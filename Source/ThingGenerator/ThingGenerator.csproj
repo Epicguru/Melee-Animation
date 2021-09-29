@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoStdLib>true</NoStdLib>
+    <LangVersion>preview</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Configurations>v1.3</Configurations>
+    <AssemblyName>EG_ThingGenerator</AssemblyName>
+    <RootNamespace>ThingGenerator</RootNamespace>
+  </PropertyGroup>
+
+  <!-- _____ 1.3 _____ -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='v1.3|AnyCPU'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3117" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Lib.QuickReload" Version="1.1.1" />
+  </ItemGroup>
+
+  <!-- Output -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='v1.3|AnyCPU'">
+    <DebugType>none</DebugType>
+    <OutputPath>..\..\1.3\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;V13</DefineConstants>
+  </PropertyGroup>
+
+</Project>

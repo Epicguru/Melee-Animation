@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingGenerator", "ThingGenerator\ThingGenerator.csproj", "{0CB2DDBC-ECE8-46B4-A8E9-9BF2239BE82B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		v1.3|Any CPU = v1.3|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CB2DDBC-ECE8-46B4-A8E9-9BF2239BE82B}.v1.3|Any CPU.ActiveCfg = v1.3|Any CPU
+		{0CB2DDBC-ECE8-46B4-A8E9-9BF2239BE82B}.v1.3|Any CPU.Build.0 = v1.3|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1478B48A-1088-4408-9427-E3B4EADB515C}
+	EndGlobalSection
+EndGlobal
