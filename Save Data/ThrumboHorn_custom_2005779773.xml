@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CustomItemData>
+	<baseThingDef>ThrumboHorn</baseThingDef>
+	<toolData>
+		<li>
+			<label>point</label>
+			<overrideIndex>0</overrideIndex>
+			<capacities>
+				<li>Scratch</li>
+				<li>Stab</li>
+			</capacities>
+		</li>
+		<li>
+			<label>base</label>
+			<overrideIndex>1</overrideIndex>
+			<capacities>
+				<li>Blunt</li>
+			</capacities>
+		</li>
+	</toolData>
+	<xmlOverrides>
+		<li>
+			<xpath>label</xpath>
+			<value>my thrumbo horn</value>
+			<id>Label</id>
+		</li>
+		<li>
+			<xpath>description</xpath>
+			<value>A thrumbo's horn. It's razor-sharp, rock-hard, and priceless in most markets. This is a true trophy, as well as a deadly melee weapon.</value>
+			<id>Desc</id>
+		</li>
+		<li>
+			<xpath>defName</xpath>
+			<value>ThrumboHorn_custom_2005779773</value>
+			<id>DefName</id>
+		</li>
+	</xmlOverrides>
+</CustomItemData>

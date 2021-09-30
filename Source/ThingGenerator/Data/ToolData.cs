@@ -7,9 +7,10 @@ namespace ThingGenerator.Data
     {
         public string label;
 
-        public float power;
-        public float cooldownTime;
-        public float armorPenetration;
+        public float power = 20f;
+        public float cooldownTime = 1f;
+        public float armorPenetration = 0f;
+        public float chanceFactor = 1f;
 
         public List<ToolCapacityDef> capacities = new List<ToolCapacityDef>();
         public int? overrideIndex;
@@ -19,34 +20,47 @@ namespace ThingGenerator.Data
         public string powerBuffer;
         public string cooldownBuffer;
         public string armorPenetrationBuffer;
+        public string chanceFactorBuffer;
 
-        public ToolData() { }
+        public ToolData()
+        {
+            SetBuffers();
+        }
 
-        public ToolData(Tool tool, int? overrideIndex)
+        public ToolData(Tool tool, int? overrideIndex) : this()
         {
             label = tool.label;
             power = tool.power;
             cooldownTime = tool.cooldownTime;
             armorPenetration = tool.armorPenetration;
+            chanceFactor = tool.chanceFactor;
 
             this.overrideIndex = overrideIndex;
 
             if (tool.capacities != null)
                 capacities.AddRange(tool.capacities);
+        }
 
+        private void SetBuffers()
+        {
             powerBuffer = power.ToString();
             cooldownBuffer = cooldownTime.ToString();
             armorPenetrationBuffer = armorPenetration.ToString();
+            chanceFactorBuffer = chanceFactor.ToString();
         }
 
         public void ExposeData()
         {
-            Scribe_Values.Look(ref delete, "delete");
-            Scribe_Values.Look(ref label, "label");
-            Scribe_Values.Look(ref power, "power");
-            Scribe_Values.Look(ref armorPenetration, "armorPenetration");
-            Scribe_Values.Look(ref cooldownTime, "cooldownTime");
-            Scribe_Values.Look(ref overrideIndex, "overrideIndex");
+            Scribe_Values.Look(ref delete, "delete", false);
+            Scribe_Values.Look(ref label, "label", "my capacity");
+            Scribe_Values.Look(ref power, "power", 20f);
+            Scribe_Values.Look(ref chanceFactor, "chanceFactor", 1f);
+            Scribe_Values.Look(ref armorPenetration, "armorPenetration", 0f);
+            Scribe_Values.Look(ref cooldownTime, "cooldownTime", 1f);
+            Scribe_Values.Look(ref overrideIndex, "overrideIndex", null);
+
+            Scribe_Collections.Look(ref capacities, "capacities", LookMode.Def);
+            capacities ??= new List<ToolCapacityDef>();
         }
     }
 }

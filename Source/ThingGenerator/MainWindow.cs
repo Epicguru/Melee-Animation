@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ThingGenerator.Data;
 using UnityEngine;
@@ -73,7 +74,7 @@ namespace ThingGenerator
 
             // Label and icon of item.
             #region Label and icon
-            string label = Item.TryGetOverride("Label")?.Value;
+            string label = Item.Label;
             if (label != null)
             {
                 var labelArea = ui.GetRect(42);
@@ -87,6 +88,30 @@ namespace ThingGenerator
                     Widgets.ButtonImageFitted(iconArea, Item.BaseThingDef.uiIcon);
                 }
 
+                Rect saveRect = labelArea;
+                saveRect.y += 10;
+                saveRect.xMin = saveRect.xMax - 70;
+                saveRect.height = 32;
+                GUI.color = Color.Lerp(Color.green, Color.white, 0.25f);
+                const string DIR = @"C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ThingGenerator\Save Data\";
+                if (Widgets.ButtonText(saveRect, "<color=white>Save</color>"))
+                {
+                    IO.SaveToFile(Item, $"{DIR}{Item.DefName}.xml", Item.Label);
+                }
+                GUI.color = Color.white;
+                Rect loadRect = saveRect;
+                loadRect.y += 34;
+                loadRect.height = 26;
+                if (Widgets.ButtonText(loadRect, "Load..."))
+                {
+                    FloatMenuUtility.MakeMenu(IO.ListXmlFiles(DIR), pair => pair.label.CapitalizeFirst(), pair => () =>
+                    {
+                        Item = new CurrentItem();
+                        IO.LoadFromFile(Item, pair.file.FullName);
+                    });
+                }
+
+                labelArea.width -= 80;
                 labelArea.xMin += 75;
                 if (editingName)
                 {
@@ -94,7 +119,7 @@ namespace ThingGenerator
                     entryArea.height = 28;
 
                     label = Widgets.TextField(entryArea, label, 64);
-                    Item.TryGetOverride("Label").Value = label;
+                    Item.Label = label;
 
                     var buttonArea = labelArea;
                     buttonArea.y += 42;
@@ -219,7 +244,7 @@ namespace ThingGenerator
 
             Item.GetOrAddOverride("Label").Set("label", $"my {t.label}");
             Item.GetOrAddOverride("Desc").Set("description", t.description);
-            Item.GetOrAddOverride("DefName").Set("defName", $"{t.defName}_custom_{Rand.Range(int.MinValue, int.MaxValue)}");
+            Item.GetOrAddOverride("DefName").Set("defName", $"{t.defName}_custom_{Rand.Range(0, int.MaxValue)}");
 
             // Tools
             if (t.tools != null)
@@ -265,7 +290,7 @@ namespace ThingGenerator
                     return;
                 }
 
-                area = ui.GetRect(90);
+                area = ui.GetRect(145);
 
                 var deleteRect = area;
                 deleteRect.x = deleteRect.xMax - 26;
@@ -291,7 +316,9 @@ namespace ThingGenerator
 
                 // Float fields.
                 FloatField(ref current, "Damage", ref d.power, ref d.powerBuffer);
+                FloatField(ref current, "Armor Pen.", ref d.armorPenetration, ref d.armorPenetrationBuffer, -1);
                 FloatField(ref current, "Cooldown", ref d.cooldownTime, ref d.cooldownBuffer);
+                FloatField(ref current, "Probability", ref d.chanceFactor, ref d.chanceFactorBuffer);
 
                 // Capacities.
                 current = area;
@@ -309,7 +336,7 @@ namespace ThingGenerator
                 {
                     const float WIDTH = 130;
                     const float HEIGHT = 24;
-                    const int MAX_ROWS = 2;
+                    const int MAX_ROWS = 4;
                     int ix = i / MAX_ROWS;
                     int iy = i % MAX_ROWS;
 
@@ -370,9 +397,44 @@ namespace ThingGenerator
             }
 
 
+            // Draw current tools.
             foreach (var tool in Item.GetAllToolData())
             {
                 DrawTool(tool);
+            }
+
+            if (ui.ButtonText("Add new..."))
+            {
+                string name = "my tool";
+
+                var window = new GenericDialog();
+                window.Draw = rect =>
+                {
+                    var listing = new Listing_Standard();
+                    listing.Begin(rect);
+
+                    listing.Label("<b>Name of new capacity:</b>");
+                    name = listing.TextEntry(name);
+
+                    bool canAdd = !string.IsNullOrEmpty(name);
+
+                    GUI.enabled = canAdd;
+                    bool add = listing.ButtonText("Add");
+                    GUI.enabled = true;
+
+                    if (add && canAdd)
+                    {
+                        window.Close();
+                        Item.AddToolData(new ToolData()
+                        {
+                            label = name.Trim(),
+                            capacities = new List<ToolCapacityDef>() { DefDatabase<ToolCapacityDef>.GetNamed("Stab") }
+                        });
+                    }
+
+                    listing.End();
+                };
+                Find.WindowStack.Add(window);
             }
 
             // Handle deleting a tool.

@@ -67,7 +67,7 @@ namespace ThingGenerator
             lastHeight = 0f;
             foreach (var item in Options)
             {
-                if (searchText.Length == 0 || (item is ThingDef td && td.label.ToLower().Contains(searchText)))
+                if (searchText.Length == 0 || (item is Def td && td.label.ToLower().Contains(searchText)))
                 {
                     lastHeight += DrawItem(item, ui, this);
                 }

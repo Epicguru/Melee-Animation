@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CustomItemData>
+	<baseThingDef>MeleeWeapon_Ikwa</baseThingDef>
+	<toolData>
+		<li>
+			<label>handle</label>
+			<overrideIndex>0</overrideIndex>
+			<capacities>
+				<li>Blunt</li>
+				<li>Poke</li>
+				<li>ToxicBite</li>
+			</capacities>
+		</li>
+		<li>
+			<label>head</label>
+			<overrideIndex>1</overrideIndex>
+			<capacities>
+				<li>Stab</li>
+			</capacities>
+		</li>
+		<li>
+			<label>edge</label>
+			<overrideIndex>2</overrideIndex>
+			<capacities>
+				<li>Cut</li>
+			</capacities>
+		</li>
+	</toolData>
+	<xmlOverrides>
+		<li>
+			<xpath>label</xpath>
+			<value>penis stick</value>
+			<id>Label</id>
+		</li>
+		<li>
+			<xpath>description</xpath>
+			<value>A short spearhandle attached to a long bladed point, designed to be driven into vital organs with a quick thrust.</value>
+			<id>Desc</id>
+		</li>
+		<li>
+			<xpath>defName</xpath>
+			<value>MeleeWeapon_Ikwa_custom_467372196</value>
+			<id>DefName</id>
+		</li>
+	</xmlOverrides>
+</CustomItemData>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinkData>
+	<links>
+		<keys>
+			<li>MeleeWeapon_BreachAxe_custom_1868913196.xml</li>
+			<li>MeleeWeapon_Ikwa_custom_467372196.xml</li>
+			<li>ThrumboHorn_custom_2005779773.xml</li>
+			<li>ElephantTusk_custom_688346838.xml</li>
+		</keys>
+		<values>
+			<li>My cool weapon</li>
+			<li>penis stick</li>
+			<li>my thrumbo horn</li>
+			<li>my elephant tusk</li>
+		</values>
+	</links>
+</LinkData>

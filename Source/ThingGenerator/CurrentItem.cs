@@ -24,6 +24,32 @@ namespace ThingGenerator
             }
         }
 
+        public string DefName
+        {
+            get
+            {
+                return TryGetOverride("DefName")?.Value;
+            }
+            set
+            {
+                GetOrAddOverride("DefName").Value = value;
+            }
+        }
+
+        public string Label
+        {
+            get
+            {
+                return TryGetOverride("Label")?.Value;
+            }
+            set
+            {
+                GetOrAddOverride("Label").Value = value;
+            }
+        }
+
+        public string LabelCap => Label?.CapitalizeFirst();
+
         public ThingDef BaseThingDef;
 
         private List<ToolData> toolData = new List<ToolData>();
