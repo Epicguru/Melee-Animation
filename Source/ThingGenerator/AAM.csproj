@@ -9,17 +9,19 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <Configurations>v1.3</Configurations>
-    <AssemblyName>EG_ThingGenerator</AssemblyName>
-    <RootNamespace>ThingGenerator</RootNamespace>
+    <AssemblyName>AdvancedAnimationMod</AssemblyName>
+    <RootNamespace>AAM</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.1.1" />
+  </ItemGroup>
 
   <!-- _____ 1.3 _____ -->
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='v1.3|AnyCPU'">
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3117" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3159" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Lib.QuickReload" Version="1.1.1" />
-  </ItemGroup>
+
 
   <!-- Output -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='v1.3|AnyCPU'">

@@ -1,0 +1,15 @@
+
+<Defs>
+  <JobDef>
+    <defName>AAM_InAnimation</defName>
+    <driverClass>ThingGenerator.JobDriver_DoAnimation</driverClass>
+    <reportString>in animation</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>true</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+</Defs>

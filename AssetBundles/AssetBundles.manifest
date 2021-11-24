@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3598767253
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: animbundle
+      Dependencies: {}
