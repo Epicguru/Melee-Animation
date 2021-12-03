@@ -15,7 +15,7 @@ namespace AAM.Workers
             UpdateEventPoints(input.Data);
 
             // Move to another random section.
-            var next = GetRandomEvent(GetPreviousEvent(input.Data.CurrentTime));
+            var next = GetRandomEvent(GetPreviousEvent(input.Animator.CurrentTime));
 
             bool stop = Rand.Chance(0.1f);
             if (stop)

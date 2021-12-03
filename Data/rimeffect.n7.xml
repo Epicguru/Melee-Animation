@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>rimeffect.n7</mod>
+	<modName>Rim-Effect: N7</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>REN7_MeleeWeapon_N7Blade</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/N7Blade</tex>
+			<ofX>0.3123644</ofX>
+			<scX>1</scX>
+			<scY>1</scY>
+			<tag>6</tag>
+		</li>
+	</items>
+</Data>

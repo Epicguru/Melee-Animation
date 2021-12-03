@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>kit.vfeweapons</mod>
+	<modName>Kit's VFE Weapons</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>KIT_CryptoSword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/KIT_CryptoSword</tex>
+			<ofX>0.3470716</ofX>
+			<scX>1.2</scX>
+			<scY>1.2</scY>
+			<tag>22</tag>
+		</li>
+		<li>
+			<dId>KIT_CryptoSpear</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/KIT_CryptoSpear</tex>
+			<ofX>0.3947939</ofX>
+			<rot>45</rot>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<tag>4</tag>
+		</li>
+		<li>
+			<dId>KIT_CryptoKnife</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/KIT_CryptoKnife</tex>
+			<ofX>0.2169197</ofX>
+			<scX>1</scX>
+			<scY>1</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>48</tag>
+		</li>
+		<li>
+			<dId>KIT_CryptoHammer</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/KIT_CryptoHammer</tex>
+			<ofX>0.2863341</ofX>
+			<scX>1.2</scX>
+			<scY>1.2</scY>
+			<tag>3</tag>
+		</li>
+	</items>
+</Data>

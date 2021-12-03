@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>xedos.psyblade</mod>
+	<modName>Psysword</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>MeleeWeapon_PsySword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/psiblade</tex>
+			<ofX>0.4679666</ofX>
+			<ofY>-0.0185701</ofY>
+			<rot>44</rot>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<tag>6</tag>
+		</li>
+		<li>
+			<dId>MeleeWeapon_PsySwordBladelink</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/psiblade</tex>
+			<ofX>0.4679666</ofX>
+			<ofY>-0.0185701</ofY>
+			<rot>44</rot>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<tag>6</tag>
+		</li>
+	</items>
+</Data>

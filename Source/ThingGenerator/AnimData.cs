@@ -1,5 +1,4 @@
-﻿using AAM;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 #if !UNITY_EDITOR
 using Verse;
+using AAM;
 #endif
 
 public class AnimData
@@ -14,28 +14,7 @@ public class AnimData
     #region Static Stuff
 
     private static Mesh m, mfx, mfy, mfxy;
-    private static Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
-    private static Dictionary<string, byte> propMap = new Dictionary<string, byte>()
-    {
-        { "m_LocalPosition.x", 1 },
-        { "m_LocalPosition.y", 2 },
-        { "m_LocalPosition.z", 3 },
-        { "localEulerAnglesRaw.x", 4 },
-        { "localEulerAnglesRaw.y", 5 },
-        { "localEulerAnglesRaw.z", 6 },
-        { "m_LocalScale.x", 7 },
-        { "m_LocalScale.y", 8 },
-        { "m_LocalScale.z", 9 },
-        { "DataA", 1 },
-        { "DataB", 2 },
-        { "DataC", 3 },
-        { "Tint.r", 4 },
-        { "Tint.g", 5 },
-        { "Tint.b", 6 },
-        { "Tint.a", 7 },
-        { "FlipX", 8 },
-        { "FlipY", 9 },
-    };
+    private static Dictionary<string, AnimData> cache = new Dictionary<string, AnimData>();
 
     public static Mesh GetMesh(bool flipX, bool flipY)
     {
@@ -47,475 +26,6 @@ public class AnimData
             mfxy = MakeMesh(Vector2.one, true, true);
         }
         return (flipX && flipY) ? mfxy : flipX ? mfx : flipY ? mfy : m;
-    }
-
-    public static Texture2D ResolveTexture(AnimPartData data)
-    {
-        if (data == null)
-            return null;
-
-        if (data.OverrideData.Texture != null)
-            return data.OverrideData.Texture;
-
-        if (data.TexturePath == null)
-            return null;
-
-        return ResolveTexture(data.TexturePath);
-    }
-
-    public static Texture2D ResolveTexture(string texturePath)
-    {
-        if (textureCache.TryGetValue(texturePath, out var found))
-            return found;
-
-        // Try load...
-        Texture2D loaded;
-#if UNITY_EDITOR
-        loaded = Resources.Load<Texture2D>(texturePath);
-#else
-        loaded = Verse.ContentFinder<Texture2D>.Get(texturePath, false);
-#endif
-        textureCache.Add(texturePath, loaded);
-        if (loaded == null)
-            Debug.LogError($"Failed to load texture '{texturePath}'.");
-
-        return loaded;
-    }
-
-#if UNITY_EDITOR
-    private static byte EncodeType(Type t)
-    {
-        if (t == typeof(Transform))
-            return 1;
-        if (t == typeof(AnimatedPart))
-            return 2;
-        return 0;
-    }
-#endif
-
-    private static byte EncodeField(string propName)
-    {
-        if (propMap.TryGetValue(propName, out var found))
-            return found;
-        return 0;
-    }
-
-    private static GameObject FindGO(GameObject root, string path)
-    {
-        var q = new Queue<string>(path.Split('/'));
-        while (q.Count > 0)
-        {
-            root = root.transform.Find(q.Dequeue())?.gameObject;
-            if (root == null)
-                return null;
-        }
-        return root;
-    }
-
-    public static string MakeRelativePath(GameObject root, GameObject child)
-    {
-        if (child == root)
-            return null;
-
-        string parent = MakeRelativePath(root, child.transform.parent.gameObject);
-        return $"{parent}{(parent == null ? "" : "/")}{child.name}";
-    }
-
-    private static IEnumerable<GameObject> EnumerateChildrenDeep(GameObject root)
-    {
-        if (root == null)
-            yield break;
-
-        foreach (Transform child in root.transform)
-        {
-            yield return child.gameObject;
-            foreach (var subChild in EnumerateChildrenDeep(child.gameObject))
-                yield return subChild.gameObject;
-        }
-    }
-
-    private static int CountFalse(bool[][] array)
-    {
-        int count = 0;
-        for (int i = 0; i < array.Length; i++)
-        {
-            for (int j = 0; j < array[i].Length; j++)
-            {
-                if (!array[i][j])
-                    count++;
-            }
-        }
-        return count;
-    }
-
-#if UNITY_EDITOR
-    private static float GetDefaultValue(byte type, byte prop, GameObject go)
-    {
-        var trs = go.transform;
-        var data = go.GetComponent<AnimatedPart>();
-
-        switch (type)
-        {
-            case 1:
-                return prop switch
-                {
-                    1 => trs.localPosition.x,
-                    2 => trs.localPosition.y,
-                    3 => trs.localPosition.z,
-                    4 => trs.localEulerAngles.x,
-                    5 => trs.localEulerAngles.y,
-                    6 => trs.localEulerAngles.z,
-                    7 => trs.localScale.x,
-                    8 => trs.localScale.y,
-                    9 => trs.localScale.z,
-                    _ => 0
-                };
-
-            case 2:
-                return prop switch
-                {
-                    1 => data?.DataA ?? 0,
-                    2 => data?.DataB ?? 0,
-                    3 => data?.DataC ?? 0,
-                    4 => data?.Tint.r ?? 1,
-                    5 => data?.Tint.g ?? 1,
-                    6 => data?.Tint.b ?? 1,
-                    7 => data?.Tint.a ?? 1,
-                    8 => (data?.FlipX ?? false) ? 1 : 0,
-                    9 => (data?.FlipY ?? false) ? 1 : 0,
-                    _ => 0
-                };
-
-            default:
-                Debug.LogError($"Invalid type {type}");
-                return 0;
-        }
-    }
-#endif
-
-    private static void WriteCurve(BinaryWriter writer, AnimationCurve curve)
-    {
-        // Wrap modes.
-        writer.Write((byte)curve.preWrapMode);
-        writer.Write((byte)curve.postWrapMode);
-
-        // Key count.
-        writer.Write(curve.length);
-
-        // Key data.
-        for (int i = 0; i < curve.length; i++)
-        {
-            var key = curve.keys[i];
-
-            writer.Write(key.time);
-            writer.Write(key.value);
-
-            writer.Write(key.inTangent);
-            writer.Write(key.outTangent);
-
-            writer.Write(key.inWeight);
-            writer.Write(key.outWeight);
-            writer.Write((byte)key.weightedMode);
-        }
-    }
-
-    private static AnimationCurve ReadCurve(BinaryReader reader)
-    {
-        // Wrap modes.
-        var preWrap = (WrapMode)reader.ReadByte();
-        var postWrap = (WrapMode)reader.ReadByte();
-
-        // Key count.
-        int count = reader.ReadInt32();
-
-        // Key data.
-        var keys = new Keyframe[count];
-        for (int i = 0; i < count; i++)
-        {
-            Keyframe k = new Keyframe();
-
-            k.time = reader.ReadSingle();
-            k.value = reader.ReadSingle();
-
-            k.inTangent = reader.ReadSingle();
-            k.outTangent = reader.ReadSingle();
-
-            k.inWeight = reader.ReadSingle();
-            k.outWeight = reader.ReadSingle();
-            k.weightedMode = (WeightedMode)reader.ReadByte();
-
-            keys[i] = k;
-        }
-
-        return new AnimationCurve(keys) { preWrapMode = preWrap, postWrapMode = postWrap };
-    }
-
-    private static AnimationCurve MakeConstantCurve(float value)
-    {
-        return new AnimationCurve(new Keyframe(0f, value)) { postWrapMode = WrapMode.ClampForever, preWrapMode = WrapMode.ClampForever };
-    }
-
-#if UNITY_EDITOR
-    public static void Save(BinaryWriter writer, AnimationClip clip, GameObject animatorRoot, bool allowStrip, IEnumerable<SpaceRequirement> spaceReqs)
-    {
-        HashSet<string> paths = new HashSet<string>();
-
-        var bindings = UnityEditor.AnimationUtility.GetCurveBindings(clip);
-        int count = 0;
-        foreach (var binding in bindings)
-        {
-            if (EncodeType(binding.type) != 0)
-            {
-                paths.Add(binding.path);
-                count++;
-            }
-        }
-        if (!allowStrip)
-        {
-            foreach (var go in EnumerateChildrenDeep(animatorRoot))
-            {
-                string path = MakeRelativePath(animatorRoot, go);
-                if (paths.Add(path))
-                    Debug.LogWarning($"Saved {path} from being stripped from the output.");
-            }
-        }
-
-        var pathList = new List<string>(paths);
-
-        // Name.
-        writer.Write(clip.name);
-
-        // Length.
-        writer.Write(clip.length);
-
-        // Part count.
-        writer.Write(pathList.Count);
-
-        // Animation events.
-        var events = new List<AnimEvent>();
-        foreach(var raw in clip.events)
-        {
-            if(raw.functionName != "DoAnimationEvent")
-            {
-                Debug.LogWarning($"Ignoring animation event for fuction '{raw.functionName}'");
-                continue;
-            }
-            events.Add(new AnimEvent(raw.stringParameter, raw.time));
-        }
-        writer.Write(events.Count);
-        foreach(var e in events)
-        {
-            writer.Write(e.Time);
-            writer.Write(e.RawInput);
-        }
-
-        // Space requirements.
-        var space = spaceReqs?.ToArray() ?? new SpaceRequirement[0];
-        writer.Write(space.Length);
-        foreach(var item in space)        
-            SpaceRequirement.Write(item, writer);        
-
-        // Object paths, parents & textures.
-        foreach (var path in pathList)
-        {
-            var go = FindGO(animatorRoot, path);
-            var parentGO = go.transform.parent.gameObject;
-            Debug.Assert(go != null);
-            Debug.Assert(parentGO != null);
-
-            // Path.
-            writer.Write(path);
-
-            // Parent index.
-            int parentIndex = parentGO == animatorRoot ? -1 : pathList.IndexOf(MakeRelativePath(animatorRoot, parentGO));
-            writer.Write((short)parentIndex);
-
-            var comp = go.GetComponent<AnimatedPart>();
-
-            // Custom name.
-            writer.Write(comp != null && comp.HasCustomName);
-            if (comp != null && comp.HasCustomName)
-                writer.Write(comp.CustomName);
-
-            // Texture path.
-            writer.Write(comp != null && comp.HasTexturePath);
-            if (comp != null && comp.HasTexturePath)
-                writer.Write(comp.TexturePath);
-        }
-
-        // Curve count.
-        writer.Write(count);
-
-        int leftOver = pathList.Count * (9 + 9);
-        bool[][][] hasValue = new bool[pathList.Count][][];
-        for (int i = 0; i < hasValue.Length; i++)
-        {
-            bool[][] temp = new bool[2][];
-            temp[0] = new bool[9];
-            temp[1] = new bool[9];
-            hasValue[i] = temp;
-        }
-
-        // Write active curves.
-        foreach (var binding in bindings)
-        {
-            if (EncodeType(binding.type) == 0)
-                continue;
-
-            var curve = UnityEditor.AnimationUtility.GetEditorCurve(clip, binding);
-            byte type = EncodeType(binding.type);
-            byte prop = EncodeField(binding.propertyName);
-            int objIndex = pathList.IndexOf(binding.path);
-
-            // Type.
-            writer.Write(type);
-
-            // Prop name.
-            writer.Write(prop);
-
-            // Part path.
-            writer.Write((byte)objIndex);
-
-            // Curve data.
-            WriteCurve(writer, curve);
-
-            hasValue[objIndex][type - 1][prop - 1] = true;
-            leftOver--;
-        }
-
-        // Write default values.
-        for (int i = 0; i < pathList.Count; i++)
-        {
-            writer.Write((byte)CountFalse(hasValue[i]));
-
-            for (int j = 0; j < hasValue[i].Length; j++)
-            {
-                for (int k = 0; k < hasValue[i][j].Length; k++)
-                {
-                    if (hasValue[i][j][k])
-                        continue;
-
-                    // Get default value.
-                    float def = GetDefaultValue((byte)(j + 1), (byte)(k + 1), FindGO(animatorRoot, pathList[i]));
-
-                    // Write default value.
-                    writer.Write((byte)(j + 1));
-                    writer.Write((byte)(k + 1));
-                    writer.Write(def);
-
-                    leftOver--;
-                }
-            }
-        }
-
-        Debug.Assert(leftOver == 0);
-    }
-#endif
-
-    public static AnimData Load(string filePath)
-    {
-        using var fs = new FileStream(filePath, FileMode.Open);
-        using var reader = new BinaryReader(fs);
-        return Load(reader);
-    }
-
-    public static AnimData Load(BinaryReader reader)
-    {
-        // Name.
-        string clipName = reader.ReadString();
-
-        // Length.
-        float length = reader.ReadSingle();
-
-        // Part count.
-        int partCount = reader.ReadInt32();
-
-        // Animation events.
-        AnimEvent[] events = new AnimEvent[reader.ReadInt32()];
-        for (int i = 0; i < events.Length; i++)
-        {
-            float time = reader.ReadSingle();
-            string input = reader.ReadString();
-            events[i] = new AnimEvent(input, time);
-        }
-
-        // Pawn positions.
-        var space = new SpaceRequirement[reader.ReadInt32()];
-        for (int i = 0; i < space.Length; i++)        
-            space[i] = SpaceRequirement.Read(reader);        
-
-        AnimPartData[] parts = new AnimPartData[partCount];
-        short[] parentIds = new short[partCount];
-
-        // Initialize parts and read paths & texture paths.
-        for (int i = 0; i < partCount; i++)
-        {
-            var part = new AnimPartData();
-
-            // Path.
-            part.Path = reader.ReadString();
-
-            // Parent index, convert to path. Will need to be resolved later.
-            parentIds[i] = reader.ReadInt16();
-
-            // Custom name.
-            if (reader.ReadBoolean())
-                part.CustomName = reader.ReadString();
-
-            // Texture.
-            if (reader.ReadBoolean())
-                part.TexturePath = reader.ReadString();
-
-            parts[i] = part;
-        }
-
-        // Assign parent references now that all parts are created.
-        for (int i = 0; i < partCount; i++)
-        {
-            var part = parts[i];
-            var parentIndex = parentIds[i];
-            if (parentIndex < 0)
-                continue;
-
-            part.Parent = parts[parentIndex];
-        }
-
-        // Curve count.
-        int curveCount = reader.ReadInt32();
-
-        // Read curves and populate part data.
-        for (int i = 0; i < curveCount; i++)
-        {
-            byte typeId = reader.ReadByte();
-            byte fieldId = reader.ReadByte();
-            AnimPartData part = parts[reader.ReadByte()];
-
-            // Get a reference to this part's corresponding curve field.
-            ref AnimationCurve curve = ref part.GetCurve(typeId, fieldId);
-
-            // Assign that reference. This updates the field in the actual object. C# is cool like that sometimes.
-            curve = ReadCurve(reader);
-        }
-
-        // Read default values.
-        for (int i = 0; i < partCount; i++)
-        {
-            int defaultValueCount = reader.ReadByte();
-            for (int j = 0; j < defaultValueCount; j++)
-            {
-                byte type = reader.ReadByte();
-                byte prop = reader.ReadByte();
-                float value = reader.ReadSingle();
-
-                var constant = MakeConstantCurve(value);
-
-                // Write default value as a constant 'curve'.
-                ref AnimationCurve curve = ref parts[i].GetCurve(type, prop);
-                curve = constant;
-            }
-        }        
-
-        return new AnimData(clipName, length, parts, events, space);
     }
 
     private static Mesh MakeMesh(Vector2 size, bool flipX, bool flipY)
@@ -571,40 +81,184 @@ public class AnimData
         return mesh;
     }
 
+    private static AnimationCurve ReadCurve(BinaryReader reader)
+    {
+        // Wrap modes.
+        var preWrap = (WrapMode)reader.ReadByte();
+        var postWrap = (WrapMode)reader.ReadByte();
+
+        // Key count.
+        int count = reader.ReadInt32();
+
+        // Key data.
+        var keys = new Keyframe[count];
+        for (int i = 0; i < count; i++)
+        {
+            Keyframe k = new Keyframe();
+
+            k.time = reader.ReadSingle();
+            k.value = reader.ReadSingle();
+
+            k.inTangent = reader.ReadSingle();
+            k.outTangent = reader.ReadSingle();
+
+            k.inWeight = reader.ReadSingle();
+            k.outWeight = reader.ReadSingle();
+            k.weightedMode = (WeightedMode)reader.ReadByte();
+
+            keys[i] = k;
+        }
+
+        return new AnimationCurve(keys) { preWrapMode = preWrap, postWrapMode = postWrap };
+    }
+
+    private static AnimationCurve MakeConstantCurve(float value)
+    {
+        return new AnimationCurve(new Keyframe(0f, value)) { postWrapMode = WrapMode.ClampForever, preWrapMode = WrapMode.ClampForever };
+    } 
+
+    public static AnimData Load(string filePath, bool allowFromCache = true, bool saveToCache = true)
+    {
+        if (filePath == null)
+            return null;
+
+        if (allowFromCache)
+        {
+            if (cache.TryGetValue(filePath, out var found))
+                return found;
+        }
+
+        using var fs = new FileStream(filePath, FileMode.Open);
+        using var reader = new BinaryReader(fs);
+        var loaded = Load(reader);
+
+        if (saveToCache)
+            cache[filePath] = loaded;
+
+        return loaded;
+    }
+
+    public static AnimData Load(BinaryReader reader)
+    {
+        // Name.
+        string clipName = reader.ReadString();
+
+        // Length.
+        float length = reader.ReadSingle();
+
+        // Part count.
+        int partCount = reader.ReadInt32();
+
+        // Animation events.
+        AnimEvent[] events = new AnimEvent[reader.ReadInt32()];
+        for (int i = 0; i < events.Length; i++)
+        {
+            string input = reader.ReadString();
+            float time = reader.ReadSingle();
+            events[i] = new AnimEvent(input, time);
+        }
+
+        AnimPartData[] parts = new AnimPartData[partCount];
+        short[] parentIds = new short[partCount];
+
+        Core.Log($"Read events ({partCount} parts).");
+
+        // Initialize parts and read paths & texture paths.
+        for (int i = 0; i < partCount; i++)
+        {
+            var part = new AnimPartData();
+
+            // Path.
+            part.Path = reader.ReadString();
+
+            // Parent index, convert to path. Will need to be resolved later.
+            parentIds[i] = reader.ReadInt16();
+
+            // Custom name.
+            if (reader.ReadBoolean())
+                part.CustomName = reader.ReadString();
+
+            // Texture.
+            if (reader.ReadBoolean())
+                part.TexturePath = reader.ReadString();
+
+            parts[i] = part;
+            Core.Log($"Read part {i}: {part.Path}, P:{parentIds[i]}, CN:{part.CustomName}, Tex:{part.TexturePath}");
+        }
+
+        // Assign parent references now that all parts are created.
+        for (int i = 0; i < partCount; i++)
+        {
+            var part = parts[i];
+            var parentIndex = parentIds[i];
+            if (parentIndex < 0)
+                continue;
+
+            part.Parent = parts[parentIndex];
+        }
+
+        // Curve count.
+        int curveCount = reader.ReadInt32();
+
+        Core.Log("Read curve count.");
+
+        // Read curves and populate part data.
+        for (int i = 0; i < curveCount; i++)
+        {
+            byte typeId = reader.ReadByte();
+            byte fieldId = reader.ReadByte();
+            AnimPartData part = parts[reader.ReadByte()];
+
+            // Get a reference to this part's corresponding curve field.
+            ref AnimationCurve curve = ref part.GetCurve(typeId, fieldId);
+
+            // Assign that reference. This updates the field in the actual object. C# is cool like that sometimes.
+            curve = ReadCurve(reader);
+        }
+
+        // Read default values.
+        for (int i = 0; i < partCount; i++)
+        {
+            int defaultValueCount = reader.ReadByte();
+            for (int j = 0; j < defaultValueCount; j++)
+            {
+                byte type = reader.ReadByte();
+                byte prop = reader.ReadByte();
+                float value = reader.ReadSingle();
+
+                var constant = MakeConstantCurve(value);
+
+                // Write default value as a constant 'curve'.
+                ref AnimationCurve curve = ref parts[i].GetCurve(type, prop);
+                curve = constant;
+            }
+        }
+
+        return new AnimData(clipName, length, parts, events);
+    }
+    
     #endregion
 
     public readonly string Name;
     public readonly float Duration;
-    public float CurrentTime { get; private set; } = -1;
-
     public IReadOnlyList<AnimPartData> Parts => parts;
     public IReadOnlyList<AnimEvent> Events => events;
     public IReadOnlyList<AnimSection> Sections => sections;
-    public AnimSection CurrentSection { get; private set; }
-    public IEnumerable<AnimPartSnapshot> CurrentSnapshots
-    {
-        get
-        {
-            foreach (var part in parts)
-                yield return part.CurrentSnapshot;
-        }
-    }
 
     private AnimPartData[] parts;
     private AnimEvent[] events;
-    private SpaceRequirement[] spaceReqs;
     private AnimSection[] sections;
 
-    public AnimData(string name, float duration, AnimPartData[] parts, AnimEvent[] events, SpaceRequirement[] spaceReqs)
+    public AnimData(string name, float duration, AnimPartData[] parts, AnimEvent[] events)
     {
         this.Name = name;
         this.Duration = duration;
         this.parts = parts ?? new AnimPartData[0];
         this.events = events ?? new AnimEvent[0];
-        this.spaceReqs = spaceReqs ?? new SpaceRequirement[0];
         this.sections = GenerateSections();
 
-        Seek(0, null);
+        for (int i = 0; i < parts.Length; i++)        
+            parts[i].Index = i;        
     }
 
     public AnimPartData GetPart(string name)
@@ -613,129 +267,28 @@ public class AnimData
             return null;
 
         foreach (var part in parts)
+        {
             if (part.Name == name)
                 return part;
-
+        }
+#if !UNITY_EDITOR
+        Core.Warn($"Failed to find part called '{name}'");
+#endif
         return null;
     }
 
-    public (SpaceRequirement start, SpaceRequirement end) GetPawnLocations(int pawnIndex, bool flipX, bool flipY)
+    public IEnumerable<AnimEvent> GetEventsInPeriod(Vector2 range)
     {
-        return SpaceRequirement.GetPawnPositions(spaceReqs, pawnIndex);
-    }
-
-    public (int x, int z, int x2, int z2) GetPawnCells(int pawnIndex, bool flipX, bool flipY)
-    {
-        var pair = GetPawnLocations(pawnIndex, flipX, flipY);
-        if (pair.start == null)
-            return (0, 0, 0, 0);
-
-        var cs = pair.start.GetCell(flipX, flipY);
-        var ce = pair.end.GetCell(flipX, flipY);
-
-        return (cs.x, cs.z, ce.x, ce.z);
-    }
-
-    public IEnumerable<(int x, int z)> GetSpaceRequirementCells(bool flipX, bool flipY, Func<SpaceRequirement, bool> selector = null)
-    {
-        foreach(var area in GetSpaceRequirements(selector))
+        foreach (var e in events)
         {
-            foreach (var cell in area.GetCells(flipX, flipY))
-                yield return cell;
+            if (e.IsInTimeWindow(range))
+                yield return e;
         }
-    }
-
-    public IEnumerable<SpaceRequirement> GetSpaceRequirements(Func<SpaceRequirement, bool> selector = null)
-    {
-        if(selector == null)
-        {
-            foreach (var item in spaceReqs)
-                yield return item;
-        }
-        else
-        {
-            foreach (var item in spaceReqs)
-                if (selector(item))
-                    yield return item;
-        }
-    }
-
-    public IEnumerable<AnimPartData> GetPartsRegex(string regex)
-    {
-        var r = new Regex(regex, RegexOptions.IgnoreCase);
-
-        foreach (var part in parts)
-        {
-            if (r.IsMatch(part.Name))
-                yield return part;
-        }
-    }
-
-    public int ModifyParts(string searchPattern, Action<AnimPartData> func)
-    {
-        if (func == null)
-            return 0;
-
-        int count = 0;
-        foreach (var part in GetPartsRegex(searchPattern))
-        {
-            func(part);
-            count++;
-        }
-        return count;
-    }
-
-    public void SortByDepth()
-    {
-        Array.Sort(parts, (a, b) => a.CurrentSnapshot.Depth.CompareTo(b.CurrentSnapshot.Depth));
-    }
-
-    public Vector2 Seek(float time, AnimRenderer renderer, bool sortByDepth = true, bool mirrorX = false, bool mirrorY = false, bool generateSectionEvents = true)
-    {
-        time = Mathf.Clamp(time, 0f, Duration);
-
-        if (CurrentTime == time)
-            return new Vector2(-1, -1);
-
-        // Pass 1: Evaluate curves, make local matrices.
-        for (int i = 0; i < parts.Length; i++)
-            parts[i].CurrentSnapshot = new AnimPartSnapshot(parts[i], time);
-
-        // Pass 2: Resolve world matrices using inheritance tree.
-        for (int i = 0; i < parts.Length; i++)
-            parts[i].CurrentSnapshot.UpdateWorldMatrix(mirrorX, mirrorY);
-
-
-        if (sortByDepth)
-            SortByDepth();
-
-        float start = Mathf.Min(CurrentTime, time);
-        float end   = Mathf.Max(CurrentTime, time);
-        CurrentTime = time;
-
-        if(CurrentSection == null)
-        {
-            CurrentSection = GetSectionAtTime(time);           
-            CurrentSection.OnSectionEnter(renderer);
-        }
-        else if (!CurrentSection.ContainsTime(time))
-        {
-            var old = CurrentSection;
-            CurrentSection = GetSectionAtTime(time);
-
-            if (generateSectionEvents)
-            {
-                old.OnSectionExit(renderer);
-                CurrentSection.OnSectionEnter(renderer);
-            }            
-        }
-
-        return new Vector2(start, end);
     }
 
     public AnimSection GetSectionNamed(string name)
     {
-        foreach(var section in sections)
+        foreach (var section in sections)
         {
             if (section.Name == name)
                 return section;
@@ -754,25 +307,16 @@ public class AnimData
         return null;
     }
 
-    public IEnumerable<AnimEvent> GetEventsInPeriod(Vector2 range)
-    {
-        foreach (var e in events)
-        {
-            if (e.IsInTimeWindow(range))
-                yield return e;
-        }
-    }
-
     protected virtual AnimSection[] GenerateSections()
     {
         if (events == null)
-            return new AnimSection[] {new AnimSection(this, null, null)};
+            return new AnimSection[] { new AnimSection(this, null, null) };
 
         var list = new List<AnimSection>();
         AnimEvent lastSection = null;
-        foreach(var e in events)
+        foreach (var e in events)
         {
-            if(e.HandlerName.ToLowerInvariant() == "section")
+            if (e.HandlerName.ToLowerInvariant() == "section")
             {
                 var sec = new AnimSection(this, lastSection, e);
                 list.Add(sec);
@@ -782,14 +326,6 @@ public class AnimData
         list.Add(new AnimSection(this, lastSection, null));
         return list.ToArray();
     }
-
-    public void Reset()
-    {
-        CurrentSection = null; // reset section. it is re-assinged in seek().
-        Seek(0, null, false);
-        foreach (var part in parts)
-            part.Reset();
-    }
 }
 
 public class AnimPartData
@@ -797,12 +333,12 @@ public class AnimPartData
     private static AnimationCurve dummy;
 
     public string Name => CustomName ?? Path;
-    public Texture2D Texture => resolvedTex ??= AnimData.ResolveTexture(this);
 
     public AnimPartData Parent;
     public string Path;
     public string CustomName;
     public string TexturePath;
+    public int Index;
 
     public AnimationCurve PosX, PosY, PosZ;
     public AnimationCurve RotX, RotY, RotZ;
@@ -810,11 +346,7 @@ public class AnimPartData
     public AnimationCurve DtaA, DtaB, DtaC;
     public AnimationCurve ColR, ColG, ColB, ColA;
     public AnimationCurve FlipX, FlipY;
-
-    public AnimPartOverrideData OverrideData = new AnimPartOverrideData();
-    public AnimPartSnapshot CurrentSnapshot;
-
-    private Texture2D resolvedTex;
+    public AnimationCurve Active;
 
     public ref AnimationCurve GetCurve(byte type, byte field)
     {
@@ -872,6 +404,13 @@ public class AnimPartData
                 return ref FlipY;
         }
 
+        // TYPE: GameObject
+        if (type == 3)
+        {
+            if (field == 1)
+                return ref Active;
+        }
+
         return ref dummy; // Shut up compiler.
     }
 
@@ -880,10 +419,11 @@ public class AnimPartData
 
     }
 
-    public void Reset()
+    public AnimPartSnapshot GetSnapshot(AnimRenderer renderer)
     {
-        resolvedTex = null;
-        OverrideData.Reset();
+        if (renderer == null)
+            return default;
+        return renderer.GetSnapshot(this);
     }
 }
 
@@ -897,14 +437,19 @@ public struct AnimPartSnapshot
     {
         get
         {
-            if (Part.OverrideData.ColorOverride != default)
-                return Part.OverrideData.ColorOverride;
+            if (Renderer == null)
+                return default;
 
-            return Color * Part.OverrideData.ColorTint;
+            var ov = Renderer.GetOverride(this);
+            if (ov.ColorOverride != default)
+                return ov.ColorOverride;
+
+            return Color * ov.ColorTint;
         }
     }
 
-    public AnimPartData Part;
+    public readonly AnimRenderer Renderer;
+    public readonly AnimPartData Part;
     public float Time;
 
     public Vector3 LocalPosition;
@@ -913,16 +458,18 @@ public struct AnimPartSnapshot
     public Color Color;
     public float DataA, DataB, DataC;
     public bool FlipX, FlipY;
+    public bool Active;
 
     public Matrix4x4 LocalMatrix;
     public Matrix4x4 WorldMatrix;
 
-    public AnimPartSnapshot(AnimPartData data, float time)
+    public AnimPartSnapshot(AnimPartData part, AnimRenderer renderer, float time)
     {
-        Part = data ?? throw new System.ArgumentNullException(nameof(data));
+        Part = part ?? throw new System.ArgumentNullException(nameof(part));
+        Renderer = renderer ?? throw new System.ArgumentNullException(nameof(renderer));
         Time = time;
 
-        var d = data;
+        var d = part;
         var t = time;
 
         LocalPosition = new Vector3(Eval(d.PosX, t), Eval(d.PosY, t), Eval(d.PosZ, t));
@@ -938,19 +485,21 @@ public struct AnimPartSnapshot
         FlipX = Eval(d.FlipX, t) >= 0.5f;
         FlipY = Eval(d.FlipY, t) >= 0.5f;
 
+        Active = Eval(d.Active, t) >= 0.5f;
+
         LocalMatrix = default;
         WorldMatrix = default;
         UpdateLocalMatrix();
     }
 
-    public Vector3 GetWorldPosition(Matrix4x4 transform, Vector3 localPos = default)
+    public Vector3 GetWorldPosition(Vector3 localPos = default)
     {
-        return (transform * WorldMatrix).MultiplyPoint3x4(localPos);
+        return (Renderer.RootTransform * WorldMatrix).MultiplyPoint3x4(localPos);
     }
 
-    public float GetWorldRotation(Matrix4x4 transform)
+    public float GetWorldRotation()
     {
-        return (transform * WorldMatrix).rotation.eulerAngles.y;
+        return (Renderer.RootTransform * WorldMatrix).rotation.eulerAngles.y;
     }
 
     public void UpdateLocalMatrix()
@@ -963,7 +512,8 @@ public struct AnimPartSnapshot
         if (Part?.Parent == null)
             return LocalMatrix;
 
-        return Part.Parent.CurrentSnapshot.MakeWorldMatrix() * LocalMatrix;
+        Active = Active && Renderer.GetSnapshot(Part.Parent).Active;
+        return Renderer.GetSnapshot(Part.Parent).MakeWorldMatrix() * LocalMatrix;
     }
 
     public void UpdateWorldMatrix(bool mirrorX, bool mirrorY)
@@ -971,9 +521,13 @@ public struct AnimPartSnapshot
         var preProc = Matrix4x4.Scale(new Vector3(mirrorX ? -1f : 1f, 1f, mirrorY ? -1f : 1f));
         var postProc = Matrix4x4.Scale(new Vector3(mirrorX ? -1f : 1f, 1f, mirrorY ? -1f : 1f));
 
+        var ov = Renderer.GetOverride(this);
         bool fx = FlipX;
+        if (ov.FlipX)
+            fx = !fx;
         bool fy = FlipY;
-        var ov = Part.OverrideData;
+        if (ov.FlipY)
+            fy = !fy;
 
         Vector2 off = new Vector2(fx ? -ov.LocalOffset.x : ov.LocalOffset.x, fy ? -ov.LocalOffset.y : ov.LocalOffset.y);
         float offRot = fx ^ fy ? -ov.LocalRotation : ov.LocalRotation;
@@ -1006,6 +560,7 @@ public class AnimPartOverrideData
     public Material Material;
     public Color ColorTint = Color.white;
     public Color ColorOverride;
+    public bool FlipX, FlipY;
 
     public void Reset()
     {
@@ -1017,6 +572,8 @@ public class AnimPartOverrideData
         Material = null;
         ColorTint = Color.white;
         ColorOverride = default;
+        FlipX = false;
+        FlipY = false;
     }
 }
 
@@ -1039,8 +596,8 @@ public class AnimEvent
             parts = input.Trim().Split(';');
             for (int i = 0; i < parts.Length; i++)
             {
-                parts[i] = parts[i].Trim();            
-            }      
+                parts[i] = parts[i].Trim();
+            }
         }
     }
 
@@ -1089,7 +646,7 @@ public class AnimEvent
         }
 
 #if !UNITY_EDITOR
-        if(typeof(T) == typeof(Pawn))
+        if (typeof(T) == typeof(Pawn))
         {
             var animator = input as AnimRenderer;
             if (animator == null)
@@ -1099,8 +656,8 @@ public class AnimEvent
                 return (T)(object)animator.Pawns[index];
             return fallback;
         }
-        
-        if(typeof(T) == typeof(AnimPartData))
+
+        if (typeof(T) == typeof(AnimPartData))
         {
             var animator = input as AnimRenderer;
             if (animator == null)
@@ -1108,10 +665,10 @@ public class AnimEvent
             return (T)(object)animator.GetPart(part) ?? fallback;
         }
 
-        if(typeof(T).IsSubclassOf(typeof(Def)))        
+        if (typeof(T).IsSubclassOf(typeof(Def)))
             return ((T)GenGeneric.InvokeStaticMethodOnGenericType(typeof(DefDatabase<>), typeof(T), "GetNamed", part, true)) ?? fallback;
 
-        if(typeof(T) == typeof(FloatRange))   
+        if (typeof(T) == typeof(FloatRange))
             return (T)(object)FloatRange.FromString(part);
 #endif
 
@@ -1141,7 +698,7 @@ public class SpaceRequirement
 
     public static IEnumerable<SpaceRequirement> GetAllMustBeClear(IEnumerable<SpaceRequirement> reqs)
     {
-        foreach(var req in reqs)
+        foreach (var req in reqs)
         {
             if (req != null && req.Type == RequirementType.MustBeClear)
                 yield return req;
@@ -1223,7 +780,7 @@ public class SpaceRequirement
 
     public IEnumerable<(int x, int z)> GetCells(bool fx, bool fy)
     {
-        foreach(var cell in Area.allPositionsWithin)
+        foreach (var cell in Area.allPositionsWithin)
         {
             var raw = Resolve(cell, fx, fy);
             yield return (raw.x, raw.y);
@@ -1232,12 +789,12 @@ public class SpaceRequirement
 
     private Vector2Int Resolve(Vector2Int vector, bool fx, bool fy)
     {
-        if (fx)        
+        if (fx)
             vector.x = -vector.x;
-        
-        if (fy)        
+
+        if (fy)
             vector.y = -vector.y;
-        
+
         return vector;
     }
 
@@ -1261,7 +818,7 @@ public class SpaceRequirement
             _ => 1f
         };
 
-        var center = new Vector3(Area.center.x-0.5f, 0f, Area.center.y-0.5f);
+        var center = new Vector3(Area.center.x - 0.5f, 0f, Area.center.y - 0.5f);
         var size = new Vector3(Area.size.x - shrink, 0f, Area.size.y - shrink);
         Gizmos.color = c;
         Gizmos.DrawWireCube(center, size);

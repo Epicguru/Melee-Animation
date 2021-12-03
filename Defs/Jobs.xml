@@ -1,8 +1,9 @@
 
 <Defs>
+
   <JobDef>
     <defName>AAM_InAnimation</defName>
-    <driverClass>ThingGenerator.JobDriver_DoAnimation</driverClass>
+    <driverClass>AAM.JobDriver_DoAnimation</driverClass>
     <reportString>in animation</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>false</playerInterruptible>
@@ -12,4 +13,17 @@
     <neverShowWeapon>true</neverShowWeapon>
     <isIdle>false</isIdle>
   </JobDef>
+
+  <JobDef>
+    <defName>AAM_PrepareAnimation</defName>
+    <driverClass>AAM.JobDriver_PrepareAnimation</driverClass>
+    <reportString>preparing for animation</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <isIdle>false</isIdle>
+  </JobDef>
+
 </Defs>

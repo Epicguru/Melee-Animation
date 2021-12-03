@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>vanillaexpanded.vwetb</mod>
+	<modName>Vanilla Weapons Expanded - Tribal</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>VWE_MeleeWeapon_Shiv</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/TribalShiv</tex>
+			<ofX>0.1271186</ofX>
+			<ofY>0.04237288</ofY>
+			<scX>1</scX>
+			<scY>1</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>48</tag>
+		</li>
+		<li>
+			<dId>VWE_MeleeWeapon_TribalAxe</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/TribalAxe</tex>
+			<ofX>0.2033898</ofX>
+			<ofY>0.01271186</ofY>
+			<scX>1</scX>
+			<scY>1</scY>
+			<tag>2</tag>
+		</li>
+		<li>
+			<dId>VWE_MeleeWeapon_LightClub</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/LightClub</tex>
+			<ofX>0.2076271</ofX>
+			<ofY>0.02118644</ofY>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<tag>9</tag>
+		</li>
+		<li>
+			<dId>VWE_MeleeWeapon_HeavyClub</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/HeavyClub</tex>
+			<ofX>0.4491525</ofX>
+			<ofY>0.02118644</ofY>
+			<rot>45</rot>
+			<scX>1</scX>
+			<scY>1</scY>
+			<tag>3</tag>
+		</li>
+	</items>
+</Data>

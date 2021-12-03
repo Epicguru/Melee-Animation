@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>xrushha.nierweaponsapparel</mod>
+	<modName>NieR: Automata Weapon and Apparel Set</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>MeleeWeapon_CruelOath</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/Oath</tex>
+			<ofX>0.3050848</ofX>
+			<ofY>-0.2161017</ofY>
+			<rot>16</rot>
+			<scX>1.5</scX>
+			<scY>1.5</scY>
+			<tag>6</tag>
+		</li>
+		<li>
+			<dId>MeleeWeapon_VirtuousContract</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/Contract</tex>
+			<ofX>0.3050848</ofX>
+			<ofY>-0.2161017</ofY>
+			<rot>16</rot>
+			<scX>1.5</scX>
+			<scY>1.5</scY>
+			<tag>6</tag>
+		</li>
+	</items>
+</Data>

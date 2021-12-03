@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>vanillaexpanded.vwenl</mod>
+	<modName>Vanilla Weapons Expanded - Non-Lethal</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>VWE_MeleeWeapon_StunBaton</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/StunBaton</tex>
+			<ofX>0.3135593</ofX>
+			<ofY>-0.008474576</ofY>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>9</tag>
+		</li>
+	</items>
+</Data>

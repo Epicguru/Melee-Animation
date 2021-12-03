@@ -12,5 +12,7 @@ namespace AAM
         }
 
         public static JobDef AAM_InAnimation;
+        public static JobDef AAM_PrepareAnimation;
+        public static RulePackDef AAM_Execution_Generic;
     }
 }

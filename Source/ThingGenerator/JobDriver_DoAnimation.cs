@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Verse;
 using Verse.AI;
 
 namespace AAM
@@ -40,9 +41,39 @@ namespace AAM
             yield return toil;
         }
 
+        public override void ExposeData()
+        {
+            base.ExposeData();
+        }
+
+        public Pawn GetFirstPawnNotSelf()
+        {
+            foreach (var p in Animator.Pawns)
+            {
+                if (p == null || p == pawn)
+                    continue;
+                return p;
+            }
+            return null;
+        }
+
+        public virtual string ProcessReport(string input)
+        {
+            if (input == null)
+                return "<unnamed>";
+
+            if (Animator == null)
+                return input;
+
+            string other = GetFirstPawnNotSelf()?.NameShortColored ?? "???";
+            input = input.Replace("[OTHER]", other);
+
+            return input;
+        }
+
         public override string GetReport()
         {
-            return base.GetReport() + $"Remaining: {ticksLeftThisToil} ({CurToil})";
+            return $"Animation: {ProcessReport(Animator?.Def?.jobString)}";
         }
     }
 }

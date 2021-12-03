@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>xrushha.animagear</mod>
+	<modName>Anima Gear</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>MeleeWeapon_AnimaStaff</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Equipment/AnimaStaff</tex>
+			<ofX>0.308026</ofX>
+			<rot>34</rot>
+			<scX>1</scX>
+			<scY>1</scY>
+			<tag>9</tag>
+		</li>
+	</items>
+</Data>

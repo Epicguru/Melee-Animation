@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>simmin.powertools</mod>
+	<modName>Power Tools</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>PowerTool_IndustrialDrill</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>WeaponMelee/IndustrialDrill</tex>
+			<ofX>0.1778742</ofX>
+			<ofY>-0.05639913</ofY>
+			<scX>0.8</scX>
+			<scY>0.8</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>32</tag>
+		</li>
+		<li>
+			<dId>PowerTool_IndustrialJackHammer</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>WeaponMelee/IndustrialJackHammer</tex>
+			<ofX>0.3904555</ofX>
+			<ofY>-0.01301518</ofY>
+			<rot>-41</rot>
+			<scX>1</scX>
+			<scY>1</scY>
+			<tag>4</tag>
+		</li>
+		<li>
+			<dId>PowerTool_IndustrialGrinder</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>WeaponMelee/IndustrialGrinder</tex>
+			<ofX>0.1995662</ofX>
+			<ofY>-0.05206074</ofY>
+			<scX>0.8</scX>
+			<scY>0.8</scY>
+			<tag>16</tag>
+		</li>
+		<li>
+			<dId>PowerTool_IndustrialChainsaw</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>WeaponMelee/IndustrialChainsaw</tex>
+			<ofX>0.4251627</ofX>
+			<ofY>-0.0867679</ofY>
+			<rot>43</rot>
+			<scX>1</scX>
+			<scY>1</scY>
+			<tag>6</tag>
+		</li>
+	</items>
+</Data>

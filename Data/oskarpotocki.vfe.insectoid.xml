@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>oskarpotocki.vfe.insectoid</mod>
+	<modName>Vanilla Factions Expanded - Insectoids</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>VFE_Plasmasaw</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Weapons/Plasmasaw</tex>
+			<ofX>0.3383948</ofX>
+			<ofY>-0.0867679</ofY>
+			<rot>45</rot>
+			<scX>1</scX>
+			<scY>1</scY>
+			<tag>2</tag>
+		</li>
+	</items>
+</Data>

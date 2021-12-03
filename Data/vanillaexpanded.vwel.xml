@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>vanillaexpanded.vwel</mod>
+	<modName>Vanilla Weapons Expanded - Laser</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>VWEL_LaserSword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/LaserSwordOn</tex>
+			<ofX>0.4091361</ofX>
+			<scX>1.2</scX>
+			<scY>1.2</scY>
+			<tag>6</tag>
+		</li>
+	</items>
+</Data>

@@ -1,20 +1,26 @@
 ﻿using AAM;
 using AAM.Workers;
+using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-#if !UNITY_EDITOR
 using Verse;
-#endif
+using Verse.AI;
 
 public class AnimRenderer
 {
+    #region Static stuff
+
+    public static readonly char[] Alphabet = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public static Material DefaultCutout, DefaultTransparent;
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
+    public static IReadOnlyCollection<Pawn> CapturedPawns => pawnToRenderer.Keys;
+    public static int CapturedPawnCount => pawnToRenderer.Count;
 
     private static List<AnimRenderer> activeRenderers = new List<AnimRenderer>();
-    private static char[] indexToAlpha = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
-#if !UNITY_EDITOR
     private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new Dictionary<Pawn, AnimRenderer>();
+    private static Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
+    private static bool isItterating;
 
     public static AnimRenderer TryGetAnimator(Pawn pawn)
     {
@@ -26,29 +32,173 @@ public class AnimRenderer
         return null;
     }
 
-    public static void Update()
+    public static Texture2D ResolveTexture(AnimPartSnapshot snapshot)
     {
+        if (snapshot.Renderer == null)
+            return null;
+
+        var ov = snapshot.Renderer.overrides[snapshot.Part.Index];
+
+        if (ov.Texture != null)
+            return ov.Texture;
+
+        if (snapshot.TexturePath == null)
+            return null;
+
+        return ResolveTexture(snapshot.TexturePath);
+    }
+
+    public static Texture2D ResolveTexture(string texturePath)
+    {
+        if (textureCache.TryGetValue(texturePath, out var found))
+            return found;
+
+        Texture2D loaded;
+        loaded = ContentFinder<Texture2D>.Get(texturePath, false);
+        textureCache.Add(texturePath, loaded);
+        if (loaded == null)
+            Debug.LogError($"Failed to load texture '{texturePath}'.");
+
+        return loaded;
+    }
+
+    public static void UpdateAll()
+    {
+        isItterating = true;
         for (int i = 0; i < activeRenderers.Count; i++)
         {
             var renderer = activeRenderers[i];
             renderer.Tick();
             if (renderer.Destroyed)
             {
-                renderer.WasInterrupted = renderer.Data.CurrentTime < 0.999f;
-                renderer.OnEnd();
-
-                foreach (var pawn in renderer.Pawns)
-                {
-                    if (pawn != null)
-                        pawnToRenderer.Remove(pawn);
-                }
-
-                renderer.bodies = null;
-                renderer.Pawns = null;
-                activeRenderers.RemoveAt(i);
+                DestroyIntWorker(renderer);
                 i--;
                 continue;
             }
+        }
+        isItterating = false;
+    }
+
+    public static void DrawAll(float dt, Map map, Action<Pawn, Vector2> labelDraw = null)
+    {
+        isItterating = true;
+        for(int i = 0; i < activeRenderers.Count; i++)
+        {
+            var renderer = activeRenderers[i];
+
+            if (renderer.Map != map)
+                continue;
+
+            if (renderer.Destroyed)
+            {
+                DestroyIntWorker(renderer);
+                i--;
+                continue;
+            }
+
+            try
+            {
+                DrawSingle(renderer, dt, labelDraw);
+            }
+            catch(Exception e)
+            {
+                Core.Error($"Exception rendering animator '{renderer}'", e);
+            }
+
+        }
+        isItterating = false;
+    }
+
+    private static void DrawSingle(AnimRenderer renderer, float dt, Action<Pawn, Vector2> labelDraw = null)
+    {
+        // Draw and handle events.
+        var timePeriod = renderer.Draw(null, dt);
+        foreach (var e in renderer.GetEventsInPeriod(timePeriod))
+        {
+            try
+            {
+                EventHelper.Handle(e, renderer);
+            }
+            catch (Exception ex)
+            {
+                Core.Error($"{ex.GetType().Name} when handling animation event '{e}':", ex);
+            }
+        }
+
+        int madeJobCount = 0;
+
+        foreach (var pawn in renderer.Pawns)
+        {
+            if (pawn == null)
+                continue;
+
+            var pos = renderer.GetPawnBody(pawn).GetSnapshot(renderer).GetWorldPosition();
+
+            // Render pawn in custom position using patches.
+            PreventDrawPatch.AllowNext = true;
+            MakePawnConsideredInvisible.IsRendering = true;
+            pawn.Drawer.renderer.RenderPawnAt(pos, Rot4.West, true);
+            MakePawnConsideredInvisible.IsRendering = false;
+
+            // Render shadow.
+            AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow").Invoke(pawn.Drawer.renderer, new object[] { pos });
+
+            // Figure out where to draw the pawn label.
+            Vector3 drawPos = pos;
+            drawPos.z -= 0.6f;
+            Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
+            vector.y = UI.screenHeight - vector.y;
+            labelDraw?.Invoke(pawn, vector);
+
+            // Create animation job for all pawns involved, if necessary.
+            if (pawn.jobs != null && pawn.jobs.curJob != null && pawn.jobs.curJob.def != AAM_DefOf.AAM_InAnimation && renderer.CurrentTime < renderer.Duration * 0.95f)
+            {
+                var newJob = JobMaker.MakeJob(AAM_DefOf.AAM_InAnimation);
+                
+                newJob.collideWithPawns = true;
+                newJob.playerForced = true;
+                if (pawn.verbTracker?.AllVerbs != null)
+                    foreach (var verb in pawn.verbTracker.AllVerbs)
+                        verb.Reset();
+
+
+                if (pawn.equipment?.AllEquipmentVerbs != null)
+                    foreach (var verb in pawn.equipment.AllEquipmentVerbs)
+                        verb.Reset();
+
+                pawn.jobs.StartJob(newJob, JobCondition.InterruptForced, null, false, true, null);
+                madeJobCount++;
+            }
+        }
+
+        if (madeJobCount > 0)
+        {
+            renderer.OnStart();
+        }
+    }
+
+    private static void DestroyIntWorker(AnimRenderer renderer)
+    {
+        renderer.WasInterrupted = renderer.CurrentTime < 0.999f;        
+
+        if (renderer.Pawns != null)
+        {
+            foreach (var pawn in renderer.Pawns)
+            {
+                if (pawn != null)
+                    pawnToRenderer.Remove(pawn);
+            }
+        }
+        
+        activeRenderers.Remove(renderer);
+
+        try
+        {
+            renderer.OnEnd();
+        }
+        catch (Exception e)
+        {
+            Core.Error("Exception in AnimRenderer.OnEnd:", e);
         }
     }
 
@@ -66,40 +216,68 @@ public class AnimRenderer
             renderer.OnStart();
         }
     }
-#endif
 
     private static void DestroyInt(AnimRenderer renderer)
     {
         renderer.Destroyed = true;
+        if (!isItterating)
+        {
+            DestroyIntWorker(renderer);
+        }
     }
+    
+    #endregion
 
-    public readonly AnimData Data;
-    public bool MirrorHorizontal, MirrorVertical;
-#if !UNITY_EDITOR
-    public Pawn[] Pawns = new Pawn[8];
-#endif
-    public bool Destroyed { get; private set; }
-    public Matrix4x4 RootTransform = Matrix4x4.identity;
-    public bool AutoHandled { get; private set; }
-    public bool Loop = false;
+    public AnimData Data => Def.Data;
     public float Duration => Data?.Duration ?? 0;
     public int DurationTicks => Mathf.RoundToInt(Duration * 60);
+    public readonly AnimDef Def;
+    public Pawn[] Pawns = new Pawn[8];
+    public Matrix4x4 RootTransform = Matrix4x4.identity;
+    public AnimSection CurrentSection { get; private set; }
+    public Map Map;
+    public Camera Camera;
+    public bool Loop = false;
+    public bool MirrorHorizontal, MirrorVertical;
     public bool WasInterrupted { get; private set; }
+    public bool Destroyed { get; private set; }
+    public float CurrentTime => time;
 
+    private AnimPartSnapshot[] snapshots;
+    private AnimPartOverrideData[] overrides;
     internal List<(AnimEvent e, AnimEventWorker worker)> workersAtEnd = new List<(AnimEvent e, AnimEventWorker worker)>();
     private AnimPartData[] bodies = new AnimPartData[8];
     private MaterialPropertyBlock pb;
-    private float time;
-    private bool destroyPending;
+    private float time = -1;
 
-    public AnimRenderer(AnimData data)
+    public AnimRenderer(AnimDef def)
     {
-        Data = data;
+        Def = def;
+        snapshots = new AnimPartSnapshot[Data.Parts.Count];
+        overrides = new AnimPartOverrideData[Data.Parts.Count];
         pb = new MaterialPropertyBlock();
+
+        for (int i = 0; i < overrides.Length; i++)        
+            overrides[i] = new AnimPartOverrideData();
     }
 
-#if !UNITY_EDITOR
-    public void Register(bool autoHandle = true)
+    public AnimRenderer(AnimDef def, Map map) : this(def)
+    {        
+        Map = map;
+    }
+
+    public AnimPartSnapshot GetSnapshot(AnimPartData part)
+    {
+        return snapshots[part.Index];
+    }
+
+    public AnimPartOverrideData GetOverride(int index) => index >= 0 && index < overrides.Length ? overrides[index] : null;
+
+    public AnimPartOverrideData GetOverride(AnimPartData part) => GetOverride(part?.Index ?? -1);
+
+    public AnimPartOverrideData GetOverride(in AnimPartSnapshot snapshot) => GetOverride(snapshot.Part);
+
+    public void Register()
     {
         Pawn invalid = GetFirstInvalidPawn();
         if (invalid != null)
@@ -118,21 +296,21 @@ public class AnimRenderer
             }
         }
 
-        this.AutoHandled = autoHandle;
         RegisterInt(this);
+        Seek(0f, null);
     }
-#endif
 
     public void Destroy()
     {
-        if (destroyPending)
+        if (Destroyed)
+        {
+            Core.Warn("Tried to destroy renderer that is already destroyed...");
             return;
+        }
 
-        destroyPending = true;
         DestroyInt(this);
     }
 
-#if !UNITY_EDITOR
     public AnimPartData GetPawnBody(Pawn pawn)
     {
         if (pawn == null)
@@ -145,7 +323,7 @@ public class AnimRenderer
                 if (b != null)
                     return b;
 
-                bodies[i] = GetPart($"Body{indexToAlpha[i]}");
+                bodies[i] = GetPart($"Body{Alphabet[i]}");
                 return bodies[i];
             }
         }
@@ -156,6 +334,12 @@ public class AnimRenderer
     {
         if (Destroyed)
             return;
+
+        if(Map == null || (Find.TickManager.TicksAbs % 120 == 0 && Map.Index < 0))
+        {
+            Destroy();
+            return;
+        }
 
         if (GetFirstInvalidPawn() != null)
         {
@@ -177,19 +361,20 @@ public class AnimRenderer
     {
         return !p.Destroyed && p.Spawned && !p.Dead && !p.Downed;
     }
-#endif
 
     public Vector2 Draw(float? atTime, float? dt)
     {
         if (Destroyed)
-            return Vector2.zero;        
+            return Vector2.zero;
 
-        foreach (var snap in Data.CurrentSnapshots)
+        var range = Seek(atTime, dt);
+
+        foreach (var snap in snapshots)
         {
             if (!ShouldDraw(snap))
                 continue;
 
-            var tex = snap.Part.Texture;
+            var tex = ResolveTexture(snap);
             if (tex == null)
                 continue;
 
@@ -205,23 +390,26 @@ public class AnimRenderer
 
             var matrix = RootTransform * snap.WorldMatrix;
 
-            bool fx = MirrorHorizontal ? !snap.FlipX : snap.FlipX;
-            bool fy = MirrorVertical ? !snap.FlipY : snap.FlipY;
+            var ov = GetOverride(snap);
+
+            bool preFx = ov.FlipX ? !snap.FlipX : snap.FlipX;
+            bool preFy = ov.FlipY ? !snap.FlipY : snap.FlipY;
+            bool fx = MirrorHorizontal ? !preFx : preFx;
+            bool fy = MirrorVertical ? !preFy : preFy;
             var mesh = AnimData.GetMesh(fx, fy);
 
-            Graphics.DrawMesh(mesh, matrix, mat, 0, null, 0, pb);
+            Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, null);
         }        
 
-        return Seek(atTime, dt);
+        return range;
     }
 
     public Vector2 Seek(float? atTime, float? dt, bool generateSectionEvents = true)
     {
-        float time = atTime ?? (this.time += dt.Value);
-        this.time = time;
-        var range = Data.Seek(time, this, true, MirrorHorizontal, MirrorVertical, generateSectionEvents);
+        float t = atTime ?? (this.time + dt.Value);
+        var range = SeekInt(t, MirrorHorizontal, MirrorVertical, generateSectionEvents);
 
-        if (time > Data.Duration)
+        if (t > Data.Duration)
         {
             if (Loop)
                 this.time = 0;
@@ -229,6 +417,50 @@ public class AnimRenderer
                 Destroy();
         }
         return range;
+    }
+
+    private Vector2 SeekInt(float time, bool mirrorX = false, bool mirrorY = false, bool generateSectionEvents = true)
+    {
+        time = Mathf.Clamp(time, 0f, Duration);
+
+        if (this.time == time)
+            return new Vector2(-1, -1);
+
+        // Pass 1: Evaluate curves, make local matrices.
+        for (int i = 0; i < Data.Parts.Count; i++)
+            snapshots[i] = new AnimPartSnapshot(Data.Parts[i], this, time);
+
+        // Pass 2: Resolve world matrices using inheritance tree.
+        for (int i = 0; i < Data.Parts.Count; i++)
+            snapshots[i].UpdateWorldMatrix(mirrorX, mirrorY);
+
+        // Sort by depth if necessary.
+        // TODO
+        //if (sortByDepth)
+        //    SortByDepth();
+
+        float start = Mathf.Min(this.time, time);
+        float end = Mathf.Max(this.time, time);
+        this.time = time;
+
+        if (CurrentSection == null)
+        {
+            CurrentSection = Data.GetSectionAtTime(time);
+            CurrentSection.OnSectionEnter(this);
+        }
+        else if (!CurrentSection.ContainsTime(time))
+        {
+            var old = CurrentSection;
+            CurrentSection = Data.GetSectionAtTime(time);
+
+            if (generateSectionEvents)
+            {
+                old.OnSectionExit(this);
+                CurrentSection.OnSectionEnter(this);
+            }
+        }
+
+        return new Vector2(start, end);
     }
 
     public void OnStart()
@@ -242,8 +474,8 @@ public class AnimRenderer
             if (pawn == null)
                 continue;
 
-            var posData = Data.GetPawnCells(i, MirrorHorizontal, MirrorVertical);
-            TeleportPawn(pawn, basePos + new IntVec3(posData.x, 0, posData.z));
+            var offset = Def.TryGetCell(AnimCellData.Type.PawnStart, MirrorHorizontal, MirrorVertical, i) ?? IntVec2.Zero;
+            TeleportPawn(pawn, basePos + offset.ToIntVec3);
         }
     }
 
@@ -255,7 +487,6 @@ public class AnimRenderer
 
         IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
         basePos.y = 0;
-        Core.Log($"Base pos: {basePos}");
 
         for (int i = 0; i < Pawns.Length; i++)
         {
@@ -263,15 +494,24 @@ public class AnimRenderer
             if (pawn == null)
                 continue;
 
-            var posData = Data.GetPawnCells(i, MirrorHorizontal, MirrorVertical);
-            TeleportPawn(pawn, basePos + new IntVec3(posData.x2, 0, posData.z2));
-            pawn?.jobs.EndCurrentJob(Verse.AI.JobCondition.InterruptForced);
+            var posData = Def.TryGetCell(AnimCellData.Type.PawnEnd, MirrorHorizontal, MirrorVertical, i);
+            if (posData == null)
+                continue;
+
+            TeleportPawn(pawn, basePos + posData.Value.ToIntVec3);
+            pawn?.jobs.EndCurrentJob(JobCondition.InterruptForced);
         }
 
         foreach(var item in workersAtEnd)
         {
-            Core.Log($"Run worker: {item.worker.GetType().FullName}");
-            item.worker.Run(new AnimEventInput(item.e, this, false, null));
+            try
+            {
+                item.worker.Run(new AnimEventInput(item.e, this, false, null));
+            }
+            catch(Exception e)
+            {
+                Core.Error("Error running end worker:", e);
+            }
         }
         workersAtEnd.Clear();
     }
@@ -297,18 +537,17 @@ public class AnimRenderer
     protected virtual bool ShouldDraw(in AnimPartSnapshot snapshot)
     {
         // TODO: Check scale too?
-        return !snapshot.Part.OverrideData.PreventDraw && snapshot.FinalColor.a > 0;
+        return snapshot.Active && !GetOverride(snapshot).PreventDraw && snapshot.FinalColor.a > 0;
     }
 
     protected virtual Material GetMaterialFor(in AnimPartSnapshot snapshot)
     {
-        if (snapshot.Part.OverrideData.Material != null)
-            return snapshot.Part.OverrideData.Material;
+        var ovMat = GetOverride(snapshot).Material;
+        if (ovMat != null)        
+            return ovMat;        
 
-        if (snapshot.FinalColor.a < 1f)
-        {
-            return DefaultTransparent;
-        }
+        if (snapshot.FinalColor.a < 1f)        
+            return DefaultTransparent;        
 
         return DefaultCutout;
     }

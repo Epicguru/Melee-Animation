@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>rimeffect.extendedcut</mod>
+	<modName>Rim-Effect: Extended Cut</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>RE_TastyTankard</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Drug/TastyTankard/TastyTankardA</tex>
+			<ofX>0.1214751</ofX>
+			<ofY>-0.06507593</ofY>
+			<rot>-90</rot>
+			<scX>0.8</scX>
+			<scY>0.8</scY>
+			<tag>8</tag>
+		</li>
+		<li>
+			<dId>RE_SerriceBrandy</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Drug/SerriceBrandy/SerriceBrandyA</tex>
+			<ofX>0.1084599</ofX>
+			<ofY>-0.04772234</ofY>
+			<rot>-90</rot>
+			<scX>0.8</scX>
+			<scY>0.8</scY>
+			<tag>8</tag>
+		</li>
+	</items>
+</Data>

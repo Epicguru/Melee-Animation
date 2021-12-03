@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>rimsenal.federation</mod>
+	<modName>Rimsenal - Federation Faction Pack</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>AD_FedConcussionBaton</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Fedweapons/Verdict</tex>
+			<ofX>0.2228412</ofX>
+			<ofY>0.2934076</ofY>
+			<rot>-1</rot>
+			<scX>1.2</scX>
+			<scY>1.2</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>9</tag>
+		</li>
+		<li>
+			<dId>AD_ConcussionBaton</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/A16/Verdict</tex>
+			<ofX>0.185701</ofX>
+			<ofY>0.2674095</ofY>
+			<rot>-1</rot>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>9</tag>
+		</li>
+	</items>
+</Data>

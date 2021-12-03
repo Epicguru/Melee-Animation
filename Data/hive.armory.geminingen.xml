@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>hive.armory.geminingen</mod>
+	<modName>Hive Armory</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>Kenshi_Staff</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapon/Staff</tex>
+			<ofX>0.2646421</ofX>
+			<ofY>-0.02603037</ofY>
+			<rot>45</rot>
+			<scX>1</scX>
+			<scY>1</scY>
+			<tag>1</tag>
+		</li>
+		<li>
+			<dId>Kenshi_Polearm</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapon/Polearm</tex>
+			<ofX>0.4859002</ofX>
+			<ofY>-0.05639913</ofY>
+			<rot>45</rot>
+			<scX>1.2</scX>
+			<scY>1.2</scY>
+			<tag>6</tag>
+		</li>
+	</items>
+</Data>

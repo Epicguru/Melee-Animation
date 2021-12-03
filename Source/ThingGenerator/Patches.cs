@@ -20,38 +20,6 @@ namespace AAM
         }
     }
 
-    [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.BodyAngle))]
-    static class AnglePatch
-    {
-        static bool Prefix(Pawn ___pawn, ref float __result)
-        {
-            var anim = PatchMaster.GetAnimator(___pawn);
-            if (anim == null)
-                return true;
-
-            __result = anim.GetPawnBody(___pawn).CurrentSnapshot.GetWorldRotation(anim.RootTransform);
-            return false;
-        }
-    }
-
-    [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.LayingFacing))]
-    static class FacingPatch
-    {
-        static bool Prefix(Pawn ___pawn, ref Rot4 __result)
-        {
-            var anim = PatchMaster.GetAnimator(___pawn);
-            if (anim == null)
-                return true;
-
-            bool west = anim.GetPawnBody(___pawn).CurrentSnapshot.FlipX;
-            if (anim.MirrorHorizontal)
-                west = !west;
-
-            __result = west ? Rot4.West : Rot4.East;
-            return false;
-        }
-    }
-
     [HarmonyPatch(typeof(PawnUtility), nameof(PawnUtility.GetPosture))]
     static class PosturePatch
     {
@@ -61,7 +29,7 @@ namespace AAM
             if (anim == null)
                 return true;
 
-            __result = PawnPosture.LayingOnGroundNormal;
+            __result = PawnPosture.Standing;
             return false;
         }
     }
@@ -81,18 +49,33 @@ namespace AAM
         }
     }
 
-    [HarmonyPatch(typeof(PawnRenderer), "RenderPawnAt")]
+    [HarmonyPatch(typeof(PawnRenderer), "RenderPawnInternal")]
     static class PreventDrawPatch
     {
         public static bool AllowNext = false;
 
         [HarmonyPriority(Priority.First)]
-        static bool Prefix(Pawn ___pawn)
+        static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle)
         {
             var anim = PatchMaster.GetAnimator(___pawn);
-            if (anim != null && !AllowNext)
+            if (anim != null)
             {
-                return false;
+                var body = anim.GetSnapshot(anim.GetPawnBody(___pawn));
+                bool east = !body.FlipX;
+                if (anim.MirrorHorizontal)
+                    east = !east;
+
+                angle = body.GetWorldRotation();
+
+                bodyFacing = anim.Def.direction switch
+                {
+                    AnimDirection.Horizontal => east ? Rot4.East : Rot4.West,
+                    AnimDirection.North => Rot4.North,
+                    AnimDirection.South => Rot4.South,
+                    _ => Rot4.East
+                };
+                if(!AllowNext)
+                    return false;
             }
 
             AllowNext = false;
