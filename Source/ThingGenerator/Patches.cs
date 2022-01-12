@@ -23,6 +23,7 @@ namespace AAM
     [HarmonyPatch(typeof(PawnUtility), nameof(PawnUtility.GetPosture))]
     static class PosturePatch
     {
+        [HarmonyPriority(Priority.First)]
         static bool Prefix(Pawn p, ref PawnPosture __result)
         {
             var anim = PatchMaster.GetAnimator(p);
@@ -37,6 +38,7 @@ namespace AAM
     [HarmonyPatch(typeof(GlobalTextureAtlasManager), "TryGetPawnFrameSet")]
     static class Patch_GlobalTextureAtlasManager_TryGetPawnFrameSet
     {
+        [HarmonyPriority(Priority.First)]
         static bool Prefix(Pawn pawn, ref bool createdNew, ref bool __result)
         {
             var anim = PatchMaster.GetAnimator(pawn);
@@ -49,12 +51,33 @@ namespace AAM
         }
     }
 
+    [HarmonyPatch(typeof(PawnRenderer), "RenderPawnAt")]
+    static class PreventDrawPatchUpper
+    {
+        public static bool AllowNext = false;
+
+        [HarmonyPriority(Priority.First)]
+        static bool Prefix(Pawn ___pawn)
+        {
+            {
+                var anim = PatchMaster.GetAnimator(___pawn);
+                if (anim != null && !AllowNext)
+                {
+                    return false;
+                }
+
+                AllowNext = false;
+                return true;
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(PawnRenderer), "RenderPawnInternal")]
     static class PreventDrawPatch
     {
         public static bool AllowNext = false;
 
-        [HarmonyPriority(Priority.First)]
+        [HarmonyPriority(Priority.Last)] // As late as possible. We want to be the last to modify results.
         static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle)
         {
             var anim = PatchMaster.GetAnimator(___pawn);
@@ -103,6 +126,7 @@ namespace AAM
         public static bool IsRendering;
 
         [HarmonyPriority(Priority.First)]
+        [HarmonyBefore("")]
         static bool Prefix(Pawn pawn, ref bool __result)
         {
             var anim = PatchMaster.GetAnimator(pawn);

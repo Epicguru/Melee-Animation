@@ -111,7 +111,7 @@ namespace AAM
                     pawn.health.woundedEffecter.Cleanup();
                 }
                 var snap = anim.GetSnapshot(body);
-                Vector3 targetPos = snap.GetWorldPosition(anim.RootTransform);
+                Vector3 targetPos = snap.GetWorldPosition();
                 IntVec3 basePos = pawn.Position;
                 Vector3 offset = targetPos - basePos.ToVector3Shifted();
                 pawn.health.woundedEffecter = damageEffecter.Spawn();
@@ -142,7 +142,7 @@ namespace AAM
             }
 
             var snap = anim.GetSnapshot(body);
-            Vector3 basePos = snap.GetWorldPosition(anim.RootTransform);
+            Vector3 basePos = snap.GetWorldPosition();
             for (int i = 0; i < count; i++)
             {
                 Vector3 pos = basePos + Rand.InsideUnitCircleVec3 * radius;

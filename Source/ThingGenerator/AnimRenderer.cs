@@ -135,6 +135,7 @@ public class AnimRenderer
             var pos = renderer.GetPawnBody(pawn).GetSnapshot(renderer).GetWorldPosition();
 
             // Render pawn in custom position using patches.
+            PreventDrawPatchUpper.AllowNext = true;
             PreventDrawPatch.AllowNext = true;
             MakePawnConsideredInvisible.IsRendering = true;
             pawn.Drawer.renderer.RenderPawnAt(pos, Rot4.West, true);
@@ -377,20 +378,25 @@ public class AnimRenderer
             var tex = ResolveTexture(snap);
             if (tex == null)
                 continue;
-
+            
             var mat = GetMaterialFor(snap);
             if (mat == null)
                 continue;
 
+            var ov = GetOverride(snap);
+
+            bool useMPB = ov.UseMPB;
+
             var color = snap.FinalColor;
 
-            pb.SetTexture("_MainTex", tex);
-            pb.SetColor("_Color", color);
-            snap.Part.PreDraw(mat, pb);
+            if (useMPB)
+            {
+                pb.SetTexture("_MainTex", tex);
+                pb.SetColor("_Color", color);
+            }
+            snap.Part.PreDraw(mat, useMPB ? pb : null);
 
             var matrix = RootTransform * snap.WorldMatrix;
-
-            var ov = GetOverride(snap);
 
             bool preFx = ov.FlipX ? !snap.FlipX : snap.FlipX;
             bool preFy = ov.FlipY ? !snap.FlipY : snap.FlipY;
@@ -398,7 +404,7 @@ public class AnimRenderer
             bool fy = MirrorVertical ? !preFy : preFy;
             var mesh = AnimData.GetMesh(fx, fy);
 
-            Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, null);
+            Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, useMPB ? pb : null);
         }        
 
         return range;

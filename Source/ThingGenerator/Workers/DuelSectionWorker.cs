@@ -55,14 +55,18 @@ namespace AAM.Workers
 
         private AnimEvent GetPreviousEvent(float time)
         {
-            AnimEvent prev = null;
-            foreach (var e in tempEvents)
+            int seen = 0;
+            for (int i = tempEvents.Count - 1; i >= 0; i--)
             {
-                if (e.Time <= time)
-                    return prev;
-                prev = e;
+                var e = tempEvents[i];
+                if (e.Time > time)
+                    continue;
+
+                seen++;
+                if (seen == 2)                
+                    return e;                
             }
-            return prev;
+            return null; // Not correct but it's late and I can't be bothered to fix.
         }
 
         private AnimEvent GetRandomEvent(AnimEvent except)

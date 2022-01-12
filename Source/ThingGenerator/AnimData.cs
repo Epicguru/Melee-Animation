@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -561,20 +561,7 @@ public class AnimPartOverrideData
     public Color ColorTint = Color.white;
     public Color ColorOverride;
     public bool FlipX, FlipY;
-
-    public void Reset()
-    {
-        Texture = null;
-        PreventDraw = false;
-        LocalOffset = default;
-        LocalRotation = 0f;
-        LocalScaleFactor = Vector2.one;
-        Material = null;
-        ColorTint = Color.white;
-        ColorOverride = default;
-        FlipX = false;
-        FlipY = false;
-    }
+    public bool UseMPB = true;
 }
 
 public class AnimEvent

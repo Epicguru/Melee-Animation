@@ -36,7 +36,7 @@ namespace AAM
 
         public virtual AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, bool mirrorX, bool mirrorY, params Pawn[] pawns)
         {
-            if (def == null || def.Data == null)
+            if (def?.Data == null)
                 return null;
 
             var renderer = new AnimRenderer(def, map);
@@ -86,7 +86,7 @@ namespace AAM
             string mainHandName = $"HandA{(index > 0 ? (index + 1) : "")}";
             string altHandName  = $"HandB{(index > 0 ? (index + 1) : "")}";
 
-            Color skinColor = pawn?.story?.SkinColor ?? Color.white;
+            Color skinColor = pawn.story?.SkinColor ?? Color.white;
             bool showMain = weapon != null && handsMode != HandsMode.No_Hands;
             bool showAlt  = weapon != null && handsMode == HandsMode.Default;
 
@@ -95,7 +95,9 @@ namespace AAM
             if(weapon != null && itemPart != null)
             {
                 tweak.Apply(renderer, itemPart);
-                renderer.GetOverride(itemPart).Material = weapon.Graphic.MatSingleFor(weapon);
+                var ov = renderer.GetOverride(itemPart);
+                ov.Material = weapon.Graphic.MatSingleFor(weapon);
+                ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
             }
 
             // Apply main hand.
@@ -106,7 +108,6 @@ namespace AAM
                 ov.PreventDraw = !showMain;
                 ov.Texture = HandTexture;
                 ov.ColorOverride = skinColor;
-                Core.Log($"Set hand: {HandTexture?.ToString() ?? "null"}");
             }
 
             // Apply alt hand.

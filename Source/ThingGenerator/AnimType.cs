@@ -3,6 +3,7 @@
     public enum AnimType
     {
         Other,
-        Execution
+        Execution,
+        Duel
     }
 }

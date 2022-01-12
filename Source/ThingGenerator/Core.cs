@@ -2,6 +2,7 @@
 using RimWorld;
 using System;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -34,7 +35,8 @@ namespace AAM
         public Core(ModContentPack content) : base(content)
         {
             Log("Hello, world!");
-            new Harmony("co.uk.epicguru.animations").PatchAll();
+            var h = new Harmony("co.uk.epicguru.animations");
+            h.PatchAll();
             ModContent = content;
 
             LongEventHandler.ExecuteWhenFinished(() =>
@@ -48,8 +50,61 @@ namespace AAM
 
                 AnimDef.Init();
                 Log("Initialized anim defs.");
+
+                LogPotentialConflicts(h);
             });
         }       
+    
+        private void LogPotentialConflicts(Harmony h)
+        {
+            bool IsSelf(Patch p)
+            {
+                return p != null && p.owner == h.Id;
+            }
+
+            var str = new StringBuilder();
+            int conflicts = 0;
+            foreach(var changed in h.GetPatchedMethods())
+            {
+                var patches = Harmony.GetPatchInfo(changed);
+                str.AppendLine();
+                str.AppendLine(changed.FullDescription());
+
+                str.AppendLine("Prefixes:");
+                foreach(var pre in patches.Prefixes)
+                {
+                    str.AppendLine($"  [{pre.owner}] {pre.PatchMethod.Name}");
+                    if (!IsSelf(pre))
+                        conflicts++;
+                }
+
+                str.AppendLine("Transpilers:");
+                foreach (var trans in patches.Transpilers)
+                {
+                    str.AppendLine($"  [{trans.owner}] {trans.PatchMethod.Name}");
+                    if (!IsSelf(trans))
+                        conflicts++;
+                }
+
+                str.AppendLine("Postfixes:");
+                foreach (var post in patches.Postfixes)
+                {
+                    str.AppendLine($"  [{post.owner}] {post.PatchMethod.Name}");
+                    if (!IsSelf(post))
+                        conflicts++;
+                }
+            }
+
+            if (conflicts > 0)
+            {
+                Warn($"Potential patch conflicts ({conflicts}):");
+                Warn(str.ToString());
+            }
+            else
+            {
+                Log("No Harmony patch conflicts were detected.");
+            }
+        }
     }
 
     public class HotSwappableAttribute : Attribute
@@ -76,6 +131,33 @@ namespace AAM
 
             if (Input.GetKeyDown(KeyCode.P))
                 StartAnim();
+
+            if (!Input.GetKeyDown(KeyCode.E))
+                return;
+
+            var mainPawn = Find.CurrentMap?.mapPawns?.AllPawns.Where(p => !p.Dead && p.IsColonist).FirstOrDefault();
+            Pawn otherPawn = null;
+            int tries = 0;
+            while (otherPawn == null || otherPawn == mainPawn)
+            {
+                otherPawn = Find.CurrentMap?.mapPawns?.AllPawns.Where(p => !p.Dead && p.IsColonist && !p.RaceProps.Animal).RandomElement();
+                tries++;
+                if (tries > 100)
+                    return;
+            }
+
+            var rootTransform = mainPawn.MakeAnimationMatrix();
+
+            var manager = map.GetAnimManager();
+
+            // Cancel any previous animation(s)
+            manager.StopAnimation(mainPawn);
+            manager.StopAnimation(otherPawn);
+
+            var def = DefDatabase<AnimDef>.GetNamed("AAM_Duel_Swords");
+
+            var anim = manager.StartAnimation(def, rootTransform, mainPawn, otherPawn);
+            anim.MirrorHorizontal = Rand.Bool;
         }
 
         private void StartAnim()
@@ -86,7 +168,6 @@ namespace AAM
 
             // Make transform centered around the main pawn's position.
             var rootTransform = mainPawn.MakeAnimationMatrix();
-            Core.Log(rootTransform.MultiplyPoint3x4(Vector2.zero).ToString());
 
             // Get the current map's animation manager.
             var manager = map.GetAnimManager();
@@ -106,7 +187,7 @@ namespace AAM
 
             // Start this new animation.
             var anim = manager.StartAnimation(exec, rootTransform, mainPawn, otherPawn);
-            anim.MirrorHorizontal = Rand.Bool;
+            //anim.MirrorHorizontal = Rand.Bool;
         }
 
         public static void StartExecution(Pawn executioner, Pawn victim)

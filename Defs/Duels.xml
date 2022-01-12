@@ -1,0 +1,28 @@
+<Defs>
+
+  <AAM.AnimDef Name="AnimDuelBase" Abstract="True">
+    <label>Duel</label>
+    <type>Duel</type>
+    <direction>Horizontal</direction>
+    <jobString>Dueling [OTHER].</jobString>
+    <cellData>
+      <li>
+        <type>PawnStart</type>
+        <position>(0, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+      <li>
+        <type>PawnStart</type>
+        <position>(1, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimDuelBase">
+    <defName>AAM_Duel_Swords</defName>
+    <allowedWeaponTypes>Long_Blunt, Long_Stab, Long_Sharp</allowedWeaponTypes>
+    <data>Duel_Swords.anim</data>
+  </AAM.AnimDef>
+
+</Defs>

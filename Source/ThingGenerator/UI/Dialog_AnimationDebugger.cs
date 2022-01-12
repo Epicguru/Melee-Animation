@@ -48,8 +48,8 @@ namespace AAM.UI
 
             var ui = new Listing_Standard();
             ui.Begin(inRect);
-
-            //DrawAllAnimators(ui);
+                
+            DrawAllAnimators(ui);
             //DrawPawnInputs(ui);
             //DrawDuelOutcome(ui);
 
@@ -135,7 +135,7 @@ namespace AAM.UI
             AnimRenderer toDestroy = null;
             foreach(var renderer in AnimRenderer.ActiveRenderers)
             {
-                var rect = ui.GetRect(100);
+                var rect = ui.GetRect(110);
 
                 Widgets.DrawBox(rect);
                 string title = $"[{renderer.CurrentTime:F2} / {renderer.Data.Duration:F2}] {renderer.Data.Name}";
@@ -144,12 +144,18 @@ namespace AAM.UI
                 Widgets.Label(rect.ExpandedBy(-4, -4), title);
                 var bar = rect.ExpandedBy(-4);
                 bar.yMin += 22;
-                bar.height = 4;
+                bar.height = 10;
                 float lerp = Mathf.Clamp01(renderer.CurrentTime / renderer.Data.Duration);
                 var fillBar = bar;
                 fillBar.width = bar.width * lerp;
                 Widgets.DrawBoxSolid(bar, Color.grey);
                 Widgets.DrawBoxSolid(fillBar, Color.green);
+
+                foreach (var e in renderer.GetEventsInPeriod(new Vector2(0, renderer.Duration + 1f)))
+                {
+                    float p = e.Time / renderer.Duration;
+                    Widgets.DrawBoxSolid(new Rect(bar.x + p * bar.width, bar.y, 3, bar.height), Color.red);
+                }
 
                 int i = 0;
                 foreach(var pawn in renderer.Pawns)
@@ -183,7 +189,7 @@ namespace AAM.UI
                     }
 
                     Rect b = rect.ExpandedBy(-4, -4);
-                    b.yMin += 30;
+                    b.yMin += 40;
                     b.width = 100;
                     b.height = 28;
                     b.x += i * 110;
@@ -197,7 +203,7 @@ namespace AAM.UI
                 }
 
                 Rect stop = rect.ExpandedBy(-4);
-                stop.y += 62;
+                stop.y += 72;
                 stop.size = new Vector2(100, 28);
                 if(Widgets.ButtonText(stop, "Stop"))
                 {
