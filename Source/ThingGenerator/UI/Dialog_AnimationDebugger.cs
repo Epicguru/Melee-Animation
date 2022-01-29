@@ -128,7 +128,7 @@ namespace AAM.UI
             var oldUI = ui;
             ui = new Listing_Standard();
             int toDraw = AnimRenderer.ActiveRenderers.Count;
-            int toDraw2 = AnimRenderer.CapturedPawnCount;
+            int toDraw2 = AnimRenderer.TotalCapturedPawnCount;
             Widgets.BeginScrollView(area, ref GetScroll(), new Rect(0, 0, area.width - 20, 110 * toDraw + 40 * toDraw2));
             ui.Begin(new Rect(0, 0, area.width - 20, area.height));
 
@@ -139,7 +139,7 @@ namespace AAM.UI
 
                 Widgets.DrawBox(rect);
                 string title = $"[{renderer.CurrentTime:F2} / {renderer.Data.Duration:F2}] {renderer.Data.Name}";
-                if (renderer.Destroyed)
+                if (renderer.IsDestroyed)
                     title += " <color=red>[DESTROYED]</color>";
                 Widgets.Label(rect.ExpandedBy(-4, -4), title);
                 var bar = rect.ExpandedBy(-4);

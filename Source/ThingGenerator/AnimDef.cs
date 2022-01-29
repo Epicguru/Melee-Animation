@@ -10,22 +10,22 @@ namespace AAM
     {
         #region Static stuff
         private static List<AnimDef> allDefs;
-        private static Dictionary<AnimType, List<AnimDef>> defsPerType;
+        private static Dictionary<AnimType, List<AnimDef>> defsOfType;
         private static List<AnimDef> tempDefs;
 
         public static void Init()
         {
             allDefs = new List<AnimDef>(DefDatabase<AnimDef>.AllDefs);
-            defsPerType = new Dictionary<AnimType, List<AnimDef>>();
+            defsOfType = new Dictionary<AnimType, List<AnimDef>>();
             tempDefs = new List<AnimDef>(128);
 
             foreach(var def in allDefs)
             {
                 var t = def.type;
-                if(!defsPerType.TryGetValue(t, out var list))
+                if(!defsOfType.TryGetValue(t, out var list))
                 {
                     list = new List<AnimDef>();
-                    defsPerType.Add(t, list);
+                    defsOfType.Add(t, list);
                 }
                 list.Add(def);
             }
@@ -33,7 +33,7 @@ namespace AAM
 
         public static IEnumerable<AnimDef> GetDefsOfType(AnimType type)
         {
-            if (defsPerType.TryGetValue(type, out var list))
+            if (defsOfType.TryGetValue(type, out var list))
                 foreach (var item in list)
                     yield return item;            
         }
@@ -57,6 +57,56 @@ namespace AAM
                 return null;
             return tempDefs.RandomElement();
         }
+
+        public static IEnumerable<(IntVec3 pos, bool mirrorX)> GetPossibleExecutionPositions(IntVec3 rootPos, AnimDef def)
+        {
+            if (def == null)
+            {
+                Core.Error("Null def");
+                yield break;
+            }
+
+            if (def.type != AnimType.Execution)
+            {
+                Core.Warn($"Called {nameof(GetPossibleExecutionPositions)} with a non-execution type animation def ({def})");
+            }
+
+            var pos = def.TryGetCell(AnimCellData.Type.PawnStart, false, false, 1);
+            if (pos != null)
+                yield return (rootPos + new IntVec3(pos.Value.x, 0, pos.Value.z), false);
+            if (pos != null && def.direction == AnimDirection.Horizontal)
+            {
+                pos = def.TryGetCell(AnimCellData.Type.PawnStart, true, false, 1);
+                if (pos != null)
+                    yield return (rootPos + new IntVec3(pos.Value.x, 0, pos.Value.z), true);
+            }
+        }
+
+        public static IEnumerable<(AnimDef def, bool mirrorX, IntVec3 victimPosition)> GetPossibleExecutionsNow(Pawn executioner, Pawn victim = null, Thing weapon = null)
+        {
+            weapon ??= executioner.GetEquippedMeleeWeapon();
+            if (weapon == null)
+                yield break;
+
+            var execPos = executioner.Position;
+            var vicPos = victim?.Position;
+
+            var execs = defsOfType[AnimType.Execution];
+            foreach (var def in execs)
+            {
+                if (!def.AllowsWeapon(weapon.def))
+                    continue;
+
+                foreach (var pair in GetPossibleExecutionPositions(execPos, def))
+                {
+                    if (vicPos != null && pair.pos != vicPos.Value)
+                        continue;
+
+                    yield return (def, pair.mirrorX, execPos + pair.pos);
+                }
+            }
+        }
+
         #endregion
 
         public virtual string FullDataPath

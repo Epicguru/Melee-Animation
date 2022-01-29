@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace AAM
@@ -8,8 +9,17 @@ namespace AAM
         public static AnimationManager GetAnimManager(this Map map)
             => map?.GetComponent<AnimationManager>();
 
+        public static AnimationManager GetAnimManager(this Pawn pawn)
+            => pawn?.Map?.GetComponent<AnimationManager>();
+
         public static Matrix4x4 MakeAnimationMatrix(this Pawn pawn)
             => Matrix4x4.TRS(pawn.Position.ToVector3ShiftedWithAltitude(pawn.DrawPos.y), Quaternion.identity, new Vector3(1f, 0.1f, 1f));
+
+        public static bool IsInAnimation(this Pawn pawn)
+            => AnimRenderer.TryGetAnimator(pawn) != null;
+
+        public static bool IsInAnimation(this Pawn pawn, out AnimRenderer animRenderer)
+            => (animRenderer = AnimRenderer.TryGetAnimator(pawn)) != null;
 
         public static ThingWithComps GetEquippedMeleeWeapon(this Pawn pawn)
         {
@@ -25,6 +35,20 @@ namespace AAM
                     return item;
             }
             return null;
+        }
+
+        public static PawnType GetPawnType(this Pawn pawn)
+        {
+            if (pawn.IsColonist)
+                return PawnType.Colonist;
+
+            if (pawn.IsPrisonerOfColony)
+                return PawnType.Prisoner;
+
+            if (pawn.HostileTo(Faction.OfPlayerSilentFail))
+                return PawnType.Enemy;
+
+            return PawnType.Friendly;
         }
     }
 }

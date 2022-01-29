@@ -11,7 +11,7 @@ namespace AAM
 
         public static AnimRenderer GetAnimator(Pawn pawn)
         {
-            if (pawn == lastPawn && lastRenderer != null && !lastRenderer.Destroyed)
+            if (pawn == lastPawn && lastRenderer != null && !lastRenderer.IsDestroyed)
                 return lastRenderer;
 
             lastPawn = pawn;

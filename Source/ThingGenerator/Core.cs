@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace AAM
     {
         public static string ModFolder => ModContent.RootDir;
         public static ModContentPack ModContent;
+        public static TestSettings Settings;
 
         public static void Log(string msg)
         {
@@ -39,6 +41,28 @@ namespace AAM
             h.PatchAll();
             ModContent = content;
 
+            //var test = new TestSettings();
+            //test.Strings.Add("newString");
+            //test.IntVec2 = new IntVec2(5, 6);
+
+            //Scribe.saver.InitSaving(@"C:\Users\spain\Desktop\TestExpose.txt", "ROOT");
+            //try
+            //{
+            //    test.ExposeData();
+            //}
+            //catch (Exception e)
+            //{
+            //    Error("Failed to save.", e);
+            //}
+            //finally
+            //{
+            //    Scribe.saver.FinalizeSaving();
+            //}
+            //Core.Log(File.ReadAllText(@"C:\Users\spain\Desktop\TestExpose.txt"));
+            //Log(SimpleSettings.MakeDebugString(test));
+
+            Settings = GetSettings<TestSettings>();
+
             LongEventHandler.ExecuteWhenFinished(() =>
             {
                 AnimRenderer.DefaultCutout ??= new Material(ThingDefOf.AIPersonaCore.graphic.Shader);
@@ -53,8 +77,18 @@ namespace AAM
 
                 LogPotentialConflicts(h);
             });
-        }       
-    
+        }
+
+        public override string SettingsCategory()
+        {
+            return Content.Name;
+        }
+
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            SimpleSettings.DrawWindow(Settings, inRect);
+        }
+
         private void LogPotentialConflicts(Harmony h)
         {
             bool IsSelf(Patch p)
@@ -63,9 +97,12 @@ namespace AAM
             }
 
             var str = new StringBuilder();
+            var str2 = new StringBuilder();
+            var str3 = new StringBuilder();
             int conflicts = 0;
             foreach(var changed in h.GetPatchedMethods())
             {
+                int oldConflicts = conflicts;
                 var patches = Harmony.GetPatchInfo(changed);
                 str.AppendLine();
                 str.AppendLine(changed.FullDescription());
@@ -93,17 +130,25 @@ namespace AAM
                     if (!IsSelf(post))
                         conflicts++;
                 }
+
+                str2.Append(str);
+                if (oldConflicts != conflicts)
+                    str3.Append(str);
+                str.Clear();
             }
 
             if (conflicts > 0)
             {
                 Warn($"Potential patch conflicts ({conflicts}):");
-                Warn(str.ToString());
+                Warn(str3.ToString());
             }
             else
             {
                 Log("No Harmony patch conflicts were detected.");
             }
+
+            Log("Full patch list:");
+            Log(str.ToString());
         }
     }
 
@@ -135,12 +180,16 @@ namespace AAM
             if (!Input.GetKeyDown(KeyCode.E))
                 return;
 
-            var mainPawn = Find.CurrentMap?.mapPawns?.AllPawns.Where(p => !p.Dead && p.IsColonist).FirstOrDefault();
+            var pawns = Find.CurrentMap?.mapPawns?.AllPawns;
+            if (pawns == null)
+                return;
+
+            var mainPawn = pawns.FirstOrDefault(p => !p.Dead && p.IsColonist);
             Pawn otherPawn = null;
             int tries = 0;
             while (otherPawn == null || otherPawn == mainPawn)
             {
-                otherPawn = Find.CurrentMap?.mapPawns?.AllPawns.Where(p => !p.Dead && p.IsColonist && !p.RaceProps.Animal).RandomElement();
+                otherPawn = pawns.Where(p => !p.Dead && p.IsColonist && !p.RaceProps.Animal).RandomElement();
                 tries++;
                 if (tries > 100)
                     return;

@@ -7,6 +7,10 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 
+/// <summary>
+/// An <see cref="AnimRenderer"/> is the object that represents and also draws (renders) a currently running animation.
+/// Be sure to check the <see cref="IsDestroyed"/> property before interacting with an object of this type.
+/// </summary>
 public class AnimRenderer
 {
     #region Static stuff
@@ -15,13 +19,18 @@ public class AnimRenderer
     public static Material DefaultCutout, DefaultTransparent;
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
     public static IReadOnlyCollection<Pawn> CapturedPawns => pawnToRenderer.Keys;
-    public static int CapturedPawnCount => pawnToRenderer.Count;
+    public static int TotalCapturedPawnCount => pawnToRenderer.Count;
 
     private static List<AnimRenderer> activeRenderers = new List<AnimRenderer>();
     private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new Dictionary<Pawn, AnimRenderer>();
     private static Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
     private static bool isItterating;
 
+    /// <summary>
+    /// Tries to get the <see cref="AnimRenderer"/> that a pawn currently belongs to.
+    /// Will return null if none is found.
+    /// </summary>
+    /// <returns>The renderer, or null. Null indicates that the pawn is not currently part of any animation.</returns>
     public static AnimRenderer TryGetAnimator(Pawn pawn)
     {
         if (pawn == null)
@@ -69,7 +78,7 @@ public class AnimRenderer
         {
             var renderer = activeRenderers[i];
             renderer.Tick();
-            if (renderer.Destroyed)
+            if (renderer.IsDestroyed)
             {
                 DestroyIntWorker(renderer);
                 i--;
@@ -89,7 +98,7 @@ public class AnimRenderer
             if (renderer.Map != map)
                 continue;
 
-            if (renderer.Destroyed)
+            if (renderer.IsDestroyed)
             {
                 DestroyIntWorker(renderer);
                 i--;
@@ -129,7 +138,7 @@ public class AnimRenderer
 
         foreach (var pawn in renderer.Pawns)
         {
-            if (pawn == null)
+            if (pawn == null || pawn.Destroyed)
                 continue;
 
             var pos = renderer.GetPawnBody(pawn).GetSnapshot(renderer).GetWorldPosition();
@@ -220,7 +229,7 @@ public class AnimRenderer
 
     private static void DestroyInt(AnimRenderer renderer)
     {
-        renderer.Destroyed = true;
+        renderer.IsDestroyed = true;
         if (!isItterating)
         {
             DestroyIntWorker(renderer);
@@ -229,20 +238,84 @@ public class AnimRenderer
     
     #endregion
 
+    /// <summary>
+    /// The active animation data. Animation data is loaded from disk upon request.
+    /// Note that this is not the same as an animation def: see <see cref="Def"/> for the definition.
+    /// </summary>
     public AnimData Data => Def.Data;
+    /// <summary>
+    /// The duration, in seconds, of the current animation.
+    /// May not accurately represent how long the animation actually plays for, depending on the type of animation (i.e. Duels may last longer).
+    /// </summary>
     public float Duration => Data?.Duration ?? 0;
+    /// <summary>
+    /// Same as the <see cref="Duration"/>, but expressed in Rimworld ticks.
+    /// </summary>
     public int DurationTicks => Mathf.RoundToInt(Duration * 60);
+    /// <summary>
+    /// The active animation def.
+    /// </summary>
     public readonly AnimDef Def;
+    /// <summary>
+    /// An array of pawns included in this animation.
+    /// <b>DO NOT MODIFY THIS ARRAY!</b> It is for reading only.
+    /// </summary>
     public Pawn[] Pawns = new Pawn[8];
+    /// <summary>
+    /// The base transform that the animation is centered on.
+    /// Useful functions to modify this are <see cref="Matrix4x4.TRS(Vector3, Quaternion, Vector3)"/>
+    /// and <see cref="Extensions.MakeAnimationMatrix(Pawn)"/>.
+    /// </summary>
     public Matrix4x4 RootTransform = Matrix4x4.identity;
+    /// <summary>
+    /// The current <see cref="AnimSection"/> that is being played. May be null.
+    /// </summary>
     public AnimSection CurrentSection { get; private set; }
+    /// <summary>
+    /// The <see cref="Map"/> that this animation is running on.
+    /// </summary>
     public Map Map;
+    /// <summary>
+    /// The Unity Camera that this animation renders to. If null, all cameras are targeted.
+    /// </summary>
     public Camera Camera;
+    /// <summary>
+    /// If true, the animation loops rather than ending.
+    /// </summary>
     public bool Loop = false;
+    /// <summary>
+    /// If true, the animation is mirrored on this axis.
+    /// </summary>
     public bool MirrorHorizontal, MirrorVertical;
+    /// <summary>
+    /// Will only be valid after the animation has already ended (see <see cref="IsDestroyed"/>).
+    /// If true, the animator ended prematurely, such as by loosing a pawn or otherwise being ended unexpectedly.
+    /// If false, the animator ended because the animation reached it's natural end.
+    /// </summary>
     public bool WasInterrupted { get; private set; }
-    public bool Destroyed { get; private set; }
+    /// <summary>
+    /// If true, this animator has finished playing and is no longer active.
+    /// You should not keep references to destroyed AnimRenderers.
+    /// </summary>
+    public bool IsDestroyed { get; private set; }
+    /// <summary>
+    /// The current time, in seconds, that the animation is playing.
+    /// </summary>
     public float CurrentTime => time;
+    /// <summary>
+    /// Gets the number of non-null pawns in the <see cref="Pawns"/> array.
+    /// </summary>
+    public int PawnCount
+    {
+        get
+        {
+            int c = 0;
+            foreach (var p in Pawns)
+                if (p != null)
+                    c++;
+            return c;
+        }
+    }
 
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
@@ -251,7 +324,7 @@ public class AnimRenderer
     private MaterialPropertyBlock pb;
     private float time = -1;
 
-    public AnimRenderer(AnimDef def)
+    private AnimRenderer(AnimDef def)
     {
         Def = def;
         snapshots = new AnimPartSnapshot[Data.Parts.Count];
@@ -267,24 +340,44 @@ public class AnimRenderer
         Map = map;
     }
 
-    public AnimPartSnapshot GetSnapshot(AnimPartData part)
-    {
-        return snapshots[part.Index];
-    }
-
+    /// <summary>
+    /// Gets the current state (snapshot) for a particular animation part.
+    /// </summary>
+    public AnimPartSnapshot GetSnapshot(AnimPartData part) => part == null ? default : snapshots[part.Index];
+    
+    /// <summary>
+    /// Gets the override data based on the part index.
+    /// See <see cref="GetOverride(AnimPartData)"/>.
+    /// </summary>
+    /// <param name="index">The part index, such as from <see cref="AnimPartData.Index"/>.</param>
+    /// <returns>The override object, or null if the index is out of bounds.</returns>
     public AnimPartOverrideData GetOverride(int index) => index >= 0 && index < overrides.Length ? overrides[index] : null;
 
+    /// <summary>
+    /// Gets the override data of a particular part.
+    /// </summary>
+    /// <returns>The override object, or null if the part is null.</returns>
     public AnimPartOverrideData GetOverride(AnimPartData part) => GetOverride(part?.Index ?? -1);
 
+    /// <summary>
+    /// Gets the override data for a particular snapshot. The <see cref="AnimPartSnapshot.Part"/>
+    /// object is used to find the override object.
+    /// </summary>
+    /// <returns>The override object, or null if the part is null.</returns>
     public AnimPartOverrideData GetOverride(in AnimPartSnapshot snapshot) => GetOverride(snapshot.Part);
 
-    public void Register()
+    /// <summary>
+    /// Causes this animation renderer to be registered with the system, and finish setting up.
+    /// Note: this is not the preferred way of starting an animation.
+    /// Instead, consider using <see cref="AnimationManager.StartAnimation(AnimDef, Matrix4x4, Pawn[])"/>.
+    /// </summary>
+    public bool Register()
     {
         Pawn invalid = GetFirstInvalidPawn();
         if (invalid != null)
         {
             Core.Error($"Tried to start animation with 1 or more invalid pawn: [{invalid.Faction?.Name ?? "No faction"}] {invalid.NameFullColored}");
-            return;
+            return false;
         }
 
         foreach(var pawn in Pawns)
@@ -293,17 +386,25 @@ public class AnimRenderer
             if(anim != null)
             {
                 Core.Error($"Tried to start animation with '{pawn.LabelShortCap}' but that pawn is already in animation {anim.Data.Name}!");
-                return;
+                return false;
             }
         }
 
+        if (PawnCount != Def.pawnCount)
+            Core.Warn($"Started AnimRenderer with bad number of pawns! Expected {Def.pawnCount}, got {PawnCount}. (Def: {Def})");
+
         RegisterInt(this);
         Seek(0f, null);
+        return true;
     }
 
+    /// <summary>
+    /// Cancels and destroys this animator, releasing it's pawns and stopping it from playing.
+    /// This call may not immediately release pawns, it may be delayed until the end of the frame.
+    /// </summary>
     public void Destroy()
     {
-        if (Destroyed)
+        if (IsDestroyed)
         {
             Core.Warn("Tried to destroy renderer that is already destroyed...");
             return;
@@ -312,6 +413,11 @@ public class AnimRenderer
         DestroyInt(this);
     }
 
+    /// <summary>
+    /// Gets the <see cref="AnimPartData"/> associated with a pawn's body.
+    /// This part data can then be used to get the current position of the body using <see cref="GetSnapshot(AnimPartData)"/>.
+    /// </summary>
+    /// <returns>The part data, or null if the pawn is null or is not captured by this animation.</returns>
     public AnimPartData GetPawnBody(Pawn pawn)
     {
         if (pawn == null)
@@ -331,9 +437,14 @@ public class AnimRenderer
         return null;
     }
 
+    /// <summary>
+    /// Should be called once per Rimworld tick.
+    /// If this animation is managed automatically (such as when using the <see cref="AnimationManager"/> utility)
+    /// then you do not need to call this manually, as it will be done for you.
+    /// </summary>
     public void Tick()
     {
-        if (Destroyed)
+        if (IsDestroyed)
             return;
 
         if(Map == null || (Find.TickManager.TicksAbs % 120 == 0 && Map.Index < 0))
@@ -348,6 +459,11 @@ public class AnimRenderer
         }
     }
 
+    /// <summary>
+    /// Gets the first captured pawn that is in an invalid state.
+    /// See <see cref="IsPawnValid(Pawn)"/> and <see cref="Pawns"/>.
+    /// </summary>
+    /// <returns>The first invalid pawn or null if all pawns are valid, or there are no pawns in this animation.</returns>
     public Pawn GetFirstInvalidPawn()
     {
         foreach(var pawn in Pawns)
@@ -358,14 +474,24 @@ public class AnimRenderer
         return null;
     }
 
+    /// <summary>
+    /// Is this pawn valid to be used in this animator?
+    /// Checks simple conditions such as not dead, destroyed, downed...
+    /// </summary>
     public virtual bool IsPawnValid(Pawn p)
     {
-        return !p.Destroyed && p.Spawned && !p.Dead && !p.Downed;
+        return p is
+        {
+            Destroyed: false,
+            Spawned: true,
+            Dead: false,
+            Downed: false
+        };
     }
 
     public Vector2 Draw(float? atTime, float? dt)
     {
-        if (Destroyed)
+        if (IsDestroyed)
             return Vector2.zero;
 
         var range = Seek(atTime, dt);
@@ -410,6 +536,10 @@ public class AnimRenderer
         return range;
     }
 
+    /// <summary>
+    /// Changes the current time of this animation.
+    /// Depending on the parameters specified, this may act as a 'jump' (<paramref name="atTime"/>) or a continuous movement (<paramref name="dt"/>).
+    /// </summary>
     public Vector2 Seek(float? atTime, float? dt, bool generateSectionEvents = true)
     {
         float t = atTime ?? (this.time + dt.Value);

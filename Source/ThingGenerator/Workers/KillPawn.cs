@@ -27,7 +27,6 @@ namespace AAM.Workers
             RulePackDef logDef = e.TryParsePart(7, fallback: AAM_DefOf.AAM_Execution_Generic);
             var part = GetPartFromDef(pawn, partDef);
             ThingDef weapon = inst.equipment?.Primary?.def;
-            Core.Log($"[EXECUTION] Hitting part '{partDef}' ({part}) using {dmgDef}. Attacker is {inst} using {weapon}");
 
             var dInfo = new DamageInfo(dmgDef, 99999, 99999, hitPart: part, instigator: inst, weapon: weapon);
             var log = CreateLog(logDef, inst.equipment?.Primary, inst, pawn);
@@ -44,6 +43,16 @@ namespace AAM.Workers
             {
                 result.AssociateWithLog(log);
             }
+
+            // Update the pawn wiggler so that the pawn corpse matches the final animation state.
+            // This does not change the body position, so when the animation ends and the corpse appears, the corpse often snaps to the center of the cell.
+            // I don't know if there is any easy fix for this.
+            var animPart = input.Animator.GetPawnBody(pawn);
+            if (animPart == null)
+                return;
+
+            var bodyRot = input.Animator.GetSnapshot(animPart).GetWorldRotation();
+            pawn.Drawer.renderer.wiggler.downedAngle = bodyRot;
         }
 
         private LogEntry_DamageResult CreateLog(RulePackDef def, Thing weapon, Pawn inst, Pawn vict)

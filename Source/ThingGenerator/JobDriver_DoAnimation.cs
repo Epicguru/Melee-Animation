@@ -18,7 +18,7 @@ namespace AAM
             }
         }
 
-        public virtual bool ShouldContinue => Animator != null && !Animator.Destroyed;
+        public virtual bool ShouldContinue => Animator != null && !Animator.IsDestroyed;
 
         private AnimRenderer _animator;
 
