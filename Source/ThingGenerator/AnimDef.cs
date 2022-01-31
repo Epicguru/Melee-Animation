@@ -100,6 +100,7 @@ namespace AAM
         public string jobString;
         public int pawnCount;
         public MeleeWeaponType? allowedWeaponTypes;
+        public ThingDef onlySpecificWeapon;
         public List<AnimCellData> cellData = new List<AnimCellData>();
 
         private AnimData resolvedData;
@@ -120,7 +121,7 @@ namespace AAM
             if (string.IsNullOrWhiteSpace(data))
                 yield return $"Animation has no data path! Please secify the location of the data file using the data tag.";
 
-            if (allowedWeaponTypes != null && allowedWeaponTypes == 0)
+            if (allowedWeaponTypes != null && allowedWeaponTypes == 0 && onlySpecificWeapon == null)
                 yield return "allowedWeaponTags is empty! Please provide at least 1 allowed weapon type.";
 
             for (int i = 0; i < cellData.Count; i++)
@@ -152,14 +153,17 @@ namespace AAM
             if (def == null)
                 return false;
 
+            if (def == onlySpecificWeapon)
+                return true;
+
             var tweak = TweakDataManager.TryGetTweak(def);
             if (tweak == null)
                 return false;
 
-            return AllowsWeapon(tweak.MeleeWeaponType);
+            return AllowsWeaponType(tweak.MeleeWeaponType);
         }
 
-        public bool AllowsWeapon(MeleeWeaponType weaponType)
+        public bool AllowsWeaponType(MeleeWeaponType weaponType)
         {
             if (allowedWeaponTypes == null)
                 return true;

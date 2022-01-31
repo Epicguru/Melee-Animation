@@ -93,8 +93,11 @@ namespace AAM.Patches
         public static bool AllowNext = false;
 
         [HarmonyPriority(Priority.Last)] // As late as possible. We want to be the last to modify results.
-        static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle)
+        static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, PawnRenderFlags flags)
         {
+            if (flags.HasFlag(PawnRenderFlags.Portrait))
+                return true;
+
             var anim = PatchMaster.GetAnimator(___pawn);
             if (anim != null)
             {

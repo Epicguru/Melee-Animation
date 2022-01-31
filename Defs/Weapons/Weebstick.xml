@@ -60,12 +60,12 @@
       </li>
     </tools>
     <comps>
-      <!-- <li Class="RimForge.Comps.CompProperties_OversizedWeapon">
+      <li Class="RimForge.Comps.CompProperties_OversizedWeapon">
         <southOffset>(0.4, 0, 0.3)</southOffset>
         <northOffset>(0.4, 0, 0.3)</northOffset>
         <eastOffset>(0.3, 0, 0.38)</eastOffset>
         <westOffset>(-0.3, 0, 0.38)</westOffset>
-      </li> -->
+      </li>
     </comps>
   </ThingDef>
 </Defs>

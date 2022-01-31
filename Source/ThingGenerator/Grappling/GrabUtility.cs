@@ -32,7 +32,6 @@ namespace AAM.Grappling
         {
             // In the interest of speed, target pawns are not validated.
             // The executioner is also assumed to be spawned, not dead, and in the same map as all the target pawns.
-
             var weapon = executioner.GetFirstMeleeWeapon();
             if (weapon == null)
                 yield break; // No melee weapon, no executions...
@@ -62,13 +61,14 @@ namespace AAM.Grappling
                 start += execPos;
                 end += execPos;
 
-                if (tempCells.Contains(start.Value) && tempCells.Contains(end))
+                // TODO check all cells: make centralized method.
+                if (tempCells.Contains(start.Value))
                 {
                     yield return new PossibleExecution()
                     {
                         Def = anim,
                         Victim = pawn,
-                        VictimMoveCell = pawn.Position == end.ToIntVec3 ? null : end.ToIntVec3,
+                        VictimMoveCell = pawn.Position == start.Value.ToIntVec3 ? null : start.Value.ToIntVec3,
                         MirrorX = fx,
                         MirrorY = fy
                     };

@@ -149,6 +149,7 @@ public class AnimRenderer
             PreventDrawPatch.AllowNext = true;
             MakePawnConsideredInvisible.IsRendering = true;
             pawn.Drawer.renderer.RenderPawnAt(pos, Rot4.West, true);
+            Core.Log($"pawn y: {pos.y}");
             MakePawnConsideredInvisible.IsRendering = false;
 
             // Render shadow.
@@ -520,7 +521,7 @@ public class AnimRenderer
 
             var color = snap.FinalColor;
 
-            if (useMPB)
+            //if (useMPB)
             {
                 pb.SetTexture("_MainTex", tex);
                 pb.SetColor("_Color", color);
@@ -535,7 +536,10 @@ public class AnimRenderer
             bool fy = MirrorVertical ? !preFy : preFy;
             var mesh = AnimData.GetMesh(fx, fy);
 
-            Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, useMPB ? pb : null);
+            if (snap.PartName.Contains("Regular"))
+                Core.Log($"Sword y: {snap.GetWorldPosition().y}");
+
+            Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, true ? pb : null);
         }        
 
         return range;

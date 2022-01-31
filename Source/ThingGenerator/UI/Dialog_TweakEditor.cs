@@ -281,7 +281,7 @@ namespace AAM.UI
                 Widgets.Label(tagsArea.RightPart(0.2f), "Allowed animations...");
                 string allowedAnimations = "";
                 foreach(var anim in AnimDef.AllDefs)
-                    if (anim.AllowsWeapon(tweak.MeleeWeaponType))
+                    if (anim.onlySpecificWeapon == tweak.GetDef() || anim.AllowsWeaponType(tweak.MeleeWeaponType))
                         allowedAnimations += $"[{anim.type}] {anim.defName}\n";
                 TooltipHandler.TipRegion(tagsArea.RightPart(0.2f), allowedAnimations);
 

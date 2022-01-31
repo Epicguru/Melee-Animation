@@ -93,6 +93,29 @@
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AAM_Execution_Weebstick</defName>
+    <label>Execution: You insulted m'lady</label>
+    <data>Execution_Weebstick.anim</data>
+    <onlySpecificWeapon>AAM_Weebstick</onlySpecificWeapon>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(3, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+      <li>
+        <type>MustBeClear</type>
+        <position>(-1, 0)</position>
+      </li>
+    </cellData>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_Passover</defName>
     <label>Execution: Passover</label>
     <data>Execution_Passover.anim</data>

@@ -221,7 +221,7 @@ namespace AAM
             if (sel.Count == 1)
             {
                 var selectedPawn = sel[0];
-                if (selectedPawn != null)
+                if (selectedPawn != null && Input.GetKey(KeyCode.LeftControl))
                     DrawValidSpotsAround(selectedPawn);
             }
             else if (sel.Count >= 2)
@@ -244,7 +244,8 @@ namespace AAM
                     {
                         bool hasLOS = GenSight.LineOfSightToThing(exec.VictimMoveCell.Value, exec.Victim, map);
 
-                        GenDraw.DrawLineBetween(exec.Victim.DrawPos, exec.VictimMoveCell.Value.ToVector3Shifted(), !hasLOS ? SimpleColor.Red : exec.MirrorX ? SimpleColor.Magenta : SimpleColor.Cyan);
+                        if(Input.GetKey(KeyCode.LeftControl))
+                            GenDraw.DrawLineBetween(exec.Victim.DrawPos, exec.VictimMoveCell.Value.ToVector3Shifted(), !hasLOS ? SimpleColor.Red : exec.MirrorX ? SimpleColor.Magenta : SimpleColor.Cyan);
 
                         if (hasLOS)
                         {
@@ -268,8 +269,6 @@ namespace AAM
                     JobDriver_GrapplePawn.GiveJob(main, exec.Victim, exec.VictimMoveCell.Value, afterGrapple);
                 }
             }
-
-            DrawBezier();
 
             if (Input.GetKeyDown(KeyCode.P))
                 StartAnim();
