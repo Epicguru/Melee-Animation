@@ -160,8 +160,10 @@ public class AnimRenderer
             vector.y = UI.screenHeight - vector.y;
             labelDraw?.Invoke(pawn, vector);
 
+            // TODO remove this awful way of making job and move to somewhere more sensible.
+
             // Create animation job for all pawns involved, if necessary.
-            if (pawn.jobs != null && pawn.jobs.curJob != null && pawn.jobs.curJob.def != AAM_DefOf.AAM_InAnimation && renderer.CurrentTime < renderer.Duration * 0.95f)
+            if (pawn.jobs != null && pawn.CurJobDef != AAM_DefOf.AAM_InAnimation && renderer.CurrentTime < renderer.Duration * 0.95f)
             {
                 var newJob = JobMaker.MakeJob(AAM_DefOf.AAM_InAnimation);
                 
@@ -323,7 +325,7 @@ public class AnimRenderer
     private AnimPartData[] bodies = new AnimPartData[8];
     private MaterialPropertyBlock pb;
     private float time = -1;
-
+    
     private AnimRenderer(AnimDef def)
     {
         Def = def;
@@ -377,6 +379,7 @@ public class AnimRenderer
         if (invalid != null)
         {
             Core.Error($"Tried to start animation with 1 or more invalid pawn: [{invalid.Faction?.Name ?? "No faction"}] {invalid.NameFullColored}");
+            IsDestroyed = true;
             return false;
         }
 
@@ -386,6 +389,7 @@ public class AnimRenderer
             if(anim != null)
             {
                 Core.Error($"Tried to start animation with '{pawn.LabelShortCap}' but that pawn is already in animation {anim.Data.Name}!");
+                IsDestroyed = true;
                 return false;
             }
         }
@@ -482,7 +486,6 @@ public class AnimRenderer
     {
         return p is
         {
-            Destroyed: false,
             Spawned: true,
             Dead: false,
             Downed: false

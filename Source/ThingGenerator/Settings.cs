@@ -8,19 +8,21 @@ namespace AAM
     public class Settings : ModSettings
     {
         public bool AllowInvisiblePawns = true;
+        [Range(-1, 15)]
         public int ThreadCount = -1;
         public bool AutoGrapple = true;
         public bool AutoGrab = true;
         public bool AutoExecute = true;
-        public ExecutionMatrix ExecutionMatrix = new ExecutionMatrix();
+        [Range(0, 20)]
         public int MinMeleeSkillToExecute = 4;
+        [Range(0, 10)]
         public float ExecutionChanceModifier = 1f;
+        public ExecutionMatrix ExecutionMatrix = new ExecutionMatrix();
 
         public override void ExposeData()
         {
             base.ExposeData();
-
-            
+            SimpleSettings.AutoExpose(this);
         }
 
         public bool IsExecutionAllowed(Pawn executioner, Pawn victim, out string explanation)
@@ -46,15 +48,26 @@ namespace AAM
 
     public class TestSettings : ModSettings
     {
-        public int Something = 42;
         public string Message = "Hello";
-        public byte X;
-        public float MyFloat = 123;
-        public double MyDouble = 12.3;
-        public decimal MyDecimal = 12.345m;
         public IntVec2 IntVec2;
         public Vector3 Vec3 = new Vector3(1, 2, 3);
         public ThingDef MyThingDef;
+
+        // Integer types.
+        public byte Byte;
+        public sbyte SByte;
+        public short Short;
+        public ushort UShort;
+        public int Int;
+        public uint UInt;
+        public long Long;
+        public ulong ULong;
+
+        // Floating point types.
+        public float Float;
+        public double Double;
+        public decimal Decimal;
+
         public ExecutionLine Line = new ExecutionLine()
         {
             Colonists = true,

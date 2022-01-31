@@ -112,7 +112,7 @@ namespace AAM
 
             // Held item.
             string itemName = $"Item{tagChar}";
-            var weapon = pawn.GetEquippedMeleeWeapon();
+            var weapon = pawn.GetFirstMeleeWeapon();
             var tweak = weapon == null ? null : TweakDataManager.GetOrCreateDefaultTweak(weapon.def);
             var handsMode = tweak?.HandsMode ?? HandsMode.Default;
 

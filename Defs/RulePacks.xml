@@ -21,6 +21,11 @@
         <li>stabbed->stabbed</li>
         <li>stabbed->skewered</li>
 
+        <li>slashed->slashed</li>
+        <li>slashed->lacerated</li>
+        <li>slashed->cut into</li>
+        <li>slashed->split open</li>
+
         <li>beat->beat</li>
         <li>beat->battered</li>
         <li>beat->bludgeoned</li>
@@ -55,6 +60,20 @@
     </rulePack>
   </RulePackDef>
 
+  <!-- Slashing executions -->
+  <RulePackDef>
+    <defName>AAM_Execution_Slashed</defName>
+    <include>
+      <li>AAM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [slashed] [RECIPIENT_definite] in the [recipient_part0_label].</li>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [slashed] [RECIPIENT_definite] with [INITIATOR_possessive] [TOOL_label].</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
   <!-- Bludgeoning executions -->
   <RulePackDef>
     <defName>AAM_Execution_Blunt</defName>
@@ -69,7 +88,7 @@
     </rulePack>
   </RulePackDef>
 
-  <!-- Bludgeoning executions -->
+  <!-- Execution: passover -->
   <RulePackDef>
     <defName>AAM_Execution_Passover</defName>
     <include>

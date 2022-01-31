@@ -1,7 +1,8 @@
-﻿using HarmonyLib;
+﻿using AAM.Grappling;
+using HarmonyLib;
 using RimWorld;
 using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -15,7 +16,8 @@ namespace AAM
     {
         public static string ModFolder => ModContent.RootDir;
         public static ModContentPack ModContent;
-        public static TestSettings Settings;
+        public static Settings Settings;
+        public static bool IsSimpleSidearmsActive;
 
         public static void Log(string msg)
         {
@@ -36,6 +38,8 @@ namespace AAM
 
         public Core(ModContentPack content) : base(content)
         {
+            AddParsers();
+
             Log("Hello, world!");
             var h = new Harmony("co.uk.epicguru.animations");
             h.PatchAll();
@@ -61,7 +65,7 @@ namespace AAM
             //Core.Log(File.ReadAllText(@"C:\Users\spain\Desktop\TestExpose.txt"));
             //Log(SimpleSettings.MakeDebugString(test));
 
-            Settings = GetSettings<TestSettings>();
+            Settings = GetSettings<Settings>();
 
             LongEventHandler.ExecuteWhenFinished(() =>
             {
@@ -75,8 +79,42 @@ namespace AAM
                 AnimDef.Init();
                 Log("Initialized anim defs.");
 
+                CheckSimpleSidearms();
+                Log($"Checked for SimpleSidearms. Found: {IsSimpleSidearmsActive}");
+
                 LogPotentialConflicts(h);
             });
+        }
+
+        private void AddParsers()
+        {
+            AddParser(byte.Parse);
+            AddParser(decimal.Parse);
+            AddParser(short.Parse);
+            AddParser(ushort.Parse);
+            AddParser(uint.Parse);
+            AddParser(ulong.Parse);
+        }
+
+        private void AddParser<T>(Func<string, T> func)
+        {
+            if (func == null)
+                return;
+
+            // We need to do two checks because of a Rimworld bug in the HandlesType method.
+            // If the T is a primitive type, HandlesType returns true, even though it is not actually handled.
+            if (typeof(T).IsPrimitive && ParseHelper.CanParse(typeof(T), default(T).ToString()))
+            {
+                Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
+                return;
+            }
+            if (!typeof(T).IsPrimitive && ParseHelper.HandlesType(typeof(T)))
+            {
+                Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
+                return;
+            }
+
+            ParseHelper.Parsers<T>.Register(func);
         }
 
         public override string SettingsCategory()
@@ -150,6 +188,11 @@ namespace AAM
             Log("Full patch list:");
             Log(str.ToString());
         }
+
+        private void CheckSimpleSidearms()
+        {
+            IsSimpleSidearmsActive = ModLister.GetActiveModWithIdentifier("PeteTimesSix.SimpleSidearms") != null;
+        }
     }
 
     public class HotSwappableAttribute : Attribute
@@ -173,6 +216,55 @@ namespace AAM
         public override void MapComponentUpdate()
         {
             base.MapComponentTick();
+
+            var sel = Find.Selector.SelectedPawns.Where(p => p.Spawned && !p.Dead && !p.Downed).ToList();
+            if (sel.Count == 1)
+            {
+                var selectedPawn = sel[0];
+                if (selectedPawn != null)
+                    DrawValidSpotsAround(selectedPawn);
+            }
+            else if (sel.Count >= 2)
+            {
+                var main = sel[0];
+                var map = main.Map;
+
+                IEnumerable<Pawn> Others()
+                {
+                    for (int i = 1; i < sel.Count; i++)
+                    {
+                        yield return sel[i];
+                    }
+                }
+
+                bool grappled = false;
+                foreach (var exec in GrabUtility.GetPossibleExecutions(main, Others()))
+                {
+                    if (exec.VictimMoveCell != null)
+                    {
+                        bool hasLOS = GenSight.LineOfSightToThing(exec.VictimMoveCell.Value, exec.Victim, map);
+
+                        GenDraw.DrawLineBetween(exec.Victim.DrawPos, exec.VictimMoveCell.Value.ToVector3Shifted(), !hasLOS ? SimpleColor.Red : exec.MirrorX ? SimpleColor.Magenta : SimpleColor.Cyan);
+
+                        if (hasLOS && !grappled && Input.GetKeyDown(KeyCode.G))
+                        {
+                            grappled = true;
+                            var afterGrapple = new AnimationStartParameters(exec.Def, main, exec.Victim)
+                            {
+                                FlipX = exec.MirrorX,
+                                FlipY = exec.MirrorY
+                            };
+                            JobDriver_GrapplePawn.GiveJob(main, exec.Victim, exec.VictimMoveCell.Value, afterGrapple);
+                        }
+                    }
+
+                    Vector2 flat = new Vector2(exec.Victim.DrawPos.x, exec.Victim.DrawPos.z);
+                    string text = $"{exec.Def}  (Mirror:{exec.MirrorX})";
+                    //GenMapUI.DrawText(flat + new Vector2(1, 0), text, Color.white);
+                }
+            }
+
+            DrawBezier();
 
             if (Input.GetKeyDown(KeyCode.P))
                 StartAnim();
@@ -209,6 +301,69 @@ namespace AAM
             anim.MirrorHorizontal = Rand.Bool;
         }
 
+        private BezierCurve curve;
+
+        private void DrawBezier()
+        {
+            int resolution = (int)Mathf.Clamp(10f * Vector2.Distance(curve.P0, curve.P3), 40, 256);
+            float y = AltitudeLayer.MoteOverhead.AltitudeFor();
+
+            Vector2 lastPoint = default;
+            for (int i = 0; i < resolution; i++)
+            {
+                float t = i / (resolution - 1f);
+                Vector2 point = Bezier.Evaluate(t, curve.P0, curve.P1, curve.P2, curve.P3);
+
+                if (i != 0)
+                {
+                    Vector3 a = lastPoint.ToWorld(y);
+                    Vector3 b = point.ToWorld(y);
+                    GenDraw.DrawLineBetween(a, b, SimpleColor.Blue, 0.3f);
+                }
+
+                lastPoint = point;
+            }
+
+            if (Input.GetKey(KeyCode.Alpha5))
+                EditPoint(ref curve.P0);
+            //if (Input.GetKey(KeyCode.Alpha2))
+            //    EditPoint(ref curve.P1);
+            //if (Input.GetKey(KeyCode.Alpha3))
+            //    EditPoint(ref curve.P2);
+            if (Input.GetKey(KeyCode.Alpha6))
+                EditPoint(ref curve.P3);
+
+            Vector2 delta = curve.P3 - curve.P0;
+            Vector2 perp = Vector2.Perpendicular(delta.normalized);
+            if (curve.P3.x < curve.P0.x)
+                perp = -perp;
+            float dst = delta.magnitude;
+
+            float t0 = 0.1f;
+            float t1 = 0.12f;
+
+            curve.P1 = Vector2.Lerp(curve.P0, curve.P3, t0) + perp * Mathf.Sin(dst * 0.5f) * Mathf.Clamp(dst * 0.25f, 2f, 12f);
+            curve.P2 = Vector2.Lerp(curve.P0, curve.P3, t1) + perp * Mathf.Sin(dst * 0.5f) * -Mathf.Clamp(dst * 0.25f, 1f, 6f);
+
+            GenDraw.DrawLineBetween(curve.P0.ToWorld(y), curve.P3.ToWorld(), SimpleColor.Orange, 0.1f);
+            GenDraw.DrawLineBetween((curve.P0 + delta.normalized * 2f).ToWorld(y), (curve.P0 + delta.normalized * 2f + perp * 2f).ToWorld(y), SimpleColor.Green, 0.15f);
+        }
+
+        private void EditPoint(ref Vector2 point)
+        {
+            var mp = Verse.UI.MouseMapPosition();
+            var mpFlat = new Vector2(mp.x, mp.z);
+            point = mpFlat;
+
+            GenDraw.DrawTargetHighlightWithLayer(mp, AltitudeLayer.VisEffects);
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Deep.Look(ref curve, nameof(curve));
+        }
+
         private void StartAnim()
         {
             // Find pawns to do animation on.
@@ -237,6 +392,12 @@ namespace AAM
             // Start this new animation.
             var anim = manager.StartAnimation(exec, rootTransform, mainPawn, otherPawn);
             //anim.MirrorHorizontal = Rand.Bool;
+        }
+
+        private void DrawValidSpotsAround(Pawn pawn)
+        {
+            foreach (var cell in GrabUtility.GetFreeSpotsAround(pawn))
+                GenDraw.DrawTargetHighlightWithLayer(cell, AltitudeLayer.MoteOverhead);
         }
 
         public static void StartExecution(Pawn executioner, Pawn victim)

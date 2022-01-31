@@ -16,15 +16,18 @@ namespace AAM
         public static Dictionary<Type, DrawHandler> DrawHandlers = new Dictionary<Type, DrawHandler>()
         {
             { typeof(string), DrawStringField },
+            { typeof(byte), DrawNumeric },
+            { typeof(sbyte), DrawNumeric },
+            { typeof(short), DrawNumeric },
+            { typeof(ushort), DrawNumeric },
+            { typeof(int), DrawNumeric },
+            { typeof(uint), DrawNumeric },
+            { typeof(long), DrawNumeric },
+            { typeof(ulong), DrawNumeric },
             { typeof(float), DrawNumeric },
             { typeof(double), DrawNumeric },
             { typeof(decimal), DrawNumeric },
-            { typeof(int), DrawNumeric },
-            { typeof(long), DrawNumeric },
-            { typeof(byte), DrawNumeric },
-            { typeof(sbyte), DrawNumeric },
-            { typeof(ulong), DrawNumeric },
-            { typeof(uint), DrawNumeric },
+            { typeof(bool), DrawToggle },
         };
         
         private static readonly Dictionary<Type, FieldHolder> settingsFields = new Dictionary<Type, FieldHolder>();
@@ -63,7 +66,10 @@ namespace AAM
 
             foreach (var member in holder.Members.Values)
             {
+                object old = member.Get<object>(settings);
                 member.Expose(settings);
+                object now = member.Get<object>(settings);
+                Core.Log($"[{Scribe.mode}] {member.Name}: {old} -> {now}");
             }
         }
 
@@ -210,7 +216,7 @@ namespace AAM
             var ret = area;
             area = area.ExpandedBy(-10);
 
-            float updated = Widgets.HorizontalSlider(area, value, 0, 100, label: name);
+            float updated = Widgets.HorizontalSlider(area, value, min, max, label: $"{name} : {value} (def: {defaultValue})", leftAlignedLabel: min.ToString(), rightAlignedLabel: max.ToString());
             if (updated != value)
             {
 
@@ -238,18 +244,21 @@ namespace AAM
         private static Rect DrawNumeric(ModSettings settings, MemberWrapper wrapper, Rect area)
         {
             // Default: do a slider.
-            float min;
-            float max;
+            var range = wrapper.TryGetCustomAttribute<UnityEngine.RangeAttribute>();
+            float min = float.MinValue;
+            float max = float.MaxValue;
 
-            var range = wrapper.TryGetCustomAttribute<RangeAttribute>();
-            if (range?.Min != null)
-                min = range.Min.Value;
+            if (range != null)
+                min = Mathf.Max(min, range.min);
             else
-                min = GetNumericMin(wrapper.MemberType);
-            if (range?.Max != null)
-                max = range.Max.Value;
+                min = Mathf.Max(min, 0);
+            min = Mathf.Max(min, GetNumericMin(wrapper.MemberType));
+
+            if (range != null)
+                max = Mathf.Min(max, range.max);
             else
-                max = GetNumericMax(wrapper.MemberType);
+                max = Mathf.Min(max, 100);
+            max = Mathf.Min(max, GetNumericMax(wrapper.MemberType));
 
             return DrawSlider(settings, wrapper, area, min, max);
         }
@@ -267,6 +276,23 @@ namespace AAM
             //string updated = Widgets.TextEntryLabeled(area, name + " :  ", value);
             if (updated != value)
                 member.Set(settings, updated);
+
+            return ret;
+        }
+
+        private static Rect DrawToggle(ModSettings settings, MemberWrapper member, Rect area)
+        {
+            var value = member.Get<bool>(settings);
+            var defaultValue = member.GetDefault<bool>();
+            string name = member.Name;
+            area.height = 40;
+            var ret = area;
+            area = area.ExpandedBy(-10);
+
+            bool changed = value;
+            Widgets.CheckboxLabeled(area, name, ref changed, placeCheckboxNearText: true);
+            if (changed != value)
+                member.Set(settings, changed);
 
             return ret;
         }
@@ -309,20 +335,11 @@ namespace AAM
                     if (member is not FieldInfo && member is not PropertyInfo)
                         continue;
 
-                    if (member.HasAttribute<SettingIgnoreAttribute>())
-                        continue;
-
                     bool isInvalidProp = member is PropertyInfo pi && (!pi.CanWrite || !pi.CanRead);
                     if (isInvalidProp)
                         continue;
 
-                    bool isPrivate = member is FieldInfo { IsPrivate: true };
-                    bool includeTag = member.HasAttribute<SettingIncludeAttribute>();
-                    if (isPrivate && !includeTag)
-                        continue;
-
                     Members.Add(member, MakeWrapperFor(settings, member));
-
                 }
             }
 
@@ -378,6 +395,7 @@ namespace AAM
             {
                 var current = Get<List<T>>(obj);
                 Scribe_Collections.Look(ref current, NameInXML, GetLookMode());
+                Set(obj, current);
             }
         }
 
@@ -392,6 +410,7 @@ namespace AAM
                 // Here we only have to handle defs using the Scribe_Defs.
                 T current = Get<T>(obj);
                 Scribe_Defs.Look(ref current, NameInXML);
+                Set(obj, current);
             }
         }
 
@@ -415,6 +434,7 @@ namespace AAM
 
                 // Default: use Scribe_Values
                 Scribe_Values.Look(ref current, NameInXML, defaultValue);
+                Set(obj, current);
             }
 
             public override K Get<K>(object obj)
@@ -521,35 +541,6 @@ namespace AAM
                     return null;
 
                 return SmartClone(current);
-            }
-        }
-
-        [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-        public class SettingIgnoreAttribute  : Attribute { }
-
-        [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-        public class SettingIncludeAttribute : Attribute { }
-
-        [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-        public class SettingCategoryAttribute : Attribute
-        {
-            public readonly string Category;
-
-            public SettingCategoryAttribute(string category)
-            {
-                this.Category = category;
-            }
-        }
-
-        [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-        public class RangeAttribute : Attribute
-        {
-            public readonly float? Min, Max;
-
-            public RangeAttribute(float? min = null, float? max = null)
-            {
-                this.Min = min;
-                this.Max = max;
             }
         }
     }

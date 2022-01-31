@@ -21,7 +21,7 @@ namespace AAM
         public static bool IsInAnimation(this Pawn pawn, out AnimRenderer animRenderer)
             => (animRenderer = AnimRenderer.TryGetAnimator(pawn)) != null;
 
-        public static ThingWithComps GetEquippedMeleeWeapon(this Pawn pawn)
+        public static ThingWithComps GetFirstMeleeWeapon(this Pawn pawn)
         {
             if (pawn?.equipment == null)
                 return null;
@@ -34,6 +34,16 @@ namespace AAM
                 if (item.def.IsMeleeWeapon)
                     return item;
             }
+
+            if (Core.IsSimpleSidearmsActive && pawn.inventory?.innerContainer != null)
+            {
+                foreach (var item in pawn.inventory.innerContainer)
+                {
+                    if (item is ThingWithComps twc && item.def.IsMeleeWeapon)
+                        return twc;
+                }
+            }
+
             return null;
         }
 
@@ -50,5 +60,9 @@ namespace AAM
 
             return PawnType.Friendly;
         }
+
+        public static Vector3 ToWorld(this in Vector2 flatVector, float altitude = 0) => new Vector3(flatVector.x, altitude, flatVector.y);
+
+        public static Vector2 ToFlat(this in Vector3 worldVector) => new Vector3(worldVector.x, worldVector.z);
     }
 }

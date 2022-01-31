@@ -276,7 +276,16 @@ namespace AAM.UI
                     });
                 }
                 ui.Gap();
-                if (ui.ButtonText($"Tags: <b>{tweak.MeleeWeaponType}</b>"))
+                var tagsArea = ui.GetRect(28);
+                Widgets.DrawBox(tagsArea.RightPart(0.2f));
+                Widgets.Label(tagsArea.RightPart(0.2f), "Allowed animations...");
+                string allowedAnimations = "";
+                foreach(var anim in AnimDef.AllDefs)
+                    if (anim.AllowsWeapon(tweak.MeleeWeaponType))
+                        allowedAnimations += $"[{anim.type}] {anim.defName}\n";
+                TooltipHandler.TipRegion(tagsArea.RightPart(0.2f), allowedAnimations);
+
+                if (Widgets.ButtonText(tagsArea.LeftPart(0.75f), $"Tags: <b>{tweak.MeleeWeaponType}</b>"))
                 {
                     string MakeTagLabel(MeleeWeaponType tag)
                     {

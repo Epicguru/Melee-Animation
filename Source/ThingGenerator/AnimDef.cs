@@ -9,6 +9,8 @@ namespace AAM
     public class AnimDef : Def
     {
         #region Static stuff
+        public static IReadOnlyList<AnimDef> AllDefs => allDefs;
+
         private static List<AnimDef> allDefs;
         private static Dictionary<AnimType, List<AnimDef>> defsOfType;
         private static List<AnimDef> tempDefs;
@@ -43,7 +45,7 @@ namespace AAM
             if (executor == null)
                 return null;
 
-            var weapon = executor.equipment?.Primary;
+            var weapon = executor.GetFirstMeleeWeapon();
             if (weapon == null)
             {
                 Core.Error($"Cannot get execution def for {executor.NameShortColored} because they are not holding any weapon.");
@@ -51,61 +53,15 @@ namespace AAM
             }
 
             tempDefs.Clear();
-            tempDefs.AddRange(GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(weapon.def)));
+            tempDefs.AddRange(GetExecutionAnimationsForWeapon(weapon.def));
 
             if (tempDefs.Count == 0)
                 return null;
             return tempDefs.RandomElement();
         }
 
-        public static IEnumerable<(IntVec3 pos, bool mirrorX)> GetPossibleExecutionPositions(IntVec3 rootPos, AnimDef def)
-        {
-            if (def == null)
-            {
-                Core.Error("Null def");
-                yield break;
-            }
-
-            if (def.type != AnimType.Execution)
-            {
-                Core.Warn($"Called {nameof(GetPossibleExecutionPositions)} with a non-execution type animation def ({def})");
-            }
-
-            var pos = def.TryGetCell(AnimCellData.Type.PawnStart, false, false, 1);
-            if (pos != null)
-                yield return (rootPos + new IntVec3(pos.Value.x, 0, pos.Value.z), false);
-            if (pos != null && def.direction == AnimDirection.Horizontal)
-            {
-                pos = def.TryGetCell(AnimCellData.Type.PawnStart, true, false, 1);
-                if (pos != null)
-                    yield return (rootPos + new IntVec3(pos.Value.x, 0, pos.Value.z), true);
-            }
-        }
-
-        public static IEnumerable<(AnimDef def, bool mirrorX, IntVec3 victimPosition)> GetPossibleExecutionsNow(Pawn executioner, Pawn victim = null, Thing weapon = null)
-        {
-            weapon ??= executioner.GetEquippedMeleeWeapon();
-            if (weapon == null)
-                yield break;
-
-            var execPos = executioner.Position;
-            var vicPos = victim?.Position;
-
-            var execs = defsOfType[AnimType.Execution];
-            foreach (var def in execs)
-            {
-                if (!def.AllowsWeapon(weapon.def))
-                    continue;
-
-                foreach (var pair in GetPossibleExecutionPositions(execPos, def))
-                {
-                    if (vicPos != null && pair.pos != vicPos.Value)
-                        continue;
-
-                    yield return (def, pair.mirrorX, execPos + pair.pos);
-                }
-            }
-        }
+        public static IEnumerable<AnimDef> GetExecutionAnimationsForWeapon(ThingDef def)
+            => GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(def));
 
         #endregion
 
@@ -196,23 +152,28 @@ namespace AAM
             if (def == null)
                 return false;
 
+            var tweak = TweakDataManager.TryGetTweak(def);
+            if (tweak == null)
+                return false;
+
+            return AllowsWeapon(tweak.MeleeWeaponType);
+        }
+
+        public bool AllowsWeapon(MeleeWeaponType weaponType)
+        {
             if (allowedWeaponTypes == null)
                 return true;
             if (allowedWeaponTypes.Value == 0)
                 return false;
 
-            var tweak = TweakDataManager.TryGetTweak(def);
-            if (tweak == null)
-                return false;
-
-            uint result = (uint)(tweak.MeleeWeaponType & allowedWeaponTypes.Value);
+            uint result = (uint)(weaponType & allowedWeaponTypes.Value);
             return result != 0;
         }
 
         public IEnumerable<ThingDef> GetAllAllowedWeapons()
         {
             foreach (var thing in DefDatabase<ThingDef>.AllDefsListForReading)
-                if (AllowsWeapon(thing))
+                if (thing.IsMeleeWeapon && AllowsWeapon(thing))
                     yield return thing;
         }
     }
