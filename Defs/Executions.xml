@@ -72,6 +72,27 @@
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_UpSlash</defName>
+    <label>Execution: Upwards Slash</label>
+    <data>Execution_UpSlash.anim</data>
+    <allowedWeaponTypes>Long_Blunt, Long_Sharp, Short_Blunt</allowedWeaponTypes>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_UpSlash_Doubletap</defName>
+    <label>Execution: Upwards Slash (doubletap)</label>
+    <data>Execution_UpSlash_DoubleTap.anim</data>
+    <allowedWeaponTypes>Long_Stab</allowedWeaponTypes>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_UpDownSlash</defName>
+    <label>Execution: Up &#38; Down Slash</label>
+    <data>Execution_UpAndDownSlash.anim</data>
+    <allowedWeaponTypes>Long_Blunt, Long_Sharp</allowedWeaponTypes>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_Passover</defName>
     <label>Execution: Passover</label>
     <data>Execution_Passover.anim</data>

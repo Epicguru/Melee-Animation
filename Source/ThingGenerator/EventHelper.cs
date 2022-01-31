@@ -98,7 +98,7 @@ namespace AAM
             var pawn = e.TryParsePart<Pawn>(0, anim);
             if (pawn == null)
             {
-                Core.Error($"Cannot spawn damage effect for pawn: pawn not found.");
+                Core.Error("Cannot spawn damage effect for pawn: pawn not found.");
                 return;
             }
             var body = anim.GetPawnBody(pawn);
@@ -125,7 +125,7 @@ namespace AAM
             var pawn = e.TryParsePart<Pawn>(0, anim);
             if (pawn == null)
             {
-                Core.Error($"Cannot spawn damage effect for pawn: pawn not found.");
+                Core.Error("Cannot spawn damage effect for pawn: pawn not found.");
                 return;
             }
             var body = anim.GetPawnBody(pawn);

@@ -2,7 +2,7 @@
 using RimWorld;
 using Verse;
 
-namespace AAM
+namespace AAM.Patches
 {
     public static class PatchMaster
     {
@@ -20,6 +20,9 @@ namespace AAM
         }
     }
 
+    /// <summary>
+    /// Makes it so that pawns that are being animated stand up, ignoring regular posture calculation.
+    /// </summary>
     [HarmonyPatch(typeof(PawnUtility), nameof(PawnUtility.GetPosture))]
     static class PosturePatch
     {
@@ -35,6 +38,10 @@ namespace AAM
         }
     }
 
+    /// <summary>
+    /// Disables the texture caching introduced in Rimworld 1.3.
+    /// Only applies when a pawn in being animated.
+    /// </summary>
     [HarmonyPatch(typeof(GlobalTextureAtlasManager), "TryGetPawnFrameSet")]
     static class Patch_GlobalTextureAtlasManager_TryGetPawnFrameSet
     {
@@ -51,6 +58,10 @@ namespace AAM
         }
     }
 
+    /// <summary>
+    /// Simply prevents the regular RenderPawnAt method from running while a pawn in being animated.
+    /// This disables the regular rendering whenever a pawn in being animated.
+    /// </summary>
     [HarmonyPatch(typeof(PawnRenderer), "RenderPawnAt")]
     static class PreventDrawPatchUpper
     {
@@ -72,6 +83,10 @@ namespace AAM
         }
     }
 
+    /// <summary>
+    /// Overrides various parameters of the pawn rendering, specifically direction (north, east etc.)
+    /// and body angle. Driven by the active animation.
+    /// </summary>
     [HarmonyPatch(typeof(PawnRenderer), "RenderPawnInternal")]
     static class PreventDrawPatch
     {
@@ -88,13 +103,19 @@ namespace AAM
                 if (anim.MirrorHorizontal)
                     east = !east;
 
+                bool north = anim.Def.direction != AnimDirection.South;
+                if (anim.MirrorVertical)
+                    north = !north;
+                if (body.FlipY)
+                    north = !north;
+
                 angle = body.GetWorldRotation();
 
+                // TODO replace body facing with animation driven parameter.
                 bodyFacing = anim.Def.direction switch
                 {
                     AnimDirection.Horizontal => east ? Rot4.East : Rot4.West,
-                    AnimDirection.North => Rot4.North,
-                    AnimDirection.South => Rot4.South,
+                    AnimDirection.North or AnimDirection.South => north ? Rot4.North : Rot4.South,
                     _ => Rot4.East
                 };
                 if(!AllowNext)
@@ -106,6 +127,10 @@ namespace AAM
         }
     }
 
+    /// <summary>
+    /// Disables the default GUI (label) rendering of animated pawns.
+    /// Instead, the label is drawn externally. See <see cref="AnimRenderer.DrawSingle(AnimRenderer, float, System.Action{Pawn, UnityEngine.Vector2})"/>
+    /// </summary>
     [HarmonyPatch(typeof(Pawn), "DrawGUIOverlay")]
     static class PreventGUIPatch
     {
@@ -120,15 +145,25 @@ namespace AAM
         }
     }
 
+    /// <summary>
+    /// Make pawns be considered invisible during animations.
+    /// This should prevent them from being targeted by enemies.
+    /// This is a common feature in games where executions are possible - the player is invincible during the execution animation.
+    /// For example, see Doom 2016 or any of the FromSoftware souls-likes.
+    /// However, making pawns invincible during animations would be very overpowered and broken, so making them untargettable instead is a nice
+    /// compromise.
+    /// </summary>
     [HarmonyPatch(typeof(PawnUtility), "IsInvisible")]
     static class MakePawnConsideredInvisible
     {
         public static bool IsRendering;
 
         [HarmonyPriority(Priority.First)]
-        [HarmonyBefore("")]
         static bool Prefix(Pawn pawn, ref bool __result)
         {
+            if (!Core.Settings.AllowInvisiblePawns)
+                return true;
+
             var anim = PatchMaster.GetAnimator(pawn);
             if (anim != null && !IsRendering)
             {

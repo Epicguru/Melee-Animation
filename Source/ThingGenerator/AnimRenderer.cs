@@ -1,4 +1,5 @@
 ﻿using AAM;
+using AAM.Patches;
 using AAM.Workers;
 using HarmonyLib;
 using System;
@@ -151,6 +152,7 @@ public class AnimRenderer
             MakePawnConsideredInvisible.IsRendering = false;
 
             // Render shadow.
+            // TODO cache or use patch.
             AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow").Invoke(pawn.Drawer.renderer, new object[] { pos });
 
             // Figure out where to draw the pawn label.

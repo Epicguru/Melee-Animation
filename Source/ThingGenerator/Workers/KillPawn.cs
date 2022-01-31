@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using AAM.Patches;
+using RimWorld;
 using Verse;
 
 namespace AAM.Workers
@@ -33,7 +34,23 @@ namespace AAM.Workers
             dInfo.SetAllowDamagePropagation(false);
             dInfo.SetIgnoreArmor(true);
             dInfo.SetIgnoreInstantKillProtection(true);
-            var result = pawn.TakeDamage(dInfo);
+
+            var oldEffecter = pawn.RaceProps?.FleshType?.damageEffecter;
+            if (oldEffecter != null)
+                pawn.RaceProps.FleshType.damageEffecter = null;
+
+            DamageWorker.DamageResult result;
+            try
+            {
+                result = pawn.TakeDamage(dInfo);
+            }
+            finally
+            {
+                if (oldEffecter != null)
+                    pawn.RaceProps.FleshType.damageEffecter = oldEffecter;
+            }
+
+
             if (!pawn.Dead)
             {
                 Find.BattleLog.RemoveEntry(log);
@@ -41,17 +58,34 @@ namespace AAM.Workers
             }
             else
             {
-                result.AssociateWithLog(log);
+                result?.AssociateWithLog(log);
             }
 
-            // Update the pawn wiggler so that the pawn corpse matches the final animation state.
-            // This does not change the body position, so when the animation ends and the corpse appears, the corpse often snaps to the center of the cell.
-            // I don't know if there is any easy fix for this.
             var animPart = input.Animator.GetPawnBody(pawn);
             if (animPart == null)
                 return;
 
-            var bodyRot = input.Animator.GetSnapshot(animPart).GetWorldRotation();
+            var ss = input.Animator.GetSnapshot(animPart);
+
+            if (pawn.Corpse != null)
+            {
+                // Do corpse interpolation - interpolates the corpse to the correct position, after the animated position.
+                Patch_Corpse_DrawAt.Interpolators.Add(pawn.Corpse, new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition()));
+
+                // Corpse facing - make the dead pawn face in the direction that the animation requires.
+                bool flipX = input.Animator.MirrorHorizontal;
+                if (ss.FlipX)
+                    flipX = !flipX;
+                
+                Patch_PawnRenderer_LayingFacing.OverrideRotations.Add(pawn, flipX ? Rot4.West : Rot4.East); // TODO replace with correct facing once it is animation driven (see patch)
+            }
+            else
+                Core.Warn($"{pawn} did not spawn a corpse after death, or the corpse was destroyed...");
+
+            // Update the pawn wiggler so that the pawn corpse matches the final animation state.
+            // This does not change the body position, so when the animation ends and the corpse appears, the corpse often snaps to the center of the cell.
+            // I don't know if there is any easy fix for this.
+            var bodyRot = ss.GetWorldRotation();
             pawn.Drawer.renderer.wiggler.downedAngle = bodyRot;
         }
 

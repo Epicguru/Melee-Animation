@@ -237,7 +237,7 @@ namespace AAM
                     }
                 }
 
-                bool grappled = false;
+                var canDo = new List<GrabUtility.PossibleExecution>();
                 foreach (var exec in GrabUtility.GetPossibleExecutions(main, Others()))
                 {
                     if (exec.VictimMoveCell != null)
@@ -246,21 +246,26 @@ namespace AAM
 
                         GenDraw.DrawLineBetween(exec.Victim.DrawPos, exec.VictimMoveCell.Value.ToVector3Shifted(), !hasLOS ? SimpleColor.Red : exec.MirrorX ? SimpleColor.Magenta : SimpleColor.Cyan);
 
-                        if (hasLOS && !grappled && Input.GetKeyDown(KeyCode.G))
+                        if (hasLOS)
                         {
-                            grappled = true;
-                            var afterGrapple = new AnimationStartParameters(exec.Def, main, exec.Victim)
-                            {
-                                FlipX = exec.MirrorX,
-                                FlipY = exec.MirrorY
-                            };
-                            JobDriver_GrapplePawn.GiveJob(main, exec.Victim, exec.VictimMoveCell.Value, afterGrapple);
+                            canDo.Add(exec);
                         }
                     }
 
                     Vector2 flat = new Vector2(exec.Victim.DrawPos.x, exec.Victim.DrawPos.z);
                     string text = $"{exec.Def}  (Mirror:{exec.MirrorX})";
                     //GenMapUI.DrawText(flat + new Vector2(1, 0), text, Color.white);
+                }
+
+                if (Input.GetKeyDown(KeyCode.G) && canDo.Count > 0)
+                {
+                    var exec = canDo.RandomElement();
+                    var afterGrapple = new AnimationStartParameters(exec.Def, main, exec.Victim)
+                    {
+                        FlipX = exec.MirrorX,
+                        FlipY = exec.MirrorY
+                    };
+                    JobDriver_GrapplePawn.GiveJob(main, exec.Victim, exec.VictimMoveCell.Value, afterGrapple);
                 }
             }
 

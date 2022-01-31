@@ -13,6 +13,8 @@ namespace AAM
         public bool AutoGrapple = true;
         public bool AutoGrab = true;
         public bool AutoExecute = true;
+        public bool AnimalsCanBeExecuted = false;
+        public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
         [Range(0, 20)]
         public int MinMeleeSkillToExecute = 4;
         [Range(0, 10)]
@@ -44,6 +46,13 @@ namespace AAM
 
             return allow;
         }
+    }
+
+    public enum CorpseOffsetMode
+    {
+        None,
+        InterpolateToCorrect,
+        KeepOffset
     }
 
     public class TestSettings : ModSettings

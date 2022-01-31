@@ -22,9 +22,6 @@ namespace AAM.Grappling
 
             var newJob = JobMaker.MakeJob(AAM_DefOf.AAM_GrapplePawn, targetCell, target);
 
-            newJob.collideWithPawns = true;
-            newJob.playerForced = true;
-
             void CleanPawn(Pawn pawn)
             {
                 if (pawn.verbTracker?.AllVerbs != null)
@@ -66,10 +63,15 @@ namespace AAM.Grappling
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
+            job.locomotionUrgency = LocomotionUrgency.None;
+            job.collideWithPawns = true;
+            job.playerForced = true;
+
             var lookAtTarget = new Toil();
             lookAtTarget.handlingFacing = true;
             lookAtTarget.initAction = () =>
             {
+                pawn.pather.StopDead();
                 pawn.rotationTracker.FaceTarget(job.targetB);
 
                 var flyer = GrappleFlyer.MakeGrappleFlyer(pawn, GrappledPawn, TargetDestination);
