@@ -113,35 +113,8 @@ namespace AAM.UI
             ui.Begin(inRect);
 
             if(ui.ButtonText("RELOAD ALL"))
-            {
-                Core.Log($"Reloading all from {IO.SaveDataPath}");
-                TweakDataManager.Reset();
-                foreach(var file in IO.ListXmlFiles(IO.SaveDataPath))
-                {
-                    string forMod = file.Name.Substring(0, file.Name.Length - 4);
-                    bool any = false;
-                    foreach(var mod in LoadedModManager.RunningModsListForReading)
-                    { 
-                        if(ItemTweakData.MakeModID(mod) == forMod)
-                        {
-                            any = true;
-                            break;
-                        }
-                    }
-                    if (!any)
-                        continue;
+                TweakDataManager.LoadAllForActiveMods();
 
-                    var container = new TweakContainer();
-                    IO.LoadFromFile(container, file.FullName);
-                    Core.Log($"Loaded {file.Name}");
-                    foreach(var tweak in container.Items)
-                    {
-                        TweakDataManager.RegisterTweak(tweak);
-                    }
-                }
-            }
-
-            
             if(ui.ButtonText("Select mod"))
             {
                 string MakeName(ModContentPack mcp)
@@ -265,6 +238,7 @@ namespace AAM.UI
                 Widgets.CheckboxLabeled(flips, "Mirror X: ", ref tweak.FlipX, placeCheckboxNearText: true);
                 flips.x += 210;
                 Widgets.CheckboxLabeled(flips, "Mirror Y: ", ref tweak.FlipY, placeCheckboxNearText: true);
+                // TODO material mode (use world material, custom material, or transparent material).
 
                 ui.Gap();
                 if (ui.ButtonText($"Hands mode: <b>{tweak.HandsMode.ToString().Replace('_', ' ')}</b>"))
@@ -332,6 +306,10 @@ namespace AAM.UI
         {
             var block = new MaterialPropertyBlock();
             var itemTex = tweak.GetTexture(false, false);
+            if (itemTex == null || Mathf.Abs(tweak.ScaleX) < 0.1f || Mathf.Abs(tweak.ScaleY) < 0.1f)
+            {
+                Core.Error("WHOA");
+            }
             block.SetTexture("_MainTex", itemTex ?? Widgets.CheckboxOffTex);
             var pos = new Vector3(tweak.OffX, 0f, tweak.OffY);
             if (tweak.FlipX)
@@ -339,7 +317,7 @@ namespace AAM.UI
             if (tweak.FlipY)
                 pos.y *= -1;
             float offRot = tweak.FlipX ^ tweak.FlipY ? -tweak.Rotation : tweak.Rotation;
-            Graphics.DrawMesh(AnimData.GetMesh(tweak.FlipX, tweak.FlipY), Matrix4x4.TRS(pos, Quaternion.Euler(0f, offRot, 0f), new Vector3(tweak.ScaleX, 1f, tweak.ScaleY)), AnimRenderer.DefaultCutout, 0, camera, 0, block);
+            Graphics.DrawMesh(AnimData.GetMesh(tweak.FlipX, tweak.FlipY), Matrix4x4.TRS(pos, Quaternion.Euler(0f, 0, 0f), new Vector3(tweak.ScaleX, 1f, tweak.ScaleY)), AnimRenderer.DefaultCutout, 0, camera, 0, block);
 
             var handScale = new Vector3(0.175f, 1f, 0.175f);
             var handAPos  = new Vector3(0f, 1f, 0f);
@@ -351,7 +329,6 @@ namespace AAM.UI
                 Graphics.DrawMesh(AnimData.GetMesh(false, false), Matrix4x4.TRS(handAPos, Quaternion.identity, handScale), AnimRenderer.DefaultCutout, 0, camera, 0, block);
             if(tweak.HandsMode == HandsMode.Default)
                 Graphics.DrawMesh(AnimData.GetMesh(false, false), Matrix4x4.TRS(handBPos, Quaternion.identity, handScale), AnimRenderer.DefaultCutout, 0, camera, 0, block);
-
 
             camera.Render();
 

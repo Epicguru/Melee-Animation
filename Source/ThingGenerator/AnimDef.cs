@@ -63,6 +63,18 @@ namespace AAM
         public static IEnumerable<AnimDef> GetExecutionAnimationsForWeapon(ThingDef def)
             => GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(def));
 
+        [DebugAction("Advanced Animation Mod", "Reload all animations", actionType = DebugActionType.Action)]
+        public static void ReloadAllAnimations()
+        {
+            foreach (var def in allDefs)
+            {
+                if(def.resolvedData == null)
+                    continue;
+
+                def.resolvedData = AnimData.Load(def.FullDataPath, false);
+            }
+        }
+
         #endregion
 
         public virtual string FullDataPath
@@ -96,7 +108,7 @@ namespace AAM
 
         public AnimType type = AnimType.Execution;
         public AnimDirection direction = AnimDirection.Horizontal;
-        public string data;
+        private string data;
         public string jobString;
         public int pawnCount;
         public MeleeWeaponType? allowedWeaponTypes;
@@ -155,6 +167,8 @@ namespace AAM
 
             if (def == onlySpecificWeapon)
                 return true;
+            if(onlySpecificWeapon != null)
+                return false;
 
             var tweak = TweakDataManager.TryGetTweak(def);
             if (tweak == null)

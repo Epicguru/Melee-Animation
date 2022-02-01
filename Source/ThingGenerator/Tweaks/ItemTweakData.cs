@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 using Verse;
 
 namespace AAM.Tweaks
@@ -10,7 +11,12 @@ namespace AAM.Tweaks
             if (mcp == null)
                 return null;
 
-            return mcp.PackageId;
+            string s = mcp.PackageId;
+
+            foreach (char c in Path.GetInvalidFileNameChars())
+                s = s.Replace(c, '_');
+
+            return s;
         }
 
         public string ItemDefName;
@@ -21,6 +27,7 @@ namespace AAM.Tweaks
         public float Rotation;
         public float ScaleX = 1, ScaleY = 1;
         public bool FlipX, FlipY;
+        public bool UseDefaultTransparentMaterial;
         public HandsMode HandsMode = HandsMode.Default;
         public MeleeWeaponType MeleeWeaponType = MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp;
 
@@ -115,6 +122,9 @@ namespace AAM.Tweaks
             ov.LocalOffset = new Vector2(OffX, OffY);
             ov.FlipX = FlipX;
             ov.FlipY = FlipY;
+            ov.UseDefaultTransparentMaterial = UseDefaultTransparentMaterial;
+
+            renderer.OnApplyTweak(this, part);
         }
 
         public void ExposeData()
@@ -126,14 +136,15 @@ namespace AAM.Tweaks
             Scribe_Values.Look(ref OffX, "ofX");
             Scribe_Values.Look(ref OffY, "ofY");
             Scribe_Values.Look(ref Rotation, "rot");
-            Scribe_Values.Look(ref ScaleX, "scX");
-            Scribe_Values.Look(ref ScaleY, "scY");
+            Scribe_Values.Look(ref ScaleX, "scX", 1);
+            Scribe_Values.Look(ref ScaleY, "scY", 1);
             Scribe_Values.Look(ref FlipX, "flX");
             Scribe_Values.Look(ref FlipY, "flY");
             Scribe_Values.Look(ref HandsMode, "hnd");
+            Scribe_Values.Look(ref UseDefaultTransparentMaterial, "trs");
 
             int flag = (int)MeleeWeaponType;
-            Scribe_Values.Look(ref flag, "tag");
+            Scribe_Values.Look(ref flag, "tag", (int)(MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp));
             MeleeWeaponType = (MeleeWeaponType)flag;
         }
     }

@@ -1,9 +1,11 @@
 ﻿using AAM;
+using AAM.Events;
+using AAM.Events.Workers;
 using AAM.Patches;
-using AAM.Workers;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -12,7 +14,7 @@ using Verse.AI;
 /// An <see cref="AnimRenderer"/> is the object that represents and also draws (renders) a currently running animation.
 /// Be sure to check the <see cref="IsDestroyed"/> property before interacting with an object of this type.
 /// </summary>
-public class AnimRenderer
+public class AnimRenderer : IExposable
 {
     #region Static stuff
 
@@ -137,31 +139,35 @@ public class AnimRenderer
 
         int madeJobCount = 0;
 
+        // TODO move into instance method.
         foreach (var pawn in renderer.Pawns)
         {
             if (pawn == null || pawn.Destroyed)
                 continue;
 
-            var pos = renderer.GetPawnBody(pawn).GetSnapshot(renderer).GetWorldPosition();
+            var pawnSS = renderer.GetPawnBody(pawn).GetSnapshot(renderer);
+            var pos = pawnSS.GetWorldPosition();
 
-            // Render pawn in custom position using patches.
-            PreventDrawPatchUpper.AllowNext = true;
-            PreventDrawPatch.AllowNext = true;
-            MakePawnConsideredInvisible.IsRendering = true;
-            pawn.Drawer.renderer.RenderPawnAt(pos, Rot4.West, true);
-            Core.Log($"pawn y: {pos.y}");
-            MakePawnConsideredInvisible.IsRendering = false;
+            if (pawnSS.Active)
+            {
+                // Render pawn in custom position using patches.
+                PreventDrawPatchUpper.AllowNext = true;
+                PreventDrawPatch.AllowNext = true;
+                MakePawnConsideredInvisible.IsRendering = true;
+                pawn.Drawer.renderer.RenderPawnAt(pos, Rot4.West, true);
+                MakePawnConsideredInvisible.IsRendering = false;
 
-            // Render shadow.
-            // TODO cache or use patch.
-            AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow").Invoke(pawn.Drawer.renderer, new object[] { pos });
+                // Render shadow.
+                // TODO cache or use patch.
+                AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow").Invoke(pawn.Drawer.renderer, new object[] { pos });
 
-            // Figure out where to draw the pawn label.
-            Vector3 drawPos = pos;
-            drawPos.z -= 0.6f;
-            Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
-            vector.y = UI.screenHeight - vector.y;
-            labelDraw?.Invoke(pawn, vector);
+                // Figure out where to draw the pawn label.
+                Vector3 drawPos = pos;
+                drawPos.z -= 0.6f;
+                Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
+                vector.y = UI.screenHeight - vector.y;
+                labelDraw?.Invoke(pawn, vector);
+            }
 
             // TODO remove this awful way of making job and move to somewhere more sensible.
 
@@ -260,22 +266,17 @@ public class AnimRenderer
     /// <summary>
     /// The active animation def.
     /// </summary>
-    public readonly AnimDef Def;
+    public AnimDef Def;
     /// <summary>
-    /// An array of pawns included in this animation.
-    /// <b>DO NOT MODIFY THIS ARRAY!</b> It is for reading only.
+    /// A list of pawns included in this animation.
     /// </summary>
-    public Pawn[] Pawns = new Pawn[8];
+    public List<Pawn> Pawns = new List<Pawn>();
     /// <summary>
     /// The base transform that the animation is centered on.
     /// Useful functions to modify this are <see cref="Matrix4x4.TRS(Vector3, Quaternion, Vector3)"/>
     /// and <see cref="Extensions.MakeAnimationMatrix(Pawn)"/>.
     /// </summary>
     public Matrix4x4 RootTransform = Matrix4x4.identity;
-    /// <summary>
-    /// The current <see cref="AnimSection"/> that is being played. May be null.
-    /// </summary>
-    public AnimSection CurrentSection { get; private set; }
     /// <summary>
     /// The <see cref="Map"/> that this animation is running on.
     /// </summary>
@@ -322,16 +323,18 @@ public class AnimRenderer
         }
     }
 
+    internal List<(EventBase e, EventWorkerBase worker)> workersAtEnd = new List<(EventBase e, EventWorkerBase worker)>();
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
-    internal List<(AnimEvent e, AnimEventWorker worker)> workersAtEnd = new List<(AnimEvent e, AnimEventWorker worker)>();
     private AnimPartData[] bodies = new AnimPartData[8];
     private MaterialPropertyBlock pb;
     private float time = -1;
+    private List<ThingDef> itemTweakDefs = new List<ThingDef>();
+    private List<string> itemTweakParts = new List<string>();
+    private bool ignoreNewTweakApplications;
     
-    private AnimRenderer(AnimDef def)
+    private AnimRenderer()
     {
-        Def = def;
         snapshots = new AnimPartSnapshot[Data.Parts.Count];
         overrides = new AnimPartOverrideData[Data.Parts.Count];
         pb = new MaterialPropertyBlock();
@@ -340,9 +343,74 @@ public class AnimRenderer
             overrides[i] = new AnimPartOverrideData();
     }
 
-    public AnimRenderer(AnimDef def, Map map) : this(def)
+    public AnimRenderer(AnimDef def, Map map) : this()
     {        
         Map = map;
+        Def = def;
+    }
+
+    public void ExposeData()
+    {
+        Scribe_Defs.Look(ref Def, "def");
+        Scribe_Values.Look(ref time, "time");
+        Scribe_Values.Look(ref MirrorHorizontal, "mirrorX");
+        Scribe_Values.Look(ref MirrorVertical, "mirrorY");
+        Scribe_Values.Look(ref Loop, "loop");
+        Scribe_Collections.Look(ref itemTweakDefs, "itemTweakDefs", LookMode.Def);
+        Scribe_Collections.Look(ref itemTweakParts, "itemTweakParts", LookMode.Value);
+        Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
+        Scribe_References.Look(ref Map, "map");
+        Scribe_Values.Look(ref RootTransform, "rootTransform");
+
+        bool temp = IsDestroyed;
+        Scribe_Values.Look(ref temp, "isDestroyed");
+        IsDestroyed = temp;
+
+        temp = WasInterrupted;
+        Scribe_Values.Look(ref temp, "wasInterrupted");
+        WasInterrupted = temp;
+
+        // TODO workers at end.
+
+        if (Scribe.mode == LoadSaveMode.PostLoadInit && itemTweakDefs != null)
+        {
+            ignoreNewTweakApplications = true;
+            try
+            {
+                for (int i = 0; i < itemTweakDefs.Count; i++)
+                {
+                    var def = itemTweakDefs[i];
+                    var partName = itemTweakParts[i];
+                    if (def == null)
+                        continue;
+
+                    var tweak = TweakDataManager.TryGetTweak(def);
+                    if (tweak == null)
+                        continue;
+
+                    var part = GetPart(partName);
+                    if (part == null)
+                        continue;
+
+                    tweak.Apply(this, part);
+                }
+            }
+            catch(Exception e)
+            {
+                Core.Error("Exception loading item tweaks on animation:", e);
+            }
+            
+            ignoreNewTweakApplications = false;
+        }
+    }
+
+    public void OnApplyTweak(ItemTweakData tweak, AnimPartData part)
+    {
+        if (ignoreNewTweakApplications)
+            return;
+
+        itemTweakDefs.Add(tweak.GetDef());
+        itemTweakParts.Add(part.Name);
     }
 
     /// <summary>
@@ -429,7 +497,8 @@ public class AnimRenderer
     {
         if (pawn == null)
             return null;
-        for (int i = 0; i < Pawns.Length; i++)
+
+        for (int i = 0; i < Pawns.Count; i++)
         {
             if (Pawns[i] == pawn)
             {
@@ -521,7 +590,7 @@ public class AnimRenderer
 
             var color = snap.FinalColor;
 
-            //if (useMPB)
+            if (useMPB)
             {
                 pb.SetTexture("_MainTex", tex);
                 pb.SetColor("_Color", color);
@@ -536,10 +605,7 @@ public class AnimRenderer
             bool fy = MirrorVertical ? !preFy : preFy;
             var mesh = AnimData.GetMesh(fx, fy);
 
-            if (snap.PartName.Contains("Regular"))
-                Core.Log($"Sword y: {snap.GetWorldPosition().y}");
-
-            Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, true ? pb : null);
+            Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, useMPB ? pb : null);
         }        
 
         return range;
@@ -549,10 +615,10 @@ public class AnimRenderer
     /// Changes the current time of this animation.
     /// Depending on the parameters specified, this may act as a 'jump' (<paramref name="atTime"/>) or a continuous movement (<paramref name="dt"/>).
     /// </summary>
-    public Vector2 Seek(float? atTime, float? dt, bool generateSectionEvents = true)
+    public Vector2 Seek(float? atTime, float? dt)
     {
         float t = atTime ?? (this.time + dt.Value);
-        var range = SeekInt(t, MirrorHorizontal, MirrorVertical, generateSectionEvents);
+        var range = SeekInt(t, MirrorHorizontal, MirrorVertical);
 
         if (t > Data.Duration)
         {
@@ -564,7 +630,7 @@ public class AnimRenderer
         return range;
     }
 
-    private Vector2 SeekInt(float time, bool mirrorX = false, bool mirrorY = false, bool generateSectionEvents = true)
+    private Vector2 SeekInt(float time, bool mirrorX = false, bool mirrorY = false)
     {
         time = Mathf.Clamp(time, 0f, Duration);
 
@@ -579,31 +645,9 @@ public class AnimRenderer
         for (int i = 0; i < Data.Parts.Count; i++)
             snapshots[i].UpdateWorldMatrix(mirrorX, mirrorY);
 
-        // Sort by depth if necessary.
-        // TODO
-        //if (sortByDepth)
-        //    SortByDepth();
-
         float start = Mathf.Min(this.time, time);
         float end = Mathf.Max(this.time, time);
         this.time = time;
-
-        if (CurrentSection == null)
-        {
-            CurrentSection = Data.GetSectionAtTime(time);
-            CurrentSection.OnSectionEnter(this);
-        }
-        else if (!CurrentSection.ContainsTime(time))
-        {
-            var old = CurrentSection;
-            CurrentSection = Data.GetSectionAtTime(time);
-
-            if (generateSectionEvents)
-            {
-                old.OnSectionExit(this);
-                CurrentSection.OnSectionEnter(this);
-            }
-        }
 
         return new Vector2(start, end);
     }
@@ -613,7 +657,7 @@ public class AnimRenderer
         IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
         basePos.y = 0;
 
-        for (int i = 0; i < Pawns.Length; i++)
+        for (int i = 0; i < Pawns.Count; i++)
         {
             var pawn = Pawns[i];
             if (pawn == null)
@@ -621,6 +665,7 @@ public class AnimRenderer
 
             var offset = Def.TryGetCell(AnimCellData.Type.PawnStart, MirrorHorizontal, MirrorVertical, i) ?? IntVec2.Zero;
             TeleportPawn(pawn, basePos + offset.ToIntVec3);
+            // TODO GIVE JOB HERE.
         }
     }
 
@@ -633,7 +678,7 @@ public class AnimRenderer
         IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
         basePos.y = 0;
 
-        for (int i = 0; i < Pawns.Length; i++)
+        for (int i = 0; i < Pawns.Count; i++)
         {
             var pawn = Pawns[i];
             if (pawn == null)
@@ -644,7 +689,7 @@ public class AnimRenderer
                 continue;
 
             TeleportPawn(pawn, basePos + posData.Value.ToIntVec3);
-            pawn?.jobs.EndCurrentJob(JobCondition.InterruptForced);
+            pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
         }
 
         foreach(var item in workersAtEnd)
@@ -672,7 +717,7 @@ public class AnimRenderer
         pawn.Drawer?.tweener?.ResetTweenedPosToRoot();
     }
 
-    public IEnumerable<AnimEvent> GetEventsInPeriod(Vector2 timePeriod)
+    public IEnumerable<EventBase> GetEventsInPeriod(Vector2 timePeriod)
     {
         return Data.GetEventsInPeriod(timePeriod);
     }
@@ -687,11 +732,12 @@ public class AnimRenderer
 
     protected virtual Material GetMaterialFor(in AnimPartSnapshot snapshot)
     {
-        var ovMat = GetOverride(snapshot).Material;
+        var ov = GetOverride(snapshot);
+        var ovMat = ov.Material;
         if (ovMat != null)        
             return ovMat;        
 
-        if (snapshot.FinalColor.a < 1f)        
+        if (ov.UseDefaultTransparentMaterial || snapshot.Part.TransparentByDefault || snapshot.FinalColor.a < 1f)        
             return DefaultTransparent;        
 
         return DefaultCutout;

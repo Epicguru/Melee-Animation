@@ -14,7 +14,6 @@
 			<rot>45</rot>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
-			<tag>6</tag>
 		</li>
 		<li>
 			<dId>ScissorBlade_AA</dId>
@@ -26,7 +25,6 @@
 			<rot>41.5</rot>
 			<scX>1.2</scX>
 			<scY>1.2</scY>
-			<tag>6</tag>
 		</li>
 		<li>
 			<dId>ResonatingBlade_AA</dId>
@@ -34,8 +32,6 @@
 			<nsp>Verse</nsp>
 			<tex>AntimatterAnnihilation/Weapons/ResonatingBlade</tex>
 			<ofX>0.2288136</ofX>
-			<scX>1</scX>
-			<scY>1</scY>
 			<hnd>Only_Main_Hand</hnd>
 			<tag>48</tag>
 		</li>
@@ -44,11 +40,12 @@
 			<typ>ThingDef</typ>
 			<nsp>Verse</nsp>
 			<tex>AntimatterAnnihilation/Weapons/Karambit</tex>
-			<ofX>0.08474576</ofX>
-			<ofY>-0.04237288</ofY>
-			<rot>180</rot>
-			<scX>1</scX>
-			<scY>1</scY>
+			<ofX>0.09421322</ofX>
+			<ofY>0.009698127</ofY>
+			<rot>175</rot>
+			<scX>1.2</scX>
+			<scY>1.2</scY>
+			<flY>True</flY>
 			<hnd>Only_Main_Hand</hnd>
 			<tag>48</tag>
 		</li>

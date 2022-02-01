@@ -1,6 +1,7 @@
 ﻿using AAM.Calculators;
 using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -53,20 +54,46 @@ namespace AAM.UI
             //DrawPawnInputs(ui);
             //DrawDuelOutcome(ui);
 
-            var def = DefDatabase<AnimDef>.GetNamed("AMM_Execution_Passover");
-            if (def != null)
+            //var def = DefDatabase<AnimDef>.GetNamed("AMM_Execution_Passover");
+            //if (def != null)
+            //{
+            //    int count = 0;
+            //    foreach (var weapon in def.GetAllAllowedWeapons())
+            //    {
+            //        count++;
+            //        ui.Label(weapon.LabelCap);
+            //    }
+            //    ui.Label($"Those are the {count} weapons allowed for {def.LabelCap} ({def.allowedWeaponTypes})");
+            //}
+            //else
+            //{
+            //    ui.Label($"Failed to find def.");
+            //}
+
+            var anim = AnimRenderer.ActiveRenderers.FirstOrFallback();
+            if (anim == null)
             {
-                int count = 0;
-                foreach (var weapon in def.GetAllAllowedWeapons())
-                {
-                    count++;
-                    ui.Label(weapon.LabelCap);
-                }
-                ui.Label($"Those are the {count} weapons allowed for {def.LabelCap} ({def.allowedWeaponTypes})");
+                ui.End();
+                return;
             }
-            else
+
+            var list = anim.Def.Data.Parts.Select(part => anim.GetSnapshot(part)).ToList();
+            list.SortBy(ss => ss.GetWorldPosition().y);
+
+            float bodyBase = anim.GetPart("BodyA")?.GetSnapshot(anim).GetWorldPosition().y ?? AltitudeLayer.Pawn.AltitudeFor();
+            float clothesTop = bodyBase + 0.023166021f + 0.0028957527f;
+            bool drawnClothes = false;
+
+            foreach (var item in list)
             {
-                ui.Label($"Failed to find def.");
+                float y = item.GetWorldPosition().y;
+                ui.Label($"<b>{item.PartName}:</b> {y}");
+
+                if (y >= clothesTop && !drawnClothes)
+                {
+                    drawnClothes = true;
+                    ui.Label($"<b><color=cyan>Clothes Top Layer</color>:</b> {clothesTop}");
+                }
             }
 
             ui.End();
@@ -144,12 +171,22 @@ namespace AAM.UI
                 Widgets.Label(rect.ExpandedBy(-4, -4), title);
                 var bar = rect.ExpandedBy(-4);
                 bar.yMin += 22;
-                bar.height = 10;
+                bar.height = 14;
                 float lerp = Mathf.Clamp01(renderer.CurrentTime / renderer.Data.Duration);
                 var fillBar = bar;
                 fillBar.width = bar.width * lerp;
                 Widgets.DrawBoxSolid(bar, Color.grey);
                 Widgets.DrawBoxSolid(fillBar, Color.green);
+
+                Widgets.ButtonInvisible(bar);
+                if (Mouse.IsOver(bar) && Input.GetMouseButton(0))
+                {
+                    Widgets.DrawHighlight(bar);
+                    var mx = Event.current.mousePosition.x;
+                    mx -= bar.x;
+                    float t = mx / bar.width;
+                    renderer.Seek(Mathf.Clamp01(t) * renderer.Data.Duration, null);
+                }
 
                 foreach (var e in renderer.GetEventsInPeriod(new Vector2(0, renderer.Duration + 1f)))
                 {

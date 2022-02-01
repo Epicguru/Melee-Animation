@@ -74,9 +74,8 @@ namespace AAM
             renderer.MirrorHorizontal = mirrorX;
             renderer.MirrorVertical = mirrorY;
 
-            int i = 0;
             foreach(var pawn in pawns)            
-                i += AddPawn(renderer, i, pawn) ? 1 : 0;            
+                renderer.AddPawn(pawn);            
 
             renderer.Register();
 
@@ -100,61 +99,6 @@ namespace AAM
         {
             if (renderer != null && !renderer.IsDestroyed)
                 renderer.Destroy();
-        }
-
-        protected virtual bool AddPawn(AnimRenderer renderer, int index, Pawn pawn)
-        {
-            if (pawn == null)
-                return false;
-
-            renderer.Pawns[index] = pawn;
-            char tagChar = AnimRenderer.Alphabet[index];
-
-            // Held item.
-            string itemName = $"Item{tagChar}";
-            var weapon = pawn.GetFirstMeleeWeapon();
-            var tweak = weapon == null ? null : TweakDataManager.GetOrCreateDefaultTweak(weapon.def);
-            var handsMode = tweak?.HandsMode ?? HandsMode.Default;
-
-            // Hands and skin color...
-            string mainHandName = $"HandA{(index > 0 ? (index + 1) : "")}";
-            string altHandName  = $"HandB{(index > 0 ? (index + 1) : "")}";
-
-            Color skinColor = pawn.story?.SkinColor ?? Color.white;
-            bool showMain = weapon != null && handsMode != HandsMode.No_Hands;
-            bool showAlt  = weapon != null && handsMode == HandsMode.Default;
-
-            // Apply weapon.
-            var itemPart = renderer.GetPart(itemName);
-            if(weapon != null && itemPart != null)
-            {
-                tweak.Apply(renderer, itemPart);
-                var ov = renderer.GetOverride(itemPart);
-                ov.Material = weapon.Graphic.MatSingleFor(weapon);
-                ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
-            }
-
-            // Apply main hand.
-            var mainHandPart = renderer.GetPart(mainHandName);
-            if(mainHandPart != null)
-            {
-                var ov = renderer.GetOverride(mainHandPart);
-                ov.PreventDraw = !showMain;
-                ov.Texture = HandTexture;
-                ov.ColorOverride = skinColor;
-            }
-
-            // Apply alt hand.
-            var altHandPart = renderer.GetPart(altHandName);
-            if (mainHandPart != null)
-            {
-                var ov = renderer.GetOverride(altHandPart);
-                ov.PreventDraw = !showAlt;
-                ov.Texture = HandTexture;
-                ov.ColorOverride = skinColor;
-            }
-
-            return true;
         }
 
         public override void MapComponentUpdate()
@@ -187,12 +131,28 @@ namespace AAM
             labels.Add((pawn, position));
         }
 
-        public override void MapComponentOnGUI()
+        public override void ExposeData()
         {
-            base.MapComponentOnGUI();
+            base.ExposeData();
+            Core.Warn("MAP EXPOSE");
+        }
 
-            foreach (var pair in labels)            
-                GenMapUI.DrawPawnLabel(pair.pawn, pair.position, 0.5f, 9999f, null, GameFont.Tiny, true, true);            
+        public override void MapRemoved()
+        {
+            base.MapRemoved();
+            Core.Warn("MAP REMOVED");
+        }
+
+        public override void FinalizeInit()
+        {
+            base.FinalizeInit();
+            Core.Warn("FINISH INIT");
+        }
+
+        public override void MapGenerated()
+        {
+            base.MapGenerated();
+            Core.Warn("GENERATED");
         }
     }
 }

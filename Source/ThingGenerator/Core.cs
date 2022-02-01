@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -18,6 +20,9 @@ namespace AAM
         public static ModContentPack ModContent;
         public static Settings Settings;
         public static bool IsSimpleSidearmsActive;
+
+        private readonly Queue<(string title, Action action)> lateLoadActions = new Queue<(string, Action)>();
+        private readonly Queue<(string title, Action action)> lateLoadActionsSync = new Queue<(string, Action)>();
 
         public static void Log(string msg)
         {
@@ -67,23 +72,64 @@ namespace AAM
 
             Settings = GetSettings<Settings>();
 
-            LongEventHandler.ExecuteWhenFinished(() =>
+            AddLateLoadAction(true, "Loading default shaders", () =>
             {
                 AnimRenderer.DefaultCutout ??= new Material(ThingDefOf.AIPersonaCore.graphic.Shader);
                 AnimRenderer.DefaultTransparent ??= new Material(FleckDefOf.AirPuff.GetGraphicData(0).shaderType.Shader);
-                Log("Assigned default shaders.");
-
-                Log("Loaded misc textures.");
-                AnimationManager.Init();
-
-                AnimDef.Init();
-                Log("Initialized anim defs.");
-
-                CheckSimpleSidearms();
-                Log($"Checked for SimpleSidearms. Found: {IsSimpleSidearmsActive}");
-
-                LogPotentialConflicts(h);
             });
+
+            AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
+            AddLateLoadAction(false, "Initializing anim defs...", AnimDef.Init);
+            AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
+            AddLateLoadAction(true, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
+            AddLateLoadAction(false, "Loading weapon tweak data...", () => TweakDataManager.LoadAllForActiveMods());
+
+            AddLateLoadEvents();
+        }
+
+        private void AddLateLoadEvents()
+        {
+            // Different thread loading...
+            LongEventHandler.QueueLongEvent(() =>
+            {
+                LongEventHandler.SetCurrentEventText("Load Advanced Animation Mod");
+                while (lateLoadActions.TryDequeue(out var pair))
+                {
+                    try
+                    {
+                        LongEventHandler.SetCurrentEventText($"Advanced Animation: {pair.title}\n");
+                        pair.action();
+                    }
+                    catch (Exception e)
+                    {
+                        Error($"Exception in post-load event (async) '{pair.title}':", e);
+                    }
+                }
+            }, "Load Advanced Animation Mod", true, null);
+
+            // Same thread loading...
+            LongEventHandler.QueueLongEvent(() =>
+            {
+                while (lateLoadActionsSync.TryDequeue(out var pair))
+                {
+                    try
+                    {
+                        LongEventHandler.SetCurrentEventText($"Advanced Animation:\n{pair.title}");
+                        pair.action();
+                    }
+                    catch (Exception e)
+                    {
+                        Error($"Exception in post-load event '{pair.title}':", e);
+                    }
+                }
+            }, "Load Advanced Animation Mod", false, null);
+        }
+
+        private void AddLateLoadAction(bool synchronous, string title, Action a)
+        {
+            if (a == null)
+                return;
+            (synchronous ? lateLoadActionsSync : lateLoadActions).Enqueue((title, a));
         }
 
         private void AddParsers()

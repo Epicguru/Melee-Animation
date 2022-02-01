@@ -2,35 +2,37 @@
 using RimWorld;
 using Verse;
 
-namespace AAM.Workers
+namespace AAM.Events.Workers
 {
-    public class KillPawn : AnimEventWorker
+    public class KillPawnWorker : EventWorkerBase
     {
-        public override void Run(AnimEventInput input)
-        {
-            var e = input.Event;
-            var animator = input.Animator;
+        public override string EventID => "KillPawn";
 
-            Pawn inst = e.TryParsePart<Pawn>(2, animator);
-            Pawn pawn = e.TryParsePart<Pawn>(3, animator);
-            if (pawn == null || pawn.Destroyed || pawn.Dead || inst == null)
+        public override void Run(AnimEventInput i)
+        {
+            var e = i.Event as KillPawnEvent;
+            var animator = i.Animator;
+            
+            Pawn killer = i.GetPawnFromIndex(e.KillerIndex);
+            Pawn pawn = i.GetPawnFromIndex(e.VictimIndex);
+
+            if (pawn == null || pawn.Destroyed || pawn.Dead || killer == null)
                 return;
 
-            bool onlyNotInterrupted = e.TryParsePart(4, fallback: true);
-            if (onlyNotInterrupted && animator.WasInterrupted)
+            if (e.OnlyIfNotInterrupted && animator.WasInterrupted)
             {
-                Core.Warn("Anim was interrupted, will not kill");
+                Core.Warn($"Anim was interrupted, will not kill {pawn}");
                 return;
             }
 
-            BodyPartDef partDef = e.TryParsePart<BodyPartDef>(5);
-            DamageDef dmgDef = e.TryParsePart(6, fallback: DamageDefOf.Cut);
-            RulePackDef logDef = e.TryParsePart(7, fallback: AAM_DefOf.AAM_Execution_Generic);
+            BodyPartDef partDef = i.GetDef<BodyPartDef>(e.TargetBodyPart);
+            DamageDef dmgDef = i.GetDef(e.DamageDef, DamageDefOf.Cut);
+            RulePackDef logDef = i.GetDef(e.BattleLogDef, AAM_DefOf.AAM_Execution_Generic);
             var part = GetPartFromDef(pawn, partDef);
-            ThingDef weapon = inst.equipment?.Primary?.def;
+            ThingDef weapon = killer.equipment?.Primary?.def;
 
-            var dInfo = new DamageInfo(dmgDef, 99999, 99999, hitPart: part, instigator: inst, weapon: weapon);
-            var log = CreateLog(logDef, inst.equipment?.Primary, inst, pawn);
+            var dInfo = new DamageInfo(dmgDef, 99999, 99999, hitPart: part, instigator: killer, weapon: weapon);
+            var log = CreateLog(logDef, killer.equipment?.Primary, killer, pawn);
             dInfo.SetAllowDamagePropagation(false);
             dInfo.SetIgnoreArmor(true);
             dInfo.SetIgnoreInstantKillProtection(true);
@@ -61,11 +63,11 @@ namespace AAM.Workers
                 result?.AssociateWithLog(log);
             }
 
-            var animPart = input.Animator.GetPawnBody(pawn);
+            var animPart = i.Animator.GetPawnBody(pawn);
             if (animPart == null)
                 return;
 
-            var ss = input.Animator.GetSnapshot(animPart);
+            var ss = i.Animator.GetSnapshot(animPart);
 
             if (pawn.Corpse != null)
             {
@@ -73,7 +75,7 @@ namespace AAM.Workers
                 Patch_Corpse_DrawAt.Interpolators.Add(pawn.Corpse, new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition()));
 
                 // Corpse facing - make the dead pawn face in the direction that the animation requires.
-                bool flipX = input.Animator.MirrorHorizontal;
+                bool flipX = i.Animator.MirrorHorizontal;
                 if (ss.FlipX)
                     flipX = !flipX;
                 

@@ -1,4 +1,5 @@
-﻿using AAM.Workers;
+﻿using AAM.Events;
+using AAM.Events.Workers;
 using System;
 
 namespace AAM
@@ -6,69 +7,30 @@ namespace AAM
     public class AnimSection
     {
         public readonly AnimData Data;
-        public readonly AnimEvent StartEvent, EndEvent;
+        public readonly EventBase StartEvent, EndEvent;
         public readonly string Name;
         public readonly float StartTime, EndTime;
         public readonly bool IsStart, IsEnd;
-        public readonly AnimEventWorker Worker;
+        public readonly EventWorkerBase WorkerBase;
 
-        public AnimSection(AnimData data, AnimEvent startEvent, AnimEvent endEvent)
+        public AnimSection(AnimData data, EventBase startEvent, EventBase endEvent)
         {
-            Data = data ?? throw new ArgumentNullException(nameof(data));
-
-            StartEvent = startEvent;
-            EndEvent = endEvent;
-
-            if (startEvent == null && endEvent == null)
-            {
-                Name = "_Full";
-                IsStart = true;
-                IsEnd = true;
-                StartTime = 0;
-                EndTime = data.Duration;
-                Worker = null;
-            }
-            else if (startEvent == null)
-            {
-                Name = "_Start";
-                IsStart = true;
-                StartTime = 0;
-                EndTime = endEvent.Time;
-                Worker = MakeWorker(endEvent);
-            }
-            else if (endEvent == null)
-            {
-                Name = "_End";
-                IsEnd = true;
-                StartTime = startEvent.Time;
-                EndTime = data.Duration;
-                Worker = MakeWorker(startEvent);
-                Name = startEvent.GetPartRaw(1);
-            }
-            else
-            {
-                Name = startEvent.GetPartRaw(1);
-                StartTime = startEvent.Time;
-                EndTime = endEvent.Time;
-                Worker = MakeWorker(startEvent);
-            }
+            throw new NotImplementedException();
         }
 
         public virtual void OnSectionEnter(AnimRenderer renderer)
         {
-            Worker?.Run(new AnimEventInput(StartEvent, renderer, true, this));
+            WorkerBase?.Run(new AnimEventInput(StartEvent, renderer, true, this));
         }
 
         public virtual void OnSectionExit(AnimRenderer renderer)
         {
-            Worker?.Run(new AnimEventInput(EndEvent, renderer, false, this));
+            WorkerBase?.Run(new AnimEventInput(EndEvent, renderer, false, this));
         }
 
-        public virtual AnimEventWorker MakeWorker(AnimEvent e)
+        public virtual EventWorkerBase MakeWorker(EventBase e)
         {
-            if (e == null)
-                return null;
-            return AnimEventWorker.GetWorker(e.GetPartRaw(0));
+            throw new NotImplementedException();
         }
 
         public bool ContainsTime(float time)

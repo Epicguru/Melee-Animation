@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using Verse;
@@ -7,7 +9,35 @@ namespace AAM.Tweaks
 {
     public static class TweakDataManager
     {
-        private static Dictionary<ThingDef, ItemTweakData> itemTweaks = new Dictionary<ThingDef, ItemTweakData>();
+        private static readonly Dictionary<ThingDef, ItemTweakData> itemTweaks = new Dictionary<ThingDef, ItemTweakData>();
+
+        public static void LoadAllForActiveMods(bool reset = true)
+        {
+            if (reset)
+                Reset();
+
+            Dictionary<string, FileInfo> fileNames = IO.ListXmlFiles(IO.SaveDataPath).ToDictionary(item => Path.GetFileNameWithoutExtension(item.Name));
+
+            foreach (var mod in LoadedModManager.RunningModsListForReading)
+            {
+                string id = ItemTweakData.MakeModID(mod);
+                if (!fileNames.TryGetValue(id, out var fi))
+                    continue;
+
+                try
+                {
+                    var container = new TweakContainer();
+                    IO.LoadFromFile(container, fi.FullName);
+
+                    foreach (var data in container.Items)
+                        RegisterTweak(data);
+                }
+                catch (Exception e)
+                {
+                    Core.Error($"Exception loading tweak data for mod '{mod.Name}':", e);
+                }
+            }
+        }
 
         public static ItemTweakData TryGetTweak(ThingDef def)
         {

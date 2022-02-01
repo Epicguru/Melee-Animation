@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AAM.Events;
 using UnityEngine;
 #if !UNITY_EDITOR
 using Verse;
@@ -149,12 +150,16 @@ public class AnimData
         int partCount = reader.ReadInt32();
 
         // Animation events.
-        AnimEvent[] events = new AnimEvent[reader.ReadInt32()];
+        EventBase[] events = new EventBase[reader.ReadInt32()];
         for (int i = 0; i < events.Length; i++)
         {
-            string input = reader.ReadString();
+            string saveData = reader.ReadString();
             float time = reader.ReadSingle();
-            events[i] = new AnimEvent(input, time);
+            Core.Log($"Creating from {saveData}");
+            var e = EventBase.CreateFromSaveData(saveData);
+            Core.Log($"Created: {e}");
+            e.Time = time;
+            events[i] = e;
         }
 
         AnimPartData[] parts = new AnimPartData[partCount];
@@ -180,6 +185,10 @@ public class AnimData
             // Texture.
             if (reader.ReadBoolean())
                 part.TexturePath = reader.ReadString();
+
+            // Default transparency.
+            bool defaultTrs = reader.ReadBoolean();
+            part.TransparentByDefault = defaultTrs;
 
             parts[i] = part;
             Core.Log($"Read part {i}: {part.Path}, P:{parentIds[i]}, CN:{part.CustomName}, Tex:{part.TexturePath}");
@@ -241,19 +250,19 @@ public class AnimData
     public readonly string Name;
     public readonly float Duration;
     public IReadOnlyList<AnimPartData> Parts => parts;
-    public IReadOnlyList<AnimEvent> Events => events;
+    public IReadOnlyList<EventBase> Events => events;
     public IReadOnlyList<AnimSection> Sections => sections;
 
     private AnimPartData[] parts;
-    private AnimEvent[] events;
+    private EventBase[] events;
     private AnimSection[] sections;
 
-    public AnimData(string name, float duration, AnimPartData[] parts, AnimEvent[] events)
+    public AnimData(string name, float duration, AnimPartData[] parts, EventBase[] events)
     {
         this.Name = name;
         this.Duration = duration;
-        this.parts = parts ?? new AnimPartData[0];
-        this.events = events ?? new AnimEvent[0];
+        this.parts = parts ?? Array.Empty<AnimPartData>();
+        this.events = events ?? Array.Empty<EventBase>();
         this.sections = GenerateSections();
 
         for (int i = 0; i < parts.Length; i++)        
@@ -276,7 +285,7 @@ public class AnimData
         return null;
     }
 
-    public IEnumerable<AnimEvent> GetEventsInPeriod(Vector2 range)
+    public IEnumerable<EventBase> GetEventsInPeriod(Vector2 range)
     {
         foreach (var e in events)
         {
@@ -308,22 +317,23 @@ public class AnimData
 
     protected virtual AnimSection[] GenerateSections()
     {
-        if (events == null)
-            return new AnimSection[] { new AnimSection(this, null, null) };
+        // TODO re-implement or remove.
+        //if (events == null)
+        //    return new AnimSection[] { new AnimSection(this, null, null) };
 
-        var list = new List<AnimSection>();
-        AnimEvent lastSection = null;
-        foreach (var e in events)
-        {
-            if (e.HandlerName.ToLowerInvariant() == "section")
-            {
-                var sec = new AnimSection(this, lastSection, e);
-                list.Add(sec);
-                lastSection = e;
-            }
-        }
-        list.Add(new AnimSection(this, lastSection, null));
-        return list.ToArray();
+        //var list = new List<AnimSection>();
+        //EventBase lastSection = null;
+        //foreach (var e in events)
+        //{
+        //    if (e.HandlerName.ToLowerInvariant() == "section")
+        //    {
+        //        var sec = new AnimSection(this, lastSection, e);
+        //        list.Add(sec);
+        //        lastSection = e;
+        //    }
+        //}
+        //list.Add(new AnimSection(this, lastSection, null));
+        return Array.Empty<AnimSection>();
     }
 }
 
@@ -338,6 +348,7 @@ public class AnimPartData
     public string CustomName;
     public string TexturePath;
     public int Index;
+    public bool TransparentByDefault;
 
     public AnimationCurve PosX, PosY, PosZ;
     public AnimationCurve RotX, RotY, RotZ;
@@ -552,129 +563,16 @@ public struct AnimPartSnapshot
 public class AnimPartOverrideData
 {
     public Texture2D Texture;
+    public Material Material;
     public bool PreventDraw;
     public Vector2 LocalOffset;
     public float LocalRotation;
     public Vector2 LocalScaleFactor = Vector2.one;
-    public Material Material;
     public Color ColorTint = Color.white;
     public Color ColorOverride;
     public bool FlipX, FlipY;
     public bool UseMPB = true;
-}
-
-public class AnimEvent
-{
-    public string HandlerName => parts.Length > 0 ? parts[0] : null;
-    public readonly string RawInput;
-    public readonly float Time;
-
-    private string[] parts;
-
-    public AnimEvent(string input, float time)
-    {
-        RawInput = input;
-        Time = time;
-        if (string.IsNullOrWhiteSpace(input))
-            parts = new string[0];
-        else
-        {
-            parts = input.Trim().Split(';');
-            for (int i = 0; i < parts.Length; i++)
-            {
-                parts[i] = parts[i].Trim();
-            }
-        }
-    }
-
-    public string GetPartRaw(int argIndex)
-    {
-        if (argIndex < 0 || argIndex >= parts.Length - 1)
-            return null;
-        return parts[argIndex + 1];
-    }
-
-    public T TryParsePart<T>(int argIndex, object input = null, T fallback = default)
-    {
-        return TryParsePart(GetPartRaw(argIndex), input, fallback);
-    }
-
-    public T TryParsePart<T>(string part, object input = null, T fallback = default)
-    {
-        if (part == null)
-            return fallback;
-
-        if (typeof(T) == typeof(string))
-            return (T)(object)part;
-
-        if (typeof(T) == typeof(float))
-        {
-            if (float.TryParse(part, out var found))
-                return (T)(object)found;
-            else
-                return fallback;
-        }
-
-        if (typeof(T) == typeof(int))
-        {
-            if (int.TryParse(part, out var found))
-                return (T)(object)found;
-            else
-                return fallback;
-        }
-
-        if (typeof(T) == typeof(bool))
-        {
-            if (bool.TryParse(part, out var found))
-                return (T)(object)found;
-            else
-                return fallback;
-        }
-
-#if !UNITY_EDITOR
-        if (typeof(T) == typeof(Pawn))
-        {
-            var animator = input as AnimRenderer;
-            if (animator == null)
-                return fallback;
-
-            if (int.TryParse(part, out var index) && index >= 0 && index < animator.Pawns.Length)
-                return (T)(object)animator.Pawns[index];
-            return fallback;
-        }
-
-        if (typeof(T) == typeof(AnimPartData))
-        {
-            var animator = input as AnimRenderer;
-            if (animator == null)
-                return fallback;
-            return (T)(object)animator.GetPart(part) ?? fallback;
-        }
-
-        if (typeof(T).IsSubclassOf(typeof(Def)))
-            return ((T)GenGeneric.InvokeStaticMethodOnGenericType(typeof(DefDatabase<>), typeof(T), "GetNamed", part, true)) ?? fallback;
-
-        if (typeof(T) == typeof(FloatRange))
-            return (T)(object)FloatRange.FromString(part);
-#endif
-
-#if UNITY_EDITOR
-        Debug.LogError($"Cannot parse unknown type '{typeof(T).FullName}' from input string '{part}'");
-#else
-        Core.Error($"Cannot parse unknown type '{typeof(T).FullName}' from input string '{part}'");
-#endif
-        return fallback;
-    }
-
-    public bool IsInTimeWindow(Vector2 range)
-    {
-        return (Time == 0 ? Time >= range.x : Time > range.x) && Time <= range.y;
-    }
-
-    public override string ToString()
-    {
-        return $"[{Time:F2}] {RawInput}";
-    }
+    public bool UseDefaultTransparentMaterial;
 }
 
 [Serializable]

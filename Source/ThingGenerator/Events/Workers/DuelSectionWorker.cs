@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using Verse;
 
-namespace AAM.Workers
+namespace AAM.Events.Workers
 {
-    public class DuelSectionWorker : AnimEventWorker
+    public class DuelSectionWorkerBase : EventWorkerBase
     {
-        private static List<AnimEvent> tempEvents = new List<AnimEvent>();
+        public override string EventID => "DuelEvent";
+
+        private static readonly List<EventBase> tempEvents = new List<EventBase>();
 
         public override void Run(AnimEventInput input)
         {
@@ -35,25 +37,23 @@ namespace AAM.Workers
             }
         }
 
-        private void JumpTo(AnimRenderer animator, AnimEvent e)
+        private void JumpTo(AnimRenderer animator, EventBase e)
         {
-            animator.Seek(e.Time, null, false);
-            Core.Log($"Jumpted to section '{e.RawInput}' @ {e.Time:F3}");
+            animator.Seek(e.Time, null);
         }
 
         private void UpdateEventPoints(AnimData data)
         {
             tempEvents.Clear();
 
-            string className = GetType().Name;
             foreach (var item in data.Events)
             {
-                if (item.GetPartRaw(1) == className)
+                if (item.EventID == EventID)
                     tempEvents.Add(item);
             }
         }
 
-        private AnimEvent GetPreviousEvent(float time)
+        private EventBase GetPreviousEvent(float time)
         {
             int seen = 0;
             for (int i = tempEvents.Count - 1; i >= 0; i--)
@@ -69,7 +69,7 @@ namespace AAM.Workers
             return null; // Not correct but it's late and I can't be bothered to fix.
         }
 
-        private AnimEvent GetRandomEvent(AnimEvent except)
+        private EventBase GetRandomEvent(EventBase except)
         {
             int avoid = tempEvents.IndexOf(except);
             int index = Rand.Range(0, tempEvents.Count - 1);
@@ -83,7 +83,7 @@ namespace AAM.Workers
             return tempEvents[index];
         }
 
-        private AnimEvent GetEndEvent()
+        private EventBase GetEndEvent()
         {
             return tempEvents[tempEvents.Count - 1];
         }
