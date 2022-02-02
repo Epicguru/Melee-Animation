@@ -26,7 +26,7 @@ public class KillPawnEvent : TimedEvent
         Look(ref TargetBodyPart);
         Look(ref DamageDef);
         Look(ref BattleLogDef);
-        Look(ref OnlyIfNotInterrupted);
+        Look(ref OnlyIfNotInterrupted, true);
         Look(ref PreventDamageMote);
     }
 }

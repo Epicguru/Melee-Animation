@@ -72,14 +72,14 @@ namespace AAM.Events.Workers
             if (pawn.Corpse != null)
             {
                 // Do corpse interpolation - interpolates the corpse to the correct position, after the animated position.
-                Patch_Corpse_DrawAt.Interpolators.Add(pawn.Corpse, new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition()));
+                Patch_Corpse_DrawAt.Interpolators[pawn.Corpse] = new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition());
 
                 // Corpse facing - make the dead pawn face in the direction that the animation requires.
                 bool flipX = i.Animator.MirrorHorizontal;
                 if (ss.FlipX)
                     flipX = !flipX;
                 
-                Patch_PawnRenderer_LayingFacing.OverrideRotations.Add(pawn, flipX ? Rot4.West : Rot4.East); // TODO replace with correct facing once it is animation driven (see patch)
+                Patch_PawnRenderer_LayingFacing.OverrideRotations[pawn] = flipX ? Rot4.West : Rot4.East; // TODO replace with correct facing once it is animation driven (see patch)
             }
             else
                 Core.Warn($"{pawn} did not spawn a corpse after death, or the corpse was destroyed...");

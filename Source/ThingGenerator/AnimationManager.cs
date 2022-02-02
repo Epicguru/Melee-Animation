@@ -1,4 +1,5 @@
-﻿using AAM.Tweaks;
+﻿using System;
+using AAM.Tweaks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace AAM
         }
 
         private List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
+        private HashSet<AnimRenderer> ioRenderers = new HashSet<AnimRenderer>();
 
         public AnimationManager(Map map) : base(map)
         {
@@ -134,7 +136,47 @@ namespace AAM
         public override void ExposeData()
         {
             base.ExposeData();
-            Core.Warn("MAP EXPOSE");
+            Core.Warn($"MAP EXPOSE ({Scribe.mode})");
+
+            ioRenderers ??= new HashSet<AnimRenderer>();
+
+            switch (Scribe.mode)
+            {
+                case LoadSaveMode.Saving:
+                    ioRenderers.Clear();
+
+                    // Collect the active renderers that are on this map.
+                    foreach (var renderer in AnimRenderer.ActiveRenderers)
+                    {
+                        if (!renderer.IsDestroyed && renderer.Map == this.map)
+                        {
+                            if (!ioRenderers.Add(renderer))
+                                Core.Error("There was a duplicate renderer in the list!");
+                        }
+                    }
+
+                    // Save.
+                    Scribe_Collections.Look(ref ioRenderers, "animationRenderers", LookMode.Deep);
+                    break;
+
+                case LoadSaveMode.LoadingVars:
+                    AnimRenderer.ClearAll(); // Remove all previous renderers from the system.
+                    ioRenderers.Clear();
+                    Scribe_Collections.Look(ref ioRenderers, "animationRenderers", LookMode.Deep);
+                    break;
+                case LoadSaveMode.ResolvingCrossRefs:
+                    Scribe_Collections.Look(ref ioRenderers, "animationRenderers", LookMode.Deep);
+                    break;
+                case LoadSaveMode.PostLoadInit:
+                    Scribe_Collections.Look(ref ioRenderers, "animationRenderers", LookMode.Deep);
+
+                    // Write back to general system.
+                    AnimRenderer.PostLoadPendingAnimators.AddRange(ioRenderers);
+
+                    Core.Log($"Loaded {ioRenderers.Count} animation renderers on map {map}");
+                    ioRenderers.Clear();
+                    break;
+            }
         }
 
         public override void MapRemoved()

@@ -1,7 +1,8 @@
-﻿using AAM.Calculators;
-using RimWorld;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using EpicUtils;
 using UnityEngine;
 using Verse;
 
@@ -22,11 +23,14 @@ namespace AAM.UI
             return instance;
         }
 
-        public Pawn PawnA, PawnB;
+        public int SelectedIndex;
+        public List<(string name, Action<Listing_Standard> tab)> Tabs = new List<(string name, Action<Listing_Standard> tab)>();
 
         private Vector2[] scrolls = new Vector2[32];
         private int scrollIndex;
-        private DuelOutcome outcome;
+        private AnimDef spaceCheckDef;
+        private bool spaceCheckMX, spaceCheckMY;
+        private bool drawSpaceCheck;
 
         public Dialog_AnimationDebugger()
         {
@@ -36,6 +40,14 @@ namespace AAM.UI
             preventCameraMotion = false;
             resizeable = true;
             draggable = true;
+            closeOnCancel = false;
+            closeOnAccept = false;
+            onlyOneOfTypeAllowed = false;
+
+            Tabs.Add(("Active Animation Inspector", DrawAllAnimators));
+            Tabs.Add(("Layer Debugger", DrawLayerDebugger));
+            Tabs.Add(("Animation Space Checker", DrawSpaceChecker));
+            Tabs.Add(("List All Active", DrawAllLists));
         }
 
         private ref Vector2 GetScroll()
@@ -46,57 +58,49 @@ namespace AAM.UI
         public override void DoWindowContents(Rect inRect)
         {
             scrollIndex = 0;
+            drawSpaceCheck = false;
 
             var ui = new Listing_Standard();
             ui.Begin(inRect);
-                
-            DrawAllAnimators(ui);
-            //DrawPawnInputs(ui);
-            //DrawDuelOutcome(ui);
 
-            //var def = DefDatabase<AnimDef>.GetNamed("AMM_Execution_Passover");
-            //if (def != null)
-            //{
-            //    int count = 0;
-            //    foreach (var weapon in def.GetAllAllowedWeapons())
-            //    {
-            //        count++;
-            //        ui.Label(weapon.LabelCap);
-            //    }
-            //    ui.Label($"Those are the {count} weapons allowed for {def.LabelCap} ({def.allowedWeaponTypes})");
-            //}
-            //else
-            //{
-            //    ui.Label($"Failed to find def.");
-            //}
-
-            var anim = AnimRenderer.ActiveRenderers.FirstOrFallback();
-            if (anim == null)
+            var rect = ui.GetRect(32);
+            if (Widgets.ButtonText(rect.LeftHalf(), $"View: {Tabs[SelectedIndex].name}"))
             {
-                ui.End();
-                return;
-            }
-
-            var list = anim.Def.Data.Parts.Select(part => anim.GetSnapshot(part)).ToList();
-            list.SortBy(ss => ss.GetWorldPosition().y);
-
-            float bodyBase = anim.GetPart("BodyA")?.GetSnapshot(anim).GetWorldPosition().y ?? AltitudeLayer.Pawn.AltitudeFor();
-            float clothesTop = bodyBase + 0.023166021f + 0.0028957527f;
-            bool drawnClothes = false;
-
-            foreach (var item in list)
-            {
-                float y = item.GetWorldPosition().y;
-                ui.Label($"<b>{item.PartName}:</b> {y}");
-
-                if (y >= clothesTop && !drawnClothes)
+                FloatMenuUtility.MakeMenu(Tabs, p => p.name, p => () =>
                 {
-                    drawnClothes = true;
-                    ui.Label($"<b><color=cyan>Clothes Top Layer</color>:</b> {clothesTop}");
-                }
+                    SelectedIndex = Tabs.IndexOf(p);
+                });
+            }
+            if (Widgets.ButtonText(rect.RightHalf(), "Open new debugger"))
+                Open();
+            
+            ui.GapLine();
+
+            try
+            {
+                Tabs[SelectedIndex].tab(ui);
+            }
+            catch (Exception e)
+            {
+                ui.Label($"<color=red>EXCEPTION DRAWING WINDOW:\n{e}</color>");
             }
 
             ui.End();
+        }
+
+        public override void WindowUpdate()
+        {
+            base.WindowUpdate();
+
+            // Space check draw.
+            if (drawSpaceCheck && spaceCheckDef != null)
+            {
+                IntVec3 mp = Verse.UI.MouseCell();
+                foreach (var cell in spaceCheckDef.GetMustBeClearCells(spaceCheckMX, spaceCheckMY, mp))
+                {
+                    GenDraw.DrawTargetHighlight(new LocalTargetInfo(cell));
+                }
+            }
         }
 
         private static IEnumerable<Pawn> GetAllPawns()
@@ -116,37 +120,30 @@ namespace AAM.UI
             }
         }
 
-        private void DrawPawnInputs(Listing_Standard ui)
+        private void DrawLayerDebugger(Listing_Standard ui)
         {
-            if(ui.ButtonText($"Pawn A: {PawnA?.NameShortColored ?? "---"}"))
-            {
-                FloatMenuUtility.MakeMenu(GetAllPawns(), p => p.NameFullColored, p => () =>
-                {
-                    PawnA = p;
-                });
-            }
-            if (ui.ButtonText($"Pawn B: {PawnB?.NameShortColored ?? "---"}"))
-            {
-                FloatMenuUtility.MakeMenu(GetAllPawns(), p => p.NameFullColored, p => () =>
-                {
-                    PawnB = p;
-                });
-            }
-            ui.GapLine();
-        }
-
-        private void DrawDuelOutcome(Listing_Standard ui)
-        {
-            if (PawnA == null || PawnB == null)
+            var anim = AnimRenderer.ActiveRenderers.FirstOrFallback();
+            if (anim == null)
                 return;
 
-            if(outcome.PawnA == null || ui.ButtonText("Re-roll duel outcome"))            
-                outcome = DuelUtility.MakeOutcome(PawnA, PawnB, true);            
+            var list = anim.Def.Data.Parts.Select(part => anim.GetSnapshot(part)).ToList();
+            list.SortBy(ss => ss.GetWorldPosition().y);
 
-            var area = ui.GetRect(200);
-            Widgets.LabelScrollable(area, outcome.GenDebug, ref GetScroll());
+            float bodyBase = anim.GetPart("BodyA")?.GetSnapshot(anim).GetWorldPosition().y ?? AltitudeLayer.Pawn.AltitudeFor();
+            float clothesTop = bodyBase + 0.023166021f + 0.0028957527f;
+            bool drawnClothes = false;
 
-            ui.GapLine();
+            foreach (var item in list)
+            {
+                float y = item.GetWorldPosition().y;
+                ui.Label($"<b>{item.PartName}:</b> {y}");
+
+                if (y >= clothesTop && !drawnClothes)
+                {
+                    drawnClothes = true;
+                    ui.Label($"<b><color=cyan>Clothes Top Layer</color>:</b> {clothesTop}");
+                }
+            }
         }
 
         private void DrawAllAnimators(Listing_Standard ui)
@@ -162,7 +159,7 @@ namespace AAM.UI
             AnimRenderer toDestroy = null;
             foreach(var renderer in AnimRenderer.ActiveRenderers)
             {
-                var rect = ui.GetRect(110);
+                var rect = ui.GetRect(130);
 
                 Widgets.DrawBox(rect);
                 string title = $"[{renderer.CurrentTime:F2} / {renderer.Data.Duration:F2}] {renderer.Data.Name}";
@@ -177,22 +174,19 @@ namespace AAM.UI
                 fillBar.width = bar.width * lerp;
                 Widgets.DrawBoxSolid(bar, Color.grey);
                 Widgets.DrawBoxSolid(fillBar, Color.green);
-
-                Widgets.ButtonInvisible(bar);
-                if (Mouse.IsOver(bar) && Input.GetMouseButton(0))
-                {
-                    Widgets.DrawHighlight(bar);
-                    var mx = Event.current.mousePosition.x;
-                    mx -= bar.x;
-                    float t = mx / bar.width;
-                    renderer.Seek(Mathf.Clamp01(t) * renderer.Data.Duration, null);
-                }
-
                 foreach (var e in renderer.GetEventsInPeriod(new Vector2(0, renderer.Duration + 1f)))
                 {
                     float p = e.Time / renderer.Duration;
                     Widgets.DrawBoxSolid(new Rect(bar.x + p * bar.width, bar.y, 3, bar.height), Color.red);
                 }
+
+                bar.y += 18;
+                Widgets.DrawBoxSolid(bar, Color.white * 0.45f);
+                float newLerp = Widgets.HorizontalSlider(bar.ExpandedBy(0, -2), lerp, 0, 1);
+                if (newLerp != lerp)
+                    renderer.Seek(newLerp * renderer.Data.Duration, null);
+
+                rect.y += 20;
 
                 int i = 0;
                 foreach(var pawn in renderer.Pawns)
@@ -261,6 +255,45 @@ namespace AAM.UI
             Widgets.EndScrollView();
             ui = oldUI;
             ui.GapLine();
+        }
+
+        private void DrawSpaceChecker(Listing_Standard ui)
+        {
+            drawSpaceCheck = true;
+            if (ui.ButtonText(spaceCheckDef?.LabelCap.ToString() ?? "<Select Def>"))
+            {
+                var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, d.LabelCap, tooltip: d.defName));
+                BetterFloatMenu.Open(items, i =>
+                {
+                    spaceCheckDef = i.GetPayload<AnimDef>();
+                });
+            }
+
+            ui.CheckboxLabeled("Mirror X", ref spaceCheckMX);
+            ui.CheckboxLabeled("Mirror Y", ref spaceCheckMY);
+        }
+
+        private void DrawAllLists(Listing_Standard ui)
+        {
+            ui.maxOneColumn = false;
+            ui.ColumnWidth = 300;
+
+            ui.Label("<b>ALL RENDERERS</b>");
+            ui.GapLine();
+            foreach (var renderer in AnimRenderer.ActiveRenderers)
+            {
+                ui.Label($"Dest.: {renderer.IsDestroyed}, Map: {renderer.Map?.ToString() ?? "<null>"}, Invalid map: {renderer.Map == null || renderer.Map.Index < 0}, PawnCount: {renderer.PawnCount}, Animation: {renderer.Def?.LabelCap ?? "<null>"}");
+            }
+
+            ui.NewColumn();
+            ui.Gap(45);
+            ui.Label("<b>PAWN TO RENDERER</b>");
+            ui.GapLine();
+            foreach (var pawn in AnimRenderer.CapturedPawns)
+            {
+                var renderer = AnimRenderer.TryGetAnimator(pawn);
+                ui.Label($"{pawn.LabelShort} -> {renderer.Def} @ {renderer.CurrentTime} on {renderer.Map}");
+            }
         }
     }
 }

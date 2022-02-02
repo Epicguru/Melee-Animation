@@ -158,6 +158,17 @@ namespace AAM
                         yield return Flip(cell, flipX, flipY);
         }
 
+        public IEnumerable<IntVec3> GetMustBeClearCells(bool flipX, bool flipY, IntVec3 offset)
+        {
+            foreach (var data in cellData)
+            {
+                foreach (var cell in data.GetCells())
+                {
+                    yield return Flip(cell, flipX, flipY).ToIntVec3 + offset;
+                }
+            }
+        }
+
         private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new IntVec2(fx ? -input.x : input.x, fy ? -input.z : input.z);
     
         public bool AllowsWeapon(ThingDef def)

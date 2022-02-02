@@ -123,8 +123,6 @@ namespace AAM.Tweaks
             ov.FlipX = FlipX;
             ov.FlipY = FlipY;
             ov.UseDefaultTransparentMaterial = UseDefaultTransparentMaterial;
-
-            renderer.OnApplyTweak(this, part);
         }
 
         public void ExposeData()

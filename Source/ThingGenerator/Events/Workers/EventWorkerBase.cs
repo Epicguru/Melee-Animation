@@ -49,7 +49,7 @@ namespace AAM.Events.Workers
             if (pawn?.health?.hediffSet == null)
                 return null;
 
-            foreach (BodyPartRecord bodyPartRecord in pawn.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Undefined, null, null))
+            foreach (BodyPartRecord bodyPartRecord in pawn.health.hediffSet.GetNotMissingParts())
             {
                 if (bodyPartRecord.def == def)
                     return bodyPartRecord;

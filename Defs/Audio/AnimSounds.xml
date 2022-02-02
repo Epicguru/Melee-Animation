@@ -1,0 +1,75 @@
+<Defs>
+
+  <SoundDef Name="AAM_AnimSoundBase" Abstract="True">
+    <sustain>false</sustain>
+    <context>MapOnly</context>
+    <maxSimultaneous>8</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+  </SoundDef>
+
+  <!-- Weebstick animations -->
+  <SoundDef ParentName="AAM_AnimSoundBase">
+    <defName>AAM_AnimeUnsheath</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AAM/AnimeUnsheath</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AAM_AnimSoundBase">
+    <defName>AAM_Sheath</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AAM/Sheath</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AAM_AnimSoundBase">
+    <defName>AAM_Dash</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AAM/Dash</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AAM_AnimSoundBase">
+    <defName>AAM_TrippleSwingSlow</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AAM/TrippleSwingSlow</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

@@ -29,6 +29,20 @@
         <li>beat->beat</li>
         <li>beat->battered</li>
         <li>beat->bludgeoned</li>
+
+        <li>skillfully->skillfully</li>
+        <li>skillfully->masterfully</li>
+        <li>skillfully->nimbly</li>
+
+        <li>weeb_legend->the Demonic Spirit</li>
+        <li>weeb_legend(p=6)->[INITIATOR_definite], Slayer of [RECIPIENT_labelPlural]</li>
+        <li>weeb_legend->[INITIATOR_definite] the Undying</li>
+        <li>weeb_legend->[INITIATOR_definite], Conqueror of the Stars</li>
+        <li>weeb_legend->[INITIATOR_definite] the Undead</li>
+        <li>weeb_legend->[INITIATOR_definite] the Edgy</li>
+        <li>weeb_legend->[INITIATOR_definite], Edgelord Supreme</li>
+        <li>weeb_legend->[INITIATOR_definite], Collector of Feetpics</li>
+        <li>weeb_legend->[INITIATOR_definite] the Penetrator</li>
       </rulesStrings>
     </rulePack>
   </RulePackDef>
@@ -97,6 +111,21 @@
     <rulePack>
       <rulesStrings>
         <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [impaled] [RECIPIENT_definite] on [INITIATOR_possessive] [TOOL_label], then tossed [RECIPIENT_definite] over [INITIATOR_possessive] back! Brutal!</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+  <!-- Execution: Weebstick -->
+  <RulePackDef>
+    <defName>AAM_Execution_Weebstick</defName>
+    <include>
+      <li>AAM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->Wielding [INITIATOR_possessive] [TOOL_label], a weapon said to have killed God, [INITIATOR_definite] confronted [RECIPIENT_definite]. Too fast for the eye to follow, [INITIATOR_pronoun] [slashed] [RECIPIENT_definite].\nEverybody clapped.</li>
+        <li>r_logentry(p=5)->Wielding [INITIATOR_possessive] [TOOL_label], a weapon said to have killed God, [INITIATOR_definite] confronted [RECIPIENT_definite]. Too fast for the eye to follow, [INITIATOR_pronoun] [slashed] [RECIPIENT_definite].\nThus the legend of [weeb_legend] was born.</li>
+        <li>r_logentry->Wielding [INITIATOR_possessive] [TOOL_label], a weapon said to have killed God, [INITIATOR_definite] confronted [RECIPIENT_definite]. Too fast for the eye to follow, [INITIATOR_pronoun] [slashed] [RECIPIENT_definite].\nNobody can be sure if the blade dealt the killing blow, or whether [INITIATOR_definite] is simply so edgy that [INITIATOR_possessive] powerful aura completely sapped [RECIPIENT_definite] of the will to live.</li>
       </rulesStrings>
     </rulePack>
   </RulePackDef>

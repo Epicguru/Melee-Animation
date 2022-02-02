@@ -232,7 +232,7 @@ namespace AAM
             }
 
             Log("Full patch list:");
-            Log(str.ToString());
+            Log(str2.ToString());
         }
 
         private void CheckSimpleSidearms()
@@ -241,10 +241,7 @@ namespace AAM
         }
     }
 
-    public class HotSwappableAttribute : Attribute
-    {
-
-    }
+    public class HotSwappableAttribute : Attribute { }
 
     public class TempComp : MapComponent
     {

@@ -115,21 +115,9 @@ namespace AAM.Grappling
                 if (pos.x < 0 || pos.z < 0 || pos.x >= size.x || pos.z >= size.z)
                     continue;
 
-                if (IsValidPawnPosFast(map, pos))
+                if (SpaceChecker.IsValidPawnPosFast(map, size.x, size.z, pos))
                     yield return pos;
             }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsValidPawnPosFast(in Map map, in IntVec3 cell)
-        {
-            // Based on Verb_Jump.ValidJumpTarget but does not consider map bounds since those have already been checked.
-            if (cell.Impassable(map) || !cell.Walkable(map))
-                return false;
-            
-            Building edifice = cell.GetEdifice(map);
-            Building_Door building_Door;
-            return edifice == null || (building_Door = (edifice as Building_Door)) == null || building_Door.Open;
         }
 
         public static IEnumerable<Pawn> GetGrabbablePawnsAround(Pawn pawn)

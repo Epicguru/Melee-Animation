@@ -23,6 +23,7 @@ public class AnimRenderer : IExposable
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
     public static IReadOnlyCollection<Pawn> CapturedPawns => pawnToRenderer.Keys;
     public static int TotalCapturedPawnCount => pawnToRenderer.Count;
+    public static List<AnimRenderer> PostLoadPendingAnimators = new List<AnimRenderer>();
 
     private static List<AnimRenderer> activeRenderers = new List<AnimRenderer>();
     private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new Dictionary<Pawn, AnimRenderer>();
@@ -74,8 +75,18 @@ public class AnimRenderer : IExposable
         return loaded;
     }
 
+    public static void ClearAll()
+    {
+        activeRenderers.Clear();
+        pawnToRenderer.Clear();
+        PostLoadPendingAnimators.Clear();
+        isItterating = false;
+    }
+
     public static void UpdateAll()
     {
+        AddFromPostLoad();
+
         isItterating = true;
         for (int i = 0; i < activeRenderers.Count; i++)
         {
@@ -93,6 +104,8 @@ public class AnimRenderer : IExposable
 
     public static void DrawAll(float dt, Map map, Action<Pawn, Vector2> labelDraw = null)
     {
+        AddFromPostLoad();
+
         isItterating = true;
         for(int i = 0; i < activeRenderers.Count; i++)
         {
@@ -119,6 +132,23 @@ public class AnimRenderer : IExposable
 
         }
         isItterating = false;
+    }
+
+    private static void AddFromPostLoad()
+    {
+        if (PostLoadPendingAnimators.Count == 0)
+            return;
+
+        foreach (var item in PostLoadPendingAnimators)
+        {
+            if (item == null)
+                continue;
+            item.ApplyPostLoad();
+            item.Register();
+        }
+
+        Core.Log($"Post-Load Init: Registered {PostLoadPendingAnimators.Count} pending animators.");
+        PostLoadPendingAnimators.Clear();
     }
 
     private static void DrawSingle(AnimRenderer renderer, float dt, Action<Pawn, Vector2> labelDraw = null)
@@ -200,7 +230,7 @@ public class AnimRenderer : IExposable
 
     private static void DestroyIntWorker(AnimRenderer renderer)
     {
-        renderer.WasInterrupted = renderer.CurrentTime < 0.999f;        
+        renderer.WasInterrupted = (renderer.Duration - renderer.CurrentTime) > (1f / 30f);        
 
         if (renderer.Pawns != null)
         {
@@ -210,7 +240,7 @@ public class AnimRenderer : IExposable
                     pawnToRenderer.Remove(pawn);
             }
         }
-        
+
         activeRenderers.Remove(renderer);
 
         try
@@ -263,6 +293,7 @@ public class AnimRenderer : IExposable
     /// Same as the <see cref="Duration"/>, but expressed in Rimworld ticks.
     /// </summary>
     public int DurationTicks => Mathf.RoundToInt(Duration * 60);
+
     /// <summary>
     /// The active animation def.
     /// </summary>
@@ -329,24 +360,34 @@ public class AnimRenderer : IExposable
     private AnimPartData[] bodies = new AnimPartData[8];
     private MaterialPropertyBlock pb;
     private float time = -1;
-    private List<ThingDef> itemTweakDefs = new List<ThingDef>();
-    private List<string> itemTweakParts = new List<string>();
-    private bool ignoreNewTweakApplications;
-    
-    private AnimRenderer()
+    private Pawn[] pawnsForPostLoad;
+
+    public AnimRenderer()
     {
+        
+    }
+
+    public AnimRenderer(AnimDef def, Map map)
+    {        
+        Map = map;
+        Def = def;
+        Init();
+    }
+
+    private void Init()
+    {
+        if (snapshots != null)
+        {
+            Core.Error("Init called multiple times!");
+            return;
+        }
+
         snapshots = new AnimPartSnapshot[Data.Parts.Count];
         overrides = new AnimPartOverrideData[Data.Parts.Count];
         pb = new MaterialPropertyBlock();
 
-        for (int i = 0; i < overrides.Length; i++)        
+        for (int i = 0; i < overrides.Length; i++)
             overrides[i] = new AnimPartOverrideData();
-    }
-
-    public AnimRenderer(AnimDef def, Map map) : this()
-    {        
-        Map = map;
-        Def = def;
     }
 
     public void ExposeData()
@@ -356,11 +397,58 @@ public class AnimRenderer : IExposable
         Scribe_Values.Look(ref MirrorHorizontal, "mirrorX");
         Scribe_Values.Look(ref MirrorVertical, "mirrorY");
         Scribe_Values.Look(ref Loop, "loop");
-        Scribe_Collections.Look(ref itemTweakDefs, "itemTweakDefs", LookMode.Def);
-        Scribe_Collections.Look(ref itemTweakParts, "itemTweakParts", LookMode.Value);
         Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
-        Scribe_Values.Look(ref RootTransform, "rootTransform");
+
+        if (Scribe.mode == LoadSaveMode.LoadingVars)
+            Init();
+
+        if (Scribe.mode == LoadSaveMode.PostLoadInit)
+        {
+            Pawns ??= new List<Pawn>();
+            pawnsForPostLoad = Pawns.ToArray();
+            Pawns.Clear();
+        }
+
+        try
+        {
+            switch (Scribe.mode)
+            {
+                case LoadSaveMode.Saving:
+                {
+                    string s = "";
+                    for (int i = 0; i < 16; i++)
+                    {
+                        s += RootTransform[i];
+                        if (i != 15)
+                            s += ',';
+                    }
+
+                    Scribe_Values.Look(ref s, "rootTransform");
+                    break;
+                }
+                case LoadSaveMode.LoadingVars:
+                {
+                    string s = string.Empty;
+                    Scribe_Values.Look(ref s, "rootTransform");
+                    string[] parts = s.Split(',');
+                    for (int i = 0; i < 16; i++)
+                    {
+                        RootTransform[i] = float.Parse(parts[i]);
+                    }
+
+                    break;
+                }
+                case LoadSaveMode.PostLoadInit:
+                    Core.Log($"Final matrix was {RootTransform}");
+                    break;
+            }
+        }
+        catch (Exception e)
+        {
+            Core.Error($"Exception exposing matrix during {Scribe.mode}:", e);
+        }
+        
 
         bool temp = IsDestroyed;
         Scribe_Values.Look(ref temp, "isDestroyed");
@@ -371,46 +459,6 @@ public class AnimRenderer : IExposable
         WasInterrupted = temp;
 
         // TODO workers at end.
-
-        if (Scribe.mode == LoadSaveMode.PostLoadInit && itemTweakDefs != null)
-        {
-            ignoreNewTweakApplications = true;
-            try
-            {
-                for (int i = 0; i < itemTweakDefs.Count; i++)
-                {
-                    var def = itemTweakDefs[i];
-                    var partName = itemTweakParts[i];
-                    if (def == null)
-                        continue;
-
-                    var tweak = TweakDataManager.TryGetTweak(def);
-                    if (tweak == null)
-                        continue;
-
-                    var part = GetPart(partName);
-                    if (part == null)
-                        continue;
-
-                    tweak.Apply(this, part);
-                }
-            }
-            catch(Exception e)
-            {
-                Core.Error("Exception loading item tweaks on animation:", e);
-            }
-            
-            ignoreNewTweakApplications = false;
-        }
-    }
-
-    public void OnApplyTweak(ItemTweakData tweak, AnimPartData part)
-    {
-        if (ignoreNewTweakApplications)
-            return;
-
-        itemTweakDefs.Add(tweak.GetDef());
-        itemTweakParts.Add(part.Name);
     }
 
     /// <summary>
@@ -446,10 +494,27 @@ public class AnimRenderer : IExposable
     /// </summary>
     public bool Register()
     {
+        if (IsDestroyed)
+        {
+            Core.Error("Tried to register an already destroyed AnimRenderer");
+            return false;
+        }
+
+        if (activeRenderers.Contains(this))
+        {
+            Core.Error("Tried to register AnimRenderer that is already in active list!");
+            return false;
+        }
+
         Pawn invalid = GetFirstInvalidPawn();
         if (invalid != null)
         {
             Core.Error($"Tried to start animation with 1 or more invalid pawn: [{invalid.Faction?.Name ?? "No faction"}] {invalid.NameFullColored}");
+            foreach (var pawn in Pawns)
+            {
+                if (!IsPawnValid(pawn))
+                    Core.Error($"Invalid Pawn '{pawn.NameShortColored}': Spawned: {pawn.Spawned}, Dead: {pawn.Dead}, Downed: {pawn.Downed}, HasHolderParent: {pawn.ParentHolder is not Verse.Map} ({pawn.ParentHolder}, {pawn.ParentHolder?.GetType().FullName})");
+            }
             IsDestroyed = true;
             return false;
         }
@@ -469,7 +534,12 @@ public class AnimRenderer : IExposable
             Core.Warn($"Started AnimRenderer with bad number of pawns! Expected {Def.pawnCount}, got {PawnCount}. (Def: {Def})");
 
         RegisterInt(this);
-        Seek(0f, null);
+
+        // This tempTime nonsense is necessary because time is written to directly by the ExposeData,
+        // and Seek will not run if time is already the target (seek) time.
+        float tempTime = time;
+        time = -1;
+        Seek(tempTime < 0 ? 0 : tempTime, null); // This will set time back to the correct value.
         return true;
     }
 
@@ -540,11 +610,11 @@ public class AnimRenderer : IExposable
     /// See <see cref="IsPawnValid(Pawn)"/> and <see cref="Pawns"/>.
     /// </summary>
     /// <returns>The first invalid pawn or null if all pawns are valid, or there are no pawns in this animation.</returns>
-    public Pawn GetFirstInvalidPawn()
+    public Pawn GetFirstInvalidPawn(bool ignoreNotSpawned = false)
     {
         foreach(var pawn in Pawns)
         {
-            if (pawn != null && !IsPawnValid(pawn))
+            if (pawn != null && !IsPawnValid(pawn, ignoreNotSpawned))
                 return pawn;
         }
         return null;
@@ -552,16 +622,11 @@ public class AnimRenderer : IExposable
 
     /// <summary>
     /// Is this pawn valid to be used in this animator?
-    /// Checks simple conditions such as not dead, destroyed, downed...
+    /// Checks simple conditions such as not dead, destroyed, downed, or held by another Thing...
     /// </summary>
-    public virtual bool IsPawnValid(Pawn p)
+    public virtual bool IsPawnValid(Pawn p, bool ignoreNotSpawned = false)
     {
-        return p is
-        {
-            Spawned: true,
-            Dead: false,
-            Downed: false
-        };
+        return p != null && (p.Spawned || ignoreNotSpawned) && !p.Dead && !p.Downed && (p.ParentHolder is Map || (p.ParentHolder == null && ignoreNotSpawned));
     }
 
     public Vector2 Draw(float? atTime, float? dt)
@@ -609,6 +674,17 @@ public class AnimRenderer : IExposable
         }        
 
         return range;
+    }
+
+    private void ApplyPostLoad()
+    {
+        if (pawnsForPostLoad == null)
+            return;
+
+        foreach (var pawn in pawnsForPostLoad)
+            AddPawn(pawn);
+
+        pawnsForPostLoad = null;
     }
 
     /// <summary>
@@ -741,5 +817,61 @@ public class AnimRenderer : IExposable
             return DefaultTransparent;        
 
         return DefaultCutout;
+    }
+
+    public bool AddPawn(Pawn pawn)
+    {
+        if (pawn == null)
+            return false;
+
+        int index = Pawns.Count;
+        Pawns.Add(pawn);
+        char tagChar = AnimRenderer.Alphabet[index];
+
+        // Held item.
+        string itemName = $"Item{tagChar}";
+        var weapon = pawn.GetFirstMeleeWeapon();
+        var tweak = weapon == null ? null : TweakDataManager.GetOrCreateDefaultTweak(weapon.def);
+        var handsMode = tweak?.HandsMode ?? HandsMode.Default;
+
+        // Hands and skin color...
+        string mainHandName = $"HandA{(index > 0 ? (index + 1) : "")}";
+        string altHandName = $"HandB{(index > 0 ? (index + 1) : "")}";
+
+        Color skinColor = pawn.story?.SkinColor ?? Color.white;
+        bool showMain = weapon != null && handsMode != HandsMode.No_Hands;
+        bool showAlt = weapon != null && handsMode == HandsMode.Default;
+
+        // Apply weapon.
+        var itemPart = GetPart(itemName);
+        if (weapon != null && itemPart != null)
+        {
+            tweak.Apply(this, itemPart);
+            var ov = GetOverride(itemPart);
+            ov.Material = weapon.Graphic?.MatSingleFor(weapon);
+            ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
+        }
+
+        // Apply main hand.
+        var mainHandPart = GetPart(mainHandName);
+        if (mainHandPart != null)
+        {
+            var ov = GetOverride(mainHandPart);
+            ov.PreventDraw = !showMain;
+            ov.Texture = AnimationManager.HandTexture;
+            ov.ColorOverride = skinColor;
+        }
+
+        // Apply alt hand.
+        var altHandPart = GetPart(altHandName);
+        if (mainHandPart != null)
+        {
+            var ov = GetOverride(altHandPart);
+            ov.PreventDraw = !showAlt;
+            ov.Texture = AnimationManager.HandTexture;
+            ov.ColorOverride = skinColor;
+        }
+
+        return true;
     }
 }
