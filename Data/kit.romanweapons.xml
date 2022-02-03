@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>kit.romanweapons</mod>
+	<modName>Kit's Roman Weapons</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>KIT_MeleeWeapon_Dolabra</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/Dolabra</tex>
+			<ofX>0.1467391</ofX>
+			<ofY>-0.01902174</ofY>
+			<tag>18</tag>
+		</li>
+		<li>
+			<dId>KIT_MeleeWeapon_Hasta</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/Hasta</tex>
+			<ofX>0.2608696</ofX>
+			<rot>45</rot>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<tag>4</tag>
+		</li>
+		<li>
+			<dId>KIT_MeleeWeapon_Pugio</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/Pugio</tex>
+			<ofX>0.1929348</ofX>
+			<ofY>-0.0326087</ofY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>48</tag>
+		</li>
+		<li>
+			<dId>KIT_MeleeWeapon_Falx</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/Falx</tex>
+			<ofX>0.1820652</ofX>
+			<ofY>-0.0625</ofY>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<flY>True</flY>
+			<tag>18</tag>
+		</li>
+	</items>
+</Data>

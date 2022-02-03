@@ -266,7 +266,10 @@ public class AnimData
         this.sections = GenerateSections();
 
         for (int i = 0; i < parts.Length; i++)        
-            parts[i].Index = i;        
+            parts[i].Index = i;
+
+        for (int i = 0; i < this.events.Length; i++)
+            this.events[i].Index = i;
     }
 
     public AnimPartData GetPart(string name)

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using HarmonyLib;
 using UnityEngine;
 
 namespace AAM.Events;
@@ -55,6 +53,7 @@ public abstract class EventBase : ScriptableObject
 
     public abstract string EventID { get; }
     public float Time;
+    public int Index;
 
     public abstract void Expose();
 

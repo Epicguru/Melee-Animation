@@ -5,6 +5,7 @@ using AAM.Patches;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AAM.Tweaks;
 using UnityEngine;
 using Verse;
@@ -198,28 +199,6 @@ public class AnimRenderer : IExposable
                 vector.y = UI.screenHeight - vector.y;
                 labelDraw?.Invoke(pawn, vector);
             }
-
-            // TODO remove this awful way of making job and move to somewhere more sensible.
-
-            // Create animation job for all pawns involved, if necessary.
-            if (pawn.jobs != null && pawn.CurJobDef != AAM_DefOf.AAM_InAnimation && renderer.CurrentTime < renderer.Duration * 0.95f)
-            {
-                var newJob = JobMaker.MakeJob(AAM_DefOf.AAM_InAnimation);
-                
-                newJob.collideWithPawns = true;
-                newJob.playerForced = true;
-                if (pawn.verbTracker?.AllVerbs != null)
-                    foreach (var verb in pawn.verbTracker.AllVerbs)
-                        verb.Reset();
-
-
-                if (pawn.equipment?.AllEquipmentVerbs != null)
-                    foreach (var verb in pawn.equipment.AllEquipmentVerbs)
-                        verb.Reset();
-
-                pawn.jobs.StartJob(newJob, JobCondition.InterruptForced, null, false, true, null);
-                madeJobCount++;
-            }
         }
 
         if (madeJobCount > 0)
@@ -357,10 +336,11 @@ public class AnimRenderer : IExposable
     internal List<(EventBase e, EventWorkerBase worker)> workersAtEnd = new List<(EventBase e, EventWorkerBase worker)>();
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
-    private AnimPartData[] bodies = new AnimPartData[8];
+    private AnimPartData[] bodies = new AnimPartData[8]; // TODO REPLACE WITH LIST OR DICT.
     private MaterialPropertyBlock pb;
     private float time = -1;
     private Pawn[] pawnsForPostLoad;
+    private bool hasStarted;
 
     public AnimRenderer()
     {
@@ -397,11 +377,35 @@ public class AnimRenderer : IExposable
         Scribe_Values.Look(ref MirrorHorizontal, "mirrorX");
         Scribe_Values.Look(ref MirrorVertical, "mirrorY");
         Scribe_Values.Look(ref Loop, "loop");
+        Scribe_Values.Look(ref hasStarted, "hasStarted");
         Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
 
         if (Scribe.mode == LoadSaveMode.LoadingVars)
+        {
             Init();
+
+            // Load workers-at-end.
+            workersAtEnd.Clear();
+            List<int> endEventIndices = new List<int>();
+            Scribe_Collections.Look(ref endEventIndices, "endEventIndices");
+            if (endEventIndices != null && Def != null)
+            {
+                try
+                {
+                    foreach (int index in endEventIndices)
+                    {
+                        var e = Def.Data.Events[index];
+                        var worker = e.GetWorker<EventWorkerBase>();
+                        workersAtEnd.Add((e, worker));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Core.Error($"Exception loading end-of-clip events from indices. Has the animation changed?", e);
+                }
+            }
+        }
 
         if (Scribe.mode == LoadSaveMode.PostLoadInit)
         {
@@ -416,6 +420,7 @@ public class AnimRenderer : IExposable
             {
                 case LoadSaveMode.Saving:
                 {
+                    // Save the root transform matrix.
                     string s = "";
                     for (int i = 0; i < 16; i++)
                     {
@@ -423,8 +428,11 @@ public class AnimRenderer : IExposable
                         if (i != 15)
                             s += ',';
                     }
-
                     Scribe_Values.Look(ref s, "rootTransform");
+
+                    // Save the workers-at-end.
+                    List<int> endEventIndices = workersAtEnd.Select(p => p.e.Index).ToList();
+                    Scribe_Collections.Look(ref endEventIndices, "endEventIndices");
                     break;
                 }
                 case LoadSaveMode.LoadingVars:
@@ -534,6 +542,12 @@ public class AnimRenderer : IExposable
             Core.Warn($"Started AnimRenderer with bad number of pawns! Expected {Def.pawnCount}, got {PawnCount}. (Def: {Def})");
 
         RegisterInt(this);
+
+        if (!hasStarted)
+        {
+            hasStarted = true;
+            OnStart();
+        }
 
         // This tempTime nonsense is necessary because time is written to directly by the ExposeData,
         // and Seek will not run if time is already the target (seek) time.
@@ -730,6 +744,29 @@ public class AnimRenderer : IExposable
 
     public void OnStart()
     {
+        // Give pawns their jobs.
+        foreach (var pawn in Pawns)
+        {
+            var newJob = JobMaker.MakeJob(AAM_DefOf.AAM_InAnimation);
+
+            if (pawn.verbTracker?.AllVerbs != null)
+                foreach (var verb in pawn.verbTracker.AllVerbs)
+                    verb.Reset();
+
+
+            if (pawn.equipment?.AllEquipmentVerbs != null)
+                foreach (var verb in pawn.equipment.AllEquipmentVerbs)
+                    verb.Reset();
+
+            pawn.jobs.StartJob(newJob, JobCondition.InterruptForced, null, false, true, null);
+
+            if (pawn.CurJobDef != AAM_DefOf.AAM_InAnimation)
+            {
+                Core.Error($"CRITICAL ERROR: Failed to force interrupt {pawn}'s job with animation job. Likely a mod conflict.");
+            }
+        }
+
+        // Teleport pawns to their starting positions. They should already be there, but check just in case.
         IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
         basePos.y = 0;
 
@@ -741,7 +778,6 @@ public class AnimRenderer : IExposable
 
             var offset = Def.TryGetCell(AnimCellData.Type.PawnStart, MirrorHorizontal, MirrorVertical, i) ?? IntVec2.Zero;
             TeleportPawn(pawn, basePos + offset.ToIntVec3);
-            // TODO GIVE JOB HERE.
         }
     }
 
@@ -772,7 +808,7 @@ public class AnimRenderer : IExposable
         {
             try
             {
-                item.worker.Run(new AnimEventInput(item.e, this, false, null));
+                item.worker?.Run(new AnimEventInput(item.e, this, false, null));
             }
             catch(Exception e)
             {
@@ -802,7 +838,6 @@ public class AnimRenderer : IExposable
 
     protected virtual bool ShouldDraw(in AnimPartSnapshot snapshot)
     {
-        // TODO: Check scale too?
         return snapshot.Active && !GetOverride(snapshot).PreventDraw && snapshot.FinalColor.a > 0;
     }
 

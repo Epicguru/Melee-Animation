@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>oskarpotocki.vfe.pirates</mod>
+	<modName>Vanilla Factions Expanded - Pirates</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>VFEP_WarcasketMeleeWeapon_CombatKnife</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Weapons/WarcasketCombatKnife</tex>
+			<ofX>0.2961957</ofX>
+			<scX>1.7</scX>
+			<scY>1.7</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>54</tag>
+		</li>
+		<li>
+			<dId>VFEP_WarcasketMeleeWeapon_Broadsword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Weapons/WarcasketBroadsword</tex>
+			<ofX>0.6467391</ofX>
+			<ofY>0.008152174</ofY>
+			<rot>45</rot>
+			<scX>1.7</scX>
+			<scY>1.7</scY>
+		</li>
+		<li>
+			<dId>VFEP_Rum</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Drugs/Rum/Rum_a</tex>
+			<ofX>0.1358696</ofX>
+			<rot>-90</rot>
+			<scX>0.6</scX>
+			<scY>0.6</scY>
+			<hnd>Only_Main_Hand</hnd>
+		</li>
+	</items>
+</Data>

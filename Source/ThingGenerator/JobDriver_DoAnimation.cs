@@ -29,9 +29,17 @@ namespace AAM
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
+            job.collideWithPawns = true;
+            job.playerForced = true;
+
             var toil = new Toil();
+            toil.handlingFacing = true;
             toil.defaultCompleteMode = ToilCompleteMode.Never;
-            toil.tickAction = () => { };
+            toil.tickAction = () =>
+            {
+                // TODO FROM ANIMATION ROTATION.
+                //job.overrideFacing = ;
+            };
             toil.AddEndCondition(() =>
             {
                 if (ShouldContinue)
@@ -39,11 +47,6 @@ namespace AAM
                 return JobCondition.Succeeded;
             });
             yield return toil;
-        }
-
-        public override void ExposeData()
-        {
-            base.ExposeData();
         }
 
         public Pawn GetFirstPawnNotSelf()

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>mlie.cyberneticwarfare</mod>
+	<modName>Cybernetic Warfare and Special Weapons (Continued)</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>CW_ChainSword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/ChainSword</tex>
+			<ofX>0.4347826</ofX>
+			<ofY>-0.07608695</ofY>
+			<scX>1.4</scX>
+			<scY>1.4</scY>
+			<tag>2</tag>
+		</li>
+		<li>
+			<dId>CW_EnergySword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/EnergySword</tex>
+			<ofX>0.4266304</ofX>
+			<ofY>-0.01086957</ofY>
+			<scX>1.5</scX>
+			<scY>1.5</scY>
+		</li>
+		<li>
+			<dId>CW_PowerFist</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/PowerFist</tex>
+			<ofX>0.2798913</ofX>
+			<ofY>0.04076087</ofY>
+			<scX>1.2</scX>
+			<scY>1.2</scY>
+			<hnd>No_Hands</hnd>
+			<tag>8</tag>
+		</li>
+		<li>
+			<dId>CW_EnergyClaw</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/WeaponMelee/EnergyClaw</tex>
+			<ofX>0.2119565</ofX>
+			<ofY>0.1684783</ofY>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<hnd>No_Hands</hnd>
+			<tag>48</tag>
+		</li>
+	</items>
+</Data>

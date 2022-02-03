@@ -71,5 +71,18 @@ namespace AAM
         public static T GetWorker<T>(this EventBase e) where T : EventWorkerBase => EventWorkerBase.GetWorker(e.EventID) as T;
 
         public static float RandomInRange(this in Vector2 range) => Rand.Range(range.x, range.y);
+
+        [DebugAction("Advanced Animation Mod", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void GimmeMeleeWeapons()
+        {
+            var pos = Verse.UI.MouseCell();
+            foreach (var def in DefDatabase<ThingDef>.AllDefsListForReading)
+            {
+                if (def.IsMeleeWeapon)
+                {
+                    DebugThingPlaceHelper.DebugSpawn(def, pos, 1, false);
+                }
+            }
+        }
     }
 }

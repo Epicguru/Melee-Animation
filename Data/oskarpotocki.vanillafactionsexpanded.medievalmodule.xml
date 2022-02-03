@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>oskarpotocki.vanillafactionsexpanded.medievalmodule</mod>
+	<modName>Vanilla Factions Expanded - Medieval</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>VFEM_Wine</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Drug/Wine/Wine_a</tex>
+			<ofX>0.1521739</ofX>
+			<ofY>-0.01902174</ofY>
+			<rot>-90</rot>
+			<scX>0.7</scX>
+			<scY>0.7</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<tag>8</tag>
+		</li>
+		<li>
+			<dId>VFEM_MeleeWeapon_HeavyMace</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/HeavyMace</tex>
+			<ofX>0.1875</ofX>
+			<ofY>-0.01630435</ofY>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+			<tag>1</tag>
+		</li>
+		<li>
+			<dId>VFEM_MeleeWeapon_Claymore</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/Claymore</tex>
+			<ofX>0.4592391</ofX>
+			<ofY>-0.02717391</ofY>
+			<rot>45</rot>
+			<scX>1.1</scX>
+			<scY>1.1</scY>
+		</li>
+	</items>
+</Data>
