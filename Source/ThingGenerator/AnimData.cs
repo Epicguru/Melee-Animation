@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using AAM.Events;
 using UnityEngine;
+using System.Runtime.InteropServices;
 #if !UNITY_EDITOR
 using Verse;
 using AAM;
@@ -155,9 +156,7 @@ public class AnimData
         {
             string saveData = reader.ReadString();
             float time = reader.ReadSingle();
-            Core.Log($"Creating from {saveData}");
             var e = EventBase.CreateFromSaveData(saveData);
-            Core.Log($"Created: {e}");
             e.Time = time;
             events[i] = e;
         }
@@ -165,7 +164,7 @@ public class AnimData
         AnimPartData[] parts = new AnimPartData[partCount];
         short[] parentIds = new short[partCount];
 
-        Core.Log($"Read events ({partCount} parts).");
+        //Core.Log($"Read events ({partCount} parts).");
 
         // Initialize parts and read paths & texture paths.
         for (int i = 0; i < partCount; i++)
@@ -191,7 +190,7 @@ public class AnimData
             part.TransparentByDefault = defaultTrs;
 
             parts[i] = part;
-            Core.Log($"Read part {i}: {part.Path}, P:{parentIds[i]}, CN:{part.CustomName}, Tex:{part.TexturePath}");
+            //Core.Log($"Read part {i}: {part.Path}, P:{parentIds[i]}, CN:{part.CustomName}, Tex:{part.TexturePath}");
         }
 
         // Assign parent references now that all parts are created.
@@ -208,7 +207,7 @@ public class AnimData
         // Curve count.
         int curveCount = reader.ReadInt32();
 
-        Core.Log("Read curve count.");
+        //Core.Log("Read curve count.");
 
         // Read curves and populate part data.
         for (int i = 0; i < curveCount; i++)
@@ -242,7 +241,31 @@ public class AnimData
             }
         }
 
-        return new AnimData(clipName, length, parts, events);
+        // Read sweeps.
+        var sweeps = new Dictionary<AnimPartData, List<SweepPointCollection>>();
+        int sweepCount = reader.ReadInt32();
+        for (int i = 0; i < sweepCount; i++)
+        {
+            // Parent index.
+            int sweepObjIndex = reader.ReadInt32();
+            var part = parts[sweepObjIndex];
+
+            // Actual data.
+            var sweep = new SweepPointCollection();
+            sweep.Read(reader);
+
+            if (!sweeps.TryGetValue(part, out var list))
+            {
+                list = new List<SweepPointCollection>();
+                sweeps.Add(part, list);
+            }
+            list.Add(sweep);
+        }
+
+        return new AnimData(clipName, length, parts, events)
+        {
+            sweeps = sweeps
+        };
     }
     
     #endregion
@@ -252,10 +275,13 @@ public class AnimData
     public IReadOnlyList<AnimPartData> Parts => parts;
     public IReadOnlyList<EventBase> Events => events;
     public IReadOnlyList<AnimSection> Sections => sections;
+    public int SweepDataCount => sweeps.Count;
+    public IEnumerable<AnimPartData> PartsWithSweepData => sweeps.Keys;
 
     private AnimPartData[] parts;
     private EventBase[] events;
     private AnimSection[] sections;
+    private Dictionary<AnimPartData, List<SweepPointCollection>> sweeps;
 
     public AnimData(string name, float duration, AnimPartData[] parts, EventBase[] events)
     {
@@ -286,6 +312,13 @@ public class AnimData
         Core.Warn($"Failed to find part called '{name}'");
 #endif
         return null;
+    }
+
+    public IReadOnlyList<SweepPointCollection> GetSweepPaths(AnimPartData forPart)
+    {
+        if (forPart != null && sweeps.TryGetValue(forPart, out var found))
+            return found;
+        return Array.Empty<SweepPointCollection>();
     }
 
     public IEnumerable<EventBase> GetEventsInPeriod(Vector2 range)
@@ -360,6 +393,7 @@ public class AnimPartData
     public AnimationCurve ColR, ColG, ColB, ColA;
     public AnimationCurve FlipX, FlipY;
     public AnimationCurve Active;
+    public AnimationCurve Direction;
 
     public ref AnimationCurve GetCurve(byte type, byte field)
     {
@@ -424,6 +458,14 @@ public class AnimPartData
                 return ref Active;
         }
 
+        // TYPE: Direction (PawnBody)
+        if (type == 4)
+        {
+            if (field == 1)
+                return ref Direction;
+        }
+
+        Core.Error($"Invalid curve ID: Type: {type}, Field: {field}");
         return ref dummy; // Shut up compiler.
     }
 
@@ -472,14 +514,15 @@ public struct AnimPartSnapshot
     public float DataA, DataB, DataC;
     public bool FlipX, FlipY;
     public bool Active;
+    public Rot4 Direction; // TODO populate.
 
     public Matrix4x4 LocalMatrix;
     public Matrix4x4 WorldMatrix;
 
     public AnimPartSnapshot(AnimPartData part, AnimRenderer renderer, float time)
     {
-        Part = part ?? throw new System.ArgumentNullException(nameof(part));
-        Renderer = renderer ?? throw new System.ArgumentNullException(nameof(renderer));
+        Part = part ?? throw new ArgumentNullException(nameof(part));
+        Renderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
         Time = time;
 
         var d = part;
@@ -500,6 +543,8 @@ public struct AnimPartSnapshot
 
         Active = Eval(d.Active, t) >= 0.5f;
 
+        Direction = new Rot4((byte)Eval(d.Direction, t));
+
         LocalMatrix = default;
         WorldMatrix = default;
         UpdateLocalMatrix();
@@ -508,6 +553,22 @@ public struct AnimPartSnapshot
     public Vector3 GetWorldPosition(Vector3 localPos = default)
     {
         return (Renderer.RootTransform * WorldMatrix).MultiplyPoint3x4(localPos);
+    }
+
+    public Rot4 GetWorldDirection()
+    {
+        // Should this respect flip?
+        // Override flip too?
+        bool mx = Renderer.MirrorHorizontal;
+        bool my = Renderer.MirrorVertical;
+        return Direction.AsInt switch
+        {
+            0 => my ? Rot4.South : Rot4.North, // North
+            1 => mx ? Rot4.West : Rot4.East, // East
+            2 => my ? Rot4.North : Rot4.South, // South
+            3 => mx ? Rot4.East : Rot4.West, // West
+            _ => throw new Exception("Invalid")
+        };
     }
 
     public float GetWorldRotation()
@@ -525,8 +586,14 @@ public struct AnimPartSnapshot
         if (Part?.Parent == null)
             return LocalMatrix;
 
-        Active = Active && Renderer.GetSnapshot(Part.Parent).Active;
         return Renderer.GetSnapshot(Part.Parent).MakeWorldMatrix() * LocalMatrix;
+    }
+
+    private bool MakeHierarchyActive()
+    {
+        if (Part?.Parent == null)
+            return Active;
+        return Active && Renderer.GetSnapshot(Part.Parent).MakeHierarchyActive();
     }
 
     public void UpdateWorldMatrix(bool mirrorX, bool mirrorY)
@@ -546,6 +613,7 @@ public struct AnimPartSnapshot
         float offRot = fx ^ fy ? -ov.LocalRotation : ov.LocalRotation;
         var adjust = Matrix4x4.TRS(new Vector3(off.x, 0f, off.y), Quaternion.Euler(0, offRot, 0f), new Vector3(ov.LocalScaleFactor.x, 1f, ov.LocalScaleFactor.y));
 
+        Active = MakeHierarchyActive();
         WorldMatrix = preProc * MakeWorldMatrix() * adjust * postProc;
     }
 
@@ -711,3 +779,184 @@ public class SpaceRequirement
         Gizmos.DrawWireCube(center, size);
     }
 }
+
+public class SweepPointCollection
+{
+    public int Count => points?.Length ?? 0;
+    public IReadOnlyList<SweepPoint> Points => points ?? (IReadOnlyList<SweepPoint>)writePoints;
+
+    private readonly List<SweepPoint> writePoints = new List<SweepPoint>();
+    private SweepPoint[] points;
+    private float currTime;
+    private int currIndex;
+
+    public void Add(in SweepPoint point)
+    {
+        writePoints.Add(point);
+    }
+
+    public void EndAdd()
+    {
+        points = writePoints.ToArray();
+        writePoints.Clear();
+    }
+
+    public void Write(BinaryWriter writer)
+    {
+        // Length.
+        writer.Write(points?.Length ?? 0);
+
+        // Points.
+        if (points != null)
+        {
+            foreach (var p in points)
+                p.Write(writer);
+        }
+    }
+
+    public void Read(BinaryReader reader)
+    {
+        int count = reader.ReadInt32();
+
+        points = new SweepPoint[count];
+        for(int i = 0; i < points.Length; i++)
+            points[i].Read(reader);
+    }
+
+    public IEnumerable<SweepPoint> Seek(float newTime)
+    {
+        // Check for no movement.
+        if (newTime == currTime)
+            yield break;
+
+        // Check rewind.
+        bool rewind = newTime < currTime;
+        if (rewind)
+        {
+            currTime = newTime;
+            currIndex = GetIndexForTime(newTime);
+            yield break;
+        }
+
+        // Moving forwards...
+        int c = currIndex;
+        while (points[c].Time < newTime)
+        {
+            yield return points[c];
+            c++;
+        }
+        currTime = newTime;
+        currIndex = c;
+    }
+
+    public void RecalculateVelocities(float downDst, float upDst)
+    {
+        Vector3 prevDown = default;
+        Vector3 prevUp = default;
+        float prevTime = 0;
+
+        for (int i = 0; i < points.Length; i++)
+        {
+            if(i != 0)
+                points[i].SetVelocity(downDst, upDst, prevDown, prevUp, prevTime);
+
+            points[i].GetEndPoints(downDst, upDst, out prevDown, out prevUp);
+            prevTime = points[i].Time;
+        }
+    }
+
+    private int GetIndexForTime(float time)
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+            if (points[i].Time > time)
+                return i;
+        }
+        return points.Length - 1;
+    }
+
+    public SweepPointCollection Clone()
+    {
+        var created = new SweepPointCollection();
+        created.points = new SweepPoint[points?.Length ?? 0];
+        if (points != null)
+            Array.Copy(points, created.points, points.Length);
+        return created;
+    }
+
+    public void Clear()
+    {
+        writePoints.Clear();
+        points = null;
+    }
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct SweepPoint
+{
+    public float Time;
+    public float X, Z;
+    public float DX, DZ;
+    public bool Disable;
+    public float VelocityTop, VelocityBottom;
+
+    public SweepPoint(float time, Vector3 position, float dx, float dz, bool disable = false)
+    {
+        Time = time;
+        X = position.x;
+        Z = position.z;
+        DX = dx;
+        DZ = dz;
+        Disable = disable;
+        VelocityTop = 0;
+        VelocityBottom = 0;
+    }
+
+    public void Write(BinaryWriter writer)
+    {
+        writer.Write(Time);
+        writer.Write(X);
+        writer.Write(Z);
+        writer.Write(DX);
+        writer.Write(DZ);
+        writer.Write(Disable);
+    }
+
+    public void Read(BinaryReader reader)
+    {
+        Time = reader.ReadSingle();
+        X = reader.ReadSingle();
+        Z = reader.ReadSingle();
+        DX = reader.ReadSingle();
+        DZ = reader.ReadSingle();
+        Disable = reader.ReadBoolean();
+    }
+
+    public void GetEndPoints(float downDst, float upDst, out Vector3 down, out Vector3 up)
+    {
+        down = new Vector3(X, 0, Z) + new Vector3(DX, 0, DZ) * downDst;
+        up   = new Vector3(X, 0, Z) + new Vector3(DX, 0, DZ) * upDst;
+    }
+
+    public void SetZeroVelocity()
+    {
+        VelocityBottom = 0;
+        VelocityTop = 0;
+    }
+
+    public void SetVelocity(float downDst, float upDst, Vector3 prevDown, Vector3 prevUp, float prevTime)
+    {
+        float timeDelta = this.Time - prevTime;
+        if (timeDelta == 0)
+            throw new Exception("Bad time delta.");
+
+        GetEndPoints(downDst, upDst, out var down, out var up);
+
+        downDst = Vector3.Distance(prevDown, down);
+        upDst = Vector3.Distance(prevUp, up);
+
+        VelocityBottom = downDst / timeDelta;
+        VelocityTop = upDst / timeDelta;
+    }
+}
+

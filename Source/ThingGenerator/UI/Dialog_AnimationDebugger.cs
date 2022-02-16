@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AAM.Tweaks;
 using EpicUtils;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace AAM.UI
 {
@@ -25,12 +27,31 @@ namespace AAM.UI
 
         public int SelectedIndex;
         public List<(string name, Action<Listing_Standard> tab)> Tabs = new List<(string name, Action<Listing_Standard> tab)>();
+        public static bool IsInRehearsalMode => startRehearsal && IsStarterOpen;
+        private static bool IsStarterOpen => Mathf.Abs(lastOpenStarterTime - Time.realtimeSinceStartup) < 0.25f;
+
+        private static AnimRenderer selectedRenderer;
+        private static AnimPartData selectedPart;
+        private static SweepPointCollection selectedSweepPath;
+        private static float currentUp, currentDown;
+        private static Pawn[] startPawns = new Pawn[8];
+        private static AnimDef startDef;
+        private static bool startMX, startMY;
+        private static bool startRehearsal = true;
+        private static LocalTargetInfo startTarget = LocalTargetInfo.Invalid;
+        private static float lastOpenStarterTime;
+        private static int trailSegments = 3;
+        private static float trailTime = 0.1f;
+        public static float trailMinSpeed = 0f, trailMaxSpeed = 25f;
 
         private Vector2[] scrolls = new Vector2[32];
         private int scrollIndex;
         private AnimDef spaceCheckDef;
         private bool spaceCheckMX, spaceCheckMY;
-        private bool drawSpaceCheck;
+        private bool autoSelectRenderer = true;
+        private float rtScale = 1f;
+        private Queue<Action> toDraw = new Queue<Action>();
+        private Rect originalRect;
 
         public Dialog_AnimationDebugger()
         {
@@ -45,8 +66,13 @@ namespace AAM.UI
             onlyOneOfTypeAllowed = false;
 
             Tabs.Add(("Active Animation Inspector", DrawAllAnimators));
+            Tabs.Add(("Animation Starter", DrawAnimationStarter));
+            Tabs.Add(("Hierarchy", DrawHierarchy));
+            Tabs.Add(("Inspector", DrawInspector));
             Tabs.Add(("Layer Debugger", DrawLayerDebugger));
             Tabs.Add(("Animation Space Checker", DrawSpaceChecker));
+            Tabs.Add(("Sweep Path Inspector", DrawSweepInspector));
+            Tabs.Add(("Sweep Path Renderer", DrawSweepRendererInspector));
             Tabs.Add(("List All Active", DrawAllLists));
         }
 
@@ -57,8 +83,14 @@ namespace AAM.UI
 
         public override void DoWindowContents(Rect inRect)
         {
+            originalRect = inRect;
+
+            if (selectedRenderer != null && selectedRenderer.IsDestroyed)
+                selectedRenderer = null;
+            if (autoSelectRenderer && selectedRenderer == null)
+                selectedRenderer = AnimRenderer.ActiveRenderers.FirstOrDefault(r => !r.IsDestroyed && r.Map == Find.CurrentMap);
+
             scrollIndex = 0;
-            drawSpaceCheck = false;
 
             var ui = new Listing_Standard();
             ui.Begin(inRect);
@@ -92,44 +124,22 @@ namespace AAM.UI
         {
             base.WindowUpdate();
 
-            // Space check draw.
-            if (drawSpaceCheck && spaceCheckDef != null)
-            {
-                IntVec3 mp = Verse.UI.MouseCell();
-                foreach (var cell in spaceCheckDef.GetMustBeClearCells(spaceCheckMX, spaceCheckMY, mp))
-                {
-                    GenDraw.DrawTargetHighlight(new LocalTargetInfo(cell));
-                }
-            }
-        }
-
-        private static IEnumerable<Pawn> GetAllPawns()
-        {
-            if (Find.CurrentMap == null)
-                yield break;
-
-            foreach(var pawn in Find.CurrentMap.mapPawns.AllPawnsSpawned)
-            {
-                if (pawn.Destroyed || pawn.Dead || pawn.Downed)
-                    continue;
-
-                if (pawn.RaceProps.Animal)
-                    continue;
-
-                yield return pawn;
-            }
+            while (toDraw.TryDequeue(out var action))
+                action();
         }
 
         private void DrawLayerDebugger(Listing_Standard ui)
         {
-            var anim = AnimRenderer.ActiveRenderers.FirstOrFallback();
-            if (anim == null)
+            if (selectedRenderer == null)
+            {
+                ui.Label("No animator selected. Select an animator using the Active Animation Inspector window.");
                 return;
+            }
 
-            var list = anim.Def.Data.Parts.Select(part => anim.GetSnapshot(part)).ToList();
+            var list = selectedRenderer.Def.Data.Parts.Select(part => selectedRenderer.GetSnapshot(part)).ToList();
             list.SortBy(ss => ss.GetWorldPosition().y);
 
-            float bodyBase = anim.GetPart("BodyA")?.GetSnapshot(anim).GetWorldPosition().y ?? AltitudeLayer.Pawn.AltitudeFor();
+            float bodyBase = selectedRenderer.GetPart("BodyA")?.GetSnapshot(selectedRenderer).GetWorldPosition().y ?? AltitudeLayer.Pawn.AltitudeFor();
             float clothesTop = bodyBase + 0.023166021f + 0.0028957527f;
             bool drawnClothes = false;
 
@@ -161,7 +171,19 @@ namespace AAM.UI
             {
                 var rect = ui.GetRect(130);
 
+                if (renderer == selectedRenderer)
+                {
+                    var c = Color.cyan;
+                    c.a = 0.3f;
+                    Widgets.DrawBoxSolid(rect, c);
+                }
+                else if (Widgets.ButtonInvisible(rect))
+                {
+                    selectedRenderer = renderer;
+                }
+
                 Widgets.DrawBox(rect);
+
                 string title = $"[{renderer.CurrentTime:F2} / {renderer.Data.Duration:F2}] {renderer.Data.Name}";
                 if (renderer.IsDestroyed)
                     title += " <color=red>[DESTROYED]</color>";
@@ -259,7 +281,18 @@ namespace AAM.UI
 
         private void DrawSpaceChecker(Listing_Standard ui)
         {
-            drawSpaceCheck = true;
+            if (Event.current.type == EventType.Repaint)
+            {
+                toDraw.Enqueue(() =>
+                {
+                    IntVec3 mp = Verse.UI.MouseCell();
+                    foreach (var cell in spaceCheckDef.GetMustBeClearCells(spaceCheckMX, spaceCheckMY, mp))
+                    {
+                        GenDraw.DrawTargetHighlight(new LocalTargetInfo(cell));
+                    }
+                });
+            }
+
             if (ui.ButtonText(spaceCheckDef?.LabelCap.ToString() ?? "<Select Def>"))
             {
                 var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, d.LabelCap, tooltip: d.defName));
@@ -293,6 +326,515 @@ namespace AAM.UI
             {
                 var renderer = AnimRenderer.TryGetAnimator(pawn);
                 ui.Label($"{pawn.LabelShort} -> {renderer.Def} @ {renderer.CurrentTime} on {renderer.Map}");
+            }
+        }
+
+        private void DrawHierarchy(Listing_Standard ui)
+        {
+            if (selectedRenderer == null)
+            {
+                ui.Label("No animator selected. Select an animator using the Active Animation Inspector window.");
+                return;
+            }
+
+            #region Build Hierarchy
+            var roots = new List<Node>();
+            var toAdd = new List<AnimPartData>(selectedRenderer.Def.Data.Parts);
+
+            bool Insert(AnimPartData part)
+            {
+                if (part.Parent == null)
+                {
+                    roots.Add(new Node(part));
+                    return true;
+                }
+                foreach (var node in roots)
+                {
+                    if (node.Insert(part))
+                        return true;
+                }
+                return false;
+            }
+
+            int max = 1000;
+            while (toAdd.Count > 0)
+            {
+                toAdd.RemoveAll(Insert);
+
+                max--;
+                if (max == 0)
+                {
+                    Core.Error("MAX HIT! Bugged animation?");
+                    break;
+                }
+            }
+            #endregion
+
+            void DrawNode(Node node)
+            {
+                var rect = ui.GetRect(28);
+                Widgets.DrawHighlightIfMouseover(rect);
+                if (Widgets.ButtonInvisible(rect))
+                {
+                    selectedPart = node.Part;
+                }
+                if (selectedPart == node.Part)
+                {
+                    var c = Color.cyan;
+                    c.a = 0.25f;
+                    Widgets.DrawBoxSolid(rect, c);
+                }
+
+                bool active = selectedRenderer.GetSnapshot(node.Part).Active;
+                GUI.color = !active ? Color.Lerp(Color.red, Color.grey, 0.5f) : Color.white;
+                Widgets.Label(rect, node.Part.Name);
+                GUI.color = Color.white;
+
+                ui.Indent(20);
+                foreach (var child in node.Children)
+                    DrawNode(child);
+                ui.Outdent(20);
+            }
+
+            foreach (var node in roots)
+                DrawNode(node);
+        }
+
+        private void DrawInspector(Listing_Standard ui)
+        {
+            if (selectedRenderer == null || selectedPart == null)
+            {
+                ui.Label($"No animator {selectedRenderer} or part {selectedPart} selected. Select an animator using the Active Animation Inspector window, and part using the Hierarchy window.");
+                return;
+            }
+
+            var ss = selectedRenderer.GetSnapshot(selectedPart);
+            if (ss.Part == null)
+            {
+                Core.Error("Bad snapshot, part is probably outdated.");
+                selectedPart = null;
+                return;
+            }
+
+            ui.Label($"Part: {selectedPart.Name} ({selectedPart.Path})");
+            ui.Label($"Tex: '{selectedPart.TexturePath}'");
+            ui.GapLine();
+            ui.Label("<color=cyan>CURRENT INFO</color>");
+            ui.Gap(6);
+            ui.Label($"Active: {ss.Active} (self: {selectedPart.Active.Evaluate(selectedRenderer.CurrentTime)})");
+            ui.Label($"Local pos: {ss.LocalPosition}");
+            ui.Label($"World pos: {ss.GetWorldPosition()}");
+            ui.Label($"Local rot: {ss.LocalRotation}");
+            ui.Label($"World rot: {ss.GetWorldRotation()}");
+            ui.Label($"World dir: {ss.Direction}");
+
+            ui.GapLine();
+
+            if (Event.current.type == EventType.Repaint)
+            {
+                toDraw.Enqueue(() =>
+                {
+                    var pos = ss.GetWorldPosition();
+                    var dir = ss.GetWorldRotation().AngleToWorldDir();
+                    GenDraw.DrawLineBetween(pos, pos + dir, SimpleColor.Blue);
+                });
+            }
+        }
+
+        private void DrawAnimationStarter(Listing_Standard ui)
+        {
+            ui.Label("Here you can make your pawns perform a specific animation for cinematic purposes, or just to inspect an animation.");
+            ui.GapLine();
+
+            if (Find.CurrentMap == null)
+            {
+                ui.Label("You must be on a map to use this tool.");
+                return;
+            }
+
+            // Animation selection.
+            if (ui.ButtonText($"Animation: {startDef?.LabelCap ?? "<None>"}"))
+            {
+                var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, d.LabelCap, tooltip: $"[{d.type}]\nData: {d.DataPath}\nPawns: {d.pawnCount}\n{d.description}".TrimEnd()));
+                BetterFloatMenu.Open(items, i =>
+                {
+                    startDef = i.GetPayload<AnimDef>();
+                });
+            }
+            if (startDef == null)
+                return;
+
+            int validSteps = 0;
+
+            // Pawn selector list.
+            if (startDef.pawnCount > 0)
+            {
+                int validPawns = 0;
+                ui.Label($"{startDef.LabelCap} requires {startDef.pawnCount} pawns:");
+                ui.GapLine();
+                for (int i = 0; i < startPawns.Length; i++)
+                {
+                    if (i >= startDef.pawnCount)
+                    {
+                        startPawns[i] = null;
+                        continue;
+                    }
+
+                    var pawn = startPawns[i];
+                    if (pawn != null && !pawn.Spawned)
+                        pawn = null;
+
+                    string name = pawn != null ? pawn.NameShortColored : "<Missing>";
+
+                    var rect = ui.GetRect(28);
+                    if (pawn != null)
+                    {
+                        Widgets.ThingIcon(rect.LeftPartPixels(30), pawn);
+                        validPawns++;
+                    }
+
+                    if (Widgets.ButtonText(rect.RightPartPixels(rect.width - 30), name))
+                    {
+                        var items = BetterFloatMenu.MakeItems(Find.CurrentMap.mapPawns.AllPawnsSpawned.Where(p => p.RaceProps.Humanlike), p2 => new PawnMenuItem(p2, $"[{p2.Faction?.Name ?? "NoFac"}] {p2.NameFullColored}\n{p2.def.LabelCap}".TrimEnd()));
+                        int i1 = i;
+                        BetterFloatMenu.Open(items, m =>
+                        {
+                            startPawns[i1] = m.GetPayload<Pawn>();
+                        });
+                    }
+                }
+                ui.GapLine();
+                if (validPawns != startDef.pawnCount)
+                {
+                    ui.Label($"<color=red><b>Wrong number of pawns! The animation expects {startDef.pawnCount}, you have selected {validPawns}</b></color>");
+                }
+                else
+                {
+                    validSteps++;
+                }
+            }
+
+            // Option: Start position.
+            if (!startTarget.IsValid || startTarget.ThingDestroyed)
+                startTarget = IntVec3.Invalid;
+
+            if (!startTarget.IsValid)
+            {
+                if (startDef.pawnCount > 0 && startPawns[0] != null && startPawns[0].Spawned)
+                    startTarget = startPawns[0];
+            }
+            else
+            {
+                validSteps++;
+            }
+            ui.Label($"Start position: {(startTarget.IsValid ? startTarget.Thing is Pawn p ? p.NameShortColored : startTarget.ToString() : "<color=red><b><NONE></b></color>")}");
+            var selRect = ui.GetRect(28);
+            if (Mouse.IsOver(selRect) && startTarget.IsValid)
+                GenDraw.DrawTargetHighlight(startTarget);
+            
+            if (Widgets.ButtonText(selRect, "Select position or pawn..."))
+            {
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                var args = new TargetingParameters()
+                {
+                    canTargetLocations = true,
+                    canTargetAnimals = false,
+                    canTargetBuildings = false,
+                    canTargetMechs = false,
+
+                };
+                Find.Targeter.BeginTargeting(args, t =>
+                {
+                    startTarget = t;
+                });
+            }
+
+            // Option: Rehearsal.
+            ui.CheckboxLabeled("Rehearsal mode", ref startRehearsal, "When in rehearsal mode, pawns are not killed or injured, and blood splatters do not spawn.");
+            if (startRehearsal)
+                lastOpenStarterTime = Time.realtimeSinceStartup;
+
+            ui.Gap();
+
+            // Options: flip X & Y
+            ui.CheckboxLabeled("Mirror Horizontally", ref startMX, "Should the animation be mirrored horizontally? The default direction is facing east.");
+            ui.CheckboxLabeled("Mirror Vertically", ref startMY, "Should the animation be mirrored vertically?");
+
+            // Start button.
+            ui.Gap();
+            GUI.color = validSteps == 2 ? Color.white : Color.red;
+            if (ui.ButtonText("<color=white>Start Now</color>"))
+            {
+                // Remove existing animations from the pawns involved.
+                Pawn[] pawns = new Pawn[startDef.pawnCount];
+                for (int i = 0; i < startDef.pawnCount; i++)
+                {
+                    var pawn = startPawns[i];
+                    if (pawn == null || !pawn.Spawned)
+                        continue;
+
+                    if (pawn.IsInAnimation(out var anim))
+                        anim.Destroy();
+
+                    pawns[i] = pawn;
+                }
+
+                var sp = new AnimationStartParameters()
+                {
+                    Animation = startDef,
+                    FlipX = startMX,
+                    FlipY = startMY,
+                    Map = Find.CurrentMap,
+                    Pawns = pawns.ToList(),
+                    RootTransform = startTarget.MakeAnimationMatrix()
+                };
+
+                if (!sp.TryTrigger())
+                    Messages.Message("Animation failed to start! Check debug log for details.", LookTargets.Invalid, MessageTypeDefOf.RejectInput, false);
+            }
+            GUI.color = Color.white;
+        }
+
+        private void DrawSweepInspector(Listing_Standard ui)
+        {
+            if (!IsStarterOpen)
+            {
+                ui.Label("Use the Animation Starter window to select an animation...");
+                return;
+            }
+
+            var data = startDef.Data;
+
+            ui.Label($"{startDef.LabelCap} ({startDef.defName}) has {data.SweepDataCount} sweep paths:");
+            foreach (var part in data.PartsWithSweepData)
+            {
+
+                ui.Label($"<b><color=cyan>{part.Name} ({part.Path})</color></b>");
+                ui.Indent();
+
+                int j = 0;
+                foreach (var path in data.GetSweepPaths(part))
+                {
+                    var rect = ui.GetRect(26);
+
+                    bool isSelected = selectedSweepPath == path;
+                    Widgets.Label(rect, $"<b>Path {j++}:</b> {path.Count} points.");
+                    if (isSelected)
+                        Widgets.DrawHighlightSelected(rect);
+                    Widgets.DrawHighlightIfMouseover(rect);
+
+                    if (Widgets.ButtonInvisible(rect))
+                    {
+                        selectedSweepPath = path;
+
+                        ItemTweakData tweak = TweakDataManager.TryGetTweak(startPawns[0]?.GetFirstMeleeWeapon()?.def);
+                        currentDown = tweak?.BladeStart ?? 0;
+                        currentUp = tweak?.BladeEnd ?? 1;
+                        selectedSweepPath.RecalculateVelocities(currentDown, currentUp);
+                    }
+                }
+
+                ui.Outdent();
+            }
+
+            ui.Label($"Trail segments: {trailSegments}");
+            trailSegments = Mathf.RoundToInt(ui.Slider(trailSegments, 1, 20));
+
+            ui.Label($"Trail time: {trailTime:F3}s");
+            trailTime = ui.Slider(trailTime, 0, 20);
+
+            ui.Label($"Trail min speed: {trailMinSpeed:F2} m/s");
+            trailMinSpeed = ui.Slider(trailMinSpeed, 0, 100);
+
+            ui.Label($"Trail max speed: {trailMaxSpeed:F2} m/s");
+            trailMaxSpeed = ui.Slider(trailMaxSpeed, 0, 100);
+
+            if (Event.current.type == EventType.Repaint && selectedSweepPath != null)
+            {
+                toDraw.Enqueue(() =>
+                {
+                    int segments = trailSegments;
+
+                    Vector3 root = startTarget.CenterVector3;
+                    root.y = AltitudeLayer.VisEffects.AltitudeFor();
+                    int i = 0;
+
+                    foreach (var point in selectedSweepPath.Points)
+                    {
+                        if (selectedRenderer != null && (point.Time > selectedRenderer.CurrentTime || point.Time < selectedRenderer.CurrentTime - trailTime))
+                            continue;
+
+                        point.GetEndPoints(currentDown, currentUp, out var down, out var up);
+                        down += root;
+                        up += root;
+                        float segLen = (down - up).MagnitudeHorizontal() / segments;
+
+                        //SweepPathRenderer.DrawLineBetween(down, up, (down - up).magnitude, Color.cyan);
+
+
+                        foreach (var seg in MakeSegments(down, up, segments, point.VelocityBottom, point.VelocityTop))
+                        {
+                            float t = Mathf.Min(1, Mathf.InverseLerp(trailMinSpeed, trailMaxSpeed, seg.speed));
+                            if (t <= 0)
+                                continue;
+
+                            Color col = Color.Lerp(Color.green, Color.red, t);
+                            SweepPathRenderer.DrawLineBetween(seg.start, seg.end, segLen, col, i * 0.001f, 0.1f, 23);
+                            SweepPathRenderer.NeedsDraw = true;
+                        }
+
+                        i++;
+                    }
+                });
+            }
+        }
+
+        private void DrawSweepRendererInspector(Listing_Standard ui)
+        {
+            ui.Label($"Texture: {SweepPathRenderer.TrailRT.width}x{SweepPathRenderer.TrailRT.height} px with depth {SweepPathRenderer.TrailRT.depth}.");
+            ui.Label($"Render time: {SweepPathRenderer.LastRenderTime*1000:F2}ms.");
+
+            ui.GapLine();
+            ui.Label($"Preview zoom: {rtScale * 100:F0}%");
+            rtScale = ui.Slider(rtScale, 1, 5);
+
+            float height = originalRect.height - ui.CurHeight;
+            var rect = ui.GetRect(height);
+
+            Widgets.DrawTextureFitted(rect, SweepPathRenderer.TrailRT, rtScale);
+        }
+
+        private IEnumerable<(Vector3 start, Vector3 end, float speed)> MakeSegments(Vector3 down, Vector3 up, int segmentCount, float bottomVel, float topVel)
+        {
+            for (int i = 0; i < segmentCount; i++)
+            {
+                float st = ((float)i / segmentCount);
+                float et = ((float)(i + 1) / segmentCount);
+
+                yield return (Vector3.Lerp(down, up, st), Vector3.Lerp(down, up, et), Mathf.Lerp(bottomVel, topVel, et));
+            }
+        }
+
+        private struct Node
+        {
+            public AnimPartData Part;
+            public List<Node> Children;
+            public bool Expanded;
+
+            public Node(AnimPartData part)
+            {
+                Part = part;
+                Children = new List<Node>(8);
+                Expanded = true;
+            }
+
+            public void SetExpanded(bool value, bool withChildren)
+            {
+                Expanded = value;
+
+                if (!withChildren)
+                    return;
+
+                foreach (var node in Children)
+                    node.SetExpanded(value, true);
+            }
+
+            public bool Insert(AnimPartData part)
+            {
+                if (part.Parent == Part)
+                {
+                    Children.Add(new Node(part));
+                    return true;
+                }
+                foreach (var child in Children)
+                {
+                    if (child.Insert(part))
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        private class PawnMenuItem : MenuItemBase
+        {
+            public Pawn Pawn
+            {
+                get
+                {
+                    return GetPayload<Pawn>();
+                }
+                set
+                {
+                    Payload = value;
+                }
+            }
+            public float CamDistance
+            {
+                get
+                {
+                    if (_camDst == null)
+                    {
+                        var camPos = Find.CameraDriver.MapPosition.ToVector3().ToFlat();
+                        var pawnPos = Pawn.DrawPos.ToFlat();
+                        _camDst = (camPos - pawnPos).magnitude;
+                    }
+
+                    return _camDst.Value;
+                }
+            }
+            public Vector2 Size = new Vector2(212f, 28f);
+            public string Tooltip;
+            public string CustomName;
+
+            private float? _camDst;
+            private string searchLabel = "";
+            private bool consumedSearch;
+
+            public PawnMenuItem(Pawn pawn, string tooltip = null)
+            {
+                this.Pawn = pawn;
+                this.Tooltip = tooltip;
+            }
+
+            public override bool MatchesSearch(string search)
+            {
+                searchLabel = BetterFloatMenu.SearchMatch(CustomName ?? Pawn.Name.ToStringFull, search);
+                consumedSearch = false;
+                return searchLabel != null;
+            }
+
+            public override int CompareTo(MenuItemBase other)
+            {
+                if (other is not PawnMenuItem pm)
+                    return 0;
+
+                return CamDistance.CompareTo(pm.CamDistance);
+            }
+
+            public override Vector2 Draw(Vector2 pos)
+            {
+                Rect area = new Rect(pos, Size);
+                var iconRect = area.LeftPartPixels(32);
+                var textRect = area.RightPartPixels(area.width - 32);
+
+                if (Pawn == null || Pawn.Destroyed)
+                {
+                    Widgets.Label(textRect, CustomName ?? "<i><None></i>");
+                    return Size;
+                }
+
+                string ovLabel = !consumedSearch ? searchLabel : null;
+                consumedSearch = true;
+
+                Widgets.ThingIcon(iconRect, Pawn);
+                Widgets.Label(textRect, ovLabel ?? CustomName ?? Pawn.Name.ToStringFull);
+
+                consumedSearch = true;
+
+                if(Tooltip != null)
+                    TooltipHandler.TipRegion(area, Tooltip);
+
+                return Size;
             }
         }
     }

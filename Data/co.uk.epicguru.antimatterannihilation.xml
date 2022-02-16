@@ -14,6 +14,8 @@
 			<rot>45</rot>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.1959531</blS>
+			<blE>1.126198</blE>
 		</li>
 		<li>
 			<dId>ScissorBlade_AA</dId>
@@ -25,6 +27,8 @@
 			<rot>41.5</rot>
 			<scX>1.2</scX>
 			<scY>1.2</scY>
+			<blS>0.3237487</blS>
+			<blE>1.249734</blE>
 		</li>
 		<li>
 			<dId>ResonatingBlade_AA</dId>
@@ -33,6 +37,8 @@
 			<tex>AntimatterAnnihilation/Weapons/ResonatingBlade</tex>
 			<ofX>0.2288136</ofX>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1320554</blS>
+			<blE>0.5681576</blE>
 			<tag>48</tag>
 		</li>
 		<li>
@@ -47,6 +53,8 @@
 			<scY>1.2</scY>
 			<flY>True</flY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1448349</blS>
+			<blE>0.4233227</blE>
 			<tag>48</tag>
 		</li>
 		<li>
@@ -58,6 +66,8 @@
 			<scX>0.7</scX>
 			<scY>0.7</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.05963791</blS>
+			<blE>0.2231097</blE>
 			<tag>8</tag>
 		</li>
 	</items>

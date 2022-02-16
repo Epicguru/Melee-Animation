@@ -3,6 +3,7 @@ using RimWorld;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AAM.Reqs;
 using UnityEngine;
 using Verse;
 
@@ -255,7 +256,7 @@ namespace AAM.UI
                 Widgets.Label(tagsArea.RightPart(0.2f), "Allowed animations...");
                 string allowedAnimations = "";
                 foreach(var anim in AnimDef.AllDefs)
-                    if (anim.onlySpecificWeapon == tweak.GetDef() || anim.AllowsWeaponType(tweak.MeleeWeaponType))
+                    if (anim.AllowsWeapon(new ReqInput(tweak)))
                         allowedAnimations += $"[{anim.type}] {anim.defName}\n";
                 TooltipHandler.TipRegion(tagsArea.RightPart(0.2f), allowedAnimations);
 
@@ -277,10 +278,15 @@ namespace AAM.UI
                     });
                 }
 
+                var startSlider = ui.GetRect(20);
+                var endSlider = ui.GetRect(20);
+                tweak.BladeStart = Widgets.HorizontalSlider(startSlider, tweak.BladeStart, -2, 2, label: "Blade Start");
+                tweak.BladeEnd = Widgets.HorizontalSlider(endSlider, tweak.BladeEnd, -2, 2, label: "Blade End");
+
                 ui.GapLine();
                 try
                 {
-                    if(((uint)(Time.unscaledTime * 60)) % 5 == 0)
+                    if((uint)(Time.unscaledTime * 60) % 5 == 0)
                         RenderPreview(tweak);
                 }
                 catch { }
@@ -329,6 +335,14 @@ namespace AAM.UI
                 Graphics.DrawMesh(AnimData.GetMesh(false, false), Matrix4x4.TRS(handAPos, Quaternion.identity, handScale), AnimRenderer.DefaultCutout, 0, camera, 0, block);
             if(tweak.HandsMode == HandsMode.Default)
                 Graphics.DrawMesh(AnimData.GetMesh(false, false), Matrix4x4.TRS(handBPos, Quaternion.identity, handScale), AnimRenderer.DefaultCutout, 0, camera, 0, block);
+
+            Vector3 start = new Vector3(tweak.BladeStart, 0, 1);
+            Vector3 end = new Vector3(tweak.BladeStart, 0, -1);
+            GenDraw.DrawLineBetween(start, end, SimpleColor.Green, 0.1f);
+
+            start = new Vector3(tweak.BladeEnd, 0, 1);
+            end = new Vector3(tweak.BladeEnd, 0, -1);
+            GenDraw.DrawLineBetween(start, end, SimpleColor.Red, 0.1f);
 
             camera.Render();
 

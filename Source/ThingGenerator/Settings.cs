@@ -19,6 +19,11 @@ namespace AAM
         public int MinMeleeSkillToExecute = 4;
         [Range(0, 10)]
         public float ExecutionChanceModifier = 1f;
+        public bool Gore_DamageEffect = true;
+        public bool Gore_FloorBlood = true;
+        public bool Gore_Spray = true;
+        [Range(0.1f, 1f)]
+        public float TrailRenderResolution = 0.25f;
         public ExecutionMatrix ExecutionMatrix = new ExecutionMatrix();
 
         public override void ExposeData()

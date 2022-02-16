@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BetterFloatMenu" Version="1.0.0" />
+    <PackageReference Include="BetterFloatMenu" Version="*" />
     <PackageReference Include="Lib.Harmony" Version="2.1.1" />
   </ItemGroup>
 

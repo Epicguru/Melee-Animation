@@ -38,7 +38,7 @@ namespace AAM
             toil.tickAction = () =>
             {
                 // TODO FROM ANIMATION ROTATION.
-                //job.overrideFacing = ;
+                job.overrideFacing = Animator?.GetPawnBody(pawn)?.GetSnapshot(Animator).GetWorldDirection() ?? Rot4.South;
             };
             toil.AddEndCondition(() =>
             {

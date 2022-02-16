@@ -1,4 +1,5 @@
 ﻿using AAM.Patches;
+using AAM.UI;
 using RimWorld;
 using Verse;
 
@@ -10,6 +11,9 @@ namespace AAM.Events.Workers
 
         public override void Run(AnimEventInput i)
         {
+            if (Dialog_AnimationDebugger.IsInRehearsalMode)
+                return;
+
             var e = i.Event as KillPawnEvent;
             var animator = i.Animator;
             
@@ -74,12 +78,7 @@ namespace AAM.Events.Workers
                 // Do corpse interpolation - interpolates the corpse to the correct position, after the animated position.
                 Patch_Corpse_DrawAt.Interpolators[pawn.Corpse] = new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition());
 
-                // Corpse facing - make the dead pawn face in the direction that the animation requires.
-                bool flipX = i.Animator.MirrorHorizontal;
-                if (ss.FlipX)
-                    flipX = !flipX;
-                
-                Patch_PawnRenderer_LayingFacing.OverrideRotations[pawn] = flipX ? Rot4.West : Rot4.East; // TODO replace with correct facing once it is animation driven (see patch)
+                Patch_PawnRenderer_LayingFacing.OverrideRotations[pawn] = ss.GetWorldDirection();
             }
             else
                 Core.Warn($"{pawn} did not spawn a corpse after death, or the corpse was destroyed...");

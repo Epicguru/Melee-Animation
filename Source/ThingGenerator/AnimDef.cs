@@ -1,4 +1,4 @@
-﻿using AAM.Tweaks;
+﻿using AAM.Reqs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -61,7 +61,7 @@ namespace AAM
         }
 
         public static IEnumerable<AnimDef> GetExecutionAnimationsForWeapon(ThingDef def)
-            => GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(def));
+            => GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(new ReqInput(def)));
 
         [DebugAction("Advanced Animation Mod", "Reload all animations", actionType = DebugActionType.Action)]
         public static void ReloadAllAnimations()
@@ -111,8 +111,7 @@ namespace AAM
         private string data;
         public string jobString;
         public int pawnCount;
-        public MeleeWeaponType? allowedWeaponTypes;
-        public ThingDef onlySpecificWeapon;
+        public Req weaponFilter;
         public List<AnimCellData> cellData = new List<AnimCellData>();
 
         private AnimData resolvedData;
@@ -133,8 +132,8 @@ namespace AAM
             if (string.IsNullOrWhiteSpace(data))
                 yield return $"Animation has no data path! Please secify the location of the data file using the data tag.";
 
-            if (allowedWeaponTypes != null && allowedWeaponTypes == 0 && onlySpecificWeapon == null)
-                yield return "allowedWeaponTags is empty! Please provide at least 1 allowed weapon type.";
+            if (weaponFilter == null)
+                yield return "weaponFilter is not assigned.";
 
             for (int i = 0; i < cellData.Count; i++)
                 foreach (var error in cellData[i].ConfigErrors())
@@ -170,39 +169,16 @@ namespace AAM
         }
 
         private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new IntVec2(fx ? -input.x : input.x, fy ? -input.z : input.z);
-    
-        public bool AllowsWeapon(ThingDef def)
+
+        public bool AllowsWeapon(ReqInput input)
         {
-            if (def == null)
-                return false;
-
-            if (def == onlySpecificWeapon)
-                return true;
-            if(onlySpecificWeapon != null)
-                return false;
-
-            var tweak = TweakDataManager.TryGetTweak(def);
-            if (tweak == null)
-                return false;
-
-            return AllowsWeaponType(tweak.MeleeWeaponType);
-        }
-
-        public bool AllowsWeaponType(MeleeWeaponType weaponType)
-        {
-            if (allowedWeaponTypes == null)
-                return true;
-            if (allowedWeaponTypes.Value == 0)
-                return false;
-
-            uint result = (uint)(weaponType & allowedWeaponTypes.Value);
-            return result != 0;
+            return weaponFilter != null && weaponFilter.Evaluate(input);
         }
 
         public IEnumerable<ThingDef> GetAllAllowedWeapons()
         {
             foreach (var thing in DefDatabase<ThingDef>.AllDefsListForReading)
-                if (thing.IsMeleeWeapon && AllowsWeapon(thing))
+                if (thing.IsMeleeWeapon && AllowsWeapon(new ReqInput(thing)))
                     yield return thing;
         }
     }

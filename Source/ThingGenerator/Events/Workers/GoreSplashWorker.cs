@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using AAM.UI;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -10,6 +11,9 @@ namespace AAM.Events.Workers
 
         public override void Run(AnimEventInput i)
         {
+            if (!Core.Settings.Gore_FloorBlood || Dialog_AnimationDebugger.IsInRehearsalMode)
+                return;
+
             var e = i.Event as GoreSplashEvent;
 
             var pawn = i.GetPawnFromIndex(e.AroundPawnIndex);

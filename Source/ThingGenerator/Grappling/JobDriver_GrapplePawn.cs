@@ -6,7 +6,7 @@ namespace AAM.Grappling
 {
     public class JobDriver_GrapplePawn : JobDriver
     {
-        public static bool GiveJob(Pawn grappler, Pawn target, in IntVec3 targetCell, AnimationStartParameters animationStartParameters = null)
+        public static bool GiveJob(Pawn grappler, Pawn target, IntVec3 targetCell, bool ignoreDeadOrDowned = false, AnimationStartParameters animationStartParameters = null)
         {
             if (grappler == null || !grappler.Spawned || grappler.Dead || grappler.Downed)
                 return false;
@@ -14,7 +14,7 @@ namespace AAM.Grappling
             if (grappler.CurJobDef == AAM_DefOf.AAM_GrapplePawn)
                 return false;
 
-            if (target == null || !target.Spawned || target.Dead || target.Downed)
+            if (target == null || !target.Spawned || !ignoreDeadOrDowned && (target.Dead || target.Downed))
                 return false;
 
             target.stances.stunner.StunFor(120, grappler, false, false);

@@ -22,6 +22,7 @@ namespace AAM.Grappling
             GrappleFlyer flyer = PawnFlyer.MakeFlyer(AAM_DefOf.AAM_GrappleFlyer, victim, targetPos) as GrappleFlyer;
             if (flyer?.FlyingPawn != null)
             {
+                victim.Rotation = Rot4.South;
                 flyer.Grappler = grappler;
                 GenSpawn.Spawn(flyer, targetPos, grappler.Map, WipeMode.Vanish);
                 return flyer;
@@ -32,6 +33,7 @@ namespace AAM.Grappling
 
         private static readonly Func<float, float> FlightSpeed;
         private static readonly Func<float, float> FlightCurveHeight = GenMath.InverseParabola;
+        private static readonly MaterialPropertyBlock mpb = new MaterialPropertyBlock();
 
         public int TotalDurationTicks => ticksFlightTime;
         public Pawn Grappler;
@@ -85,7 +87,7 @@ namespace AAM.Grappling
             this.positionLastComputedTick = this.ticksFlying;
             float arg = (float)this.ticksFlying / (float)this.ticksFlightTime;
             float num = FlightSpeed(arg);
-            this.effectiveHeight = FlightCurveHeight(num) * 0.1f;
+            this.effectiveHeight = FlightCurveHeight(num) * Mathf.Clamp(ticksFlightTime / 60f * 0.5f, 0.3f, 2f);
             this.groundPos = Vector3.Lerp(this.startVec, base.DestinationPos, num);
             Vector3 a = new Vector3(0f, 0f, 2f);
             Vector3 b = Altitudes.AltIncVect * this.effectiveHeight;
@@ -95,11 +97,12 @@ namespace AAM.Grappling
 
         public override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            this.RecomputePosition();
-            this.DrawShadow(this.groundPos, this.effectiveHeight);
-            base.FlyingPawn.DrawAt(this.effectivePos, flip);
+            RecomputePosition();
+            DrawShadow(groundPos, effectiveHeight);
+            FlyingPawn.DrawAt(effectivePos, flip);
 
-            DrawGrappleLine();
+            DrawBoundTexture(effectivePos, flip);
+            DrawGrappleLineNew();
         }
 
         public BezierCurve MakeGrappleCurve()
@@ -121,6 +124,26 @@ namespace AAM.Grappling
             curve.P2 = Vector2.Lerp(curve.P0, curve.P3, t1) + perp * Mathf.Sin(dst * 0.5f) * -Mathf.Clamp(dst * 0.25f, 1f, 6f);
 
             return curve;
+        }
+
+        public void DrawGrappleLineNew()
+        {
+            Vector3 from = Grappler.DrawPos;
+            from += Grappler.Rotation.AsVector2.ToWorld() * 0.4f;
+            from.y = AltitudeLayer.PawnUnused.AltitudeFor();
+
+            Vector3 to = effectivePos;
+            to.y = from.y;
+
+            float bumpMag = Mathf.Clamp(FlightCurveHeight(ticksFlying / 15f) * 1.25f, 0f, 1.25f);
+            float bumpMag2 = Mathf.Clamp(FlightCurveHeight(ticksFlying / 10f) * 0.25f, 0f, 0.25f);
+            Vector3 bump = (Grappler.DrawPos - from).normalized;
+            Vector3 bump2 = Vector2.Perpendicular(to.ToFlat() - Grappler.DrawPos.ToFlat()).normalized.ToWorld();
+            bump.y = 0;
+            from += bump * bumpMag + bump2 * bumpMag2;
+
+
+            GrabUtility.DrawRopeFromTo(from, to, Color.yellow);
         }
 
         public void DrawGrappleLine()
@@ -146,7 +169,20 @@ namespace AAM.Grappling
                 lastPoint = point;
             }
         }
-        
+
+        public void DrawBoundTexture(Vector3 drawLoc, bool flip)
+        {
+            drawLoc.y += 0.0001f;
+            var tex = GrabUtility.GetBoundPawnTexture(FlyingPawn);
+            var mat = AnimRenderer.DefaultCutout;
+            var trs = Matrix4x4.TRS(drawLoc, Quaternion.identity, Vector3.one * 1.5f); // TODO use actual pawn size such as from alien races.
+
+            mpb.SetTexture("_MainTex", tex); // TODO cache id.
+            mpb.SetColor("_Color", Color.yellow); // TODO based on rope type.
+
+            Graphics.DrawMesh(MeshPool.plane10, trs, mat, 0, null, 0, mpb);
+        }
+
         private void DrawShadow(Vector3 drawLoc, float height)
 {
 Material shadowMaterial = this.ShadowMaterial;

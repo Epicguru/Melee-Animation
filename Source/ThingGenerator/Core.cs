@@ -21,6 +21,7 @@ namespace AAM
         public static Settings Settings;
         public static bool IsSimpleSidearmsActive;
 
+
         private readonly Queue<(string title, Action action)> lateLoadActions = new Queue<(string, Action)>();
         private readonly Queue<(string title, Action action)> lateLoadActionsSync = new Queue<(string, Action)>();
 
@@ -50,26 +51,6 @@ namespace AAM
             h.PatchAll();
             ModContent = content;
 
-            //var test = new TestSettings();
-            //test.Strings.Add("newString");
-            //test.IntVec2 = new IntVec2(5, 6);
-
-            //Scribe.saver.InitSaving(@"C:\Users\spain\Desktop\TestExpose.txt", "ROOT");
-            //try
-            //{
-            //    test.ExposeData();
-            //}
-            //catch (Exception e)
-            //{
-            //    Error("Failed to save.", e);
-            //}
-            //finally
-            //{
-            //    Scribe.saver.FinalizeSaving();
-            //}
-            //Core.Log(File.ReadAllText(@"C:\Users\spain\Desktop\TestExpose.txt"));
-            //Log(SimpleSettings.MakeDebugString(test));
-
             Settings = GetSettings<Settings>();
 
             AddLateLoadAction(true, "Loading default shaders", () =>
@@ -79,6 +60,8 @@ namespace AAM
             });
 
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
+            AddLateLoadAction(true, "Loading line renderer...", AAM.Content.Load);
+            AddLateLoadAction(true, "Loading main content...", SweepPathRenderer.Init);
             AddLateLoadAction(false, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
             AddLateLoadAction(true, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
@@ -309,30 +292,21 @@ namespace AAM
                         FlipX = exec.MirrorX,
                         FlipY = exec.MirrorY
                     };
-                    JobDriver_GrapplePawn.GiveJob(main, exec.Victim, exec.VictimMoveCell.Value, afterGrapple);
+                    if (exec.VictimMoveCell != null)
+                        JobDriver_GrapplePawn.GiveJob(main, exec.Victim, exec.VictimMoveCell.Value, false, afterGrapple);
+                    else
+                        afterGrapple.TryTrigger();
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.P))
-                StartAnim();
+            //if (Input.GetKeyDown(KeyCode.P))
+            //    StartAnim();
 
             if (!Input.GetKeyDown(KeyCode.E))
                 return;
 
-            var pawns = Find.CurrentMap?.mapPawns?.AllPawns;
-            if (pawns == null)
-                return;
-
-            var mainPawn = pawns.FirstOrDefault(p => !p.Dead && p.IsColonist);
-            Pawn otherPawn = null;
-            int tries = 0;
-            while (otherPawn == null || otherPawn == mainPawn)
-            {
-                otherPawn = pawns.Where(p => !p.Dead && p.IsColonist && !p.RaceProps.Animal).RandomElement();
-                tries++;
-                if (tries > 100)
-                    return;
-            }
+            var mainPawn = Find.Selector.SelectedPawns[0];
+            var otherPawn = Find.Selector.SelectedPawns[1];
 
             var rootTransform = mainPawn.MakeAnimationMatrix();
 
@@ -343,9 +317,9 @@ namespace AAM
             manager.StopAnimation(otherPawn);
 
             var def = DefDatabase<AnimDef>.GetNamed("AAM_Duel_Swords");
-
+            Core.Log($"Starting {mainPawn}, {otherPawn}");
             var anim = manager.StartAnimation(def, rootTransform, mainPawn, otherPawn);
-            anim.MirrorHorizontal = Rand.Bool;
+            anim.MirrorHorizontal = false;
         }
 
         private BezierCurve curve;

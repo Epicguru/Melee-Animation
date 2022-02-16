@@ -155,7 +155,9 @@ public class AnimRenderer : IExposable
     private static void DrawSingle(AnimRenderer renderer, float dt, Action<Pawn, Vector2> labelDraw = null)
     {
         // Draw and handle events.
-        var timePeriod = renderer.Draw(null, dt);
+        // TODO handle exceptions.
+        var timePeriod = renderer.Draw(null, dt, labelDraw);
+
         foreach (var e in renderer.GetEventsInPeriod(timePeriod))
         {
             try
@@ -166,44 +168,6 @@ public class AnimRenderer : IExposable
             {
                 Core.Error($"{ex.GetType().Name} when handling animation event '{e}':", ex);
             }
-        }
-
-        int madeJobCount = 0;
-
-        // TODO move into instance method.
-        foreach (var pawn in renderer.Pawns)
-        {
-            if (pawn == null || pawn.Destroyed)
-                continue;
-
-            var pawnSS = renderer.GetPawnBody(pawn).GetSnapshot(renderer);
-            var pos = pawnSS.GetWorldPosition();
-
-            if (pawnSS.Active)
-            {
-                // Render pawn in custom position using patches.
-                PreventDrawPatchUpper.AllowNext = true;
-                PreventDrawPatch.AllowNext = true;
-                MakePawnConsideredInvisible.IsRendering = true;
-                pawn.Drawer.renderer.RenderPawnAt(pos, Rot4.West, true);
-                MakePawnConsideredInvisible.IsRendering = false;
-
-                // Render shadow.
-                // TODO cache or use patch.
-                AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow").Invoke(pawn.Drawer.renderer, new object[] { pos });
-
-                // Figure out where to draw the pawn label.
-                Vector3 drawPos = pos;
-                drawPos.z -= 0.6f;
-                Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
-                vector.y = UI.screenHeight - vector.y;
-                labelDraw?.Invoke(pawn, vector);
-            }
-        }
-
-        if (madeJobCount > 0)
-        {
-            renderer.OnStart();
         }
     }
 
@@ -617,6 +581,15 @@ public class AnimRenderer : IExposable
         {
             Destroy();
         }
+
+        foreach (var pawn in Pawns)
+        {
+            if (pawn.CurJobDef != AAM_DefOf.AAM_InAnimation)
+            {
+                Core.Error($"{pawn} has bad job: {pawn.CurJobDef}. Cancelling animation.");
+                Destroy();
+            }    
+        }
     }
 
     /// <summary>
@@ -643,7 +616,7 @@ public class AnimRenderer : IExposable
         return p != null && (p.Spawned || ignoreNotSpawned) && !p.Dead && !p.Downed && (p.ParentHolder is Map || (p.ParentHolder == null && ignoreNotSpawned));
     }
 
-    public Vector2 Draw(float? atTime, float? dt)
+    public Vector2 Draw(float? atTime, float? dt, Action<Pawn, Vector2> labelDraw = null)
     {
         if (IsDestroyed)
             return Vector2.zero;
@@ -685,9 +658,47 @@ public class AnimRenderer : IExposable
             var mesh = AnimData.GetMesh(fx, fy);
 
             Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, useMPB ? pb : null);
-        }        
+        }
+
+        DrawPawns(labelDraw);
 
         return range;
+    }
+
+    protected void DrawPawns(Action<Pawn, Vector2> labelDraw = null)
+    {
+        foreach (var pawn in Pawns)
+        {
+            if (pawn == null || pawn.Destroyed)
+                continue;
+
+            var pawnSS = GetSnapshot(GetPawnBody(pawn));
+
+            if (pawnSS.Active)
+            {
+                // Position and direction.
+                var pos = pawnSS.GetWorldPosition();
+                var dir = pawnSS.GetWorldDirection();
+
+                // Render pawn in custom position using patches.
+                PreventDrawPatchUpper.AllowNext = true;
+                PreventDrawPatch.AllowNext = true;
+                MakePawnConsideredInvisible.IsRendering = true;
+                pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
+                MakePawnConsideredInvisible.IsRendering = false;
+
+                // Render shadow.
+                // TODO cache or use patch.
+                AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow").Invoke(pawn.Drawer.renderer, new object[] { pos });
+
+                // Figure out where to draw the pawn label.
+                Vector3 drawPos = pos;
+                drawPos.z -= 0.6f;
+                Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
+                vector.y = UI.screenHeight - vector.y;
+                labelDraw?.Invoke(pawn, vector);
+            }
+        }
     }
 
     private void ApplyPostLoad()
@@ -803,6 +814,8 @@ public class AnimRenderer : IExposable
             TeleportPawn(pawn, basePos + posData.Value.ToIntVec3);
             pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
         }
+
+        Core.Log("END");
 
         foreach(var item in workersAtEnd)
         {

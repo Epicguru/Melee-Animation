@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
 
 <Defs>
-
   <AAM.AnimDef Name="AnimExecutionBase" Abstract="True">
     <type>Execution</type>
     <direction>Horizontal</direction>
@@ -40,63 +40,160 @@
     <defName>AMM_Execution_Stab</defName>
     <label>Execution: Stab</label>
     <data>Execution_Stab.anim</data>
-    <allowedWeaponTypes>Short_Stab, Long_Stab</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Short_Stab, Long_Stab</types>
+    </weaponFilter>
   </AAM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimExecutionVerticalBase">
+  <!-- <AAM.AnimDef ParentName="AnimExecutionVerticalBase">
     <defName>AMM_Execution_BeheadVertical</defName>
     <label>Execution: Behead Vert.</label>
     <data>Execution_BeheadVertical.anim</data>
     <allowedWeaponTypes>Long_Sharp</allowedWeaponTypes>
-  </AAM.AnimDef>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Sharp</types>
+    </weaponFilter>
+  </AAM.AnimDef> -->
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_Shank</defName>
     <label>Execution: Shank</label>
     <data>Execution_Shank.anim</data>
-    <allowedWeaponTypes>Short_Stab</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Short_Stab</types>
+    </weaponFilter>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_Bash</defName>
     <label>Execution: Bash</label>
     <data>Execution_Bash.anim</data>
-    <allowedWeaponTypes>Short_Blunt</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Short_Blunt</types>
+    </weaponFilter>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_BashLarge</defName>
     <label>Execution: Big Bash</label>
     <data>Execution_BashLarge.anim</data>
-    <allowedWeaponTypes>Long_Blunt</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Blunt</types>
+    </weaponFilter>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_UpSlash</defName>
     <label>Execution: Upwards Slash</label>
     <data>Execution_UpSlash.anim</data>
-    <allowedWeaponTypes>Long_Blunt, Long_Sharp, Short_Blunt</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Blunt, Long_Sharp, Short_Blunt</types>
+    </weaponFilter>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_UpSlash_Doubletap</defName>
     <label>Execution: Upwards Slash (doubletap)</label>
     <data>Execution_UpSlash_DoubleTap.anim</data>
-    <allowedWeaponTypes>Long_Stab</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_UpDownSlash</defName>
     <label>Execution: Up &#38; Down Slash</label>
     <data>Execution_UpAndDownSlash.anim</data>
-    <allowedWeaponTypes>Long_Blunt, Long_Sharp</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Blunt, Long_Sharp</types>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_GaeBulg</defName>
+    <label>Execution: Gáe Bulg</label>
+    <data>Execution_GaeBulgAir.anim</data>
+    <weaponFilter Class="AAM.Reqs.SpecificWeapon">
+      <weapon>RF_GaeBulg</weapon>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_SekiroBS</defName>
+    <label>Execution: Acrobatic Backstab</label>
+    <data>Execution_SekiroBS.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab, Long_Sharp, Short_Sharp</types>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_ThrowSharp</defName>
+    <label>Execution: Throw Sharp</label>
+    <data>Execution_ThrowSharp.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab</types>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_HeadStab</defName>
+    <label>Execution: Head Stab</label>
+    <data>Execution_HeadStab.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab</types>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_KnockdownStab</defName>
+    <label>Execution: Knockdown Stab</label>
+    <data>Execution_KnockdownStab.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab</types>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+      <li>
+        <type>PawnEnd</type>
+        <position>(1, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_Weebstick</defName>
     <label>Execution: You insulted m'lady</label>
     <data>Execution_Weebstick.anim</data>
-    <onlySpecificWeapon>AAM_Weebstick</onlySpecificWeapon>
+    <weaponFilter Class="AAM.Reqs.SpecificWeapon">
+      <weapon>RF_GaeBulg</weapon>
+    </weaponFilter>
     <cellData>
       <li>
         <type>PawnEnd</type>
@@ -119,7 +216,9 @@
     <defName>AMM_Execution_Passover</defName>
     <label>Execution: Passover</label>
     <data>Execution_Passover.anim</data>
-    <allowedWeaponTypes>Long_Stab</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
     <cellData>
       <li>
         <type>PawnEnd</type>

@@ -102,25 +102,10 @@ namespace AAM.Patches
             if (anim != null)
             {
                 var body = anim.GetSnapshot(anim.GetPawnBody(___pawn));
-                bool east = !body.FlipX;
-                if (anim.MirrorHorizontal)
-                    east = !east;
-
-                bool north = anim.Def.direction != AnimDirection.South;
-                if (anim.MirrorVertical)
-                    north = !north;
-                if (body.FlipY)
-                    north = !north;
 
                 angle = body.GetWorldRotation();
+                bodyFacing = body.GetWorldDirection();
 
-                // TODO replace body facing with animation driven parameter.
-                bodyFacing = anim.Def.direction switch
-                {
-                    AnimDirection.Horizontal => east ? Rot4.East : Rot4.West,
-                    AnimDirection.North or AnimDirection.South => north ? Rot4.North : Rot4.South,
-                    _ => Rot4.East
-                };
                 if(!AllowNext)
                     return false;
             }

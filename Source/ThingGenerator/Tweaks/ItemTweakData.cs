@@ -29,6 +29,7 @@ namespace AAM.Tweaks
         public bool FlipX, FlipY;
         public bool UseDefaultTransparentMaterial;
         public HandsMode HandsMode = HandsMode.Default;
+        public float BladeStart, BladeEnd = 0.5f;
         public MeleeWeaponType MeleeWeaponType = MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp;
 
         private ThingDef cachedDef;
@@ -77,6 +78,8 @@ namespace AAM.Tweaks
             MeleeWeaponType = data.MeleeWeaponType;
             FlipX = data.FlipX;
             FlipY = data.FlipY;
+            BladeStart = data.BladeStart;
+            BladeEnd = data.BladeEnd;
         }
 
         public Texture2D GetTexture(bool allowFromCache = true, bool saveToCache = true)
@@ -140,6 +143,8 @@ namespace AAM.Tweaks
             Scribe_Values.Look(ref FlipY, "flY");
             Scribe_Values.Look(ref HandsMode, "hnd");
             Scribe_Values.Look(ref UseDefaultTransparentMaterial, "trs");
+            Scribe_Values.Look(ref BladeStart, "blS", 0);
+            Scribe_Values.Look(ref BladeEnd, "blE", 0.5f);
 
             int flag = (int)MeleeWeaponType;
             Scribe_Values.Look(ref flag, "tag", (int)(MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp));

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RimWorld;
+using System.Collections.Generic;
 using Verse;
 
 namespace AAM.Patches
@@ -29,21 +29,6 @@ namespace AAM.Patches
                     return;
 
                 Core.Log($"{pawn.NameShortColored} hit {target} with a {weapon.LabelShortCap}.");
-
-                // Can we start an execution?
-                //tempAnims.Clear();
-                //foreach (var pair in AnimDef.GetPossibleExecutionsNow(pawn, target, weapon))
-                //{
-                //    tempAnims.Add((pair.def, pair.mirrorX));
-                //}
-                
-                //if (tempAnims.Count == 0)
-                //    return;
-
-                //var selected = tempAnims.RandomElement();
-                //var manager = pawn.Map.GetAnimManager();
-
-                //manager.StartAnimation(selected.anim, pawn.MakeAnimationMatrix(), selected.mirrorX, pawn, target);
             }
         }
     }

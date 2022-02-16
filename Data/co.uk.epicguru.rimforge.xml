@@ -10,11 +10,12 @@
 			<nsp>Verse</nsp>
 			<tex>RF/Weapons/VirtuousTreaty</tex>
 			<ofX>0.7</ofX>
-			<ofY>-0.004545454</ofY>
+			<ofY>-0.0002855992</ofY>
 			<rot>45</rot>
 			<scX>1.8</scX>
 			<scY>1.8</scY>
-			<tag>6</tag>
+			<blS>0.3407881</blS>
+			<blE>1.803514</blE>
 		</li>
 		<li>
 			<dId>RF_GaeBulg</dId>
@@ -25,7 +26,8 @@
 			<rot>45</rot>
 			<scX>1.65</scX>
 			<scY>1.65</scY>
-			<tag>6</tag>
+			<blS>0.07241745</blS>
+			<blE>1.501065</blE>
 		</li>
 		<li>
 			<dId>RF_CursedKhopesh</dId>
@@ -37,7 +39,8 @@
 			<rot>45</rot>
 			<scX>1.3</scX>
 			<scY>1.3</scY>
-			<tag>6</tag>
+			<blS>0.4387646</blS>
+			<blE>1.224175</blE>
 		</li>
 		<li>
 			<dId>RF_Khopesh</dId>
@@ -49,7 +52,8 @@
 			<rot>45</rot>
 			<scX>1.3</scX>
 			<scY>1.3</scY>
-			<tag>6</tag>
+			<blS>0.4387646</blS>
+			<blE>1.224175</blE>
 		</li>
 		<li>
 			<dId>RF_SwordOfRapture</dId>
@@ -61,6 +65,8 @@
 			<rot>45</rot>
 			<scX>1.35</scX>
 			<scY>1.45</scY>
+			<blS>0.3620873</blS>
+			<blE>1.381789</blE>
 			<tag>1</tag>
 		</li>
 		<li>
@@ -73,6 +79,8 @@
 			<rot>45</rot>
 			<scX>1.35</scX>
 			<scY>1.45</scY>
+			<blS>0.3620873</blS>
+			<blE>1.381789</blE>
 			<tag>1</tag>
 		</li>
 	</items>

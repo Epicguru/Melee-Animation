@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace AAM.Grappling
@@ -25,8 +26,13 @@ namespace AAM.Grappling
             public bool MirrorX, MirrorY;
         }
 
+        // You can add a bound pawn texture here for your modded body type.
+        // Alternatively, simply add your texture to your textures folder: Textures/AAM/BoundPawns/<bodyTypeDefName>.png
+        public static readonly Dictionary<BodyTypeDef, Texture2D> BoundPawnTextures = new Dictionary<BodyTypeDef, Texture2D>();
+
         private static readonly List<AnimDef> tempAnimations = new List<AnimDef>();
         private static readonly HashSet<IntVec2> tempCells = new HashSet<IntVec2>();
+        private static MaterialPropertyBlock mpb = new MaterialPropertyBlock();
 
         public static IEnumerable<PossibleExecution> GetPossibleExecutions(Pawn executioner, IEnumerable<Pawn> targetPawns)
         {
@@ -150,5 +156,55 @@ namespace AAM.Grappling
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool CanGrabPawn(Pawn a, Pawn b) => !b.Dead && !b.Downed && b.Spawned;
+
+        public static void DrawRopeFromTo(Vector3 from, Vector3 to, Color ropeColor)
+        {
+            float len = (to - from).magnitude;
+            float angle = (to - from).AngleFlat();
+            Vector3 mid = (from + to) * 0.5f;
+
+            mpb.SetTexture("_MainTex", Content.Rope); // TODO cache id.
+            mpb.SetVector("_MainTex_ST", new Vector4(len, 1, 0, 0));
+            mpb.SetColor("_Color", ropeColor);
+
+            // Line.
+            float ratio = (float)Content.Rope.height / Content.Rope.width;
+            var mat = AnimRenderer.DefaultCutout;
+            var trs = Matrix4x4.TRS(mid, Quaternion.Euler(0f, angle + 90f, 0f), new Vector3(len, 1f, ratio));
+            Graphics.DrawMesh(MeshPool.plane10, trs, mat, 0, null, 0, mpb);
+
+            // Coil.
+            from.y += 0.0001f;
+            mpb.SetTexture("_MainTex", Content.RopeCoil); // TODO cache id.
+            mpb.SetVector("_MainTex_ST", new Vector4(1, 1, 0, 0));
+            trs = Matrix4x4.TRS(from, Quaternion.Euler(0f, angle + 90f, 0f), Vector3.one * 0.3f);
+            Graphics.DrawMesh(MeshPool.plane10, trs, mat, 0, null, 0, mpb);
+
+            // Dangle.
+            from.y -= 0.0005f;
+            mpb.SetTexture("_MainTex", Content.RopeEnd); // TODO cache id.
+            trs = Matrix4x4.TRS(from, Quaternion.identity, Vector3.one * 1);
+            Graphics.DrawMesh(MeshPool.plane10, trs, mat, 0, null, 0, mpb);
+        }
+
+        public static Texture2D GetBoundPawnTexture(Pawn pawn)
+        {
+            BodyTypeDef btd = pawn?.story?.bodyType;
+            if (btd == null)
+                return null;
+
+            return GetBoundPawnTexture(pawn, btd);
+        }
+
+        private static Texture2D GetBoundPawnTexture(Pawn pawn, BodyTypeDef bodyType)
+        {
+            if (BoundPawnTextures.TryGetValue(bodyType, out var found))
+                return found;
+
+            var loaded = ContentFinder<Texture2D>.Get($"AAM/BoundPawns/{bodyType.defName}");
+            if (loaded != null)
+                BoundPawnTextures.Add(bodyType, loaded);
+            return loaded;
+        }
     }
 }

@@ -9,6 +9,9 @@ namespace AAM.Events.Workers
 
         public override void Run(AnimEventInput i)
         {
+            if (!Core.Settings.Gore_DamageEffect)
+                return;
+
             var e = i.Event as DamageEffectEvent;
             var pawn = i.GetPawnFromIndex(e.PawnIndex);
             if (pawn == null)

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using AAM.Patches;
-using RimWorld;
+﻿using AAM.Patches;
+using System;
+using System.IO;
 using UnityEngine;
 using Verse;
+using Object = UnityEngine.Object;
 
 namespace AAM
 {
@@ -11,8 +11,10 @@ namespace AAM
     {
         [TweakValue("__AAM", 0, 20)]
         private static float Y = 0;
+        [TweakValue("__AAM")]
+        private static bool drawTextureExtractor;
 
-        private Vector3 position;
+        private string texPath;
 
         public GameComp(Game _) { }
 
@@ -27,23 +29,52 @@ namespace AAM
         public override void GameComponentUpdate()
         {
             base.GameComponentUpdate();
-
-            if (Current.ProgramState != ProgramState.Playing)
-                return;
-
-            if (Input.GetKey(KeyCode.L))
-                position = Verse.UI.MouseMapPosition();
-
-            position.y = Y;
-
-            var mat = ThingDefOf.AIPersonaCore.graphic.MatSingle;
-            Graphics.DrawMesh(MeshPool.plane10, Matrix4x4.TRS(position, Quaternion.identity, Vector3.one), mat, 0);
+            SweepPathRenderer.Update();
         }
 
-        public override void LoadedGame()
+        public override void GameComponentOnGUI()
         {
-            base.LoadedGame();
-            Core.Warn("Loaded game");
+            if (!drawTextureExtractor)
+                return;
+
+            GUILayout.Space(100);
+
+            texPath ??= "";
+            texPath = GUILayout.TextField(texPath);
+            var tex = ContentFinder<Texture2D>.Get(texPath, false);
+
+            if (tex != null)
+            {
+                GUILayout.Box(tex);
+
+                if (GUILayout.Button("Save"))
+                {
+                    RenderTexture renderTex = RenderTexture.GetTemporary(
+                        tex.width,
+                        tex.height,
+                        0,
+                        RenderTextureFormat.Default,
+                        RenderTextureReadWrite.Linear);
+
+                    Graphics.Blit(tex, renderTex);
+                    RenderTexture previous = RenderTexture.active;
+                    RenderTexture.active = renderTex;
+                    Texture2D readableText = new Texture2D(tex.width, tex.height);
+                    readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
+                    readableText.Apply();
+                    RenderTexture.active = previous;
+                    RenderTexture.ReleaseTemporary(renderTex);
+
+                    var pngBytes = readableText.EncodeToPNG();
+                    ;
+                    Log.Message($"Writing {pngBytes.Length} bytes of {texPath} to Desktop ...");
+                    File.WriteAllBytes(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"{tex.name ?? "grab"}.png"), pngBytes);
+
+                    Object.Destroy(readableText);
+                    Object.Destroy(renderTex);
+                }
+
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AAM.Events;
 using AAM.Events.Workers;
-using AAM.Tweaks;
 using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
 
@@ -18,11 +18,16 @@ namespace AAM
         public static Matrix4x4 MakeAnimationMatrix(this Pawn pawn)
             => Matrix4x4.TRS(pawn.Position.ToVector3ShiftedWithAltitude(pawn.DrawPos.y), Quaternion.identity, Vector3.one);
 
+        public static Matrix4x4 MakeAnimationMatrix(this in LocalTargetInfo target)
+            => Matrix4x4.TRS(new Vector3(target.CenterVector3.x, AltitudeLayer.Pawn.AltitudeFor(), target.CenterVector3.z), Quaternion.identity, Vector3.one);
+
         public static bool IsInAnimation(this Pawn pawn)
             => AnimRenderer.TryGetAnimator(pawn) != null;
 
         public static bool IsInAnimation(this Pawn pawn, out AnimRenderer animRenderer)
             => (animRenderer = AnimRenderer.TryGetAnimator(pawn)) != null;
+
+        public static AnimRenderer TryGetAnimator(this Pawn pawn) => AnimRenderer.TryGetAnimator(pawn);
 
         public static ThingWithComps GetFirstMeleeWeapon(this Pawn pawn)
         {
@@ -72,6 +77,8 @@ namespace AAM
 
         public static float RandomInRange(this in Vector2 range) => Rand.Range(range.x, range.y);
 
+        public static Vector3 AngleToWorldDir(this float angleDeg) => -new Vector3(Mathf.Cos(angleDeg * Mathf.Deg2Rad), 0f, Mathf.Sin(angleDeg * Mathf.Deg2Rad));
+
         [DebugAction("Advanced Animation Mod", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void GimmeMeleeWeapons()
         {
@@ -80,7 +87,14 @@ namespace AAM
             {
                 if (def.IsMeleeWeapon)
                 {
-                    DebugThingPlaceHelper.DebugSpawn(def, pos, 1, false);
+                    try
+                    {
+                        DebugThingPlaceHelper.DebugSpawn(def, pos, 1, false);
+                    }
+                    catch (Exception e)
+                    {
+                        Core.Warn($"Failed to spawn {def}: [{e.GetType().Name}] {e.Message}");
+                    }
                 }
             }
         }

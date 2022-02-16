@@ -5,6 +5,7 @@
     <type>Duel</type>
     <direction>Horizontal</direction>
     <jobString>Dueling [OTHER].</jobString>
+    <pawnCount>2</pawnCount>
     <cellData>
       <li>
         <type>PawnStart</type>
@@ -21,7 +22,9 @@
 
   <AAM.AnimDef ParentName="AnimDuelBase">
     <defName>AAM_Duel_Swords</defName>
-    <allowedWeaponTypes>Long_Blunt, Long_Stab, Long_Sharp</allowedWeaponTypes>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Blunt, Long_Stab, Long_Sharp</types>
+    </weaponFilter>
     <data>Duel_Swords.anim</data>
   </AAM.AnimDef>
 

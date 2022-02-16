@@ -14,7 +14,8 @@
 			<rot>16</rot>
 			<scX>1.5</scX>
 			<scY>1.5</scY>
-			<tag>6</tag>
+			<blS>0.2342918</blS>
+			<blE>1.130458</blE>
 		</li>
 		<li>
 			<dId>MeleeWeapon_VirtuousContract</dId>
@@ -26,7 +27,8 @@
 			<rot>16</rot>
 			<scX>1.5</scX>
 			<scY>1.5</scY>
-			<tag>6</tag>
+			<blS>0.2342918</blS>
+			<blE>1.130458</blE>
 		</li>
 	</items>
 </Data>

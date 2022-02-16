@@ -4,7 +4,7 @@
     <thingClass>AAM.Grappling.GrappleFlyer</thingClass>
     <pawnFlyer>
       <flightDurationMin>0.25</flightDurationMin>
-      <flightSpeed>30</flightSpeed>
+      <flightSpeed>18</flightSpeed>
       <!-- <flightEffecterDef>JumpFlightEffect</flightEffecterDef> -->
       <!-- <soundLanding>JumpPackLand</soundLanding> -->
     </pawnFlyer>
