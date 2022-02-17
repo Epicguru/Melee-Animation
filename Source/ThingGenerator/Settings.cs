@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -7,24 +6,71 @@ namespace AAM
 {
     public class Settings : ModSettings
     {
+        [Header("General")]
+        [Label("Animated Pawns Considered Invisible")]
+        [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
+                     "they will not be actively targeted or shot at. This makes executions less risky.\n" +
+                     "Note that pawns in animations can still take damage, such as from stray gunfire or explosions.")]
         public bool AllowInvisiblePawns = true;
-        [Range(-1, 15)]
-        public int ThreadCount = -1;
+
+        [Header("Grappling")]
+        [Description("If true, your colonists will automatically use their grappling hooks against enemies.")]
         public bool AutoGrapple = true;
-        public bool AutoGrab = true;
+
+        [Header("Executions")]
+        [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
+                     "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.")]
         public bool AutoExecute = true;
+
+        [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
         public bool AnimalsCanBeExecuted = false;
-        public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
+
         [Range(0, 20)]
+        [Description("The absolute minimum melee skill required to perform any execution.\n" +
+                     "Certain execution animations may require higher skill levels though.")]
         public int MinMeleeSkillToExecute = 4;
+
         [Range(0, 10)]
+        [Percentage]
+        [Description("A general modifier on the chance for execution animations to trigger. Affects all pawns.")]
         public float ExecutionChanceModifier = 1f;
-        public bool Gore_DamageEffect = true;
-        public bool Gore_FloorBlood = true;
-        public bool Gore_Spray = true;
-        [Range(0.1f, 1f)]
-        public float TrailRenderResolution = 0.25f;
+
+        [Description("If true, executions can destroy specific vital body parts, such as the heart or head.\n" +
+                     "If false, the pawn is simply killed by 'magic' (no specific part takes damage)\n" +
+                     "Note: if disabled, combat log generation does not work properly for the execution, and will give a default message: \"<i>name was killed.</i>\"")]
+        public bool ExecutionsCanDestroyBodyParts = true;
+
+        [Description("Allows you to finely control who can execute who. A summary of the default settings is:\n" +
+                     "Colonists will only execute hostile enemies.\n" +
+                     "This means colonists will not execute prisoners or friendly pawns from trade caravans.")]
         public ExecutionMatrix ExecutionMatrix = new ExecutionMatrix();
+
+        [Header("Gore")]
+        [Label("Damage Effect")]
+        [Description("Enable or disable the damage affect in animations.\n" +
+                     "The damage effect is normally a small, temporary puff of blood.")]
+        public bool Gore_DamageEffect = true;
+
+        [Label("Blood (filth)")]
+        [Description("Enable or disable the spawning of blood in animations.\n" +
+                     "The blood is filth that must be cleaned up. Includes modded blood and mechanoid blood (oil).")]
+        public bool Gore_FloorBlood = true;
+
+        [Label("Blood Spray")]
+        [Description("Enable or disable the blood spray effect in certain animations.\n" +
+                     "The blood spray is a visual effect and does not leave any permanent filth.\n" +
+                     "May be too over-the-top for some player's liking.")]
+        public bool Gore_Spray = true;
+
+        [Header("Other")]
+        [Range(0.1f, 1f)]
+        [Percentage]
+        public float TrailRenderResolution = 0.25f;
+
+        [Description("In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.\n" +
+                     "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
+                     "<b>Note:</b> The offset corpses are reset after a save-reload.")]
+        public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
 
         public override void ExposeData()
         {
@@ -60,61 +106,6 @@ namespace AAM
         KeepOffset
     }
 
-    public class TestSettings : ModSettings
-    {
-        public string Message = "Hello";
-        public IntVec2 IntVec2;
-        public Vector3 Vec3 = new Vector3(1, 2, 3);
-        public ThingDef MyThingDef;
-
-        // Integer types.
-        public byte Byte;
-        public sbyte SByte;
-        public short Short;
-        public ushort UShort;
-        public int Int;
-        public uint UInt;
-        public long Long;
-        public ulong ULong;
-
-        // Floating point types.
-        public float Float;
-        public double Double;
-        public decimal Decimal;
-
-        public ExecutionLine Line = new ExecutionLine()
-        {
-            Colonists = true,
-            Prisoners = true
-        };
-        public List<long> Longs = new List<long>()
-        {
-            -500, 0, 1024
-        };
-        public List<string> Strings = new List<string>()
-        {
-            "First",
-            "Second",
-            "Third"
-        };
-        public List<ExecutionLine> Lines = new List<ExecutionLine>()
-        {
-            new ExecutionLine(){Friendlies = true},
-            null
-        };
-
-        public TestSettings()
-        {
-            SimpleSettings.Init(this);
-        }
-
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            SimpleSettings.AutoExpose(this);
-        }
-    }
-
     public class ExecutionMatrix : IExposable
     {
         /// <summary>
@@ -128,6 +119,7 @@ namespace AAM
             Friendlies = false,
             Enemies = true
         };
+
         /// <summary>
         /// Prisoners of the player colony. Does not include imprisoned colonists.
         /// </summary>
@@ -138,6 +130,7 @@ namespace AAM
             Friendlies = false,
             Enemies = true
         };
+
         /// <summary>
         /// Pawns that are friendly with the player faction, such as traders or allies.
         /// </summary>
@@ -148,6 +141,7 @@ namespace AAM
             Friendlies = true,
             Enemies = true
         };
+
         /// <summary>
         /// Enemies of the player faction.
         /// </summary>
@@ -159,6 +153,14 @@ namespace AAM
             Enemies = false
         };
 
+        public ref bool AllowsRef(PawnType attacker, PawnType victim)
+        {
+            var line = GetLineOf(attacker);
+            return ref line.AllowsRef(victim);
+        }
+
+        public bool Allows(PawnType attacker, PawnType victim) => GetLineOf(attacker).Allows(victim);
+        
         public ExecutionLine GetLineOf(PawnType type)
             => type switch
             {

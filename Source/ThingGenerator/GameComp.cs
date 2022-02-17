@@ -1,6 +1,7 @@
 ﻿using AAM.Patches;
 using System;
 using System.IO;
+using AAM.UI;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
@@ -30,6 +31,10 @@ namespace AAM
         {
             base.GameComponentUpdate();
             SweepPathRenderer.Update();
+
+            if (Input.GetKeyDown(KeyCode.L))
+                Dialog_TweakEditor.Open();
+                //Dialog_AnimationDebugger.Open();
         }
 
         public override void GameComponentOnGUI()

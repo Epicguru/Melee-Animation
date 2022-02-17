@@ -228,4 +228,13 @@
     </cellData>
   </AAM.AnimDef>
 
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_Whirlwind</defName>
+    <label>Execution: Whirlwind</label>
+    <data>Execution_Whirlwind.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
+  </AAM.AnimDef>
+
 </Defs>

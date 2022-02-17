@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -15,7 +16,7 @@ namespace AAM
         public static Func<MemberWrapper, DrawHandler> SelectDrawHandler = DefaultDrawHandlerSelector;
         public static Dictionary<Type, DrawHandler> DrawHandlers = new Dictionary<Type, DrawHandler>()
         {
-            { typeof(string), DrawStringField },
+            //{ typeof(string), DrawStringField },
             { typeof(byte), DrawNumeric },
             { typeof(sbyte), DrawNumeric },
             { typeof(short), DrawNumeric },
@@ -34,6 +35,9 @@ namespace AAM
         private static Stack<ScribeSaver> saverStack = new Stack<ScribeSaver>();
         private static Stack<ScribeLoader> loaderStack = new Stack<ScribeLoader>();
         private static Stack<LoadSaveMode> modeStack = new Stack<LoadSaveMode>();
+
+        private static MemberWrapper highlightedMember;
+        private static HashSet<string> allHeaders = new HashSet<string>();
 
         public static void Init(ModSettings settings)
         {
@@ -167,28 +171,122 @@ namespace AAM
             if (settings == null)
                 return;
 
+            Rect tabBar = inRect;
+            tabBar.height = 28;
+
+            highlightedMember = null;
+            float totalWidth = inRect.width;
+            inRect.width *= 0.7f;
+            inRect.y += 28;
+            inRect.height -= 28;
+
             var holder = GetHolder(settings);
 
             Widgets.BeginScrollView(inRect, ref holder.UI_Scroll, new Rect(0, 0, holder.UI_LastSize.x, holder.UI_LastSize.y));
-            Vector2 size = Vector2.zero;
+            Vector2 size = new Vector2(inRect.width - 20, 0);
             Vector2 pos = Vector2.zero;
+            string currentHeader = null;
+            string selectedHeader = holder.UI_SelectedTab;
+            allHeaders.Clear();
 
             foreach (var member in holder.Members.Values)
             {
+                bool isCurrentTab = currentHeader == selectedHeader;
+
+                // TODO draw header.
+                var header = member.TryGetCustomAttribute<HeaderAttribute>();
+                bool didHeader = false;
+                if (header != null)
+                {
+                    currentHeader = header.header;
+                    allHeaders.Add(header.header);
+                    isCurrentTab = currentHeader == selectedHeader;
+
+                    float headerHeight = 32;
+
+                    if(isCurrentTab)
+                    {
+                        var headerRect = new Rect(new Vector2(pos.x, pos.y + 12), new Vector2(inRect.width - 20, headerHeight));
+                        Widgets.Label(headerRect, $"<color=cyan><b><size=22>{header.header}</size></b></color>");
+
+                        pos.y += headerHeight + 12;
+                        size.y += headerHeight + 12;
+                        didHeader = true;
+                    }
+                }
+
+                if (!isCurrentTab)
+                    continue;
+
                 var handler = SelectDrawHandler(member);
                 if (handler == null)
                     continue;
 
-                // TODO Check if it should be drawn...
-                var area = new Rect(pos, new Vector2(inRect.width, inRect.height - pos.y));
-                Rect drawn = handler(settings, member, area);
-                pos.y += drawn.height;
-                size.y += drawn.height;
-                size.x = Mathf.Max(size.x, drawn.width);
+                if (!didHeader)
+                {
+                    pos.y += 6;
+                    size.y += 6;
+                    GUI.color = new Color(1, 1, 1, 0.25f);
+                    Widgets.DrawLineHorizontal(pos.x + 20, pos.y, inRect.width);
+                    GUI.color = Color.white;
+                    pos.y += 6;
+                    size.y += 6;
+                }
+
+                var area = new Rect(new Vector2(pos.x + 20, pos.y), new Vector2(inRect.width - 40, inRect.height - pos.y));
+                float height = handler(settings, member, area);
+                pos.y += height;
+                size.y += height;
             }
 
             Widgets.EndScrollView();
             holder.UI_LastSize = size;
+            holder.UI_SelectedTab ??= allHeaders.First();
+
+            float tabWidth = (1f / allHeaders.Count) * tabBar.width;
+            int i = 0;
+            foreach(string tab in allHeaders)
+            {
+                var area = new Rect(tabBar.x + tabWidth * i, tabBar.y, tabWidth, tabBar.height);
+                bool active = holder.UI_SelectedTab == tab;
+                GUI.color = active ? Color.grey : Color.white;
+                if (Widgets.ButtonText(area.ExpandedBy(-2, 0), $"<b><color=lightblue>{tab}</color></b>"))
+                    holder.UI_SelectedTab = tab;
+                if (active)
+                    Widgets.DrawBox(area.ExpandedBy(-2, 0));
+                GUI.color = Color.white;
+                i++;
+            }
+
+            inRect.x = inRect.xMax;
+            inRect.width = totalWidth * 0.3f;
+            GUI.color = Color.white * 0.5f;
+            Widgets.DrawBox(inRect, 1);
+            GUI.color = Color.white;
+            inRect = inRect.ExpandedBy(-5, -5);
+
+            if (highlightedMember == null)
+                return;
+
+            Text.Anchor = TextAnchor.UpperCenter;
+            Text.Font = GameFont.Medium;
+            Widgets.Label(inRect, $"<b><color=lightblue>{highlightedMember.DisplayName}</color></b>");
+            float titleHeight = Text.CalcHeight($"<b>{highlightedMember.DisplayName}</b>", inRect.width);
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+
+            string description = highlightedMember.GetDescription() ?? "<i>No description</i>";
+
+            inRect.y += titleHeight + 14;
+            Widgets.Label(inRect, description);
+
+            string defaultValue = highlightedMember.ValueToString(highlightedMember.GetDefault<object>());
+
+            inRect.y += Text.CalcHeight(description, inRect.width) + 8;
+            Widgets.Label(inRect, $"<color=grey><i>Default value: </i>{defaultValue}\n\nRight-click to reset to default.</color>");
+
+            if (Input.GetMouseButtonUp(1))
+                highlightedMember.Set(settings, highlightedMember.DefaultValue);
         }
 
         public static DrawHandler DefaultDrawHandlerSelector(MemberWrapper wrapper)
@@ -197,38 +295,16 @@ namespace AAM
                 return null;
 
             var type = wrapper.MemberType;
+
+            // Enum.
+            if (type.IsEnum)
+                return DrawEnum;
+
+            // Everything else.
             if (DrawHandlers.TryGetValue(type, out var found))
                 return found;
 
             return null;
-
-        }
-
-        private static Rect DrawSlider(ModSettings settings, MemberWrapper member, Rect area, float min, float max)
-        {
-            Type type = member.MemberType;
-            bool isFloatType = type == typeof(float) || type == typeof(double) || type == typeof(decimal);
-
-            var value = member.Get<float>(settings);
-            var defaultValue = member.GetDefault<float>();
-            string name = member.Name;
-            area.height = 40;
-            var ret = area;
-            area = area.ExpandedBy(-10);
-
-            float updated = Widgets.HorizontalSlider(area, value, min, max, label: $"{name} : {value} (def: {defaultValue})", leftAlignedLabel: min.ToString(), rightAlignedLabel: max.ToString());
-            if (updated != value)
-            {
-
-                updated = Mathf.Clamp(updated, min, max);
-                object writeBack = updated;
-                if (!isFloatType)
-                    writeBack = (long)Math.Round(updated);
-                Core.Log($"Updating {name} from {value} to {writeBack}");
-                member.Set(settings, writeBack);
-            }
-
-            return ret;
         }
 
         private static float GetNumericMin(Type type)
@@ -241,63 +317,118 @@ namespace AAM
             return (float)Convert.ChangeType(type.GetField("MaxValue", BindingFlags.Public | BindingFlags.Static).GetValue(null), typeof(float));
         }
 
-        private static Rect DrawNumeric(ModSettings settings, MemberWrapper wrapper, Rect area)
+        private static float DrawFieldHeader(ModSettings settings, MemberWrapper member, Rect area)
         {
-            // Default: do a slider.
-            var range = wrapper.TryGetCustomAttribute<UnityEngine.RangeAttribute>();
+            float height = 26;
+
+            Rect labelrect = area;
+            labelrect.height = height;
+            var value = member.Get<object>(settings);
+            var old = Text.Anchor;
+            Text.Anchor = TextAnchor.MiddleLeft;
+            Widgets.Label(labelrect, HighlightIfNotDefault(settings, member, $"<b>{member.DisplayName}: </b> {member.ValueToString(value)}"));
+            Text.Anchor = old;
+            Widgets.DrawHighlightIfMouseover(labelrect);
+            if (Mouse.IsOver(labelrect))
+            {
+                highlightedMember = member;
+            }
+
+            return height;
+        }
+
+        private static string HighlightIfNotDefault(ModSettings settings, MemberWrapper member, string str)
+        {
+            if (member.IsDefault(settings))
+                return str;
+
+            return $"<color=yellow>{str}</color>";
+        }
+
+        private static float DrawNumeric(ModSettings settings, MemberWrapper member, Rect area)
+        {
+            float height = DrawFieldHeader(settings, member, area);
+
+            float value = member.Get<float>(settings);
+
+            // Min and max.
+            var range = member.TryGetCustomAttribute<RangeAttribute>();
             float min = float.MinValue;
             float max = float.MaxValue;
+            min = range != null ? Mathf.Max(min, range.min) : Mathf.Max(min, 0);
+            min = Mathf.Max(min, GetNumericMin(member.MemberType));
+            max = range != null ? Mathf.Min(max, range.max) : Mathf.Min(max, 100);
+            max = Mathf.Min(max, GetNumericMax(member.MemberType));
 
-            if (range != null)
-                min = Mathf.Max(min, range.min);
-            else
-                min = Mathf.Max(min, 0);
-            min = Mathf.Max(min, GetNumericMin(wrapper.MemberType));
+            float sliderHeight = 18;
+            Rect sliderArea = new Rect(area.x, area.y + height, area.width, sliderHeight);
+            height += sliderHeight;
 
-            if (range != null)
-                max = Mathf.Min(max, range.max);
-            else
-                max = Mathf.Min(max, 100);
-            max = Mathf.Min(max, GetNumericMax(wrapper.MemberType));
-
-            return DrawSlider(settings, wrapper, area, min, max);
-        }
-
-        private static Rect DrawStringField(ModSettings settings, MemberWrapper member, Rect area)
-        {
-            string value = member.Get<string>(settings);
-            string defaultValue = member.GetDefault<string>();
-            string name = member.Name;
-            area.height = 40;
-            var ret = area;
-            area = area.ExpandedBy(-10);
-
-            string updated = Widgets.TextField(area, value);
-            //string updated = Widgets.TextEntryLabeled(area, name + " :  ", value);
-            if (updated != value)
-                member.Set(settings, updated);
-
-            return ret;
-        }
-
-        private static Rect DrawToggle(ModSettings settings, MemberWrapper member, Rect area)
-        {
-            var value = member.Get<bool>(settings);
-            var defaultValue = member.GetDefault<bool>();
-            string name = member.Name;
-            area.height = 40;
-            var ret = area;
-            area = area.ExpandedBy(-10);
-
-            bool changed = value;
-            Widgets.CheckboxLabeled(area, name, ref changed, placeCheckboxNearText: true);
+            // Simple slider for now.
+            float changed = Widgets.HorizontalSlider(sliderArea, value, min, max);
             if (changed != value)
-                member.Set(settings, changed);
+            {
+                Type type = member.MemberType;
+                bool isFloatType = type == typeof(float) || type == typeof(double) || type == typeof(decimal);
+                object writeBack = changed;
+                if (!isFloatType)
+                    writeBack = (long)Mathf.Round(changed);
+                member.Set(settings, writeBack);
+            }
 
-            return ret;
+            return height;
         }
 
-        public delegate Rect DrawHandler(ModSettings settings, MemberWrapper member, Rect area);
+        private static float DrawToggle(ModSettings settings, MemberWrapper member, Rect area)
+        {
+            Rect toggleRect = area;
+            toggleRect.height = 28;
+
+            bool enabled = member.Get<bool>(settings);
+            bool old = enabled;
+            Widgets.CheckboxLabeled(toggleRect, HighlightIfNotDefault(settings, member, $"<b>{member.DisplayName}</b>: "), ref enabled, placeCheckboxNearText: true);
+
+            if (old != enabled)
+                member.Set(settings, enabled);
+
+            Widgets.DrawHighlightIfMouseover(toggleRect);
+            if (Mouse.IsOver(toggleRect))
+                highlightedMember = member;
+
+            return toggleRect.height;
+        }
+
+        private static float DrawEnum(ModSettings settings, MemberWrapper member, Rect area)
+        {
+            float height = 28;
+
+            Rect rect = area;
+            rect.height = height;
+
+            string txt = HighlightIfNotDefault(settings, member, $"<b>{member.DisplayName}: </b>");
+            float labelWidth = Text.CalcSize(txt).x;
+            Widgets.Label(rect, txt);
+
+            var value = member.Get<object>(settings);
+
+            if (Widgets.ButtonText(new Rect(rect.x + labelWidth + 10, rect.y, 240, height), member.ValueToString(value)))
+            {
+                var values = Enum.GetValues(member.MemberType).OfType<object>();
+                FloatMenuUtility.MakeMenu(values, member.ValueToString, o =>
+                () =>
+                {
+                    member.Set(settings, o);
+                });
+            }
+
+            Widgets.DrawHighlightIfMouseover(rect);
+            if (Mouse.IsOver(rect))
+                highlightedMember = member;
+
+            return height;
+        }
+
+        public delegate float DrawHandler(ModSettings settings, MemberWrapper member, Rect area);
 
         public static void PushNewScribeState()
         {
@@ -324,6 +455,7 @@ namespace AAM
             public readonly Dictionary<MemberInfo, MemberWrapper> Members = new Dictionary<MemberInfo, MemberWrapper>();
             public Vector2 UI_LastSize;
             public Vector2 UI_Scroll;
+            public string UI_SelectedTab;
 
             public FieldHolder(ModSettings settings, Type forType)
             {
@@ -470,6 +602,7 @@ namespace AAM
 
         public abstract class MemberWrapper
         {
+            public string DisplayName => _displayName = MakeDisplayName(Name);
             public string Name => field?.Name ?? prop?.Name;
             public readonly object DefaultValue;
             public Type MemberType => field?.FieldType ?? prop.PropertyType;
@@ -482,6 +615,7 @@ namespace AAM
 
             protected readonly FieldInfo field;
             protected readonly PropertyInfo prop;
+            private string _displayName;
 
             protected MemberWrapper(object obj, MemberInfo member)
             {
@@ -498,6 +632,52 @@ namespace AAM
                 }
 
                 DefaultValue = GetDefaultValue(obj);
+            }
+
+            public bool IsDefault(ModSettings settings)
+            {
+                return Get<object>(settings).Equals(DefaultValue);
+            }
+
+            protected virtual string MakeDisplayName(string baseName)
+            {
+                var label = TryGetCustomAttribute<LabelAttribute>();
+                if (label != null)
+                    return label.Label;
+
+                var str = new StringBuilder();
+                bool lastWasLower = true;
+                foreach (var c in baseName)
+                {
+                    if (char.IsUpper(c) && lastWasLower)
+                        str.Append(' ');
+
+                    lastWasLower = char.IsLower(c);
+
+                    if (c == '_')
+                    {
+                        str.Append(' ');
+                        continue;
+                    }
+
+                    str.Append(c);
+                }
+
+                return str.ToString().Trim().CapitalizeFirst();
+            }
+
+            public virtual string ValueToString(object value)
+            {
+                if (TryGetCustomAttribute<PercentageAttribute>() != null && value is float f)
+                    return $"{f*100f:F0}%";
+
+                return value.ToString();
+            }
+
+            public virtual string GetDescription()
+            {
+                var attr = TryGetCustomAttribute<DescriptionAttribute>();
+                return attr?.Description;
             }
 
             public virtual T Get<T>(object obj)
@@ -542,6 +722,31 @@ namespace AAM
 
                 return SmartClone(current);
             }
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class LabelAttribute : Attribute
+    {
+        public readonly string Label;
+
+        public LabelAttribute(string label)
+        {
+            this.Label = label ?? throw new ArgumentNullException(nameof(label));
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class PercentageAttribute : Attribute { }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DescriptionAttribute : Attribute
+    {
+        public readonly string Description;
+
+        public DescriptionAttribute(string description)
+        {
+            this.Description = description;
         }
     }
 }

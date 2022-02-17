@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>tachyonite.pawnmorpherpublic</mod>
+	<modName>Pawnmorpher</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>MeleeWeapon_MutaniteSpear</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/Spear</tex>
+			<ofX>0.2565445</ofX>
+			<rot>45</rot>
+			<blS>0.1151832</blS>
+			<blE>0.8769634</blE>
+			<tag>5</tag>
+		</li>
+		<li>
+			<dId>MeleeWeapon_MutagenicStunStick</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/mutaprod</tex>
+			<ofX>0.1780105</ofX>
+			<rot>45</rot>
+			<blS>0.08376963</blS>
+			<blE>0.5366492</blE>
+			<tag>8</tag>
+		</li>
+		<li>
+			<dId>MeleeWeapon_MutaniteKnife</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/Knife</tex>
+			<ofX>0.1413613</ofX>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1151832</blS>
+			<blE>0.4267016</blE>
+			<tag>48</tag>
+		</li>
+	</items>
+</Data>

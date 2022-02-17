@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>sarg.alphaanimals</mod>
+	<modName>Alpha Animals</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>GU_RedWood</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Resource/GU_RedWood/GU_RedWood_a</tex>
+			<ofX>0.08376963</ofX>
+			<ofY>3.744794E-09</ofY>
+			<rot>45</rot>
+			<scX>0.9</scX>
+			<scY>0.9</scY>
+			<tag>8</tag>
+		</li>
+	</items>
+</Data>

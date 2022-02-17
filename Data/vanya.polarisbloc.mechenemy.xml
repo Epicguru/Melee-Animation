@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>vanya.polarisbloc.mechenemy</mod>
+	<modName>Polarisbloc - Mechenemy</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>Vanya_VibrateKnife</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Vanya/Things/Item/Equipment/Vanya_VibrateKnife</tex>
+			<ofX>0.2041885</ofX>
+			<ofY>-0.104712</ofY>
+			<rot>20</rot>
+			<blS>0.09947644</blS>
+			<blE>0.7303665</blE>
+		</li>
+		<li>
+			<dId>Vanya_PlasmaSword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Vanya/Things/Item/Equipment/Vanya_PlasmaSword</tex>
+			<ofX>0.3507853</ofX>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1204188</blS>
+			<blE>0.8141361</blE>
+		</li>
+	</items>
+</Data>

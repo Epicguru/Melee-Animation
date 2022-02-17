@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>sargoskar.racetotherim</mod>
+	<modName>Race to the Rim</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>RttR_WoodLog</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/RttR_NadderSpikes/RttR_NadderSpikes_a</tex>
+			<ofX>0.07853403</ofX>
+			<ofY>0.01570681</ofY>
+			<rot>30</rot>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.04188482</blS>
+			<blE>0.3219895</blE>
+			<tag>48</tag>
+		</li>
+		<li>
+			<dId>RttR_RawFish</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/RttR_Fish/RttR_Fish_a</tex>
+			<tag>0</tag>
+		</li>
+	</items>
+</Data>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>guy.starwarsanimalcollection</mod>
+	<modName>StarWars Animal Collection</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>KraytDragonHorn</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>swanimals/KraytDragonHorn</tex>
+			<ofX>0.2146597</ofX>
+			<rot>-45</rot>
+			<blS>0.09424084</blS>
+			<blE>0.7670157</blE>
+			<tag>5</tag>
+		</li>
+		<li>
+			<dId>BanthaHorn</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>swanimals/BanthaHorn</tex>
+			<ofX>0.2670157</ofX>
+			<rot>90</rot>
+			<blS>0.03664922</blS>
+			<blE>0.6204188</blE>
+			<tag>9</tag>
+		</li>
+	</items>
+</Data>

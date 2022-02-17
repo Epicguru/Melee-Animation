@@ -13,6 +13,8 @@
 			<ofY>-0.03389831</ofY>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.3664922</blS>
+			<blE>0.6937173</blE>
 			<tag>1</tag>
 		</li>
 		<li>
@@ -24,6 +26,8 @@
 			<ofY>-0.03389831</ofY>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.382199</blS>
+			<blE>0.6937173</blE>
 			<tag>1</tag>
 		</li>
 		<li>
@@ -33,8 +37,8 @@
 			<tex>Things/Item/Equipment/WeaponMelee/Warhammer</tex>
 			<ofX>0.1440678</ofX>
 			<ofY>-0.03389831</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.408377</blS>
+			<blE>0.6204188</blE>
 			<tag>1</tag>
 		</li>
 		<li>
@@ -44,8 +48,8 @@
 			<tex>Things/Item/Equipment/WeaponMelee/PsyfocusStaff</tex>
 			<ofX>0.2415254</ofX>
 			<ofY>-0.02542373</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.2251309</blS>
+			<blE>0.7198953</blE>
 			<tag>1</tag>
 		</li>
 		<li>
@@ -57,7 +61,8 @@
 			<ofY>-0.02542373</ofY>
 			<scX>1.2</scX>
 			<scY>1.2</scY>
-			<tag>6</tag>
+			<blS>0.1884817</blS>
+			<blE>0.8926702</blE>
 		</li>
 		<li>
 			<dId>MeleeWeapon_PlasmaSwordBladelink</dId>
@@ -68,7 +73,8 @@
 			<ofY>-0.02542373</ofY>
 			<scX>1.2</scX>
 			<scY>1.2</scY>
-			<tag>6</tag>
+			<blS>0.2198953</blS>
+			<blE>0.8717278</blE>
 		</li>
 		<li>
 			<dId>MeleeWeapon_Axe</dId>
@@ -77,8 +83,8 @@
 			<tex>Things/Item/Equipment/WeaponMelee/Axe</tex>
 			<ofX>0.1652542</ofX>
 			<ofY>-0.02118644</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.3350785</blS>
+			<blE>0.5471204</blE>
 			<tag>18</tag>
 		</li>
 		<li>
@@ -90,7 +96,8 @@
 			<ofY>-0.03813559</ofY>
 			<scX>1.2</scX>
 			<scY>1.2</scY>
-			<tag>6</tag>
+			<blS>0.1570681</blS>
+			<blE>0.8612565</blE>
 		</li>
 		<li>
 			<dId>MeleeWeapon_MonoSwordBladelink</dId>
@@ -101,7 +108,8 @@
 			<ofY>-0.03813559</ofY>
 			<scX>1.2</scX>
 			<scY>1.2</scY>
-			<tag>6</tag>
+			<blS>0.1308901</blS>
+			<blE>0.8664922</blE>
 		</li>
 	</items>
 </Data>

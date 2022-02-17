@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>albion.sparklingworlds.full</mod>
+	<modName>Sparkling Worlds - Full Mod</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>PainStickSW</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Items/ShockStickSW</tex>
+			<ofX>0.2931937</ofX>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1256544</blS>
+			<blE>0.7722513</blE>
+			<tag>9</tag>
+		</li>
+		<li>
+			<dId>BurnStickSW</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Items/BurnStickSW</tex>
+			<ofX>0.2041885</ofX>
+			<rot>-10</rot>
+			<hnd>No_Hands</hnd>
+			<blS>0.07329843</blS>
+			<blE>0.6518325</blE>
+			<tag>45</tag>
+		</li>
+	</items>
+</Data>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>xrushha.animaanimals</mod>
+	<modName>Anima Animals</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>MeleeWeapon_RazorfangKnife</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Item/MakeshiftAnimaFangKnife/MakeshiftAnimaFangKnife</tex>
+			<ofX>0.07329843</ofX>
+			<ofY>0.04712042</ofY>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.08376963</blS>
+			<blE>0.3769633</blE>
+			<tag>48</tag>
+		</li>
+		<li>
+			<dId>AnimaWargFang</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Item/AnimaFang/AnimaFang</tex>
+			<ofX>0.07329843</ofX>
+			<ofY>0.04712042</ofY>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.08376963</blS>
+			<blE>0.3769633</blE>
+			<tag>48</tag>
+		</li>
+	</items>
+</Data>

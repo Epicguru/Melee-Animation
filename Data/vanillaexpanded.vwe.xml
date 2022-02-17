@@ -5,81 +5,25 @@
 	<author>Epicguru</author>
 	<items>
 		<li>
-			<dId>VWE_MeleeWeapon_Axe</dId>
+			<dId>VWE_MeleeWeapon_Baton</dId>
 			<typ>ThingDef</typ>
 			<nsp>Verse</nsp>
-			<tex>Things/WeaponMelee/Axe</tex>
-			<ofX>0.1398305</ofX>
-			<ofY>0.008474576</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
-			<tag>18</tag>
-		</li>
-		<li>
-			<dId>VWE_MeleeWeapon_Cleaver</dId>
-			<typ>ThingDef</typ>
-			<nsp>Verse</nsp>
-			<tex>Things/WeaponMelee/Cleaver</tex>
-			<ofX>0.1737288</ofX>
-			<rot>5</rot>
-			<scX>1</scX>
-			<scY>1</scY>
-			<hnd>Only_Main_Hand</hnd>
-			<tag>48</tag>
-		</li>
-		<li>
-			<dId>VWE_MeleeWeapon_Halberd</dId>
-			<typ>ThingDef</typ>
-			<nsp>Verse</nsp>
-			<tex>Things/WeaponMelee/Halberd</tex>
-			<ofX>0.3389831</ofX>
-			<ofY>-0.05508475</ofY>
-			<rot>47.6</rot>
-			<scX>1.21</scX>
-			<scY>1.21</scY>
-			<tag>2</tag>
-		</li>
-		<li>
-			<dId>VWE_MeleeWeapon_BattleAxe</dId>
-			<typ>ThingDef</typ>
-			<nsp>Verse</nsp>
-			<tex>Things/WeaponMelee/BattleAxe</tex>
-			<ofX>0.1567797</ofX>
-			<ofY>-0.02118644</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
-			<tag>18</tag>
-		</li>
-		<li>
-			<dId>VWE_MeleeWeapon_Hammer</dId>
-			<typ>ThingDef</typ>
-			<nsp>Verse</nsp>
-			<tex>Things/WeaponMelee/Hammer</tex>
-			<ofX>0.1398305</ofX>
-			<ofY>-0.008474577</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
-			<tag>9</tag>
-		</li>
-		<li>
-			<dId>VWE_MeleeWeapon_Pickaxe</dId>
-			<typ>ThingDef</typ>
-			<nsp>Verse</nsp>
-			<tex>Things/WeaponMelee/Pickaxe</tex>
-			<ofX>0.1483051</ofX>
-			<scX>1</scX>
-			<scY>1</scY>
-			<tag>2</tag>
+			<tex>Things/WeaponMelee/Baton</tex>
+			<ofX>0.08900524</ofX>
+			<ofY>-0.0104712</ofY>
+			<blS>0.1099476</blS>
+			<blE>0.5314136</blE>
+			<tag>8</tag>
 		</li>
 		<li>
 			<dId>VWE_MeleeWeapon_Scalpel</dId>
 			<typ>ThingDef</typ>
 			<nsp>Verse</nsp>
 			<tex>Things/WeaponMelee/Scalpel</tex>
-			<ofX>0.1271186</ofX>
-			<scX>1.1</scX>
-			<scY>1.1</scY>
+			<ofX>0.08376963</ofX>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.104712</blS>
+			<blE>0.3429319</blE>
 			<tag>48</tag>
 		</li>
 		<li>
@@ -87,44 +31,23 @@
 			<typ>ThingDef</typ>
 			<nsp>Verse</nsp>
 			<tex>Things/WeaponMelee/Wrench</tex>
-			<ofX>0.1059322</ofX>
-			<ofY>0.01694915</ofY>
-			<scX>0.9</scX>
-			<scY>0.9</scY>
-			<tag>8</tag>
+			<ofX>0.1465969</ofX>
+			<ofY>0.0104712</ofY>
+			<blS>0.07853403</blS>
+			<blE>0.5890052</blE>
+			<tag>9</tag>
 		</li>
 		<li>
 			<dId>VWE_MeleeWeapon_CombatKnife</dId>
 			<typ>ThingDef</typ>
 			<nsp>Verse</nsp>
 			<tex>Things/WeaponMelee/CombatKnife</tex>
-			<ofX>0.2372881</ofX>
-			<ofY>-0.01271186</ofY>
-			<scX>1.1</scX>
-			<scY>1.1</scY>
+			<ofX>0.2251309</ofX>
+			<ofY>-0.01570681</ofY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1151832</blS>
+			<blE>0.4895288</blE>
 			<tag>48</tag>
-		</li>
-		<li>
-			<dId>VWE_MeleeWeapon_Baton</dId>
-			<typ>ThingDef</typ>
-			<nsp>Verse</nsp>
-			<tex>Things/WeaponMelee/Baton</tex>
-			<ofX>0.161017</ofX>
-			<scX>1.1</scX>
-			<scY>1.1</scY>
-			<hnd>Only_Main_Hand</hnd>
-			<tag>9</tag>
-		</li>
-		<li>
-			<dId>VWE_MeleeWeapon_Shovel</dId>
-			<typ>ThingDef</typ>
-			<nsp>Verse</nsp>
-			<tex>Things/WeaponMelee/Shovel</tex>
-			<ofX>0.25</ofX>
-			<scX>1.1</scX>
-			<scY>1.1</scY>
-			<tag>6</tag>
 		</li>
 	</items>
 </Data>

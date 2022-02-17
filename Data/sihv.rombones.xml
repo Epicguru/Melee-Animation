@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>sihv.rombones</mod>
+	<modName>Rim of Madness - Bones</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>BoneItem</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Resource/Bone/Bone_a</tex>
+			<ofX>0.1623037</ofX>
+			<ofY>0.07853403</ofY>
+			<scX>0.6</scX>
+			<scY>0.6</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.05759162</blS>
+			<blE>0.4109948</blE>
+			<tag>8</tag>
+		</li>
+	</items>
+</Data>

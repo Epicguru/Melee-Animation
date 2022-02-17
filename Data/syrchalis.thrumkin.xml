@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>syrchalis.thrumkin</mod>
+	<modName>[SYR] Thrumkin</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>WoodLog_GhostAsh</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Resource/GhostAsh/GhostAsh_a</tex>
+			<ofX>0.1780105</ofX>
+			<ofY>-0.04188482</ofY>
+			<rot>45</rot>
+			<tag>8</tag>
+		</li>
+		<li>
+			<dId>Thrumkin_Sword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Thrumkin_Sword</tex>
+			<ofX>0.3979058</ofX>
+			<rot>45</rot>
+			<blS>0.1989529</blS>
+			<blE>1.002618</blE>
+		</li>
+	</items>
+</Data>

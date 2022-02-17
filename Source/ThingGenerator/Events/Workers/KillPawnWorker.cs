@@ -29,42 +29,56 @@ namespace AAM.Events.Workers
                 return;
             }
 
-            BodyPartDef partDef = i.GetDef<BodyPartDef>(e.TargetBodyPart);
-            DamageDef dmgDef = i.GetDef(e.DamageDef, DamageDefOf.Cut);
-            RulePackDef logDef = i.GetDef(e.BattleLogDef, AAM_DefOf.AAM_Execution_Generic);
-            var part = GetPartFromDef(pawn, partDef);
-            ThingDef weapon = killer.equipment?.Primary?.def;
-
-            var dInfo = new DamageInfo(dmgDef, 99999, 99999, hitPart: part, instigator: killer, weapon: weapon);
-            var log = CreateLog(logDef, killer.equipment?.Primary, killer, pawn);
-            dInfo.SetAllowDamagePropagation(false);
-            dInfo.SetIgnoreArmor(true);
-            dInfo.SetIgnoreInstantKillProtection(true);
-
-            var oldEffecter = pawn.RaceProps?.FleshType?.damageEffecter;
-            if (oldEffecter != null)
-                pawn.RaceProps.FleshType.damageEffecter = null;
-
-            DamageWorker.DamageResult result;
-            try
+            if (Core.Settings.ExecutionsCanDestroyBodyParts)
             {
-                result = pawn.TakeDamage(dInfo);
-            }
-            finally
-            {
+                BodyPartDef partDef = i.GetDef<BodyPartDef>(e.TargetBodyPart);
+                DamageDef dmgDef = i.GetDef(e.DamageDef, DamageDefOf.Cut);
+                RulePackDef logDef = i.GetDef(e.BattleLogDef, AAM_DefOf.AAM_Execution_Generic);
+                var part = GetPartFromDef(pawn, partDef);
+                ThingDef weapon = killer.equipment?.Primary?.def;
+
+                var dInfo = new DamageInfo(dmgDef, 99999, 99999, hitPart: part, instigator: killer, weapon: weapon);
+                var log = CreateLog(logDef, killer.equipment?.Primary, killer, pawn);
+                dInfo.SetAllowDamagePropagation(false);
+                dInfo.SetIgnoreArmor(true);
+                dInfo.SetIgnoreInstantKillProtection(true);
+
+                var oldEffecter = pawn.RaceProps?.FleshType?.damageEffecter;
                 if (oldEffecter != null)
-                    pawn.RaceProps.FleshType.damageEffecter = oldEffecter;
-            }
+                    pawn.RaceProps.FleshType.damageEffecter = null;
 
+                DamageWorker.DamageResult result;
+                try
+                {
+                    result = pawn.TakeDamage(dInfo);
+                }
+                finally
+                {
+                    if (oldEffecter != null)
+                        pawn.RaceProps.FleshType.damageEffecter = oldEffecter;
+                }
 
-            if (!pawn.Dead)
-            {
-                Find.BattleLog.RemoveEntry(log);
-                pawn.Kill(dInfo, result?.hediffs?.FirstOrFallback());
+                if (!pawn.Dead)
+                {
+                    Find.BattleLog.RemoveEntry(log);
+                    pawn.Kill(dInfo, result?.hediffs?.FirstOrFallback());
+                }
+                else
+                {
+                    result?.AssociateWithLog(log);
+                }
             }
             else
             {
-                result?.AssociateWithLog(log);
+                // Magic kill...
+                BodyPartDef partDef = i.GetDef<BodyPartDef>(e.TargetBodyPart);
+                DamageDef dmgDef = i.GetDef(e.DamageDef, DamageDefOf.Cut);
+                var part = GetPartFromDef(pawn, partDef);
+                ThingDef weapon = killer.equipment?.Primary?.def;
+
+                // Does 0.01 damage, kills anyway.
+                var dInfo = new DamageInfo(dmgDef, 0.01f, 0f, hitPart: part, instigator: killer, weapon: weapon);
+                pawn.Kill(dInfo);
             }
 
             var animPart = i.Animator.GetPawnBody(pawn);

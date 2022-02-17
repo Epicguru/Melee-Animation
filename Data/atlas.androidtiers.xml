@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>atlas.androidtiers</mod>
+	<modName>Android tiers</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>MeleeWeapon_MechKnife</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/MechKnife</tex>
+			<ofX>0.5340314</ofX>
+			<ofY>-0.08376963</ofY>
+			<scX>3.5</scX>
+			<scY>3.5</scY>
+			<blS>0.356021</blS>
+			<blE>1.531414</blE>
+		</li>
+	</items>
+</Data>

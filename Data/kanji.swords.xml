@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>kanji.swords</mod>
+	<modName>Kanji's Swords</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>KS_Fenrir</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>KS/Dagger</tex>
+			<ofX>0.2408377</ofX>
+			<rot>18</rot>
+			<scX>1.3</scX>
+			<scY>1.3</scY>
+			<blS>0.1204188</blS>
+			<blE>0.7670157</blE>
+		</li>
+		<li>
+			<dId>KS_Bahamut</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>KS/Sword</tex>
+			<ofX>0.4764398</ofX>
+			<rot>42</rot>
+			<scX>1.3</scX>
+			<scY>1.3</scY>
+			<blS>0.1518325</blS>
+			<blE>1.217278</blE>
+		</li>
+	</items>
+</Data>

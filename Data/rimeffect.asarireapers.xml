@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>rimeffect.asarireapers</mod>
+	<modName>Rim-Effect: Asari and Reapers</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>RE_MeleeWeapon_AsariSword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Items/Weapons/AsariSword</tex>
+			<ofX>0.3403141</ofX>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1780105</blS>
+			<blE>0.7984293</blE>
+		</li>
+	</items>
+</Data>

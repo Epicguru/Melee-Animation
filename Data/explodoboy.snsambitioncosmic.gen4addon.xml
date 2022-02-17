@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>explodoboy.snsambitioncosmic.gen4addon</mod>
+	<modName>SNS AOTC: True Pinnacle of Creation</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>SNS_RecursionMelee</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/SNS/Gen4/RECURSION/RECURSION</tex>
+			<ofX>0.3874345</ofX>
+			<ofY>-0.07853403</ofY>
+			<rot>100</rot>
+			<scX>1.2</scX>
+			<scY>1.2</scY>
+			<blS>0.1204188</blS>
+			<blE>1.002618</blE>
+		</li>
+	</items>
+</Data>
