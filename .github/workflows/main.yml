@@ -17,4 +17,14 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run generator.
-      run: ./Source/CI/CompatibilityGenerator.exe "../../Data" "../../Data/Compatible Mods.md"
+      run: ./Source/CI/CompatibilityGenerator.exe "./Data" "./Data/Compatible Mods.md"
+    - name: Check for changes.
+      run: git status
+    - name: Stage changes.
+      run: git add .
+    - name: Commit changes.
+      run: git commit -m "[AUTO CI] Update compatible mod list."
+    - name: Fetch latest.
+      run: git fetch origin master
+    - name: Push to master.
+      run: git push origin HEAD:master
