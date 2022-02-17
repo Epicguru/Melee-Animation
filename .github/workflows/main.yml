@@ -26,5 +26,8 @@ jobs:
       run: git commit -m "[AUTO CI] Update compatible mod list."
     - name: Fetch latest.
       run: git fetch origin master
-    - name: Push to master.
-      run: git push origin HEAD:master
+    - name: Push to ${{ github.ref }}.
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
