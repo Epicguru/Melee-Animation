@@ -17,4 +17,4 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run generator.
-      run: ./Source/CI/CompatibilityGenerator.exe
+      run: ./Source/CI/CompatibilityGenerator.exe "../../Data" "../../Data/Compatible Mods.md"
