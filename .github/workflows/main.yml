@@ -23,11 +23,14 @@ jobs:
     - name: Stage changes.
       run: git add .
     - name: Commit changes.
-      run: git commit -m "[AUTO CI] Update compatible mod list."
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "[AUTO CI] Update compatible mod list."
     - name: Fetch latest.
       run: git fetch origin master
     - name: Push to ${{ github.ref }}.
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.CI_TOKEN }}
         branch: ${{ github.ref }}
