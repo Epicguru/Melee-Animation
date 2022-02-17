@@ -33,7 +33,7 @@ namespace AAM
             SweepPathRenderer.Update();
 
             if (Input.GetKeyDown(KeyCode.L))
-                Dialog_TweakEditor.Open();
+                Dialog_TweakEditor.Open(); 
                 //Dialog_AnimationDebugger.Open();
         }
 
