@@ -16,5 +16,15 @@
 			<blE>0.7879581</blE>
 			<tag>5</tag>
 		</li>
+		<li>
+			<dId>MorrowRim_KagoutiTusk</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Special/ElephantTusk</tex>
+			<ofX>0.1548732</ofX>
+			<blS>0.06408545</blS>
+			<blE>0.5801068</blE>
+			<tag>12</tag>
+		</li>
 	</items>
 </Data>

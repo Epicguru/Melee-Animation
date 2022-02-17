@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>madman.toolsofthetrade</mod>
+	<modName>Medieval Madness: Tools of the Trade</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>MM_flamberge</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/MM_flamberge</tex>
+			<ofX>0.413478</ofX>
+			<rot>45</rot>
+			<blS>0.1724729</blS>
+			<blE>1.084809</blE>
+		</li>
+		<li>
+			<dId>MM_Pitchfork</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Equipment/WeaponMelee/MM_pitchfork</tex>
+			<ofX>0.4203312</ofX>
+			<rot>45</rot>
+			<blS>0.01827527</blS>
+			<tag>5</tag>
+		</li>
+	</items>
+</Data>

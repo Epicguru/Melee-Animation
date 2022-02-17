@@ -9,12 +9,24 @@
 			<typ>ThingDef</typ>
 			<nsp>Verse</nsp>
 			<tex>Things/Item/Resource/GU_RedWood/GU_RedWood_a</tex>
-			<ofX>0.08376963</ofX>
-			<ofY>3.744794E-09</ofY>
+			<ofX>0.1708945</ofX>
+			<ofY>-0.05340454</ofY>
 			<rot>45</rot>
-			<scX>0.9</scX>
-			<scY>0.9</scY>
+			<blS>0.02136182</blS>
+			<blE>0.4519359</blE>
 			<tag>8</tag>
+		</li>
+		<li>
+			<dId>AA_GallatrossHorn</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Resource/AA_GallatrossHorn</tex>
+			<ofX>0.2136182</ofX>
+			<ofY>-0.05340454</ofY>
+			<rot>45</rot>
+			<blS>0.04272363</blS>
+			<blE>0.6708945</blE>
+			<tag>45</tag>
 		</li>
 	</items>
 </Data>

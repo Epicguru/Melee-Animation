@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>sarg.jorisexperience</mod>
+	<modName>The Joris Experience</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>JE_GoldenUniJorisHorn</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/JE_GoldenUniJorisHorn</tex>
+			<ofX>0.2242991</ofX>
+			<ofY>-0.0694259</ofY>
+			<rot>45</rot>
+			<blS>0.09078772</blS>
+			<blE>0.7242991</blE>
+			<tag>5</tag>
+		</li>
+	</items>
+</Data>

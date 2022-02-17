@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>regrowth.botr.extinctanimalspack</mod>
+	<modName>ReGrowth: Extinct Animals Pack</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>RG-EAP_WoollyMammothTusk</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Special/WoollyMammothTusk</tex>
+			<ofX>0.2883845</ofX>
+			<ofY>0.1708945</ofY>
+			<rot>-60</rot>
+			<blS>0.07476635</blS>
+			<blE>0.8097463</blE>
+			<tag>1</tag>
+		</li>
+	</items>
+</Data>
