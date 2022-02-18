@@ -1,5 +1,5 @@
 # Compatible Mods List
-`Updated 02/17/2022 03:22:23.`  
+`Updated 02/18/2022 17:57:07.`  
 
 Mods listed here are fully compatible with this mod.  
 Mods that are **not** listed here are not *incompatible* - but they won't be able to perform animations.  
@@ -17,17 +17,17 @@ Maybe a weapon that is too large or small?
 Open an issue or leave a comment on the Workshop page - or even better, submit a Pull Request!
 </details>
 
-Currently supports 349 weapons from 71 mods.
+Currently supports 442 weapons from 78 mods.
   | Mod Name | Mod ID | Weapon Count | Patch Author |
 | --- | --- | --- | --- |
 | **[RF]Berserk - Character Apparel Pack** | rf.berserk.armory | 1 | *Epicguru* |
 | **[SYR] Thrumkin** | syrchalis.thrumkin | 2 | *Epicguru* |
 | **A RimWorld of Magic** | torann.arimworldofmagic | 8 | *Epicguru* |
-| **Alpha Animals** | sarg.alphaanimals | 1 | *Epicguru* |
+| **Alpha Animals** | sarg.alphaanimals | 2 | *Epicguru* |
 | **Alpha Biomes** | sarg.alphabiomes | 22 | *Epicguru* |
 | **Ancient Eastern Armory** | eastern.armory.geminingen | 3 | *Epicguru* |
 | **Android tiers** | atlas.androidtiers | 1 | *Epicguru* |
-| **Anima Animals** | xrushha.animaanimals | 2 | *Epicguru* |
+| **Anima Animals** | xrushha.animaanimals | 3 | *Epicguru* |
 | **Anima Gear** | xrushha.animagear | 1 | *Epicguru* |
 | **Antimatter Annihilation** | co.uk.epicguru.antimatterannihilation | 5 | *Epicguru* |
 | **Apothecary (Continued)** | mlie.apothecary | 1 | *Epicguru* |
@@ -36,6 +36,7 @@ Currently supports 349 weapons from 71 mods.
 | **Core** | ludeon.rimworld | 12 | *Epicguru* |
 | **Corinthian Royal Armoury** | s16.ddm | 1 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
+| **Dinosauria** | spincrus.dinosauria | 1 | *Epicguru* |
 | **Early Times** | rd.earlytimes | 19 | *Epicguru* |
 | **Forsakens** | kikohi.forsakens | 4 | *Epicguru* |
 | **Glitter Tech** | gt.sam.glittertech | 1 | *Epicguru* |
@@ -50,16 +51,19 @@ Currently supports 349 weapons from 71 mods.
 | **Kit's Roman Weapons** | kit.romanweapons | 4 | *Epicguru* |
 | **Kit's VFE Weapons** | kit.vfeweapons | 4 | *Epicguru* |
 | **Mamuffalo** | dismarzero.vgp.mamuffalo | 1 | *Epicguru* |
+| **Medieval Madness: Tools of the Trade** | madman.toolsofthetrade | 44 | *Epicguru* |
 | **Medieval Overhaul** | dankpyon.medieval.overhaul | 47 | *Epicguru* |
+| **Megafauna** | spino.megafauna | 6 | *Epicguru* |
 | **Melee Please (Continued)** | mlie.meleeplease | 12 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
-| **MorrowRim - Just the Animals** | sirmashedpotato.morrowrim.justtheanimals | 1 | *Epicguru* |
+| **MorrowRim - Just the Animals** | sirmashedpotato.morrowrim.justtheanimals | 2 | *Epicguru* |
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
 | **Pawnmorpher** | tachyonite.pawnmorpherpublic | 3 | *Epicguru* |
 | **Polarisbloc - Mechenemy** | vanya.polarisbloc.mechenemy | 2 | *Epicguru* |
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |
 | **Psysword** | xedos.psyblade | 2 | *Epicguru* |
 | **Race to the Rim** | sargoskar.racetotherim | 2 | *Epicguru* |
+| **ReGrowth: Extinct Animals Pack** | regrowth.botr.extinctanimalspack | 1 | *Epicguru* |
 | **Revia Race** | fs.reviarace | 8 | *Epicguru* |
 | **Rim of Madness - Bones** | sihv.rombones | 1 | *Epicguru* |
 | **Rim-Effect: Asari and Reapers** | rimeffect.asarireapers | 1 | *Epicguru* |
@@ -71,15 +75,18 @@ Currently supports 349 weapons from 71 mods.
 | **Rimsenal - Core** | rimsenal.core | 5 | *Epicguru* |
 | **Rimsenal - Federation Faction Pack** | rimsenal.federation | 2 | *Epicguru* |
 | **Rimsenal - Feral Faction Pack** | rimsenal.feral | 4 | *Epicguru* |
+| **Royal Thrumbos** | andross.royalthrumbos | 2 | *Epicguru* |
 | **Royalty** | ludeon.rimworld.royalty | 9 | *Epicguru* |
+| **Simply More Melee (Continued)** | mlie.simplymoremelee | 34 | *Epicguru* |
 | **SNS AOTC: True Pinnacle of Creation** | explodoboy.snsambitioncosmic.gen4addon | 1 | *Epicguru* |
 | **Sparkling Worlds - Full Mod** | albion.sparklingworlds.full | 2 | *Epicguru* |
 | **Star Crafters Armory** | akri.starcraftersarmory | 1 | *Epicguru* |
 | **StarWars Animal Collection** | guy.starwarsanimalcollection | 2 | *Epicguru* |
 | **Swords (Continued)** | mlie.swords | 5 | *Epicguru* |
+| **The Joris Experience** | sarg.jorisexperience | 1 | *Epicguru* |
 | **Thing Generator** | co.uk.epicguru.thinggenerator | 1 | *Epicguru* |
 | **Vanilla Animals Expanded — Endangered** | vanillaexpanded.vaeendandext | 1 | *Epicguru* |
-| **Vanilla Animals Expanded — Ice Sheet** | vanillaexpanded.vaeis | 1 | *Epicguru* |
+| **Vanilla Animals Expanded — Ice Sheet** | vanillaexpanded.vaeis | 2 | *Epicguru* |
 | **Vanilla Brewing Expanded** | vanillaexpanded.vbrewe | 7 | *Epicguru* |
 | **Vanilla Factions Expanded - Insectoids** | oskarpotocki.vfe.insectoid | 1 | *Epicguru* |
 | **Vanilla Factions Expanded - Medieval** | oskarpotocki.vanillafactionsexpanded.medievalmodule | 3 | *Epicguru* |
