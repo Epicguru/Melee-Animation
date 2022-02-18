@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+	<mod>spincrus.dinosauria</mod>
+	<modName>Dinosauria</modName>
+	<author>Epicguru</author>
+	<items>
+		<li>
+			<dId>TriceratopsHorn</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>dinosauria/dinosauria_triceratopshorn</tex>
+			<ofX>0.1815754</ofX>
+			<ofY>-0.1068091</ofY>
+			<rot>-70</rot>
+			<blS>0.0694259</blS>
+			<blE>0.6975968</blE>
+			<tag>12</tag>
+		</li>
+	</items>
+</Data>

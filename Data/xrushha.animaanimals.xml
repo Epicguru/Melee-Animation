@@ -28,5 +28,16 @@
 			<blE>0.3769633</blE>
 			<tag>48</tag>
 		</li>
+		<li>
+			<dId>AnimaThrumboHorn</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Item/AnimaThrumboHorn/AnimaHorn</tex>
+			<ofX>0.1548732</ofX>
+			<ofY>-0.07476635</ofY>
+			<blS>0.05874499</blS>
+			<blE>0.5640854</blE>
+			<tag>13</tag>
+		</li>
 	</items>
 </Data>
