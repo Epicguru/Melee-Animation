@@ -11,6 +11,8 @@
 			<tex>Things/WeaponMelee/Dolabra</tex>
 			<ofX>0.1467391</ofX>
 			<ofY>-0.01902174</ofY>
+			<blS>0.1027027</blS>
+			<blE>0.5459459</blE>
 			<tag>18</tag>
 		</li>
 		<li>
@@ -22,6 +24,8 @@
 			<rot>45</rot>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.1297297</blS>
+			<blE>0.9945946</blE>
 			<tag>4</tag>
 		</li>
 		<li>
@@ -32,6 +36,8 @@
 			<ofX>0.1929348</ofX>
 			<ofY>-0.0326087</ofY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1297297</blS>
+			<blE>0.6054054</blE>
 			<tag>48</tag>
 		</li>
 		<li>
@@ -44,6 +50,8 @@
 			<scX>1.1</scX>
 			<scY>1.1</scY>
 			<flY>True</flY>
+			<blS>0.2108108</blS>
+			<blE>0.6378378</blE>
 			<tag>18</tag>
 		</li>
 	</items>

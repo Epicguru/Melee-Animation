@@ -12,6 +12,8 @@
 			<ofX>0.3470716</ofX>
 			<scX>1.2</scX>
 			<scY>1.2</scY>
+			<blS>0.2</blS>
+			<blE>0.9081081</blE>
 			<tag>22</tag>
 		</li>
 		<li>
@@ -23,6 +25,8 @@
 			<rot>45</rot>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.0972973</blS>
+			<blE>1.075676</blE>
 			<tag>4</tag>
 		</li>
 		<li>
@@ -31,9 +35,9 @@
 			<nsp>Verse</nsp>
 			<tex>Things/Item/Equipment/WeaponMelee/KIT_CryptoKnife</tex>
 			<ofX>0.2169197</ofX>
-			<scX>1</scX>
-			<scY>1</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1567568</blS>
+			<blE>0.4918919</blE>
 			<tag>48</tag>
 		</li>
 		<li>
@@ -44,6 +48,8 @@
 			<ofX>0.2863341</ofX>
 			<scX>1.2</scX>
 			<scY>1.2</scY>
+			<blS>0.1567568</blS>
+			<blE>0.8378379</blE>
 			<tag>3</tag>
 		</li>
 	</items>

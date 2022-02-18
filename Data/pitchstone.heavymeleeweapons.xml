@@ -15,7 +15,8 @@
 			<scX>1.4</scX>
 			<scY>1.4</scY>
 			<flY>True</flY>
-			<tag>6</tag>
+			<blS>0.2756757</blS>
+			<blE>1.07027</blE>
 		</li>
 		<li>
 			<dId>HMW_MeleeWeapon_HeavyMonoSword</dId>
@@ -27,7 +28,8 @@
 			<rot>15</rot>
 			<scX>1.4</scX>
 			<scY>1.4</scY>
-			<tag>6</tag>
+			<blS>0.2</blS>
+			<blE>1.189189</blE>
 		</li>
 		<li>
 			<dId>HMW_MeleeWeapon_PersonaHeavyMonoSword</dId>
@@ -39,7 +41,8 @@
 			<rot>15</rot>
 			<scX>1.4</scX>
 			<scY>1.4</scY>
-			<tag>6</tag>
+			<blS>0.145946</blS>
+			<blE>1.178378</blE>
 		</li>
 		<li>
 			<dId>HMW_MeleeWeapon_ZeusSword</dId>
@@ -50,6 +53,8 @@
 			<rot>45</rot>
 			<scX>1.5</scX>
 			<scY>1.5</scY>
+			<blS>0.2648649</blS>
+			<blE>1.518919</blE>
 			<tag>7</tag>
 		</li>
 		<li>
@@ -61,6 +66,8 @@
 			<rot>45</rot>
 			<scX>1.5</scX>
 			<scY>1.5</scY>
+			<blS>0.2324324</blS>
+			<blE>1.518919</blE>
 			<tag>7</tag>
 		</li>
 		<li>
@@ -73,6 +80,8 @@
 			<scX>1.6</scX>
 			<scY>1.6</scY>
 			<flY>True</flY>
+			<blS>0.4594595</blS>
+			<blE>1.086486</blE>
 			<tag>1</tag>
 		</li>
 		<li>
@@ -85,6 +94,8 @@
 			<scX>1.6</scX>
 			<scY>1.6</scY>
 			<flY>True</flY>
+			<blS>0.1243243</blS>
+			<blE>1.108108</blE>
 			<tag>1</tag>
 		</li>
 		<li>
@@ -97,7 +108,8 @@
 			<rot>47</rot>
 			<scX>1.6</scX>
 			<scY>1.6</scY>
-			<tag>6</tag>
+			<blS>0.08108108</blS>
+			<blE>1.762162</blE>
 		</li>
 		<li>
 			<dId>HMW_MeleeWeapon_PersonaFlameLance</dId>
@@ -109,7 +121,8 @@
 			<rot>47</rot>
 			<scX>1.6</scX>
 			<scY>1.6</scY>
-			<tag>6</tag>
+			<blS>0.08108108</blS>
+			<blE>1.735135</blE>
 		</li>
 		<li>
 			<dId>HMW_MeleeWeapon_SagittariusMight</dId>
@@ -120,6 +133,8 @@
 			<rot>45</rot>
 			<scX>1.6</scX>
 			<scY>1.6</scY>
+			<blS>0.145946</blS>
+			<blE>1.313514</blE>
 			<tag>4</tag>
 		</li>
 		<li>
@@ -132,6 +147,8 @@
 			<rot>45</rot>
 			<scX>1.4</scX>
 			<scY>1.4</scY>
+			<blS>0.1297297</blS>
+			<blE>1.221622</blE>
 			<tag>1</tag>
 		</li>
 	</items>

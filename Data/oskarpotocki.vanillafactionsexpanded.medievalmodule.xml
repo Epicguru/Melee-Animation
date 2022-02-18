@@ -15,6 +15,8 @@
 			<scX>0.7</scX>
 			<scY>0.7</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.07027027</blS>
+			<blE>0.4054054</blE>
 			<tag>8</tag>
 		</li>
 		<li>
@@ -26,6 +28,8 @@
 			<ofY>-0.01630435</ofY>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.07027027</blS>
+			<blE>0.6918919</blE>
 			<tag>1</tag>
 		</li>
 		<li>
@@ -38,6 +42,8 @@
 			<rot>45</rot>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.1405405</blS>
+			<blE>1.172973</blE>
 		</li>
 	</items>
 </Data>
