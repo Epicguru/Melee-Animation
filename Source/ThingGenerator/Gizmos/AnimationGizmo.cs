@@ -31,7 +31,7 @@ namespace AAM.Gizmos
 
         public override float GetWidth(float maxWidth)
         {
-            return maxWidth;
+            return Mathf.Max(240, maxWidth);
         }
     }
 }

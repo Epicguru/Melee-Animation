@@ -298,28 +298,6 @@ namespace AAM
                         afterGrapple.TryTrigger();
                 }
             }
-
-            //if (Input.GetKeyDown(KeyCode.P))
-            //    StartAnim();
-
-            if (!Input.GetKeyDown(KeyCode.E))
-                return;
-
-            var mainPawn = Find.Selector.SelectedPawns[0];
-            var otherPawn = Find.Selector.SelectedPawns[1];
-
-            var rootTransform = mainPawn.MakeAnimationMatrix();
-
-            var manager = map.GetAnimManager();
-
-            // Cancel any previous animation(s)
-            manager.StopAnimation(mainPawn);
-            manager.StopAnimation(otherPawn);
-
-            var def = DefDatabase<AnimDef>.GetNamed("AAM_Duel_Swords");
-            Core.Log($"Starting {mainPawn}, {otherPawn}");
-            var anim = manager.StartAnimation(def, rootTransform, mainPawn, otherPawn);
-            anim.MirrorHorizontal = false;
         }
 
         private BezierCurve curve;

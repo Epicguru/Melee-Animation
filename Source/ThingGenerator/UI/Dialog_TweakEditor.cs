@@ -1,6 +1,7 @@
 ﻿using AAM.Tweaks;
 using RimWorld;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using AAM.Reqs;
@@ -13,11 +14,10 @@ namespace AAM.UI
     {
         private static ItemTweakData clipboard;
 
-        [DebugAction("Advanced Animation Mod", "Open Tweak Editor", actionType = DebugActionType.Action)]
-        private static void OpenInt()
-        {
-            Open();
-        }
+        [DebugAction("Advanced Animation Mod", "Open Tweak Editor", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Playing)]
+        private static void OpenInt() => Open();
+        [DebugAction("Advanced Animation Mod", "Open Tweak Editor", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
+        private static void OpenInt2() => Open();
 
         public static Dialog_TweakEditor Open()
         {
@@ -37,6 +37,10 @@ namespace AAM.UI
         private Camera camera;
         private RenderTexture rt;
         private Texture2D rt_tex;
+        private Vector3 mousePos;
+        private Vector3? startPos;
+        private Vector2 tweakStart;
+        private byte trsMode;
 
         public Dialog_TweakEditor()
         {
@@ -178,13 +182,6 @@ namespace AAM.UI
             {
                 var tweak = TweakDataManager.GetOrCreateDefaultTweak(CurrentDef);
 
-                //if (ui.ButtonDebug("RESET", false))
-                //{
-                //    tweak = new ItemTweakData(CurrentDef);
-                //    TweakDataManager.RegisterTweak(tweak);
-                //    ResetBuffers();
-                //}
-
                 var copyPasta = ui.GetRect(28);
                 copyPasta.width = 120;
                 if(Widgets.ButtonText(copyPasta, "COPY"))                
@@ -231,7 +228,8 @@ namespace AAM.UI
                 tweak.OffX = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffX, -2, 2, label: $"Offset X: {tweak.OffX:F3}");
                 tweak.OffY = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffY, -2, 2, label: $"Offset Y: {tweak.OffY:F3}");
                 ui.Gap();
-                ui.TextFieldNumericLabeled($"Rotation:  ", ref tweak.Rotation, ref GetBuffer(tweak.Rotation), -360, 360);
+                ref string tweakRotBuf = ref GetBuffer(tweak.Rotation);
+                ui.TextFieldNumericLabeled($"Rotation:  ", ref tweak.Rotation, ref tweakRotBuf, -360, 360);
 
                 ui.Gap();
                 var flips = ui.GetRect(28);
@@ -270,6 +268,11 @@ namespace AAM.UI
                     var list = System.Enum.GetValues(typeof(MeleeWeaponType)).Cast<MeleeWeaponType>();
                     FloatMenuUtility.MakeMenu(list, t => MakeTagLabel(t), t => () =>
                     {
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            tweak.MeleeWeaponType = t;
+                            return;
+                        }
                         bool flag = tweak.MeleeWeaponType.HasFlag(t);
                         if (flag)
                             tweak.MeleeWeaponType &= ~t;
@@ -280,29 +283,113 @@ namespace AAM.UI
 
                 var startSlider = ui.GetRect(20);
                 var endSlider = ui.GetRect(20);
-                tweak.BladeStart = Widgets.HorizontalSlider(startSlider, tweak.BladeStart, -2, 2, label: "Blade Start");
-                tweak.BladeEnd = Widgets.HorizontalSlider(endSlider, tweak.BladeEnd, -2, 2, label: "Blade End");
+                tweak.BladeStart = Widgets.HorizontalSlider(startSlider, tweak.BladeStart, -2, 2, label: "Blade Start <b>[Q]</b>");
+                tweak.BladeEnd = Widgets.HorizontalSlider(endSlider, tweak.BladeEnd, -2, 2, label: "Blade End <b>[E]</b>");
 
                 ui.GapLine();
-                try
+
+                if (Event.current.type == EventType.Repaint)
                 {
-                    if((uint)(Time.unscaledTime * 60) % 5 == 0)
-                        RenderPreview(tweak);
+                    try
+                    {
+                        const int FRAME_INTERVAL = 1;
+                        if ((uint)(Time.unscaledTime * 60) % FRAME_INTERVAL == 0)
+                            RenderPreview(tweak);
+                    }
+                    catch { }
                 }
-                catch { }
 
                 if(rt_tex != null)
                 {
-                    var view = ui.GetRect(Mathf.Min(rt_tex.height, inRect.height - ui.CurHeight - 30));
-                    Widgets.DrawTextureFitted(view, rt_tex, 1f);
+                    var view = ui.GetRect(inRect.height - ui.CurHeight - 30);
+                    if ((int)view.width != rt.width || (int)view.height != rt.height)
+                    {
+                        rt.Release();
+                        rt.width = (int)view.width;
+                        rt.height = (int)view.height;
+                        rt.Create();
+                    }
+
+                    var mp = Event.current.mousePosition;
+                    var localMousePos = mp - view.center;
+                    localMousePos.y *= -1;
+                    float unitsPerPixel = (camera.orthographicSize * 2) / view.height;
+                    mousePos = localMousePos * unitsPerPixel;
+                    camera.backgroundColor = Color.grey * 0.25f;
+
+                    GUI.DrawTexture(view, rt_tex);
                     Widgets.DrawLine(new Vector2(view.xMin, view.center.y), new Vector2(view.xMax, view.center.y), new Color(0f, 1f, 0f, 0.333f), 1);
                     Widgets.DrawLine(new Vector2(view.center.x, view.yMin), new Vector2(view.center.x, view.yMax), new Color(0f, 1f, 0f, 0.333f), 1);
+                    Widgets.Label(view, $"{localMousePos}, {mousePos}, {rt.width}x{rt.height} vs {(int)view.width}x{(int)view.height}");
+
+                    if (Widgets.ButtonInvisible(view, false))
+                    {
+                        GUI.FocusControl(null);
+                    }
+
+                    // Modify start and end.
+                    if (startPos == null)
+                    {
+                        if (Input.GetKey(KeyCode.E))
+                            tweak.BladeEnd = mousePos.x;
+                        else if (Input.GetKey(KeyCode.Q))
+                            tweak.BladeStart = mousePos.x;
+                        else if (Input.GetKey(KeyCode.G))
+                        {
+                            startPos = mousePos;
+                            tweakStart = new Vector2(tweak.OffX, tweak.OffY);
+                            trsMode = 0;
+                        }
+                        else if (Input.GetKey(KeyCode.R))
+                        {
+                            startPos = mousePos;
+                            tweakStart = new Vector2(tweak.Rotation, 0);
+                            trsMode = 1;
+                        }
+                    }
+                    else
+                    {
+                        switch (trsMode)
+                        {
+                            case 0:
+                                // Move.
+                                var offset = mousePos - startPos.Value;
+                                var newPos = tweakStart + (Vector2)offset;
+
+                                tweak.OffX = newPos.x;
+                                if(Input.GetKey(KeyCode.LeftShift))
+                                    tweak.OffY = newPos.y;
+                                
+
+                                if (!Input.GetKey(KeyCode.G))
+                                    startPos = null;
+                                break;
+
+                            case 1:
+                                // Rotate.
+                                float a = Vector2.SignedAngle(startPos.Value, mousePos);
+                                tweak.Rotation = (tweakStart.x - a) % 360f;
+
+                                if (!Input.GetKey(KeyCode.LeftShift))
+                                    tweak.Rotation = Mathf.Round(tweak.Rotation / 5f) * 5f;
+                                tweakRotBuf = tweak.Rotation.ToString(CultureInfo.InvariantCulture);
+
+                                if (!Input.GetKey(KeyCode.R))
+                                    startPos = null;
+                                break;
+
+                            default:
+                                Core.Error("Bad");
+                                trsMode = 0;
+                                break;
+                        }
+                    }
                 }                
 
                 const float MIN = 0.1f;
                 const float MAX = 5f;
 
-                camera.orthographicSize = Mathf.Lerp(MIN, MAX, 1f - Widgets.HorizontalSlider(ui.GetRect(30), 1f - Mathf.InverseLerp(MIN, MAX, camera.orthographicSize), 0f, 1f, label: $"Camera zoom"));
+                camera.orthographicSize = Mathf.Lerp(MIN, MAX, 1f - Widgets.HorizontalSlider(ui.GetRect(30), 1f - Mathf.InverseLerp(MIN, MAX, camera.orthographicSize), 0f, 1f, label: "Camera zoom"));
             }
 
             ui.End();
@@ -338,11 +425,13 @@ namespace AAM.UI
 
             Vector3 start = new Vector3(tweak.BladeStart, 0, 1);
             Vector3 end = new Vector3(tweak.BladeStart, 0, -1);
-            GenDraw.DrawLineBetween(start, end, SimpleColor.Green, 0.1f);
+            for (int i = 0; i < 3; i++)
+                GenDraw.DrawLineBetween(start, end, SimpleColor.Green, 0.1f);
 
             start = new Vector3(tweak.BladeEnd, 0, 1);
             end = new Vector3(tweak.BladeEnd, 0, -1);
-            GenDraw.DrawLineBetween(start, end, SimpleColor.Red, 0.1f);
+            for (int i = 0; i < 3; i++)
+                GenDraw.DrawLineBetween(start, end, SimpleColor.Red, 0.1f);
 
             camera.Render();
 
