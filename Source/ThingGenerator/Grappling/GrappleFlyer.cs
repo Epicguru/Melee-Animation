@@ -19,6 +19,13 @@ namespace AAM.Grappling
             if (victim.Position == targetPos || !victim.Spawned)
                 return null;
 
+            if (grappler.Map == null)
+            {
+                // I can't fathom how this is possible, but it happened once and it's not cool.
+                Core.Error($"Null grappler ({grappler.LabelShortCap}) map!");
+                return null;
+            }
+
             GrappleFlyer flyer = PawnFlyer.MakeFlyer(AAM_DefOf.AAM_GrappleFlyer, victim, targetPos) as GrappleFlyer;
             if (flyer?.FlyingPawn != null)
             {
@@ -174,6 +181,14 @@ namespace AAM.Grappling
         {
             drawLoc.y += 0.0001f;
             var tex = GrabUtility.GetBoundPawnTexture(FlyingPawn);
+            if (tex == null)
+            {
+                if (FlyingPawn.RaceProps.Humanlike)
+                    tex = Content.BoundMaleRope;
+                else
+                    return;
+            }
+
             var mat = AnimRenderer.DefaultCutout;
             var trs = Matrix4x4.TRS(drawLoc, Quaternion.identity, Vector3.one * 1.5f); // TODO use actual pawn size such as from alien races.
 

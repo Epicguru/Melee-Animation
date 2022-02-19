@@ -2,8 +2,10 @@
 using AAM.Events.Workers;
 using RimWorld;
 using System;
+using AAM.Tweaks;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace AAM
 {
@@ -27,6 +29,9 @@ namespace AAM
         public static bool IsInAnimation(this Pawn pawn, out AnimRenderer animRenderer)
             => (animRenderer = AnimRenderer.TryGetAnimator(pawn)) != null;
 
+        public static bool IsInActiveMeleeCombat(this Pawn pawn)
+            => pawn.jobs?.curDriver is JobDriver_AttackMelee or JobDriver_AttackStatic;
+
         public static AnimRenderer TryGetAnimator(this Pawn pawn) => AnimRenderer.TryGetAnimator(pawn);
 
         public static ThingWithComps GetFirstMeleeWeapon(this Pawn pawn)
@@ -34,12 +39,12 @@ namespace AAM
             if (pawn?.equipment == null)
                 return null;
 
-            if (pawn.equipment.Primary?.def.IsMeleeWeapon ?? false)
+            if ((pawn.equipment.Primary?.def.IsMeleeWeapon ?? false) && TweakDataManager.TryGetTweak(pawn.equipment.Primary.def) != null)
                 return pawn.equipment.Primary;
 
             foreach(var item in pawn.equipment.AllEquipmentListForReading)
             {
-                if (item.def.IsMeleeWeapon)
+                if (item.def.IsMeleeWeapon && TweakDataManager.TryGetTweak(item.def) != null)
                     return item;
             }
 
@@ -47,7 +52,7 @@ namespace AAM
             {
                 foreach (var item in pawn.inventory.innerContainer)
                 {
-                    if (item is ThingWithComps twc && item.def.IsMeleeWeapon)
+                    if (item is ThingWithComps twc && item.def.IsMeleeWeapon && TweakDataManager.TryGetTweak(item.def) != null)
                         return twc;
                 }
             }

@@ -7,19 +7,31 @@ namespace AAM
     public class Settings : ModSettings
     {
         [Header("General")]
+        [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
+                     "If enabled, you can view and edit multiple Advanced Melee gizmos when selecting multiple pawns.\n" +
+                     "Disabled by default as they can quickly clutter up the screen when selecting many colonists.")]
+        public bool ShowMultipleGizmos = false;
+
+        [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
+                     "If enabled, the Advanced Melee gizmo will be shown even if the pawn does not have a valid (compatible) melee weapon.")]
+        public bool ShowGizmosWithoutMeleeWeapon = false;
+
         [Label("Animated Pawns Considered Invisible")]
         [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
                      "they will not be actively targeted or shot at. This makes executions less risky.\n" +
                      "Note that pawns in animations can still take damage, such as from stray gunfire or explosions.")]
         public bool AllowInvisiblePawns = true;
 
-        [Header("Grappling")]
-        [Description("If true, your colonists will automatically use their grappling hooks against enemies.")]
+        [Header("Lasso")]
+        [Label("Auto Lasso")]
+        [Description("If true, your colonists will automatically use their lassos against enemies.\n\n" +
+                     "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoGrapple = true;
 
         [Header("Executions")]
         [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
-                     "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.")]
+                     "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
+                     "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoExecute = true;
 
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]

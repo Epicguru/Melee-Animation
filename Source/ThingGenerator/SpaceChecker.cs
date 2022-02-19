@@ -34,10 +34,14 @@ namespace AAM
         public static bool IsValidPawnPosFast(Map map, int mapWidth, int mapHeight, in IntVec3 cell)
         {
             if (cell.x < 0 || cell.z < 0 || cell.x >= mapWidth || cell.z >= mapHeight)
+            {
                 return false;
+            }
 
             if (cell.Impassable(map) || !cell.Walkable(map))
+            {
                 return false;
+            }
 
             return cell.GetEdifice(map) is not Building_Door bd || bd.Open;
         }

@@ -34,6 +34,100 @@ namespace AAM.Grappling
         private static readonly HashSet<IntVec2> tempCells = new HashSet<IntVec2>();
         private static MaterialPropertyBlock mpb = new MaterialPropertyBlock();
 
+        public static bool CanStartGrapple(Pawn grappler, Pawn target, in IntVec3 endCell, out string reason)
+        {
+            if (grappler == null || target == null || !endCell.IsValid)
+            {
+                reason = "Invalid input(s)";
+                return false;
+            }
+
+            var map = grappler.Map;
+
+            if (grappler.Dead)
+            {
+                reason = $"{grappler.NameShortColored} is dead.";
+                return false;
+            }
+            if (grappler.Downed)
+            {
+                reason = $"{grappler.NameShortColored} is downed and cannot use their lasso.";
+                return false;
+            }
+            if (target.Dead)
+            {
+                reason = $"{target.NameShortColored} is dead. You can't lasso corpses...";
+                return false;
+            }
+            if (grappler.IsInAnimation())
+            {
+                reason = $"{grappler.NameShortColored} is busy in an animation.";
+                return false;
+            }
+            if (!grappler.Spawned)
+            {
+                reason = $"{grappler.NameShortColored} cannot use their lasso right now.";
+                return false;
+            }
+            if (!target.Spawned)
+            {
+                reason = $"{target.NameShortColored} cannot be lassoed right now.";
+                return false;
+            }
+
+            // End cell check.
+            if (!SpaceChecker.IsValidPawnPosFast(map, map.info.Size.x, map.info.Size.z, endCell))
+            {
+                reason = "Invalid end position.";
+                return false;
+            }
+
+            // LOS.
+            if (!GenSight.LineOfSightToThing(endCell, target, map))
+            {
+                reason = $"{grappler.NameShortColored} has no line of sight to {target.NameShortColored}.";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public static IEnumerable<IntVec3> GetIdealGrappleSpots(Pawn grappler, Pawn target, bool onlyExecutionSpots)
+        {
+            // Assumes grappler and target are valid.
+
+            var selfPos = grappler.Position;
+            var targetPos = target.Position;
+            var map = grappler.Map;
+            var size = map.Size;
+
+            if (onlyExecutionSpots)
+            {
+                bool toRight = selfPos.x <= targetPos.x;
+                if (toRight)
+                {
+                    if (SpaceChecker.IsValidPawnPosFast(map, size.x, size.z, selfPos + new IntVec3(1, 0, 0)))
+                        yield return selfPos + new IntVec3(1, 0, 0);
+                    if (SpaceChecker.IsValidPawnPosFast(map, size.x, size.z, selfPos - new IntVec3(1, 0, 0)))
+                        yield return selfPos - new IntVec3(1, 0, 0);
+                }
+                else
+                {
+                    if (SpaceChecker.IsValidPawnPosFast(map, size.x, size.z, selfPos - new IntVec3(1, 0, 0)))
+                        yield return selfPos - new IntVec3(1, 0, 0);
+                    if (SpaceChecker.IsValidPawnPosFast(map, size.x, size.z, selfPos + new IntVec3(1, 0, 0)))
+                        yield return selfPos + new IntVec3(1, 0, 0);
+                }
+            }
+            else
+            {
+                // TODO need a much better implementation of this.
+                foreach (var p in GetFreeSpotsAround(grappler).OrderBy(pos => pos.DistanceToSquared(targetPos)))
+                    yield return p;
+            }
+        }
+
         public static IEnumerable<PossibleExecution> GetPossibleExecutions(Pawn executioner, IEnumerable<Pawn> targetPawns)
         {
             // In the interest of speed, target pawns are not validated.
@@ -106,7 +200,9 @@ namespace AAM.Grappling
             }
         }
 
-        public static IEnumerable<IntVec3> GetFreeSpotsAround(Pawn pawn)
+        public static IEnumerable<IntVec3> GetFreeSpotsAround(Pawn pawn) => GetFreeSpotsAround(pawn, GenAdj.AdjacentCells);
+
+        private static IEnumerable<IntVec3> GetFreeSpotsAround(Pawn pawn, IntVec3[] cells)
         {
             if (pawn == null)
                 yield break;
@@ -115,7 +211,7 @@ namespace AAM.Grappling
             var map = pawn.Map;
             var size = map.Size;
 
-            foreach (var offset in GenAdj.AdjacentCellsAround)
+            foreach (var offset in cells)
             {
                 var pos = basePos + offset;
                 if (pos.x < 0 || pos.z < 0 || pos.x >= size.x || pos.z >= size.z)
@@ -126,36 +222,6 @@ namespace AAM.Grappling
             }
         }
 
-        public static IEnumerable<Pawn> GetGrabbablePawnsAround(Pawn pawn)
-        {
-            if (pawn == null)
-                yield break;
-
-            var map = pawn.Map;
-            var pos = pawn.Position;
-            var size = map.Size;
-
-            foreach (var offset in GenAdj.AdjacentCellsAround)
-                foreach (var p in TryGetPawnsGrabbableBy(map, size, pawn, pos + offset))
-                    yield return p;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static IEnumerable<Pawn> TryGetPawnsGrabbableBy(Map map, IntVec3 mapSize, Pawn pawn, IntVec3 pos)
-        {
-            if (pos.x < 0 || pos.z < 0 || pos.x >= mapSize.x || pos.z >= mapSize.z)
-                yield break;
-
-            var things = map.thingGrid.ThingsListAtFast(pos);
-            foreach (var thing in things)
-            {
-                if (thing is Pawn p && CanGrabPawn(pawn, p))
-                    yield return p;
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool CanGrabPawn(Pawn a, Pawn b) => !b.Dead && !b.Downed && b.Spawned;
 
         public static void DrawRopeFromTo(Vector3 from, Vector3 to, Color ropeColor)
         {

@@ -1,7 +1,8 @@
 ﻿using AAM.Patches;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using AAM.UI;
+using AAM.Data;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
@@ -16,8 +17,49 @@ namespace AAM
         private static bool drawTextureExtractor;
 
         private string texPath;
+        private Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new Dictionary<Pawn, PawnMeleeData>();
+        private List<PawnMeleeData> allMeleeData = new List<PawnMeleeData>();
 
         public GameComp(Game _) { }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                allMeleeData.RemoveAll(d => !d.ShouldSave());
+            }
+
+            Scribe_Collections.Look(ref allMeleeData, "pawnMeleeData", LookMode.Deep);
+            allMeleeData ??= new List<PawnMeleeData>();
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                pawnMeleeData.Clear();
+                Core.Log($"Loading {allMeleeData.Count} datas.");
+                foreach (var data in allMeleeData)
+                {
+                    if (data.ShouldSave())
+                        pawnMeleeData.Add(data.Pawn, data);
+                }
+            }
+        }
+
+        public PawnMeleeData GetOrCreateData(Pawn pawn)
+        {
+            if (pawn == null || pawn.Destroyed)
+                return null;
+
+            if (pawnMeleeData.TryGetValue(pawn, out var found))
+                return found;
+
+            var created = new PawnMeleeData();
+            created.Pawn = pawn;
+            allMeleeData.Add(created);
+            pawnMeleeData.Add(pawn, created);
+            return created;
+        }
 
         public override void GameComponentTick()
         {
@@ -25,16 +67,6 @@ namespace AAM
 
             Patch_Corpse_DrawAt.Tick();
             Patch_PawnRenderer_LayingFacing.Tick();
-        }
-
-        public override void GameComponentUpdate()
-        {
-            base.GameComponentUpdate();
-            SweepPathRenderer.Update();
-
-            if (Input.GetKeyDown(KeyCode.L))
-                Dialog_TweakEditor.Open(); 
-                //Dialog_AnimationDebugger.Open();
         }
 
         public override void GameComponentOnGUI()
@@ -78,7 +110,6 @@ namespace AAM
                     Object.Destroy(readableText);
                     Object.Destroy(renderTex);
                 }
-
             }
         }
     }

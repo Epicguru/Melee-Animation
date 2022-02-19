@@ -232,6 +232,11 @@ namespace AAM
                     pos.y += 6;
                     size.y += 6;
                 }
+                else
+                {
+                    pos.y += 12;
+                    size.y += 12;
+                }
 
                 var area = new Rect(new Vector2(pos.x + 20, pos.y), new Vector2(inRect.width - 40, inRect.height - pos.y));
                 float height = handler(settings, member, area);
