@@ -2,6 +2,7 @@
 using AAM.Events.Workers;
 using RimWorld;
 using System;
+using AAM.Data;
 using AAM.Tweaks;
 using UnityEngine;
 using Verse;
@@ -73,6 +74,8 @@ namespace AAM
 
             return PawnType.Friendly;
         }
+
+        public static PawnMeleeData GetMeleeData(this Pawn pawn) => GameComp.Current?.GetOrCreateData(pawn);
 
         public static Vector3 ToWorld(this in Vector2 flatVector, float altitude = 0) => new Vector3(flatVector.x, altitude, flatVector.y);
 

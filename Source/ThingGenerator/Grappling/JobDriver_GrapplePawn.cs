@@ -6,7 +6,7 @@ namespace AAM.Grappling
 {
     public class JobDriver_GrapplePawn : JobDriver
     {
-        public static bool GiveJob(Pawn grappler, Pawn target, IntVec3 targetCell, bool ignoreDeadOrDowned = false, AnimationStartParameters animationStartParameters = null)
+        public static bool GiveJob(Pawn grappler, Pawn target, IntVec3 targetCell, bool ignoreDeadOrDowned = false, AnimationStartParameters? animationStartParameters = null)
         {
             if (grappler == null || !grappler.Spawned || grappler.Dead || grappler.Downed)
                 return false;
@@ -53,7 +53,7 @@ namespace AAM.Grappling
         public GrappleFlyer Flyer => GrappledPawn == null ? null : GrappledPawn.ParentHolder as GrappleFlyer;
         public float PullDistance => GrappledPawn.Position.DistanceTo(TargetDestination);
 
-        public AnimationStartParameters AnimationStartParameters;
+        public AnimationStartParameters? AnimationStartParameters;
         public int TicksToPull;
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -100,9 +100,9 @@ namespace AAM.Grappling
 
                     if (AnimationStartParameters != null)
                     {
-                        bool worked = AnimationStartParameters.TryTrigger();
+                        bool worked = AnimationStartParameters.Value.TryTrigger();
                         if (!worked)
-                            Core.Error($"AnimationOnFinish failed to trigger - Invalid object? Invalid state? Invalid pawn(s)? Pawns: {string.Join(", ", AnimationStartParameters.Pawns)}");
+                            Core.Error($"AnimationOnFinish failed to trigger - Invalid object? Invalid state? Invalid pawn(s)? Pawns: {string.Join(", ", AnimationStartParameters.Value.EnumeratePawns())}");
                     }
                     return;
                 }

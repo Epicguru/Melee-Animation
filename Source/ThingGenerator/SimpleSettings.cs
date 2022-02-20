@@ -70,10 +70,7 @@ namespace AAM
 
             foreach (var member in holder.Members.Values)
             {
-                object old = member.Get<object>(settings);
                 member.Expose(settings);
-                object now = member.Get<object>(settings);
-                Core.Log($"[{Scribe.mode}] {member.Name}: {old} -> {now}");
             }
         }
 

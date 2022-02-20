@@ -1,9 +1,25 @@
-﻿using Verse;
+﻿using System;
+using Verse;
 
 namespace AAM.Data
 {
     public class PawnMeleeData : IExposable
     {
+        public bool ResolvedAutoExecute => AutoExecute switch
+        {
+            AutoOption.Enabled => true,
+            AutoOption.Disabled => false,
+            AutoOption.Default => Core.Settings.AutoExecute,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        public bool ResolvedAutoGrapple => AutoGrapple switch
+        {
+            AutoOption.Enabled => true,
+            AutoOption.Disabled => false,
+            AutoOption.Default => Core.Settings.AutoGrapple,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
         public Pawn Pawn;
         public AutoOption AutoExecute;
         public AutoOption AutoGrapple;

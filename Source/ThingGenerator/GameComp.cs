@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using AAM.Data;
+using AAM.UI;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
@@ -11,8 +12,9 @@ namespace AAM
 {
     public class GameComp : GameComponent
     {
-        [TweakValue("__AAM", 0, 20)]
-        private static float Y = 0;
+        public static GameComp Current;
+
+        public readonly Game Game;
         [TweakValue("__AAM")]
         private static bool drawTextureExtractor;
 
@@ -20,7 +22,11 @@ namespace AAM
         private Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new Dictionary<Pawn, PawnMeleeData>();
         private List<PawnMeleeData> allMeleeData = new List<PawnMeleeData>();
 
-        public GameComp(Game _) { }
+        public GameComp(Game game)
+        {
+            this.Game = game;
+            Current = this;
+        }
 
         public override void ExposeData()
         {
@@ -65,16 +71,30 @@ namespace AAM
         {
             base.GameComponentTick();
 
+            AnimRenderer.TickAll();
+
             Patch_Corpse_DrawAt.Tick();
             Patch_PawnRenderer_LayingFacing.Tick();
         }
 
+        public override void GameComponentUpdate()
+        {
+            base.GameComponentUpdate();
+        }
+
         public override void GameComponentOnGUI()
         {
+            if (Prefs.DevMode && Dialog_AnimationDebugger.IsInRehearsalMode)
+            {
+                GUILayout.Space(100);
+                GUILayout.Label($"<b><color=green>IN REHEARSAL MODE!</color></b>");
+            }
+
             if (!drawTextureExtractor)
                 return;
 
             GUILayout.Space(100);
+
 
             texPath ??= "";
             texPath = GUILayout.TextField(texPath);

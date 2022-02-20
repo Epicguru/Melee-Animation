@@ -75,11 +75,18 @@ namespace AAM.Gizmos
 
                 GUI.color = Color.white;
 
+                bool HasLos(IntVec3 c)
+                {
+                    return GenSight.LineOfSight(pawn.Position, c, pawn.Map);
+                }
+
                 if (Event.current.type == EventType.Repaint && Find.Targeter.IsTargeting && Find.Targeter.IsPawnTargeting(pawn))
                 {
+                    pawn.GetAnimManager().AddPostDraw(() =>
+                    {
+                        GenDraw.DrawRadiusRing(pawn.Position, 10, Color.green, HasLos);
+                    });
                 }
-                if (Event.current.type == EventType.Repaint)
-                    GenDraw.DrawRadiusRing(pawn.Position, 10, Color.green/*, c => GenSight.LineOfSight(pawn.Position, c, pawn.Map)*/);
 
                 var state = mouseOver ? GizmoState.Mouseover : GizmoState.Clear;
                 return new GizmoResult(state, null);
@@ -178,7 +185,7 @@ namespace AAM.Gizmos
         {
             DrawIcon(rect, Content.IconSkill, Color.grey);
 
-            TooltipHandler.TipRegion(rect, "<b>Skills:</b>\n\nThis weapon has no special skills available.");
+            TooltipHandler.TipRegion(rect, "<b>Skills:</b>\n\nThis weapon has no special skills available.\n\n<color=yellow>(Not implemented yet!)</color>");
         }
 
         private void DrawExecuteTarget(Rect rect)

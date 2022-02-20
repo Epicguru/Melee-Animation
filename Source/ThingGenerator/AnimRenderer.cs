@@ -5,11 +5,13 @@ using AAM.Patches;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Debug = UnityEngine.Debug;
 
 /// <summary>
 /// An <see cref="AnimRenderer"/> is the object that represents and also draws (renders) a currently running animation.
@@ -19,6 +21,9 @@ public class AnimRenderer : IExposable
 {
     #region Static stuff
 
+    public static readonly Stopwatch SeekTimer = new Stopwatch();
+    public static readonly Stopwatch DrawTimer = new Stopwatch();
+    public static readonly Stopwatch EventsTimer = new Stopwatch();
     public static readonly char[] Alphabet = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public static Material DefaultCutout, DefaultTransparent;
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
@@ -84,7 +89,14 @@ public class AnimRenderer : IExposable
         isItterating = false;
     }
 
-    public static void UpdateAll()
+    public static void ResetTimers()
+    {
+        SeekTimer.Reset();
+        DrawTimer.Reset();
+        EventsTimer.Reset();
+    }
+
+    public static void TickAll()
     {
         AddFromPostLoad();
 
@@ -158,6 +170,7 @@ public class AnimRenderer : IExposable
         // TODO handle exceptions.
         var timePeriod = renderer.Draw(null, dt, labelDraw);
 
+        EventsTimer.Start();
         foreach (var e in renderer.GetEventsInPeriod(timePeriod))
         {
             try
@@ -169,6 +182,7 @@ public class AnimRenderer : IExposable
                 Core.Error($"{ex.GetType().Name} when handling animation event '{e}':", ex);
             }
         }
+        EventsTimer.Stop();
     }
 
     private static void DestroyIntWorker(AnimRenderer renderer)
@@ -621,7 +635,12 @@ public class AnimRenderer : IExposable
         if (IsDestroyed)
             return Vector2.zero;
 
-        var range = Seek(atTime, dt);
+        var range = Seek(atTime, dt * Core.Settings.GlobalAnimationSpeed);
+
+        if (Find.CurrentMap != Map)
+            return range; // Do not actually draw if not on the current map...
+
+        DrawTimer.Start();
 
         foreach (var snap in snapshots)
         {
@@ -662,6 +681,7 @@ public class AnimRenderer : IExposable
 
         DrawPawns(labelDraw);
 
+        DrawTimer.Stop();
         return range;
     }
 
@@ -718,6 +738,8 @@ public class AnimRenderer : IExposable
     /// </summary>
     public Vector2 Seek(float? atTime, float? dt)
     {
+        SeekTimer.Start();
+
         float t = atTime ?? (this.time + dt.Value);
         var range = SeekInt(t, MirrorHorizontal, MirrorVertical);
 
@@ -728,6 +750,8 @@ public class AnimRenderer : IExposable
             else
                 Destroy();
         }
+
+        SeekTimer.Stop();
         return range;
     }
 

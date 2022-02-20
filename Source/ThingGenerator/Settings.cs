@@ -22,6 +22,11 @@ namespace AAM
                      "Note that pawns in animations can still take damage, such as from stray gunfire or explosions.")]
         public bool AllowInvisiblePawns = true;
 
+        [Range(0.01f, 5f)]
+        [Percentage]
+        [Description("A modifier on the speed of all animations.")]
+        public float GlobalAnimationSpeed = 1f;
+
         [Header("Lasso")]
         [Label("Auto Lasso")]
         [Description("If true, your colonists will automatically use their lassos against enemies.\n\n" +
@@ -73,6 +78,18 @@ namespace AAM
                      "The blood spray is a visual effect and does not leave any permanent filth.\n" +
                      "May be too over-the-top for some player's liking.")]
         public bool Gore_Spray = true;
+
+        [Header("Performance")]
+        [Description("Attempts to run certain calculations on multiple CPU cores.\nCan greatly reduce lag and lag spikes, but may be less stable.")]
+        public bool Multithread = false;
+
+        [Description("The interval, in ticks, between a complex pawn calculation that runs on each map.\nDon't touch this unless you know what you are doing.")]
+        [Range(1, 240)]
+        public int PawnProcessorTickInterval = 20;
+        [Description("The maximum amount of time, in milliseconds, that the mod can spend processing pawns </b>per tick, per map</b>.\n" +
+                     "Higher values can increase the responsiveness of automatic grappling and executions, but can also greatly lower performance on very populated maps.")]
+        [Range(0.25f, 10f)]
+        public double MaxCPUTimePerTick = 1;
 
         [Header("Other")]
         [Range(0.1f, 1f)]

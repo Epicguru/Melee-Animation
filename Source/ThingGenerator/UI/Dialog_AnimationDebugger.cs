@@ -52,6 +52,7 @@ namespace AAM.UI
         private float rtScale = 1f;
         private Queue<Action> toDraw = new Queue<Action>();
         private Rect originalRect;
+        private List<AnimationManager> allManagers = new List<AnimationManager>();
 
         public Dialog_AnimationDebugger()
         {
@@ -69,7 +70,7 @@ namespace AAM.UI
             Tabs.Add(("Animation Starter", DrawAnimationStarter));
             Tabs.Add(("Hierarchy", DrawHierarchy));
             Tabs.Add(("Inspector", DrawInspector));
-            Tabs.Add(("Layer Debugger", DrawLayerDebugger));
+            Tabs.Add(("Performance Analyzer", DrawPerformanceAnalyzer));
             Tabs.Add(("Animation Space Checker", DrawSpaceChecker));
             Tabs.Add(("Sweep Path Inspector", DrawSweepInspector));
             Tabs.Add(("Sweep Path Renderer", DrawSweepRendererInspector));
@@ -126,34 +127,6 @@ namespace AAM.UI
 
             while (toDraw.TryDequeue(out var action))
                 action();
-        }
-
-        private void DrawLayerDebugger(Listing_Standard ui)
-        {
-            if (selectedRenderer == null)
-            {
-                ui.Label("No animator selected. Select an animator using the Active Animation Inspector window.");
-                return;
-            }
-
-            var list = selectedRenderer.Def.Data.Parts.Select(part => selectedRenderer.GetSnapshot(part)).ToList();
-            list.SortBy(ss => ss.GetWorldPosition().y);
-
-            float bodyBase = selectedRenderer.GetPart("BodyA")?.GetSnapshot(selectedRenderer).GetWorldPosition().y ?? AltitudeLayer.Pawn.AltitudeFor();
-            float clothesTop = bodyBase + 0.023166021f + 0.0028957527f;
-            bool drawnClothes = false;
-
-            foreach (var item in list)
-            {
-                float y = item.GetWorldPosition().y;
-                ui.Label($"<b>{item.PartName}:</b> {y}");
-
-                if (y >= clothesTop && !drawnClothes)
-                {
-                    drawnClothes = true;
-                    ui.Label($"<b><color=cyan>Clothes Top Layer</color>:</b> {clothesTop}");
-                }
-            }
         }
 
         private void DrawAllAnimators(Listing_Standard ui)
@@ -579,13 +552,12 @@ namespace AAM.UI
                     pawns[i] = pawn;
                 }
 
-                var sp = new AnimationStartParameters()
+                var sp = new AnimationStartParameters(startDef, pawns)
                 {
                     Animation = startDef,
                     FlipX = startMX,
                     FlipY = startMY,
                     Map = Find.CurrentMap,
-                    Pawns = pawns.ToList(),
                     RootTransform = startTarget.MakeAnimationMatrix()
                 };
 
@@ -702,6 +674,75 @@ namespace AAM.UI
             var rect = ui.GetRect(height);
 
             Widgets.DrawTextureFitted(rect, SweepPathRenderer.TrailRT, rtScale);
+        }
+
+        private void DrawPerformanceAnalyzer(Listing_Standard ui)
+        {
+            allManagers.Clear();
+            allManagers.AddRange(Find.Maps.Select(m => m.GetAnimManager()));
+
+            ui.Label("<b><color=cyan>SCAN TIMES</color></b>");
+
+            double totalScanTime = 0;
+            double totalProcessTime = 0;
+            foreach (var manager in allManagers)
+            {
+                var pp = manager.PawnProcessor;
+                totalScanTime += pp.LastListUpdateTimeMS;
+                totalProcessTime += pp.LastProcessTimeMS;
+                ui.Label($"<b>Map: {manager.map}</b>");
+                ui.Indent();
+                ui.Label($"Last scan time: {pp.LastListUpdateTimeMS:F2} ms");
+
+                string extra = null;
+                if (pp.LastProcessTimeMS >= Core.Settings.MaxCPUTimePerTick)
+                    extra = "<color=red>[!!!]</color>";
+                ui.Label($"Last process time: {pp.LastProcessTimeMS:F2} ms  {extra}");
+                ui.Label($"Process average interval per pawn: {pp.ProcessAverageInterval:F3} ms ({pp.ProcessAverageInterval / (100f / 6f):F0} ticks)");
+                ui.Label("Last process pass involved:");
+                ui.Indent();
+                ui.Label($"Processed {pp.LastProcessedPawnCount} out of {pp.TargetProcessedPawnCount} ({(float)pp.LastProcessedPawnCount / pp.TargetProcessedPawnCount * 100f:F0}%) pawns.");
+                ui.Label($"Checked {pp.LastAnimationsConsideredCount * 2} animations against {pp.LastTargetsConsideredCount} targets.");
+                ui.Label($"This caused {pp.LastCellsConsideredCount} cells to be checked.");
+                ui.Outdent();
+                ui.Outdent();
+            }
+
+            ui.Gap();
+            ui.Label($"Total scan time: {totalScanTime:F3} ms");
+            ui.Label($"Total process time: {totalProcessTime:F3} ms ({totalProcessTime / Core.Settings.MaxCPUTimePerTick * 100f:F0}% of limit)");
+            ui.GapLine();
+
+            ui.Label("<b><color=cyan>RENDERING</color></b>");
+            ui.Label($"Active: {AnimRenderer.ActiveRenderers.Count} renderers.");
+            ui.Label("<b>Total times:</b>");
+            ui.Indent();
+            ui.Label($"Events: {AnimRenderer.EventsTimer.Elapsed.TotalMilliseconds:F3} ms");
+            ui.Label($"Seek: {AnimRenderer.SeekTimer.Elapsed.TotalMilliseconds:F3} ms");
+            ui.Label($"Draw: {AnimRenderer.DrawTimer.Elapsed.TotalMilliseconds:F3} ms");
+            ui.Outdent();
+
+            var curve = new SimpleCurve();
+            for (int i = 0; i < 100; i++)
+            {
+                float x = i;
+                float y = Mathf.Sin(x);
+                curve.Add(x, y, false);
+            }
+
+            var drawInfo = new SimpleCurveDrawInfo()
+            {
+                color = Color.green,
+                curve = curve,
+                label = "My curve",
+                valueFormat = "F2"
+            };
+
+            SimpleCurveDrawer.DrawCurveLines(ui.GetRect(200), drawInfo, false, new Rect(0, 0, 100, 1), true, false);
+
+            // Lazy :)
+            if(Event.current.type == EventType.Repaint)
+                AnimRenderer.ResetTimers();
         }
 
         private IEnumerable<(Vector3 start, Vector3 end, float speed)> MakeSegments(Vector3 down, Vector3 up, int segmentCount, float bottomVel, float topVel)
