@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
@@ -26,10 +27,8 @@ namespace AAM.Processing
         private readonly Stopwatch sw2 = new Stopwatch();
         private readonly Stopwatch sw3 = new Stopwatch();
         private readonly List<AnimationStartParameters> tempAnimationStarts = new List<AnimationStartParameters>(64);
-        private readonly List<Pawn> pawnListThreaded = new List<Pawn>();
         private readonly List<Pawn> pawnList = new List<Pawn>();
         private List<Pawn> pawnListWrite;
-        private Task runningUpdateTask;
 
         private uint tick;
 
@@ -88,27 +87,6 @@ namespace AAM.Processing
         {
             if (tick % Core.Settings.PawnProcessorTickInterval != 0)
                 return;
-
-            // Threaded mode....
-            if (Core.Settings.Multithread)
-            {
-                if (runningUpdateTask is { IsCompleted: false })
-                {
-                    Core.Warn("MapPawnProcessor is still running threaded updated, even though a new one needs to be done now! Forcing thread join...");
-                    runningUpdateTask.Wait();
-                }
-
-                pawnListWrite = pawnListThreaded;
-                runningUpdateTask = Task.Run(UpdatePawnList);
-                return;
-            }
-            
-            // Regular, sync mode.
-
-            // Clean up async mode if that was previously active...
-            if (runningUpdateTask is { IsCompleted: false })
-                runningUpdateTask.Wait();
-            runningUpdateTask = null;
 
             // Run sync.
             pawnListWrite = pawnList;
@@ -179,8 +157,6 @@ namespace AAM.Processing
             // Not in active melee combat (in the case of grappling)...
 
             Map map = pawn.Map;
-            int mapWidth = map.Size.x;
-            int mapHeight = map.Size.z;
             IntVec3 pawnPos = pawn.Position;
             bool exec = ShouldAutoExecute(pawn);
             bool grapple = ShouldAutoGrapple(pawn);
@@ -189,70 +165,57 @@ namespace AAM.Processing
 
             if (exec && !grapple)
             {
-                var allowedExecutions = AnimDef.GetExecutionAnimationsForWeapon(meleeWeapon.def); // TODO cache?
-                // Is it even worth checking for strange positioning with the animations?
+                // Can execute, but cannot grapple.
+                // We only need to consider the immediate left and right of the pawn.
 
-                IEnumerable<AnimationStartParameters> Check(AnimDef def, bool flipX)
+                var allowedExecutions = AnimDef.GetExecutionAnimationsForWeapon(meleeWeapon.def); // TODO cache.
+
+                IntVec3 left  = pawnPos - new IntVec3(1, 0, 0);
+                IntVec3 right = pawnPos + new IntVec3(1, 0, 0);
+
+                // Make space mask. This is an int where each bit represents the 'un-standability' of a cell in a 7x7 area surrounding the pawn.
+                // Each anim def has a corresponding space requirement mask, where each bit is 1 if that cell is required to be standable.
+                // By combining the masks (very fast), we check if there is enough space.
+                ulong spaceMask = SpaceChecker.MakeOccupiedMask(map, pawnPos);
+                LastCellsConsideredCount += 49;
+
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                void CheckAllAnimations(Pawn victim, bool flipX)
                 {
-                    // Check that the animation has enough space to start.
-                    foreach (var cell in def.GetMustBeClearCells(flipX, false, pawnPos))
+                    foreach(var def in allowedExecutions)
                     {
-                        LastCellsConsideredCount++;
-                        if (!SpaceChecker.IsValidPawnPosFast(map, mapWidth, mapHeight, cell))
-                            yield break;
-                    }
+                        LastAnimationsConsideredCount++;
 
-                    // Get the animation start cell. Might be good to cache, along with other cell calculations.
-                    var rawS = def.TryGetCell(AnimCellData.Type.PawnStart, flipX, false, 1);
-                    if (rawS == null)
-                        yield break;
-
-                    var start = rawS.Value.ToIntVec3 + pawnPos;
-
-                    // For each potential target...
-                    //Core.Log($"{pawn} has {Map.attackTargetsCache.GetPotentialTargetsFor(pawn).Count} targets");
-                    foreach (var target in Map.attackTargetsCache.GetPotentialTargetsFor(pawn))
-                    {
-                        if (target.Thing is not Pawn p)
-                            continue;
-                        LastTargetsConsideredCount++;
-
-                        // TODO AUTO ATTACK CHECK.
-
-                        // Filter out invalid targets.
-                        if (!CanBeExecutedNow(pawn, p))
+                        // Check for space.
+                        if ((spaceMask & (flipX ? def.ClearMask : def.FlipClearMask)) != 0)
                             continue;
 
-                        // Are they standing in the right position for the animation to start?
-                        if (p.Position != start)
-                            continue;
-
-                        // Return it as a possibility.
-                        yield return new AnimationStartParameters(def, pawn, p)
-                        {
-                            FlipX = flipX
-                        };
+                        tempAnimationStarts.Add(new AnimationStartParameters(def, pawn, victim){FlipX = flipX});
                     }
                 }
 
-                // For all possible animations with this weapon...
-                foreach (var e in allowedExecutions)
+                // For each target...
+                foreach (var target in map.attackTargetsCache.GetPotentialTargetsFor(pawn))
                 {
-                    LastAnimationsConsideredCount++;
-                    // Check the regular animation.
-                    foreach (var item in Check(e, false))
-                        tempAnimationStarts.Add(item);
+                    if (target.Thing is not Pawn p)
+                        continue;
 
-                    // Check the animation mirrored. No vertical support...
-                    foreach (var item in Check(e, true))
-                        tempAnimationStarts.Add(item);
+                    LastTargetsConsideredCount++;
+
+                    if (!CanBeExecutedNow(pawn, p))
+                        continue;
+
+                    var pos = p.Position;
+
+                    if (pos == right)
+                        CheckAllAnimations(p, false);
+                    else if (pos == left)
+                        CheckAllAnimations(p, true);
                 }
 
                 // TODO work with list of possible animations here...
                 if (tempAnimationStarts.Count > 0)
                 {
-                    if (map == Find.CurrentMap)
-                        Core.Log($"{pawn} can do {tempAnimationStarts.Count} animations.");
                     foreach (var start in tempAnimationStarts)
                         Core.Log(start.ToString());
 

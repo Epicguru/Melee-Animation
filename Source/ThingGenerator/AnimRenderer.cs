@@ -922,6 +922,20 @@ public class AnimRenderer : IExposable
             var ov = GetOverride(itemPart);
             ov.Material = weapon.Graphic?.MatSingleFor(weapon);
             ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
+
+            // FIX: Certain vanilla textures are set to Clamp instead of Wrap. This breaks flipping.
+            // Which ones seems random. (Beer is Clamp, Breach Axe is Repeat).
+            // For now, force them to be repeat. Not sure if this will have any negative impact elsewhere in the game. Hopefully not.
+            if (ov.Material != null)
+            {
+                var main = ov.Material.mainTexture;
+                if(main != null)
+                    main.wrapMode = TextureWrapMode.Repeat;
+
+                var mask = ov.Material.GetTexture(ShaderPropertyIDs.MaskTex);
+                if (mask != null)
+                    mask.wrapMode = TextureWrapMode.Repeat;
+            }
         }
 
         // Apply main hand.

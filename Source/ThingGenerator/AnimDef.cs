@@ -105,6 +105,7 @@ namespace AAM
             }
         }
         public string DataPath => data;
+        public ulong ClearMask, FlipClearMask;
 
         public AnimType type = AnimType.Execution;
         public AnimDirection direction = AnimDirection.Horizontal;
@@ -130,14 +131,25 @@ namespace AAM
                 yield return $"Animation type is Execution, but pawnCount is less than 2! ({pawnCount})";
 
             if (string.IsNullOrWhiteSpace(data))
-                yield return $"Animation has no data path! Please secify the location of the data file using the data tag.";
+                yield return "Animation has no data path! Please secify the location of the data file using the data tag.";
 
             if (weaponFilter == null)
                 yield return "weaponFilter is not assigned.";
 
+            var p1StartCell = TryGetCell(AnimCellData.Type.PawnStart, false, false, 1);
+            if (type == AnimType.Execution && (p1StartCell == null || p1StartCell != new IntVec2(1, 0)))
+                yield return $"This execution animation should have pawn 1 starting at offset (1, 0), but instead they are starting at {p1StartCell}. Change this in the <cellData> tag.";
+
             for (int i = 0; i < cellData.Count; i++)
                 foreach (var error in cellData[i].ConfigErrors())
                     yield return $"[CellData, index:{i}] {error}";
+        }
+
+        public override void PostLoad()
+        {
+            base.PostLoad();
+            ClearMask = SpaceChecker.MakeClearMask(this, false);
+            FlipClearMask = SpaceChecker.MakeClearMask(this, true);
         }
 
         public IntVec2? TryGetCell(AnimCellData.Type type, bool flipX, bool flipY, int? pawnIndex = null)

@@ -710,7 +710,7 @@ namespace AAM.UI
 
             ui.Gap();
             ui.Label($"Total scan time: {totalScanTime:F3} ms");
-            ui.Label($"Total process time: {totalProcessTime:F3} ms ({totalProcessTime / Core.Settings.MaxCPUTimePerTick * 100f:F0}% of limit)");
+            ui.Label($"Total process time: {totalProcessTime:F3} ms ({totalProcessTime / Core.Settings.MaxCPUTimePerTick * 100f:F0}% of limit) {(totalProcessTime >= Core.Settings.MaxCPUTimePerTick ? "  <color=red>[!!!]</color>" : "")}");
             ui.GapLine();
 
             ui.Label("<b><color=cyan>RENDERING</color></b>");
@@ -726,7 +726,7 @@ namespace AAM.UI
             for (int i = 0; i < 100; i++)
             {
                 float x = i;
-                float y = Mathf.Sin(x);
+                float y = Mathf.Sin(x * Mathf.Deg2Rad);
                 curve.Add(x, y, false);
             }
 
@@ -738,7 +738,7 @@ namespace AAM.UI
                 valueFormat = "F2"
             };
 
-            SimpleCurveDrawer.DrawCurveLines(ui.GetRect(200), drawInfo, false, new Rect(0, 0, 100, 1), true, false);
+            SimpleCurveDrawer.DrawCurveLines(ui.GetRect(200), drawInfo, false, new Rect(0, 0, 100, 1), true, true);
 
             // Lazy :)
             if(Event.current.type == EventType.Repaint)

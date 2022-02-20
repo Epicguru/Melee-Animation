@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Verse;
 
@@ -7,29 +6,6 @@ namespace AAM
 {
     public static class SpaceChecker
     {
-        public static bool Check(Map map, AnimDef animDef, bool mirrorX, bool mirrorY, in IntVec3 root)
-        {
-            if (animDef == null)
-                return false;
-
-            return Check(map, animDef.GetMustBeClearCells(mirrorX, mirrorY, root));
-        }
-
-        public static bool Check(Map map, IEnumerable<IntVec3> cells)
-        {
-            if (map == null)
-                return false;
-
-            int mx = map.Size.x;
-            int mz = map.Size.z;
-
-            foreach (var cell in cells)
-                if (!IsValidPawnPosFast(map, mx, mz, cell))
-                    return false;
-
-            return true;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsValidPawnPosFast(Map map, int mapWidth, int mapHeight, in IntVec3 cell)
         {
@@ -44,6 +20,55 @@ namespace AAM
             }
 
             return cell.GetEdifice(map) is not Building_Door bd || bd.Open;
+        }
+
+        public static ulong MakeClearMask(AnimDef def, bool flipX)
+        {
+            // 1 means must be clear.
+            ulong mask = 0;
+
+            for (int x = -3; x <= 3; x++)
+            {
+                for (int z = -3; z <= 3; z++)
+                {
+                    int index = x + z * 7;
+
+                    IntVec3 pos = new IntVec3(x, 0, z);
+                    bool mustBeClear = false;
+                    foreach (var cell in def.GetMustBeClearCells(flipX, false, IntVec3.Zero))
+                    {
+                        if (cell == pos)
+                        {
+                            mustBeClear = true;
+                            break;
+                        }
+                    }
+
+                    if(mustBeClear)
+                        mask &= (ulong)1 << index;
+                }
+            }
+
+            return mask;
+        }
+
+        public static ulong MakeOccupiedMask(Map map, IntVec3 center)
+        {
+            // 1 means cell is occupied (cannot stand there).
+            ulong mask = 0;
+            int w = map.Size.x;
+            int h = map.Size.z;
+
+            for (int x = -3; x <= 3; x++)
+            {
+                for (int z = -3; z <= 3; z++)
+                {
+                    if (!IsValidPawnPosFast(map, w, h, new IntVec3(x, 0, z) + center))
+                        mask &= (ulong)1 << (x + z * 7);
+                }
+            }
+
+            return mask;
         }
     }
 }
