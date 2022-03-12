@@ -114,6 +114,7 @@ namespace AAM
         public int pawnCount;
         public Req weaponFilter;
         public List<AnimCellData> cellData = new List<AnimCellData>();
+        public float relativeProbability = 1;
 
         private AnimData resolvedData;
 

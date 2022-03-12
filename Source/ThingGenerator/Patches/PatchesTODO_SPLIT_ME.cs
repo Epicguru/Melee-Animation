@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿using System.Runtime.CompilerServices;
+using AAM.Grappling;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -9,6 +11,7 @@ namespace AAM.Patches
         private static Pawn lastPawn;
         private static AnimRenderer lastRenderer;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AnimRenderer GetAnimator(Pawn pawn)
         {
             if (pawn == lastPawn && lastRenderer != null && !lastRenderer.IsDestroyed)
@@ -75,6 +78,12 @@ namespace AAM.Patches
                 if (anim != null && !AllowNext)
                 {
                     return false;
+                }
+
+                var job = ___pawn.CurJob;
+                if (job?.def == AAM_DefOf.AAM_GrapplePawn)
+                {
+                    JobDriver_GrapplePawn.DrawEnsnaringRope(___pawn, job);
                 }
 
                 AllowNext = false;

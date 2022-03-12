@@ -17,7 +17,7 @@
   <JobDef>
     <defName>AAM_GrapplePawn</defName>
     <driverClass>AAM.Grappling.JobDriver_GrapplePawn</driverClass>
-    <reportString>grappling pawn</reportString>
+    <reportString>lassoing pawn</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>false</playerInterruptible>
     <allowOpportunisticPrefix>false</allowOpportunisticPrefix>

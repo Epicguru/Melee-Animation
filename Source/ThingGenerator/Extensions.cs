@@ -2,11 +2,15 @@
 using AAM.Events.Workers;
 using RimWorld;
 using System;
+using System.Runtime.CompilerServices;
 using AAM.Data;
 using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.AI.Group;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AAM
 {
@@ -87,6 +91,15 @@ namespace AAM
 
         public static Vector3 AngleToWorldDir(this float angleDeg) => -new Vector3(Mathf.Cos(angleDeg * Mathf.Deg2Rad), 0f, Mathf.Sin(angleDeg * Mathf.Deg2Rad));
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GetOccupiedMaskBit(this uint mask, int x, int z) => (((uint)1 << (x + 1) + (z + 1) * 3) & mask) != 0;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GetOccupiedMaskBitX(this uint mask, int x) => (((uint)1 << (x + 1) + 3) & mask) != 0;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GetOccupiedMaskBitZ(this uint mask, int z) => (((uint)1 << 1 + (z + 1) * 3) & mask) != 0;
+
         [DebugAction("Advanced Animation Mod", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void GimmeMeleeWeapons()
         {
@@ -105,6 +118,44 @@ namespace AAM
                     }
                 }
             }
+        }
+
+        [DebugAction("Advanced Animation Mod", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void SpawnArmy()
+        {
+            List<DebugMenuOption> list = new List<DebugMenuOption>();
+            foreach (PawnKindDef localKindDef2 in from kd in DefDatabase<PawnKindDef>.AllDefs
+                     orderby kd.defName
+                     select kd)
+            {
+                PawnKindDef localKindDef = localKindDef2;
+                list.Add(new DebugMenuOption(localKindDef.defName, DebugMenuOptionMode.Tool, delegate()
+                {
+                    var pos = Verse.UI.MouseCell();
+                    Faction faction = FactionUtility.DefaultFactionFrom(localKindDef.defaultFactionType);
+
+                    for (int i = 0; i < 50; i++)
+                    {
+                        Pawn newPawn = PawnGenerator.GeneratePawn(localKindDef, faction);
+                        GenSpawn.Spawn(newPawn, Verse.UI.MouseCell(), Find.CurrentMap, WipeMode.Vanish);
+                        if (faction != null && faction != Faction.OfPlayer)
+                        {
+                            Lord lord = null;
+                            if (newPawn.Map.mapPawns.SpawnedPawnsInFaction(faction).Any((Pawn p) => p != newPawn))
+                            {
+                                lord = ((Pawn)GenClosest.ClosestThing_Global(newPawn.Position, newPawn.Map.mapPawns.SpawnedPawnsInFaction(faction), 99999f, (Thing p) => p != newPawn && ((Pawn)p).GetLord() != null, null)).GetLord();
+                            }
+                            if (lord == null)
+                            {
+                                LordJob_DefendPoint lordJob = new LordJob_DefendPoint(newPawn.Position, null, false, true);
+                                lord = LordMaker.MakeNewLord(faction, lordJob, Find.CurrentMap, null);
+                            }
+                            lord.AddPawn(newPawn);
+                        }
+                    }
+                }));
+            }
+            Find.WindowStack.Add(new Dialog_DebugOptionListLister(list));
         }
     }
 }

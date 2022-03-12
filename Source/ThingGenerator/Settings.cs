@@ -92,10 +92,6 @@ namespace AAM
         public double MaxCPUTimePerTick = 1;
 
         [Header("Other")]
-        [Range(0.1f, 1f)]
-        [Percentage]
-        public float TrailRenderResolution = 0.25f;
-
         [Description("In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.\n" +
                      "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
                      "<b>Note:</b> The offset corpses are reset after a save-reload.")]

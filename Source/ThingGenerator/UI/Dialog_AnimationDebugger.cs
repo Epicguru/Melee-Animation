@@ -2,16 +2,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AAM.Sweep;
 using AAM.Tweaks;
 using EpicUtils;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
+using Verse.Noise;
 
 namespace AAM.UI
 {
     public class Dialog_AnimationDebugger : Window
     {
+
+        public static bool IsInRehearsalMode => startRehearsal && IsStarterOpen;
+        public static float trailMinSpeed = 0f, trailMaxSpeed = 25f;
+
+        private static bool IsStarterOpen => Mathf.Abs(lastOpenStarterTime - Time.realtimeSinceStartup) < 0.25f;
+        private static MaterialPropertyBlock mpb;
+        private static readonly Material mat = MaterialPool.MatFrom(GenDraw.LineTexPath, ShaderDatabase.Transparent, Color.white);
+        private static AnimRenderer selectedRenderer;
+        private static AnimPartData selectedPart;
+        private static SweepPointCollection selectedSweepPath;
+        private static float currentUp, currentDown;
+        private static Pawn[] startPawns = new Pawn[8];
+        private static AnimDef startDef;
+        private static bool startMX, startMY;
+        private static bool startRehearsal = true;
+        private static LocalTargetInfo startTarget = LocalTargetInfo.Invalid;
+        private static float lastOpenStarterTime;
+        private static int trailSegments = 3;
+        private static float trailTime = 0.1f;
+
         [DebugAction("Advanced Animation Mod", "Open Debugger", actionType = DebugActionType.Action)]
         private static void OpenInt()
         {
@@ -27,22 +49,6 @@ namespace AAM.UI
 
         public int SelectedIndex;
         public List<(string name, Action<Listing_Standard> tab)> Tabs = new List<(string name, Action<Listing_Standard> tab)>();
-        public static bool IsInRehearsalMode => startRehearsal && IsStarterOpen;
-        private static bool IsStarterOpen => Mathf.Abs(lastOpenStarterTime - Time.realtimeSinceStartup) < 0.25f;
-
-        private static AnimRenderer selectedRenderer;
-        private static AnimPartData selectedPart;
-        private static SweepPointCollection selectedSweepPath;
-        private static float currentUp, currentDown;
-        private static Pawn[] startPawns = new Pawn[8];
-        private static AnimDef startDef;
-        private static bool startMX, startMY;
-        private static bool startRehearsal = true;
-        private static LocalTargetInfo startTarget = LocalTargetInfo.Invalid;
-        private static float lastOpenStarterTime;
-        private static int trailSegments = 3;
-        private static float trailTime = 0.1f;
-        public static float trailMinSpeed = 0f, trailMaxSpeed = 25f;
 
         private Vector2[] scrolls = new Vector2[32];
         private int scrollIndex;
@@ -73,8 +79,13 @@ namespace AAM.UI
             Tabs.Add(("Performance Analyzer", DrawPerformanceAnalyzer));
             Tabs.Add(("Animation Space Checker", DrawSpaceChecker));
             Tabs.Add(("Sweep Path Inspector", DrawSweepInspector));
-            Tabs.Add(("Sweep Path Renderer", DrawSweepRendererInspector));
             Tabs.Add(("List All Active", DrawAllLists));
+
+            if (mpb == null)
+            {
+                mpb = new MaterialPropertyBlock();
+                mpb.SetTexture("_MainTex", mat.mainTexture);
+            }
         }
 
         private ref Vector2 GetScroll()
@@ -603,6 +614,7 @@ namespace AAM.UI
                         currentDown = tweak?.BladeStart ?? 0;
                         currentUp = tweak?.BladeEnd ?? 1;
                         selectedSweepPath.RecalculateVelocities(currentDown, currentUp);
+                        Core.Log($"{currentDown}, {currentUp}");
                     }
                 }
 
@@ -625,6 +637,8 @@ namespace AAM.UI
             {
                 toDraw.Enqueue(() =>
                 {
+                    var m = new SweepMesh();
+
                     int segments = trailSegments;
 
                     Vector3 root = startTarget.CenterVector3;
@@ -639,10 +653,14 @@ namespace AAM.UI
                         point.GetEndPoints(currentDown, currentUp, out var down, out var up);
                         down += root;
                         up += root;
+
+                        float topVel = Mathf.Min(1, Mathf.InverseLerp(trailMinSpeed, trailMaxSpeed, point.VelocityTop));
+                        float botVel = Mathf.Min(1, Mathf.InverseLerp(trailMinSpeed, trailMaxSpeed, point.VelocityBottom));
+                        Color topColor = Color.Lerp(default, Color.red, topVel);
+                        Color botColor = Color.Lerp(default, Color.red, botVel);
+                        m.AddLine(down, up, botColor, topColor);
+
                         float segLen = (down - up).MagnitudeHorizontal() / segments;
-
-                        //SweepPathRenderer.DrawLineBetween(down, up, (down - up).magnitude, Color.cyan);
-
 
                         foreach (var seg in MakeSegments(down, up, segments, point.VelocityBottom, point.VelocityTop))
                         {
@@ -651,29 +669,32 @@ namespace AAM.UI
                                 continue;
 
                             Color col = Color.Lerp(Color.green, Color.red, t);
-                            SweepPathRenderer.DrawLineBetween(seg.start, seg.end, segLen, col, i * 0.001f, 0.1f, 23);
-                            SweepPathRenderer.NeedsDraw = true;
+
+                            //DrawLineBetween(seg.start, seg.end, segLen, col, i * 0.001f, 0.1f);
                         }
 
                         i++;
                     }
+
+                    m.Rebuild();
+                    Graphics.DrawMesh(m.Mesh, Matrix4x4.Translate(new Vector3(0, 0, 0)), AnimRenderer.DefaultCutout, 0);
                 });
             }
+
+            
+
+
         }
 
-        private void DrawSweepRendererInspector(Listing_Standard ui)
+        private static void DrawLineBetween(in Vector3 A, in Vector3 B, float len, in Color color, float yOff, float width = 0.2f)
         {
-            ui.Label($"Texture: {SweepPathRenderer.TrailRT.width}x{SweepPathRenderer.TrailRT.height} px with depth {SweepPathRenderer.TrailRT.depth}.");
-            ui.Label($"Render time: {SweepPathRenderer.LastRenderTime*1000:F2}ms.");
+            mpb.SetFloat("_Alpha", color.r);
 
-            ui.GapLine();
-            ui.Label($"Preview zoom: {rtScale * 100:F0}%");
-            rtScale = ui.Slider(rtScale, 1, 5);
-
-            float height = originalRect.height - ui.CurHeight;
-            var rect = ui.GetRect(height);
-
-            Widgets.DrawTextureFitted(rect, SweepPathRenderer.TrailRT, rtScale);
+            Vector3 mid = (A + B) * 0.5f;
+            mid.y += yOff;
+            var rot = Quaternion.Euler(0, (B - A).ToAngleFlat(), 0);
+            var trs = Matrix4x4.TRS(mid, rot, new Vector3(len, 1, width));
+            Graphics.DrawMesh(MeshPool.plane10, trs, Content.TrailMaterial, 0, null, 0, mpb);
         }
 
         private void DrawPerformanceAnalyzer(Listing_Standard ui)

@@ -191,6 +191,13 @@ namespace AAM.Gizmos
         private void DrawExecuteTarget(Rect rect)
         {
             GUI.DrawTexture(rect, Content.IconLongBG);
+
+            if (!data.IsExecutionOffCooldown(5f))
+            {
+                float pct = data.GetExecuteCooldownPct(5f);
+                Widgets.FillableBar(rect.BottomPartPixels(14).ExpandedBy(-4, -3), pct);
+            }
+
             Widgets.DrawHighlightIfMouseover(rect);
             if (Widgets.ButtonInvisible(rect) && !Find.Targeter.IsTargeting)
             {
@@ -214,6 +221,13 @@ namespace AAM.Gizmos
         private void DrawLassoTarget(Rect rect)
         {
             GUI.DrawTexture(rect, Content.IconLongBG);
+
+            if (!data.IsGrappleOffCooldown(5f))
+            {
+                float pct = data.GetGrappleCooldownPct(5f);
+                Widgets.FillableBar(rect.BottomPartPixels(14).ExpandedBy(-4, -3), pct);
+            }
+
             Widgets.DrawHighlightIfMouseover(rect);
 
             // TODO check grappler conditions.
@@ -257,7 +271,8 @@ namespace AAM.Gizmos
 
                 if (GrabUtility.CanStartGrapple(pawn, target, pos, out lastReason))
                 {
-                    JobDriver_GrapplePawn.GiveJob(pawn, target, pos, true);
+                    if (JobDriver_GrapplePawn.GiveJob(pawn, target, pos, true))
+                        data.TimeSinceGrappled = 0;
                     return;
                 }
             }
@@ -282,13 +297,16 @@ namespace AAM.Gizmos
                 if (pos == targetPos)
                 {
                     // Start immediately.
-                    startParams.TryTrigger(); // TODO handle false (error).
+                    if (startParams.TryTrigger())
+                        data.TimeSinceExecuted = 0;
                     return;
                 }
 
+                // Grapple, then execute.
                 if (GrabUtility.CanStartGrapple(pawn, target, pos, out lastReason))
                 {
-                    JobDriver_GrapplePawn.GiveJob(pawn, target, pos, true, startParams);
+                    if (JobDriver_GrapplePawn.GiveJob(pawn, target, pos, true, startParams))
+                        data.TimeSinceGrappled = 0;
                     return;
                 }
             }

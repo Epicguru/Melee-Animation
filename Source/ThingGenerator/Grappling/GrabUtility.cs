@@ -9,30 +9,30 @@ namespace AAM.Grappling
 {
     public static class GrabUtility
     {
-        /*
-         * Strategy to grab pawns:
-         * 1. Get a list of pawns we can grab (be that short or long range)
-         * 2. Make a list of spots around us that we can drag pawns into.
-         * 3. Randomize list of grabbable pawns.
-         * 4. For each pawn, see what executions we can perform with our current weapon.
-         * 5. If that execution animation has free spots around executioner, then that animation can be played.
-         */
-
-        public struct PossibleExecution
-        {
-            public AnimDef Def;
-            public Pawn Victim;
-            public IntVec3? VictimMoveCell;
-            public bool MirrorX, MirrorY;
-        }
-
         // You can add a bound pawn texture here for your modded body type.
         // Alternatively, simply add your texture to your textures folder: Textures/AAM/BoundPawns/<bodyTypeDefName>.png
         public static readonly Dictionary<BodyTypeDef, Texture2D> BoundPawnTextures = new Dictionary<BodyTypeDef, Texture2D>();
 
-        private static readonly List<AnimDef> tempAnimations = new List<AnimDef>();
-        private static readonly HashSet<IntVec2> tempCells = new HashSet<IntVec2>();
-        private static MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        private static readonly MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        private static readonly HashSet<Pawn> pawnsBeingTargetedByGrapples = new HashSet<Pawn>();
+
+        public static bool CanStartGrabAttempt(Pawn pawn) => pawn != null && !pawnsBeingTargetedByGrapples.Contains(pawn);
+
+        public static bool TryRegisterGrabAttempt(Pawn pawn)
+        {
+            return pawn != null && pawnsBeingTargetedByGrapples.Add(pawn);
+        }
+
+        public static bool EndGrabAttempt(Pawn pawn)
+        {
+            return pawn != null && pawnsBeingTargetedByGrapples.Remove(pawn);
+        }
+
+        public static void Tick()
+        {
+            if (GenTicks.TicksGame % 480 == 0)
+                pawnsBeingTargetedByGrapples.RemoveWhere(p => !p.Spawned || p.Dead);
+        }
 
         public static bool CanStartGrapple(Pawn grappler, Pawn target, in IntVec3 endCell, out string reason)
         {
@@ -72,6 +72,13 @@ namespace AAM.Grappling
             if (!target.Spawned)
             {
                 reason = $"{target.NameShortColored} cannot be lassoed right now.";
+                return false;
+            }
+
+            // Already attempting to be grappled by someone else.
+            if (!CanStartGrabAttempt(target))
+            {
+                reason = $"{target.NameShortColored} is already being lassoed by someone else!";
                 return false;
             }
 
@@ -128,78 +135,6 @@ namespace AAM.Grappling
             }
         }
 
-        public static IEnumerable<PossibleExecution> GetPossibleExecutions(Pawn executioner, IEnumerable<Pawn> targetPawns)
-        {
-            // In the interest of speed, target pawns are not validated.
-            // The executioner is also assumed to be spawned, not dead, and in the same map as all the target pawns.
-            var weapon = executioner.GetFirstMeleeWeapon();
-            if (weapon == null)
-                yield break; // No melee weapon, no executions...
-
-            // Populate the list of possible animations.
-            tempAnimations.Clear();
-            tempAnimations.AddRange(AnimDef.GetExecutionAnimationsForWeapon(weapon.def));
-
-            if (tempAnimations.Count == 0)
-                yield break; // No animations to play.
-
-            // Populate the list of free cells around the executioner.
-            tempCells.Clear();
-            tempCells.AddRange(GetFreeSpotsAround(executioner).Select(v3 => v3.ToIntVec2));
-
-            // Cache the executioner pos.
-            var execPos = new IntVec2(executioner.Position.x, executioner.Position.z);
-
-            IEnumerable<PossibleExecution> CheckAnim(Pawn pawn, AnimDef anim, bool fx, bool fy)
-            {
-                var start = anim.TryGetCell(AnimCellData.Type.PawnStart, fx, fy, 1);
-                if (start == null)
-                    yield break;
-
-                var end = anim.TryGetCell(AnimCellData.Type.PawnEnd, fx, fy, 1) ?? start.Value;
-
-                start += execPos;
-                end += execPos;
-
-                // TODO check all cells: make centralized method.
-                if (tempCells.Contains(start.Value))
-                {
-                    yield return new PossibleExecution()
-                    {
-                        Def = anim,
-                        Victim = pawn,
-                        VictimMoveCell = pawn.Position == start.Value.ToIntVec3 ? null : start.Value.ToIntVec3,
-                        MirrorX = fx,
-                        MirrorY = fy
-                    };
-                }
-            }
-
-            foreach (var pawn in targetPawns)
-            {
-                foreach (var anim in tempAnimations)
-                {
-                    switch (anim.direction)
-                    {
-                        case AnimDirection.Horizontal:
-
-                            foreach (var exec in CheckAnim(pawn, anim, false, false)) yield return exec;
-                            foreach (var exec in CheckAnim(pawn, anim, true, false)) yield return exec;
-
-                            break;
-
-                        case AnimDirection.North or AnimDirection.South:
-                            foreach (var exec in CheckAnim(pawn, anim, false, false)) yield return exec;
-                            break;
-
-                        default:
-                            Core.Error($"Unhandled animation direction: {anim.direction}");
-                            break;
-                    }
-                }
-            }
-        }
-
         public static IEnumerable<IntVec3> GetFreeSpotsAround(Pawn pawn) => GetFreeSpotsAround(pawn, GenAdj.AdjacentCells);
 
         private static IEnumerable<IntVec3> GetFreeSpotsAround(Pawn pawn, IntVec3[] cells)
@@ -221,7 +156,6 @@ namespace AAM.Grappling
                     yield return pos;
             }
         }
-
 
         public static void DrawRopeFromTo(Vector3 from, Vector3 to, Color ropeColor)
         {

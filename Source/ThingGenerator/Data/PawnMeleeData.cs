@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using Verse;
 
 namespace AAM.Data
@@ -22,7 +23,11 @@ namespace AAM.Data
 
         public Pawn Pawn;
         public AutoOption AutoExecute;
+        public float TimeSinceExecuted;
         public AutoOption AutoGrapple;
+        public float TimeSinceGrappled;
+
+        public int lastTickPresentedOptions = -1; // Not saved.
 
         public bool ShouldSave()
         {
@@ -34,6 +39,14 @@ namespace AAM.Data
             Scribe_References.Look(ref Pawn, "pawn");
             Scribe_Values.Look(ref AutoExecute, "autoExecute");
             Scribe_Values.Look(ref AutoGrapple, "autoGrapple");
+            Scribe_Values.Look(ref TimeSinceExecuted, "timeSinceExecuted");
+            Scribe_Values.Look(ref TimeSinceGrappled, "timeSinceGrappled");
         }
+
+        public float GetExecuteCooldownPct(float cooldownTime) => cooldownTime <= 0 ? 1 : Mathf.Clamp01(TimeSinceExecuted / cooldownTime);
+        public bool IsExecutionOffCooldown(float cooldownTime) => cooldownTime <= TimeSinceExecuted;
+
+        public float GetGrappleCooldownPct(float cooldownTime) => cooldownTime <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / cooldownTime);
+        public bool IsGrappleOffCooldown(float cooldownTime) => cooldownTime <= TimeSinceGrappled;
     }
 }

@@ -59,7 +59,6 @@ namespace AAM
 
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
             AddLateLoadAction(true, "Loading line renderer...", AAM.Content.Load);
-            AddLateLoadAction(true, "Loading main content...", SweepPathRenderer.Init);
             AddLateLoadAction(false, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
             AddLateLoadAction(true, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
@@ -254,54 +253,6 @@ namespace AAM
                         continue;
 
                     GenDraw.DrawLineBetween(selectedPawn.DrawPos, target.Thing.DrawPos, color);
-                }
-            }
-            else if (sel.Count >= 2)
-            {
-                var main = sel[0];
-                var map = main.Map;
-
-                IEnumerable<Pawn> Others()
-                {
-                    for (int i = 1; i < sel.Count; i++)
-                    {
-                        yield return sel[i];
-                    }
-                }
-
-                var canDo = new List<GrabUtility.PossibleExecution>();
-                foreach (var exec in GrabUtility.GetPossibleExecutions(main, Others()))
-                {
-                    if (exec.VictimMoveCell != null)
-                    {
-                        bool hasLOS = GenSight.LineOfSightToThing(exec.VictimMoveCell.Value, exec.Victim, map);
-
-                        if(Input.GetKey(KeyCode.LeftControl))
-                            GenDraw.DrawLineBetween(exec.Victim.DrawPos, exec.VictimMoveCell.Value.ToVector3Shifted(), !hasLOS ? SimpleColor.Red : exec.MirrorX ? SimpleColor.Magenta : SimpleColor.Cyan);
-
-                        if (hasLOS)
-                        {
-                            canDo.Add(exec);
-                        }
-                    }
-
-                    Vector2 flat = new Vector2(exec.Victim.DrawPos.x, exec.Victim.DrawPos.z);
-                    string text = $"{exec.Def}  (Mirror:{exec.MirrorX})";
-                    //GenMapUI.DrawText(flat + new Vector2(1, 0), text, Color.white);
-                }
-
-                if (Input.GetKeyDown(KeyCode.G) && canDo.Count > 0)
-                {
-                    var exec = canDo.RandomElement();
-                    var afterGrapple = new AnimationStartParameters(exec.Def, main, exec.Victim)
-                    {
-                        FlipX = exec.MirrorX,
-                        FlipY = exec.MirrorY
-                    };
-                    if (exec.VictimMoveCell != null)
-                        JobDriver_GrapplePawn.GiveJob(main, exec.Victim, exec.VictimMoveCell.Value, false, afterGrapple);
-                    else
-                        afterGrapple.TryTrigger();
                 }
             }
         }

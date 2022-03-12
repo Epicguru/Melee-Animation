@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using AAM.Data;
+using AAM.Grappling;
 using AAM.UI;
 using UnityEngine;
 using Verse;
@@ -72,14 +73,16 @@ namespace AAM
             base.GameComponentTick();
 
             AnimRenderer.TickAll();
+            GrabUtility.Tick();
 
             Patch_Corpse_DrawAt.Tick();
             Patch_PawnRenderer_LayingFacing.Tick();
-        }
 
-        public override void GameComponentUpdate()
-        {
-            base.GameComponentUpdate();
+            foreach (var data in allMeleeData)
+            {
+                data.TimeSinceExecuted += 1 / 60f;
+                data.TimeSinceGrappled += 1 / 60f;
+            }
         }
 
         public override void GameComponentOnGUI()
