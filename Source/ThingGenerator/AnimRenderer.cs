@@ -7,11 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using AAM.Sweep;
 using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 using Debug = UnityEngine.Debug;
+using Color = UnityEngine.Color;
 
 /// <summary>
 /// An <see cref="AnimRenderer"/> is the object that represents and also draws (renders) a currently running animation.
@@ -315,6 +317,7 @@ public class AnimRenderer : IExposable
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
     private AnimPartData[] bodies = new AnimPartData[8]; // TODO REPLACE WITH LIST OR DICT.
+    private PartWithSweep[] sweeps;
     private MaterialPropertyBlock pb;
     private float time = -1;
     private Pawn[] pawnsForPostLoad;
@@ -346,6 +349,19 @@ public class AnimRenderer : IExposable
 
         for (int i = 0; i < overrides.Length; i++)
             overrides[i] = new AnimPartOverrideData();
+
+        // Create sweep meshes.
+        int j = 0;
+        sweeps = new PartWithSweep[Data.SweepDataCount];
+        foreach (var part in Data.PartsWithSweepData)
+        {
+            var paths = Data.GetSweepPaths(part);
+            foreach (var path in paths)
+            {
+                var mesh = new SweepMesh();
+                sweeps[j++] = new PartWithSweep(this, part, path, mesh);
+            }
+        }
     }
 
     public void ExposeData()
@@ -642,6 +658,11 @@ public class AnimRenderer : IExposable
 
         DrawTimer.Start();
 
+        foreach (var path in sweeps)
+        {
+            path.Draw(time);
+        }
+
         foreach (var snap in snapshots)
         {
             if (!ShouldDraw(snap))
@@ -656,6 +677,28 @@ public class AnimRenderer : IExposable
                 continue;
 
             var ov = GetOverride(snap);
+            var matrix = RootTransform * snap.WorldMatrix;
+            bool preFx = ov.FlipX ? !snap.FlipX : snap.FlipX;
+            bool preFy = ov.FlipY ? !snap.FlipY : snap.FlipY;
+            bool fx = MirrorHorizontal ? !preFx : preFx;
+            bool fy = MirrorVertical ? !preFy : preFy;
+            var mesh = AnimData.GetMesh(fx, fy);
+
+            if (ov.CustomRenderer != null)
+            {
+                ov.CustomRenderer.TRS = matrix;
+                ov.CustomRenderer.OverrideData = ov;
+                ov.CustomRenderer.Part = snap.Part;
+                ov.CustomRenderer.Snapshot = snap;
+                ov.CustomRenderer.Renderer = this;
+                ov.CustomRenderer.TweakData = null; // TODO assign tweak data.
+                ov.CustomRenderer.Mesh = mesh;
+                ov.CustomRenderer.Material = mat;
+
+                bool stop = ov.CustomRenderer.Draw();
+                if (stop)
+                    continue;
+            }
 
             bool useMPB = ov.UseMPB;
 
@@ -666,15 +709,6 @@ public class AnimRenderer : IExposable
                 pb.SetTexture("_MainTex", tex);
                 pb.SetColor("_Color", color);
             }
-            snap.Part.PreDraw(mat, useMPB ? pb : null);
-
-            var matrix = RootTransform * snap.WorldMatrix;
-
-            bool preFx = ov.FlipX ? !snap.FlipX : snap.FlipX;
-            bool preFy = ov.FlipY ? !snap.FlipY : snap.FlipY;
-            bool fx = MirrorHorizontal ? !preFx : preFx;
-            bool fy = MirrorVertical ? !preFy : preFy;
-            var mesh = AnimData.GetMesh(fx, fy);
 
             Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, useMPB ? pb : null);
         }
@@ -839,8 +873,6 @@ public class AnimRenderer : IExposable
             pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
         }
 
-        Core.Log("END");
-
         foreach(var item in workersAtEnd)
         {
             try
@@ -853,6 +885,11 @@ public class AnimRenderer : IExposable
             }
         }
         workersAtEnd.Clear();
+
+        foreach (var sweep in sweeps)
+        {
+            sweep.Mesh.Dispose();
+        }
     }
 
     protected virtual void TeleportPawn(Pawn pawn, IntVec3 pos)
@@ -936,6 +973,18 @@ public class AnimRenderer : IExposable
                 if (mask != null)
                     mask.wrapMode = TextureWrapMode.Repeat;
             }
+
+            if (ov.CustomRenderer != null)
+                ov.CustomRenderer.Item = weapon;
+
+            foreach (var path in sweeps)
+            {
+                if (path.Part == itemPart)
+                {
+                    path.DownDst = tweak.BladeStart;
+                    path.UpDst = tweak.BladeEnd;
+                }
+            }
         }
 
         // Apply main hand.
@@ -959,5 +1008,75 @@ public class AnimRenderer : IExposable
         }
 
         return true;
+    }
+
+    public class PartWithSweep
+    {
+        public readonly AnimPartData Part;
+        public readonly SweepPointCollection Points;
+        public readonly SweepMesh Mesh;
+        public readonly AnimRenderer Renderer;
+        public float DownDst, UpDst;
+
+        private float lastTime = -1;
+        private int lastIndex = -1;
+
+        public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection points, SweepMesh mesh)
+        {
+            Renderer = renderer;
+            Part = part;
+            Points = points;
+            Mesh = mesh;
+        }
+
+        public void Draw(float time)
+        {
+            DrawInt(time);
+
+            Graphics.DrawMesh(Mesh.Mesh, Renderer.RootTransform, AnimRenderer.DefaultCutout, 0);
+        }
+
+        private bool DrawInt(float time)
+        {
+            if (time == lastTime)
+                return false;
+
+            if (time < lastTime)
+            {
+                Rebuild(time);
+                return true;
+            }
+
+            for (int i = lastIndex + 1; i < Points.Points.Count; i++)
+            {
+                var point = Points.Points[i];
+                if (point.Time > time)
+                    break;
+
+                point.GetEndPoints(DownDst, UpDst, out var down, out var up);
+                Mesh.AddLine(down, up, Color.green, Color.red);
+                lastIndex = i;
+            }
+            lastTime = time;
+            Mesh.Rebuild();
+            return true;
+        }
+
+        private void Rebuild(float upTo)
+        {
+            Mesh.Clear();
+            for(int i = 0; i < Points.Points.Count; i++)
+            {
+                var point = Points.Points[i];
+                if (point.Time > upTo)
+                    break;
+
+                point.GetEndPoints(DownDst, UpDst, out var down, out var up);
+                Mesh.AddLine(down, up, Color.green, Color.red);
+                lastIndex = i;
+            }
+            Mesh.Rebuild();
+            lastTime = upTo;
+        }
     }
 }

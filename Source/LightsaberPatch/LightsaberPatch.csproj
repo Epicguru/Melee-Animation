@@ -14,16 +14,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.1.1" />
-    <ProjectReference Include="..\ThingGenerator\AAM.csproj" />
+    <PackageReference Include="Lib.Harmony" Version="2.1.1">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <ProjectReference Include="..\ThingGenerator\AAM.csproj">
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
   </ItemGroup>
 
   <!-- _____ 1.3 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.3'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3159" />
-    <Reference Include="SWSaber"><HintPath>SWSaber_13.dll</HintPath></Reference>
-    <Reference Include="CompActivatableEffect"><HintPath>CompActivatableEffect_13.dll</HintPath></Reference>
-    <Reference Include="CompSlotLoadable"><HintPath>CompSlotLoadable_13.dll</HintPath></Reference>
+    <Reference Include="SWSaber">
+      <HintPath>refs/1.3/SWSaber_13.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CompActivatableEffect">
+      <HintPath>refs/1.3/CompActivatableEffect_13.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
 
 

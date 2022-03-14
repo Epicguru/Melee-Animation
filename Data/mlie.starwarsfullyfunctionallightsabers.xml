@@ -16,14 +16,21 @@
 			<scY>2.5</scY>
 			<blS>0.1880342</blS>
 			<blE>1.384615</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
 		</li>
 		<li>
 			<dId>SWSaber_Doublesaber</dId>
 			<typ>ThingDef</typ>
 			<nsp>Verse</nsp>
 			<tex>Weapons/DoublesaberHilt</tex>
+			<ofX>-0.01628584</ofX>
+			<ofY>-0.2778635</ofY>
+			<rot>40</rot>
 			<scX>2.5</scX>
 			<scY>2.5</scY>
+			<blS>0.309702</blS>
+			<blE>1.189603</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
 		</li>
 		<li>
 			<dId>SWSaber_ObiSaber</dId>
@@ -45,11 +52,97 @@
 			<tex>Weapons/MaceHilt</tex>
 			<ofX>0.4526184</ofX>
 			<ofY>0.03415987</ofY>
-			<rot>49</rot>
+			<rot>50</rot>
 			<scX>2.3</scX>
 			<scY>2.3</scY>
 			<blS>0.256199</blS>
-			<blE>2.66447</blE>
+			<blE>1.931537</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+		</li>
+		<li>
+			<dId>SWSaber_SaberPike</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/PikeHilt</tex>
+			<ofX>1.036199</ofX>
+			<ofY>-0.1041988</ofY>
+			<rot>50</rot>
+			<scX>2.4</scX>
+			<scY>2.4</scY>
+			<blS>1.149081</blS>
+			<blE>2.407365</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+			<tag>7</tag>
+		</li>
+		<li>
+			<dId>SWSaber_DookuSaber</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/DookuHilt</tex>
+			<ofX>0.2093361</ofX>
+			<ofY>-0.2309915</ofY>
+			<rot>40</rot>
+			<scX>2.5</scX>
+			<scY>2.5</scY>
+			<blS>0.1479789</blS>
+			<blE>1.396777</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+			<tag>22</tag>
+		</li>
+		<li>
+			<dId>SWSaber_Inquis</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/InquisHilt</tex>
+			<rot>45</rot>
+			<scX>2.2</scX>
+			<scY>2.2</scY>
+			<blS>0.4583738</blS>
+			<blE>1.375121</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+		</li>
+		<li>
+			<dId>SWSaber_Yodasaber</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/Yoda_hilt</tex>
+			<ofX>0.2959579</ofX>
+			<ofY>0.1154958</ofY>
+			<rot>50</rot>
+			<scX>1.9</scX>
+			<scY>1.9</scY>
+			<hnd>Only_Main_Hand</hnd>
+			<blS>0.119105</blS>
+			<blE>1.454525</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+		</li>
+		<li>
+			<dId>SWSaber_KyloSaber</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/KyloHilt</tex>
+			<ofX>0.23821</ofX>
+			<ofY>-0.2743024</ofY>
+			<rot>40</rot>
+			<scX>2.5</scX>
+			<scY>2.5</scY>
+			<blS>0.2057268</blS>
+			<blE>1.47618</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+		</li>
+		<li>
+			<dId>SWSaber_Darksaber</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/Sabine_Hilt</tex>
+			<ofX>0.5341678</ofX>
+			<ofY>0.07218486</ofY>
+			<rot>50</rot>
+			<scX>2.15</scX>
+			<scY>2.15</scY>
+			<blS>0.2490377</blS>
+			<blE>1.887634</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
 		</li>
 	</items>
 </Data>

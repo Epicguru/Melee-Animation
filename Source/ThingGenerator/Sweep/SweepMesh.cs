@@ -85,6 +85,14 @@ namespace AAM.Sweep
             UnityEngine.Object.Destroy(Mesh);
         }
 
+        public void Clear()
+        {
+            vertices.Clear();
+            colors.Clear();
+            indices.Clear();
+            last = null;
+        }
+
         private struct LineData
         {
             public Color DownColor, UpColor;

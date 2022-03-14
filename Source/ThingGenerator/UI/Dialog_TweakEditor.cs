@@ -198,6 +198,10 @@ namespace AAM.UI
                 copyPasta.x += 130;
                 copyPasta.y += 3;
                 Widgets.Label(copyPasta, "Capacities...");
+                copyPasta.x += 140;
+                copyPasta.width = 300;
+                tweak.CustomRendererClass = Widgets.TextField(copyPasta, tweak.CustomRendererClass);
+
                 if(CurrentDef.tools != null)
                 {
                     string[] caps = new string[CurrentDef.tools.Count];

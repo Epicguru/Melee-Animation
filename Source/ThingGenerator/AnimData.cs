@@ -469,11 +469,6 @@ public class AnimPartData
         return ref dummy; // Shut up compiler.
     }
 
-    public virtual void PreDraw(Material mat, MaterialPropertyBlock pb)
-    {
-
-    }
-
     public AnimPartSnapshot GetSnapshot(AnimRenderer renderer)
     {
         if (renderer == null)
@@ -644,6 +639,7 @@ public class AnimPartOverrideData
     public bool FlipX, FlipY;
     public bool UseMPB = true;
     public bool UseDefaultTransparentMaterial;
+    public PartRenderer CustomRenderer;
 }
 
 [Serializable]
