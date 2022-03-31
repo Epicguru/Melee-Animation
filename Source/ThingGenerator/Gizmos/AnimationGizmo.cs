@@ -192,7 +192,8 @@ namespace AAM.Gizmos
         {
             GUI.DrawTexture(rect, Content.IconLongBG);
 
-            if (!data.IsExecutionOffCooldown(5f))
+            bool isOffCooldown = data.IsExecutionOffCooldown(5f);
+            if (!isOffCooldown)
             {
                 float pct = data.GetExecuteCooldownPct(5f);
                 Widgets.FillableBar(rect.BottomPartPixels(14).ExpandedBy(-4, -3), pct);
@@ -201,14 +202,23 @@ namespace AAM.Gizmos
             Widgets.DrawHighlightIfMouseover(rect);
             if (Widgets.ButtonInvisible(rect) && !Find.Targeter.IsTargeting)
             {
-                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
-                var args = new TargetingParameters()
+                if(!isOffCooldown)
                 {
-                    canTargetSelf = false,
-                    canTargetBuildings = false,
-                    validator = LassoTargetValidator
-                };
-                Find.Targeter.BeginTargeting(args, OnSelectedExecutionTarget, null, null, pawn);
+                    string name = pawn.Name.ToStringShort;
+                    Messages.Message($"{name}'s execution is on cooldown!", MessageTypeDefOf.RejectInput, false);
+                }
+                else
+                {
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                    var args = new TargetingParameters()
+                    {
+                        canTargetSelf = false,
+                        canTargetBuildings = false,
+                        validator = LassoTargetValidator
+                    };
+                    Find.Targeter.BeginTargeting(args, OnSelectedExecutionTarget, null, null, pawn);
+                }
+                
             }
 
             Text.Anchor = TextAnchor.MiddleCenter;
@@ -222,7 +232,8 @@ namespace AAM.Gizmos
         {
             GUI.DrawTexture(rect, Content.IconLongBG);
 
-            if (!data.IsGrappleOffCooldown(5f))
+            bool isOffCooldown = data.IsGrappleOffCooldown(5f);
+            if (!isOffCooldown)
             {
                 float pct = data.GetGrappleCooldownPct(5f);
                 Widgets.FillableBar(rect.BottomPartPixels(14).ExpandedBy(-4, -3), pct);
@@ -234,21 +245,29 @@ namespace AAM.Gizmos
 
             if (Widgets.ButtonInvisible(rect) && !Find.Targeter.IsTargeting)
             {
-                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
-                var args = new TargetingParameters()
+                if(!isOffCooldown)
                 {
-                    canTargetSelf = false,
-                    canTargetBuildings = false,
-                    validator = LassoTargetValidator
-                };
-                Find.Targeter.BeginTargeting(args, OnSelectedLassoTarget, null, null, pawn);
+                    string name = pawn.Name.ToStringShort;
+                    Messages.Message($"{name}'s lasso is on cooldown!", MessageTypeDefOf.RejectInput, false);
+                }
+                else
+                {
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                    var args = new TargetingParameters()
+                    {
+                        canTargetSelf = false,
+                        canTargetBuildings = false,
+                        validator = LassoTargetValidator
+                    };
+                    Find.Targeter.BeginTargeting(args, OnSelectedLassoTarget, null, null, pawn);
+                }
             }
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(rect, "Lasso Target...");
             Text.Anchor = TextAnchor.UpperLeft;
 
-            TooltipHandler.TipRegion(rect, "Use a lasso to drag in a pawn.\nYou can lasso enemies or friendlies, even if they are downed.\n\nLassoing does not harm the target.");
+            TooltipHandler.TipRegion(rect, "Use a lasso to drag in a pawn.\nYou can lasso enemies or friendlies, even if they are downed.\nLassoing does not harm the target.");
         }
 
         private bool LassoTargetValidator(TargetInfo info)
@@ -287,10 +306,12 @@ namespace AAM.Gizmos
             if (info.Thing is not Pawn target || target.Dead)
                 return;
 
+            bool canGrapple = data.IsGrappleOffCooldown(5f);
             var targetPos = target.Position;
-            var startParams = new AnimationStartParameters(
-                AnimDef.GetExecutionAnimationsForWeapon(pawn.GetFirstMeleeWeapon().def).RandomElement(), pawn, target);
-            string lastReason = $"No valid position to drag {target.NameShortColored} to.";
+            string lastReason = canGrapple ? $"No valid position to drag {target.NameShortColored} to." : "Lasoo is on cooldown, so the target cannot be dragged in for an execution.";
+
+            var startParams = new AnimationStartParameters(AnimDef.GetExecutionAnimationsForWeapon(pawn.GetFirstMeleeWeapon().def).RandomElement(), pawn, target);
+            // TODO start params need to change based on space available.
 
             foreach (var pos in GrabUtility.GetIdealGrappleSpots(pawn, target, true))
             {
@@ -303,8 +324,9 @@ namespace AAM.Gizmos
                 }
 
                 // Grapple, then execute.
-                if (GrabUtility.CanStartGrapple(pawn, target, pos, out lastReason))
+                if (canGrapple && GrabUtility.CanStartGrapple(pawn, target, pos, out lastReason))
                 {
+
                     if (JobDriver_GrapplePawn.GiveJob(pawn, target, pos, true, startParams))
                         data.TimeSinceGrappled = 0;
                     return;

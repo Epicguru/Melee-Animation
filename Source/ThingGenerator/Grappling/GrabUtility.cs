@@ -34,6 +34,9 @@ namespace AAM.Grappling
                 pawnsBeingTargetedByGrapples.RemoveWhere(p => !p.Spawned || p.Dead);
         }
 
+        /// <summary>
+        ///  Does not check cooldown or skill!
+        /// </summary>
         public static bool CanStartGrapple(Pawn grappler, Pawn target, in IntVec3 endCell, out string reason)
         {
             if (grappler == null || target == null || !endCell.IsValid)

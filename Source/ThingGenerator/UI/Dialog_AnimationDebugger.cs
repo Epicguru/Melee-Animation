@@ -55,9 +55,7 @@ namespace AAM.UI
         private AnimDef spaceCheckDef;
         private bool spaceCheckMX, spaceCheckMY;
         private bool autoSelectRenderer = true;
-        private float rtScale = 1f;
         private Queue<Action> toDraw = new Queue<Action>();
-        private Rect originalRect;
         private List<AnimationManager> allManagers = new List<AnimationManager>();
 
         public Dialog_AnimationDebugger()
@@ -95,8 +93,6 @@ namespace AAM.UI
 
         public override void DoWindowContents(Rect inRect)
         {
-            originalRect = inRect;
-
             if (selectedRenderer != null && selectedRenderer.IsDestroyed)
                 selectedRenderer = null;
             if (autoSelectRenderer && selectedRenderer == null)
@@ -632,58 +628,6 @@ namespace AAM.UI
 
             ui.Label($"Trail max speed: {trailMaxSpeed:F2} m/s");
             trailMaxSpeed = ui.Slider(trailMaxSpeed, 0, 100);
-
-            if (Event.current.type == EventType.Repaint && selectedSweepPath != null)
-            {
-                toDraw.Enqueue(() =>
-                {
-                    var m = new SweepMesh();
-
-                    int segments = trailSegments;
-
-                    Vector3 root = startTarget.CenterVector3;
-                    root.y = AltitudeLayer.VisEffects.AltitudeFor();
-                    int i = 0;
-
-                    foreach (var point in selectedSweepPath.Points)
-                    {
-                        if (selectedRenderer != null && (point.Time > selectedRenderer.CurrentTime || point.Time < selectedRenderer.CurrentTime - trailTime))
-                            continue;
-
-                        point.GetEndPoints(currentDown, currentUp, out var down, out var up);
-                        down += root;
-                        up += root;
-
-                        float topVel = Mathf.Min(1, Mathf.InverseLerp(trailMinSpeed, trailMaxSpeed, point.VelocityTop));
-                        float botVel = Mathf.Min(1, Mathf.InverseLerp(trailMinSpeed, trailMaxSpeed, point.VelocityBottom));
-                        Color topColor = Color.Lerp(default, Color.red, topVel);
-                        Color botColor = Color.Lerp(default, Color.red, botVel);
-                        m.AddLine(down, up, botColor, topColor);
-
-                        float segLen = (down - up).MagnitudeHorizontal() / segments;
-
-                        foreach (var seg in MakeSegments(down, up, segments, point.VelocityBottom, point.VelocityTop))
-                        {
-                            float t = Mathf.Min(1, Mathf.InverseLerp(trailMinSpeed, trailMaxSpeed, seg.speed));
-                            if (t <= 0)
-                                continue;
-
-                            Color col = Color.Lerp(Color.green, Color.red, t);
-
-                            //DrawLineBetween(seg.start, seg.end, segLen, col, i * 0.001f, 0.1f);
-                        }
-
-                        i++;
-                    }
-
-                    m.Rebuild();
-                    Graphics.DrawMesh(m.Mesh, Matrix4x4.Translate(new Vector3(0, 0, 0)), AnimRenderer.DefaultCutout, 0);
-                });
-            }
-
-            
-
-
         }
 
         private static void DrawLineBetween(in Vector3 A, in Vector3 B, float len, in Color color, float yOff, float width = 0.2f)

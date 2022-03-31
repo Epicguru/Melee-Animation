@@ -358,8 +358,7 @@ public class AnimRenderer : IExposable
             var paths = Data.GetSweepPaths(part);
             foreach (var path in paths)
             {
-                var mesh = new SweepMesh();
-                sweeps[j++] = new PartWithSweep(this, part, path, mesh);
+                sweeps[j++] = new PartWithSweep(this, part, path, new());
             }
         }
     }
@@ -1014,14 +1013,21 @@ public class AnimRenderer : IExposable
     {
         public readonly AnimPartData Part;
         public readonly SweepPointCollection Points;
-        public readonly SweepMesh Mesh;
+        public readonly SweepMesh<Data> Mesh;
         public readonly AnimRenderer Renderer;
         public float DownDst, UpDst;
 
         private float lastTime = -1;
         private int lastIndex = -1;
 
-        public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection points, SweepMesh mesh)
+        public struct Data
+        {
+            public float Time;
+            public float DownVel;
+            public float UpVel;
+        }
+
+        public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection points, SweepMesh<Data> mesh)
         {
             Renderer = renderer;
             Part = part;
@@ -1033,7 +1039,7 @@ public class AnimRenderer : IExposable
         {
             DrawInt(time);
 
-            Graphics.DrawMesh(Mesh.Mesh, Renderer.RootTransform, AnimRenderer.DefaultCutout, 0);
+            Graphics.DrawMesh(Mesh.Mesh, Renderer.RootTransform, DefaultCutout, 0);
         }
 
         private bool DrawInt(float time)
@@ -1054,10 +1060,19 @@ public class AnimRenderer : IExposable
                     break;
 
                 point.GetEndPoints(DownDst, UpDst, out var down, out var up);
-                Mesh.AddLine(down, up, Color.green, Color.red);
+                Mesh.AddLine(down, up, new Data()
+                {
+                    Time = point.Time,
+                    UpVel = point.VelocityTop,
+                    DownVel = point.VelocityBottom
+                });
                 lastIndex = i;
             }
+
             lastTime = time;
+            AddInterpolatedPos(lastIndex, time);
+
+            Mesh.UpdateColors(MakeColors);
             Mesh.Rebuild();
             return true;
         }
@@ -1072,11 +1087,49 @@ public class AnimRenderer : IExposable
                     break;
 
                 point.GetEndPoints(DownDst, UpDst, out var down, out var up);
-                Mesh.AddLine(down, up, Color.green, Color.red);
-                lastIndex = i;
+                Mesh.AddLine(down, up, new Data()
+                {
+                    Time = point.Time,
+                    UpVel = point.VelocityTop,
+                    DownVel = point.VelocityBottom
+                }); lastIndex = i;
             }
+            AddInterpolatedPos(lastIndex, upTo);
+
+            Mesh.UpdateColors(MakeColors);
             Mesh.Rebuild();
             lastTime = upTo;
+        }
+
+        private (Color down, Color up) MakeColors(in Data data)
+        {
+            return (Color.red, Color.green);
+        }
+
+        private void AddInterpolatedPos(int lastIndex, float currentTime)
+        {
+            if (lastIndex < 0)
+                return;
+            if (lastIndex >= Points.Count - 1)
+                return; // Can't interpolate if we don't have the end.
+
+            Core.Log($"{lastIndex} of {Points.Count}");
+
+            var lastPoint = Points.Points[lastIndex];
+            if (Mathf.Abs(lastPoint.Time - currentTime) < 0.001f)
+                return;
+
+            var nextPoint = Points.Points[lastIndex + 1];
+
+            float t = Mathf.InverseLerp(lastPoint.Time, nextPoint.Time, currentTime);
+            var newPoint = SweepPoint.Lerp(lastPoint, nextPoint, t);
+            newPoint.GetEndPoints(DownDst, UpDst, out var down, out var up);
+            Mesh.AddLine(down, up, new Data()
+            {
+                Time = currentTime,
+                UpVel = newPoint.VelocityTop,
+                DownVel = newPoint.VelocityBottom
+            });
         }
     }
 }
