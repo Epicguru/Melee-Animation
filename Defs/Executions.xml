@@ -217,7 +217,7 @@
     <label>Execution: Passover</label>
     <data>Execution_Passover.anim</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
-      <types>Long_Stab</types>
+      <types>Long_Stab</types>      
     </weaponFilter>
     <cellData>
       <li>

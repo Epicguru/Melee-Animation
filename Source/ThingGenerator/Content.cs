@@ -14,7 +14,24 @@ namespace AAM
         public static Texture2D RopeEnd;
         [Content("AAM/Rope/Coiled")]
         public static Texture2D RopeCoil;
+        [Content("AAM/BoundPawns/Male")]
+        public static Texture2D BoundMaleRope;
 
+        // UI
+        [Content("AAM/UI/IconBG")]
+        public static Texture2D IconBG;
+        [Content("AAM/UI/IconLongBG")]
+        public static Texture2D IconLongBG;
+        [Content("AAM/UI/IconExecute")]
+        public static Texture2D IconExecute;
+        [Content("AAM/UI/IconGrapple")]
+        public static Texture2D IconGrapple;
+        [Content("AAM/UI/IconInfo")]
+        public static Texture2D IconInfo;
+        [Content("AAM/UI/IconSkill")]
+        public static Texture2D IconSkill;
+
+        // TEMP: Trail shader.
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;
         [BundleContent("Materials/BlitMaterial.mat")]

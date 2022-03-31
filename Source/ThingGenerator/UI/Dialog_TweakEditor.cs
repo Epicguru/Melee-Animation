@@ -198,6 +198,10 @@ namespace AAM.UI
                 copyPasta.x += 130;
                 copyPasta.y += 3;
                 Widgets.Label(copyPasta, "Capacities...");
+                copyPasta.x += 140;
+                copyPasta.width = 300;
+                tweak.CustomRendererClass = Widgets.TextField(copyPasta, tweak.CustomRendererClass);
+
                 if(CurrentDef.tools != null)
                 {
                     string[] caps = new string[CurrentDef.tools.Count];
@@ -410,6 +414,7 @@ namespace AAM.UI
             if (tweak.FlipY)
                 pos.y *= -1;
             float offRot = tweak.FlipX ^ tweak.FlipY ? -tweak.Rotation : tweak.Rotation;
+            itemTex.wrapMode = TextureWrapMode.Repeat;
             Graphics.DrawMesh(AnimData.GetMesh(tweak.FlipX, tweak.FlipY), Matrix4x4.TRS(pos, Quaternion.Euler(0f, offRot, 0f), new Vector3(tweak.ScaleX, 1f, tweak.ScaleY)), AnimRenderer.DefaultCutout, 0, camera, 0, block);
 
             var handScale = new Vector3(0.175f, 1f, 0.175f);

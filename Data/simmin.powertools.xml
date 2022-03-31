@@ -14,6 +14,8 @@
 			<scX>0.8</scX>
 			<scY>0.8</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.08108108</blS>
+			<blE>0.427027</blE>
 			<tag>32</tag>
 		</li>
 		<li>
@@ -24,8 +26,8 @@
 			<ofX>0.3904555</ofX>
 			<ofY>-0.01301518</ofY>
 			<rot>-41</rot>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.1243243</blS>
+			<blE>0.9567568</blE>
 			<tag>4</tag>
 		</li>
 		<li>
@@ -37,6 +39,8 @@
 			<ofY>-0.05206074</ofY>
 			<scX>0.8</scX>
 			<scY>0.8</scY>
+			<blS>0.2162162</blS>
+			<blE>0.5513514</blE>
 			<tag>16</tag>
 		</li>
 		<li>
@@ -47,9 +51,8 @@
 			<ofX>0.4251627</ofX>
 			<ofY>-0.0867679</ofY>
 			<rot>43</rot>
-			<scX>1</scX>
-			<scY>1</scY>
-			<tag>6</tag>
+			<blS>0.3891892</blS>
+			<blE>1.037838</blE>
 		</li>
 	</items>
 </Data>

@@ -13,7 +13,8 @@
 			<rot>44</rot>
 			<scX>1.8</scX>
 			<scY>1.8</scY>
-			<tag>6</tag>
+			<blS>1.92973</blS>
+			<blE>0.2432432</blE>
 		</li>
 		<li>
 			<dId>LS_Deathbringer</dId>
@@ -25,7 +26,8 @@
 			<rot>41</rot>
 			<scX>2</scX>
 			<scY>2</scY>
-			<tag>6</tag>
+			<blS>0.1567568</blS>
+			<blE>1.972973</blE>
 		</li>
 		<li>
 			<dId>LS_Executioner</dId>
@@ -37,7 +39,8 @@
 			<rot>39</rot>
 			<scX>2.1</scX>
 			<scY>2.1</scY>
-			<tag>6</tag>
+			<blS>0.2918919</blS>
+			<blE>1.962162</blE>
 		</li>
 		<li>
 			<dId>LS_Nightfall</dId>
@@ -49,7 +52,8 @@
 			<scX>2</scX>
 			<scY>2</scY>
 			<flY>True</flY>
-			<tag>6</tag>
+			<blS>0.1513514</blS>
+			<blE>2.189189</blE>
 		</li>
 		<li>
 			<dId>LS_CloudSword</dId>
@@ -62,7 +66,8 @@
 			<scX>2.1</scX>
 			<scY>2.1</scY>
 			<flY>True</flY>
-			<tag>6</tag>
+			<blS>0.3243243</blS>
+			<blE>2.405406</blE>
 		</li>
 	</items>
 </Data>

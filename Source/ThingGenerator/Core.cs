@@ -1,12 +1,11 @@
 ﻿using AAM.Grappling;
+using AAM.Tweaks;
 using HarmonyLib;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -20,7 +19,6 @@ namespace AAM
         public static ModContentPack ModContent;
         public static Settings Settings;
         public static bool IsSimpleSidearmsActive;
-
 
         private readonly Queue<(string title, Action action)> lateLoadActions = new Queue<(string, Action)>();
         private readonly Queue<(string title, Action action)> lateLoadActionsSync = new Queue<(string, Action)>();
@@ -61,7 +59,6 @@ namespace AAM
 
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
             AddLateLoadAction(true, "Loading line renderer...", AAM.Content.Load);
-            AddLateLoadAction(true, "Loading main content...", SweepPathRenderer.Init);
             AddLateLoadAction(false, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
             AddLateLoadAction(true, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
@@ -228,13 +225,6 @@ namespace AAM
 
     public class TempComp : MapComponent
     {
-        [DebugAction("Advanced Animation Mod", "Debug Execute", false, false, actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        private static void DebugExecute(Pawn victim)
-        {
-            var executioner  = Find.CurrentMap?.mapPawns?.AllPawns.Where(p => !p.Dead && p.IsColonist).FirstOrDefault();
-            StartExecution(executioner, victim);
-        }
-
         public TempComp(Map map) : base(map)
         {
         }
@@ -249,184 +239,28 @@ namespace AAM
                 var selectedPawn = sel[0];
                 if (selectedPawn != null && Input.GetKey(KeyCode.LeftControl))
                     DrawValidSpotsAround(selectedPawn);
-            }
-            else if (sel.Count >= 2)
-            {
-                var main = sel[0];
-                var map = main.Map;
 
-                IEnumerable<Pawn> Others()
+                var targets = selectedPawn.Map.attackTargetsCache.GetPotentialTargetsFor(selectedPawn);
+                foreach (var target in targets)
                 {
-                    for (int i = 1; i < sel.Count; i++)
-                    {
-                        yield return sel[i];
-                    }
-                }
+                    if (target.Thing is not Pawn pawn)
+                        continue;
 
-                var canDo = new List<GrabUtility.PossibleExecution>();
-                foreach (var exec in GrabUtility.GetPossibleExecutions(main, Others()))
-                {
-                    if (exec.VictimMoveCell != null)
-                    {
-                        bool hasLOS = GenSight.LineOfSightToThing(exec.VictimMoveCell.Value, exec.Victim, map);
+                    SimpleColor color = SimpleColor.Green;
+                    if (target.ThreatDisabled(selectedPawn))
+                        continue;
+                    if (!AttackTargetFinder.IsAutoTargetable(target))
+                        continue;
 
-                        if(Input.GetKey(KeyCode.LeftControl))
-                            GenDraw.DrawLineBetween(exec.Victim.DrawPos, exec.VictimMoveCell.Value.ToVector3Shifted(), !hasLOS ? SimpleColor.Red : exec.MirrorX ? SimpleColor.Magenta : SimpleColor.Cyan);
-
-                        if (hasLOS)
-                        {
-                            canDo.Add(exec);
-                        }
-                    }
-
-                    Vector2 flat = new Vector2(exec.Victim.DrawPos.x, exec.Victim.DrawPos.z);
-                    string text = $"{exec.Def}  (Mirror:{exec.MirrorX})";
-                    //GenMapUI.DrawText(flat + new Vector2(1, 0), text, Color.white);
-                }
-
-                if (Input.GetKeyDown(KeyCode.G) && canDo.Count > 0)
-                {
-                    var exec = canDo.RandomElement();
-                    var afterGrapple = new AnimationStartParameters(exec.Def, main, exec.Victim)
-                    {
-                        FlipX = exec.MirrorX,
-                        FlipY = exec.MirrorY
-                    };
-                    if (exec.VictimMoveCell != null)
-                        JobDriver_GrapplePawn.GiveJob(main, exec.Victim, exec.VictimMoveCell.Value, false, afterGrapple);
-                    else
-                        afterGrapple.TryTrigger();
+                    GenDraw.DrawLineBetween(selectedPawn.DrawPos, target.Thing.DrawPos, color);
                 }
             }
-        }
-
-        private BezierCurve curve;
-
-        private void DrawBezier()
-        {
-            int resolution = (int)Mathf.Clamp(10f * Vector2.Distance(curve.P0, curve.P3), 40, 256);
-            float y = AltitudeLayer.MoteOverhead.AltitudeFor();
-
-            Vector2 lastPoint = default;
-            for (int i = 0; i < resolution; i++)
-            {
-                float t = i / (resolution - 1f);
-                Vector2 point = Bezier.Evaluate(t, curve.P0, curve.P1, curve.P2, curve.P3);
-
-                if (i != 0)
-                {
-                    Vector3 a = lastPoint.ToWorld(y);
-                    Vector3 b = point.ToWorld(y);
-                    GenDraw.DrawLineBetween(a, b, SimpleColor.Blue, 0.3f);
-                }
-
-                lastPoint = point;
-            }
-
-            if (Input.GetKey(KeyCode.Alpha5))
-                EditPoint(ref curve.P0);
-            //if (Input.GetKey(KeyCode.Alpha2))
-            //    EditPoint(ref curve.P1);
-            //if (Input.GetKey(KeyCode.Alpha3))
-            //    EditPoint(ref curve.P2);
-            if (Input.GetKey(KeyCode.Alpha6))
-                EditPoint(ref curve.P3);
-
-            Vector2 delta = curve.P3 - curve.P0;
-            Vector2 perp = Vector2.Perpendicular(delta.normalized);
-            if (curve.P3.x < curve.P0.x)
-                perp = -perp;
-            float dst = delta.magnitude;
-
-            float t0 = 0.1f;
-            float t1 = 0.12f;
-
-            curve.P1 = Vector2.Lerp(curve.P0, curve.P3, t0) + perp * Mathf.Sin(dst * 0.5f) * Mathf.Clamp(dst * 0.25f, 2f, 12f);
-            curve.P2 = Vector2.Lerp(curve.P0, curve.P3, t1) + perp * Mathf.Sin(dst * 0.5f) * -Mathf.Clamp(dst * 0.25f, 1f, 6f);
-
-            GenDraw.DrawLineBetween(curve.P0.ToWorld(y), curve.P3.ToWorld(), SimpleColor.Orange, 0.1f);
-            GenDraw.DrawLineBetween((curve.P0 + delta.normalized * 2f).ToWorld(y), (curve.P0 + delta.normalized * 2f + perp * 2f).ToWorld(y), SimpleColor.Green, 0.15f);
-        }
-
-        private void EditPoint(ref Vector2 point)
-        {
-            var mp = Verse.UI.MouseMapPosition();
-            var mpFlat = new Vector2(mp.x, mp.z);
-            point = mpFlat;
-
-            GenDraw.DrawTargetHighlightWithLayer(mp, AltitudeLayer.VisEffects);
-        }
-
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_Deep.Look(ref curve, nameof(curve));
-        }
-
-        private void StartAnim()
-        {
-            // Find pawns to do animation on.
-            var mainPawn  = Find.CurrentMap?.mapPawns?.AllPawns.Where(p => !p.Dead && p.IsColonist).FirstOrDefault();
-            var otherPawn = Find.CurrentMap?.mapPawns?.AllPawns.Where(p => !p.Dead && !p.IsColonist && !p.RaceProps.Animal).RandomElement();
-
-            // Make transform centered around the main pawn's position.
-            var rootTransform = mainPawn.MakeAnimationMatrix();
-
-            // Get the current map's animation manager.
-            var manager = map.GetAnimManager();
-
-            // Cancel any previous animation(s)
-            manager.StopAnimation(mainPawn);
-            manager.StopAnimation(otherPawn);
-
-            // Try to find an execution animation to play.
-            var exec = AnimDef.TryGetExecutionFor(mainPawn, otherPawn);
-
-            if (exec == null)
-            {
-                Core.Warn($"Could not find any execution animation to play!");
-                return;
-            }
-
-            // Start this new animation.
-            var anim = manager.StartAnimation(exec, rootTransform, mainPawn, otherPawn);
-            //anim.MirrorHorizontal = Rand.Bool;
         }
 
         private void DrawValidSpotsAround(Pawn pawn)
         {
             foreach (var cell in GrabUtility.GetFreeSpotsAround(pawn))
                 GenDraw.DrawTargetHighlightWithLayer(cell, AltitudeLayer.MoteOverhead);
-        }
-
-        public static void StartExecution(Pawn executioner, Pawn victim)
-        {
-            if (executioner == null || victim == null)
-                return;
-
-            bool right = Rand.Bool;
-            IntVec3 targetCell = victim.Position + (right ? IntVec3.East : IntVec3.West);
-
-            var job = JobMaker.MakeJob(AAM_DefOf.AAM_PrepareAnimation, executioner, victim, targetCell);
-            job.collideWithPawns = false;
-            job.playerForced = true;
-
-            ClearVerbs(executioner);
-            ClearVerbs(victim);
-
-            executioner.jobs.StartJob(job, JobCondition.InterruptForced, null, false, true, null);
-        }
-
-        private static void ClearVerbs(Pawn pawn)
-        {
-            if (pawn.verbTracker?.AllVerbs != null)
-                foreach (var verb in pawn.verbTracker.AllVerbs)
-                    verb.Reset();
-
-
-            if (pawn.equipment?.AllEquipmentVerbs != null)
-                foreach (var verb in pawn.equipment.AllEquipmentVerbs)
-                    verb.Reset();
         }
     }
 }

@@ -11,9 +11,9 @@
 			<tex>Things/Item/Equipment/WeaponMelee/TribalShiv</tex>
 			<ofX>0.1271186</ofX>
 			<ofY>0.04237288</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.0972973</blS>
+			<blE>0.3837838</blE>
 			<tag>48</tag>
 		</li>
 		<li>
@@ -23,8 +23,8 @@
 			<tex>Things/Item/Equipment/WeaponMelee/TribalAxe</tex>
 			<ofX>0.2033898</ofX>
 			<ofY>0.01271186</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.1081081</blS>
+			<blE>0.5945946</blE>
 			<tag>2</tag>
 		</li>
 		<li>
@@ -36,6 +36,8 @@
 			<ofY>0.02118644</ofY>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.1297297</blS>
+			<blE>0.572973</blE>
 			<tag>9</tag>
 		</li>
 		<li>
@@ -46,8 +48,8 @@
 			<ofX>0.4491525</ofX>
 			<ofY>0.02118644</ofY>
 			<rot>45</rot>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.1297297</blS>
+			<blE>0.9945946</blE>
 			<tag>3</tag>
 		</li>
 	</items>

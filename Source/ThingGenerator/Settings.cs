@@ -7,19 +7,36 @@ namespace AAM
     public class Settings : ModSettings
     {
         [Header("General")]
+        [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
+                     "If enabled, you can view and edit multiple Advanced Melee gizmos when selecting multiple pawns.\n" +
+                     "Disabled by default as they can quickly clutter up the screen when selecting many colonists.")]
+        public bool ShowMultipleGizmos = false;
+
+        [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
+                     "If enabled, the Advanced Melee gizmo will be shown even if the pawn does not have a valid (compatible) melee weapon.")]
+        public bool ShowGizmosWithoutMeleeWeapon = false;
+
         [Label("Animated Pawns Considered Invisible")]
         [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
                      "they will not be actively targeted or shot at. This makes executions less risky.\n" +
                      "Note that pawns in animations can still take damage, such as from stray gunfire or explosions.")]
         public bool AllowInvisiblePawns = true;
 
-        [Header("Grappling")]
-        [Description("If true, your colonists will automatically use their grappling hooks against enemies.")]
+        [Range(0.01f, 5f)]
+        [Percentage]
+        [Description("A modifier on the speed of all animations.")]
+        public float GlobalAnimationSpeed = 1f;
+
+        [Header("Lasso")]
+        [Label("Auto Lasso")]
+        [Description("If true, your colonists will automatically use their lassos against enemies.\n\n" +
+                     "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoGrapple = true;
 
         [Header("Executions")]
         [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
-                     "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.")]
+                     "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
+                     "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoExecute = true;
 
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
@@ -62,11 +79,19 @@ namespace AAM
                      "May be too over-the-top for some player's liking.")]
         public bool Gore_Spray = true;
 
-        [Header("Other")]
-        [Range(0.1f, 1f)]
-        [Percentage]
-        public float TrailRenderResolution = 0.25f;
+        [Header("Performance")]
+        [Description("Attempts to run certain calculations on multiple CPU cores.\nCan greatly reduce lag and lag spikes, but may be less stable.")]
+        public bool Multithread = false;
 
+        [Description("The interval, in ticks, between a complex pawn calculation that runs on each map.\nDon't touch this unless you know what you are doing.")]
+        [Range(1, 240)]
+        public int PawnProcessorTickInterval = 20;
+        [Description("The maximum amount of time, in milliseconds, that the mod can spend processing pawns </b>per tick, per map</b>.\n" +
+                     "Higher values can increase the responsiveness of automatic grappling and executions, but can also greatly lower performance on very populated maps.")]
+        [Range(0.25f, 10f)]
+        public double MaxCPUTimePerTick = 1;
+
+        [Header("Other")]
         [Description("In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.\n" +
                      "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
                      "<b>Note:</b> The offset corpses are reset after a save-reload.")]

@@ -13,6 +13,8 @@
 			<ofY>-0.07608695</ofY>
 			<scX>1.4</scX>
 			<scY>1.4</scY>
+			<blS>0.2486487</blS>
+			<blE>1.091892</blE>
 			<tag>2</tag>
 		</li>
 		<li>
@@ -24,6 +26,8 @@
 			<ofY>-0.01086957</ofY>
 			<scX>1.5</scX>
 			<scY>1.5</scY>
+			<blS>0.1189189</blS>
+			<blE>1.086486</blE>
 		</li>
 		<li>
 			<dId>CW_PowerFist</dId>
@@ -35,6 +39,8 @@
 			<scX>1.2</scX>
 			<scY>1.2</scY>
 			<hnd>No_Hands</hnd>
+			<blS>0.0972973</blS>
+			<blE>0.572973</blE>
 			<tag>8</tag>
 		</li>
 		<li>
@@ -47,6 +53,8 @@
 			<scX>1.1</scX>
 			<scY>1.1</scY>
 			<hnd>No_Hands</hnd>
+			<blS>0.08648649</blS>
+			<blE>0.5837838</blE>
 			<tag>48</tag>
 		</li>
 	</items>

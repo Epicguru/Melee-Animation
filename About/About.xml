@@ -17,5 +17,6 @@
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
+    <li>Mlie.StarWarsFullyFunctionalLightsabers</li>
   </loadAfter>
 </ModMetaData>

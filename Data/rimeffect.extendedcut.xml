@@ -14,6 +14,8 @@
 			<rot>-90</rot>
 			<scX>0.8</scX>
 			<scY>0.8</scY>
+			<blS>0.05945946</blS>
+			<blE>0.3945946</blE>
 			<tag>8</tag>
 		</li>
 		<li>
@@ -26,6 +28,8 @@
 			<rot>-90</rot>
 			<scX>0.8</scX>
 			<scY>0.8</scY>
+			<blS>0.03783784</blS>
+			<blE>0.3675676</blE>
 			<tag>8</tag>
 		</li>
 	</items>

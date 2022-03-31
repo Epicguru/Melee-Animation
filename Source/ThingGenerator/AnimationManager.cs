@@ -1,7 +1,6 @@
 ﻿using System;
-using AAM.Tweaks;
 using System.Collections.Generic;
-using System.Linq;
+using AAM.Processing;
 using UnityEngine;
 using Verse;
 
@@ -11,19 +10,20 @@ namespace AAM
     {
         public static Texture2D HandTexture;
 
-        private static int lastTickedFrame = -1;
-
         public static void Init()
         {
             HandTexture = ContentFinder<Texture2D>.Get("AAM/Hand");
         }
 
-        private List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
+        public MapPawnProcessor PawnProcessor;
+
+        private readonly List<Action> toDraw = new List<Action>();
+        private readonly List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
         private HashSet<AnimRenderer> ioRenderers = new HashSet<AnimRenderer>();
 
         public AnimationManager(Map map) : base(map)
         {
-
+            PawnProcessor = new MapPawnProcessor(map);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace AAM
         /// the animation started successfully.
         /// </summary>
         /// <returns>The created animation renderer, or null if the <paramref name="def"/> was null.</returns>
-        public AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, params Pawn[] pawns)
+        public AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, IEnumerable<Pawn> pawns)
         {
             return StartAnimation(def, rootTransform, false, false, pawns);
         }
@@ -51,7 +51,7 @@ namespace AAM
         /// the animation started successfully.
         /// </summary>
         /// <returns>The created animation renderer, or null if the <paramref name="def"/> was null.</returns>
-        public AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, bool mirrorX, params Pawn[] pawns)
+        public AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, bool mirrorX, IEnumerable<Pawn> pawns)
         {
             return StartAnimation(def, rootTransform, mirrorX, false, pawns);
         }
@@ -66,7 +66,7 @@ namespace AAM
         /// the animation started successfully.
         /// </summary>
         /// <returns>The created animation renderer, or null if the <paramref name="def"/> was null.</returns>
-        public virtual AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, bool mirrorX, bool mirrorY, params Pawn[] pawns)
+        public virtual AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, bool mirrorX, bool mirrorY, IEnumerable<Pawn> pawns)
         {
             if (def?.Data == null)
                 return null;
@@ -76,8 +76,9 @@ namespace AAM
             renderer.MirrorHorizontal = mirrorX;
             renderer.MirrorVertical = mirrorY;
 
-            foreach(var pawn in pawns)            
-                renderer.AddPawn(pawn);            
+            if(pawns != null)
+                foreach(var pawn in pawns)            
+                    renderer.AddPawn(pawn);            
 
             renderer.Register();
 
@@ -103,23 +104,29 @@ namespace AAM
                 renderer.Destroy();
         }
 
+        public void AddPostDraw(Action draw)
+        {
+            if (draw != null)
+                toDraw.Add(draw);
+        }
+
         public override void MapComponentUpdate()
         {
             base.MapComponentUpdate();
 
             float dt = Time.deltaTime * Find.TickManager.TickRateMultiplier * (Input.GetKey(KeyCode.LeftShift) ? 0.1f : 1f);
             Draw(dt);
+
+            foreach (var action in toDraw)
+                action?.Invoke();
+            toDraw.Clear();
         }
 
         public override void MapComponentTick()
         {
             base.MapComponentTick();
 
-            if (GenTicks.TicksAbs == lastTickedFrame)
-                return;
-            lastTickedFrame = GenTicks.TicksAbs;
-
-            AnimRenderer.UpdateAll();
+            PawnProcessor.Tick();
         }
 
         public void Draw(float deltaTime)
@@ -136,7 +143,6 @@ namespace AAM
         public override void ExposeData()
         {
             base.ExposeData();
-            Core.Warn($"MAP EXPOSE ({Scribe.mode})");
 
             ioRenderers ??= new HashSet<AnimRenderer>();
 

@@ -5,11 +5,15 @@ using AAM.Patches;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using AAM.Sweep;
 using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Debug = UnityEngine.Debug;
+using Color = UnityEngine.Color;
 
 /// <summary>
 /// An <see cref="AnimRenderer"/> is the object that represents and also draws (renders) a currently running animation.
@@ -19,6 +23,9 @@ public class AnimRenderer : IExposable
 {
     #region Static stuff
 
+    public static readonly Stopwatch SeekTimer = new Stopwatch();
+    public static readonly Stopwatch DrawTimer = new Stopwatch();
+    public static readonly Stopwatch EventsTimer = new Stopwatch();
     public static readonly char[] Alphabet = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public static Material DefaultCutout, DefaultTransparent;
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
@@ -84,7 +91,14 @@ public class AnimRenderer : IExposable
         isItterating = false;
     }
 
-    public static void UpdateAll()
+    public static void ResetTimers()
+    {
+        SeekTimer.Reset();
+        DrawTimer.Reset();
+        EventsTimer.Reset();
+    }
+
+    public static void TickAll()
     {
         AddFromPostLoad();
 
@@ -158,6 +172,7 @@ public class AnimRenderer : IExposable
         // TODO handle exceptions.
         var timePeriod = renderer.Draw(null, dt, labelDraw);
 
+        EventsTimer.Start();
         foreach (var e in renderer.GetEventsInPeriod(timePeriod))
         {
             try
@@ -169,6 +184,7 @@ public class AnimRenderer : IExposable
                 Core.Error($"{ex.GetType().Name} when handling animation event '{e}':", ex);
             }
         }
+        EventsTimer.Stop();
     }
 
     private static void DestroyIntWorker(AnimRenderer renderer)
@@ -301,6 +317,7 @@ public class AnimRenderer : IExposable
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
     private AnimPartData[] bodies = new AnimPartData[8]; // TODO REPLACE WITH LIST OR DICT.
+    private PartWithSweep[] sweeps;
     private MaterialPropertyBlock pb;
     private float time = -1;
     private Pawn[] pawnsForPostLoad;
@@ -332,6 +349,18 @@ public class AnimRenderer : IExposable
 
         for (int i = 0; i < overrides.Length; i++)
             overrides[i] = new AnimPartOverrideData();
+
+        // Create sweep meshes.
+        int j = 0;
+        sweeps = new PartWithSweep[Data.SweepDataCount];
+        foreach (var part in Data.PartsWithSweepData)
+        {
+            var paths = Data.GetSweepPaths(part);
+            foreach (var path in paths)
+            {
+                sweeps[j++] = new PartWithSweep(this, part, path, new());
+            }
+        }
     }
 
     public void ExposeData()
@@ -621,7 +650,17 @@ public class AnimRenderer : IExposable
         if (IsDestroyed)
             return Vector2.zero;
 
-        var range = Seek(atTime, dt);
+        var range = Seek(atTime, dt * Core.Settings.GlobalAnimationSpeed);
+
+        if (Find.CurrentMap != Map)
+            return range; // Do not actually draw if not on the current map...
+
+        DrawTimer.Start();
+
+        foreach (var path in sweeps)
+        {
+            path.Draw(time);
+        }
 
         foreach (var snap in snapshots)
         {
@@ -637,6 +676,28 @@ public class AnimRenderer : IExposable
                 continue;
 
             var ov = GetOverride(snap);
+            var matrix = RootTransform * snap.WorldMatrix;
+            bool preFx = ov.FlipX ? !snap.FlipX : snap.FlipX;
+            bool preFy = ov.FlipY ? !snap.FlipY : snap.FlipY;
+            bool fx = MirrorHorizontal ? !preFx : preFx;
+            bool fy = MirrorVertical ? !preFy : preFy;
+            var mesh = AnimData.GetMesh(fx, fy);
+
+            if (ov.CustomRenderer != null)
+            {
+                ov.CustomRenderer.TRS = matrix;
+                ov.CustomRenderer.OverrideData = ov;
+                ov.CustomRenderer.Part = snap.Part;
+                ov.CustomRenderer.Snapshot = snap;
+                ov.CustomRenderer.Renderer = this;
+                ov.CustomRenderer.TweakData = null; // TODO assign tweak data.
+                ov.CustomRenderer.Mesh = mesh;
+                ov.CustomRenderer.Material = mat;
+
+                bool stop = ov.CustomRenderer.Draw();
+                if (stop)
+                    continue;
+            }
 
             bool useMPB = ov.UseMPB;
 
@@ -647,21 +708,13 @@ public class AnimRenderer : IExposable
                 pb.SetTexture("_MainTex", tex);
                 pb.SetColor("_Color", color);
             }
-            snap.Part.PreDraw(mat, useMPB ? pb : null);
-
-            var matrix = RootTransform * snap.WorldMatrix;
-
-            bool preFx = ov.FlipX ? !snap.FlipX : snap.FlipX;
-            bool preFy = ov.FlipY ? !snap.FlipY : snap.FlipY;
-            bool fx = MirrorHorizontal ? !preFx : preFx;
-            bool fy = MirrorVertical ? !preFy : preFy;
-            var mesh = AnimData.GetMesh(fx, fy);
 
             Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, useMPB ? pb : null);
         }
 
         DrawPawns(labelDraw);
 
+        DrawTimer.Stop();
         return range;
     }
 
@@ -718,6 +771,8 @@ public class AnimRenderer : IExposable
     /// </summary>
     public Vector2 Seek(float? atTime, float? dt)
     {
+        SeekTimer.Start();
+
         float t = atTime ?? (this.time + dt.Value);
         var range = SeekInt(t, MirrorHorizontal, MirrorVertical);
 
@@ -728,6 +783,8 @@ public class AnimRenderer : IExposable
             else
                 Destroy();
         }
+
+        SeekTimer.Stop();
         return range;
     }
 
@@ -815,8 +872,6 @@ public class AnimRenderer : IExposable
             pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
         }
 
-        Core.Log("END");
-
         foreach(var item in workersAtEnd)
         {
             try
@@ -829,6 +884,11 @@ public class AnimRenderer : IExposable
             }
         }
         workersAtEnd.Clear();
+
+        foreach (var sweep in sweeps)
+        {
+            sweep.Mesh.Dispose();
+        }
     }
 
     protected virtual void TeleportPawn(Pawn pawn, IntVec3 pos)
@@ -898,6 +958,32 @@ public class AnimRenderer : IExposable
             var ov = GetOverride(itemPart);
             ov.Material = weapon.Graphic?.MatSingleFor(weapon);
             ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
+
+            // FIX: Certain vanilla textures are set to Clamp instead of Wrap. This breaks flipping.
+            // Which ones seems random. (Beer is Clamp, Breach Axe is Repeat).
+            // For now, force them to be repeat. Not sure if this will have any negative impact elsewhere in the game. Hopefully not.
+            if (ov.Material != null)
+            {
+                var main = ov.Material.mainTexture;
+                if(main != null)
+                    main.wrapMode = TextureWrapMode.Repeat;
+
+                var mask = ov.Material.GetTexture(ShaderPropertyIDs.MaskTex);
+                if (mask != null)
+                    mask.wrapMode = TextureWrapMode.Repeat;
+            }
+
+            if (ov.CustomRenderer != null)
+                ov.CustomRenderer.Item = weapon;
+
+            foreach (var path in sweeps)
+            {
+                if (path.Part == itemPart)
+                {
+                    path.DownDst = tweak.BladeStart;
+                    path.UpDst = tweak.BladeEnd;
+                }
+            }
         }
 
         // Apply main hand.
@@ -921,5 +1007,129 @@ public class AnimRenderer : IExposable
         }
 
         return true;
+    }
+
+    public class PartWithSweep
+    {
+        public readonly AnimPartData Part;
+        public readonly SweepPointCollection Points;
+        public readonly SweepMesh<Data> Mesh;
+        public readonly AnimRenderer Renderer;
+        public float DownDst, UpDst;
+
+        private float lastTime = -1;
+        private int lastIndex = -1;
+
+        public struct Data
+        {
+            public float Time;
+            public float DownVel;
+            public float UpVel;
+        }
+
+        public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection points, SweepMesh<Data> mesh)
+        {
+            Renderer = renderer;
+            Part = part;
+            Points = points;
+            Mesh = mesh;
+        }
+
+        public void Draw(float time)
+        {
+            DrawInt(time);
+
+            Graphics.DrawMesh(Mesh.Mesh, Renderer.RootTransform, DefaultCutout, 0);
+        }
+
+        private bool DrawInt(float time)
+        {
+            if (time == lastTime)
+                return false;
+
+            if (time < lastTime)
+            {
+                Rebuild(time);
+                return true;
+            }
+
+            for (int i = lastIndex + 1; i < Points.Points.Count; i++)
+            {
+                var point = Points.Points[i];
+                if (point.Time > time)
+                    break;
+
+                point.GetEndPoints(DownDst, UpDst, out var down, out var up);
+                Mesh.AddLine(down, up, new Data()
+                {
+                    Time = point.Time,
+                    UpVel = point.VelocityTop,
+                    DownVel = point.VelocityBottom
+                });
+                lastIndex = i;
+            }
+
+            lastTime = time;
+            AddInterpolatedPos(lastIndex, time);
+
+            Mesh.UpdateColors(MakeColors);
+            Mesh.Rebuild();
+            return true;
+        }
+
+        private void Rebuild(float upTo)
+        {
+            Mesh.Clear();
+            for(int i = 0; i < Points.Points.Count; i++)
+            {
+                var point = Points.Points[i];
+                if (point.Time > upTo)
+                    break;
+
+                point.GetEndPoints(DownDst, UpDst, out var down, out var up);
+                Mesh.AddLine(down, up, new Data()
+                {
+                    Time = point.Time,
+                    UpVel = point.VelocityTop,
+                    DownVel = point.VelocityBottom
+                }); lastIndex = i;
+            }
+            AddInterpolatedPos(lastIndex, upTo);
+
+            Mesh.UpdateColors(MakeColors);
+            Mesh.Rebuild();
+            lastTime = upTo;
+        }
+
+        private (Color down, Color up) MakeColors(in Data data)
+        {
+            return (Color.red, Color.green);
+        }
+
+        private void AddInterpolatedPos(int lastIndex, float currentTime)
+        {
+            if (lastIndex < 0)
+                return;
+            if (lastIndex >= Points.Count - 1)
+                return; // Can't interpolate if we don't have the end.
+
+            Core.Log($"{lastIndex} of {Points.Count}");
+
+            var lastPoint = Points.Points[lastIndex];
+            if (Mathf.Abs(lastPoint.Time - currentTime) < 0.001f)
+                return;
+
+            var nextPoint = Points.Points[lastIndex + 1];
+
+            float t = Mathf.InverseLerp(lastPoint.Time, nextPoint.Time, currentTime);
+            var newPoint = SweepPoint.Lerp(lastPoint, nextPoint, t);
+            newPoint.GetEndPoints(DownDst, UpDst, out var down, out var up);
+            Mesh.AddLine(down, up, new Data()
+            {
+                Time = currentTime,
+                UpVel = newPoint.VelocityTop,
+                DownVel = newPoint.VelocityBottom
+            });
+        }
     }
 }

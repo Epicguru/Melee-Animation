@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEngine;
 using Verse;
 
@@ -31,6 +32,7 @@ namespace AAM.Tweaks
         public HandsMode HandsMode = HandsMode.Default;
         public float BladeStart, BladeEnd = 0.5f;
         public MeleeWeaponType MeleeWeaponType = MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp;
+        public string CustomRendererClass;
 
         private ThingDef cachedDef;
         private Texture2D cachedTex;
@@ -80,6 +82,7 @@ namespace AAM.Tweaks
             FlipY = data.FlipY;
             BladeStart = data.BladeStart;
             BladeEnd = data.BladeEnd;
+            CustomRendererClass = data.CustomRendererClass;
         }
 
         public Texture2D GetTexture(bool allowFromCache = true, bool saveToCache = true)
@@ -126,10 +129,23 @@ namespace AAM.Tweaks
             ov.FlipX = FlipX;
             ov.FlipY = FlipY;
             ov.UseDefaultTransparentMaterial = UseDefaultTransparentMaterial;
+
+            if (!string.IsNullOrWhiteSpace(CustomRendererClass))
+            {
+                // TODO cache.
+                // TODO handle errors.
+                Type rendererClass = GenTypes.GetTypeInAnyAssembly(CustomRendererClass);
+                var instance = Activator.CreateInstance(rendererClass) as PartRenderer;
+                instance.TweakData = this;
+                ov.CustomRenderer = instance;
+            }
         }
 
         public void ExposeData()
         {
+            if (string.IsNullOrWhiteSpace(CustomRendererClass))
+                CustomRendererClass = null;
+
             Scribe_Values.Look(ref ItemDefName, "dId");
             Scribe_Values.Look(ref ItemType, "typ");
             Scribe_Values.Look(ref ItemTypeNamespace, "nsp");
@@ -145,6 +161,7 @@ namespace AAM.Tweaks
             Scribe_Values.Look(ref UseDefaultTransparentMaterial, "trs");
             Scribe_Values.Look(ref BladeStart, "blS", 0);
             Scribe_Values.Look(ref BladeEnd, "blE", 0.5f);
+            Scribe_Values.Look(ref CustomRendererClass, "crc", null);
 
             int flag = (int)MeleeWeaponType;
             Scribe_Values.Look(ref flag, "tag", (int)(MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp));

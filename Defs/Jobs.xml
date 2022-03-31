@@ -17,25 +17,13 @@
   <JobDef>
     <defName>AAM_GrapplePawn</defName>
     <driverClass>AAM.Grappling.JobDriver_GrapplePawn</driverClass>
-    <reportString>grappling pawn</reportString>
+    <reportString>lassoing pawn</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>false</playerInterruptible>
     <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
     <dropThingBeforeJob>false</dropThingBeforeJob>
     <suspendable>false</suspendable>
     <neverShowWeapon>true</neverShowWeapon>
-    <isIdle>false</isIdle>
-  </JobDef>
-
-  <JobDef>
-    <defName>AAM_PrepareAnimation</defName>
-    <driverClass>AAM.JobDriver_PrepareAnimation</driverClass>
-    <reportString>preparing for animation</reportString>
-    <casualInterruptible>false</casualInterruptible>
-    <playerInterruptible>false</playerInterruptible>
-    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
-    <dropThingBeforeJob>false</dropThingBeforeJob>
-    <suspendable>false</suspendable>
     <isIdle>false</isIdle>
   </JobDef>
 

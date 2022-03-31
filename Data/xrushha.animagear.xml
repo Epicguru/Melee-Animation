@@ -11,8 +11,8 @@
 			<tex>Things/Equipment/AnimaStaff</tex>
 			<ofX>0.308026</ofX>
 			<rot>34</rot>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.1189189</blS>
+			<blE>0.8594595</blE>
 			<tag>9</tag>
 		</li>
 	</items>

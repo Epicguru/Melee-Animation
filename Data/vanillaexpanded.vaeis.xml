@@ -5,13 +5,6 @@
 	<author>Epicguru</author>
 	<items>
 		<li>
-			<dId>AEXP_RawFish</dId>
-			<typ>ThingDef</typ>
-			<nsp>Verse</nsp>
-			<tex>Things/Item/Resource/AEXP_Fish/AEXP_Fish_a</tex>
-			<tag>0</tag>
-		</li>
-		<li>
 			<dId>AEXP_WalrusTusk</dId>
 			<typ>ThingDef</typ>
 			<nsp>Verse</nsp>
@@ -20,6 +13,13 @@
 			<blS>0.0694259</blS>
 			<blE>0.6008011</blE>
 			<tag>12</tag>
+		</li>
+		<li>
+			<dId>AEXP_RawFish</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Resource/AEXP_Fish/AEXP_Fish_a</tex>
+			<tag>0</tag>
 		</li>
 	</items>
 </Data>

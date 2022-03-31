@@ -469,11 +469,6 @@ public class AnimPartData
         return ref dummy; // Shut up compiler.
     }
 
-    public virtual void PreDraw(Material mat, MaterialPropertyBlock pb)
-    {
-
-    }
-
     public AnimPartSnapshot GetSnapshot(AnimRenderer renderer)
     {
         if (renderer == null)
@@ -644,6 +639,7 @@ public class AnimPartOverrideData
     public bool FlipX, FlipY;
     public bool UseMPB = true;
     public bool UseDefaultTransparentMaterial;
+    public PartRenderer CustomRenderer;
 }
 
 [Serializable]
@@ -894,6 +890,19 @@ public class SweepPointCollection
 [StructLayout(LayoutKind.Sequential)]
 public struct SweepPoint
 {
+    public static SweepPoint Lerp(in SweepPoint a, in SweepPoint b, float t)
+        => new SweepPoint()
+        {
+            Time = Mathf.Lerp(a.Time, b.Time, t),
+            X = Mathf.Lerp(a.X, b.X, t),
+            Z = Mathf.Lerp(a.Z, b.Z, t),
+            DX = Mathf.Lerp(a.DX, b.DX, t),
+            DZ = Mathf.Lerp(a.DZ, b.DZ, t),
+            VelocityTop = Mathf.Lerp(a.VelocityTop, b.VelocityTop, t),
+            VelocityBottom = Mathf.Lerp(a.VelocityBottom, b.VelocityBottom, t),
+            Disable = t >= 0.5f ? b.Disable : a.Disable
+        };
+
     public float Time;
     public float X, Z;
     public float DX, DZ;

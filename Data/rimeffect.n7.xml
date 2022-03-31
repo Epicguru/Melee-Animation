@@ -10,9 +10,8 @@
 			<nsp>Verse</nsp>
 			<tex>Things/Item/Equipment/WeaponMelee/N7Blade</tex>
 			<ofX>0.3123644</ofX>
-			<scX>1</scX>
-			<scY>1</scY>
-			<tag>6</tag>
+			<blS>0.1567568</blS>
+			<blE>0.7891892</blE>
 		</li>
 	</items>
 </Data>

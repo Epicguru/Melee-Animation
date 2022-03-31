@@ -12,7 +12,8 @@
 			<ofX>0.3135593</ofX>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
-			<tag>6</tag>
+			<blS>0.1243243</blS>
+			<blE>0.7567568</blE>
 		</li>
 		<li>
 			<dId>VFEV_CryptoLightAxe</dId>
@@ -21,9 +22,9 @@
 			<tex>Things/Item/Equipment/WeaponMelee/CryptoLightAxe</tex>
 			<ofX>0.1567797</ofX>
 			<rot>75</rot>
-			<scX>1</scX>
-			<scY>1</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1783784</blS>
+			<blE>0.4486487</blE>
 			<tag>18</tag>
 		</li>
 		<li>
@@ -33,8 +34,8 @@
 			<tex>Things/Item/Equipment/WeaponMelee/CryptoHeavyAxe</tex>
 			<ofX>0.2372881</ofX>
 			<rot>-10</rot>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.3945946</blS>
+			<blE>0.7405406</blE>
 			<tag>2</tag>
 		</li>
 		<li>
@@ -45,8 +46,8 @@
 			<ofX>0.3389831</ofX>
 			<ofY>-0.1440678</ofY>
 			<rot>53</rot>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.4378378</blS>
+			<blE>0.8810811</blE>
 			<tag>2</tag>
 		</li>
 		<li>
@@ -56,8 +57,8 @@
 			<tex>Things/Item/Equipment/WeaponMelee/BeardedAxe</tex>
 			<ofX>0.1652542</ofX>
 			<ofY>-0.01694915</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.1891892</blS>
+			<blE>0.5783784</blE>
 			<tag>18</tag>
 		</li>
 		<li>
@@ -67,8 +68,8 @@
 			<tex>Things/Item/Special/LothurrAntler</tex>
 			<ofX>0.1779661</ofX>
 			<ofY>-0.1355932</ofY>
-			<scX>1</scX>
-			<scY>1</scY>
+			<blS>0.09189189</blS>
+			<blE>0.5891892</blE>
 			<tag>8</tag>
 		</li>
 		<li>
@@ -79,9 +80,8 @@
 			<ofX>0.190678</ofX>
 			<ofY>-0.0720339</ofY>
 			<rot>-90</rot>
-			<scX>1</scX>
-			<scY>1</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.05405406</blS>
 			<tag>8</tag>
 		</li>
 	</items>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -6,7 +7,7 @@ namespace AAM.Grappling
 {
     public class JobDriver_GrapplePawn : JobDriver
     {
-        public static bool GiveJob(Pawn grappler, Pawn target, IntVec3 targetCell, bool ignoreDeadOrDowned = false, AnimationStartParameters animationStartParameters = null)
+        public static bool GiveJob(Pawn grappler, Pawn target, IntVec3 targetCell, bool ignoreDeadOrDowned = false, AnimationStartParameters? animationStartParameters = null)
         {
             if (grappler == null || !grappler.Spawned || grappler.Dead || grappler.Downed)
                 return false;
@@ -17,7 +18,9 @@ namespace AAM.Grappling
             if (target == null || !target.Spawned || !ignoreDeadOrDowned && (target.Dead || target.Downed))
                 return false;
 
-            target.stances.stunner.StunFor(120, grappler, false, false);
+            if (!GrabUtility.TryRegisterGrabAttempt(target))
+                return false;
+
             CleanPawn(grappler);
 
             var newJob = JobMaker.MakeJob(AAM_DefOf.AAM_GrapplePawn, targetCell, target);
@@ -39,6 +42,7 @@ namespace AAM.Grappling
             if (grappler.jobs.curDriver is not JobDriver_GrapplePawn created)
             {
                 Core.Error($"Failed to give job (driver) to pawn {grappler.NameShortColored} even when using InterruptForced: is there another mod interrupting? What is going on...");
+                GrabUtility.EndGrabAttempt(target);
             }
             else
             {
@@ -48,17 +52,92 @@ namespace AAM.Grappling
             return true;
         }
 
+        public static void DrawEnsnaringRope(Pawn grappler, Job job)
+        {
+            var driver = grappler.jobs.curDriver as JobDriver_GrapplePawn;
+            
+            if (driver?.GrappledPawn == null || driver.HasEnsnared || driver.RopeDistance == 0)
+                return;
+
+            Vector3 start = driver.pawn.DrawPos;
+            Vector3 end = driver.GrappledPawn.DrawPos;
+            Vector3 realEnd = start + (end - start).normalized * driver.RopeDistance;
+
+            GrabUtility.DrawRopeFromTo(start, realEnd, Color.yellow);
+        }
+
         public IntVec3 TargetDestination => this.job.targetA.Cell;
         public Pawn GrappledPawn => this.job?.targetB.Pawn;
         public GrappleFlyer Flyer => GrappledPawn == null ? null : GrappledPawn.ParentHolder as GrappleFlyer;
-        public float PullDistance => GrappledPawn.Position.DistanceTo(TargetDestination);
 
-        public AnimationStartParameters AnimationStartParameters;
-        public int TicksToPull;
+        public AnimationStartParameters? AnimationStartParameters;
+        public float RopeDistance;
+        public bool HasEnsnared;
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return true;
+        }
+
+        private void Ensnare()
+        {
+            if (HasEnsnared)
+            {
+                Core.Error("Already called Ensnare");
+                return;
+            }
+
+            HasEnsnared = true;
+            var flyer = GrappleFlyer.MakeGrappleFlyer(pawn, GrappledPawn, TargetDestination);
+            if (flyer == null) // creation failed.
+            {
+                EndJobWith(JobCondition.Errored);
+                Core.Error("Failed: failed to spawn flyer.");
+            }
+            GrabUtility.EndGrabAttempt(GrappledPawn);
+        }
+
+        private void TickEnsnared()
+        {
+            // Check completion.
+            if (Flyer == null)
+            {
+                // Upon landing, the flyer de-spawns and the pawn is released.
+                EndJobWith(JobCondition.Succeeded);
+
+                if (AnimationStartParameters != null)
+                {
+                    bool worked = AnimationStartParameters.Value.TryTrigger();
+                    if (!worked)
+                        Core.Error($"AnimationOnFinish failed to trigger - Invalid object? Invalid state? Invalid pawn(s)? Pawns: {string.Join(", ", AnimationStartParameters.Value.EnumeratePawns())}");
+                    else
+                        pawn.GetMeleeData().TimeSinceExecuted = 0; // TODO animation is not necessarily execution...
+                }
+                return;
+            }
+
+            // If the flyer is still active but does not have a pawn in it, it's not good. Always indicates an error.
+            if (Flyer.Spawned && Flyer.FlyingPawn == null)
+                EndJobWith(JobCondition.Errored);
+        }
+
+        private void TickPreEnsnare()
+        {
+            RopeDistance += 0.75f; // TODO configurable hook speed.
+
+            // TODO maybe don't check every frame?
+            var target = GrappledPawn;
+            if (!GenSight.LineOfSightToThing(TargetDestination, target, Map) || target.Dead || !target.Spawned || target.IsInAnimation())
+            {
+                EndJobWith(JobCondition.Errored);
+                Core.Warn("Failed: pawn moved out of line of sight before being ensnared.");
+                return;
+            }
+
+            if(RopeDistance * RopeDistance >= pawn.Position.DistanceToSquared(GrappledPawn.Position))
+            {
+                Ensnare();
+            }
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -73,15 +152,6 @@ namespace AAM.Grappling
             {
                 pawn.pather.StopDead();
                 pawn.rotationTracker.FaceTarget(job.targetB);
-
-                var flyer = GrappleFlyer.MakeGrappleFlyer(pawn, GrappledPawn, TargetDestination);
-                if (flyer == null) // creation failed.
-                {
-                    EndJobWith(JobCondition.Errored);
-                    Core.Error($"Failed: failed to spawn flyer.");
-                    return;
-                }
-                TicksToPull = flyer.TotalDurationTicks;
             };
             lookAtTarget.tickAction = () =>
             {
@@ -92,28 +162,12 @@ namespace AAM.Grappling
                     return;
                 }
 
-                // Check completion.
-                if (Flyer == null)
-                {
-                    // Upon landing, the flyer de-spawns and the pawn is released.
-                    EndJobWith(JobCondition.Succeeded);
-
-                    if (AnimationStartParameters != null)
-                    {
-                        bool worked = AnimationStartParameters.TryTrigger();
-                        if (!worked)
-                            Core.Error($"AnimationOnFinish failed to trigger - Invalid object? Invalid state? Invalid pawn(s)? Pawns: {string.Join(", ", AnimationStartParameters.Pawns)}");
-                    }
-                    return;
-                }
-
-                // If the flyer is still active but does not have a pawn in it, it's not good. Always indicates an error.
-                if (Flyer.Spawned && Flyer.FlyingPawn == null)
-                {
-                    EndJobWith(JobCondition.Errored);
-                    return;
-                }
+                if (HasEnsnared)
+                    TickEnsnared();
+                else
+                    TickPreEnsnare();
             };
+            
             lookAtTarget.defaultCompleteMode = ToilCompleteMode.Never;
 
             yield return lookAtTarget;
@@ -123,11 +177,15 @@ namespace AAM.Grappling
         {
             base.ExposeData();
             Scribe_Deep.Look(ref AnimationStartParameters, "animOnFinish");
+            Scribe_Values.Look(ref HasEnsnared, "hasEnsnared");
+            Scribe_Values.Look(ref RopeDistance, "ropeDistance");
         }
 
         public override string GetReport()
         {
-            return $"Grapple: Pulling {GrappledPawn?.NameShortColored} in ({PullDistance}).";
+            if(HasEnsnared)
+                return $"Using lasso: Pulling {GrappledPawn?.NameShortColored}.";
+            return $"Using lasso: Trying to ensnare {GrappledPawn?.NameShortColored}.";
         }
     }
 }

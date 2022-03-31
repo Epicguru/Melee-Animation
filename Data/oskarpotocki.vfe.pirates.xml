@@ -13,6 +13,8 @@
 			<scX>1.7</scX>
 			<scY>1.7</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1783784</blS>
+			<blE>0.8378379</blE>
 			<tag>54</tag>
 		</li>
 		<li>
@@ -25,6 +27,8 @@
 			<rot>45</rot>
 			<scX>1.7</scX>
 			<scY>1.7</scY>
+			<blS>0.2648649</blS>
+			<blE>1.637838</blE>
 		</li>
 		<li>
 			<dId>VFEP_Rum</dId>
@@ -36,6 +40,8 @@
 			<scX>0.6</scX>
 			<scY>0.6</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.07027027</blS>
+			<blE>0.372973</blE>
 		</li>
 	</items>
 </Data>

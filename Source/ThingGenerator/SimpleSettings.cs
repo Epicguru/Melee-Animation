@@ -70,10 +70,7 @@ namespace AAM
 
             foreach (var member in holder.Members.Values)
             {
-                object old = member.Get<object>(settings);
                 member.Expose(settings);
-                object now = member.Get<object>(settings);
-                Core.Log($"[{Scribe.mode}] {member.Name}: {old} -> {now}");
             }
         }
 
@@ -231,6 +228,11 @@ namespace AAM
                     GUI.color = Color.white;
                     pos.y += 6;
                     size.y += 6;
+                }
+                else
+                {
+                    pos.y += 12;
+                    size.y += 12;
                 }
 
                 var area = new Rect(new Vector2(pos.x + 20, pos.y), new Vector2(inRect.width - 40, inRect.height - pos.y));
