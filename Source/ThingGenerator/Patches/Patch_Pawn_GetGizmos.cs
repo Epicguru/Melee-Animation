@@ -31,8 +31,8 @@ namespace AAM.Patches
 
         private static bool ShouldShowFor(Pawn pawn)
         {
-            if (!Core.Settings.ShowMultipleGizmos && Find.Selector.SelectedPawns.Count > 1)
-                return false;
+            //if (!Core.Settings.ShowMultipleGizmos && Find.Selector.SelectedPawns.Count > 1)
+            //    return false;
 
             return !pawn.Dead && !pawn.Downed && pawn.RaceProps.Humanlike && (Prefs.DevMode || pawn.IsColonistPlayerControlled) && (Core.Settings.ShowGizmosWithoutMeleeWeapon || pawn.GetFirstMeleeWeapon() != null);
         }

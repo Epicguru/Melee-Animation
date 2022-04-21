@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AAM.Data;
 using AAM.Grappling;
 using RimWorld;
@@ -14,6 +15,8 @@ namespace AAM.Gizmos
         private Pawn pawn;
         private PawnMeleeData data;
 
+        private List<Pawn> pawns = new List<Pawn>();
+
         public AnimationGizmo(Pawn pawn)
         {
             this.pawn = pawn;
@@ -22,7 +25,41 @@ namespace AAM.Gizmos
 
         public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth, GizmoRenderParms parms)
         {
-            var butRect = new Rect(topLeft.x, topLeft.y, this.GetWidth(maxWidth), 75f);
+            if(pawns.Count == 0)
+                return DrawSingle(topLeft, maxWidth, parms);
+
+            var butRect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), 75f);
+
+            Text.Font = GameFont.Tiny;
+            MouseoverSounds.DoRegion(butRect, SoundDefOf.Mouseover_Command);
+            if (parms.highLight)
+                QuickSearchWidget.DrawStrongHighlight(butRect.ExpandedBy(12f));
+
+            Widgets.DrawBoxSolidWithOutline(butRect, new Color32(21, 25, 29, 255), Color.white * 0.75f);
+
+            DrawAutoExecute(butRect.LeftHalf().TopHalf());
+            DrawAutoGrapple(butRect.LeftHalf().BottomHalf());
+
+            return default;
+        }
+
+        public override bool GroupsWith(Gizmo other)
+        {
+            return other is AnimationGizmo g && g != this;
+        }
+
+        public override void MergeWith(Gizmo raw)
+        {
+            var other = raw as AnimationGizmo;
+            if (other == null)
+                return;
+
+            pawns.Add(other.pawn);
+        }
+
+        private GizmoResult DrawSingle(Vector2 topLeft, float maxWidth, GizmoRenderParms parms)
+        {
+            var butRect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), 75f);
             try
             {
                 Text.Font = GameFont.Tiny;
@@ -73,6 +110,8 @@ namespace AAM.Gizmos
                     Text.Font = GameFont.Small;
                 }
 
+                TooltipHandler.TipRegion(butRect, string.Join(", ", pawns));
+
                 GUI.color = Color.white;
 
                 bool HasLos(IntVec3 c)
@@ -115,36 +154,68 @@ namespace AAM.Gizmos
 
         private void DrawAutoExecute(Rect rect)
         {
-            var mode = data.AutoExecute;
+            bool multi = pawns.Count > 0;
+            AutoOption? multiSingular = null;
+            if (multi)
+            {
+                multiSingular = data.AutoExecute;
+                foreach (var pawn in pawns)
+                {                    
+                    if(multiSingular != pawn.GetMeleeData().AutoExecute)
+                    {
+                        multiSingular = null;
+                        break;
+                    }                    
+                }
+            }            
+
+            var mode = !multi ? data.AutoExecute : multiSingular;
             (string status, Color color) = mode switch
             {
                 AutoOption.Default => ($"Default ({(Core.Settings.AutoExecute ? AutoOption.Enabled : AutoOption.Disabled)})", Color.grey),
                 AutoOption.Enabled => ("Enabled", Color.green),
                 AutoOption.Disabled => ("Disabled", Color.red),
+                null => ("Mixed", Color.yellow),
                 _ => throw new ArgumentOutOfRangeException()
             };
 
             if (mode == AutoOption.Default)
                 mode = Core.Settings.AutoExecute ? AutoOption.Enabled : AutoOption.Disabled;
-            string tint = mode == AutoOption.Enabled ? "green" : "red";
+            string tint = mode == null ? "yellow" : mode == AutoOption.Enabled ? "green" : "red";
             status = $"<b><color={tint}>{status}</color></b>";
 
             DrawIcon(rect, Content.IconExecute, color);
 
-            bool lasso = data.AutoGrapple switch
+            bool lasso = mode switch
             {
                 AutoOption.Default => Core.Settings.AutoGrapple,
                 AutoOption.Enabled => true,
                 AutoOption.Disabled => false,
+                null => false, // Not used.
                 _ => throw new ArgumentOutOfRangeException()
             };
-            string grappleStatus = lasso
+            string grappleStatus = mode == null ? "Multiple pawns are selected but they have different auto-execute settings." : lasso
                 ? "Since <i>Auto Lasso</i> is <b><color=green>enabled</color></b>, this pawn may automatically grab distant enemies to drag them in and execute them."
                 : "Since <i>Auto Lasso</i> is <b><color=red>disabled</color></b>, this pawn will only automatically execute enemies when they are standing right next to them (horizontally).";
+
             TooltipHandler.TipRegion(rect, $"<b>Auto Execute</b>: {status}\n\nAllows this pawn to automatically perform executions on enemies.{(mode == AutoOption.Enabled ? $"\n\n{grappleStatus}" : "")}");
 
             if (Widgets.ButtonInvisible(rect))
-                data.AutoExecute = (AutoOption)(((int)data.AutoExecute + 1) % 3);
+            {
+                if(!multi)
+                {
+                    data.AutoExecute = (AutoOption)(((int)data.AutoExecute + 1) % 3);
+                }
+                else
+                {
+                    AutoOption changeTo = mode == null ? AutoOption.Default : (AutoOption)(((int)mode + 1) % 3);
+                    data.AutoExecute = changeTo;
+                    foreach(var pawn in pawns)
+                    {
+                        pawn.GetMeleeData().AutoExecute = changeTo;
+                    }
+                }
+            }
         }
 
         private void DrawAutoGrapple(Rect rect)
@@ -338,7 +409,8 @@ namespace AAM.Gizmos
 
         public override float GetWidth(float maxWidth)
         {
-            return Mathf.Min(180, maxWidth);
+            float target = pawns.Count == 0 ? 180 : 75;
+            return Mathf.Min(target, maxWidth);
         }
     }
 }
