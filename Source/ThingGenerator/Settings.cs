@@ -8,11 +8,6 @@ namespace AAM
     {
         [Header("General")]
         [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
-                     "If enabled, you can view and edit multiple Advanced Melee gizmos when selecting multiple pawns.\n" +
-                     "Disabled by default as they can quickly clutter up the screen when selecting many colonists.")]
-        public bool ShowMultipleGizmos = false;
-
-        [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
                      "If enabled, the Advanced Melee gizmo will be shown even if the pawn does not have a valid (compatible) melee weapon.")]
         public bool ShowGizmosWithoutMeleeWeapon = false;
 
@@ -73,16 +68,13 @@ namespace AAM
                      "The blood is filth that must be cleaned up. Includes modded blood and mechanoid blood (oil).")]
         public bool Gore_FloorBlood = true;
 
-        [Label("Blood Spray")]
-        [Description("Enable or disable the blood spray effect in certain animations.\n" +
-                     "The blood spray is a visual effect and does not leave any permanent filth.\n" +
-                     "May be too over-the-top for some player's liking.")]
-        public bool Gore_Spray = true;
+        //[Label("Blood Spray")]
+        //[Description("Enable or disable the blood spray effect in certain animations.\n" +
+        //             "The blood spray is a visual effect and does not leave any permanent filth.\n" +
+        //             "May be too over-the-top for some player's liking.")]
+        //public bool Gore_Spray = true;
 
         [Header("Performance")]
-        [Description("Attempts to run certain calculations on multiple CPU cores.\nCan greatly reduce lag and lag spikes, but may be less stable.")]
-        public bool Multithread = false;
-
         [Description("The interval, in ticks, between a complex pawn calculation that runs on each map.\nDon't touch this unless you know what you are doing.")]
         [Range(1, 240)]
         public int PawnProcessorTickInterval = 20;

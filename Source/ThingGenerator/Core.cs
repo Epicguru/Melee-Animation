@@ -12,7 +12,7 @@ using Verse.AI;
 
 namespace AAM
 {
-    [HotSwappable]
+    [HotSwapAll]
     public class Core : Mod
     {
         public static string ModFolder => ModContent.RootDir;
@@ -221,7 +221,7 @@ namespace AAM
         }
     }
 
-    public class HotSwappableAttribute : Attribute { }
+    public class HotSwapAllAttribute : Attribute { }
 
     public class TempComp : MapComponent
     {

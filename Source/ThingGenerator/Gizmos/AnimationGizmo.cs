@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using AAM.Data;
+﻿using AAM.Data;
 using AAM.Grappling;
 using RimWorld;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
-using Verse.Noise;
 using Verse.Sound;
 
 namespace AAM.Gizmos
@@ -155,91 +154,165 @@ namespace AAM.Gizmos
         private void DrawAutoExecute(Rect rect)
         {
             bool multi = pawns.Count > 0;
-            AutoOption? multiSingular = null;
+            bool mixed = false;
             if (multi)
             {
-                multiSingular = data.AutoExecute;
-                foreach (var pawn in pawns)
-                {                    
-                    if(multiSingular != pawn.GetMeleeData().AutoExecute)
-                    {
-                        multiSingular = null;
-                        break;
-                    }                    
+                var mode = data.AutoExecute;
+                foreach (var other in pawns)
+                {
+                    if (other.GetMeleeData().AutoExecute != mode)
+                        mixed = true;
                 }
-            }            
+            }
 
-            var mode = !multi ? data.AutoExecute : multiSingular;
-            (string status, Color color) = mode switch
+            AutoOption selected = data.AutoExecute;
+            Color iconColor = selected switch
             {
-                AutoOption.Default => ($"Default ({(Core.Settings.AutoExecute ? AutoOption.Enabled : AutoOption.Disabled)})", Color.grey),
-                AutoOption.Enabled => ("Enabled", Color.green),
-                AutoOption.Disabled => ("Disabled", Color.red),
-                null => ("Mixed", Color.yellow),
-                _ => throw new ArgumentOutOfRangeException()
+                AutoOption.Default  => Color.grey,
+                AutoOption.Enabled  => Color.green,
+                AutoOption.Disabled => Color.red,
+                _ => Color.magenta
             };
+            if (mixed)
+                iconColor = Color.yellow;
 
-            if (mode == AutoOption.Default)
-                mode = Core.Settings.AutoExecute ? AutoOption.Enabled : AutoOption.Disabled;
-            string tint = mode == null ? "yellow" : mode == AutoOption.Enabled ? "green" : "red";
-            status = $"<b><color={tint}>{status}</color></b>";
+            DrawIcon(rect, Content.IconExecute, iconColor);
 
-            DrawIcon(rect, Content.IconExecute, color);
+            string sThis = multi ? "these" : "this";
+            string sPawns = multi ? $"{pawns.Count + 1} pawns" : "pawn";
+            string sIs = multi ? $"are" : "is";
+            string sHas = multi ? "have" : "has";
 
-            bool lasso = mode switch
+            string tooltip;
+            if (mixed)
             {
-                AutoOption.Default => Core.Settings.AutoGrapple,
-                AutoOption.Enabled => true,
-                AutoOption.Disabled => false,
-                null => false, // Not used.
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            string grappleStatus = mode == null ? "Multiple pawns are selected but they have different auto-execute settings." : lasso
-                ? "Since <i>Auto Lasso</i> is <b><color=green>enabled</color></b>, this pawn may automatically grab distant enemies to drag them in and execute them."
-                : "Since <i>Auto Lasso</i> is <b><color=red>disabled</color></b>, this pawn will only automatically execute enemies when they are standing right next to them (horizontally).";
+                tooltip = $"These {pawns.Count + 1} pawns have differing auto-execute settings. Click to set them all to '{data.AutoExecute}'.";
+            }
+            else
+            {
+                string autoExecFromSettings = Core.Settings.AutoExecute ? "enabled" : "disabled";
+                string autoExecFromSettingsColor = Core.Settings.AutoExecute ? "green" : "red";
+                bool resolved = selected switch
+                {
+                    AutoOption.Default => Core.Settings.AutoExecute,
+                    AutoOption.Enabled => true,
+                    AutoOption.Disabled => false,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+                string explanation = resolved
+                    ? $"This means that {sThis} {sPawns} will automatically execute enemies whenever they can."
+                    : $"This means that {sThis} {sPawns} will <b>NOT</b> automatically execute enemies."; 
 
-            TooltipHandler.TipRegion(rect, $"<b>Auto Execute</b>: {status}\n\nAllows this pawn to automatically perform executions on enemies.{(mode == AutoOption.Enabled ? $"\n\n{grappleStatus}" : "")}");
+                tooltip = selected switch
+                {
+                    AutoOption.Default  => $"{sThis.CapitalizeFirst()} {sPawns} {sIs} using the <b>default</b> auto-execute setting, which is <color={autoExecFromSettingsColor}><b>{autoExecFromSettings}</b></color>.\n\n{explanation}",
+                    AutoOption.Enabled  => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-execute <color=green><b>enabled</b></color>.\n\n{explanation}",
+                    AutoOption.Disabled => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-execute <color=red><b>disabled</b></color>.\n\n{explanation}",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+
+            TooltipHandler.TipRegion(rect, tooltip);
 
             if (Widgets.ButtonInvisible(rect))
             {
-                if(!multi)
+                if (multi)
                 {
-                    data.AutoExecute = (AutoOption)(((int)data.AutoExecute + 1) % 3);
+                    if(!mixed)
+                        data.AutoExecute = (AutoOption)(((int)data.AutoExecute + 1) % 3);
+
+                    // Set all to first pawn's mode.
+                    foreach (var pawn in pawns)
+                        pawn.GetMeleeData().AutoExecute = data.AutoExecute;
+
                 }
                 else
                 {
-                    AutoOption changeTo = mode == null ? AutoOption.Default : (AutoOption)(((int)mode + 1) % 3);
-                    data.AutoExecute = changeTo;
-                    foreach(var pawn in pawns)
-                    {
-                        pawn.GetMeleeData().AutoExecute = changeTo;
-                    }
+                    data.AutoExecute = (AutoOption) (((int) data.AutoExecute + 1) % 3);
                 }
             }
         }
 
         private void DrawAutoGrapple(Rect rect)
         {
-            var mode = data.AutoGrapple;
-            (string status, Color color) = mode switch
+            bool multi = pawns.Count > 0;
+            bool mixed = false;
+            if (multi)
             {
-                AutoOption.Default => ($"Default ({(Core.Settings.AutoGrapple ? AutoOption.Enabled : AutoOption.Disabled)})", Color.grey),
-                AutoOption.Enabled => ("Enabled", Color.green),
-                AutoOption.Disabled => ("Disabled", Color.red),
-                _ => throw new ArgumentOutOfRangeException()
+                var mode = data.AutoGrapple;
+                foreach (var other in pawns)
+                {
+                    if (other.GetMeleeData().AutoGrapple != mode)
+                        mixed = true;
+                }
+            }
+
+            AutoOption selected = data.AutoGrapple;
+            Color iconColor = selected switch
+            {
+                AutoOption.Default => Color.grey,
+                AutoOption.Enabled => Color.green,
+                AutoOption.Disabled => Color.red,
+                _ => Color.magenta
             };
+            if (mixed)
+                iconColor = Color.yellow;
 
-            if (mode == AutoOption.Default)
-                mode = Core.Settings.AutoExecute ? AutoOption.Enabled : AutoOption.Disabled;
-            string tint = mode == AutoOption.Enabled ? "green" : "red";
-            status = $"<b><color={tint}>{status}</color></b>";
+            DrawIcon(rect, Content.IconGrapple, iconColor);
 
-            DrawIcon(rect, Content.IconGrapple, color);
+            string sThis = multi ? "these" : "this";
+            string sPawns = multi ? $"{pawns.Count + 1} pawns" : "pawn";
+            string sIs = multi ? $"are" : "is";
+            string sHas = multi ? "have" : "has";
 
-            TooltipHandler.TipRegion(rect, $"<b>Auto Lasso</b>: {status}\n\nAllows this pawn to automatically use their lasso to pull in distant enemies into melee range.");
+            string tooltip;
+            if (mixed)
+            {
+                tooltip = $"These {pawns.Count + 1} pawns have differing auto-lasso settings. Click to set them all to '{data.AutoGrapple}'.";
+            }
+            else
+            {
+                string autoExecFromSettings = Core.Settings.AutoGrapple ? "enabled" : "disabled";
+                string autoExecFromSettingsColor = Core.Settings.AutoGrapple ? "green" : "red";
+                bool resolved = selected switch
+                {
+                    AutoOption.Default => Core.Settings.AutoGrapple,
+                    AutoOption.Enabled => true,
+                    AutoOption.Disabled => false,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+                string explanation = resolved
+                    ? $"This means that {sThis} {sPawns} will automatically pull enemies into melee range using an equipped lasso, whenever they can."
+                    : $"This means that {sThis} {sPawns} will <b>NOT</b> automatically lasso enemies.";
+
+                tooltip = selected switch
+                {
+                    AutoOption.Default  => $"{sThis.CapitalizeFirst()} {sPawns} {sIs} using the <b>default</b> auto-lasso setting, which is <color={autoExecFromSettingsColor}><b>{autoExecFromSettings}</b></color>.\n\n{explanation}",
+                    AutoOption.Enabled  => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-lasso <color=green><b>enabled</b></color>.\n\n{explanation}",
+                    AutoOption.Disabled => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-lasso <color=red><b>disabled</b></color>.\n\n{explanation}",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+
+            TooltipHandler.TipRegion(rect, tooltip);
 
             if (Widgets.ButtonInvisible(rect))
-                data.AutoGrapple = (AutoOption)(((int)data.AutoGrapple + 1) % 3);
+            {
+                if (multi)
+                {
+                    if (!mixed)
+                        data.AutoGrapple = (AutoOption)(((int)data.AutoGrapple + 1) % 3);
+
+                    // Set all to first pawn's mode.
+                    foreach (var pawn in pawns)
+                        pawn.GetMeleeData().AutoGrapple = data.AutoGrapple;
+
+                }
+                else
+                {
+                    data.AutoGrapple = (AutoOption)(((int)data.AutoGrapple + 1) % 3);
+                }
+            }
         }
 
         private void DrawInfo(Rect rect)

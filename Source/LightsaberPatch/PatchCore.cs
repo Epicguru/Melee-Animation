@@ -3,7 +3,7 @@ using Verse;
 
 namespace AAM.LightsaberPatch
 {
-    [HotSwappable]
+    [HotSwapAll]
     public class PatchCore : Mod
     {
         public static void Log(string msg)
