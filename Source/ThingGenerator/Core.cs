@@ -63,6 +63,7 @@ namespace AAM
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
             AddLateLoadAction(true, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
             AddLateLoadAction(false, "Loading weapon tweak data...", () => TweakDataManager.LoadAllForActiveMods());
+            AddLateLoadAction(true, "Finding all lassos...", AAM.Content.FindAllLassos);
 
             AddLateLoadEvents();
         }

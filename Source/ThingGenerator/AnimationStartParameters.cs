@@ -13,6 +13,7 @@ namespace AAM
         public Map Map;
         public Matrix4x4 RootTransform;
         public bool FlipX, FlipY;
+        public ExecutionOutcome ExecutionOutcome = ExecutionOutcome.Nothing;
 
         public AnimationStartParameters(AnimDef animation, Map map, Matrix4x4 rootTransform)
         {
@@ -68,6 +69,10 @@ namespace AAM
 
             var renderer = Map.GetAnimManager().StartAnimation(Animation, RootTransform, FlipX, FlipY, EnumeratePawns());
             animation = renderer;
+            if (renderer != null)
+            {
+                renderer.ExecutionOutcome = ExecutionOutcome;
+            }
             return renderer != null && !renderer.IsDestroyed;
         }
 

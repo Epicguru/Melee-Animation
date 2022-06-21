@@ -3,7 +3,6 @@
 <Defs>
   <AAM.AnimDef Name="AnimExecutionBase" Abstract="True">
     <type>Execution</type>
-    <direction>Horizontal</direction>
     <pawnCount>2</pawnCount>
     <jobString>Executing [OTHER].</jobString>
     <cellData>
@@ -21,7 +20,6 @@
   </AAM.AnimDef>
 
   <AAM.AnimDef Name="AnimExecutionVerticalBase" ParentName="AnimExecutionBase" Abstract="True">
-    <direction>North</direction>
     <cellData Inherit="False">
       <li>
         <type>PawnStart</type>

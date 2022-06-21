@@ -3,7 +3,6 @@
   <AAM.AnimDef Name="AnimDuelBase" Abstract="True">
     <label>Duel</label>
     <type>Duel</type>
-    <direction>Horizontal</direction>
     <jobString>Dueling [OTHER].</jobString>
     <pawnCount>2</pawnCount>
     <cellData>

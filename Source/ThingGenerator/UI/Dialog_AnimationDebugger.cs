@@ -33,6 +33,7 @@ namespace AAM.UI
         private static float lastOpenStarterTime;
         private static int trailSegments = 3;
         private static float trailTime = 0.1f;
+        private static ExecutionOutcome executionOutcome = ExecutionOutcome.Kill;
 
         [DebugAction("Advanced Animation Mod", "Open Debugger", actionType = DebugActionType.Action)]
         private static void OpenInt()
@@ -534,6 +535,21 @@ namespace AAM.UI
             if (startRehearsal)
                 lastOpenStarterTime = Time.realtimeSinceStartup;
 
+            if (ui.ButtonTextLabeled("Execution outcome: ", executionOutcome.ToString()))
+            {
+                var options = new ExecutionOutcome[]
+                {
+                    ExecutionOutcome.Nothing,
+                    ExecutionOutcome.Damage,
+                    ExecutionOutcome.Down,
+                    ExecutionOutcome.Kill
+                };
+                BetterFloatMenu.Open(BetterFloatMenu.MakeItems(options, i => new MenuItemText(i, i.ToString())), i =>
+                {
+                    executionOutcome = i.GetPayload<ExecutionOutcome>();
+                });
+            }
+
             ui.Gap();
 
             // Options: flip X & Y
@@ -565,7 +581,8 @@ namespace AAM.UI
                     FlipX = startMX,
                     FlipY = startMY,
                     Map = Find.CurrentMap,
-                    RootTransform = startTarget.MakeAnimationMatrix()
+                    RootTransform = startTarget.MakeAnimationMatrix(),
+                    ExecutionOutcome = executionOutcome
                 };
 
                 if (!sp.TryTrigger())

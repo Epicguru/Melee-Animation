@@ -34,7 +34,7 @@ namespace AAM.Patches
             //if (!Core.Settings.ShowMultipleGizmos && Find.Selector.SelectedPawns.Count > 1)
             //    return false;
 
-            return !pawn.Dead && !pawn.Downed && pawn.RaceProps.Humanlike && (Prefs.DevMode || pawn.IsColonistPlayerControlled) && (Core.Settings.ShowGizmosWithoutMeleeWeapon || pawn.GetFirstMeleeWeapon() != null);
+            return !pawn.Dead && !pawn.Downed && pawn.RaceProps.Humanlike && (Prefs.DevMode || pawn.IsColonistPlayerControlled) && (Core.Settings.ShowGizmosWithoutMeleeWeapon || pawn.GetFirstMeleeWeapon() != null || pawn.TryGetLasso() != null);
         }
     }
 }

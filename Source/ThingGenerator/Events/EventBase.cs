@@ -105,10 +105,6 @@ public abstract class EventBase : ScriptableObject
     public string MakeSaveData()
     {
         saveDataInt = EventID;
-        if (this is TimedEvent te)
-        {
-            saveDataInt += $";{te.When}";
-        }
         reading = false;
         Expose();
         return saveDataInt;
@@ -119,11 +115,6 @@ public abstract class EventBase : ScriptableObject
         reading = true;
         split = saveData.Split(';');
         splitIndex = 1;
-        if (this is TimedEvent te)
-        {
-            string when = ReadNext();
-            te.When = (EventTime)Enum.Parse(typeof(EventTime), when);
-        }
         Expose();
     }
 

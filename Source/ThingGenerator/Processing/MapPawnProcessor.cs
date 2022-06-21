@@ -1,11 +1,9 @@
-﻿using System;
+﻿using AAM.Data;
+using AAM.Grappling;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using AAM.Data;
-using AAM.Grappling;
-using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -467,7 +465,7 @@ namespace AAM.Processing
 
             // TODO this isn't actually time-independent and also isn't very controllable.
 
-            const float chancePerSecond = 0.5f; // 50% chance each second...
+            const float chancePerSecond = 0.5f;
             const float chancePerTick = chancePerSecond / 60f;
             float chance = chancePerTick * tickDelta;
 

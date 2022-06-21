@@ -28,6 +28,11 @@ namespace AAM
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoGrapple = true;
 
+        [Label("Lasso Travel Speed")]
+        [Range(0.1f, 5f)]
+        [Description("Adjusts the speed <b>(not cooldown)</b> of lassos, making it faster or slower to ensnare and pull in an enemy.\nAffects all pawns.")]
+        public float GrappleSpeed = 1f;
+
         [Header("Executions")]
         [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
                      "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +

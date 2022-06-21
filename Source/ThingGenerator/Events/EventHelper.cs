@@ -13,21 +13,6 @@ namespace AAM.Events
                 return;
             }
 
-            if (e is TimedEvent te)
-            {
-                switch (te.When)
-                {
-                    case EventTime.Now:
-                        break;
-                    case EventTime.AtEnd:
-                        animator.workersAtEnd.Add((e, worker));
-                        return;
-                    default:
-                        Core.Error($"Unhandled EventTime: {te.When}");
-                        return;
-
-                }
-            }
             worker.Run(new AnimEventInput(e, animator, false, null));
         }
     }

@@ -164,8 +164,6 @@ public class AnimData
         AnimPartData[] parts = new AnimPartData[partCount];
         short[] parentIds = new short[partCount];
 
-        //Core.Log($"Read events ({partCount} parts).");
-
         // Initialize parts and read paths & texture paths.
         for (int i = 0; i < partCount; i++)
         {

@@ -120,10 +120,14 @@ namespace AAM.Gizmos
 
                 if (Event.current.type == EventType.Repaint && Find.Targeter.IsTargeting && Find.Targeter.IsPawnTargeting(pawn))
                 {
-                    pawn.GetAnimManager().AddPostDraw(() =>
+                    if (pawn.TryGetLasso() != null)
                     {
-                        GenDraw.DrawRadiusRing(pawn.Position, 10, Color.green, HasLos);
-                    });
+                        pawn.GetAnimManager().AddPostDraw(() =>
+                        {
+                            float radius = pawn.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
+                            GenDraw.DrawRadiusRing(pawn.Position, radius, Color.yellow, HasLos);
+                        });
+                    }
                 }
 
                 var state = mouseOver ? GizmoState.Mouseover : GizmoState.Clear;
@@ -336,10 +340,12 @@ namespace AAM.Gizmos
         {
             GUI.DrawTexture(rect, Content.IconLongBG);
 
-            bool isOffCooldown = data.IsExecutionOffCooldown(5f);
+            float cooldown = pawn.GetStatValue(AAM_DefOf.AAM_ExecutionCooldown);
+
+            bool isOffCooldown = data.IsExecutionOffCooldown(cooldown);
             if (!isOffCooldown)
             {
-                float pct = data.GetExecuteCooldownPct(5f);
+                float pct = data.GetExecuteCooldownPct(cooldown);
                 Widgets.FillableBar(rect.BottomPartPixels(14).ExpandedBy(-4, -3), pct);
             }
 
@@ -350,6 +356,11 @@ namespace AAM.Gizmos
                 {
                     string name = pawn.Name.ToStringShort;
                     Messages.Message($"{name}'s execution is on cooldown!", MessageTypeDefOf.RejectInput, false);
+                }
+                else if (pawn.GetFirstMeleeWeapon() == null)
+                {
+                    string name = pawn.Name.ToStringShort;
+                    Messages.Message($"{name} cannot execute anyone without a melee weapon!", MessageTypeDefOf.RejectInput, false);
                 }
                 else
                 {
@@ -376,10 +387,12 @@ namespace AAM.Gizmos
         {
             GUI.DrawTexture(rect, Content.IconLongBG);
 
-            bool isOffCooldown = data.IsGrappleOffCooldown(5f);
+            float cooldown = pawn.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
+
+            bool isOffCooldown = data.IsGrappleOffCooldown(cooldown);
             if (!isOffCooldown)
             {
-                float pct = data.GetGrappleCooldownPct(5f);
+                float pct = data.GetGrappleCooldownPct(cooldown);
                 Widgets.FillableBar(rect.BottomPartPixels(14).ExpandedBy(-4, -3), pct);
             }
 
@@ -393,6 +406,11 @@ namespace AAM.Gizmos
                 {
                     string name = pawn.Name.ToStringShort;
                     Messages.Message($"{name}'s lasso is on cooldown!", MessageTypeDefOf.RejectInput, false);
+                }
+                else if (pawn.TryGetLasso() == null)
+                {
+                    string name = pawn.Name.ToStringShort;
+                    Messages.Message($"{name} does not have a lasso equipped.", MessageTypeDefOf.RejectInput, false);
                 }
                 else
                 {
@@ -423,6 +441,10 @@ namespace AAM.Gizmos
         {
             if (info.Thing is not Pawn target || target.Dead)
                 return;
+
+            if (target == pawn)
+                return;
+
             var targetPos = target.Position;
 
             string lastReason = $"No valid position to drag {target.NameShortColored} to.";
@@ -449,21 +471,37 @@ namespace AAM.Gizmos
 
             if (info.Thing is not Pawn target || target.Dead)
                 return;
+            if (target == pawn)
+                return;
 
-            bool canGrapple = data.IsGrappleOffCooldown(5f);
+            float grappleCooldown = pawn.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
+            var lasso = pawn.TryGetLasso();
+
+            bool canGrapple = lasso != null && data.IsGrappleOffCooldown(grappleCooldown);
             var targetPos = target.Position;
-            string lastReason = canGrapple ? $"No valid position to drag {target.NameShortColored} to." : "Lasoo is on cooldown, so the target cannot be dragged in for an execution.";
+            string lastReason = canGrapple ? $"No valid position to drag {target.NameShortColored} to." : lasso == null ?  "No lasso is equipped, so the target cannot be dragged in for an execution." : "Lasso is on cooldown, so the target cannot be dragged in for an execution.";
 
-            var startParams = new AnimationStartParameters(AnimDef.GetExecutionAnimationsForWeapon(pawn.GetFirstMeleeWeapon().def).RandomElement(), pawn, target);
             // TODO start params need to change based on space available.
+            var anim = AnimDef.GetExecutionAnimationsForWeapon(pawn.GetFirstMeleeWeapon().def).RandomElementByWeightWithFallback(a => a.relativeProbability);
+            if (anim == null)
+            {
+                Messages.Message("Cannot execute target: No way to execute! (no animations can be played, perhaps because of the weapon or because of a lack of space)", MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            var startParams = new AnimationStartParameters(anim, pawn, target);
 
             foreach (var pos in GrabUtility.GetIdealGrappleSpots(pawn, target, true))
             {
+                // Configure horizontal flip...
+                startParams.FlipX = pos.x < pawn.Position.x;
+
                 if (pos == targetPos)
                 {
-                    // Start immediately.
+                    // Start immediately then exit.
                     if (startParams.TryTrigger())
                         data.TimeSinceExecuted = 0;
+
                     return;
                 }
 

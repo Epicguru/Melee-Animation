@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -63,12 +64,14 @@ namespace AAM.Grappling
             Vector3 end = driver.GrappledPawn.DrawPos;
             Vector3 realEnd = start + (end - start).normalized * driver.RopeDistance;
 
-            GrabUtility.DrawRopeFromTo(start, realEnd, Color.yellow);
+            Color ropeColor = grappler?.TryGetLasso()?.def.graphicData.color ?? Color.magenta;
+
+            GrabUtility.DrawRopeFromTo(start, realEnd, ropeColor);
         }
 
         public IntVec3 TargetDestination => this.job.targetA.Cell;
         public Pawn GrappledPawn => this.job?.targetB.Pawn;
-        public GrappleFlyer Flyer => GrappledPawn == null ? null : GrappledPawn.ParentHolder as GrappleFlyer;
+        public GrappleFlyer Flyer => GrappledPawn?.ParentHolder as GrappleFlyer;
 
         public AnimationStartParameters? AnimationStartParameters;
         public float RopeDistance;
@@ -123,7 +126,8 @@ namespace AAM.Grappling
 
         private void TickPreEnsnare()
         {
-            RopeDistance += 0.75f; // TODO configurable hook speed.
+            float lassoFactor = pawn.GetStatValue(AAM_DefOf.AAM_GrappleSpeed);
+            RopeDistance += 0.75f * Core.Settings.GrappleSpeed * lassoFactor;
 
             // TODO maybe don't check every frame?
             var target = GrappledPawn;

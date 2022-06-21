@@ -189,8 +189,6 @@ public class AnimRenderer : IExposable
 
     private static void DestroyIntWorker(AnimRenderer renderer)
     {
-        renderer.WasInterrupted = (renderer.Duration - renderer.CurrentTime) > (1f / 30f);        
-
         if (renderer.Pawns != null)
         {
             foreach (var pawn in renderer.Pawns)
@@ -312,8 +310,11 @@ public class AnimRenderer : IExposable
             return c;
         }
     }
+    /// <summary>
+    /// The outcome of this animation if it is an execution animation.
+    /// </summary>
+    public ExecutionOutcome ExecutionOutcome = ExecutionOutcome.Nothing;
 
-    internal List<(EventBase e, EventWorkerBase worker)> workersAtEnd = new List<(EventBase e, EventWorkerBase worker)>();
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
     private AnimPartData[] bodies = new AnimPartData[8]; // TODO REPLACE WITH LIST OR DICT.
@@ -377,27 +378,6 @@ public class AnimRenderer : IExposable
         if (Scribe.mode == LoadSaveMode.LoadingVars)
         {
             Init();
-
-            // Load workers-at-end.
-            workersAtEnd.Clear();
-            List<int> endEventIndices = new List<int>();
-            Scribe_Collections.Look(ref endEventIndices, "endEventIndices");
-            if (endEventIndices != null && Def != null)
-            {
-                try
-                {
-                    foreach (int index in endEventIndices)
-                    {
-                        var e = Def.Data.Events[index];
-                        var worker = e.GetWorker<EventWorkerBase>();
-                        workersAtEnd.Add((e, worker));
-                    }
-                }
-                catch (Exception e)
-                {
-                    Core.Error($"Exception loading end-of-clip events from indices. Has the animation changed?", e);
-                }
-            }
         }
 
         if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -422,10 +402,6 @@ public class AnimRenderer : IExposable
                             s += ',';
                     }
                     Scribe_Values.Look(ref s, "rootTransform");
-
-                    // Save the workers-at-end.
-                    List<int> endEventIndices = workersAtEnd.Select(p => p.e.Index).ToList();
-                    Scribe_Collections.Look(ref endEventIndices, "endEventIndices");
                     break;
                 }
                 case LoadSaveMode.LoadingVars:
@@ -561,7 +537,6 @@ public class AnimRenderer : IExposable
             Core.Warn("Tried to destroy renderer that is already destroyed...");
             return;
         }
-
         DestroyInt(this);
     }
 
@@ -602,13 +577,16 @@ public class AnimRenderer : IExposable
 
         if(Map == null || (Find.TickManager.TicksAbs % 120 == 0 && Map.Index < 0))
         {
+            WasInterrupted = true;
             Destroy();
             return;
         }
 
         if (GetFirstInvalidPawn() != null)
         {
+            WasInterrupted = true;
             Destroy();
+            return;
         }
 
         foreach (var pawn in Pawns)
@@ -616,8 +594,10 @@ public class AnimRenderer : IExposable
             if (pawn.CurJobDef != AAM_DefOf.AAM_InAnimation)
             {
                 Core.Error($"{pawn} has bad job: {pawn.CurJobDef}. Cancelling animation.");
+                WasInterrupted = true;
                 Destroy();
-            }    
+                return;
+            }
         }
     }
 
@@ -792,7 +772,7 @@ public class AnimRenderer : IExposable
     {
         time = Mathf.Clamp(time, 0f, Duration);
 
-        if (this.time == time)
+        if (Math.Abs(this.time - time) < 0.0001f)
             return new Vector2(-1, -1);
 
         // Pass 1: Evaluate curves, make local matrices.
@@ -871,19 +851,6 @@ public class AnimRenderer : IExposable
             TeleportPawn(pawn, basePos + posData.Value.ToIntVec3);
             pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
         }
-
-        foreach(var item in workersAtEnd)
-        {
-            try
-            {
-                item.worker?.Run(new AnimEventInput(item.e, this, false, null));
-            }
-            catch(Exception e)
-            {
-                Core.Error("Error running end worker:", e);
-            }
-        }
-        workersAtEnd.Clear();
 
         foreach (var sweep in sweeps)
         {

@@ -13,13 +13,11 @@ namespace AAM
 
         private static List<AnimDef> allDefs;
         private static Dictionary<AnimType, List<AnimDef>> defsOfType;
-        private static List<AnimDef> tempDefs;
 
         public static void Init()
         {
             allDefs = new List<AnimDef>(DefDatabase<AnimDef>.AllDefs);
             defsOfType = new Dictionary<AnimType, List<AnimDef>>();
-            tempDefs = new List<AnimDef>(128);
 
             foreach(var def in allDefs)
             {
@@ -38,26 +36,6 @@ namespace AAM
             if (defsOfType.TryGetValue(type, out var list))
                 foreach (var item in list)
                     yield return item;            
-        }
-
-        public static AnimDef TryGetExecutionFor(Pawn executor, Pawn victim)
-        {
-            if (executor == null)
-                return null;
-
-            var weapon = executor.GetFirstMeleeWeapon();
-            if (weapon == null)
-            {
-                Core.Error($"Cannot get execution def for {executor.NameShortColored} because they are not holding any weapon.");
-                return null;
-            }
-
-            tempDefs.Clear();
-            tempDefs.AddRange(GetExecutionAnimationsForWeapon(weapon.def));
-
-            if (tempDefs.Count == 0)
-                return null;
-            return tempDefs.RandomElement();
         }
 
         public static IEnumerable<AnimDef> GetExecutionAnimationsForWeapon(ThingDef def)
@@ -95,20 +73,31 @@ namespace AAM
                 return Path.Combine(mod.RootDir, "Animations", relative);
             }
         }
-        public bool HasJobString => !string.IsNullOrWhiteSpace(jobString);
+        public virtual string FullNonLethalDataPath => FullDataPath.Replace(".anim", "_NL.anim");
         public AnimData Data
         {
             get
             {
-                resolvedData ??= ResolveData();
+                if (resolvedData == null)
+                    ResolveData();
+
                 return resolvedData;
+            }
+        }
+        public AnimData DataNonLethal
+        {
+            get
+            {
+                if (resolvedData == null)
+                    ResolveData();
+
+                return resolvedNonLethalData ?? resolvedData;
             }
         }
         public string DataPath => data;
         public ulong ClearMask, FlipClearMask;
 
         public AnimType type = AnimType.Execution;
-        public AnimDirection direction = AnimDirection.Horizontal;
         private string data;
         public string jobString;
         public int pawnCount;
@@ -116,11 +105,15 @@ namespace AAM
         public List<AnimCellData> cellData = new List<AnimCellData>();
         public float relativeProbability = 1;
 
-        private AnimData resolvedData;
+        private AnimData resolvedData, resolvedNonLethalData;
 
-        protected virtual AnimData ResolveData()
+        protected virtual void ResolveData()
         {
-            return AnimData.Load(FullDataPath);
+            if (File.Exists(FullDataPath))
+                resolvedData = AnimData.Load(FullDataPath);
+
+            if (File.Exists(FullNonLethalDataPath))
+                resolvedNonLethalData = AnimData.Load(FullNonLethalDataPath);
         }
 
         public override IEnumerable<string> ConfigErrors()
@@ -132,7 +125,9 @@ namespace AAM
                 yield return $"Animation type is Execution, but pawnCount is less than 2! ({pawnCount})";
 
             if (string.IsNullOrWhiteSpace(data))
-                yield return "Animation has no data path! Please secify the location of the data file using the data tag.";
+                yield return "Animation has no data path! Please specify the location of the data file using the data tag.";
+            else if (!File.Exists(FullDataPath))
+                yield return $"Failed to find animation file at '{FullDataPath}'!";
 
             if (weaponFilter == null)
                 yield return "weaponFilter is not assigned.";

@@ -65,6 +65,22 @@ namespace AAM
             return null;
         }
 
+        public static ThingWithComps TryGetLasso(this Pawn pawn)
+        {
+            if (pawn?.apparel == null)
+                return null;
+
+            foreach (var item in pawn.apparel.WornApparel)
+            {
+                if (item.def.IsApparel && Content.LassoDefs.Contains(item.def))
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
         public static PawnType GetPawnType(this Pawn pawn)
         {
             if (pawn.IsColonist)

@@ -84,6 +84,23 @@ namespace AAM.Grappling
             }
         }
 
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+            if (respawningAfterLoad)
+                return;
+
+            if (Grappler == null)
+            {
+                Core.Error("Null grappler, cannot determine flight speed factor.");
+                return;
+            }
+
+            // Adjust flight time based on grapple speed.
+            float speed = Grappler.GetStatValue(AAM_DefOf.AAM_GrappleSpeed);
+            ticksFlightTime = Mathf.Max(2, (int)(ticksFlightTime / (speed * Core.Settings.GrappleSpeed)));
+        }
+
         private void RecomputePosition()
         {
             if (this.positionLastComputedTick == this.ticksFlying)
@@ -108,8 +125,9 @@ namespace AAM.Grappling
             DrawShadow(groundPos, effectiveHeight);
             FlyingPawn.DrawAt(effectivePos, flip);
 
-            DrawBoundTexture(effectivePos, flip);
-            DrawGrappleLineNew();
+            Color ropeColor = Grappler?.TryGetLasso()?.def.graphicData.color ?? Color.magenta;
+            DrawBoundTexture(effectivePos, flip, ropeColor);
+            DrawGrappleLineNew(ropeColor);
         }
 
         public BezierCurve MakeGrappleCurve()
@@ -133,7 +151,7 @@ namespace AAM.Grappling
             return curve;
         }
 
-        public void DrawGrappleLineNew()
+        public void DrawGrappleLineNew(Color ropeColor)
         {
             Vector3 from = Grappler.DrawPos;
             from += Grappler.Rotation.AsVector2.ToWorld() * 0.4f;
@@ -150,7 +168,7 @@ namespace AAM.Grappling
             from += bump * bumpMag + bump2 * bumpMag2;
 
 
-            GrabUtility.DrawRopeFromTo(from, to, Color.yellow);
+            GrabUtility.DrawRopeFromTo(from, to, ropeColor);
         }
 
         public void DrawGrappleLine()
@@ -177,7 +195,7 @@ namespace AAM.Grappling
             }
         }
 
-        public void DrawBoundTexture(Vector3 drawLoc, bool flip)
+        public void DrawBoundTexture(Vector3 drawLoc, bool flip, Color ropeColor)
         {
             drawLoc.y += 0.0001f;
             var tex = GrabUtility.GetBoundPawnTexture(FlyingPawn);
@@ -193,7 +211,7 @@ namespace AAM.Grappling
             var trs = Matrix4x4.TRS(drawLoc, Quaternion.identity, Vector3.one * 1.5f); // TODO use actual pawn size such as from alien races.
 
             mpb.SetTexture("_MainTex", tex); // TODO cache id.
-            mpb.SetColor("_Color", Color.yellow); // TODO based on rope type.
+            mpb.SetColor("_Color", ropeColor);
 
             Graphics.DrawMesh(MeshPool.plane10, trs, mat, 0, null, 0, mpb);
         }

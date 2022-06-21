@@ -186,7 +186,7 @@ namespace AAM.Grappling
             // Dangle.
             from.y -= 0.0005f;
             mpb.SetTexture("_MainTex", Content.RopeEnd); // TODO cache id.
-            trs = Matrix4x4.TRS(from, Quaternion.identity, Vector3.one * 1);
+            trs = Matrix4x4.TRS(from + new Vector3(0, 0, -0.22f), Quaternion.identity, new Vector3(0.1f, 1f, 0.3f));
             Graphics.DrawMesh(MeshPool.plane10, trs, mat, 0, null, 0, mpb);
         }
 

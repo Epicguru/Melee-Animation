@@ -3,7 +3,7 @@
 namespace AAM.Events;
 
 [CreateAssetMenu(fileName = "KillPawn", menuName = "Events/KillPawn")]
-public class KillPawnEvent : TimedEvent
+public class KillPawnEvent : EventBase
 {
     public override string EventID => "KillPawn";
 
@@ -16,7 +16,6 @@ public class KillPawnEvent : TimedEvent
     public string BattleLogDef = "AAM_Execution_Generic";
 
     [Header("Misc")]
-    public bool OnlyIfNotInterrupted = true;
     public bool PreventDamageMote = true;
 
     public override void Expose()
@@ -26,7 +25,6 @@ public class KillPawnEvent : TimedEvent
         Look(ref TargetBodyPart);
         Look(ref DamageDef);
         Look(ref BattleLogDef);
-        Look(ref OnlyIfNotInterrupted, true);
         Look(ref PreventDamageMote);
     }
 }

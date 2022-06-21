@@ -37,7 +37,6 @@ namespace AAM
             toil.defaultCompleteMode = ToilCompleteMode.Never;
             toil.tickAction = () =>
             {
-                // TODO FROM ANIMATION ROTATION.
                 job.overrideFacing = Animator?.GetPawnBody(pawn)?.GetSnapshot(Animator).GetWorldDirection() ?? Rot4.South;
             };
             toil.AddEndCondition(() =>
