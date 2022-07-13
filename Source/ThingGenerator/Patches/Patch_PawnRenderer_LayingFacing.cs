@@ -7,7 +7,7 @@ namespace AAM.Patches
     [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.LayingFacing))]
     public static class Patch_PawnRenderer_LayingFacing
     {
-        public static Dictionary<Pawn, Rot4> OverrideRotations = new Dictionary<Pawn, Rot4>();
+        public static Dictionary<Pawn, Rot4> OverrideRotations = new();
 
         public static void Tick()
         {

@@ -1,18 +1,15 @@
 ﻿using AAM;
 using AAM.Events;
-using AAM.Events.Workers;
 using AAM.Patches;
+using AAM.Sweep;
+using AAM.Tweaks;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using AAM.Sweep;
-using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using Debug = UnityEngine.Debug;
 using Color = UnityEngine.Color;
 
 /// <summary>
@@ -23,19 +20,19 @@ public class AnimRenderer : IExposable
 {
     #region Static stuff
 
-    public static readonly Stopwatch SeekTimer = new Stopwatch();
-    public static readonly Stopwatch DrawTimer = new Stopwatch();
-    public static readonly Stopwatch EventsTimer = new Stopwatch();
+    public static readonly Stopwatch SeekTimer = new();
+    public static readonly Stopwatch DrawTimer = new();
+    public static readonly Stopwatch EventsTimer = new();
     public static readonly char[] Alphabet = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public static Material DefaultCutout, DefaultTransparent;
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
     public static IReadOnlyCollection<Pawn> CapturedPawns => pawnToRenderer.Keys;
     public static int TotalCapturedPawnCount => pawnToRenderer.Count;
-    public static List<AnimRenderer> PostLoadPendingAnimators = new List<AnimRenderer>();
+    public static List<AnimRenderer> PostLoadPendingAnimators = new();
 
-    private static List<AnimRenderer> activeRenderers = new List<AnimRenderer>();
-    private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new Dictionary<Pawn, AnimRenderer>();
-    private static Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
+    private static List<AnimRenderer> activeRenderers = new();
+    private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new();
+    private static Dictionary<string, Texture2D> textureCache = new();
     private static bool isItterating;
 
     /// <summary>
@@ -78,7 +75,7 @@ public class AnimRenderer : IExposable
         loaded = ContentFinder<Texture2D>.Get(texturePath, false);
         textureCache.Add(texturePath, loaded);
         if (loaded == null)
-            Debug.LogError($"Failed to load texture '{texturePath}'.");
+            Core.Error($"Failed to load texture '{texturePath}'.");
 
         return loaded;
     }
@@ -258,7 +255,7 @@ public class AnimRenderer : IExposable
     /// <summary>
     /// A list of pawns included in this animation.
     /// </summary>
-    public List<Pawn> Pawns = new List<Pawn>();
+    public List<Pawn> Pawns = new();
     /// <summary>
     /// The base transform that the animation is centered on.
     /// Useful functions to modify this are <see cref="Matrix4x4.TRS(Vector3, Quaternion, Vector3)"/>
@@ -1079,8 +1076,6 @@ public class AnimRenderer : IExposable
                 return;
             if (lastIndex >= Points.Count - 1)
                 return; // Can't interpolate if we don't have the end.
-
-            Core.Log($"{lastIndex} of {Points.Count}");
 
             var lastPoint = Points.Points[lastIndex];
             if (Mathf.Abs(lastPoint.Time - currentTime) < 0.001f)

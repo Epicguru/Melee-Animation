@@ -11,6 +11,7 @@
     <Configurations>v1.3</Configurations>
     <AssemblyName>AdvancedAnimationMod</AssemblyName>
     <RootNamespace>AAM</RootNamespace>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

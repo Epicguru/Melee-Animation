@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -11,10 +10,10 @@ namespace AAM.Grappling
     {
         // You can add a bound pawn texture here for your modded body type.
         // Alternatively, simply add your texture to your textures folder: Textures/AAM/BoundPawns/<bodyTypeDefName>.png
-        public static readonly Dictionary<BodyTypeDef, Texture2D> BoundPawnTextures = new Dictionary<BodyTypeDef, Texture2D>();
+        public static readonly Dictionary<BodyTypeDef, Texture2D> BoundPawnTextures = new();
 
-        private static readonly MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-        private static readonly HashSet<Pawn> pawnsBeingTargetedByGrapples = new HashSet<Pawn>();
+        private static readonly MaterialPropertyBlock mpb = new();
+        private static readonly HashSet<Pawn> pawnsBeingTargetedByGrapples = new();
 
         public static bool CanStartGrabAttempt(Pawn pawn) => pawn != null && !pawnsBeingTargetedByGrapples.Contains(pawn);
 
@@ -76,6 +75,82 @@ namespace AAM.Grappling
             {
                 reason = $"{target.NameShortColored} cannot be lassoed right now.";
                 return false;
+            }
+
+            var data = grappler.GetMeleeData();
+            float cooldown = grappler.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
+
+            // Grapple is on cooldown...
+            if (!data.IsGrappleOffCooldown(cooldown))
+            {
+                float timeRemaining = cooldown - data.TimeSinceGrappled;
+                reason = $"{grappler.NameShortColored}'s lasso is on cooldown for another {timeRemaining:F1} seconds!";
+                return false;
+            }
+
+            // Max distance...
+            float currDistanceSqr = (grappler.Position - target.Position).LengthHorizontalSquared;
+            float maxDistance = grappler.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
+            if (maxDistance * maxDistance < currDistanceSqr)
+            {
+                reason = $"{target.NameShortColored} is outside of the max range of the lasso.";
+                return false;
+            }
+
+            // Check mass.
+            if (Core.Settings.MaxLassoMass > 0)
+            {
+                float mass = target.GetStatValue(StatDefOf.Mass);
+                if (mass > Core.Settings.MaxLassoMass)
+                {
+                    reason = $"{target.NameShortColored} is to heavy to be lassoed: they weigh {mass:F1}kg, which is over the {Core.Settings.MaxLassoMass:F1}kg limit.";
+                    return false;
+                }
+            }
+
+            // Check size.
+            if (Core.Settings.MaxLassoBodySize > 0)
+            {
+                float size = target.BodySize;
+                if (size > Core.Settings.MaxLassoBodySize)
+                {
+                    reason = $"{target.NameShortColored} is too large to be lassoed: their body size is {size:F2}, which is over the {Core.Settings.MaxLassoBodySize:F2} limit.";
+                    return false;
+                }
+            }
+
+            // Check required melee skill.
+            if (Core.Settings.MinMeleeSkillToLasso > 0)
+            {
+                var meleeSkill = grappler.skills?.GetSkill(SkillDefOf.Melee);
+                if (meleeSkill == null)
+                {
+                    reason = $"{grappler.NameShortColored} is not capable of melee, so cannot use a lasso.";
+                    return false;
+                }
+
+                if (meleeSkill.Level < Core.Settings.MinMeleeSkillToLasso)
+                {
+                    reason = $"{grappler.NameShortColored} does not have the {Core.Settings.MinMeleeSkillToLasso} melee skill required to use a lasso.";
+                    return false;
+                }
+            }
+
+            // Check required manipulation.
+            if (Core.Settings.MinManipulationToLasso > 0)
+            {
+                var manipulation = grappler.health?.capacities?.GetLevel(PawnCapacityDefOf.Manipulation);
+                if (manipulation == null)
+                {
+                    reason = $"{grappler.NameShortColored} does not have the ability to manipulate items, so cannot use a lasso.";
+                    return false;
+                }
+
+                if (manipulation.Value < Core.Settings.MinManipulationToLasso)
+                {
+                    reason = $"{grappler.NameFullColored}'s current manipulation level is {manipulation.Value * 100f: F0}% which is below the {Core.Settings.MinManipulationToLasso * 100f:F0}% required to use a lasso.";
+                    return false;
+                }
             }
 
             // Already attempting to be grappled by someone else.

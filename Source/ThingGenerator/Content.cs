@@ -42,7 +42,7 @@ namespace AAM
         /// A hashset containing all lasso defs, used to check if a pawn has a lasso equipped.
         /// This is automatically populated with all apparel that has the 'Lasso' tag.
         /// </summary>
-        public static HashSet<ThingDef> LassoDefs = new HashSet<ThingDef>();
+        public static HashSet<ThingDef> LassoDefs = new();
 
         public static void Load()
         {

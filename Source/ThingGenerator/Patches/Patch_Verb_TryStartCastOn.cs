@@ -12,7 +12,7 @@ namespace AAM.Patches
         [TweakValue("__AAM", 0f, 1f)]
         public static float Chance = 0.1f;
 
-        private static List<(AnimDef anim, bool mirrorX)> tempAnims = new List<(AnimDef anim, bool mirrorX)>(32);
+        private static List<(AnimDef anim, bool mirrorX)> tempAnims = new(32);
 
         static void Postfix(Verb __instance, bool __result)
         {

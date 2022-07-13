@@ -1,14 +1,12 @@
-﻿using RimWorld;
+﻿using AAM.Tweaks;
+using EpicUtils;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AAM.Sweep;
-using AAM.Tweaks;
-using EpicUtils;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
-using Verse.Noise;
 
 namespace AAM.UI
 {
@@ -49,15 +47,15 @@ namespace AAM.UI
         }
 
         public int SelectedIndex;
-        public List<(string name, Action<Listing_Standard> tab)> Tabs = new List<(string name, Action<Listing_Standard> tab)>();
+        public List<(string name, Action<Listing_Standard> tab)> Tabs = new();
 
         private Vector2[] scrolls = new Vector2[32];
         private int scrollIndex;
         private AnimDef spaceCheckDef;
         private bool spaceCheckMX, spaceCheckMY;
         private bool autoSelectRenderer = true;
-        private Queue<Action> toDraw = new Queue<Action>();
-        private List<AnimationManager> allManagers = new List<AnimationManager>();
+        private Queue<Action> toDraw = new();
+        private List<AnimationManager> allManagers = new();
 
         public Dialog_AnimationDebugger()
         {
@@ -805,7 +803,7 @@ namespace AAM.UI
                     return _camDst.Value;
                 }
             }
-            public Vector2 Size = new Vector2(212f, 28f);
+            public Vector2 Size = new(212f, 28f);
             public string Tooltip;
             public string CustomName;
 
@@ -836,7 +834,7 @@ namespace AAM.UI
 
             public override Vector2 Draw(Vector2 pos)
             {
-                Rect area = new Rect(pos, Size);
+                Rect area = new(pos, Size);
                 var iconRect = area.LeftPartPixels(32);
                 var textRect = area.RightPartPixels(area.width - 32);
 

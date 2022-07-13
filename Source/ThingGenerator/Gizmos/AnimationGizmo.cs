@@ -11,10 +11,9 @@ namespace AAM.Gizmos
 {
     public class AnimationGizmo : Gizmo
     {
-        private Pawn pawn;
-        private PawnMeleeData data;
-
-        private List<Pawn> pawns = new List<Pawn>();
+        private readonly Pawn pawn;
+        private readonly PawnMeleeData data;
+        private readonly List<Pawn> pawns = new();
 
         public AnimationGizmo(Pawn pawn)
         {
@@ -49,8 +48,7 @@ namespace AAM.Gizmos
 
         public override void MergeWith(Gizmo raw)
         {
-            var other = raw as AnimationGizmo;
-            if (other == null)
+            if (raw is not AnimationGizmo other)
                 return;
 
             pawns.Add(other.pawn);
@@ -101,7 +99,7 @@ namespace AAM.Gizmos
                 {
                     Text.Font = GameFont.Tiny;
                     float num = Text.CalcHeight(labelCap, butRect.width);
-                    Rect rect2 = new Rect(butRect.x, butRect.yMax - num + 12f, butRect.width, num);
+                    Rect rect2 = new(butRect.x, butRect.yMax - num + 12f, butRect.width, num);
                     GUI.DrawTexture(rect2, TexUI.GrayTextBG);
                     Text.Anchor = TextAnchor.UpperCenter;
                     Widgets.Label(rect2, labelCap);
@@ -482,14 +480,17 @@ namespace AAM.Gizmos
             string lastReason = canGrapple ? $"No valid position to drag {target.NameShortColored} to." : lasso == null ?  "No lasso is equipped, so the target cannot be dragged in for an execution." : "Lasso is on cooldown, so the target cannot be dragged in for an execution.";
 
             // TODO start params need to change based on space available.
-            var anim = AnimDef.GetExecutionAnimationsForWeapon(pawn.GetFirstMeleeWeapon().def).RandomElementByWeightWithFallback(a => a.relativeProbability);
+            var anim = AnimDef.GetExecutionAnimationsForWeapon(pawn.GetFirstMeleeWeapon().def).RandomElementByWeightWithFallback(a => a.Probability);
             if (anim == null)
             {
                 Messages.Message("Cannot execute target: No way to execute! (no animations can be played, perhaps because of the weapon or because of a lack of space)", MessageTypeDefOf.RejectInput, false);
                 return;
             }
 
-            var startParams = new AnimationStartParameters(anim, pawn, target);
+            var startParams = new AnimationStartParameters(anim, pawn, target)
+            {
+                ExecutionOutcome = ExecutionOutcome.Kill
+            };
 
             foreach (var pos in GrabUtility.GetIdealGrappleSpots(pawn, target, true))
             {

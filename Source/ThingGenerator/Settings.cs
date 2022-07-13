@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -6,6 +7,7 @@ namespace AAM
 {
     public class Settings : ModSettings
     {
+        #region General
         [Header("General")]
         [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
                      "If enabled, the Advanced Melee gizmo will be shown even if the pawn does not have a valid (compatible) melee weapon.")]
@@ -22,17 +24,52 @@ namespace AAM
         [Description("A modifier on the speed of all animations.")]
         public float GlobalAnimationSpeed = 1f;
 
+        [DrawMethod(nameof(DrawAnimationList))]
+        [SettingOptions(drawValue: false, allowReset: false)]
+        private Dictionary<AnimDef, AnimDef.SettingsData> animSettings = new Dictionary<AnimDef, AnimDef.SettingsData>();
+        #endregion
+
+        #region Lasso
         [Header("Lasso")]
         [Label("Auto Lasso")]
         [Description("If true, your colonists will automatically use their lassos against enemies.\n\n" +
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoGrapple = true;
 
-        [Label("Lasso Travel Speed")]
-        [Range(0.1f, 5f)]
-        [Description("Adjusts the speed <b>(not cooldown)</b> of lassos, making it faster or slower to ensnare and pull in an enemy.\nAffects all pawns.")]
-        public float GrappleSpeed = 1f;
+        [Label("Minimum Melee Skill")]
+        [Description("The minumum melee skill required to use a lasso.\nAffects all pawns.")]
+        [Range(0, 20)]
+        public int MinMeleeSkillToLasso = 4;
 
+        [Label("Minimum Manipulation")]
+        [Description("The minimum Manipulation stat required to use a lasso.\nAffects all pawns.")]
+        [Percentage]
+        public float MinManipulationToLasso = 0.5f;
+
+        [Label("Max Pawn Mass")]
+        [Description("The maximum mass that a pawn can have in order for it to be lassoed. The mass is measured in kilograms. You can check the mass of pawns in their Stat sheet.\nSet to zero to disable the mass limit.")]
+        [Min(0)]
+        public float MaxLassoMass = 0f;
+
+        [Label("Max Pawn Size")]
+        [Description("The maximum 'body size' that a pawn can have in order for it to be lassoed.\nFor reference, here are some example body sizes:\n" +
+            "• Chicken: 0.3\n" +
+            "• Human: 1\n" +
+            "• Boomalope: 2\n" +
+            "• Warg: 3\n" +
+            "• Thrumbo: 4\n" +
+            "\n\nSet to zero to disable the body size limit.")]
+        [Min(0)]
+        public float MaxLassoBodySize = 3;
+
+        [Label("Lasso Travel Speed")]
+        [Description("Adjusts the speed <b>(not cooldown)</b> of lassos, making it faster or slower to ensnare and pull in an enemy.\nHigher values make the lasso faster.\nAffects all pawns.")]
+        [Range(0.1f, 5f)]
+        [Percentage]
+        public float GrappleSpeed = 1f;
+        #endregion
+
+        #region Executions
         [Header("Executions")]
         [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
                      "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
@@ -42,6 +79,7 @@ namespace AAM
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
         public bool AnimalsCanBeExecuted = false;
 
+        [Label("Minimum Melee Skill")]
         [Range(0, 20)]
         [Description("The absolute minimum melee skill required to perform any execution.\n" +
                      "Certain execution animations may require higher skill levels though.")]
@@ -60,8 +98,10 @@ namespace AAM
         [Description("Allows you to finely control who can execute who. A summary of the default settings is:\n" +
                      "Colonists will only execute hostile enemies.\n" +
                      "This means colonists will not execute prisoners or friendly pawns from trade caravans.")]
-        public ExecutionMatrix ExecutionMatrix = new ExecutionMatrix();
+        public ExecutionMatrix ExecutionMatrix = new();
+        #endregion
 
+        #region Gore
         [Header("Gore")]
         [Label("Damage Effect")]
         [Description("Enable or disable the damage affect in animations.\n" +
@@ -73,12 +113,6 @@ namespace AAM
                      "The blood is filth that must be cleaned up. Includes modded blood and mechanoid blood (oil).")]
         public bool Gore_FloorBlood = true;
 
-        //[Label("Blood Spray")]
-        //[Description("Enable or disable the blood spray effect in certain animations.\n" +
-        //             "The blood spray is a visual effect and does not leave any permanent filth.\n" +
-        //             "May be too over-the-top for some player's liking.")]
-        //public bool Gore_Spray = true;
-
         [Header("Performance")]
         [Description("The interval, in ticks, between a complex pawn calculation that runs on each map.\nDon't touch this unless you know what you are doing.")]
         [Range(1, 240)]
@@ -89,17 +123,72 @@ namespace AAM
                      "Higher values can increase the responsiveness of automatic grappling and executions, but can also greatly lower performance on very populated maps.")]
         [Range(0.25f, 10f)]
         public double MaxCPUTimePerTick = 1;
+        #endregion
 
+        #region Other
         [Header("Other")]
         [Description("In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.\n" +
                      "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
                      "<b>Note:</b> The offset corpses are reset after a save-reload.")]
         public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
+        #endregion
 
         public override void ExposeData()
         {
             base.ExposeData();
             SimpleSettings.AutoExpose(this);
+        }
+
+        public void PostLoadDefs()
+        {
+            animSettings ??= new Dictionary<AnimDef, AnimDef.SettingsData>();
+
+            foreach (var def in AnimDef.AllDefs)
+            {
+                if (def.SData != null)
+                    Core.Error("EXPECTED NULL DATA!");
+
+                if (animSettings.TryGetValue(def, out var found))
+                {
+                    def.SData = found;
+                }
+                else
+                {
+                    def.SetDefaultSData();
+                    animSettings.Add(def, def.SData);
+                }
+            }
+        }
+
+        public float DrawAnimationList(ModSettings self, SimpleSettings.MemberWrapper member, Rect area)
+        {
+            float height = SimpleSettings.DrawFieldHeader(self, member, area);
+            area.y += height;
+
+            float DrawAnim(AnimDef def)
+            {
+                var rect = area;
+                rect.height = 32;
+
+                Widgets.Label(rect, def.LabelCap);
+
+                var checkbox = rect;
+                checkbox.x += 200;
+                checkbox.width = 100;
+                Widgets.CheckboxLabeled(checkbox, "Enabled: ", ref def.SData.Enabled, placeCheckboxNearText: true);
+
+                return rect.height;
+            }
+
+            var animations = AnimDef.AllDefs;
+            foreach (var anim in animations)
+            {
+                float h = DrawAnim(anim);
+                area.y += h;
+                height += h;
+            }
+
+            return height;
         }
 
         public bool IsExecutionAllowed(Pawn executioner, Pawn victim, out string explanation)
@@ -136,7 +225,7 @@ namespace AAM
         /// Colonists of the player colony.
         /// Includes imprisoned colonists.
         /// </summary>
-        public ExecutionLine Colonists = new ExecutionLine()
+        public ExecutionLine Colonists = new()
         {
             Colonists = false,
             Prisoners = false,
@@ -147,7 +236,7 @@ namespace AAM
         /// <summary>
         /// Prisoners of the player colony. Does not include imprisoned colonists.
         /// </summary>
-        public ExecutionLine Prisoners = new ExecutionLine()
+        public ExecutionLine Prisoners = new()
         {
             Colonists = true,
             Prisoners = false,
@@ -158,7 +247,7 @@ namespace AAM
         /// <summary>
         /// Pawns that are friendly with the player faction, such as traders or allies.
         /// </summary>
-        public ExecutionLine Friendlies = new ExecutionLine()
+        public ExecutionLine Friendlies = new()
         {
             Colonists = true,
             Prisoners = true,
@@ -169,7 +258,7 @@ namespace AAM
         /// <summary>
         /// Enemies of the player faction.
         /// </summary>
-        public ExecutionLine Enemies = new ExecutionLine()
+        public ExecutionLine Enemies = new()
         {
             Colonists = true,
             Prisoners = true,

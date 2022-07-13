@@ -31,7 +31,7 @@ namespace AAM
             {
                 for (int z = -3; z <= 3; z++)
                 {
-                    IntVec3 pos = new IntVec3(x, 0, z);
+                    IntVec3 pos = new(x, 0, z);
                     bool mustBeClear = false;
                     foreach (var cell in def.GetMustBeClearCells(flipX, false, IntVec3.Zero))
                     {

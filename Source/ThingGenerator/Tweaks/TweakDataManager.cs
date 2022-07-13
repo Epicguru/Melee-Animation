@@ -9,7 +9,7 @@ namespace AAM.Tweaks
 {
     public static class TweakDataManager
     {
-        private static readonly Dictionary<ThingDef, ItemTweakData> itemTweaks = new Dictionary<ThingDef, ItemTweakData>();
+        private static readonly Dictionary<ThingDef, ItemTweakData> itemTweaks = new();
 
         public static void LoadAllForActiveMods(bool reset = true)
         {
@@ -90,7 +90,7 @@ namespace AAM.Tweaks
 
         public static Texture2D ToTexture2D(this RenderTexture rTex)
         {
-            Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGBA32, false);
+            Texture2D tex = new(rTex.width, rTex.height, TextureFormat.RGBA32, false);
             var old_rt = RenderTexture.active;
             RenderTexture.active = rTex;
 

@@ -1,27 +1,25 @@
-﻿using AAM.Grappling;
-using AAM.Tweaks;
+﻿using AAM.Tweaks;
 using HarmonyLib;
 using RimWorld;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using Verse;
-using Verse.AI;
 
 namespace AAM
 {
     [HotSwapAll]
     public class Core : Mod
     {
+        public static string ModTitle => "AAM.ModTitle".Trs();
         public static string ModFolder => ModContent.RootDir;
         public static ModContentPack ModContent;
         public static Settings Settings;
         public static bool IsSimpleSidearmsActive;
 
-        private readonly Queue<(string title, Action action)> lateLoadActions = new Queue<(string, Action)>();
-        private readonly Queue<(string title, Action action)> lateLoadActionsSync = new Queue<(string, Action)>();
+        private readonly Queue<(string title, Action action)> lateLoadActions = new();
+        private readonly Queue<(string title, Action action)> lateLoadActionsSync = new();
 
         public static void Log(string msg)
         {
@@ -45,10 +43,11 @@ namespace AAM
             AddParsers();
 
             Log("Hello, world!");
-            var h = new Harmony("co.uk.epicguru.animations");
+            var h = new Harmony(content.PackageId);
             h.PatchAll();
             ModContent = content;
 
+            // Initialize settings.
             Settings = GetSettings<Settings>();
 
             AddLateLoadAction(true, "Loading default shaders", () =>
@@ -57,13 +56,15 @@ namespace AAM
                 AnimRenderer.DefaultTransparent ??= new Material(FleckDefOf.AirPuff.GetGraphicData(0).shaderType.Shader);
             });
 
-            AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
-            AddLateLoadAction(true, "Loading line renderer...", AAM.Content.Load);
-            AddLateLoadAction(false, "Initializing anim defs...", AnimDef.Init);
-            AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
-            AddLateLoadAction(true, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
-            AddLateLoadAction(false, "Loading weapon tweak data...", () => TweakDataManager.LoadAllForActiveMods());
-            AddLateLoadAction(true, "Finding all lassos...", AAM.Content.FindAllLassos);
+            AddLateLoadAction(false, "AAM.Loading.SimpleSidearms".Trs(), CheckSimpleSidearms);
+            AddLateLoadAction(false, "AAM.Loading.TweakData".Trs(), () => TweakDataManager.LoadAllForActiveMods());
+            AddLateLoadAction(false, "AAM.Loading.PatchConf".Trs(), () => LogPotentialConflicts(h));
+            AddLateLoadAction(false, "AAM.Loading.Lasso".Trs(), AAM.Content.FindAllLassos);
+            
+            AddLateLoadAction(true, "AAM.Loading.Content".Trs(), AAM.Content.Load);
+            AddLateLoadAction(true, "AAM.Loading.Tex".Trs(), AnimationManager.Init);
+            AddLateLoadAction(true, "AAM.Loading.Anim".Trs(), AnimDef.Init);
+            AddLateLoadAction(true, "AAM.Loading.Settings".Trs(), Settings.PostLoadDefs);
 
             AddLateLoadEvents();
         }
@@ -78,7 +79,7 @@ namespace AAM
                 {
                     try
                     {
-                        LongEventHandler.SetCurrentEventText($"Advanced Animation: {pair.title}\n");
+                        LongEventHandler.SetCurrentEventText($"{ModTitle}: {pair.title}\n");
                         pair.action();
                     }
                     catch (Exception e)
@@ -86,7 +87,7 @@ namespace AAM
                         Error($"Exception in post-load event (async) '{pair.title}':", e);
                     }
                 }
-            }, "Load Advanced Animation Mod", true, null);
+            }, "AAM.Loading.Title".Trs(), true, null);
 
             // Same thread loading...
             LongEventHandler.QueueLongEvent(() =>
@@ -95,7 +96,7 @@ namespace AAM
                 {
                     try
                     {
-                        LongEventHandler.SetCurrentEventText($"Advanced Animation:\n{pair.title}");
+                        LongEventHandler.SetCurrentEventText($"{ModTitle}:\n{pair.title}");
                         pair.action();
                     }
                     catch (Exception e)
@@ -103,7 +104,7 @@ namespace AAM
                         Error($"Exception in post-load event '{pair.title}':", e);
                     }
                 }
-            }, "Load Advanced Animation Mod", false, null);
+            }, "AAM.Loading.Title".Trs(), false, null);
         }
 
         private void AddLateLoadAction(bool synchronous, string title, Action a)
@@ -146,7 +147,7 @@ namespace AAM
 
         public override string SettingsCategory()
         {
-            return Content.Name;
+            return ModTitle;
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
@@ -223,45 +224,4 @@ namespace AAM
     }
 
     public class HotSwapAllAttribute : Attribute { }
-
-    public class TempComp : MapComponent
-    {
-        public TempComp(Map map) : base(map)
-        {
-        }
-
-        public override void MapComponentUpdate()
-        {
-            base.MapComponentTick();
-
-            var sel = Find.Selector.SelectedPawns.Where(p => p.Spawned && !p.Dead && !p.Downed).ToList();
-            if (sel.Count == 1)
-            {
-                var selectedPawn = sel[0];
-                if (selectedPawn != null && Input.GetKey(KeyCode.LeftControl))
-                    DrawValidSpotsAround(selectedPawn);
-
-                var targets = selectedPawn.Map.attackTargetsCache.GetPotentialTargetsFor(selectedPawn);
-                foreach (var target in targets)
-                {
-                    if (target.Thing is not Pawn pawn)
-                        continue;
-
-                    SimpleColor color = SimpleColor.Green;
-                    if (target.ThreatDisabled(selectedPawn))
-                        continue;
-                    if (!AttackTargetFinder.IsAutoTargetable(target))
-                        continue;
-
-                    GenDraw.DrawLineBetween(selectedPawn.DrawPos, target.Thing.DrawPos, color);
-                }
-            }
-        }
-
-        private void DrawValidSpotsAround(Pawn pawn)
-        {
-            foreach (var cell in GrabUtility.GetFreeSpotsAround(pawn))
-                GenDraw.DrawTargetHighlightWithLayer(cell, AltitudeLayer.MoteOverhead);
-        }
-    }
 }

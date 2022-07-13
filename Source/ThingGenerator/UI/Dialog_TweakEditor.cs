@@ -1,10 +1,10 @@
-﻿using AAM.Tweaks;
+﻿using AAM.Reqs;
+using AAM.Tweaks;
 using RimWorld;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using AAM.Reqs;
 using UnityEngine;
 using Verse;
 
@@ -26,7 +26,7 @@ namespace AAM.UI
             return instance;
         }
 
-        public override Vector2 InitialSize => new Vector2(512, 700);
+        public override Vector2 InitialSize => new(512, 700);
         public ModContentPack Mod;
         public TweakContainer Container;
         public ThingDef CurrentDef;
@@ -158,7 +158,7 @@ namespace AAM.UI
 
             if (ui.ButtonText($"Editing: {CurrentDef?.LabelCap ?? "nothing"}"))
             {
-                List<FloatMenuOption> list = new List<FloatMenuOption>();
+                List<FloatMenuOption> list = new();
                 foreach (var def in AllMeleeWeapons())
                 {
                     bool hasTweak = TweakDataManager.TweakExistsFor(def);
@@ -428,8 +428,8 @@ namespace AAM.UI
             if(tweak.HandsMode == HandsMode.Default)
                 Graphics.DrawMesh(AnimData.GetMesh(false, false), Matrix4x4.TRS(handBPos, Quaternion.identity, handScale), AnimRenderer.DefaultCutout, 0, camera, 0, block);
 
-            Vector3 start = new Vector3(tweak.BladeStart, 0, 1);
-            Vector3 end = new Vector3(tweak.BladeStart, 0, -1);
+            Vector3 start = new(tweak.BladeStart, 0, 1);
+            Vector3 end = new(tweak.BladeStart, 0, -1);
             for (int i = 0; i < 3; i++)
                 GenDraw.DrawLineBetween(start, end, SimpleColor.Green, 0.1f);
 

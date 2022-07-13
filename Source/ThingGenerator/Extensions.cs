@@ -1,21 +1,26 @@
-﻿using AAM.Events;
+﻿using AAM.Data;
+using AAM.Events;
 using AAM.Events.Workers;
+using AAM.Tweaks;
 using RimWorld;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using AAM.Data;
-using AAM.Tweaks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AAM
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Shorthand for <paramref name="str"/>.Translate().
+        /// </summary>
+        public static TaggedString Trs(this string str) => str.Translate();
+
         public static AnimationManager GetAnimManager(this Map map)
             => map?.GetComponent<AnimationManager>();
 
@@ -97,7 +102,7 @@ namespace AAM
 
         public static PawnMeleeData GetMeleeData(this Pawn pawn) => GameComp.Current?.GetOrCreateData(pawn);
 
-        public static Vector3 ToWorld(this in Vector2 flatVector, float altitude = 0) => new Vector3(flatVector.x, altitude, flatVector.y);
+        public static Vector3 ToWorld(this in Vector2 flatVector, float altitude = 0) => new(flatVector.x, altitude, flatVector.y);
 
         public static Vector2 ToFlat(this in Vector3 worldVector) => new Vector3(worldVector.x, worldVector.z);
 
@@ -139,7 +144,7 @@ namespace AAM
         [DebugAction("Advanced Animation Mod", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void SpawnArmy()
         {
-            List<DebugMenuOption> list = new List<DebugMenuOption>();
+            List<DebugMenuOption> list = new();
             foreach (PawnKindDef localKindDef2 in from kd in DefDatabase<PawnKindDef>.AllDefs
                      orderby kd.defName
                      select kd)
@@ -163,7 +168,7 @@ namespace AAM
                             }
                             if (lord == null)
                             {
-                                LordJob_DefendPoint lordJob = new LordJob_DefendPoint(newPawn.Position, null, false, true);
+                                LordJob_DefendPoint lordJob = new(newPawn.Position, null, false, true);
                                 lord = LordMaker.MakeNewLord(faction, lordJob, Find.CurrentMap, null);
                             }
                             lord.AddPawn(newPawn);

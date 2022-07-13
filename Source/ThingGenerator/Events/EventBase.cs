@@ -6,7 +6,7 @@ namespace AAM.Events;
 
 public abstract class EventBase : ScriptableObject
 {
-    public static Dictionary<Type, Func<string, object>> Parsers = new Dictionary<Type, Func<string, object>>()
+    public static Dictionary<Type, Func<string, object>> Parsers = new()
     {
         { typeof(string), s => s },
         { typeof(float), s => float.Parse(s) },

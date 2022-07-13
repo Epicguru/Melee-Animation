@@ -18,7 +18,7 @@ public class MoteEvent : EventBase
 
     [Header("velocity")]
     public Vector2 StartRotationSpeed;
-    public Vector2 StartVelocityMagnitude = new Vector2(1, 2);
+    public Vector2 StartVelocityMagnitude = new(1, 2);
     public Vector2 StartVelocityAngle;
     public Vector2 StartScale = Vector2.one;
 

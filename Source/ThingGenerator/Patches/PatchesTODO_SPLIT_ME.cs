@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using AAM.Grappling;
+﻿using AAM.Grappling;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -11,7 +10,6 @@ namespace AAM.Patches
         private static Pawn lastPawn;
         private static AnimRenderer lastRenderer;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AnimRenderer GetAnimator(Pawn pawn)
         {
             if (pawn == lastPawn && lastRenderer != null && !lastRenderer.IsDestroyed)

@@ -2,7 +2,7 @@
 {
     public sealed class True : Req
     {
-        public static readonly True Instance = new True();
+        public static readonly True Instance = new();
 
         public override bool Evaluate(ReqInput input) => true;
     }

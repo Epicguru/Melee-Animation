@@ -1,7 +1,7 @@
-﻿using System;
-using AAM.Patches;
+﻿using AAM.Patches;
 using AAM.UI;
 using RimWorld;
+using System;
 using Verse;
 
 namespace AAM.Events.Workers

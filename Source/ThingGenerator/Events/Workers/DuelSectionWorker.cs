@@ -7,7 +7,7 @@ namespace AAM.Events.Workers
     {
         public override string EventID => "DuelEvent";
 
-        private static readonly List<EventBase> tempEvents = new List<EventBase>();
+        private static readonly List<EventBase> tempEvents = new();
 
         public override void Run(AnimEventInput input)
         {

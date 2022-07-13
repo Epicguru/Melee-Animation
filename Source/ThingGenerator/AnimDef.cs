@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using Verse;
 
 namespace AAM
@@ -55,6 +56,18 @@ namespace AAM
 
         #endregion
 
+        public class SettingsData : IExposable
+        {
+            public bool Enabled = true;
+            public float Probability = 1;
+
+            public void ExposeData()
+            {
+                Scribe_Values.Look(ref Enabled, "Enabled", true);
+                Scribe_Values.Look(ref Probability, "Probability", 1f);
+            }
+        }
+
         public virtual string FullDataPath
         {
             get
@@ -96,16 +109,27 @@ namespace AAM
         }
         public string DataPath => data;
         public ulong ClearMask, FlipClearMask;
+        public float Probability => SData?.Probability ?? relativeProbability;
+        [XmlIgnore] public SettingsData SData;
 
         public AnimType type = AnimType.Execution;
         private string data;
         public string jobString;
         public int pawnCount;
         public Req weaponFilter;
-        public List<AnimCellData> cellData = new List<AnimCellData>();
-        public float relativeProbability = 1;
+        public List<AnimCellData> cellData = new();
+        private float relativeProbability = 1;
 
         private AnimData resolvedData, resolvedNonLethalData;
+
+        public void SetDefaultSData()
+        {
+            SData = new SettingsData()
+            {
+                Enabled = true,
+                Probability = relativeProbability,
+            };
+        }
 
         protected virtual void ResolveData()
         {
@@ -176,7 +200,7 @@ namespace AAM
             }
         }
 
-        private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new IntVec2(fx ? -input.x : input.x, fy ? -input.z : input.z);
+        private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new(fx ? -input.x : input.x, fy ? -input.z : input.z);
 
         public bool AllowsWeapon(ReqInput input)
         {

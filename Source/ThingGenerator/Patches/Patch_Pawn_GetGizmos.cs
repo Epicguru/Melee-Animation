@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AAM.Gizmos;
 using HarmonyLib;
+using System;
 using System.Collections.Generic;
-using AAM.Gizmos;
 using Verse;
 
 namespace AAM.Patches

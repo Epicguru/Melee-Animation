@@ -40,7 +40,7 @@ namespace AAM.Grappling
 
         private static readonly Func<float, float> FlightSpeed;
         private static readonly Func<float, float> FlightCurveHeight = GenMath.InverseParabola;
-        private static readonly MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        private static readonly MaterialPropertyBlock mpb = new();
 
         public int TotalDurationTicks => ticksFlightTime;
         public Pawn Grappler;
@@ -68,7 +68,7 @@ namespace AAM.Grappling
 
         static GrappleFlyer()
         {
-            AnimationCurve animationCurve = new AnimationCurve();
+            AnimationCurve animationCurve = new();
             animationCurve.AddKey(0f, 0f);
             animationCurve.AddKey(0.1f, 0.15f);
             animationCurve.AddKey(1f, 1f);
@@ -113,7 +113,7 @@ namespace AAM.Grappling
             float num = FlightSpeed(arg);
             this.effectiveHeight = FlightCurveHeight(num) * Mathf.Clamp(ticksFlightTime / 60f * 0.5f, 0.3f, 2f);
             this.groundPos = Vector3.Lerp(this.startVec, base.DestinationPos, num);
-            Vector3 a = new Vector3(0f, 0f, 2f);
+            Vector3 a = new(0f, 0f, 2f);
             Vector3 b = Altitudes.AltIncVect * this.effectiveHeight;
             Vector3 b2 = a * this.effectiveHeight;
             this.effectivePos = this.groundPos + b + b2;
@@ -224,7 +224,7 @@ if (shadowMaterial == null)
 return;
 }
 float num = Mathf.Lerp(1f, 0.6f, height);
-            Vector3 s = new Vector3(num, 1f, num);
+            Vector3 s = new(num, 1f, num);
             Matrix4x4 matrix = default(Matrix4x4);
             matrix.SetTRS(drawLoc, Quaternion.identity, s);
             Graphics.DrawMesh(MeshPool.plane10, matrix, shadowMaterial, 0);
