@@ -75,7 +75,7 @@ namespace AAM
 
         public override string GetReport()
         {
-            return $"Animation: {ProcessReport(Animator?.Def?.jobString)}";
+            return $"{"AAM.Animation".Trs()}: {ProcessReport(Animator?.Def?.jobString)}";
         }
     }
 }

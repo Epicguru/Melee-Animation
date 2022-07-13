@@ -184,23 +184,5 @@ namespace AAM
                     break;
             }
         }
-
-        public override void MapRemoved()
-        {
-            base.MapRemoved();
-            Core.Warn("MAP REMOVED");
-        }
-
-        public override void FinalizeInit()
-        {
-            base.FinalizeInit();
-            Core.Warn("FINISH INIT");
-        }
-
-        public override void MapGenerated()
-        {
-            base.MapGenerated();
-            Core.Warn("GENERATED");
-        }
     }
 }

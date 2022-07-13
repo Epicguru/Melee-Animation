@@ -21,6 +21,11 @@ namespace AAM
         /// </summary>
         public static TaggedString Trs(this string str) => str.Translate();
 
+        /// <summary>
+        /// Shorthand for <paramref name="str"/>.Translate().
+        /// </summary>
+        public static TaggedString Trs(this string str, params NamedArgument[] args) => TranslatorFormattedStringExtensions.Translate(str, args);
+
         public static AnimationManager GetAnimManager(this Map map)
             => map?.GetComponent<AnimationManager>();
 

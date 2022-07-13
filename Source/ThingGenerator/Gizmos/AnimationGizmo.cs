@@ -93,7 +93,7 @@ namespace AAM.Gizmos
                 string pawnName = null;
                 if (Find.Selector.SelectedPawns.Count > 1)
                     pawnName = pawn.NameShortColored;
-                string labelCap = $"Advanced Melee{(pawnName != null ? $" ({pawnName})" : "")}";
+                string labelCap = $"{"AAM.Gizmo.Title".Trs()}{(pawnName != null ? $"({pawnName})" : "")}";
 
                 if (!labelCap.NullOrEmpty())
                 {
@@ -184,15 +184,18 @@ namespace AAM.Gizmos
             string sPawns = multi ? $"{pawns.Count + 1} pawns" : "pawn";
             string sIs = multi ? $"are" : "is";
             string sHas = multi ? "have" : "has";
+            var pawnCount = new NamedArgument(pawns.Count + 1, "PawnCount");
 
             string tooltip;
             if (mixed)
             {
-                tooltip = $"These {pawns.Count + 1} pawns have differing auto-execute settings. Click to set them all to '{data.AutoExecute}'.";
+                // pawns.Count + 1
+                tooltip = $"AAM.Gizmo.DifferingReset".Trs(pawnCount,
+                                                          new NamedArgument(data.AutoExecute, "Mode"));
             }
             else
             {
-                string autoExecFromSettings = Core.Settings.AutoExecute ? "enabled" : "disabled";
+                string autoExecFromSettings = Core.Settings.AutoExecute ? "AAM.Gizmo.Enabled".Trs() : "AAM.Gizmo.Disabled".Trs();
                 string autoExecFromSettingsColor = Core.Settings.AutoExecute ? "green" : "red";
                 bool resolved = selected switch
                 {
@@ -201,13 +204,17 @@ namespace AAM.Gizmos
                     AutoOption.Disabled => false,
                     _ => throw new ArgumentOutOfRangeException()
                 };
+                string plural = multi ? "Plural" : "";
                 string explanation = resolved
-                    ? $"This means that {sThis} {sPawns} will automatically execute enemies whenever they can."
-                    : $"This means that {sThis} {sPawns} will <b>NOT</b> automatically execute enemies."; 
+                    ? $"AAM.Gizmo.Execute.ExplainResolved{plural}".Trs(pawnCount)
+                    : $"AAM.Gizmo.Execute.Explain{plural}".Trs(pawnCount);
 
+                string mode = $"<color={autoExecFromSettingsColor}><b>{autoExecFromSettings}</b></color>";
+                var modeArg = new NamedArgument(mode, "Mode");
+                var explainationArg = new NamedArgument(explanation, "Explanation");
                 tooltip = selected switch
                 {
-                    AutoOption.Default  => $"{sThis.CapitalizeFirst()} {sPawns} {sIs} using the <b>default</b> auto-execute setting, which is <color={autoExecFromSettingsColor}><b>{autoExecFromSettings}</b></color>.\n\n{explanation}",
+                    AutoOption.Default  => $"AAM.Gizmo.Execute.Mode.Default{plural}".Trs(pawnCount, explainationArg),
                     AutoOption.Enabled  => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-execute <color=green><b>enabled</b></color>.\n\n{explanation}",
                     AutoOption.Disabled => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-execute <color=red><b>disabled</b></color>.\n\n{explanation}",
                     _ => throw new ArgumentOutOfRangeException()
