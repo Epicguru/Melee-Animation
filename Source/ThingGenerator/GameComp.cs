@@ -44,7 +44,7 @@ namespace AAM
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 pawnMeleeData.Clear();
-                Core.Log($"Loading {allMeleeData.Count} datas.");
+                Core.Log($"Loading {allMeleeData.Count} pawn melee data.");
                 foreach (var data in allMeleeData)
                 {
                     if (data.ShouldSave())

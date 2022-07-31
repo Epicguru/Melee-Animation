@@ -1003,12 +1003,12 @@ public class AnimRenderer : IExposable
         {
             DrawInt(time);
 
-            Graphics.DrawMesh(Mesh.Mesh, Renderer.RootTransform, DefaultCutout, 0);
+            Graphics.DrawMesh(Mesh.Mesh, Renderer.RootTransform, DefaultTransparent, 0);
         }
 
         private bool DrawInt(float time)
         {
-            if (time == lastTime)
+            if (Math.Abs(time - lastTime) < 0.0001f)
                 return false;
 
             if (time < lastTime)
@@ -1067,7 +1067,15 @@ public class AnimRenderer : IExposable
 
         private (Color down, Color up) MakeColors(in Data data)
         {
-            return (Color.red, Color.green);
+            const float LEN = 0.3f;
+            float timeSinceHere = lastTime - data.Time;
+            if (timeSinceHere > LEN)
+                return (default, default);
+
+            float a = 1f - timeSinceHere / LEN;
+            var low = new Color(1, 0, 0, a);
+            var high = new Color(0, 1, 0, a);
+            return (low, high);
         }
 
         private void AddInterpolatedPos(int lastIndex, float currentTime)

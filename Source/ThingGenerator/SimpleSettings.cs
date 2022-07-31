@@ -909,7 +909,7 @@ namespace AAM
     public class DescriptionAttribute : Attribute
     {
         public readonly string Description;
-        public DescriptionAttribute(string description!!)
+        public DescriptionAttribute(string description)
         {
             this.Description = description;
         }
@@ -921,7 +921,7 @@ namespace AAM
         public readonly string MethodName;
         public bool SerializeField = true;
 
-        public DrawMethodAttribute(string methodName!!)
+        public DrawMethodAttribute(string methodName)
         {
             this.MethodName = methodName;
         }

@@ -212,9 +212,10 @@ namespace AAM.Gizmos
                 string mode = $"<color={autoExecFromSettingsColor}><b>{autoExecFromSettings}</b></color>";
                 var modeArg = new NamedArgument(mode, "Mode");
                 var explainationArg = new NamedArgument(explanation, "Explanation");
+
                 tooltip = selected switch
                 {
-                    AutoOption.Default  => $"AAM.Gizmo.Execute.Mode.Default{plural}".Trs(pawnCount, explainationArg),
+                    AutoOption.Default  => $"AAM.Gizmo.Execute.Mode.Default{plural}".Trs(pawnCount, explainationArg, modeArg),
                     AutoOption.Enabled  => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-execute <color=green><b>enabled</b></color>.\n\n{explanation}",
                     AutoOption.Disabled => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-execute <color=red><b>disabled</b></color>.\n\n{explanation}",
                     _ => throw new ArgumentOutOfRangeException()

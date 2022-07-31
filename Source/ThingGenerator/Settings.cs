@@ -25,8 +25,8 @@ namespace AAM
         public float GlobalAnimationSpeed = 1f;
 
         [DrawMethod(nameof(DrawAnimationList))]
-        [SettingOptions(drawValue: false, allowReset: false)]
-        private Dictionary<AnimDef, AnimDef.SettingsData> animSettings = new Dictionary<AnimDef, AnimDef.SettingsData>();
+        [SettingOptions(drawValue: false, allowReset: false, drawHoverHighlight: false)]
+        private Dictionary<string, AnimDef.SettingsData> animSettings = new Dictionary<string, AnimDef.SettingsData>();
         #endregion
 
         #region Lasso
@@ -141,21 +141,21 @@ namespace AAM
 
         public void PostLoadDefs()
         {
-            animSettings ??= new Dictionary<AnimDef, AnimDef.SettingsData>();
+            animSettings ??= new Dictionary<string, AnimDef.SettingsData>();
 
             foreach (var def in AnimDef.AllDefs)
             {
                 if (def.SData != null)
                     Core.Error("EXPECTED NULL DATA!");
 
-                if (animSettings.TryGetValue(def, out var found))
+                if (animSettings.TryGetValue(def.defName, out var found))
                 {
                     def.SData = found;
                 }
                 else
                 {
                     def.SetDefaultSData();
-                    animSettings.Add(def, def.SData);
+                    animSettings.Add(def.defName, def.SData);
                 }
             }
         }
@@ -173,9 +173,16 @@ namespace AAM
                 Widgets.Label(rect, def.LabelCap);
 
                 var checkbox = rect;
-                checkbox.x += 200;
+                checkbox.x += 230;
                 checkbox.width = 100;
                 Widgets.CheckboxLabeled(checkbox, "Enabled: ", ref def.SData.Enabled, placeCheckboxNearText: true);
+
+                if (def.SData.Enabled)
+                {
+                    checkbox.x += 110;
+                    checkbox.width = 200;
+                    def.SData.Probability = Widgets.HorizontalSlider(checkbox, def.SData.Probability, 0f, 10f, label: $"Relative Probability: {def.SData.Probability * 100f:F0}%");
+                }
 
                 return rect.height;
             }

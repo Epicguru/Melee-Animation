@@ -1,4 +1,5 @@
-﻿using AAM.Tweaks;
+﻿using AAM.Patches;
+using AAM.Tweaks;
 using HarmonyLib;
 using RimWorld;
 using System;
@@ -53,18 +54,20 @@ namespace AAM
             AddLateLoadAction(true, "Loading default shaders", () =>
             {
                 AnimRenderer.DefaultCutout ??= new Material(ThingDefOf.AIPersonaCore.graphic.Shader);
-                AnimRenderer.DefaultTransparent ??= new Material(FleckDefOf.AirPuff.GetGraphicData(0).shaderType.Shader);
+                AnimRenderer.DefaultTransparent ??= new Material(FleckDefOf.DustPuff.graphicData.shaderType.Shader);
             });
 
-            AddLateLoadAction(false, "AAM.Loading.SimpleSidearms".Trs(), CheckSimpleSidearms);
-            AddLateLoadAction(false, "AAM.Loading.TweakData".Trs(), () => TweakDataManager.LoadAllForActiveMods());
-            AddLateLoadAction(false, "AAM.Loading.PatchConf".Trs(), () => LogPotentialConflicts(h));
-            AddLateLoadAction(false, "AAM.Loading.Lasso".Trs(), AAM.Content.FindAllLassos);
-            
-            AddLateLoadAction(true, "AAM.Loading.Content".Trs(), AAM.Content.Load);
-            AddLateLoadAction(true, "AAM.Loading.Tex".Trs(), AnimationManager.Init);
-            AddLateLoadAction(true, "AAM.Loading.Anim".Trs(), AnimDef.Init);
-            AddLateLoadAction(true, "AAM.Loading.Settings".Trs(), Settings.PostLoadDefs);
+            AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
+            AddLateLoadAction(false, "Loading weapon tweak data...", () => TweakDataManager.LoadAllForActiveMods());
+            AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
+            AddLateLoadAction(false, "Finding all lassos...", AAM.Content.FindAllLassos);
+
+            //AddLateLoadAction(true, "Loading settings...", () => {  });
+            AddLateLoadAction(true, "Loading main content...", AAM.Content.Load);
+            AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
+            AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
+            AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
+            AddLateLoadAction(true, "Nuking Yayo's Animation patches...", () => YayoKiller.Init(h));
 
             AddLateLoadEvents();
         }
@@ -87,7 +90,7 @@ namespace AAM
                         Error($"Exception in post-load event (async) '{pair.title}':", e);
                     }
                 }
-            }, "AAM.Loading.Title".Trs(), true, null);
+            }, "Load Advanced Animation Mod", true, null);
 
             // Same thread loading...
             LongEventHandler.QueueLongEvent(() =>

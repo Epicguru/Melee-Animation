@@ -109,7 +109,7 @@ namespace AAM
         }
         public string DataPath => data;
         public ulong ClearMask, FlipClearMask;
-        public float Probability => SData?.Probability ?? relativeProbability;
+        public float Probability => relativeProbability * (SData?.Probability ?? 1f);
         [XmlIgnore] public SettingsData SData;
 
         public AnimType type = AnimType.Execution;
@@ -127,7 +127,7 @@ namespace AAM
             SData = new SettingsData()
             {
                 Enabled = true,
-                Probability = relativeProbability,
+                Probability = 1f,
             };
         }
 

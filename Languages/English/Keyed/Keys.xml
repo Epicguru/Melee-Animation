@@ -3,16 +3,6 @@
 
   <AAM.ModTitle>Epicguru's Melee Animation</AAM.ModTitle>
 
-  <AAM.LoadingTitle>Load Advanced Animation Mod</AAM.LoadingTitle>
-  <AAM.Loading.SimpleSidearms>Checking for Simple Sidearms install...</AAM.Loading.SimpleSidearms>
-  <AAM.Loading.TweakData>Loading weapon tweak data...</AAM.Loading.TweakData>
-  <AAM.Loading.PatchConf>Checking for patch conflicts...</AAM.Loading.PatchConf>
-  <AAM.Loading.Lasso>Finding all lassos...</AAM.Loading.Lasso>
-  <AAM.Loading.Content>Loading main content...</AAM.Loading.Content>
-  <AAM.Loading.Tex>Loading misc textures...</AAM.Loading.Tex>
-  <AAM.Loading.Anim>Initializing anim defs...</AAM.Loading.Anim>
-  <AAM.Loading.Settings>Applying settings...</AAM.Loading.Settings>
-
   <AAM.Animation>Animation</AAM.Animation>
 
   <AAM.Gizmo.Title>Advanced Melee</AAM.Gizmo.Title>
