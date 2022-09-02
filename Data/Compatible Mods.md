@@ -1,5 +1,5 @@
 # Compatible Mods List
-`Updated 09/02/2022 21:11:34.`  
+`Updated 09/02/2022 21:13:36.`  
 
 Mods listed here are fully compatible with this mod.  
 Mods that are **not** listed here are not *incompatible* - but they won't be able to perform animations.  
