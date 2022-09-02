@@ -1,0 +1,165 @@
+name: Release
+
+env:
+  # Change this to point to your solution, or the folder in which your solution 
+  # can be found.
+  SLN_PATH: Source/
+  # Change this to what you want your folder name to be in people's Mods/
+  # folder. It should be unique to your mod.
+  MOD_NAME: RimCI
+  # These two environment variables control whether all releases created by the
+  # release job are drafts or prereleases.
+  RELEASE_DRAFT: true
+  RELEASE_PRERELEASE: false
+
+on:
+  push:
+    tags:
+      # This will only run the release workflow when it's tagged with a version
+      # tag.
+      - 'v*'
+
+jobs:
+  build:
+    name: Build on ${{ matrix.operating-system }}
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        # You only need one platform for building the release since the DLLs are
+        # cross-platform using mono. I chose Ubuntu because it ran the fastest
+        # for the build steps. 
+        operating-system: [ubuntu-latest]
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      
+    - name: Setup Dotnet
+      uses: actions/setup-dotnet@3
+      with:
+        dotnet-version: 6.0.x
+      
+    - name: Install Mod Dependencies
+      run: dotnet restore ${{ env.SLN_PATH }}
+
+    - name: Build Mod
+      run: dotnet build ${{ env.SLN_PATH }} --configuration Release --no-restore
+
+    # I don't know how well testing will work without Rimworld actually installed. 
+    # But if you have unit tests configured to work with dotnet, you may be able 
+    # to uncomment this and add a testing step.
+    # - name: Test Mod
+    #   run: dotnet test ${{ env.SLN_PATH }} --no-restore --verbosity normal
+
+    # There is no `zip` command on windows so you need to use tar.
+    # - name: Zip-up Mod
+    #   run: tar --exclude="*." -zcvf dist.tar.gz About/ Assemblies/ Defs/ Languages/ Patches/ RimCI/ Sounds/ Textures/
+
+    # To modify this with your own directory structure, just change the paths to 
+    # whatever you want. It will not upload any empty directories, those with only
+    # hidden files will also be excluded.
+    - name: Upload Mod Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        retention-days: 7
+        path: |
+          About/
+          Assemblies/
+          Defs/
+          Languages/
+          LICENSE
+          Patches/
+          Sounds/
+          Source/
+          Textures/
+          !**/.*
+        # This final path is to exclude hidden files such as .gitkeep and .DS_STORE. 
+        # I would recommend keeping it, but I don't think it will break anything if 
+        # you remove or modify it.
+  package:
+    name: Package
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set Environment Variables
+      # This is a special syntax for GitHub Actions that sets an environment
+      # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+      run: echo "::set-env name=MOD_PATH::$HOME/$MOD_NAME"
+    
+    - name: Create Mod Folder
+      run: mkdir -p ${{ env.MOD_PATH }}
+
+    - name: Download Mod Artifacts from Build Step
+      uses: actions/download-artifact@v3
+      with:
+        name: build
+        path: ${{ env.MOD_PATH }}
+
+    # If you have any other Rimworld folders that didn't get scooped up in the
+    # artifacts, add them here. It may be neccessary to change this for v1.1 mods.
+    - name: Create Mod Folders
+      run: |
+        mkdir -p ${{ env.MOD_PATH }}/About
+        mkdir -p ${{ env.MOD_PATH }}/Assemblies
+        mkdir -p ${{ env.MOD_PATH }}/Defs
+        mkdir -p ${{ env.MOD_PATH }}/Languages
+        mkdir -p ${{ env.MOD_PATH }}/Patches
+        mkdir -p ${{ env.MOD_PATH }}/Sounds
+        mkdir -p ${{ env.MOD_PATH }}/Source
+        mkdir -p ${{ env.MOD_PATH }}/Textures
+
+    - name: Zip Mod
+      run: | 
+        cd $HOME
+        zip -r ./${{ env.MOD_NAME }}.zip ./${{ env.MOD_NAME }}/*
+
+    - name: Upload Mod Zip Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.MOD_NAME }}
+        path: ${{ env.MOD_PATH }}.zip
+        retention-days: 5
+
+  release:
+    name: Release
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get the Version
+      id: get_version
+      # This is a special syntax for GitHub Actions that sets an output
+      # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+      run: echo ::set-output name=VERSION::$(echo ${{ github.ref }} | cut -d / -f 3)
+    - name: Set Environment Variables
+      # This is a special syntax for GitHub Actions that sets an environment
+      # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+      run: echo "::set-env name=MOD_RELEASE::$MOD_NAME-${{ steps.get_version.outputs.VERSION }}"
+
+    - name: Download Mod Artifacts from Build Step
+      id: download_zip
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ env.MOD_NAME }}
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ env.MOD_RELEASE }}
+        # These can be configured at the top of the workflow.
+        draft: ${{ env.RELEASE_DRAFT }}
+        prerelease: ${{ env.RELEASE_PRERELEASE }}
+    
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ${{ steps.download_zip.outputs.download-path }}/${{ env.MOD_NAME }}.zip
+        asset_name: ${{ env.MOD_RELEASE }}.zip
+        asset_content_type: application/zip
