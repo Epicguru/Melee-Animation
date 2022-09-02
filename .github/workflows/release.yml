@@ -6,10 +6,10 @@ env:
   SLN_PATH: Source/
   # Change this to what you want your folder name to be in people's Mods/
   # folder. It should be unique to your mod.
-  MOD_NAME: RimCI
+  MOD_NAME: AdvancedAnimationMod
   # These two environment variables control whether all releases created by the
   # release job are drafts or prereleases.
-  RELEASE_DRAFT: true
+  RELEASE_DRAFT: false
   RELEASE_PRERELEASE: false
 
 on:
@@ -36,13 +36,13 @@ jobs:
     - name: Setup Dotnet
       uses: actions/setup-dotnet@3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 6.x.x
       
     - name: Install Mod Dependencies
       run: dotnet restore ${{ env.SLN_PATH }}
 
     - name: Build Mod
-      run: dotnet build ${{ env.SLN_PATH }} --configuration Release --no-restore
+      run: dotnet build ${{ env.SLN_PATH }} --no-restore
 
     # I don't know how well testing will work without Rimworld actually installed. 
     # But if you have unit tests configured to work with dotnet, you may be able 
