@@ -1,19 +1,22 @@
-﻿
-using Verse;
+﻿using Verse;
 
-namespace AAM.LightsaberPatch
+namespace AAM.LightsaberPatch;
+
+[HotSwapAll]
+public class PatchCore : Mod
 {
-    [HotSwapAll]
-    public class PatchCore : Mod
+    public static void Log(string msg)
     {
-        public static void Log(string msg)
-        {
-            Core.Log($"<color=#ffa8fc>[Lightsaber Patch]</color> {msg}");
-        }
+        Core.Log($"<color=#ffa8fc>[Lightsaber Patch]</color> {msg}");
+    }
 
-        public PatchCore(ModContentPack content) : base(content)
-        {
-            Log("Loaded lightsaber patch!");
-        }
+    public PatchCore(ModContentPack content) : base(content)
+    {
+        Log("Loaded lightsaber patch!");
+    }
+
+    private void PatchSabers()
+    {
+
     }
 }

@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="BetterFloatMenu" Version="*" />
-    <PackageReference Include="Lib.Harmony" Version="2.2.1">
+    <PackageReference Include="Lib.Harmony" Version="2.2.2">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
   </ItemGroup>

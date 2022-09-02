@@ -75,7 +75,6 @@ namespace AAM.UI
             Tabs.Add(("Inspector", DrawInspector));
             Tabs.Add(("Performance Analyzer", DrawPerformanceAnalyzer));
             Tabs.Add(("Animation Space Checker", DrawSpaceChecker));
-            Tabs.Add(("Sweep Path Inspector", DrawSweepInspector));
             Tabs.Add(("List All Active", DrawAllLists));
 
             if (mpb == null)
@@ -587,62 +586,6 @@ namespace AAM.UI
                     Messages.Message("Animation failed to start! Check debug log for details.", LookTargets.Invalid, MessageTypeDefOf.RejectInput, false);
             }
             GUI.color = Color.white;
-        }
-
-        private void DrawSweepInspector(Listing_Standard ui)
-        {
-            if (!IsStarterOpen)
-            {
-                ui.Label("Use the Animation Starter window to select an animation...");
-                return;
-            }
-
-            var data = startDef.Data;
-
-            ui.Label($"{startDef.LabelCap} ({startDef.defName}) has {data.SweepDataCount} sweep paths:");
-            foreach (var part in data.PartsWithSweepData)
-            {
-
-                ui.Label($"<b><color=cyan>{part.Name} ({part.Path})</color></b>");
-                ui.Indent();
-
-                int j = 0;
-                foreach (var path in data.GetSweepPaths(part))
-                {
-                    var rect = ui.GetRect(26);
-
-                    bool isSelected = selectedSweepPath == path;
-                    Widgets.Label(rect, $"<b>Path {j++}:</b> {path.Count} points.");
-                    if (isSelected)
-                        Widgets.DrawHighlightSelected(rect);
-                    Widgets.DrawHighlightIfMouseover(rect);
-
-                    if (Widgets.ButtonInvisible(rect))
-                    {
-                        selectedSweepPath = path;
-
-                        ItemTweakData tweak = TweakDataManager.TryGetTweak(startPawns[0]?.GetFirstMeleeWeapon()?.def);
-                        currentDown = tweak?.BladeStart ?? 0;
-                        currentUp = tweak?.BladeEnd ?? 1;
-                        selectedSweepPath.RecalculateVelocities(currentDown, currentUp);
-                        Core.Log($"{currentDown}, {currentUp}");
-                    }
-                }
-
-                ui.Outdent();
-            }
-
-            ui.Label($"Trail segments: {trailSegments}");
-            trailSegments = Mathf.RoundToInt(ui.Slider(trailSegments, 1, 20));
-
-            ui.Label($"Trail time: {trailTime:F3}s");
-            trailTime = ui.Slider(trailTime, 0, 20);
-
-            ui.Label($"Trail min speed: {trailMinSpeed:F2} m/s");
-            trailMinSpeed = ui.Slider(trailMinSpeed, 0, 100);
-
-            ui.Label($"Trail max speed: {trailMaxSpeed:F2} m/s");
-            trailMaxSpeed = ui.Slider(trailMaxSpeed, 0, 100);
         }
 
         private static void DrawLineBetween(in Vector3 A, in Vector3 B, float len, in Color color, float yOff, float width = 0.2f)

@@ -356,7 +356,7 @@ public class AnimRenderer : IExposable
             var paths = Data.GetSweepPaths(part);
             foreach (var path in paths)
             {
-                sweeps[j++] = new PartWithSweep(this, part, path, new());
+                sweeps[j++] = new PartWithSweep(this, part, path, new SweepMesh<PartWithSweep.Data>(), BasicSweepProvider.DefaultInstance);
             }
         }
     }
@@ -627,6 +627,10 @@ public class AnimRenderer : IExposable
         if (IsDestroyed)
             return Vector2.zero;
 
+        foreach (var item in sweeps)
+            if (item != null)
+                item.MirrorHorizontal = MirrorHorizontal;
+
         var range = Seek(atTime, dt * Core.Settings.GlobalAnimationSpeed);
 
         if (Find.CurrentMap != Map)
@@ -635,9 +639,7 @@ public class AnimRenderer : IExposable
         DrawTimer.Start();
 
         foreach (var path in sweeps)
-        {
             path.Draw(time);
-        }
 
         foreach (var snap in snapshots)
         {
@@ -824,6 +826,22 @@ public class AnimRenderer : IExposable
             var offset = Def.TryGetCell(AnimCellData.Type.PawnStart, MirrorHorizontal, MirrorVertical, i) ?? IntVec2.Zero;
             TeleportPawn(pawn, basePos + offset.ToIntVec3);
         }
+
+        // Custom sweep paths:
+        ISweepProvider sweepProvider = BasicSweepProvider.DefaultInstance;
+        var weapon = Pawns.Count == 0 ? null : Pawns[0].GetFirstMeleeWeapon();
+        var tweak = weapon == null ? null : TweakDataManager.GetOrCreateDefaultTweak(weapon.def);
+        if (tweak.GetSweepProvider() != null)
+            sweepProvider = tweak.GetSweepProvider();
+        else if (Def.sweepProvider != null)
+            sweepProvider = Def.sweepProvider;
+
+        foreach (var sweep in sweeps)
+        {
+            if (sweep == null)
+                continue;
+            sweep.ColorProvider = sweepProvider;
+        }
     }
 
     public void OnEnd()
@@ -976,11 +994,14 @@ public class AnimRenderer : IExposable
     public class PartWithSweep
     {
         public readonly AnimPartData Part;
-        public readonly SweepPointCollection Points;
+        public readonly SweepPointCollection PointCollection;
         public readonly SweepMesh<Data> Mesh;
         public readonly AnimRenderer Renderer;
         public float DownDst, UpDst;
+        public bool MirrorHorizontal;
+        public ISweepProvider ColorProvider;
 
+        private readonly SweepPoint[] points;
         private float lastTime = -1;
         private int lastIndex = -1;
 
@@ -991,12 +1012,14 @@ public class AnimRenderer : IExposable
             public float UpVel;
         }
 
-        public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection points, SweepMesh<Data> mesh)
+        public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection pointCollection, SweepMesh<Data> mesh, ISweepProvider colorProvider)
         {
             Renderer = renderer;
             Part = part;
-            Points = points;
+            PointCollection = pointCollection;
             Mesh = mesh;
+            points = pointCollection.CloneWithVelocities(DownDst, UpDst);
+            ColorProvider = colorProvider;
         }
 
         public void Draw(float time)
@@ -1017,13 +1040,20 @@ public class AnimRenderer : IExposable
                 return true;
             }
 
-            for (int i = lastIndex + 1; i < Points.Points.Count; i++)
+            for (int i = lastIndex + 1; i < points.Length; i++)
             {
-                var point = Points.Points[i];
+                var point = points[i];
                 if (point.Time > time)
                     break;
 
                 point.GetEndPoints(DownDst, UpDst, out var down, out var up);
+
+                if (MirrorHorizontal)
+                {
+                    down.x *= -1;
+                    up.x *= -1;
+                }
+
                 Mesh.AddLine(down, up, new Data()
                 {
                     Time = point.Time,
@@ -1041,12 +1071,25 @@ public class AnimRenderer : IExposable
             return true;
         }
 
+        private (Color low, Color high) MakeColors(in Data data)
+        {
+            return ColorProvider.GetTrailColors(new SweepProviderArgs()
+            {
+                DownVel = data.DownVel,
+                UpVel = data.UpVel,
+                LastTime = lastTime,
+                Time = data.Time,
+                Part = Part,
+                Renderer = Renderer
+            });
+        }
+
         private void Rebuild(float upTo)
         {
             Mesh.Clear();
-            for(int i = 0; i < Points.Points.Count; i++)
+            for(int i = 0; i < points.Length; i++)
             {
-                var point = Points.Points[i];
+                var point = points[i];
                 if (point.Time > upTo)
                     break;
 
@@ -1065,35 +1108,29 @@ public class AnimRenderer : IExposable
             lastTime = upTo;
         }
 
-        private (Color down, Color up) MakeColors(in Data data)
-        {
-            const float LEN = 0.3f;
-            float timeSinceHere = lastTime - data.Time;
-            if (timeSinceHere > LEN)
-                return (default, default);
-
-            float a = 1f - timeSinceHere / LEN;
-            var low = new Color(1, 0, 0, a);
-            var high = new Color(0, 1, 0, a);
-            return (low, high);
-        }
-
         private void AddInterpolatedPos(int lastIndex, float currentTime)
         {
             if (lastIndex < 0)
                 return;
-            if (lastIndex >= Points.Count - 1)
+            if (lastIndex >= PointCollection.Count - 1)
                 return; // Can't interpolate if we don't have the end.
 
-            var lastPoint = Points.Points[lastIndex];
+            var lastPoint = points[lastIndex];
             if (Mathf.Abs(lastPoint.Time - currentTime) < 0.001f)
                 return;
 
-            var nextPoint = Points.Points[lastIndex + 1];
+            var nextPoint = points[lastIndex + 1];
 
             float t = Mathf.InverseLerp(lastPoint.Time, nextPoint.Time, currentTime);
             var newPoint = SweepPoint.Lerp(lastPoint, nextPoint, t);
             newPoint.GetEndPoints(DownDst, UpDst, out var down, out var up);
+
+            if (MirrorHorizontal)
+            {
+                down.x *= -1;
+                up.x *= -1;
+            }
+
             Mesh.AddLine(down, up, new Data()
             {
                 Time = currentTime,

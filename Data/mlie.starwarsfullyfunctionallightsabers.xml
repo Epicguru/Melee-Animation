@@ -144,5 +144,61 @@
 			<blE>1.887634</blE>
 			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
 		</li>
+		<li>
+			<dId>SWSaber_Quigon</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/Quigon_Hilt</tex>
+			<ofX>0.5863447</ofX>
+			<ofY>0.02933082</ofY>
+			<rot>48</rot>
+			<scX>2.5</scX>
+			<scY>2.5</scY>
+			<blS>0.2091703</blS>
+			<blE>1.448023</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+		</li>
+		<li>
+			<dId>SWSaber_ElectrumSaber</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/ElectrumHilt</tex>
+			<ofX>0.2339913</ofX>
+			<ofY>-0.2820513</ofY>
+			<rot>40</rot>
+			<scX>2.5</scX>
+			<scY>2.5</scY>
+			<blS>0.1880342</blS>
+			<blE>1.384615</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+		</li>
+		<li>
+			<dId>SWSaber_Ahsokasaber</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/AhsokaHilt</tex>
+			<ofX>0.49166</ofX>
+			<ofY>-0.04892245</ofY>
+			<rot>45</rot>
+			<scX>2.5</scX>
+			<scY>2.5</scY>
+			<blS>0.1880342</blS>
+			<blE>1.384615</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+		</li>
+		<li>
+			<dId>SWSaber_JGuard</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Weapons/JGuard_Hilt</tex>
+			<ofX>-0.04821715</ofX>
+			<ofY>-0.01211265</ofY>
+			<rot>45</rot>
+			<scX>2.2</scX>
+			<scY>2.2</scY>
+			<blS>0.3865031</blS>
+			<blE>1.871166</blE>
+			<crc>AAM.LightsaberPatch.SaberRenderer</crc>
+		</li>
 	</items>
 </Data>

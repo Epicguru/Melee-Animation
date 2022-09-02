@@ -8,6 +8,10 @@
       <!-- <shaderType>CutoutComplex</shaderType> -->
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.3,1.3)</drawSize>
+      <drawOffsetSouth>(0.4, 0, 0.3)</drawOffsetSouth>
+      <drawOffsetNorth>(0.4, 0, 0.3)</drawOffsetNorth>
+      <drawOffsetEast>(0.3, 0, 0.38)</drawOffsetEast>
+      <drawOffsetWest>(-0.3, 0, 0.38)</drawOffsetWest>
     </graphicData>
 
     <!-- <costList>
@@ -59,13 +63,5 @@
         <cooldownTime>2.25</cooldownTime>
       </li>
     </tools>
-    <comps>
-      <li Class="RimForge.Comps.CompProperties_OversizedWeapon">
-        <southOffset>(0.4, 0, 0.3)</southOffset>
-        <northOffset>(0.4, 0, 0.3)</northOffset>
-        <eastOffset>(0.3, 0, 0.38)</eastOffset>
-        <westOffset>(-0.3, 0, 0.38)</westOffset>
-      </li>
-    </comps>
   </ThingDef>
 </Defs>

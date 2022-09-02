@@ -89,12 +89,11 @@ namespace AAM.Sweep
 
         public void UpdateColors(MakeColors function)
         {
-            for (int i = 0; i < metaData.Count; i++)
+            foreach ((T data, int downIndex, int upIndex) in metaData)
             {
-                var meta = metaData[i];
-                var colors = function(meta.data);
-                this.colors[meta.downIndex] = colors.downColor;
-                this.colors[meta.upIndex] = colors.upColor;
+                (Color downColor, Color upColor) = function(data);
+                colors[downIndex] = downColor;
+                colors[upIndex] = upColor;
             }
         }
 

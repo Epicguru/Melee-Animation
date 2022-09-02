@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using AAM.Sweep;
 using Verse;
 
 namespace AAM
@@ -118,6 +119,7 @@ namespace AAM
         public int pawnCount;
         public Req weaponFilter;
         public List<AnimCellData> cellData = new();
+        public ISweepProvider sweepProvider;
         private float relativeProbability = 1;
 
         private AnimData resolvedData, resolvedNonLethalData;

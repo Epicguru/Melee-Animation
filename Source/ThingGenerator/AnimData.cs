@@ -843,20 +843,25 @@ public class SweepPointCollection
         currIndex = c;
     }
 
-    public void RecalculateVelocities(float downDst, float upDst)
+    public SweepPoint[] CloneWithVelocities(float downDst, float upDst)
     {
+        SweepPoint[] clone = new SweepPoint[points.Length];
+        Array.Copy(points, clone, points.Length);
+
         Vector3 prevDown = default;
         Vector3 prevUp = default;
         float prevTime = 0;
 
-        for (int i = 0; i < points.Length; i++)
+        for (int i = 0; i < clone.Length; i++)
         {
             if(i != 0)
-                points[i].SetVelocity(downDst, upDst, prevDown, prevUp, prevTime);
+                clone[i].SetVelocity(downDst, upDst, prevDown, prevUp, prevTime);
 
-            points[i].GetEndPoints(downDst, upDst, out prevDown, out prevUp);
-            prevTime = points[i].Time;
+            clone[i].GetEndPoints(downDst, upDst, out prevDown, out prevUp);
+            prevTime = clone[i].Time;
         }
+
+        return clone;
     }
 
     private int GetIndexForTime(float time)

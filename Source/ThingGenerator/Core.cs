@@ -54,7 +54,8 @@ namespace AAM
             AddLateLoadAction(true, "Loading default shaders", () =>
             {
                 AnimRenderer.DefaultCutout ??= new Material(ThingDefOf.AIPersonaCore.graphic.Shader);
-                AnimRenderer.DefaultTransparent ??= new Material(FleckDefOf.DustPuff.graphicData.shaderType.Shader);
+                AnimRenderer.DefaultTransparent ??= new Material(ShaderTypeDefOf.Transparent.Shader);
+                //AnimRenderer.DefaultTransparent ??= new Material(DefDatabase<ShaderTypeDef>.GetNamed("Mote").Shader);
             });
 
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
@@ -107,7 +108,7 @@ namespace AAM
                         Error($"Exception in post-load event '{pair.title}':", e);
                     }
                 }
-            }, "AAM.Loading.Title".Trs(), false, null);
+            }, "Load Advanced Animation Mod", false, null);
         }
 
         private void AddLateLoadAction(bool synchronous, string title, Action a)
