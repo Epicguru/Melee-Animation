@@ -233,7 +233,11 @@ namespace AAM.UI
                 tweak.OffY = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffY, -2, 2, label: $"Offset Y: {tweak.OffY:F3}");
                 ui.Gap();
                 ref string tweakRotBuf = ref GetBuffer(tweak.Rotation);
-                ui.TextFieldNumericLabeled($"Rotation:  ", ref tweak.Rotation, ref tweakRotBuf, -360, 360);
+                ui.TextFieldNumericLabeled("Rotation:  ", ref tweak.Rotation, ref tweakRotBuf, -360, 360);
+
+                // Drawer class, sweep class.
+                var otherRect = ui.GetRect(28);
+                Widgets.DrawBox(otherRect);
 
                 ui.Gap();
                 var flips = ui.GetRect(28);

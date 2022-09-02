@@ -1,8 +1,9 @@
-﻿using AAM.Tweaks;
+﻿using AAM.Sweep;
 using SWSaber;
 using UnityEngine;
+using Verse;
 
-namespace AAM.Sweep;
+namespace AAM.LightsaberPatch;
 
 public class LightsaberSweepProvider : ISweepProvider
 {
@@ -11,11 +12,16 @@ public class LightsaberSweepProvider : ISweepProvider
     public const float minVel = 1f;
     public const float maxVel = 2f;
 
-    public LightsaberSweepProvider(ItemTweakData tweak)
+    public LightsaberSweepProvider(Thing lightsaber)
     {
-        CompProperties_LightsaberActivatableEffect props;
-        props.
-        color = tweak.GetDef().
+        var color = lightsaber.TryGetLightsaberColor();
+        if (color == null)
+        {
+            Core.Error($"Tried to use {nameof(LightsaberSweepProvider)} with a Thing that does not have a {nameof(CompLightsaberActivatableEffect)}! ({lightsaber})");
+            return;
+        }
+
+        this.color = color.Value;
     }
 
     public (Color low, Color high) GetTrailColors(in SweepProviderArgs args)

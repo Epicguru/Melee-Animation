@@ -5,7 +5,7 @@
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NoStdLib>false</NoStdLib>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>10</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <Configurations>v1.3</Configurations>

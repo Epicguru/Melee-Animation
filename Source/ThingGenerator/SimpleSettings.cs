@@ -889,7 +889,7 @@ namespace AAM
     public class LabelAttribute : Attribute
     {
         public readonly string Label;
-        public LabelAttribute(string label!!)
+        public LabelAttribute(string label)
         {
             this.Label = label;
         }
