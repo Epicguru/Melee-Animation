@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AAM.Sweep;
+using System;
 using System.IO;
 using UnityEngine;
 using Verse;
@@ -33,9 +34,11 @@ namespace AAM.Tweaks
         public float BladeStart, BladeEnd = 0.5f;
         public MeleeWeaponType MeleeWeaponType = MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp;
         public string CustomRendererClass;
+        public string SweepProviderClass;
 
         private ThingDef cachedDef;
         private Texture2D cachedTex;
+        private ISweepProvider cachedSweepProvider;
 
         public ItemTweakData() { }
 
@@ -83,6 +86,7 @@ namespace AAM.Tweaks
             BladeStart = data.BladeStart;
             BladeEnd = data.BladeEnd;
             CustomRendererClass = data.CustomRendererClass;
+            SweepProviderClass = data.SweepProviderClass;
         }
 
         public Texture2D GetTexture(bool allowFromCache = true, bool saveToCache = true)
@@ -114,6 +118,49 @@ namespace AAM.Tweaks
                     return obj as ThingDef;
             }
             return cachedDef;
+        }
+
+        public ISweepProvider GetSweepProvider()
+        {
+            if (string.IsNullOrEmpty(SweepProviderClass))
+                return null;
+
+            if (cachedSweepProvider != null)
+                return cachedSweepProvider;
+
+            Type klass = GenTypes.GetTypeInAnyAssembly(SweepProviderClass);
+            if (klass == null)
+            {
+                Core.Warn($"Failed to find any class called '{SweepProviderClass}' as a sweep provider.");
+                return null;
+            }
+
+            if (!typeof(ISweepProvider).IsAssignableFrom(klass))
+            {
+                Core.Error($"{klass.FullName} does not implement {nameof(ISweepProvider)}");
+                return null;
+            }
+
+            ISweepProvider instance;
+            try
+            {
+                instance = Activator.CreateInstance(klass, this) as ISweepProvider;
+            }
+            catch
+            {
+                try
+                {
+                    instance = Activator.CreateInstance(klass) as ISweepProvider;
+                }
+                catch (Exception e)
+                {
+                    Core.Error($"Failed to create instance of ISweepProvider '{klass.FullName}':", e);
+                    return null;
+;               }
+            }
+
+            cachedSweepProvider = instance;
+            return cachedSweepProvider;
         }
 
         public virtual void Apply(AnimRenderer renderer, AnimPartData part)

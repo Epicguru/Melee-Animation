@@ -8,7 +8,7 @@ namespace AAM.Tweaks
         public string ModID;
         public string ModName;
         public string Author;
-        public List<ItemTweakData> Items = new List<ItemTweakData>();
+        public List<ItemTweakData> Items = new();
 
         public TweakContainer() { }
 

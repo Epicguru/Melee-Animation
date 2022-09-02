@@ -3,7 +3,6 @@
 <Defs>
   <AAM.AnimDef Name="AnimExecutionBase" Abstract="True">
     <type>Execution</type>
-    <direction>Horizontal</direction>
     <pawnCount>2</pawnCount>
     <jobString>Executing [OTHER].</jobString>
     <cellData>
@@ -21,7 +20,6 @@
   </AAM.AnimDef>
 
   <AAM.AnimDef Name="AnimExecutionVerticalBase" ParentName="AnimExecutionBase" Abstract="True">
-    <direction>North</direction>
     <cellData Inherit="False">
       <li>
         <type>PawnStart</type>
@@ -44,16 +42,6 @@
       <types>Short_Stab, Long_Stab</types>
     </weaponFilter>
   </AAM.AnimDef>
-
-  <!-- <AAM.AnimDef ParentName="AnimExecutionVerticalBase">
-    <defName>AMM_Execution_BeheadVertical</defName>
-    <label>Execution: Behead Vert.</label>
-    <data>Execution_BeheadVertical.anim</data>
-    <allowedWeaponTypes>Long_Sharp</allowedWeaponTypes>
-    <weaponFilter Class="AAM.Reqs.AnyType">
-      <types>Long_Sharp</types>
-    </weaponFilter>
-  </AAM.AnimDef> -->
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_Shank</defName>
@@ -192,7 +180,7 @@
     <label>Execution: You insulted m'lady</label>
     <data>Execution_Weebstick.anim</data>
     <weaponFilter Class="AAM.Reqs.SpecificWeapon">
-      <weapon>RF_GaeBulg</weapon>
+      <weapon>AAM_Weebstick</weapon>
     </weaponFilter>
     <cellData>
       <li>
@@ -232,6 +220,15 @@
     <defName>AMM_Execution_Whirlwind</defName>
     <label>Execution: Whirlwind</label>
     <data>Execution_Whirlwind.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_SpearLift</defName>
+    <label>Execution: Spear Stab</label>
+    <data>Execution_Spear.anim</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab</types>
     </weaponFilter>

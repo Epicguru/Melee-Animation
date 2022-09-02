@@ -1,11 +1,9 @@
-﻿using System;
+﻿using AAM.Data;
+using AAM.Grappling;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using AAM.Data;
-using AAM.Grappling;
-using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -75,12 +73,12 @@ namespace AAM.Processing
         public uint TotalThreadedExceptionCount;
 
         private int lastIndex;
-        private readonly Stopwatch sw = new Stopwatch();
-        private readonly Stopwatch sw2 = new Stopwatch();
-        private readonly Stopwatch sw3 = new Stopwatch();
-        private readonly List<AnimationStartParameters> tempAnimationStarts = new List<AnimationStartParameters>(64);
-        private readonly List<PossibleGrapple> tempGrappleStarts = new List<PossibleGrapple>(64);
-        private readonly List<Pawn> pawnList = new List<Pawn>();
+        private readonly Stopwatch sw = new();
+        private readonly Stopwatch sw2 = new();
+        private readonly Stopwatch sw3 = new();
+        private readonly List<AnimationStartParameters> tempAnimationStarts = new(64);
+        private readonly List<PossibleGrapple> tempGrappleStarts = new(64);
+        private readonly List<Pawn> pawnList = new();
         private List<Pawn> pawnListWrite;
 
         private uint tick;
@@ -467,14 +465,14 @@ namespace AAM.Processing
 
             // TODO this isn't actually time-independent and also isn't very controllable.
 
-            const float chancePerSecond = 0.5f; // 50% chance each second...
+            const float chancePerSecond = 0.5f;
             const float chancePerTick = chancePerSecond / 60f;
             float chance = chancePerTick * tickDelta;
 
             if (!Rand.Chance(chance))
                 return false;
 
-            var execution = tempAnimationStarts.RandomElementByWeight(d => d.Animation.relativeProbability);
+            var execution = tempAnimationStarts.RandomElementByWeight(d => d.Animation.Probability);
             bool worked = execution.TryTrigger();
             if (worked)
                 data.TimeSinceExecuted = 0;

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -13,8 +14,10 @@ namespace AAM
 {
     public static class SimpleSettings
     {
+        public delegate float DrawHandler(ModSettings settings, MemberWrapper member, Rect area);
+
         public static Func<MemberWrapper, DrawHandler> SelectDrawHandler = DefaultDrawHandlerSelector;
-        public static Dictionary<Type, DrawHandler> DrawHandlers = new Dictionary<Type, DrawHandler>()
+        public static Dictionary<Type, DrawHandler> DrawHandlers = new()
         {
             //{ typeof(string), DrawStringField },
             { typeof(byte), DrawNumeric },
@@ -31,13 +34,14 @@ namespace AAM
             { typeof(bool), DrawToggle },
         };
         
-        private static readonly Dictionary<Type, FieldHolder> settingsFields = new Dictionary<Type, FieldHolder>();
-        private static Stack<ScribeSaver> saverStack = new Stack<ScribeSaver>();
-        private static Stack<ScribeLoader> loaderStack = new Stack<ScribeLoader>();
-        private static Stack<LoadSaveMode> modeStack = new Stack<LoadSaveMode>();
-
+        private static readonly Dictionary<Type, FieldHolder> settingsFields = new();
+        private static readonly Stack<ScribeSaver> saverStack = new();
+        private static readonly Stack<ScribeLoader> loaderStack = new();
+        private static readonly Stack<LoadSaveMode> modeStack = new();
+        private static readonly HashSet<string> allHeaders = new();
         private static MemberWrapper highlightedMember;
-        private static HashSet<string> allHeaders = new HashSet<string>();
+
+        internal static string TranslateOrSelf(this string str) => str.TryTranslate(out var found) ? found : str;
 
         public static void Init(ModSettings settings)
         {
@@ -70,7 +74,8 @@ namespace AAM
 
             foreach (var member in holder.Members.Values)
             {
-                member.Expose(settings);
+                if (member.ShouldExpose)
+                    member.Expose(settings);
             }
         }
 
@@ -111,8 +116,7 @@ namespace AAM
             }
 
             // Try to make clone using IExposable.
-            var created = Activator.CreateInstance(type) as IExposable;
-            if (created == null)
+            if (Activator.CreateInstance(type) is not IExposable created)
             {
                 Log.Error($"Failed to create new instance of '{type.FullName}' because it lacks a public zero argument constructor or is abstract.");
                 return null;
@@ -180,7 +184,7 @@ namespace AAM
             var holder = GetHolder(settings);
 
             Widgets.BeginScrollView(inRect, ref holder.UI_Scroll, new Rect(0, 0, holder.UI_LastSize.x, holder.UI_LastSize.y));
-            Vector2 size = new Vector2(inRect.width - 20, 0);
+            Vector2 size = new(inRect.width - 20, 0);
             Vector2 pos = Vector2.zero;
             string currentHeader = null;
             string selectedHeader = holder.UI_SelectedTab;
@@ -204,7 +208,8 @@ namespace AAM
                     if(isCurrentTab)
                     {
                         var headerRect = new Rect(new Vector2(pos.x, pos.y + 12), new Vector2(inRect.width - 20, headerHeight));
-                        Widgets.Label(headerRect, $"<color=cyan><b><size=22>{header.header}</size></b></color>");
+                        string headerText = $"{settings.GetType().FullName}.{header.header}".TryTranslate(out var found) ? found : header.header;
+                        Widgets.Label(headerRect, $"<color=cyan><b><size=22>{headerText}</size></b></color>");
 
                         pos.y += headerHeight + 12;
                         size.y += headerHeight + 12;
@@ -237,6 +242,15 @@ namespace AAM
 
                 var area = new Rect(new Vector2(pos.x + 20, pos.y), new Vector2(inRect.width - 40, inRect.height - pos.y));
                 float height = handler(settings, member, area);
+
+                var finalArea = area;
+                finalArea.height = height;
+
+                if (member.Options.DrawHoverHighlight)
+                    Widgets.DrawHighlightIfMouseover(finalArea);
+                if (Mouse.IsOver(finalArea))
+                    highlightedMember = member;
+
                 pos.y += height;
                 size.y += height;
             }
@@ -252,7 +266,8 @@ namespace AAM
                 var area = new Rect(tabBar.x + tabWidth * i, tabBar.y, tabWidth, tabBar.height);
                 bool active = holder.UI_SelectedTab == tab;
                 GUI.color = active ? Color.grey : Color.white;
-                if (Widgets.ButtonText(area.ExpandedBy(-2, 0), $"<b><color=lightblue>{tab}</color></b>"))
+                string tabText = $"{settings.GetType().FullName}.{tab}".TryTranslate(out var found) ? found : tab;
+                if (Widgets.ButtonText(area.ExpandedBy(-2, 0), $"<b><color=lightblue>{tabText}</color></b>"))
                     holder.UI_SelectedTab = tab;
                 if (active)
                     Widgets.DrawBox(area.ExpandedBy(-2, 0));
@@ -277,24 +292,35 @@ namespace AAM
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
 
-            string description = highlightedMember.GetDescription() ?? "<i>No description</i>";
+            if (highlightedMember.Options.DrawDescription)
+            {
+                string description = highlightedMember.GetDescription() ?? "<i>No description</i>";
+                inRect.y += titleHeight + 14;
+                Widgets.Label(inRect, description);
 
-            inRect.y += titleHeight + 14;
-            Widgets.Label(inRect, description);
+                inRect.y += Text.CalcHeight(description, inRect.width) + 8;
+            }            
 
-            string defaultValue = highlightedMember.ValueToString(highlightedMember.GetDefault<object>());
+            if (highlightedMember.Options.AllowReset)
+            {
+                string defaultValue = highlightedMember.ValueToString(highlightedMember.GetDefault<object>());
+                Widgets.Label(inRect, $"<color=grey><i>Default value: </i>{defaultValue}\n\nRight-click to reset to default.</color>");
 
-            inRect.y += Text.CalcHeight(description, inRect.width) + 8;
-            Widgets.Label(inRect, $"<color=grey><i>Default value: </i>{defaultValue}\n\nRight-click to reset to default.</color>");
-
-            if (Input.GetMouseButtonUp(1))
-                highlightedMember.Set(settings, highlightedMember.DefaultValue);
+                if (Input.GetMouseButtonUp(1))
+                {
+                    highlightedMember.Set(settings, highlightedMember.DefaultValue);
+                    highlightedMember.TextBuffer = highlightedMember.DefaultValue.ToString();
+                }
+            }            
         }
 
         public static DrawHandler DefaultDrawHandlerSelector(MemberWrapper wrapper)
         {
             if (wrapper == null)
                 return null;
+
+            if (wrapper.OverrideDrawHandler != null)
+                return wrapper.OverrideDrawHandler;
 
             var type = wrapper.MemberType;
 
@@ -319,7 +345,7 @@ namespace AAM
             return (float)Convert.ChangeType(type.GetField("MaxValue", BindingFlags.Public | BindingFlags.Static).GetValue(null), typeof(float));
         }
 
-        private static float DrawFieldHeader(ModSettings settings, MemberWrapper member, Rect area)
+        public static float DrawFieldHeader(ModSettings settings, MemberWrapper member, Rect area)
         {
             float height = 26;
 
@@ -328,13 +354,15 @@ namespace AAM
             var value = member.Get<object>(settings);
             var old = Text.Anchor;
             Text.Anchor = TextAnchor.MiddleLeft;
-            Widgets.Label(labelrect, HighlightIfNotDefault(settings, member, $"<b>{member.DisplayName}: </b> {member.ValueToString(value)}"));
+
+            string label = $"<b>{member.DisplayName}</b>";
+            if (member.Options.DrawValue)
+                label += $": {member.ValueToString(value)}";
+            if (member.Options.AllowReset)
+                label = HighlightIfNotDefault(settings, member, label);
+
+            Widgets.Label(labelrect, label);
             Text.Anchor = old;
-            Widgets.DrawHighlightIfMouseover(labelrect);
-            if (Mouse.IsOver(labelrect))
-            {
-                highlightedMember = member;
-            }
 
             return height;
         }
@@ -347,27 +375,56 @@ namespace AAM
             return $"<color=yellow>{str}</color>";
         }
 
+        private static void TryGetBounds(MemberWrapper member, out float? min, out float? max)
+        {
+            var range = member.TryGetCustomAttribute<RangeAttribute>();
+            var minAtr = member.TryGetCustomAttribute<MinAttribute>();
+            var percentage = member.TryGetCustomAttribute<PercentageAttribute>();
+
+            min = null;
+            max = null;
+
+            if(range != null)
+            {
+                min = range.min;
+                max = range.max;
+            }
+            else if (minAtr != null)
+            {
+                min = minAtr.min;
+            }
+            else if (percentage != null)
+            {
+                min = 0;
+                max = 1;
+            }
+
+            if (min != null)
+                min = Mathf.Max(min.Value, GetNumericMin(member.MemberType));
+            if (max != null)
+                max = Mathf.Min(max.Value, GetNumericMax(member.MemberType));            
+        }
+
         private static float DrawNumeric(ModSettings settings, MemberWrapper member, Rect area)
         {
             float height = DrawFieldHeader(settings, member, area);
-
             float value = member.Get<float>(settings);
 
             // Min and max.
-            var range = member.TryGetCustomAttribute<RangeAttribute>();
-            float min = float.MinValue;
-            float max = float.MaxValue;
-            min = range != null ? Mathf.Max(min, range.min) : Mathf.Max(min, 0);
-            min = Mathf.Max(min, GetNumericMin(member.MemberType));
-            max = range != null ? Mathf.Min(max, range.max) : Mathf.Min(max, 100);
-            max = Mathf.Min(max, GetNumericMax(member.MemberType));
+            TryGetBounds(member, out var min, out var max);
+            if (min == null || max == null)
+            {
+                return DrawNumericTextBased(settings, member, area, min, max);
+            }
 
             float sliderHeight = 18;
-            Rect sliderArea = new Rect(area.x, area.y + height, area.width, sliderHeight);
+            Rect sliderArea = new(area.x, area.y + height, area.width, sliderHeight);
             height += sliderHeight;
 
+            float step = member.TryGetCustomAttribute<StepAttribute>()?.Step ?? -1;
+
             // Simple slider for now.
-            float changed = Widgets.HorizontalSlider(sliderArea, value, min, max);
+            float changed = Widgets.HorizontalSlider(sliderArea, value, min.Value, max.Value, roundTo: step);
             if (changed != value)
             {
                 Type type = member.MemberType;
@@ -381,6 +438,26 @@ namespace AAM
             return height;
         }
 
+        private static float DrawNumericTextBased(ModSettings settings, MemberWrapper member, Rect area, float? min, float? max)
+        {
+            float height = DrawFieldHeader(settings, member, area);
+            float value = member.Get<float>(settings);
+
+            const float TEXTBOX_HEIGHT = 28;
+            Rect field = area;
+            field.y += height;
+            field.height = TEXTBOX_HEIGHT;
+
+            float minF = min ?? float.MinValue;
+            float maxF = max ?? float.MaxValue;
+            float newValue = value;
+            Widgets.TextFieldNumeric(field, ref newValue, ref member.TextBuffer, minF, maxF);
+            if (newValue != value)
+                member.Set(settings, newValue);
+
+            return TEXTBOX_HEIGHT + height;
+        }
+
         private static float DrawToggle(ModSettings settings, MemberWrapper member, Rect area)
         {
             Rect toggleRect = area;
@@ -392,10 +469,6 @@ namespace AAM
 
             if (old != enabled)
                 member.Set(settings, enabled);
-
-            Widgets.DrawHighlightIfMouseover(toggleRect);
-            if (Mouse.IsOver(toggleRect))
-                highlightedMember = member;
 
             return toggleRect.height;
         }
@@ -423,14 +496,8 @@ namespace AAM
                 });
             }
 
-            Widgets.DrawHighlightIfMouseover(rect);
-            if (Mouse.IsOver(rect))
-                highlightedMember = member;
-
             return height;
         }
-
-        public delegate float DrawHandler(ModSettings settings, MemberWrapper member, Rect area);
 
         public static void PushNewScribeState()
         {
@@ -454,17 +521,17 @@ namespace AAM
         {
             public readonly ModSettings ForSettingsObject;
             public readonly Type ForType;
-            public readonly Dictionary<MemberInfo, MemberWrapper> Members = new Dictionary<MemberInfo, MemberWrapper>();
+            public readonly Dictionary<MemberInfo, MemberWrapper> Members = new();
             public Vector2 UI_LastSize;
             public Vector2 UI_Scroll;
             public string UI_SelectedTab;
 
             public FieldHolder(ModSettings settings, Type forType)
             {
-                this.ForSettingsObject = settings;
-                this.ForType = forType;
+                ForSettingsObject = settings;
+                ForType = forType;
 
-                foreach (var member in ForType.GetMembers(BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+                foreach (var member in ForType.GetMembers(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                 {
                     if (member is not FieldInfo && member is not PropertyInfo)
                         continue;
@@ -473,7 +540,10 @@ namespace AAM
                     if (isInvalidProp)
                         continue;
 
-                    Members.Add(member, MakeWrapperFor(settings, member));
+                    var wrapper = MakeWrapperFor(settings, member);
+                    SetOverrideDrawHandler(settings, wrapper);
+
+                    Members.Add(member, wrapper);
                 }
             }
 
@@ -485,6 +555,12 @@ namespace AAM
                     PropertyInfo pi => pi.PropertyType,
                     _ => throw new ArgumentException(nameof(member), $"Unexpected type: {member.GetType().FullName}")
                 };
+
+                // Dictionaries.
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                {
+                    return MakeGenericWrapper(typeof(MemberWrapperDict<,>), obj, member, type.GetGenericArguments());
+                }
 
                 // Lists.
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
@@ -506,6 +582,70 @@ namespace AAM
             {
                 var generic = baseGenericType.MakeGenericType(genericParam);
                 return Activator.CreateInstance(generic, obj, member) as MemberWrapper;
+            }
+
+            private MemberWrapper MakeGenericWrapper(Type baseGenericType, object obj, MemberInfo member, params Type[] genericParams)
+            {
+                var generic = baseGenericType.MakeGenericType(genericParams);
+                return Activator.CreateInstance(generic, obj, member) as MemberWrapper;
+            }
+
+            private void SetOverrideDrawHandler(ModSettings settings, MemberWrapper member)
+            {
+                if (member == null)
+                    return;
+
+                var attr = member.TryGetCustomAttribute<DrawMethodAttribute>();
+                if (attr == null)
+                    return;
+
+                member.ShouldExpose = attr.SerializeField;
+
+                const BindingFlags FLAGS = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+                var methodInfo = settings.GetType().GetMethod(attr.MethodName, FLAGS);
+                if (methodInfo == null)
+                {
+                    Core.Error($"Failed to find method '{attr.MethodName}' in class {settings.GetType()}!");
+                    return;
+                }
+
+                DrawHandler handler;
+                if (methodInfo.IsStatic)
+                    handler = Delegate.CreateDelegate(typeof(DrawHandler), methodInfo, false) as DrawHandler;
+                else
+                    handler = Delegate.CreateDelegate(typeof(DrawHandler), settings, methodInfo, false) as DrawHandler;
+
+                if (handler == null)
+                {
+                    Core.Error($"Method '{attr.MethodName}' does not match the {nameof(DrawHandler)} signiture!");
+                    return;
+                }
+
+                member.OverrideDrawHandler = handler;
+            }
+        }
+
+        private class MemberWrapperDict<K, V> : MemberWrapper
+        {
+            public MemberWrapperDict(object obj, FieldInfo field) : base(obj, field) { }
+            public MemberWrapperDict(object obj, PropertyInfo prop) : base(obj, prop) { }
+
+            private LookMode GetLookMode<T>()
+            {
+                if (typeof(T).GetInterfaces().Contains(typeof(IExposable)))
+                    return LookMode.Deep;
+
+                if (typeof(Def).IsAssignableFrom(typeof(T)))
+                    return LookMode.Def;
+
+                return LookMode.Undefined;
+            }
+
+            public override void Expose(object obj)
+            {
+                var current = Get<Dictionary<K, V>>(obj);
+                Scribe_Collections.Look(ref current, NameInXML, GetLookMode<K>(), GetLookMode<V>());
+                Set(obj, current);
             }
         }
 
@@ -604,16 +744,22 @@ namespace AAM
 
         public abstract class MemberWrapper
         {
-            public string DisplayName => _displayName = MakeDisplayName(Name);
+            public string DisplayName => _displayName ??= MakeDisplayName();
             public string Name => field?.Name ?? prop?.Name;
             public readonly object DefaultValue;
             public Type MemberType => field?.FieldType ?? prop.PropertyType;
+            public Type DeclaringType => field?.DeclaringType ?? prop.DeclaringType;
+            public string TranslationName => $"{DeclaringType.FullName}.{Name}";
             public bool IsIExposable => MemberType.GetInterfaces().Contains(typeof(IExposable));
             public bool IsValueType => MemberType.IsValueType;
             public bool IsDefType => typeof(Def).IsAssignableFrom(MemberType);
             public bool IsStatic => field?.IsStatic ?? prop.GetMethod.IsStatic;
             public string NameInXML => Name;
             public IEnumerable<Attribute> CustomAttributes => field?.GetCustomAttributes() ?? prop.GetCustomAttributes();
+            public string TextBuffer = "";
+            public DrawHandler OverrideDrawHandler { get; set; }
+            public bool ShouldExpose { get; set; } = true;
+            public SettingOptionsAttribute Options { get; protected set; }
 
             protected readonly FieldInfo field;
             protected readonly PropertyInfo prop;
@@ -633,23 +779,32 @@ namespace AAM
                         throw new ArgumentException(nameof(member), $"Unexpected type: {member.GetType().FullName}");
                 }
 
+                Options = member.TryGetAttribute<SettingOptionsAttribute>() ?? SettingOptionsAttribute.CreateDefault();
                 DefaultValue = GetDefaultValue(obj);
             }
 
             public bool IsDefault(ModSettings settings)
             {
-                return Get<object>(settings).Equals(DefaultValue);
+                var current = Get<object>(settings);
+                bool bothNull = current == null && DefaultValue == null;
+
+                return bothNull || (current != null && current.Equals(DefaultValue));
             }
 
-            protected virtual string MakeDisplayName(string baseName)
+            protected virtual string MakeDisplayName()
             {
                 var label = TryGetCustomAttribute<LabelAttribute>();
                 if (label != null)
-                    return label.Label;
+                {
+                    return label.Label.TranslateOrSelf();
+                }
+
+                if (TranslationName.TryTranslate(out var found))
+                    return found;
 
                 var str = new StringBuilder();
                 bool lastWasLower = true;
-                foreach (var c in baseName)
+                foreach (var c in Name)
                 {
                     if (char.IsUpper(c) && lastWasLower)
                         str.Append(' ');
@@ -673,13 +828,16 @@ namespace AAM
                 if (TryGetCustomAttribute<PercentageAttribute>() != null && value is float f)
                     return $"{f*100f:F0}%";
 
-                return value.ToString();
+                return value?.ToString() ?? "<null>";
             }
 
             public virtual string GetDescription()
             {
                 var attr = TryGetCustomAttribute<DescriptionAttribute>();
-                return attr?.Description;
+                if (attr == null)
+                    return $"{TranslationName}.Desc".TryTranslate(out var found) ? found : null;
+
+                return attr.Description.TranslateOrSelf();
             }
 
             public virtual T Get<T>(object obj)
@@ -731,10 +889,9 @@ namespace AAM
     public class LabelAttribute : Attribute
     {
         public readonly string Label;
-
-        public LabelAttribute(string label)
+        public LabelAttribute(string label!!)
         {
-            this.Label = label ?? throw new ArgumentNullException(nameof(label));
+            this.Label = label;
         }
     }
 
@@ -742,13 +899,53 @@ namespace AAM
     public class PercentageAttribute : Attribute { }
 
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class StepAttribute : Attribute
+    {
+        public readonly float Step;
+        public StepAttribute(float step) { Step = step; }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DescriptionAttribute : Attribute
     {
         public readonly string Description;
-
         public DescriptionAttribute(string description)
         {
             this.Description = description;
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DrawMethodAttribute : Attribute
+    {
+        public readonly string MethodName;
+        public bool SerializeField = true;
+
+        public DrawMethodAttribute(string methodName)
+        {
+            this.MethodName = methodName;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class SettingOptionsAttribute : Attribute
+    {
+        public static SettingOptionsAttribute CreateDefault() => new();
+
+        public readonly bool DrawDescription = true;
+        public readonly bool DrawValue = true;
+        public readonly bool AllowReset = true;
+        public readonly bool DrawHoverHighlight = true;
+
+        public SettingOptionsAttribute(bool drawDescription = true, bool drawValue = true,
+                                       bool allowReset = true, bool drawHoverHighlight = true)
+        {
+            DrawDescription = drawDescription;
+            DrawValue = drawValue;
+            AllowReset = allowReset;
+            DrawHoverHighlight = drawHoverHighlight;
+        }
+
+        private SettingOptionsAttribute() { }
     }
 }

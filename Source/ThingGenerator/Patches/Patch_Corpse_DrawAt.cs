@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -8,7 +8,7 @@ namespace AAM.Patches
     [HarmonyPatch(typeof(Corpse), nameof(Corpse.DrawAt))]
     public static class Patch_Corpse_DrawAt
     {
-        public static Dictionary<Corpse, CorpseInterpolate> Interpolators = new Dictionary<Corpse, CorpseInterpolate>();
+        public static Dictionary<Corpse, CorpseInterpolate> Interpolators = new();
 
         public static void Tick()
         {

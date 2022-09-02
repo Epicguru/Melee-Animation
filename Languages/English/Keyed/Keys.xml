@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <AAM.ModTitle>Epicguru's Melee Animation</AAM.ModTitle>
+
+  <AAM.Animation>Animation</AAM.Animation>
+
+  <AAM.Gizmo.Title>Advanced Melee</AAM.Gizmo.Title>
+  <AAM.Gizmo.DifferingReset>These {PawnCount} pawns have differing auto-execute settings. Click to set them all to '{Mode}'.</AAM.Gizmo.DifferingReset>
+  <AAM.Gizmo.Enabled>enabled</AAM.Gizmo.Enabled>
+  <AAM.Gizmo.Disabled>disabled</AAM.Gizmo.Disabled>
+
+  <AAM.Gizmo.Execute.ExplainResolved>This means that this pawn will automatically execute enemies whenever they can.</AAM.Gizmo.Execute.ExplainResolved>  
+  <AAM.Gizmo.Execute.ExplainResolvedPlural>This means that these {PawnCount} pawns will automatically execute enemies whenever they can.</AAM.Gizmo.Execute.ExplainResolvedPlural>  
+  
+  <AAM.Gizmo.Execute.Explain>This means that this pawn will <b>NOT</b> automatically execute enemies.</AAM.Gizmo.Execute.Explain>  
+  <AAM.Gizmo.Execute.ExplainPlural>This means that these {PawnCount} pawns will <b>NOT</b> automatically execute enemies.</AAM.Gizmo.Execute.ExplainPlural>  
+  
+  <AAM.Gizmo.Execute.Mode.Default>This pawn is using the Default auto-execute setting, which is {Mode}.\n\n{Explanation}</AAM.Gizmo.Execute.Mode.Default>
+  <AAM.Gizmo.Execute.Mode.DefaultPlural>These {PawnCount} pawns are using the Default auto-execute setting, which is {Mode}.\n\n{Explanation}</AAM.Gizmo.Execute.Mode.DefaultPlural>
+
+</LanguageData>

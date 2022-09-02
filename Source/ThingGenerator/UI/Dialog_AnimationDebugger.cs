@@ -1,14 +1,12 @@
-﻿using RimWorld;
+﻿using AAM.Tweaks;
+using EpicUtils;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AAM.Sweep;
-using AAM.Tweaks;
-using EpicUtils;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
-using Verse.Noise;
 
 namespace AAM.UI
 {
@@ -33,6 +31,7 @@ namespace AAM.UI
         private static float lastOpenStarterTime;
         private static int trailSegments = 3;
         private static float trailTime = 0.1f;
+        private static ExecutionOutcome executionOutcome = ExecutionOutcome.Kill;
 
         [DebugAction("Advanced Animation Mod", "Open Debugger", actionType = DebugActionType.Action)]
         private static void OpenInt()
@@ -48,15 +47,15 @@ namespace AAM.UI
         }
 
         public int SelectedIndex;
-        public List<(string name, Action<Listing_Standard> tab)> Tabs = new List<(string name, Action<Listing_Standard> tab)>();
+        public List<(string name, Action<Listing_Standard> tab)> Tabs = new();
 
         private Vector2[] scrolls = new Vector2[32];
         private int scrollIndex;
         private AnimDef spaceCheckDef;
         private bool spaceCheckMX, spaceCheckMY;
         private bool autoSelectRenderer = true;
-        private Queue<Action> toDraw = new Queue<Action>();
-        private List<AnimationManager> allManagers = new List<AnimationManager>();
+        private Queue<Action> toDraw = new();
+        private List<AnimationManager> allManagers = new();
 
         public Dialog_AnimationDebugger()
         {
@@ -76,7 +75,6 @@ namespace AAM.UI
             Tabs.Add(("Inspector", DrawInspector));
             Tabs.Add(("Performance Analyzer", DrawPerformanceAnalyzer));
             Tabs.Add(("Animation Space Checker", DrawSpaceChecker));
-            Tabs.Add(("Sweep Path Inspector", DrawSweepInspector));
             Tabs.Add(("List All Active", DrawAllLists));
 
             if (mpb == null)
@@ -534,6 +532,21 @@ namespace AAM.UI
             if (startRehearsal)
                 lastOpenStarterTime = Time.realtimeSinceStartup;
 
+            if (ui.ButtonTextLabeled("Execution outcome: ", executionOutcome.ToString()))
+            {
+                var options = new ExecutionOutcome[]
+                {
+                    ExecutionOutcome.Nothing,
+                    ExecutionOutcome.Damage,
+                    ExecutionOutcome.Down,
+                    ExecutionOutcome.Kill
+                };
+                BetterFloatMenu.Open(BetterFloatMenu.MakeItems(options, i => new MenuItemText(i, i.ToString())), i =>
+                {
+                    executionOutcome = i.GetPayload<ExecutionOutcome>();
+                });
+            }
+
             ui.Gap();
 
             // Options: flip X & Y
@@ -565,69 +578,14 @@ namespace AAM.UI
                     FlipX = startMX,
                     FlipY = startMY,
                     Map = Find.CurrentMap,
-                    RootTransform = startTarget.MakeAnimationMatrix()
+                    RootTransform = startTarget.MakeAnimationMatrix(),
+                    ExecutionOutcome = executionOutcome
                 };
 
                 if (!sp.TryTrigger())
                     Messages.Message("Animation failed to start! Check debug log for details.", LookTargets.Invalid, MessageTypeDefOf.RejectInput, false);
             }
             GUI.color = Color.white;
-        }
-
-        private void DrawSweepInspector(Listing_Standard ui)
-        {
-            if (!IsStarterOpen)
-            {
-                ui.Label("Use the Animation Starter window to select an animation...");
-                return;
-            }
-
-            var data = startDef.Data;
-
-            ui.Label($"{startDef.LabelCap} ({startDef.defName}) has {data.SweepDataCount} sweep paths:");
-            foreach (var part in data.PartsWithSweepData)
-            {
-
-                ui.Label($"<b><color=cyan>{part.Name} ({part.Path})</color></b>");
-                ui.Indent();
-
-                int j = 0;
-                foreach (var path in data.GetSweepPaths(part))
-                {
-                    var rect = ui.GetRect(26);
-
-                    bool isSelected = selectedSweepPath == path;
-                    Widgets.Label(rect, $"<b>Path {j++}:</b> {path.Count} points.");
-                    if (isSelected)
-                        Widgets.DrawHighlightSelected(rect);
-                    Widgets.DrawHighlightIfMouseover(rect);
-
-                    if (Widgets.ButtonInvisible(rect))
-                    {
-                        selectedSweepPath = path;
-
-                        ItemTweakData tweak = TweakDataManager.TryGetTweak(startPawns[0]?.GetFirstMeleeWeapon()?.def);
-                        currentDown = tweak?.BladeStart ?? 0;
-                        currentUp = tweak?.BladeEnd ?? 1;
-                        selectedSweepPath.RecalculateVelocities(currentDown, currentUp);
-                        Core.Log($"{currentDown}, {currentUp}");
-                    }
-                }
-
-                ui.Outdent();
-            }
-
-            ui.Label($"Trail segments: {trailSegments}");
-            trailSegments = Mathf.RoundToInt(ui.Slider(trailSegments, 1, 20));
-
-            ui.Label($"Trail time: {trailTime:F3}s");
-            trailTime = ui.Slider(trailTime, 0, 20);
-
-            ui.Label($"Trail min speed: {trailMinSpeed:F2} m/s");
-            trailMinSpeed = ui.Slider(trailMinSpeed, 0, 100);
-
-            ui.Label($"Trail max speed: {trailMaxSpeed:F2} m/s");
-            trailMaxSpeed = ui.Slider(trailMaxSpeed, 0, 100);
         }
 
         private static void DrawLineBetween(in Vector3 A, in Vector3 B, float len, in Color color, float yOff, float width = 0.2f)
@@ -788,7 +746,7 @@ namespace AAM.UI
                     return _camDst.Value;
                 }
             }
-            public Vector2 Size = new Vector2(212f, 28f);
+            public Vector2 Size = new(212f, 28f);
             public string Tooltip;
             public string CustomName;
 
@@ -819,7 +777,7 @@ namespace AAM.UI
 
             public override Vector2 Draw(Vector2 pos)
             {
-                Rect area = new Rect(pos, Size);
+                Rect area = new(pos, Size);
                 var iconRect = area.LeftPartPixels(32);
                 var textRect = area.RightPartPixels(area.width - 32);
 

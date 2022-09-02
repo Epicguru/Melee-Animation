@@ -15,7 +15,7 @@ public class AnimData
     #region Static Stuff
 
     private static Mesh m, mfx, mfy, mfxy;
-    private static Dictionary<string, AnimData> cache = new Dictionary<string, AnimData>();
+    private static Dictionary<string, AnimData> cache = new();
 
     public static Mesh GetMesh(bool flipX, bool flipY)
     {
@@ -72,7 +72,7 @@ public class AnimData
         tris[3] = 0;
         tris[4] = 2;
         tris[5] = 3;
-        Mesh mesh = new Mesh();
+        Mesh mesh = new();
         mesh.name = $"AAM Mesh: {flipX}, {flipY}";
         mesh.vertices = verts;
         mesh.uv = (flipX && flipY) ? fxy : flipX ? fx : flipY ? fy : normal;
@@ -95,7 +95,7 @@ public class AnimData
         var keys = new Keyframe[count];
         for (int i = 0; i < count; i++)
         {
-            Keyframe k = new Keyframe();
+            Keyframe k = new();
 
             k.time = reader.ReadSingle();
             k.value = reader.ReadSingle();
@@ -163,8 +163,6 @@ public class AnimData
 
         AnimPartData[] parts = new AnimPartData[partCount];
         short[] parentIds = new short[partCount];
-
-        //Core.Log($"Read events ({partCount} parts).");
 
         // Initialize parts and read paths & texture paths.
         for (int i = 0; i < partCount; i++)
@@ -604,7 +602,7 @@ public struct AnimPartSnapshot
         if (ov.FlipY)
             fy = !fy;
 
-        Vector2 off = new Vector2(fx ? -ov.LocalOffset.x : ov.LocalOffset.x, fy ? -ov.LocalOffset.y : ov.LocalOffset.y);
+        Vector2 off = new(fx ? -ov.LocalOffset.x : ov.LocalOffset.x, fy ? -ov.LocalOffset.y : ov.LocalOffset.y);
         float offRot = fx ^ fy ? -ov.LocalRotation : ov.LocalRotation;
         var adjust = Matrix4x4.TRS(new Vector3(off.x, 0f, off.y), Quaternion.Euler(0, offRot, 0f), new Vector3(ov.LocalScaleFactor.x, 1f, ov.LocalScaleFactor.y));
 
@@ -781,7 +779,7 @@ public class SweepPointCollection
     public int Count => points?.Length ?? 0;
     public IReadOnlyList<SweepPoint> Points => points ?? (IReadOnlyList<SweepPoint>)writePoints;
 
-    private readonly List<SweepPoint> writePoints = new List<SweepPoint>();
+    private readonly List<SweepPoint> writePoints = new();
     private SweepPoint[] points;
     private float currTime;
     private int currIndex;
@@ -845,20 +843,25 @@ public class SweepPointCollection
         currIndex = c;
     }
 
-    public void RecalculateVelocities(float downDst, float upDst)
+    public SweepPoint[] CloneWithVelocities(float downDst, float upDst)
     {
+        SweepPoint[] clone = new SweepPoint[points.Length];
+        Array.Copy(points, clone, points.Length);
+
         Vector3 prevDown = default;
         Vector3 prevUp = default;
         float prevTime = 0;
 
-        for (int i = 0; i < points.Length; i++)
+        for (int i = 0; i < clone.Length; i++)
         {
             if(i != 0)
-                points[i].SetVelocity(downDst, upDst, prevDown, prevUp, prevTime);
+                clone[i].SetVelocity(downDst, upDst, prevDown, prevUp, prevTime);
 
-            points[i].GetEndPoints(downDst, upDst, out prevDown, out prevUp);
-            prevTime = points[i].Time;
+            clone[i].GetEndPoints(downDst, upDst, out prevDown, out prevUp);
+            prevTime = clone[i].Time;
         }
+
+        return clone;
     }
 
     private int GetIndexForTime(float time)
@@ -891,7 +894,7 @@ public class SweepPointCollection
 public struct SweepPoint
 {
     public static SweepPoint Lerp(in SweepPoint a, in SweepPoint b, float t)
-        => new SweepPoint()
+        => new()
         {
             Time = Mathf.Lerp(a.Time, b.Time, t),
             X = Mathf.Lerp(a.X, b.X, t),

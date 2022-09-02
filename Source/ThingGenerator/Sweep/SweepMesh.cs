@@ -11,10 +11,10 @@ namespace AAM.Sweep
 
         public readonly Mesh Mesh;
 
-        private readonly List<Vector3> vertices = new List<Vector3>(256);
-        private readonly List<Color> colors = new List<Color>(256);
-        private readonly List<ushort> indices = new List<ushort>(256);
-        private readonly List<(T data, int downIndex, int upIndex)> metaData = new List<(T, int, int)>(256);
+        private readonly List<Vector3> vertices = new(256);
+        private readonly List<Color> colors = new(256);
+        private readonly List<ushort> indices = new(256);
+        private readonly List<(T data, int downIndex, int upIndex)> metaData = new(256);
         private LineData? last;
         private T lastT;
 
@@ -89,12 +89,11 @@ namespace AAM.Sweep
 
         public void UpdateColors(MakeColors function)
         {
-            for (int i = 0; i < metaData.Count; i++)
+            foreach ((T data, int downIndex, int upIndex) in metaData)
             {
-                var meta = metaData[i];
-                var colors = function(meta.data);
-                this.colors[meta.downIndex] = colors.downColor;
-                this.colors[meta.upIndex] = colors.upColor;
+                (Color downColor, Color upColor) = function(data);
+                colors[downIndex] = downColor;
+                colors[upIndex] = upColor;
             }
         }
 

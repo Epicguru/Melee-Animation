@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
+using AAM.Sweep;
 using Verse;
 
 namespace AAM
@@ -13,13 +15,11 @@ namespace AAM
 
         private static List<AnimDef> allDefs;
         private static Dictionary<AnimType, List<AnimDef>> defsOfType;
-        private static List<AnimDef> tempDefs;
 
         public static void Init()
         {
             allDefs = new List<AnimDef>(DefDatabase<AnimDef>.AllDefs);
             defsOfType = new Dictionary<AnimType, List<AnimDef>>();
-            tempDefs = new List<AnimDef>(128);
 
             foreach(var def in allDefs)
             {
@@ -40,26 +40,6 @@ namespace AAM
                     yield return item;            
         }
 
-        public static AnimDef TryGetExecutionFor(Pawn executor, Pawn victim)
-        {
-            if (executor == null)
-                return null;
-
-            var weapon = executor.GetFirstMeleeWeapon();
-            if (weapon == null)
-            {
-                Core.Error($"Cannot get execution def for {executor.NameShortColored} because they are not holding any weapon.");
-                return null;
-            }
-
-            tempDefs.Clear();
-            tempDefs.AddRange(GetExecutionAnimationsForWeapon(weapon.def));
-
-            if (tempDefs.Count == 0)
-                return null;
-            return tempDefs.RandomElement();
-        }
-
         public static IEnumerable<AnimDef> GetExecutionAnimationsForWeapon(ThingDef def)
             => GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(new ReqInput(def)));
 
@@ -76,6 +56,18 @@ namespace AAM
         }
 
         #endregion
+
+        public class SettingsData : IExposable
+        {
+            public bool Enabled = true;
+            public float Probability = 1;
+
+            public void ExposeData()
+            {
+                Scribe_Values.Look(ref Enabled, "Enabled", true);
+                Scribe_Values.Look(ref Probability, "Probability", 1f);
+            }
+        }
 
         public virtual string FullDataPath
         {
@@ -95,32 +87,59 @@ namespace AAM
                 return Path.Combine(mod.RootDir, "Animations", relative);
             }
         }
-        public bool HasJobString => !string.IsNullOrWhiteSpace(jobString);
+        public virtual string FullNonLethalDataPath => FullDataPath.Replace(".anim", "_NL.anim");
         public AnimData Data
         {
             get
             {
-                resolvedData ??= ResolveData();
+                if (resolvedData == null)
+                    ResolveData();
+
                 return resolvedData;
+            }
+        }
+        public AnimData DataNonLethal
+        {
+            get
+            {
+                if (resolvedData == null)
+                    ResolveData();
+
+                return resolvedNonLethalData ?? resolvedData;
             }
         }
         public string DataPath => data;
         public ulong ClearMask, FlipClearMask;
+        public float Probability => relativeProbability * (SData?.Probability ?? 1f);
+        [XmlIgnore] public SettingsData SData;
 
         public AnimType type = AnimType.Execution;
-        public AnimDirection direction = AnimDirection.Horizontal;
         private string data;
         public string jobString;
         public int pawnCount;
         public Req weaponFilter;
-        public List<AnimCellData> cellData = new List<AnimCellData>();
-        public float relativeProbability = 1;
+        public List<AnimCellData> cellData = new();
+        public ISweepProvider sweepProvider;
+        private float relativeProbability = 1;
 
-        private AnimData resolvedData;
+        private AnimData resolvedData, resolvedNonLethalData;
 
-        protected virtual AnimData ResolveData()
+        public void SetDefaultSData()
         {
-            return AnimData.Load(FullDataPath);
+            SData = new SettingsData()
+            {
+                Enabled = true,
+                Probability = 1f,
+            };
+        }
+
+        protected virtual void ResolveData()
+        {
+            if (File.Exists(FullDataPath))
+                resolvedData = AnimData.Load(FullDataPath);
+
+            if (File.Exists(FullNonLethalDataPath))
+                resolvedNonLethalData = AnimData.Load(FullNonLethalDataPath);
         }
 
         public override IEnumerable<string> ConfigErrors()
@@ -132,7 +151,9 @@ namespace AAM
                 yield return $"Animation type is Execution, but pawnCount is less than 2! ({pawnCount})";
 
             if (string.IsNullOrWhiteSpace(data))
-                yield return "Animation has no data path! Please secify the location of the data file using the data tag.";
+                yield return "Animation has no data path! Please specify the location of the data file using the data tag.";
+            else if (!File.Exists(FullDataPath))
+                yield return $"Failed to find animation file at '{FullDataPath}'!";
 
             if (weaponFilter == null)
                 yield return "weaponFilter is not assigned.";
@@ -181,7 +202,7 @@ namespace AAM
             }
         }
 
-        private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new IntVec2(fx ? -input.x : input.x, fy ? -input.z : input.z);
+        private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new(fx ? -input.x : input.x, fy ? -input.z : input.z);
 
         public bool AllowsWeapon(ReqInput input)
         {

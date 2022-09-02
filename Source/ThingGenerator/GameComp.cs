@@ -1,10 +1,10 @@
-﻿using AAM.Patches;
+﻿using AAM.Data;
+using AAM.Grappling;
+using AAM.Patches;
+using AAM.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using AAM.Data;
-using AAM.Grappling;
-using AAM.UI;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
@@ -20,8 +20,8 @@ namespace AAM
         private static bool drawTextureExtractor;
 
         private string texPath;
-        private Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new Dictionary<Pawn, PawnMeleeData>();
-        private List<PawnMeleeData> allMeleeData = new List<PawnMeleeData>();
+        private Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new();
+        private List<PawnMeleeData> allMeleeData = new();
 
         public GameComp(Game game)
         {
@@ -44,7 +44,7 @@ namespace AAM
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 pawnMeleeData.Clear();
-                Core.Log($"Loading {allMeleeData.Count} datas.");
+                Core.Log($"Loading {allMeleeData.Count} pawn melee data.");
                 foreach (var data in allMeleeData)
                 {
                     if (data.ShouldSave())
@@ -119,7 +119,7 @@ namespace AAM
                     Graphics.Blit(tex, renderTex);
                     RenderTexture previous = RenderTexture.active;
                     RenderTexture.active = renderTex;
-                    Texture2D readableText = new Texture2D(tex.width, tex.height);
+                    Texture2D readableText = new(tex.width, tex.height);
                     readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
                     readableText.Apply();
                     RenderTexture.active = previous;

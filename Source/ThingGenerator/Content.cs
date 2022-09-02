@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using Verse;
@@ -36,6 +37,12 @@ namespace AAM
         public static Material TrailMaterial;
         [BundleContent("Materials/BlitMaterial.mat")]
         public static Material BlitMaterial;
+
+        /// <summary>
+        /// A hashset containing all lasso defs, used to check if a pawn has a lasso equipped.
+        /// This is automatically populated with all apparel that has the 'Lasso' tag.
+        /// </summary>
+        public static HashSet<ThingDef> LassoDefs = new();
 
         public static void Load()
         {
@@ -78,6 +85,19 @@ namespace AAM
                     field.SetValue(null, value);
                 }
             }
+        }
+
+        public static void FindAllLassos()
+        {
+            foreach (var ap in DefDatabase<ThingDef>.AllDefsListForReading)
+            {
+                if (ap.IsApparel && (ap.apparel.tags?.Contains("Lasso") ?? false))
+                {
+                    LassoDefs.Add(ap);
+                }
+            }
+
+            Core.Log($"Found {LassoDefs.Count} lassos!");
         }
     }
 

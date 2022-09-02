@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AAM.Gizmos;
 using HarmonyLib;
+using System;
 using System.Collections.Generic;
-using AAM.Gizmos;
 using Verse;
 
 namespace AAM.Patches
@@ -31,10 +31,10 @@ namespace AAM.Patches
 
         private static bool ShouldShowFor(Pawn pawn)
         {
-            if (!Core.Settings.ShowMultipleGizmos && Find.Selector.SelectedPawns.Count > 1)
-                return false;
+            //if (!Core.Settings.ShowMultipleGizmos && Find.Selector.SelectedPawns.Count > 1)
+            //    return false;
 
-            return !pawn.Dead && !pawn.Downed && pawn.RaceProps.Humanlike && (Prefs.DevMode || pawn.IsColonistPlayerControlled) && (Core.Settings.ShowGizmosWithoutMeleeWeapon || pawn.GetFirstMeleeWeapon() != null);
+            return !pawn.Dead && !pawn.Downed && pawn.RaceProps.Humanlike && (Prefs.DevMode || pawn.IsColonistPlayerControlled) && (Core.Settings.ShowGizmosWithoutMeleeWeapon || pawn.GetFirstMeleeWeapon() != null || pawn.TryGetLasso() != null);
         }
     }
 }

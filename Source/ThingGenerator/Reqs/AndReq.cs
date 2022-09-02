@@ -4,7 +4,7 @@ namespace AAM.Reqs
 {
     public class AndReq : Req
     {
-        public List<Req> subs = new List<Req>();
+        public List<Req> subs = new();
 
         public override bool Evaluate(ReqInput input)
         {

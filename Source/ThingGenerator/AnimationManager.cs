@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AAM.Processing;
+using System;
 using System.Collections.Generic;
-using AAM.Processing;
 using UnityEngine;
 using Verse;
 
@@ -17,9 +17,9 @@ namespace AAM
 
         public MapPawnProcessor PawnProcessor;
 
-        private readonly List<Action> toDraw = new List<Action>();
-        private readonly List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
-        private HashSet<AnimRenderer> ioRenderers = new HashSet<AnimRenderer>();
+        private readonly List<Action> toDraw = new();
+        private readonly List<(Pawn pawn, Vector2 position)> labels = new();
+        private HashSet<AnimRenderer> ioRenderers = new();
 
         public AnimationManager(Map map) : base(map)
         {
@@ -183,24 +183,6 @@ namespace AAM
                     ioRenderers.Clear();
                     break;
             }
-        }
-
-        public override void MapRemoved()
-        {
-            base.MapRemoved();
-            Core.Warn("MAP REMOVED");
-        }
-
-        public override void FinalizeInit()
-        {
-            base.FinalizeInit();
-            Core.Warn("FINISH INIT");
-        }
-
-        public override void MapGenerated()
-        {
-            base.MapGenerated();
-            Core.Warn("GENERATED");
         }
     }
 }

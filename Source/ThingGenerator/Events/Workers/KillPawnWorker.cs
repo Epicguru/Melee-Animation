@@ -1,6 +1,7 @@
 ﻿using AAM.Patches;
 using AAM.UI;
 using RimWorld;
+using System;
 using Verse;
 
 namespace AAM.Events.Workers
@@ -11,11 +12,18 @@ namespace AAM.Events.Workers
 
         public override void Run(AnimEventInput i)
         {
+            var animator = i.Animator;
+
             if (Dialog_AnimationDebugger.IsInRehearsalMode)
+            {
+                if (animator.ExecutionOutcome >= ExecutionOutcome.Down)
+                    animator.Destroy();
                 return;
+            }
 
             var e = i.Event as KillPawnEvent;
-            var animator = i.Animator;
+            if (animator.ExecutionOutcome == ExecutionOutcome.Nothing)
+                return;
             
             Pawn killer = i.GetPawnFromIndex(e.KillerIndex);
             Pawn pawn = i.GetPawnFromIndex(e.VictimIndex);
@@ -23,17 +31,59 @@ namespace AAM.Events.Workers
             if (pawn == null || pawn.Destroyed || pawn.Dead || killer == null)
                 return;
 
-            if (e.OnlyIfNotInterrupted && animator.WasInterrupted)
+            switch (animator.ExecutionOutcome)
             {
-                Core.Warn($"Anim was interrupted, will not kill {pawn}");
-                return;
+                case ExecutionOutcome.Nothing:
+                    return;
+
+                case ExecutionOutcome.Damage:
+                    Injure(i, pawn, killer, e);
+                    if (pawn.Downed || pawn.Dead)
+                    {
+                        Core.Warn($"Injuring {pawn} in execution animation (in Damage mode) caused them to be downed, even though it was not the intended outcome...");
+                        animator.Destroy();
+                    }
+                    break;
+
+                case ExecutionOutcome.Down:
+                    Down(i, pawn, killer, e);
+                    animator.Destroy();
+                    break;
+
+                case ExecutionOutcome.Kill:
+                    Kill(i, pawn, killer, e);
+                    animator.Destroy();
+                    return;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
+
+            // End the animation because the victim has been killed.
+            // If the animation is not ended, it will continue with the 'recovery' part of the animation,
+            // with the victim standing back up.
+        }
+
+        private void Injure(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
+        {
+            // TODO implement me.
+            Core.Warn("IMPLEMENT ME");
+        }
+
+        private void Down(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
+        {
+            // TODO implement me.
+            Core.Warn("IMPLEMENT ME");
+        }
+
+        private void Kill(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
+        {
             if (Core.Settings.ExecutionsCanDestroyBodyParts)
             {
-                BodyPartDef partDef = i.GetDef<BodyPartDef>(e.TargetBodyPart);
-                DamageDef dmgDef = i.GetDef(e.DamageDef, DamageDefOf.Cut);
-                RulePackDef logDef = i.GetDef(e.BattleLogDef, AAM_DefOf.AAM_Execution_Generic);
+                BodyPartDef partDef = i.GetDef<BodyPartDef>(@event.TargetBodyPart);
+                DamageDef dmgDef = i.GetDef(@event.DamageDef, DamageDefOf.Cut);
+                RulePackDef logDef = i.GetDef(@event.BattleLogDef, AAM_DefOf.AAM_Execution_Generic);
                 var part = GetPartFromDef(pawn, partDef);
                 ThingDef weapon = killer.equipment?.Primary?.def;
 
@@ -71,8 +121,8 @@ namespace AAM.Events.Workers
             else
             {
                 // Magic kill...
-                BodyPartDef partDef = i.GetDef<BodyPartDef>(e.TargetBodyPart);
-                DamageDef dmgDef = i.GetDef(e.DamageDef, DamageDefOf.Cut);
+                BodyPartDef partDef = i.GetDef<BodyPartDef>(@event.TargetBodyPart);
+                DamageDef dmgDef = i.GetDef(@event.DamageDef, DamageDefOf.Cut);
                 var part = GetPartFromDef(pawn, partDef);
                 ThingDef weapon = killer.equipment?.Primary?.def;
 
