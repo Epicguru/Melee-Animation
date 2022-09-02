@@ -1,5 +1,5 @@
 # Compatible Mods List
-`Updated 03/31/2022 00:37:16.`  
+`Updated 09/02/2022 20:13:26.`  
 
 Mods listed here are fully compatible with this mod.  
 Mods that are **not** listed here are not *incompatible* - but they won't be able to perform animations.  
@@ -17,7 +17,7 @@ Maybe a weapon that is too large or small?
 Open an issue or leave a comment on the Workshop page - or even better, submit a Pull Request!
 </details>
 
-Currently supports 453 weapons from 80 mods.
+Currently supports 457 weapons from 80 mods.
   | Mod Name | Mod ID | Weapon Count | Patch Author |
 | --- | --- | --- | --- |
 | **[RF]Berserk - Character Apparel Pack** | rf.berserk.armory | 1 | *Epicguru* |
@@ -81,7 +81,7 @@ Currently supports 453 weapons from 80 mods.
 | **SNS AOTC: True Pinnacle of Creation** | explodoboy.snsambitioncosmic.gen4addon | 1 | *Epicguru* |
 | **Sparkling Worlds - Full Mod** | albion.sparklingworlds.full | 2 | *Epicguru* |
 | **Star Crafters Armory** | akri.starcraftersarmory | 1 | *Epicguru* |
-| **Star Wars - Fully Functional Lightsabers (Continued)** | mlie.starwarsfullyfunctionallightsabers | 10 | *Epicguru* |
+| **Star Wars - Fully Functional Lightsabers (Continued)** | mlie.starwarsfullyfunctionallightsabers | 14 | *Epicguru* |
 | **StarWars Animal Collection** | guy.starwarsanimalcollection | 2 | *Epicguru* |
 | **Swords (Continued)** | mlie.swords | 5 | *Epicguru* |
 | **The Joris Experience** | sarg.jorisexperience | 1 | *Epicguru* |
