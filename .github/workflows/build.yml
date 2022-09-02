@@ -28,7 +28,8 @@ jobs:
     strategy:
       matrix:
         # You can configure operating systems to build on here. It shouldn't make a difference 
-        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        # operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        operating-system: [ubuntu-latest]
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -42,7 +43,7 @@ jobs:
       run: dotnet restore ${{ env.SLN_PATH }}
 
     - name: Build Mod
-      run: dotnet build ${{ env.SLN_PATH }} --configuration Release --no-restore
+      run: dotnet build ${{ env.SLN_PATH }} --no-restore # --configuration Release # Don't specify config, allow it to default to latest.
 
     # I don't know how well testing will work without Rimworld actually installed. 
     # But if you have unit tests configured to work with dotnet, you may be able 
