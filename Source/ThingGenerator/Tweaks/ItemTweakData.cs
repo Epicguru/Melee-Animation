@@ -209,6 +209,7 @@ namespace AAM.Tweaks
             Scribe_Values.Look(ref BladeStart, "blS", 0);
             Scribe_Values.Look(ref BladeEnd, "blE", 0.5f);
             Scribe_Values.Look(ref CustomRendererClass, "crc", null);
+            Scribe_Values.Look(ref SweepProviderClass, "spc", null);
 
             int flag = (int)MeleeWeaponType;
             Scribe_Values.Look(ref flag, "tag", (int)(MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp));
