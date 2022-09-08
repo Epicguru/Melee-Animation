@@ -116,7 +116,8 @@ namespace AAM.Gizmos
                     return GenSight.LineOfSight(pawn.Position, c, pawn.Map);
                 }
 
-                if (Event.current.type == EventType.Repaint && Find.Targeter.IsTargeting && Find.Targeter.IsPawnTargeting(pawn))
+                // Note: despite best efforts, may still display radius for other custom targeting operations when this pawn is selected.
+                if (Event.current.type == EventType.Repaint && Find.Targeter.IsTargeting && Find.Targeter.IsPawnTargeting(pawn) && Find.Targeter.targetingSource == null)
                 {
                     if (pawn.TryGetLasso() != null)
                     {
@@ -408,15 +409,10 @@ namespace AAM.Gizmos
 
             if (Widgets.ButtonInvisible(rect) && !Find.Targeter.IsTargeting)
             {
-                if(!isOffCooldown)
+                if(!GrabUtility.CanStartGrapple())
                 {
                     string name = pawn.Name.ToStringShort;
                     Messages.Message($"{name}'s lasso is on cooldown!", MessageTypeDefOf.RejectInput, false);
-                }
-                else if (pawn.TryGetLasso() == null)
-                {
-                    string name = pawn.Name.ToStringShort;
-                    Messages.Message($"{name} does not have a lasso equipped.", MessageTypeDefOf.RejectInput, false);
                 }
                 else
                 {
