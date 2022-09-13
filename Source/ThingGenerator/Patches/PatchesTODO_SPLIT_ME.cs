@@ -12,7 +12,7 @@ namespace AAM.Patches
 
         public static AnimRenderer GetAnimator(Pawn pawn)
         {
-            if (pawn == lastPawn && lastRenderer != null && !lastRenderer.IsDestroyed)
+            if (pawn == lastPawn && lastRenderer is {IsDestroyed: false})
                 return lastRenderer;
 
             lastPawn = pawn;

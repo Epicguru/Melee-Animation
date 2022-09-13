@@ -405,14 +405,11 @@ namespace AAM.Gizmos
 
             Widgets.DrawHighlightIfMouseover(rect);
 
-            // TODO check grappler conditions.
-
             if (Widgets.ButtonInvisible(rect) && !Find.Targeter.IsTargeting)
             {
-                if(!GrabUtility.CanStartGrapple())
+                if(!GrabUtility.CanStartGrapple(pawn, out string reason))
                 {
-                    string name = pawn.Name.ToStringShort;
-                    Messages.Message($"{name}'s lasso is on cooldown!", MessageTypeDefOf.RejectInput, false);
+                    Messages.Message(reason, MessageTypeDefOf.RejectInput, false);
                 }
                 else
                 {

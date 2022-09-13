@@ -44,8 +44,6 @@ namespace AAM.Grappling
                 return false;
             }
 
-            var map = grappler.Map;
-
             if (grappler.Dead)
             {
                 reason = $"{grappler.NameShortColored} is dead.";

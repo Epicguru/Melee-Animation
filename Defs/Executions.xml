@@ -146,6 +146,22 @@
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AMM_Execution_Punt</defName>
+    <label>Execution: Punt</label>
+    <data>Execution_BluntPunt.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab, Long_Blunt, Long_Sharp</types>
+    </weaponFilter>
+    <!-- <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData> -->
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AMM_Execution_HeadStab</defName>
     <label>Execution: Head Stab</label>
     <data>Execution_HeadStab.anim</data>

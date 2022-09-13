@@ -12,6 +12,7 @@
     <AssemblyName>AdvancedAnimationMod</AssemblyName>
     <RootNamespace>AAM</RootNamespace>
     <Nullable>disable</Nullable>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

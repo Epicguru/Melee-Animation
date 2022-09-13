@@ -1,4 +1,6 @@
 <Defs>
+
+  <!-- Grapple -->
   <ThingDef ParentName="PawnFlyerBase">
     <defName>AAM_GrappleFlyer</defName>
     <thingClass>AAM.Grappling.GrappleFlyer</thingClass>
@@ -9,4 +11,15 @@
       <!-- <soundLanding>JumpPackLand</soundLanding> -->
     </pawnFlyer>
   </ThingDef>
+
+  <!-- Knockback -->
+  <ThingDef ParentName="PawnFlyerBase">
+    <defName>AAM_KnockbackFlyer</defName>
+    <thingClass>AAM.Grappling.KnockbackFlyer</thingClass>
+    <pawnFlyer>
+      <flightEffecterDef>ConstructDirt</flightEffecterDef>
+      <soundLanding>Pawn_Melee_Punch_HitBuilding</soundLanding>
+    </pawnFlyer>
+  </ThingDef>
+
 </Defs>
