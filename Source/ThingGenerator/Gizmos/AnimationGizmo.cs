@@ -30,8 +30,6 @@ namespace AAM.Gizmos
 
             Text.Font = GameFont.Tiny;
             MouseoverSounds.DoRegion(butRect, SoundDefOf.Mouseover_Command);
-            if (parms.highLight)
-                QuickSearchWidget.DrawStrongHighlight(butRect.ExpandedBy(12f));
 
             Widgets.DrawBoxSolidWithOutline(butRect, new Color32(21, 25, 29, 255), Color.white * 0.75f);
 
@@ -63,8 +61,6 @@ namespace AAM.Gizmos
 
                 // Mouseover and highlight.
                 MouseoverSounds.DoRegion(butRect, SoundDefOf.Mouseover_Command);
-                if (parms.highLight)
-                    QuickSearchWidget.DrawStrongHighlight(butRect.ExpandedBy(12f));
 
                 bool mouseOver = Mouse.IsOver(butRect);
 

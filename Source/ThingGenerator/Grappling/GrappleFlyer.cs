@@ -2,7 +2,6 @@
 using System;
 using UnityEngine;
 using Verse;
-using Verse.Sound;
 
 namespace AAM.Grappling;
 
@@ -26,7 +25,11 @@ public class GrappleFlyer : PawnFlyer
             return null;
         }
 
-        GrappleFlyer flyer = PawnFlyer.MakeFlyer(AAM_DefOf.AAM_GrappleFlyer, victim, targetPos) as GrappleFlyer;
+#if V13
+        GrappleFlyer flyer = MakeFlyer(AAM_DefOf.AAM_GrappleFlyer, victim, targetPos) as GrappleFlyer;
+#else
+        GrappleFlyer flyer = MakeFlyer(AAM_DefOf.AAM_GrappleFlyer, victim, targetPos, null, null) as GrappleFlyer;
+#endif
         if (flyer?.FlyingPawn != null)
         {
             victim.Rotation = Rot4.South;
@@ -130,27 +133,6 @@ public class GrappleFlyer : PawnFlyer
         DrawGrappleLine(ropeColor);
     }
 
-    public BezierCurve MakeGrappleCurve()
-    {
-        var curve = new BezierCurve();
-        curve.P0 = Grappler.DrawPos.ToFlat();
-        curve.P3 = effectivePos.ToFlat();
-
-        Vector2 delta = curve.P3 - curve.P0;
-        Vector2 perp = Vector2.Perpendicular(delta.normalized);
-        if (curve.P3.x < curve.P0.x)
-            perp = -perp;
-        float dst = delta.magnitude;
-
-        float t0 = 0.1f;
-        float t1 = 0.12f;
-
-        curve.P1 = Vector2.Lerp(curve.P0, curve.P3, t0) + perp * Mathf.Sin(dst * 0.5f) * Mathf.Clamp(dst * 0.25f, 2f, 12f);
-        curve.P2 = Vector2.Lerp(curve.P0, curve.P3, t1) + perp * Mathf.Sin(dst * 0.5f) * -Mathf.Clamp(dst * 0.25f, 1f, 6f);
-
-        return curve;
-    }
-
     public void DrawGrappleLine(Color ropeColor)
     {
         Vector3 from = Grappler.DrawPos;
@@ -208,7 +190,7 @@ public class GrappleFlyer : PawnFlyer
 
     protected override void RespawnPawn()
     {
-        this.LandingEffects();
+        FleckMaker.ThrowDustPuff(base.DestinationPos + Gen.RandomHorizontalVector(0.5f), base.Map, 2f);
         base.RespawnPawn();
     }
 
@@ -216,35 +198,6 @@ public class GrappleFlyer : PawnFlyer
     {
         base.ExposeData();
         Scribe_References.Look(ref Grappler, "AAM_grappler", true);
-    }
-
-    public override void Tick()
-    {
-        if (this.flightEffecter == null && this.def.pawnFlyer.flightEffecterDef != null)
-        {
-            this.flightEffecter = this.def.pawnFlyer.flightEffecterDef.Spawn();
-            this.flightEffecter.Trigger(this, TargetInfo.Invalid);
-        }
-        else
-        {
-            Effecter effecter = this.flightEffecter;
-            if (effecter != null)
-            {
-                effecter.EffectTick(this, TargetInfo.Invalid);
-            }
-        }
-
-        base.Tick();
-    }
-
-    private void LandingEffects()
-    {
-        if (this.def.pawnFlyer.soundLanding != null)
-        {
-            this.def.pawnFlyer.soundLanding.PlayOneShot(new TargetInfo(base.Position, base.Map, false));
-        }
-
-        FleckMaker.ThrowDustPuff(base.DestinationPos + Gen.RandomHorizontalVector(0.5f), base.Map, 2f);
     }
 
     public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
