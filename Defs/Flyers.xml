@@ -7,8 +7,6 @@
     <pawnFlyer>
       <flightDurationMin>0.25</flightDurationMin>
       <flightSpeed>18</flightSpeed>
-      <!-- <flightEffecterDef>JumpFlightEffect</flightEffecterDef> -->
-      <!-- <soundLanding>JumpPackLand</soundLanding> -->
     </pawnFlyer>
   </ThingDef>
 
@@ -16,10 +14,6 @@
   <ThingDef ParentName="PawnFlyerBase">
     <defName>AAM_KnockbackFlyer</defName>
     <thingClass>AAM.Grappling.KnockbackFlyer</thingClass>
-    <pawnFlyer>
-      <flightEffecterDef>ConstructDirt</flightEffecterDef>
-      <soundLanding>Pawn_Melee_Punch_HitBuilding</soundLanding>
-    </pawnFlyer>
   </ThingDef>
 
 </Defs>

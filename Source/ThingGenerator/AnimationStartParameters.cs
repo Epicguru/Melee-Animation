@@ -13,7 +13,7 @@ namespace AAM
         public Map Map;
         public Matrix4x4 RootTransform;
         public bool FlipX, FlipY;
-        public ExecutionOutcome ExecutionOutcome = ExecutionOutcome.Nothing;
+        public ExecutionOutcome ExecutionOutcome = ExecutionOutcome.Down;
 
         public AnimationStartParameters(AnimDef animation, Map map, Matrix4x4 rootTransform)
         {

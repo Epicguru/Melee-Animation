@@ -1,9 +1,11 @@
 ﻿using AAM.Data;
 using AAM.Grappling;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -309,9 +311,9 @@ namespace AAM.Processing
                     // Check range and exclude.
                     var pos = p.Position;
 
-                    const float maxGrappleRadiusSqr = 21.4f * 21.4f; // 20 + 1.414 from the corner grapple.
+                    float maxGrappleRadius = pawn.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
                     float sqrDst = pos.DistanceToSquared(pawnPos);
-                    if (sqrDst > maxGrappleRadiusSqr)
+                    if (sqrDst > maxGrappleRadius * maxGrappleRadius)
                         continue;
 
                     // If executing, is it in the perfect spot?
@@ -346,7 +348,7 @@ namespace AAM.Processing
                 // ... and if none of those are acted upon, consider the possible grapples.
                 if (tempGrappleStarts.Count > 0)
                 {
-                    OnPossibleGrapples(pawn, data);
+                    OnPossibleGrapples(pawn, data, exec);
                 }
             }
         }
@@ -472,7 +474,12 @@ namespace AAM.Processing
             if (!Rand.Chance(chance))
                 return false;
 
-            var execution = tempAnimationStarts.RandomElementByWeight(d => d.Animation.Probability);
+            var execution = tempAnimationStarts.RandomElementByWeightWithFallback(d => d.Animation.Probability);
+
+            // Check that there is actually an animation to do - if all animations are disabled, there's nothing to play.
+            if (execution.Animation == null)
+                return false;
+
             bool worked = execution.TryTrigger();
             if (worked)
                 data.TimeSinceExecuted = 0;
@@ -480,7 +487,7 @@ namespace AAM.Processing
             return worked;
         }
 
-        private bool OnPossibleGrapples(Pawn executioner, PawnMeleeData data)
+        private bool OnPossibleGrapples(Pawn executioner, PawnMeleeData data, bool tryExecAtEnd)
         {
             int tickDelta = data.lastTickPresentedOptions < 0 ? 1 : (GenTicks.TicksAbs - data.lastTickPresentedOptions);
             if (tickDelta == 0)
@@ -495,7 +502,14 @@ namespace AAM.Processing
                 return false;
 
             var rand = tempGrappleStarts.RandomElement();
-            bool worked = JobDriver_GrapplePawn.GiveJob(executioner, rand.Victim, rand.GrappleEndPos);
+
+            AnimationStartParameters? args = null;
+            if (tryExecAtEnd)
+            {
+                // TODO add the ability to immediately trigger execution animation.
+            }
+
+            bool worked = JobDriver_GrapplePawn.GiveJob(executioner, rand.Victim, rand.GrappleEndPos, animationStartParameters: args);
             if (worked)
                 data.TimeSinceGrappled = 0;
 
