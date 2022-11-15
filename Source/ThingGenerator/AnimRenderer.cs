@@ -237,7 +237,7 @@ public class AnimRenderer : IExposable
     /// The active animation data. Animation data is loaded from disk upon request.
     /// Note that this is not the same as an animation def: see <see cref="Def"/> for the definition.
     /// </summary>
-    public AnimData Data => Def.Data;
+    public AnimData Data => ExecutionOutcome <= ExecutionOutcome.Damage ? Def.DataNonLethal : Def.Data;
     /// <summary>
     /// The duration, in seconds, of the current animation.
     /// May not accurately represent how long the animation actually plays for, depending on the type of animation (i.e. Duels may last longer).

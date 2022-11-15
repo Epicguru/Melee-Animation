@@ -27,7 +27,7 @@ public class KnockbackFlyer : PawnFlyer
 
     public static KnockbackFlyer MakeKnockbackFlyer(Pawn victim, IntVec3 targetPos)
     {
-        if (victim.Position == targetPos || !victim.Spawned)
+        if (!victim.Spawned)
             return null;
 
         var map = victim.Map;

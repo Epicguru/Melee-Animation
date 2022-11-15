@@ -14,6 +14,12 @@
   <ThingDef ParentName="PawnFlyerBase">
     <defName>AAM_KnockbackFlyer</defName>
     <thingClass>AAM.Grappling.KnockbackFlyer</thingClass>
+    <pawnFlyer>
+      <!-- Both these values are overwritten in C#, but they need to be here or will cause errors -->
+      <!-- See KnockbackFlyer.cs -->
+      <flightDurationMin>0.25</flightDurationMin>
+      <flightSpeed>18</flightSpeed>
+    </pawnFlyer>
   </ThingDef>
 
 </Defs>
