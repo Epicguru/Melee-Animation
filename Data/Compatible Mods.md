@@ -1,5 +1,5 @@
 # Compatible Mods List
-`Updated 09/02/2022 21:13:36.`  
+`Updated 11/20/2022 23:40:36.`  
 
 Mods listed here are fully compatible with this mod.  
 Mods that are **not** listed here are not *incompatible* - but they won't be able to perform animations.  
@@ -17,12 +17,13 @@ Maybe a weapon that is too large or small?
 Open an issue or leave a comment on the Workshop page - or even better, submit a Pull Request!
 </details>
 
-Currently supports 457 weapons from 80 mods.
+Currently supports 463 weapons from 81 mods.
   | Mod Name | Mod ID | Weapon Count | Patch Author |
 | --- | --- | --- | --- |
 | **[RF]Berserk - Character Apparel Pack** | rf.berserk.armory | 1 | *Epicguru* |
 | **[SYR] Thrumkin** | syrchalis.thrumkin | 2 | *Epicguru* |
 | **A RimWorld of Magic** | torann.arimworldofmagic | 8 | *Epicguru* |
+| **Advanced Animation** | co.uk.epicguru.advancedanimation | 1 | *Epicguru* |
 | **Alpha Animals** | sarg.alphaanimals | 2 | *Epicguru* |
 | **Alpha Biomes** | sarg.alphabiomes | 22 | *Epicguru* |
 | **Ancient Eastern Armory** | eastern.armory.geminingen | 3 | *Epicguru* |
@@ -31,7 +32,7 @@ Currently supports 457 weapons from 80 mods.
 | **Anima Gear** | xrushha.animagear | 1 | *Epicguru* |
 | **Antimatter Annihilation** | co.uk.epicguru.antimatterannihilation | 5 | *Epicguru* |
 | **Apothecary (Continued)** | mlie.apothecary | 1 | *Epicguru* |
-| **Arasaka Corporation [1.3]** | alien.arasakacorporation | 2 | *Epicguru* |
+| **Arasaka Corporation** | alien.arasakacorporation | 2 | *Epicguru* |
 | **Biomes! Caveworld Flora Unleashed** | fluffysminion.itw.caveworldfloraunleashed | 1 | *Epicguru* |
 | **Core** | ludeon.rimworld | 12 | *Epicguru* |
 | **Corinthian Royal Armoury** | s16.ddm | 1 | *Epicguru* |
@@ -92,11 +93,11 @@ Currently supports 457 weapons from 80 mods.
 | **Vanilla Brewing Expanded** | vanillaexpanded.vbrewe | 7 | *Epicguru* |
 | **Vanilla Factions Expanded - Insectoids** | oskarpotocki.vfe.insectoid | 1 | *Epicguru* |
 | **Vanilla Factions Expanded - Medieval** | oskarpotocki.vanillafactionsexpanded.medievalmodule | 3 | *Epicguru* |
-| **Vanilla Factions Expanded - Pirates** | oskarpotocki.vfe.pirates | 3 | *Epicguru* |
+| **Vanilla Factions Expanded - Pirates** | oskarpotocki.vfe.pirates | 5 | *Epicguru* |
 | **Vanilla Factions Expanded - Vikings** | oskarpotocki.vfe.vikings | 7 | *Epicguru* |
 | **Vanilla Weapons Expanded - Laser** | vanillaexpanded.vwel | 1 | *Epicguru* |
 | **Vanilla Weapons Expanded - Non-Lethal** | vanillaexpanded.vwenl | 1 | *Epicguru* |
 | **Vanilla Weapons Expanded - Tribal** | vanillaexpanded.vwetb | 4 | *Epicguru* |
-| **Vanilla Weapons Expanded** | vanillaexpanded.vwe | 4 | *Epicguru* |
+| **Vanilla Weapons Expanded** | vanillaexpanded.vwe | 7 | *Epicguru* |
 | **VGP Garden Drinks UF** | dismarzero.vgp.vgpgardendrinksuf | 10 | *Epicguru* |
 | **VGP Vegetable Garden** | dismarzero.vgp.vgpvegetablegarden | 3 | *Epicguru* |
