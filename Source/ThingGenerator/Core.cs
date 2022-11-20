@@ -4,6 +4,7 @@ using HarmonyLib;
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using Verse;
@@ -13,6 +14,7 @@ namespace AAM
     [HotSwapAll]
     public class Core : Mod
     {
+        public static Func<Pawn, float> GetBodyDrawSizeFactor = _ => 1f;
         public static string ModTitle => "AAM.ModTitle".Trs();
         public static string ModFolder => ModContent.RootDir;
         public static ModContentPack ModContent;
@@ -63,12 +65,31 @@ namespace AAM
             AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
             AddLateLoadAction(false, "Finding all lassos...", AAM.Content.FindAllLassos);
 
-            //AddLateLoadAction(true, "Loading settings...", () => {  });
             AddLateLoadAction(true, "Loading main content...", AAM.Content.Load);
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
             AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
             AddLateLoadAction(true, "Nuking Yayo's Animation patches...", () => YayoKiller.Init(h));
+            AddLateLoadAction(true, "Checking asset bundles...", () =>
+            {
+                void Ensure(string path)
+                {
+                    string bundleName = path.Split(':')[0];
+                    var bundle = content.assetBundles.loadedAssetBundles.FirstOrDefault(b => b.name == bundleName);
+                    if (bundle == null)
+                    {
+                        Error($"Asset bundle '{bundleName}' failed to load, expect issues. This is normally caused by an updated engine version, the mod will need updating.");
+                        return;
+                    }
+
+                    string name = path.Split(':')[1];
+                    if (bundle.Contains(name))
+                        return;
+                    Error($"Failed to locate asset '{name}' within the {bundle.name} bundle. Expect errors. Please report this bug.");
+                }
+
+                Ensure("shaders:Assets/CutoffCustom.mat");
+            });
 
             AddLateLoadEvents();
         }

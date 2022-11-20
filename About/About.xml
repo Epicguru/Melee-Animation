@@ -19,5 +19,6 @@
   <loadAfter>
     <li>brrainz.harmony</li>
     <li>Mlie.StarWarsFullyFunctionalLightsabers</li>
+    <li>erdelf.humanoidalienraces</li>
   </loadAfter>
 </ModMetaData>

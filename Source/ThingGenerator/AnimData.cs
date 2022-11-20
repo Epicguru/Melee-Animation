@@ -19,7 +19,7 @@ public class AnimData
 
     public static Mesh GetMesh(bool flipX, bool flipY)
     {
-        if (true)
+        if (m == null)
         {
             m = MakeMesh(Vector2.one, false, false);
             mfx = MakeMesh(Vector2.one, true, false);
@@ -33,39 +33,39 @@ public class AnimData
     {
         var normal = new Vector2[]
         {
-            new Vector2(0, 0),
-            new Vector2(0, 1),
-            new Vector2(1, 1),
-            new Vector2(1, 0)
+            new Vector2(0, 0),// Bottom-left
+            new Vector2(0, 1),// Top-left
+            new Vector2(1, 1),// Top-right
+            new Vector2(1, 0) // Bottom-right
         };
         var fx = new Vector2[]
         {
-            new Vector2(1, 0),
-            new Vector2(1, 1),
-            new Vector2(0, 1),
-            new Vector2(0, 0)
+            new Vector2(1, 0),// Bottom-left
+            new Vector2(1, 1),// Top-left
+            new Vector2(0, 1),// Top-right
+            new Vector2(0, 0) // Bottom-right
         };
         var fy = new Vector2[]
         {
-            new Vector2(0, 0),
-            new Vector2(0, -1),
-            new Vector2(1, -1),
-            new Vector2(1, 0)
+            new Vector2(0, 0), // Bottom-left
+            new Vector2(0, -1),// Top-left
+            new Vector2(1, -1),// Top-right
+            new Vector2(1, 0)  // Bottom-right
         };
         var fxy = new Vector2[]
         {
-            new Vector2(1, 0),
-            new Vector2(1, -1),
-            new Vector2(0, -1),
-            new Vector2(0, 0)
+            new Vector2(1, 0), // Bottom-left
+            new Vector2(1, -1),// Top-left
+            new Vector2(0, -1),// Top-right
+            new Vector2(0, 0)  // Bottom-right
         };
 
         Vector3[] verts = new Vector3[4];
         int[] tris = new int[6];
-        verts[0] = new Vector3(-0.5f * size.x, 0f, -0.5f * size.y);
-        verts[1] = new Vector3(-0.5f * size.x, 0f, 0.5f * size.y);
-        verts[2] = new Vector3(0.5f * size.x, 0f, 0.5f * size.y);
-        verts[3] = new Vector3(0.5f * size.x, 0f, -0.5f * size.y);
+        verts[0] = new Vector3(-0.5f * size.x, 0f, -0.5f * size.y); // Bottom-left
+        verts[1] = new Vector3(-0.5f * size.x, 0f, 0.5f * size.y);  // Top-left
+        verts[2] = new Vector3(0.5f * size.x, 0f, 0.5f * size.y);   // Top-right
+        verts[3] = new Vector3(0.5f * size.x, 0f, -0.5f * size.y);  // Bottom-right
         tris[0] = 0;
         tris[1] = 1;
         tris[2] = 2;
@@ -141,6 +141,9 @@ public class AnimData
 
     public static AnimData Load(BinaryReader reader)
     {
+        // Format version
+        int formatVersion = reader.ReadInt32();
+
         // Name.
         string clipName = reader.ReadString();
 
@@ -163,6 +166,9 @@ public class AnimData
 
         AnimPartData[] parts = new AnimPartData[partCount];
         short[] parentIds = new short[partCount];
+        int[] splitPartPivotTargets = new int[partCount];
+        for (int i = 0; i < partCount; i++)
+            splitPartPivotTargets[i] = -1;
 
         // Initialize parts and read paths & texture paths.
         for (int i = 0; i < partCount; i++)
@@ -187,25 +193,35 @@ public class AnimData
             bool defaultTrs = reader.ReadBoolean();
             part.TransparentByDefault = defaultTrs;
 
+            // Split pivot.
+            if (reader.ReadBoolean())
+            {
+                int pivotIndex = reader.ReadInt32();
+                splitPartPivotTargets[i] = pivotIndex;
+            }
+
             parts[i] = part;
-            //Core.Log($"Read part {i}: {part.Path}, P:{parentIds[i]}, CN:{part.CustomName}, Tex:{part.TexturePath}");
         }
 
         // Assign parent references now that all parts are created.
         for (int i = 0; i < partCount; i++)
         {
             var part = parts[i];
+
+            // Assign split draw pivot reference.
+            if (splitPartPivotTargets[i] != -1)
+                part.SplitDrawPivot = parts[splitPartPivotTargets[i]];
+
             var parentIndex = parentIds[i];
             if (parentIndex < 0)
                 continue;
 
             part.Parent = parts[parentIndex];
+            part.Parent.Children.Add(part);
         }
 
         // Curve count.
         int curveCount = reader.ReadInt32();
-
-        //Core.Log("Read curve count.");
 
         // Read curves and populate part data.
         for (int i = 0; i < curveCount; i++)
@@ -262,12 +278,22 @@ public class AnimData
 
         return new AnimData(clipName, length, parts, events)
         {
-            sweeps = sweeps
+            sweeps = sweeps,
+            FormatVersion = formatVersion,
         };
     }
-    
+
+    public enum SplitDrawMode
+    {
+        None,
+        Before,
+        After,
+        BeforeAndAfter,
+    }
+
     #endregion
 
+    public int FormatVersion { get; private set; }
     public readonly string Name;
     public readonly float Duration;
     public IReadOnlyList<AnimPartData> Parts => parts;
@@ -378,11 +404,13 @@ public class AnimPartData
     public string Name => CustomName ?? Path;
 
     public AnimPartData Parent;
+    public List<AnimPartData> Children = new List<AnimPartData>();
     public string Path;
     public string CustomName;
     public string TexturePath;
     public int Index;
     public bool TransparentByDefault;
+    public AnimPartData SplitDrawPivot;
 
     public AnimationCurve PosX, PosY, PosZ;
     public AnimationCurve RotX, RotY, RotZ;
@@ -392,6 +420,7 @@ public class AnimPartData
     public AnimationCurve FlipX, FlipY;
     public AnimationCurve Active;
     public AnimationCurve Direction;
+    public AnimationCurve SplitDrawModeCurve;
 
     public ref AnimationCurve GetCurve(byte type, byte field)
     {
@@ -447,6 +476,8 @@ public class AnimPartData
                 return ref FlipX;
             if (field == 9)
                 return ref FlipY;
+            if (field == 10)
+                return ref SplitDrawModeCurve;
         }
 
         // TYPE: GameObject
@@ -481,6 +512,7 @@ public struct AnimPartSnapshot
     public string TexturePath => Part?.TexturePath;
     public string PartName => Part?.Name;
     public float Depth => WorldMatrix.MultiplyPoint3x4(Vector3.zero).y;
+    public AnimPartData SplitDrawPivot => Part?.SplitDrawPivot;
     public Color FinalColor
     {
         get
@@ -507,10 +539,12 @@ public struct AnimPartSnapshot
     public float DataA, DataB, DataC;
     public bool FlipX, FlipY;
     public bool Active;
-    public Rot4 Direction; // TODO populate.
+    public Rot4 Direction;
+    public AnimData.SplitDrawMode SplitDrawMode;
 
     public Matrix4x4 LocalMatrix;
     public Matrix4x4 WorldMatrix;
+    public Matrix4x4 WorldMatrixNoOverride;
 
     public AnimPartSnapshot(AnimPartData part, AnimRenderer renderer, float time)
     {
@@ -535,20 +569,27 @@ public struct AnimPartSnapshot
         FlipY = Eval(d.FlipY, t) >= 0.5f;
 
         Active = Eval(d.Active, t) >= 0.5f;
+        SplitDrawMode = (AnimData.SplitDrawMode)(int)Eval(d.SplitDrawModeCurve, t);
 
         Direction = new Rot4((byte)Eval(d.Direction, t));
 
         LocalMatrix = default;
         WorldMatrix = default;
+        WorldMatrixNoOverride = default;
         UpdateLocalMatrix();
     }
 
-    public Vector3 GetWorldPosition(Vector3 localPos = default)
+    public readonly Vector3 GetWorldPosition(Vector3 localPos = default)
     {
         return (Renderer.RootTransform * WorldMatrix).MultiplyPoint3x4(localPos);
     }
 
-    public Rot4 GetWorldDirection()
+    public readonly Vector3 GetWorldPositionNoOverride(Vector3 localPos = default)
+    {
+        return (Renderer.RootTransform * WorldMatrixNoOverride).MultiplyPoint3x4(localPos);
+    }
+
+    public readonly Rot4 GetWorldDirection()
     {
         // Should this respect flip?
         // Override flip too?
@@ -564,7 +605,7 @@ public struct AnimPartSnapshot
         };
     }
 
-    public float GetWorldRotation()
+    public readonly float GetWorldRotation()
     {
         return (Renderer.RootTransform * WorldMatrix).rotation.eulerAngles.y;
     }
@@ -574,7 +615,7 @@ public struct AnimPartSnapshot
         LocalMatrix = Matrix4x4.TRS(LocalPosition, Quaternion.Euler(LocalRotation), LocalScale);
     }
 
-    private Matrix4x4 MakeWorldMatrix()
+    private readonly Matrix4x4 MakeWorldMatrix()
     {
         if (Part?.Parent == null)
             return LocalMatrix;
@@ -582,7 +623,7 @@ public struct AnimPartSnapshot
         return Renderer.GetSnapshot(Part.Parent).MakeWorldMatrix() * LocalMatrix;
     }
 
-    private bool MakeHierarchyActive()
+    private readonly bool MakeHierarchyActive()
     {
         if (Part?.Parent == null)
             return Active;
@@ -608,6 +649,7 @@ public struct AnimPartSnapshot
 
         Active = MakeHierarchyActive();
         WorldMatrix = preProc * MakeWorldMatrix() * adjust * postProc;
+        WorldMatrixNoOverride = preProc * MakeWorldMatrix() * postProc;
     }
 
     private static float Eval(AnimationCurve curve, float time, float fallback = 0f)
@@ -615,7 +657,7 @@ public struct AnimPartSnapshot
         return curve?.Evaluate(time) ?? fallback;
     }
 
-    public override string ToString()
+    public readonly override string ToString()
     {
         if (Part == null)
             return "<default-snapshot>";
@@ -638,6 +680,7 @@ public class AnimPartOverrideData
     public bool UseMPB = true;
     public bool UseDefaultTransparentMaterial;
     public PartRenderer CustomRenderer;
+    public object UserData;
 }
 
 [Serializable]

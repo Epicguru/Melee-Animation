@@ -1,5 +1,6 @@
 ﻿using AAM.Sweep;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Verse;
@@ -39,6 +40,7 @@ namespace AAM.Tweaks
         private ThingDef cachedDef;
         private Texture2D cachedTex;
         private ISweepProvider cachedSweepProvider;
+        private Dictionary<float, Vector2> widthAtPosition;
 
         public ItemTweakData() { }
 
@@ -67,6 +69,21 @@ namespace AAM.Tweaks
             ScaleX = def.graphic.drawSize.x;
             ScaleY = def.graphic.drawSize.y;
             HandsMode = HandsMode.Default;
+        }
+
+        public Vector2? TryGetWidthAtPosition(float distance)
+        {
+            var tex = GetTexture();
+            if (tex == null)
+                return null;
+
+            if (!tex.isReadable)
+            {
+                Core.Warn($"Texture '{tex}' is not readable so some effects will not work.");
+                return null;
+            }
+
+            return null;
         }
 
         public void CopyTransformFrom(ItemTweakData data)
@@ -110,12 +127,14 @@ namespace AAM.Tweaks
                 if (type == null)
                     return null;
 
-                var obj = GenGeneric.InvokeStaticMethodOnGenericType(typeof(DefDatabase<>), type, "GetNamedSilentFail", ItemDefName);
+                var obj = GenGeneric.InvokeStaticMethodOnGenericType(typeof(DefDatabase<>), type, "GetNamedSilentFail", ItemDefName) as ThingDef;
+                if (obj == null)
+                    Core.Warn($"Failed to find item def '{ItemDefName}' of type {type}. The item was probably removed from the target mod.");
 
                 if (saveToCache)
-                    cachedDef = obj as ThingDef;
+                    cachedDef = obj;
                 else
-                    return obj as ThingDef;
+                    return obj;
             }
             return cachedDef;
         }
@@ -163,10 +182,10 @@ namespace AAM.Tweaks
             return cachedSweepProvider;
         }
 
-        public virtual void Apply(AnimRenderer renderer, AnimPartData part)
+        public virtual AnimPartOverrideData Apply(AnimRenderer renderer, AnimPartData part)
         {
             if (part == null)
-                return;
+                return null;
 
             var ov = renderer.GetOverride(part);
             ov.Texture = GetTexture();
@@ -186,6 +205,8 @@ namespace AAM.Tweaks
                 instance.TweakData = this;
                 ov.CustomRenderer = instance;
             }
+
+            return ov;
         }
 
         public void ExposeData()

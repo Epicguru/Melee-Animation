@@ -72,9 +72,9 @@ namespace AAM.Tweaks
         public static void RegisterTweak(ThingDef forDef, ItemTweakData tweak)
         {
             if (forDef == null)
-                throw new System.ArgumentNullException(nameof(forDef));
+                throw new ArgumentNullException(nameof(forDef));
             if (tweak == null)
-                throw new System.ArgumentNullException(nameof(tweak));
+                throw new ArgumentNullException(nameof(tweak));
 
             var target = tweak.GetDef(false, false);
             if (forDef != target)

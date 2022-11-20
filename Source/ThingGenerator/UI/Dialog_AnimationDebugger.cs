@@ -582,8 +582,16 @@ namespace AAM.UI
                     ExecutionOutcome = executionOutcome
                 };
 
-                if (!sp.TryTrigger())
-                    Messages.Message("Animation failed to start! Check debug log for details.", LookTargets.Invalid, MessageTypeDefOf.RejectInput, false);
+                try
+                {
+                    if (!sp.TryTrigger())
+                        Messages.Message("Animation failed to start! Check debug log for details.", LookTargets.Invalid, MessageTypeDefOf.RejectInput, false);
+                }
+                catch (Exception e)
+                {
+                    Core.Error($"Exception trigger animation:", e);
+                }
+
             }
             GUI.color = Color.white;
         }
