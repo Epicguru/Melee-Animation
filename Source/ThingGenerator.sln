@@ -4,17 +4,28 @@ VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AAM", "ThingGenerator\AAM.csproj", "{0CB2DDBC-ECE8-46B4-A8E9-9BF2239BE82B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightsaberPatch", "LightsaberPatch\LightsaberPatch.csproj", "{D9B99467-57BB-4DE7-8147-F5D47554D1CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightsaberPatch", "LightsaberPatch\LightsaberPatch.csproj", "{D9B99467-57BB-4DE7-8147-F5D47554D1CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlienRacesPatch", "AlienRacesPatch\AlienRacesPatch.csproj", "{15189C13-7D5D-4F8D-AE17-1CA9F4A744EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		v1.3|Any CPU = v1.3|Any CPU
+		v1.4|Any CPU = v1.4|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0CB2DDBC-ECE8-46B4-A8E9-9BF2239BE82B}.v1.3|Any CPU.ActiveCfg = v1.3|Any CPU
 		{0CB2DDBC-ECE8-46B4-A8E9-9BF2239BE82B}.v1.3|Any CPU.Build.0 = v1.3|Any CPU
+		{0CB2DDBC-ECE8-46B4-A8E9-9BF2239BE82B}.v1.4|Any CPU.ActiveCfg = v1.4|Any CPU
+		{0CB2DDBC-ECE8-46B4-A8E9-9BF2239BE82B}.v1.4|Any CPU.Build.0 = v1.4|Any CPU
 		{D9B99467-57BB-4DE7-8147-F5D47554D1CB}.v1.3|Any CPU.ActiveCfg = v1.3|Any CPU
 		{D9B99467-57BB-4DE7-8147-F5D47554D1CB}.v1.3|Any CPU.Build.0 = v1.3|Any CPU
+		{D9B99467-57BB-4DE7-8147-F5D47554D1CB}.v1.4|Any CPU.ActiveCfg = v1.4|Any CPU
+		{D9B99467-57BB-4DE7-8147-F5D47554D1CB}.v1.4|Any CPU.Build.0 = v1.4|Any CPU
+		{15189C13-7D5D-4F8D-AE17-1CA9F4A744EB}.v1.3|Any CPU.ActiveCfg = v1.3|Any CPU
+		{15189C13-7D5D-4F8D-AE17-1CA9F4A744EB}.v1.3|Any CPU.Build.0 = v1.3|Any CPU
+		{15189C13-7D5D-4F8D-AE17-1CA9F4A744EB}.v1.4|Any CPU.ActiveCfg = v1.4|Any CPU
+		{15189C13-7D5D-4F8D-AE17-1CA9F4A744EB}.v1.4|Any CPU.Build.0 = v1.4|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -40,8 +40,33 @@
 			<scX>0.6</scX>
 			<scY>0.6</scY>
 			<hnd>Only_Main_Hand</hnd>
-			<blS>0.07027027</blS>
-			<blE>0.372973</blE>
+			<blS>0.02985075</blS>
+			<blE>0.39801</blE>
+			<tag>8</tag>
+		</li>
+		<li>
+			<dId>VFEP_WarcasketMeleeWeapon_GravityHammer</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Weapons/WarcasketGravityHammer</tex>
+			<ofX>0.5258214</ofX>
+			<rot>45</rot>
+			<scX>1.7</scX>
+			<scY>1.7</scY>
+			<blS>0.5305164</blS>
+			<blE>1.262911</blE>
+			<tag>1</tag>
+		</li>
+		<li>
+			<dId>VFEP_WarcasketMeleeWeapon_PlasmaSword</dId>
+			<typ>ThingDef</typ>
+			<nsp>Verse</nsp>
+			<tex>Things/Item/Weapons/WarcasketPlasmaSword</tex>
+			<ofX>0.5633803</ofX>
+			<scX>1.7</scX>
+			<scY>1.7</scY>
+			<blS>0.3615023</blS>
+			<blE>1.384977</blE>
 		</li>
 	</items>
 </Data>

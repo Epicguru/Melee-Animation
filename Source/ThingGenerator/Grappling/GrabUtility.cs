@@ -15,7 +15,7 @@ namespace AAM.Grappling
         private static readonly MaterialPropertyBlock mpb = new();
         private static readonly HashSet<Pawn> pawnsBeingTargetedByGrapples = new();
 
-        public static bool CanStartGrabAttempt(Pawn pawn) => pawn != null && !pawnsBeingTargetedByGrapples.Contains(pawn);
+        public static bool IsBeingTargetedForGrapple(Pawn pawn) => pawn != null && !pawnsBeingTargetedByGrapples.Contains(pawn);
 
         public static bool TryRegisterGrabAttempt(Pawn pawn)
         {
@@ -34,17 +34,15 @@ namespace AAM.Grappling
         }
 
         /// <summary>
-        ///  Does not check cooldown or skill!
+        /// Checks everything necessary for a pawn to start grappling any other.
         /// </summary>
-        public static bool CanStartGrapple(Pawn grappler, Pawn target, in IntVec3 endCell, out string reason)
+        public static bool CanStartGrapple(Pawn grappler, out string reason, bool checkLasso = false)
         {
-            if (grappler == null || target == null || !endCell.IsValid)
+            if (grappler == null)
             {
                 reason = "Invalid input(s)";
                 return false;
             }
-
-            var map = grappler.Map;
 
             if (grappler.Dead)
             {
@@ -54,11 +52,6 @@ namespace AAM.Grappling
             if (grappler.Downed)
             {
                 reason = $"{grappler.NameShortColored} is downed and cannot use their lasso.";
-                return false;
-            }
-            if (target.Dead)
-            {
-                reason = $"{target.NameShortColored} is dead. You can't lasso corpses...";
                 return false;
             }
             if (grappler.IsInAnimation())
@@ -71,9 +64,10 @@ namespace AAM.Grappling
                 reason = $"{grappler.NameShortColored} cannot use their lasso right now.";
                 return false;
             }
-            if (!target.Spawned)
+
+            if (checkLasso && grappler.TryGetLasso() == null)
             {
-                reason = $"{target.NameShortColored} cannot be lassoed right now.";
+                reason = $"{grappler.NameShortColored} does not have a lasso equipped!";
                 return false;
             }
 
@@ -86,37 +80,6 @@ namespace AAM.Grappling
                 float timeRemaining = cooldown - data.TimeSinceGrappled;
                 reason = $"{grappler.NameShortColored}'s lasso is on cooldown for another {timeRemaining:F1} seconds!";
                 return false;
-            }
-
-            // Max distance...
-            float currDistanceSqr = (grappler.Position - target.Position).LengthHorizontalSquared;
-            float maxDistance = grappler.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
-            if (maxDistance * maxDistance < currDistanceSqr)
-            {
-                reason = $"{target.NameShortColored} is outside of the max range of the lasso.";
-                return false;
-            }
-
-            // Check mass.
-            if (Core.Settings.MaxLassoMass > 0)
-            {
-                float mass = target.GetStatValue(StatDefOf.Mass);
-                if (mass > Core.Settings.MaxLassoMass)
-                {
-                    reason = $"{target.NameShortColored} is to heavy to be lassoed: they weigh {mass:F1}kg, which is over the {Core.Settings.MaxLassoMass:F1}kg limit.";
-                    return false;
-                }
-            }
-
-            // Check size.
-            if (Core.Settings.MaxLassoBodySize > 0)
-            {
-                float size = target.BodySize;
-                if (size > Core.Settings.MaxLassoBodySize)
-                {
-                    reason = $"{target.NameShortColored} is too large to be lassoed: their body size is {size:F2}, which is over the {Core.Settings.MaxLassoBodySize:F2} limit.";
-                    return false;
-                }
             }
 
             // Check required melee skill.
@@ -153,8 +116,73 @@ namespace AAM.Grappling
                 }
             }
 
+            reason = null;
+            return true;
+        }
+
+        /// <summary>
+        /// Checks everything necessary for a pawn to start grappling (lassoing) another.
+        /// </summary>
+        public static bool CanStartGrapple(Pawn grappler, Pawn target, in IntVec3 endCell, out string reason, bool checkLasso = false)
+        {
+            // Basic check for grappler.
+            if (!CanStartGrapple(grappler, out reason, checkLasso))
+            {
+                return false;
+            }
+
+            if (target == null || !endCell.IsValid)
+            {
+                reason = "Invalid input(s)";
+                return false;
+            }
+
+            var map = grappler.Map;
+
+            if (target.Dead)
+            {
+                reason = $"{target.NameShortColored} is dead. You can't lasso corpses...";
+                return false;
+            }
+            if (!target.Spawned)
+            {
+                reason = $"{target.NameShortColored} cannot be lassoed right now.";
+                return false;
+            }
+
+            // Max distance...
+            float currDistanceSqr = (grappler.Position - target.Position).LengthHorizontalSquared;
+            float maxDistance = grappler.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
+            if (maxDistance * maxDistance < currDistanceSqr)
+            {
+                reason = $"{target.NameShortColored} is outside of the max range of the lasso.";
+                return false;
+            }
+
+            // Check mass.
+            if (Core.Settings.MaxLassoMass > 0)
+            {
+                float mass = target.GetStatValue(StatDefOf.Mass);
+                if (mass > Core.Settings.MaxLassoMass)
+                {
+                    reason = $"{target.NameShortColored} is to heavy to be lassoed: they weigh {mass:F1}kg, which is over the {Core.Settings.MaxLassoMass:F1}kg limit.";
+                    return false;
+                }
+            }
+
+            // Check size.
+            if (Core.Settings.MaxLassoBodySize > 0)
+            {
+                float size = target.BodySize;
+                if (size > Core.Settings.MaxLassoBodySize)
+                {
+                    reason = $"{target.NameShortColored} is too large to be lassoed: their body size is {size:F2}, which is over the {Core.Settings.MaxLassoBodySize:F2} limit.";
+                    return false;
+                }
+            }
+
             // Already attempting to be grappled by someone else.
-            if (!CanStartGrabAttempt(target))
+            if (!IsBeingTargetedForGrapple(target))
             {
                 reason = $"{target.NameShortColored} is already being lassoed by someone else!";
                 return false;

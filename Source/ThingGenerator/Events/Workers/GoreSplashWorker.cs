@@ -19,8 +19,10 @@ namespace AAM.Events.Workers
             var pawn = i.GetPawnFromIndex(e.AroundPawnIndex);
             if (pawn == null)
             {
-                Core.Error("Cannot spawn damage effect for pawn: pawn not found.");
-                return;
+                Core.Warn("Cannot spawn damage effect for pawn: pawn not found. Attempting to find first pawn.");
+                pawn = i.GetPawnFromIndex(0);
+                if (pawn == null)
+                    return;
             }
             var body = i.GetPawnBody(pawn);
 

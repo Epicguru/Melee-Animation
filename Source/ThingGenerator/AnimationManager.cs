@@ -36,37 +36,7 @@ namespace AAM
         /// the animation started successfully.
         /// </summary>
         /// <returns>The created animation renderer, or null if the <paramref name="def"/> was null.</returns>
-        public AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, IEnumerable<Pawn> pawns)
-        {
-            return StartAnimation(def, rootTransform, false, false, pawns);
-        }
-
-        /// <summary>
-        /// Attempts to start an animation given an animation def, and a position (<paramref name="rootTransform"/>).
-        /// You may also optionally supply one or more pawns to participate in the animation, if the animation requires them.
-        /// The caller should pass in as many pawns as the animation is designed for. Passing in too few or too many pawns may lead
-        /// to undefined behaviour.
-        /// Passing in an 'invalid' pawn (one that is dead, downed, or otherwise inadequate for the animation) will result in the animation
-        /// being immediately cancelled and never started. Check the <see cref="AnimRenderer.IsDestroyed"/> field of the return value to check that
-        /// the animation started successfully.
-        /// </summary>
-        /// <returns>The created animation renderer, or null if the <paramref name="def"/> was null.</returns>
-        public AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, bool mirrorX, IEnumerable<Pawn> pawns)
-        {
-            return StartAnimation(def, rootTransform, mirrorX, false, pawns);
-        }
-
-        /// <summary>
-        /// Attempts to start an animation given an animation def, and a position (<paramref name="rootTransform"/>).
-        /// You may also optionally supply one or more pawns to participate in the animation, if the animation requires them.
-        /// The caller should pass in as many pawns as the animation is designed for. Passing in too few or too many pawns may lead
-        /// to undefined behaviour.
-        /// Passing in an 'invalid' pawn (one that is dead, downed, or otherwise inadequate for the animation) will result in the animation
-        /// being immediately cancelled and never started. Check the <see cref="AnimRenderer.IsDestroyed"/> field of the return value to check that
-        /// the animation started successfully.
-        /// </summary>
-        /// <returns>The created animation renderer, or null if the <paramref name="def"/> was null.</returns>
-        public virtual AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, bool mirrorX, bool mirrorY, IEnumerable<Pawn> pawns)
+        public AnimRenderer StartAnimation(AnimDef def, Matrix4x4 rootTransform, bool mirrorX, bool mirrorY, IEnumerable<Pawn> pawns)
         {
             if (def?.Data == null)
                 return null;
@@ -76,32 +46,13 @@ namespace AAM
             renderer.MirrorHorizontal = mirrorX;
             renderer.MirrorVertical = mirrorY;
 
-            if(pawns != null)
-                foreach(var pawn in pawns)            
-                    renderer.AddPawn(pawn);            
+            if (pawns != null)
+                foreach (var pawn in pawns)
+                    renderer.AddPawn(pawn);
 
             renderer.Register();
 
             return renderer;
-        }
-
-        /// <summary>
-        /// Stops the animation that the pawn is currently part of.
-        /// If the pawn is not part of any animation, this does nothing.
-        /// </summary>
-        public void StopAnimation(Pawn pawn)
-        {
-            if (pawn == null)
-                return;
-
-            var renderer = AnimRenderer.TryGetAnimator(pawn);
-            StopAnimation(renderer);
-        }
-
-        private void StopAnimation(AnimRenderer renderer)
-        {
-            if (renderer != null && !renderer.IsDestroyed)
-                renderer.Destroy();
         }
 
         public void AddPostDraw(Action draw)
@@ -127,6 +78,13 @@ namespace AAM
             base.MapComponentTick();
 
             PawnProcessor.Tick();
+        }
+
+        public override void MapComponentOnGUI()
+        {
+            base.MapComponentOnGUI();
+
+            AnimRenderer.DrawAllGUI(map);
         }
 
         public void Draw(float deltaTime)

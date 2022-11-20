@@ -1,9 +1,11 @@
 ﻿using AAM.Reqs;
+using AAM.Sweep;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using AAM.Sweep;
+using AAM.RendererWorkers;
 using Verse;
 
 namespace AAM
@@ -110,16 +112,18 @@ namespace AAM
         }
         public string DataPath => data;
         public ulong ClearMask, FlipClearMask;
-        public float Probability => relativeProbability * (SData?.Probability ?? 1f);
+        public float Probability => relativeProbability * ((SData?.Enabled ?? true) ? (SData?.Probability ?? 1f) : 0f);
         [XmlIgnore] public SettingsData SData;
 
         public AnimType type = AnimType.Execution;
         private string data;
         public string jobString;
+        public Type rendererWorker;
         public int pawnCount;
         public Req weaponFilter;
         public List<AnimCellData> cellData = new();
         public ISweepProvider sweepProvider;
+
         private float relativeProbability = 1;
 
         private AnimData resolvedData, resolvedNonLethalData;
@@ -140,6 +144,23 @@ namespace AAM
 
             if (File.Exists(FullNonLethalDataPath))
                 resolvedNonLethalData = AnimData.Load(FullNonLethalDataPath);
+        }
+
+        public virtual AnimationRendererWorker TryMakeRendererWorker()
+        {
+            if (rendererWorker == null)
+                return null;
+
+            try
+            {
+                var instance = Activator.CreateInstance(rendererWorker);
+                return instance as AnimationRendererWorker;
+            }
+            catch (Exception e)
+            {
+                Core.Error($"Failed to create instance of SetupWorker class '{rendererWorker}'", e);
+                return null;
+            }
         }
 
         public override IEnumerable<string> ConfigErrors()

@@ -8,10 +8,12 @@
     <LangVersion>10</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.3</Configurations>
+    <Configurations>v1.3;v1.4</Configurations>
     <AssemblyName>AdvancedAnimationMod</AssemblyName>
     <RootNamespace>AAM</RootNamespace>
     <Nullable>disable</Nullable>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,17 +24,26 @@
   </ItemGroup>
 
   <!-- _____ 1.3 _____ -->
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='v1.3|AnyCPU'">
+  <ItemGroup Condition="'$(Configuration)'=='v1.3'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3389" />
   </ItemGroup>
 
-
   <!-- Output -->
   <PropertyGroup Condition="'$(Configuration)'=='v1.3'">
-    <DebugType>none</DebugType>
     <OutputPath>..\..\1.3\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;V13</DefineConstants>
+  </PropertyGroup>
+
+  <!-- _____ 1.4 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
+	  <PackageReference Include="Krafs.Rimworld.Ref" Verison="1.3.3389" Version="1.4.3542" />
+  </ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+    <OutputPath>..\..\1.4\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;V14</DefineConstants>
   </PropertyGroup>
 
 </Project>

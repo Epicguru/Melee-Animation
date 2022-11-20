@@ -30,8 +30,6 @@ namespace AAM.Gizmos
 
             Text.Font = GameFont.Tiny;
             MouseoverSounds.DoRegion(butRect, SoundDefOf.Mouseover_Command);
-            if (parms.highLight)
-                QuickSearchWidget.DrawStrongHighlight(butRect.ExpandedBy(12f));
 
             Widgets.DrawBoxSolidWithOutline(butRect, new Color32(21, 25, 29, 255), Color.white * 0.75f);
 
@@ -63,8 +61,6 @@ namespace AAM.Gizmos
 
                 // Mouseover and highlight.
                 MouseoverSounds.DoRegion(butRect, SoundDefOf.Mouseover_Command);
-                if (parms.highLight)
-                    QuickSearchWidget.DrawStrongHighlight(butRect.ExpandedBy(12f));
 
                 bool mouseOver = Mouse.IsOver(butRect);
 
@@ -116,7 +112,8 @@ namespace AAM.Gizmos
                     return GenSight.LineOfSight(pawn.Position, c, pawn.Map);
                 }
 
-                if (Event.current.type == EventType.Repaint && Find.Targeter.IsTargeting && Find.Targeter.IsPawnTargeting(pawn))
+                // Note: despite best efforts, may still display radius for other custom targeting operations when this pawn is selected.
+                if (Event.current.type == EventType.Repaint && Find.Targeter.IsTargeting && Find.Targeter.IsPawnTargeting(pawn) && Find.Targeter.targetingSource == null)
                 {
                     if (pawn.TryGetLasso() != null)
                     {
@@ -404,19 +401,11 @@ namespace AAM.Gizmos
 
             Widgets.DrawHighlightIfMouseover(rect);
 
-            // TODO check grappler conditions.
-
             if (Widgets.ButtonInvisible(rect) && !Find.Targeter.IsTargeting)
             {
-                if(!isOffCooldown)
+                if(!GrabUtility.CanStartGrapple(pawn, out string reason))
                 {
-                    string name = pawn.Name.ToStringShort;
-                    Messages.Message($"{name}'s lasso is on cooldown!", MessageTypeDefOf.RejectInput, false);
-                }
-                else if (pawn.TryGetLasso() == null)
-                {
-                    string name = pawn.Name.ToStringShort;
-                    Messages.Message($"{name} does not have a lasso equipped.", MessageTypeDefOf.RejectInput, false);
+                    Messages.Message(reason, MessageTypeDefOf.RejectInput, false);
                 }
                 else
                 {

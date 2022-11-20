@@ -1,16 +1,20 @@
 ﻿using AAM;
 using AAM.Events;
 using AAM.Patches;
+using AAM.RendererWorkers;
 using AAM.Sweep;
 using AAM.Tweaks;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Noise;
 using Color = UnityEngine.Color;
+using Debug = UnityEngine.Debug;
 
 /// <summary>
 /// An <see cref="AnimRenderer"/> is the object that represents and also draws (renders) a currently running animation.
@@ -146,6 +150,31 @@ public class AnimRenderer : IExposable
         isItterating = false;
     }
 
+    public static void DrawAllGUI(Map map)
+    {
+        AddFromPostLoad();
+
+        isItterating = true;
+        for (int i = 0; i < activeRenderers.Count; i++)
+        {
+            var renderer = activeRenderers[i];
+
+            if (renderer.Map != map)
+                continue;
+
+            try
+            {
+                renderer.DrawGUI();
+            }
+            catch (Exception e)
+            {
+                Core.Error($"Exception rendering animator '{renderer}'", e);
+            }
+
+        }
+        isItterating = false;
+    }
+
     private static void AddFromPostLoad()
     {
         if (PostLoadPendingAnimators.Count == 0)
@@ -230,14 +259,30 @@ public class AnimRenderer : IExposable
             DestroyIntWorker(renderer);
         }
     }
-    
+
+    public static float Remap(float value, float a, float b, float a2, float b2)
+        => Mathf.Lerp(a2, b2, Mathf.InverseLerp(a, b, value));
+
+    public static float InverseLerp(in Vector2 start, in Vector2 end, in Vector2 pos)
+    {
+        Vector2 dir = end - start;
+        float dirLen = dir.magnitude;
+        Vector2 realDir = pos - start;
+        float realLen = realDir.magnitude;
+
+        if (Vector2.Dot(dir / dirLen, realDir / realLen) < 0)
+            return 0f;
+
+        return Mathf.Clamp01(realLen / dirLen);
+    }
+
     #endregion
 
     /// <summary>
     /// The active animation data. Animation data is loaded from disk upon request.
     /// Note that this is not the same as an animation def: see <see cref="Def"/> for the definition.
     /// </summary>
-    public AnimData Data => Def.Data;
+    public AnimData Data => ExecutionOutcome <= ExecutionOutcome.Damage ? Def.DataNonLethal : Def.Data;
     /// <summary>
     /// The duration, in seconds, of the current animation.
     /// May not accurately represent how long the animation actually plays for, depending on the type of animation (i.e. Duels may last longer).
@@ -311,6 +356,10 @@ public class AnimRenderer : IExposable
     /// The outcome of this animation if it is an execution animation.
     /// </summary>
     public ExecutionOutcome ExecutionOutcome = ExecutionOutcome.Nothing;
+    /// <summary>
+    /// The custom renderer worker, optional.
+    /// </summary>
+    public AnimationRendererWorker AnimationRendererWorker;
 
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
@@ -359,6 +408,9 @@ public class AnimRenderer : IExposable
                 sweeps[j++] = new PartWithSweep(this, part, path, new SweepMesh<PartWithSweep.Data>(), BasicSweepProvider.DefaultInstance);
             }
         }
+
+        Debug.Assert(AnimationRendererWorker == null);
+        AnimationRendererWorker = Def.TryMakeRendererWorker();
     }
 
     public void ExposeData()
@@ -414,7 +466,7 @@ public class AnimRenderer : IExposable
                     break;
                 }
                 case LoadSaveMode.PostLoadInit:
-                    Core.Log($"Final matrix was {RootTransform}");
+                    //Core.Log($"Final matrix was {RootTransform}");
                     break;
             }
         }
@@ -431,8 +483,6 @@ public class AnimRenderer : IExposable
         temp = WasInterrupted;
         Scribe_Values.Look(ref temp, "wasInterrupted");
         WasInterrupted = temp;
-
-        // TODO workers at end.
     }
 
     /// <summary>
@@ -520,6 +570,8 @@ public class AnimRenderer : IExposable
         float tempTime = time;
         time = -1;
         Seek(tempTime < 0 ? 0 : tempTime, null); // This will set time back to the correct value.
+
+        AnimationRendererWorker?.SetupRenderer(this);
         return true;
     }
 
@@ -679,22 +731,78 @@ public class AnimRenderer : IExposable
             }
 
             bool useMPB = ov.UseMPB;
-
             var color = snap.FinalColor;
 
-            if (useMPB)
+            int passes = 1;
+            for (int i = 0; i < passes; i++)
             {
-                pb.SetTexture("_MainTex", tex);
-                pb.SetColor("_Color", color);
-            }
+                if (useMPB)
+                {
+                    pb.SetTexture("_MainTex", tex);
+                    pb.SetColor("_Color", color);
 
-            Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, useMPB ? pb : null);
+                    if (snap.SplitDrawMode != AnimData.SplitDrawMode.None && snap.SplitDrawPivot != null)
+                    {
+                        ConfigureSplitDraw(snap, ref matrix, pb, ov, i, ref passes);
+                    }
+                }
+
+                var finalMpb = useMPB ? pb : null;
+
+                AnimationRendererWorker?.PreRenderPart(snap, ov, ref mesh, ref matrix, ref mat, ref finalMpb);
+                Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, finalMpb);
+            }
         }
 
         DrawPawns(labelDraw);
 
         DrawTimer.Stop();
         return range;
+    }
+
+    private void ConfigureSplitDraw(in AnimPartSnapshot part, ref Matrix4x4 matrix, MaterialPropertyBlock pb, AnimPartOverrideData ov, int currentPass, ref int passCount)
+    {
+        bool preFx = ov.FlipX ? !part.FlipX : part.FlipX;
+        bool preFy = ov.FlipY ? !part.FlipY : part.FlipY;
+        bool fx = MirrorHorizontal ? !preFx : preFx;
+        bool fy = MirrorVertical ? !preFy : preFy;
+
+        float textureRot = ov.LocalRotation * Mathf.Deg2Rad;
+        pb.SetFloat("CutoffAngle", textureRot * (fy ? -1f : 1f));
+        var mode = part.SplitDrawMode;
+        if (mode == AnimData.SplitDrawMode.BeforeAndAfter)
+        {
+            mode = currentPass == 0 ? AnimData.SplitDrawMode.Before : AnimData.SplitDrawMode.After;
+            if (currentPass == 0)
+                passCount++;
+            else
+                matrix *= Matrix4x4.Translate(new Vector3(0, -0.1f, 0));
+        }
+        pb.SetFloat("Polarity", mode == AnimData.SplitDrawMode.Before ? 1f : -1f);
+
+        // The total length of the weapon sprite, in world units (1 unit = 1 cell).
+        float length = matrix.lossyScale.x * Remap(Mathf.Abs(Mathf.Sin(textureRot * 2f)), 0, 1f, 1f, 1.41421356237f); // sqrt(2)
+        float distanceScale = Remap(Mathf.Abs(Mathf.Sin(textureRot * 2f)), 0, 1f, 0.5f, 0.70710678118f); // sqrt(0.5)
+
+        Matrix4x4 noOverrideMat = part.Renderer.RootTransform * part.WorldMatrixNoOverride * Matrix4x4.Scale(ov.LocalScaleFactor.ToWorld());
+
+        Vector2 renderedPos = matrix.MultiplyPoint3x4(Vector3.zero).ToFlat();
+        Vector2 startPos = renderedPos - length * 0.5f * noOverrideMat.MultiplyVector(Vector3.right).normalized.ToFlat();
+        Vector2 endPos = renderedPos + length * 0.5f * noOverrideMat.MultiplyVector(Vector3.right).normalized.ToFlat();
+        Vector2 basePos = GetSnapshot(part.SplitDrawPivot).GetWorldPosition().ToFlat();
+
+        var ap = basePos - startPos;
+        var ab = endPos - startPos;
+        float lerp = Vector2.Dot(ap, ab) / Vector2.Dot(ab, ab);
+        if (!fx)
+            lerp = 1 - lerp;
+
+        pb.SetFloat("Distance", distanceScale * (-1f + lerp * 2f));
+    }
+
+    public void DrawGUI()
+    {
+        AnimationRendererWorker?.DrawGUI(this);
     }
 
     protected void DrawPawns(Action<Pawn, Vector2> labelDraw = null)
@@ -711,6 +819,9 @@ public class AnimRenderer : IExposable
                 // Position and direction.
                 var pos = pawnSS.GetWorldPosition();
                 var dir = pawnSS.GetWorldDirection();
+
+                // Worker pre-draw
+                AnimationRendererWorker?.PreRenderPawn(pawnSS, ref pos, ref dir, pawn);
 
                 // Render pawn in custom position using patches.
                 PreventDrawPatchUpper.AllowNext = true;
@@ -776,7 +887,9 @@ public class AnimRenderer : IExposable
 
         // Pass 1: Evaluate curves, make local matrices.
         for (int i = 0; i < Data.Parts.Count; i++)
+        {
             snapshots[i] = new AnimPartSnapshot(Data.Parts[i], this, time);
+        }
 
         // Pass 2: Resolve world matrices using inheritance tree.
         for (int i = 0; i < Data.Parts.Count; i++)
@@ -831,7 +944,7 @@ public class AnimRenderer : IExposable
         ISweepProvider sweepProvider = BasicSweepProvider.DefaultInstance;
         var weapon = Pawns.Count == 0 ? null : Pawns[0].GetFirstMeleeWeapon();
         var tweak = weapon == null ? null : TweakDataManager.GetOrCreateDefaultTweak(weapon.def);
-        if (tweak.GetSweepProvider() != null)
+        if (tweak?.GetSweepProvider() != null)
             sweepProvider = tweak.GetSweepProvider();
         else if (Def.sweepProvider != null)
             sweepProvider = Def.sweepProvider;
@@ -901,7 +1014,10 @@ public class AnimRenderer : IExposable
         var ov = GetOverride(snapshot);
         var ovMat = ov.Material;
         if (ovMat != null)        
-            return ovMat;        
+            return ovMat;
+
+        if (snapshot.SplitDrawMode != AnimData.SplitDrawMode.None && snapshot.SplitDrawPivot != null)
+            return Content.CustomCutoffMaterial;
 
         if (ov.UseDefaultTransparentMaterial || snapshot.Part.TransparentByDefault || snapshot.FinalColor.a < 1f)        
             return DefaultTransparent;        
