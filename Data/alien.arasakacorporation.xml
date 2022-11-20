@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Data>
 	<mod>alien.arasakacorporation</mod>
-	<modName>Arasaka Corporation [1.3]</modName>
+	<modName>Arasaka Corporation</modName>
 	<author>Epicguru</author>
 	<items>
 		<li>
@@ -14,6 +14,8 @@
 			<rot>5</rot>
 			<scX>1.4</scX>
 			<scY>1.4</scY>
+			<blS>0.1196013</blS>
+			<blE>1.116279</blE>
 		</li>
 		<li>
 			<dId>MeleeWeapon_Thermal_Katana_AC</dId>
@@ -25,6 +27,8 @@
 			<rot>48</rot>
 			<scX>1.4</scX>
 			<scY>1.4</scY>
+			<blS>0.179402</blS>
+			<blE>1.096346</blE>
 		</li>
 	</items>
 </Data>

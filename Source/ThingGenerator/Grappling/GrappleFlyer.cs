@@ -126,10 +126,10 @@ public class GrappleFlyer : PawnFlyer
     {
         RecomputePosition();
         DrawShadow(groundPos, effectiveHeight);
-        FlyingPawn.DrawAt(effectivePos, flip);
+        FlyingPawn.DrawAt(effectivePos, flip); // For Pawns, flip does nothing, it's just an inherited param.
 
         Color ropeColor = Grappler?.TryGetLasso()?.def.graphicData.color ?? Color.magenta;
-        DrawBoundTexture(effectivePos, flip, ropeColor);
+        DrawBoundTexture(FlyingPawn, effectivePos, ropeColor);
         DrawGrappleLine(ropeColor);
     }
 
@@ -149,24 +149,23 @@ public class GrappleFlyer : PawnFlyer
         bump.y = 0;
         from += bump * bumpMag + bump2 * bumpMag2;
 
-
         GrabUtility.DrawRopeFromTo(from, to, ropeColor);
     }
 
-    public void DrawBoundTexture(Vector3 drawLoc, bool flip, Color ropeColor)
+    public static void DrawBoundTexture(Pawn pawn, Vector3 drawLoc, Color ropeColor)
     {
-        drawLoc.y += 0.0001f;
-        var tex = GrabUtility.GetBoundPawnTexture(FlyingPawn);
+        drawLoc.y += 0.05f;
+        var tex = GrabUtility.GetBoundPawnTexture(pawn);
         if (tex == null)
         {
-            if (FlyingPawn.RaceProps.Humanlike)
+            if (pawn.RaceProps.Humanlike)
                 tex = Content.BoundMaleRope;
             else
                 return;
         }
 
         var mat = AnimRenderer.DefaultCutout;
-        var trs = Matrix4x4.TRS(drawLoc, Quaternion.identity, Vector3.one * 1.5f); // TODO use actual pawn size such as from alien races.
+        var trs = Matrix4x4.TRS(drawLoc, Quaternion.identity, Vector3.one * 1.5f * Core.GetBodyDrawSizeFactor(pawn)); // TODO use actual pawn size such as from alien races.
 
         mpb.SetTexture("_MainTex", tex); // TODO cache id.
         mpb.SetColor("_Color", ropeColor);

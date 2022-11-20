@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using Verse;
@@ -35,8 +36,8 @@ namespace AAM
         // TEMP: Trail shader.
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;
-        [BundleContent("Materials/BlitMaterial.mat")]
-        public static Material BlitMaterial;
+        [BundleContent("CutoffCustom.mat")]
+        public static Material CustomCutoffMaterial;
 
         /// <summary>
         /// A hashset containing all lasso defs, used to check if a pawn has a lasso equipped.
@@ -77,10 +78,10 @@ namespace AAM
                     if (!path.StartsWith("Assets/"))
                         path = "Assets/" + path;
 
-                    var value = Core.ModContent.assetBundles.loadedAssetBundles[0].LoadAsset(path, field.FieldType);
+                    var value = Core.ModContent.assetBundles.loadedAssetBundles.Select(b => b.LoadAsset(path, field.FieldType)).FirstOrDefault(a => a != null);
 
                     if (value == null)
-                        Log.Error($"Failed to load bundle content: [{field.FieldType.Name}] {path}");
+                        Log.Error($"Failed to load bundle content: [{field.FieldType.Name}] {path} from any loaded bundle.");
 
                     field.SetValue(null, value);
                 }

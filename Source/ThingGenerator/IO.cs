@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Verse;
 
@@ -35,10 +36,15 @@ namespace AAM
         {
             Scribe.loader.InitLoading(filePath);
 
-            Scribe.loader.EnterNode("Data");
-            item.ExposeData();
-
-            Scribe.loader.FinalizeLoading();
+            try
+            {
+                Scribe.loader.EnterNode("Data");
+                item.ExposeData();
+            }
+            finally
+            {
+                Scribe.loader.FinalizeLoading();
+            }
         }
 
         public static IEnumerable<FileInfo> ListXmlFiles(string directory)

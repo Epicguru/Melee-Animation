@@ -80,6 +80,13 @@ namespace AAM
             PawnProcessor.Tick();
         }
 
+        public override void MapComponentOnGUI()
+        {
+            base.MapComponentOnGUI();
+
+            AnimRenderer.DrawAllGUI(map);
+        }
+
         public void Draw(float deltaTime)
         {
             labels.Clear();

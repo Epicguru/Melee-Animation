@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<NoStdLib>false</NoStdLib>
+		<LangVersion>preview</LangVersion>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<Configurations>v1.3;v1.4</Configurations>
+		<AssemblyName>AAM.AlienRacesPatch</AssemblyName>
+		<RootNamespace>AAM.AlienRacesPatch</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Lib.Harmony" Version="2.2.2">
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</PackageReference>
+		<ProjectReference Include="..\ThingGenerator\AAM.csproj">
+			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</ProjectReference>
+	</ItemGroup>
+
+	<!-- _____ 1.3 _____ -->
+	<ItemGroup Condition="'$(Configuration)'=='v1.3'">
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3389" />
+		<Reference Include="AlienRace">
+			<HintPath>refs/1.3/AlienRace13.dll</HintPath>
+			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+
+
+	<!-- Output -->
+	<PropertyGroup Condition="'$(Configuration)'=='v1.3'">
+		<DebugType>none</DebugType>
+		<OutputPath>..\..\Patch_AlienRaces\1.3\Assemblies\</OutputPath>
+		<Optimize>true</Optimize>
+		<DefineConstants>TRACE;V13</DefineConstants>
+	</PropertyGroup>
+
+	<!-- _____ 1.4 _____ -->
+	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3542" />
+		<Reference Include="AlienRace">
+			<HintPath>refs/1.4/AlienRace14.dll</HintPath>
+			<CopyLocal>False</CopyLocal>
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+		<DebugType>none</DebugType>
+		<OutputPath>..\..\Patch_AlienRaces\1.4\Assemblies\</OutputPath>
+		<Optimize>true</Optimize>
+		<DefineConstants>TRACE;V14</DefineConstants>
+	</PropertyGroup>
+
+</Project>

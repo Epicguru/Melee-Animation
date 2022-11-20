@@ -11,9 +11,9 @@
 			<tex>Things/A13/Carver</tex>
 			<ofX>0.06313835</ofX>
 			<rot>30</rot>
-			<scX>1</scX>
-			<scY>1</scY>
 			<hnd>No_Hands</hnd>
+			<blS>0.1328904</blS>
+			<blE>0.3986711</blE>
 			<tag>16</tag>
 		</li>
 		<li>
@@ -26,6 +26,8 @@
 			<rot>48</rot>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
+			<blS>0.166113</blS>
+			<blE>1.036545</blE>
 			<tag>2</tag>
 		</li>
 		<li>
@@ -38,7 +40,8 @@
 			<rot>48</rot>
 			<scX>1.1</scX>
 			<scY>1.1</scY>
-			<tag>6</tag>
+			<blS>0.5581395</blS>
+			<blE>1.076412</blE>
 		</li>
 		<li>
 			<dId>MeleeWeapon_FeralCleaver</dId>
@@ -48,9 +51,8 @@
 			<ofX>0.1039926</ofX>
 			<ofY>0.1039926</ofY>
 			<rot>45</rot>
-			<scX>1</scX>
-			<scY>1</scY>
 			<hnd>Only_Main_Hand</hnd>
+			<blS>0.1328904</blS>
 			<tag>48</tag>
 		</li>
 	</items>

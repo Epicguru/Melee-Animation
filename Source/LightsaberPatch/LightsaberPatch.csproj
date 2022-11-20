@@ -51,7 +51,7 @@
   <!-- _____ 1.4 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.4'">
 	  <PackageReference Include="Krafs.Rimworld.Ref">
-		  <Version>1.4.3548-beta</Version>
+		  <Version>1.4.3542</Version>
 	  </PackageReference>
 	  <Reference Include="SWSaber">
 		  <HintPath>refs/1.3/SWSaber_13.dll</HintPath>
@@ -65,11 +65,12 @@
 	  </Reference>
   </ItemGroup>
 
+  <!-- Output -->
   <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
-    <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_Lightsabers\1.4\Assemblies\</OutputPath>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V14</DefineConstants>
+	  <DebugType>none</DebugType>
+	  <OutputPath>..\..\Patch_Lightsabers\1.4\Assemblies\</OutputPath>
+	  <Optimize>true</Optimize>
+	  <DefineConstants>TRACE;V14</DefineConstants>
   </PropertyGroup>
 
 </Project>
