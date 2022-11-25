@@ -26,7 +26,7 @@
 
 	<!-- _____ 1.3 _____ -->
 	<ItemGroup Condition="'$(Configuration)'=='v1.3'">
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3389" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3557" />
 		<Reference Include="AlienRace">
 			<HintPath>refs/1.3/AlienRace13.dll</HintPath>
 			<CopyLocal>False</CopyLocal>
@@ -45,7 +45,7 @@
 
 	<!-- _____ 1.4 _____ -->
 	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3542" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3557" />
 		<Reference Include="AlienRace">
 			<HintPath>refs/1.4/AlienRace14.dll</HintPath>
 			<CopyLocal>False</CopyLocal>
