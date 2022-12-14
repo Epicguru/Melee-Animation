@@ -27,7 +27,7 @@ namespace AAM
             return ShouldContinue;
         }
 
-        protected override IEnumerable<Toil> MakeNewToils()
+        public override IEnumerable<Toil> MakeNewToils()
         {
             job.collideWithPawns = true;
             job.playerForced = true;

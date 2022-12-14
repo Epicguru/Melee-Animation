@@ -187,7 +187,7 @@ public class GrappleFlyer : PawnFlyer
         Graphics.DrawMesh(MeshPool.plane10, matrix, shadowMaterial, 0);
     }
 
-    protected override void RespawnPawn()
+    public override void RespawnPawn()
     {
         FleckMaker.ThrowDustPuff(base.DestinationPos + Gen.RandomHorizontalVector(0.5f), base.Map, 2f);
         base.RespawnPawn();

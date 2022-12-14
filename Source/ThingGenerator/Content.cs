@@ -18,6 +18,8 @@ namespace AAM
         public static Texture2D RopeCoil;
         [Content("AAM/BoundPawns/Male")]
         public static Texture2D BoundMaleRope;
+        [Content("AAM/Shadow")]
+        public static Texture2D Shadow;
 
         // UI
         [Content("AAM/UI/IconBG")]

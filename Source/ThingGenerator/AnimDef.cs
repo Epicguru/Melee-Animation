@@ -123,7 +123,10 @@ namespace AAM
         public Req weaponFilter;
         public List<AnimCellData> cellData = new();
         public ISweepProvider sweepProvider;
+        public bool drawDisabledPawns;
+        public bool shadowDrawFromData;
 
+        private Dictionary<string, string> additionalData = new Dictionary<string, string>();
         private float relativeProbability = 1;
 
         private AnimData resolvedData, resolvedNonLethalData;
@@ -144,6 +147,23 @@ namespace AAM
 
             if (File.Exists(FullNonLethalDataPath))
                 resolvedNonLethalData = AnimData.Load(FullNonLethalDataPath);
+        }
+
+        public T TryGetAdditionalData<T>(string id, T defaultValue = default)
+        {
+            string value = additionalData.TryGetValue(id);
+            if (value == null)
+                return defaultValue;
+
+            // Here, enjoy some hacky shit.
+            return defaultValue switch
+            {
+                string => (T)(object)value,
+                int => int.TryParse(value, out var i) ? (T)(object)i : defaultValue,
+                float => float.TryParse(value, out var f) ? (T)(object)f : defaultValue,
+                bool => bool.TryParse(value, out var b) ? (T)(object)b : defaultValue,
+                _ => throw new NotSupportedException($"Additional data of type '{typeof(T)}' is not supported.")
+            };
         }
 
         public virtual AnimationRendererWorker TryMakeRendererWorker()
