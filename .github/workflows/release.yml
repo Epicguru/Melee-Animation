@@ -89,7 +89,8 @@ jobs:
     - name: Set Environment Variables
       # This is a special syntax for GitHub Actions that sets an environment
       # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
-      run: echo "::set-env name=MOD_PATH::$HOME/$MOD_NAME"
+      run: echo "MOD_PATH=$HOME/$MOD_NAME" >> $GITHUB_ENV
+      # run: echo "::set-env name=MOD_PATH::$HOME/$MOD_NAME"
     
     - name: Create Mod Folder
       run: mkdir -p ${{ env.MOD_PATH }}
@@ -139,11 +140,14 @@ jobs:
       id: get_version
       # This is a special syntax for GitHub Actions that sets an output
       # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
-      run: echo ::set-output name=VERSION::$(echo ${{ github.ref }} | cut -d / -f 3)
+      # run: echo ::set-output name=VERSION::$(echo ${{ github.ref }} | cut -d / -f 3)
+      run: echo "VERSION=$(echo ${{ github.ref }} | cut -d / -f 3)" >> $GITHUB_OUTPUT
+
     - name: Set Environment Variables
       # This is a special syntax for GitHub Actions that sets an environment
       # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
-      run: echo "::set-env name=MOD_RELEASE::$MOD_NAME-${{ steps.get_version.outputs.VERSION }}"
+      # run: echo "::set-env name=MOD_RELEASE::$MOD_NAME-${{ steps.get_version.outputs.VERSION }}"
+      run: echo "MOD_RELEASE=$MOD_NAME-${{ steps.get_version.outputs.VERSION }}" >> $GITHUB_ENV
 
     - name: Download Mod Artifacts from Build Step
       id: download_zip
