@@ -8,6 +8,7 @@ using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -32,6 +33,8 @@ public class AnimRenderer : IExposable
     public static int TotalCapturedPawnCount => pawnToRenderer.Count;
     public static List<AnimRenderer> PostLoadPendingAnimators = new();
 
+    private static readonly MethodInfo drawShadowMethod = AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow");
+    private static readonly MaterialPropertyBlock shadowMpb = new MaterialPropertyBlock();
     private static List<AnimRenderer> activeRenderers = new();
     private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new();
     private static Dictionary<string, Texture2D> textureCache = new();
@@ -292,6 +295,11 @@ public class AnimRenderer : IExposable
     public int DurationTicks => Mathf.RoundToInt(Duration * 60);
 
     /// <summary>
+    /// The root world position of this animation.
+    /// Derived from <see cref="RootTransform"/>.
+    /// </summary>
+    public Vector3 RootPosition => RootTransform.MultiplyPoint3x4(default);
+    /// <summary>
     /// The active animation def.
     /// </summary>
     public AnimDef Def;
@@ -359,6 +367,7 @@ public class AnimRenderer : IExposable
     /// </summary>
     public AnimationRendererWorker AnimationRendererWorker;
 
+    private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
     private AnimPartData[] bodies = new AnimPartData[8]; // TODO REPLACE WITH LIST OR DICT.
@@ -395,7 +404,21 @@ public class AnimRenderer : IExposable
         for (int i = 0; i < overrides.Length; i++)
             overrides[i] = new AnimPartOverrideData();
 
-        // Create sweep meshes.
+        // Dummy array for sweep meshes.
+        // Reason: A Unity bug where creating a new mesh (new Mesh()) during loading
+        // crashes the game.
+        // Solution: delay creating meshes until the game has started rendering.
+        sweeps = Array.Empty<PartWithSweep>();
+
+        Debug.Assert(AnimationRendererWorker == null);
+        AnimationRendererWorker = Def.TryMakeRendererWorker();
+    }
+
+    private void InitSweepMeshes()
+    {
+        if (Data.SweepDataCount == sweeps.Length)
+            return;
+
         int j = 0;
         sweeps = new PartWithSweep[Data.SweepDataCount];
         foreach (var part in Data.PartsWithSweepData)
@@ -406,9 +429,6 @@ public class AnimRenderer : IExposable
                 sweeps[j++] = new PartWithSweep(this, part, path, new SweepMesh<PartWithSweep.Data>(), BasicSweepProvider.DefaultInstance);
             }
         }
-
-        Debug.Assert(AnimationRendererWorker == null);
-        AnimationRendererWorker = Def.TryMakeRendererWorker();
     }
 
     public void ExposeData()
@@ -420,16 +440,14 @@ public class AnimRenderer : IExposable
         Scribe_Values.Look(ref Loop, "loop");
         Scribe_Values.Look(ref hasStarted, "hasStarted");
         Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
+        Scribe_Collections.Look(ref pawnsValidEvenIfDespawned, "pawnsValidEvenIfDespawned", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
-
-        if (Scribe.mode == LoadSaveMode.LoadingVars)
-        {
-            Init();
-        }
 
         if (Scribe.mode == LoadSaveMode.PostLoadInit)
         {
+            Init();
             Pawns ??= new List<Pawn>();
+            pawnsValidEvenIfDespawned ??= new HashSet<Pawn>();
             pawnsForPostLoad = Pawns.ToArray();
             Pawns.Clear();
         }
@@ -481,6 +499,20 @@ public class AnimRenderer : IExposable
         temp = WasInterrupted;
         Scribe_Values.Look(ref temp, "wasInterrupted");
         WasInterrupted = temp;
+    }
+
+    public void FlagAsValidIfDespawned(Pawn pawn)
+    {
+        if (pawn == null)
+            throw new ArgumentNullException(nameof(pawn));
+
+        if (!Pawns.Contains(pawn))
+        {
+            Core.Error("Should not mark a pawn as valid if despawned if that pawn is not part of this animation!");
+            return;
+        }
+
+        pawnsValidEvenIfDespawned.Add(pawn);
     }
 
     /// <summary>
@@ -640,6 +672,9 @@ public class AnimRenderer : IExposable
         {
             if (pawn.CurJobDef != AAM_DefOf.AAM_InAnimation)
             {
+                if (pawnsValidEvenIfDespawned.Contains(pawn))
+                    continue;
+
                 Core.Error($"{pawn} has bad job: {pawn.CurJobDef}. Cancelling animation.");
                 WasInterrupted = true;
                 Destroy();
@@ -669,7 +704,19 @@ public class AnimRenderer : IExposable
     /// </summary>
     public virtual bool IsPawnValid(Pawn p, bool ignoreNotSpawned = false)
     {
-        return p != null && (p.Spawned || ignoreNotSpawned) && !p.Dead && !p.Downed && (p.ParentHolder is Map || (p.ParentHolder == null && ignoreNotSpawned));
+        // Summary:
+        // Not dead or downed.
+        bool basic = p is {Dead: false, Downed: false};
+        if (!basic)
+            return false;
+
+        // Check not spawned exceptions list.
+        if (!p.Spawned && pawnsValidEvenIfDespawned.Contains(p))
+            return true;
+
+        // Spawned (includes things like grappling, flying)
+        // Is part of the correct map (checks for drop pods, teleporting across maps)
+        return (p.Spawned || ignoreNotSpawned) && ((p.ParentHolder is Map m && m == Map) || (p.ParentHolder == null && ignoreNotSpawned));
     }
 
     public Vector2 Draw(float? atTime, float? dt, Action<Pawn, Vector2> labelDraw = null)
@@ -677,6 +724,7 @@ public class AnimRenderer : IExposable
         if (IsDestroyed)
             return Vector2.zero;
 
+        InitSweepMeshes();
         foreach (var item in sweeps)
             if (item != null)
                 item.MirrorHorizontal = MirrorHorizontal;
@@ -812,34 +860,72 @@ public class AnimRenderer : IExposable
 
             var pawnSS = GetSnapshot(GetPawnBody(pawn));
 
-            if (pawnSS.Active)
+            if (!pawnSS.Active)
             {
-                // Position and direction.
-                var pos = pawnSS.GetWorldPosition();
-                var dir = pawnSS.GetWorldDirection();
-
-                // Worker pre-draw
-                AnimationRendererWorker?.PreRenderPawn(pawnSS, ref pos, ref dir, pawn);
-
-                // Render pawn in custom position using patches.
-                PreventDrawPatchUpper.AllowNext = true;
-                PreventDrawPatch.AllowNext = true;
-                MakePawnConsideredInvisible.IsRendering = true;
-                pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
-                MakePawnConsideredInvisible.IsRendering = false;
-
-                // Render shadow.
-                // TODO cache or use patch.
-                AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow").Invoke(pawn.Drawer.renderer, new object[] { pos });
-
-                // Figure out where to draw the pawn label.
-                Vector3 drawPos = pos;
-                drawPos.z -= 0.6f;
-                Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
-                vector.y = UI.screenHeight - vector.y;
-                labelDraw?.Invoke(pawn, vector);
+                if (Def.drawDisabledPawns)
+                {
+                    // Regular pawn render.
+                    PreventDrawPatchUpper.AllowNext = true;
+                    PreventDrawPatch.AllowNext = true;
+                    PreventDrawPatch.DoNotModify = true; // Don't use animation position/rotation.
+                    MakePawnConsideredInvisible.IsRendering = true;
+                    pawn.DrawAt(pawn.DrawPosHeld ?? pawn.DrawPos);
+                    PreventDrawPatch.DoNotModify = false;
+                    MakePawnConsideredInvisible.IsRendering = false;
+                }
+                continue;
             }
+
+            // Position and direction.
+            var pos = pawnSS.GetWorldPosition();
+            var dir = pawnSS.GetWorldDirection();
+
+            // Worker pre-draw
+            AnimationRendererWorker?.PreRenderPawn(pawnSS, ref pos, ref dir, pawn);
+
+            // Render pawn in custom position using patches.
+            PreventDrawPatchUpper.AllowNext = true;
+            PreventDrawPatch.AllowNext = true;
+            MakePawnConsideredInvisible.IsRendering = true;
+            pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
+            MakePawnConsideredInvisible.IsRendering = false;
+
+            // Render shadow.
+            if (Def.shadowDrawFromData)
+            {
+                // DataC now drives the shadow rendering.
+                // Value of 0 means regular shadow rendering,
+                // value of 1 means shadow is a ground-based entity shadow (a-la-minecraft).
+                float v = pawnSS.DataC;
+                if (v < 0.2f)
+                    drawShadowMethod.Invoke(pawn.Drawer.renderer, new object[] { pos });
+
+                Vector3 groundPos = pos with { z = RootPosition.z };
+                Vector3 scale = new Vector3(1, 1, 0.5f);
+                Color color = new Color(0, 0, 0, 0.5f);
+
+                DrawSimpleShadow(groundPos, scale, color);
+            }
+            else
+            {
+                // Regular shadow draw, just like base game.
+                drawShadowMethod.Invoke(pawn.Drawer.renderer, new object[] { pos });
+            }
+
+            // Figure out where to draw the pawn label.
+            Vector3 drawPos = pos;
+            drawPos.z -= 0.6f;
+            Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
+            vector.y = UI.screenHeight - vector.y;
+            labelDraw?.Invoke(pawn, vector);
         }
+    }
+
+    private void DrawSimpleShadow(Vector3 pos, Vector3 size, Color color)
+    {
+        var trs = Matrix4x4.TRS(pos, Quaternion.identity, size);
+        shadowMpb.SetColor("_Color", color);
+        Graphics.DrawMesh(MeshPool.plane10, trs, DefaultTransparent, 0, Camera, 0, shadowMpb);
     }
 
     private void ApplyPostLoad()
@@ -947,6 +1033,7 @@ public class AnimRenderer : IExposable
         else if (Def.sweepProvider != null)
             sweepProvider = Def.sweepProvider;
 
+        InitSweepMeshes();
         foreach (var sweep in sweeps)
         {
             if (sweep == null)
@@ -975,7 +1062,7 @@ public class AnimRenderer : IExposable
                 continue;
 
             TeleportPawn(pawn, basePos + posData.Value.ToIntVec3);
-            pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
+            pawn.jobs?.EndCurrentJob(JobCondition.InterruptForced);
         }
 
         foreach (var sweep in sweeps)
@@ -1072,6 +1159,7 @@ public class AnimRenderer : IExposable
             if (ov.CustomRenderer != null)
                 ov.CustomRenderer.Item = weapon;
 
+            InitSweepMeshes();
             foreach (var path in sweeps)
             {
                 if (path.Part == itemPart)

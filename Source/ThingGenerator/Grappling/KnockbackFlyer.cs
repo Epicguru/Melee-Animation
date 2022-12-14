@@ -12,9 +12,15 @@ public class KnockbackFlyer : PawnFlyer
     [DebugAction("Advanced Animation Mod", actionType = DebugActionType.ToolMapForPawns)]
     private static void TestKnockback(Pawn victim)
     {
+        var end = GetEndCell(victim, IntVec3.East, 20);
+        MakeKnockbackFlyer(victim, end);
+    }
+
+    public static IntVec3 GetEndCell(Pawn victim, in IntVec3 direction, int maxRange)
+    {
         var map = victim.Map;
-        IntVec3 end = victim.Position;
-        foreach (var cell in GetCellsFromTo(victim.Position, victim.Position + new IntVec3(20, 0, 0)))
+        IntVec3 end = victim.Position + direction * maxRange;
+        foreach (var cell in GetCellsFromTo(victim.Position, end))
         {
             if (IsSolid(victim, cell, map))
                 break;
@@ -22,7 +28,7 @@ public class KnockbackFlyer : PawnFlyer
             end = cell;
         }
 
-        MakeKnockbackFlyer(victim, end);
+        return end;
     }
 
     public static KnockbackFlyer MakeKnockbackFlyer(Pawn victim, IntVec3 targetPos)
@@ -44,6 +50,12 @@ public class KnockbackFlyer : PawnFlyer
             flyer.StartPos = start;
             flyer.EndPos = end;
             victim.Rotation = flyer.GetPawnRotation();
+
+            // Important: clear victim job queue, which is normally the animation job.
+            // Failing to do this means that the animation job is referenced when saving
+            // but will not be found when loading.
+            // This normally hard crashes the game!
+            flyer.jobQueue = null;
 
             GenSpawn.Spawn(flyer, targetPos, map, WipeMode.Vanish);
             return flyer;
@@ -123,7 +135,7 @@ public class KnockbackFlyer : PawnFlyer
         FlyingPawn.DrawAt(drawLoc, flip);
     }
 
-    protected override void RespawnPawn()
+    public override void RespawnPawn()
     {
         var p = FlyingPawn;
         base.RespawnPawn();

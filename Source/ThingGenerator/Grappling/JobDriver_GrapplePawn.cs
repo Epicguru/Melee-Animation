@@ -144,7 +144,7 @@ namespace AAM.Grappling
             }
         }
 
-        protected override IEnumerable<Toil> MakeNewToils()
+        public override IEnumerable<Toil> MakeNewToils()
         {
             job.locomotionUrgency = LocomotionUrgency.None;
             job.collideWithPawns = true;

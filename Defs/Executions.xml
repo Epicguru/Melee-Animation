@@ -112,6 +112,7 @@
         <pawnIndex>0</pawnIndex>
       </li>
     </cellData>
+    <shadowDrawFromData>true</shadowDrawFromData>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
@@ -153,13 +154,14 @@
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab, Long_Blunt, Long_Sharp</types>
     </weaponFilter>
-    <!-- <cellData>
+    <drawDisabledPawns>true</drawDisabledPawns>
+    <additionalData>
       <li>
-        <type>PawnEnd</type>
-        <position>(2, 0)</position>
-        <pawnIndex>1</pawnIndex>
+        <!-- How far the punt will send the victim flying, measured in cells -->
+        <key>PuntRange</key>
+        <value>10</value>
       </li>
-    </cellData> -->
+    </additionalData>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">

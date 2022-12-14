@@ -98,6 +98,7 @@ namespace AAM.Patches
     static class PreventDrawPatch
     {
         public static bool AllowNext = false;
+        public static bool DoNotModify = false;
 
         [HarmonyPriority(Priority.Last)] // As late as possible. We want to be the last to modify results.
         static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, PawnRenderFlags flags)
@@ -108,10 +109,12 @@ namespace AAM.Patches
             var anim = PatchMaster.GetAnimator(___pawn);
             if (anim != null)
             {
-                var body = anim.GetSnapshot(anim.GetPawnBody(___pawn));
-
-                angle = body.GetWorldRotation();
-                bodyFacing = body.GetWorldDirection();
+                if (!DoNotModify)
+                {
+                    var body = anim.GetSnapshot(anim.GetPawnBody(___pawn));
+                    angle = body.GetWorldRotation();
+                    bodyFacing = body.GetWorldDirection();
+                }
 
                 if(!AllowNext)
                     return false;

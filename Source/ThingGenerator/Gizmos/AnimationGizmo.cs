@@ -403,13 +403,13 @@ namespace AAM.Gizmos
 
             if (Widgets.ButtonInvisible(rect) && !Find.Targeter.IsTargeting)
             {
-                if(!GrabUtility.CanStartGrapple(pawn, out string reason))
+                if(!GrabUtility.CanStartGrapple(pawn, out string reason, true))
                 {
                     Messages.Message(reason, MessageTypeDefOf.RejectInput, false);
                 }
                 else
                 {
-                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera();
                     var args = new TargetingParameters()
                     {
                         canTargetSelf = false,

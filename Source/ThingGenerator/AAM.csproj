@@ -21,6 +21,11 @@
     <PackageReference Include="Lib.Harmony" Version="2.2.2">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
+    <PackageReference Include="Krafs.Publicizer" Version="2.1.0">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <Publicize Include="Assembly-CSharp" />
   </ItemGroup>
 
   <!-- _____ 1.3 _____ -->
@@ -35,12 +40,14 @@
     <DefineConstants>TRACE;V13</DefineConstants>
   </PropertyGroup>
 
+
   <!-- _____ 1.4 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-	  <PackageReference Include="Krafs.Rimworld.Ref" Verison="1.3.3389" Version="1.4.3542" />
+	  <PackageReference Include="Krafs.Rimworld.Ref" Verison="1.3.3389" Version="1.4.3573-beta" />
   </ItemGroup>
 
-	<PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+  <!-- Output -->
+  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
     <OutputPath>..\..\1.4\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;V14</DefineConstants>
