@@ -8,7 +8,7 @@ env:
 on:
   push:
     paths:
-      - Source/**
+      - Source/*
     tags-ignore:
       # This will ignore release versions tagged with a version identifier. We'll 
       # use a separate workflow for them.
@@ -18,6 +18,10 @@ on:
   pull_request:
     paths: 
       - Source/
+    tags-ignore:
+      # This will ignore release versions tagged with a version identifier. We'll 
+      # use a separate workflow for them.
+      - 'v*'
 
 jobs:
   build:
