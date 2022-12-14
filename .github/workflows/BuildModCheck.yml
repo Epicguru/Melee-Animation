@@ -11,7 +11,7 @@ on:
       - master
       - develop
     paths:
-      - Source/
+      - Source/**
     tags-ignore:
       # This will ignore release versions tagged with a version identifier. We'll 
       # use a separate workflow for them.
