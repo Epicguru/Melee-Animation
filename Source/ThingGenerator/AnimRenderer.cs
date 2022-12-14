@@ -8,11 +8,9 @@ using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing.Drawing2D;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using Verse.Noise;
 using Color = UnityEngine.Color;
 using Debug = UnityEngine.Debug;
 
