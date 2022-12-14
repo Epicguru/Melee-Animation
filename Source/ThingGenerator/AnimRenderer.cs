@@ -1138,7 +1138,7 @@ public class AnimRenderer : IExposable
             ColorProvider = colorProvider;
         }
 
-        public void Draw(float time)
+        public void Draw(float time) 
         {
             DrawInt(time);
 
