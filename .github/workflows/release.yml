@@ -1,4 +1,4 @@
-name: Release
+name: Generate Github Release Zip
 
 env:
   # Change this to point to your solution, or the folder in which your solution 
