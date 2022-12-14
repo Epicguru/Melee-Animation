@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/Source"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "krafs"
+    labels:
+      - "enhancement"
