@@ -869,7 +869,11 @@ public class AnimRenderer : IExposable
                     PreventDrawPatch.AllowNext = true;
                     PreventDrawPatch.DoNotModify = true; // Don't use animation position/rotation.
                     MakePawnConsideredInvisible.IsRendering = true;
+#if V13
+                    pawn.DrawAt(pawn.DrawPos);
+#else
                     pawn.DrawAt(pawn.DrawPosHeld ?? pawn.DrawPos);
+#endif
                     PreventDrawPatch.DoNotModify = false;
                     MakePawnConsideredInvisible.IsRendering = false;
                 }
