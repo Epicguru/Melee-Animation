@@ -153,6 +153,13 @@ public class AnimData
         // Part count.
         int partCount = reader.ReadInt32();
 
+        // Total bounds.
+        Rect bounds = default;
+        bounds.x = reader.ReadSingle();
+        bounds.y = reader.ReadSingle();
+        bounds.width = reader.ReadSingle();
+        bounds.height = reader.ReadSingle();
+
         // Animation events.
         EventBase[] events = new EventBase[reader.ReadInt32()];
         for (int i = 0; i < events.Length; i++)
@@ -280,6 +287,7 @@ public class AnimData
         {
             sweeps = sweeps,
             FormatVersion = formatVersion,
+            Bounds = bounds
         };
     }
 
@@ -301,6 +309,7 @@ public class AnimData
     public IReadOnlyList<AnimSection> Sections => sections;
     public int SweepDataCount => sweeps.Count;
     public IEnumerable<AnimPartData> PartsWithSweepData => sweeps.Keys;
+    public Rect Bounds { get; private set; }
 
     private AnimPartData[] parts;
     private EventBase[] events;

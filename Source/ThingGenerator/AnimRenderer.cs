@@ -33,7 +33,6 @@ public class AnimRenderer : IExposable
     public static int TotalCapturedPawnCount => pawnToRenderer.Count;
     public static List<AnimRenderer> PostLoadPendingAnimators = new();
 
-    private static readonly MethodInfo drawShadowMethod = AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow");
     private static readonly MaterialPropertyBlock shadowMpb = new MaterialPropertyBlock();
     private static List<AnimRenderer> activeRenderers = new();
     private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new();
@@ -113,7 +112,6 @@ public class AnimRenderer : IExposable
             {
                 DestroyIntWorker(renderer);
                 i--;
-                continue;
             }
         }
         isItterating = false;
@@ -876,6 +874,14 @@ public class AnimRenderer : IExposable
 #endif
                     PreventDrawPatch.DoNotModify = false;
                     MakePawnConsideredInvisible.IsRendering = false;
+
+                    // Draw label.
+                    Vector3 drawPos2 = pawn.DrawPos;
+                    drawPos2.z -= 0.6f;
+                    Vector2 vector2 = Find.Camera.WorldToScreenPoint(drawPos2) / Prefs.UIScale;
+                    vector2.y = UI.screenHeight - vector2.y;
+                    labelDraw?.Invoke(pawn, vector2);
+
                 }
                 continue;
             }
@@ -887,11 +893,15 @@ public class AnimRenderer : IExposable
             // Worker pre-draw
             AnimationRendererWorker?.PreRenderPawn(pawnSS, ref pos, ref dir, pawn);
 
+            bool suppressShadow = Def.shadowDrawFromData && pawnSS.DataC > 0.2f;
+
             // Render pawn in custom position using patches.
             PreventDrawPatchUpper.AllowNext = true;
             PreventDrawPatch.AllowNext = true;
             MakePawnConsideredInvisible.IsRendering = true;
+            Patch_PawnRenderer_DrawInvisibleShadow.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
             pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
+            Patch_PawnRenderer_DrawInvisibleShadow.Suppress = false;
             MakePawnConsideredInvisible.IsRendering = false;
 
             // Render shadow.
@@ -900,20 +910,20 @@ public class AnimRenderer : IExposable
                 // DataC now drives the shadow rendering.
                 // Value of 0 means regular shadow rendering,
                 // value of 1 means shadow is a ground-based entity shadow (a-la-minecraft).
-                float v = pawnSS.DataC;
-                if (v < 0.2f)
-                    drawShadowMethod.Invoke(pawn.Drawer.renderer, new object[] { pos });
-
                 Vector3 groundPos = pos with { z = RootPosition.z };
                 Vector3 scale = new Vector3(1, 1, 0.5f);
-                Color color = new Color(0, 0, 0, 0.5f);
+                Color color = new Color(0, 0, 0, pawnSS.DataC * 0.6f);
 
-                DrawSimpleShadow(groundPos, scale, color);
+                if (pawnSS.DataC > 0f)
+                    DrawSimpleShadow(groundPos, scale, color);
             }
             else
             {
                 // Regular shadow draw, just like base game.
-                drawShadowMethod.Invoke(pawn.Drawer.renderer, new object[] { pos });
+                // Only required in Rimworld 1.3, in 1.4 it is baked into the RenderPawnAt method.
+#if V13
+                pawn.Drawer.renderer.DrawInvisibleShadow(pos);
+#endif
             }
 
             // Figure out where to draw the pawn label.
@@ -929,6 +939,7 @@ public class AnimRenderer : IExposable
     {
         var trs = Matrix4x4.TRS(pos, Quaternion.identity, size);
         shadowMpb.SetColor("_Color", color);
+        shadowMpb.SetTexture("_MainTex", Content.Shadow);
         Graphics.DrawMesh(MeshPool.plane10, trs, DefaultTransparent, 0, Camera, 0, shadowMpb);
     }
 
@@ -1017,7 +1028,7 @@ public class AnimRenderer : IExposable
         // Teleport pawns to their starting positions. They should already be there, but check just in case.
         IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
         basePos.y = 0;
-
+          
         for (int i = 0; i < Pawns.Count; i++)
         {
             var pawn = Pawns[i];

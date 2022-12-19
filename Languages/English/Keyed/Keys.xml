@@ -18,5 +18,15 @@
   
   <AAM.Gizmo.Execute.Mode.Default>This pawn is using the Default auto-execute setting, which is {Mode}.\n\n{Explanation}</AAM.Gizmo.Execute.Mode.Default>
   <AAM.Gizmo.Execute.Mode.DefaultPlural>These {PawnCount} pawns are using the Default auto-execute setting, which is {Mode}.\n\n{Explanation}</AAM.Gizmo.Execute.Mode.DefaultPlural>
+  <AAM.Gizmo.Execute.Tooltip>Perform a stylish finishing blow on a target.\nLethality depends on pawn skill and weapon.\n\nIf this pawn has a lasso equipped, they will use it to pull the target into range.\nHint: Shift+Click this button to force this pawn to walk to the target instead of using the lasso.</AAM.Gizmo.Execute.Tooltip>
+
+  <AAM.Gizmo.Execute.Fail>Cannot execute target: {Reason}</AAM.Gizmo.Execute.Fail>
+  <AAM.Gizmo.Error.NoAnimations>The {Weapon} cannot perform any animations, or {Pawn} does not have the skill to do any.</AAM.Gizmo.Error.NoAnimations>
+  <AAM.Gizmo.Error.NoSpace>There is no space to perform an execution. Using a different weapon or having a higher melee skill may enable animations that work in tighter spaces.</AAM.Gizmo.Error.NoSpace>
+  <AAM.Gizmo.Error.NoLasso>{Pawn} does not have a lasso or their lasso is on cooldown, so {Target} cannot be dragged in to perform an execution.</AAM.Gizmo.Error.NoLasso>
+  <AAM.Gizmo.Error.CannotLasso>{Target} cannot be lassoed by {Pawn} at the moment ({Reason}).</AAM.Gizmo.Error.CannotLasso>
+
+  <AAM.Gizmo.Grapple.CannotLassoGeneric>{Pawn} cannot lasso {Target}: {Reason}</AAM.Gizmo.Grapple.CannotLassoGeneric>
+  <AAM.Gizmo.Grapple.CannotLassoDefault>No valid position to drag {Target} to.</AAM.Gizmo.Grapple.CannotLassoDefault>
 
 </LanguageData>

@@ -231,7 +231,7 @@ namespace AAM.Processing
             tempAnimationStarts.Clear();
             tempGrappleStarts.Clear();
 
-            var allowedExecutions = AnimDef.GetExecutionAnimationsForWeapon(meleeWeapon.def); // TODO cache.
+            var allowedExecutions = AnimDef.GetExecutionAnimationsForPawnAndWeapon(pawn, meleeWeapon.def); // TODO cache.
 
             ulong spaceMask = 0;
             uint smallSpaceMask = 0;

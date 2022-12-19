@@ -24,6 +24,9 @@ namespace AAM
         [Description("A modifier on the speed of all animations.")]
         public float GlobalAnimationSpeed = 1f;
 
+        [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
+        public bool DrawNamesInAnimation = true;
+
         [DrawMethod(nameof(DrawAnimationList))]
         [SettingOptions(drawValue: false, allowReset: false, drawHoverHighlight: false)]
         private Dictionary<string, AnimDef.SettingsData> animSettings = new Dictionary<string, AnimDef.SettingsData>();

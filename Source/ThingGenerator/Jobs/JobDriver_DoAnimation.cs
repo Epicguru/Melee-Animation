@@ -2,7 +2,7 @@
 using Verse;
 using Verse.AI;
 
-namespace AAM
+namespace AAM.Jobs
 {
     public class JobDriver_DoAnimation : JobDriver
     {
@@ -18,7 +18,7 @@ namespace AAM
             }
         }
 
-        public virtual bool ShouldContinue => Animator != null && !Animator.IsDestroyed;
+        public virtual bool ShouldContinue => Animator is { IsDestroyed: false };
 
         private AnimRenderer _animator;
 

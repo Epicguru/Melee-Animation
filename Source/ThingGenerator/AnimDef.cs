@@ -7,6 +7,9 @@ using System.Linq;
 using System.Xml.Serialization;
 using AAM.RendererWorkers;
 using Verse;
+using System.Security.Cryptography;
+using UnityEngine;
+using RimWorld;
 
 namespace AAM
 {
@@ -42,6 +45,12 @@ namespace AAM
                     yield return item;            
         }
 
+        public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef)
+        => GetDefsOfType(AnimType.Execution)
+            .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
+            .Where(d => Mathf.Max(d.MinMeleeSkill ?? 0f, Core.Settings.MinMeleeSkillToExecute) <= pawn.skills.GetSkill(SkillDefOf.Melee).Level);
+
+        [Obsolete($"Use {nameof(GetExecutionAnimationsForPawnAndWeapon)} instead", true)]
         public static IEnumerable<AnimDef> GetExecutionAnimationsForWeapon(ThingDef def)
             => GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(new ReqInput(def)));
 
@@ -125,6 +134,7 @@ namespace AAM
         public ISweepProvider sweepProvider;
         public bool drawDisabledPawns;
         public bool shadowDrawFromData;
+        public int? MinMeleeSkill = null;
 
         private Dictionary<string, string> additionalData = new Dictionary<string, string>();
         private float relativeProbability = 1;

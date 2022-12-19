@@ -113,8 +113,8 @@ namespace AAM.Grappling
                     bool worked = AnimationStartParameters.Value.TryTrigger();
                     if (!worked)
                         Core.Error($"AnimationOnFinish failed to trigger - Invalid object? Invalid state? Invalid pawn(s)? Pawns: {string.Join(", ", AnimationStartParameters.Value.EnumeratePawns())}");
-                    else
-                        pawn.GetMeleeData().TimeSinceExecuted = 0; // TODO animation is not necessarily execution...
+                    else if (AnimationStartParameters.Value.Animation.type == AnimType.Execution)
+                        pawn.GetMeleeData().TimeSinceExecuted = 0;
                 }
                 return;
             }

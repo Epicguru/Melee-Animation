@@ -18,7 +18,7 @@ namespace AAM
         public MapPawnProcessor PawnProcessor;
 
         private readonly List<Action> toDraw = new();
-        private readonly List<(Pawn pawn, Vector2 position)> labels = new();
+        private readonly List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
         private HashSet<AnimRenderer> ioRenderers = new();
 
         public AnimationManager(Map map) : base(map)
@@ -85,12 +85,17 @@ namespace AAM
             base.MapComponentOnGUI();
 
             AnimRenderer.DrawAllGUI(map);
+
+            foreach (var pair in labels)
+            {
+                GenMapUI.DrawPawnLabel(pair.pawn, pair.position);
+            }
         }
 
         public void Draw(float deltaTime)
         {
             labels.Clear();
-            AnimRenderer.DrawAll(deltaTime, map, DrawLabel);
+            AnimRenderer.DrawAll(deltaTime, map, Core.Settings.DrawNamesInAnimation ? DrawLabel : null);
         }
 
         private void DrawLabel(Pawn pawn, Vector2 position)
