@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
 
@@ -43,10 +44,12 @@ namespace AAM.Data
             Scribe_Values.Look(ref TimeSinceGrappled, "timeSinceGrappled");
         }
 
-        public float GetExecuteCooldownPct(float cooldownTime) => cooldownTime <= 0 ? 1 : Mathf.Clamp01(TimeSinceExecuted / cooldownTime);
-        public bool IsExecutionOffCooldown(float cooldownTime) => cooldownTime <= TimeSinceExecuted;
+        public float GetExecuteCooldownMax() => Pawn.GetStatValue(AAM_DefOf.AAM_ExecutionCooldown);
+        public float GetExecuteCooldownPct() => GetExecuteCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceExecuted / GetExecuteCooldownMax());
+        public bool IsExecutionOffCooldown() => GetExecuteCooldownMax() <= TimeSinceExecuted;
 
-        public float GetGrappleCooldownPct(float cooldownTime) => cooldownTime <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / cooldownTime);
-        public bool IsGrappleOffCooldown(float cooldownTime) => cooldownTime <= TimeSinceGrappled;
+        public float GetGrappleCooldownMax() => Pawn.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
+        public float GetGrappleCooldownPct() => GetExecuteCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / GetExecuteCooldownMax());
+        public bool IsGrappleOffCooldown() => GetExecuteCooldownMax() <= TimeSinceGrappled;
     }
 }

@@ -41,20 +41,5 @@ namespace AAM.Events.Workers
         public abstract string EventID { get; }
 
         public abstract void Run(AnimEventInput input);
-
-        public BodyPartRecord GetPartFromDef(Pawn pawn, BodyPartDef def)
-        {
-            if (def == null)
-                return null;
-            if (pawn?.health?.hediffSet == null)
-                return null;
-
-            foreach (BodyPartRecord bodyPartRecord in pawn.health.hediffSet.GetNotMissingParts())
-            {
-                if (bodyPartRecord.def == def)
-                    return bodyPartRecord;
-            }
-            return null;
-        }
     }
 }

@@ -205,9 +205,9 @@ namespace AAM.Processing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool IsPlayerControlled(Pawn pawn) => pawn.IsColonistPlayerControlled;
 
-        // TODO add better checks - including mod settings.
-        private bool ShouldAutoGrapple(Pawn pawn, PawnMeleeData data) => (!IsPlayerControlled(pawn) || data.ResolvedAutoGrapple) && data.IsGrappleOffCooldown(5f);
-        private bool ShouldAutoExecute(Pawn pawn, PawnMeleeData data) => (!IsPlayerControlled(pawn) || data.ResolvedAutoExecute) && data.IsExecutionOffCooldown(5f);
+        // TODO grapple and execute cooldown stat worker to use mod settings.
+        private bool ShouldAutoGrapple(Pawn pawn, PawnMeleeData data) => (!IsPlayerControlled(pawn) || data.ResolvedAutoGrapple) && data.IsGrappleOffCooldown();
+        private bool ShouldAutoExecute(Pawn pawn, PawnMeleeData data) => (!IsPlayerControlled(pawn) || data.ResolvedAutoExecute) && data.IsExecutionOffCooldown();
 
         public void Process(Pawn pawn)
         {

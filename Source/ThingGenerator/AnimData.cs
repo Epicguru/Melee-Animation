@@ -5,6 +5,7 @@ using System.Linq;
 using AAM.Events;
 using UnityEngine;
 using System.Runtime.InteropServices;
+using AAM.Tweaks;
 #if !UNITY_EDITOR
 using Verse;
 using AAM;
@@ -306,14 +307,12 @@ public class AnimData
     public readonly float Duration;
     public IReadOnlyList<AnimPartData> Parts => parts;
     public IReadOnlyList<EventBase> Events => events;
-    public IReadOnlyList<AnimSection> Sections => sections;
     public int SweepDataCount => sweeps.Count;
     public IEnumerable<AnimPartData> PartsWithSweepData => sweeps.Keys;
     public Rect Bounds { get; private set; }
 
     private AnimPartData[] parts;
     private EventBase[] events;
-    private AnimSection[] sections;
     private Dictionary<AnimPartData, List<SweepPointCollection>> sweeps;
 
     public AnimData(string name, float duration, AnimPartData[] parts, EventBase[] events)
@@ -322,7 +321,6 @@ public class AnimData
         this.Duration = duration;
         this.parts = parts ?? Array.Empty<AnimPartData>();
         this.events = events ?? Array.Empty<EventBase>();
-        this.sections = GenerateSections();
 
         for (int i = 0; i < parts.Length; i++)        
             parts[i].Index = i;
@@ -361,48 +359,6 @@ public class AnimData
             if (e.IsInTimeWindow(range))
                 yield return e;
         }
-    }
-
-    public AnimSection GetSectionNamed(string name)
-    {
-        foreach (var section in sections)
-        {
-            if (section.Name == name)
-                return section;
-        }
-        return null;
-    }
-
-    public AnimSection GetSectionAtTime(float time)
-    {
-        foreach (var section in sections)
-        {
-            if (section.ContainsTime(time))
-                return section;
-        }
-        Core.Warn($"Didn't find any section for time {time}. Clip is {Duration}s with {sections.Length} sections.");
-        return null;
-    }
-
-    protected virtual AnimSection[] GenerateSections()
-    {
-        // TODO re-implement or remove.
-        //if (events == null)
-        //    return new AnimSection[] { new AnimSection(this, null, null) };
-
-        //var list = new List<AnimSection>();
-        //EventBase lastSection = null;
-        //foreach (var e in events)
-        //{
-        //    if (e.HandlerName.ToLowerInvariant() == "section")
-        //    {
-        //        var sec = new AnimSection(this, lastSection, e);
-        //        list.Add(sec);
-        //        lastSection = e;
-        //    }
-        //}
-        //list.Add(new AnimSection(this, lastSection, null));
-        return Array.Empty<AnimSection>();
     }
 }
 
@@ -690,6 +646,7 @@ public class AnimPartOverrideData
     public bool UseDefaultTransparentMaterial;
     public PartRenderer CustomRenderer;
     public object UserData;
+    public ItemTweakData TweakData;
 }
 
 [Serializable]

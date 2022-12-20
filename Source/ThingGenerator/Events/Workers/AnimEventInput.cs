@@ -30,13 +30,5 @@ namespace AAM.Events.Workers
         }
 
         public AnimPartData GetPart(string name) => Animator.GetPart(name);
-
-        public T GetDef<T>(string defName, T fallback = null) where T : Def
-        {
-            if (string.IsNullOrWhiteSpace(defName))
-                return fallback;
-
-            return (T)GenGeneric.InvokeStaticMethodOnGenericType(typeof(DefDatabase<>), typeof(T), "GetNamed", defName, true) ?? fallback;
-        }
     }
 }

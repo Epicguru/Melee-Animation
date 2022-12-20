@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
-using Verse.Sound;
-using AAM;
 using Verse.AI;
+using Verse.Sound;
 
 namespace AAM.Gizmos;
 
@@ -334,6 +333,7 @@ public class AnimationGizmo : Gizmo
         var weapon = pawn.GetFirstMeleeWeapon();
         // yes the " 1" is intentional: Rimworld doesn't account for RichText in text size calculation.
         string msg = $"Weapon: {(weapon == null ? "<i>None</i>" : weapon.LabelCap)}";
+
         TooltipHandler.TipRegion(rect, msg);
     }
 
@@ -348,12 +348,10 @@ public class AnimationGizmo : Gizmo
     {
         GUI.DrawTexture(rect, Content.IconLongBG);
 
-        float cooldown = pawn.GetStatValue(AAM_DefOf.AAM_ExecutionCooldown);
-
-        bool isOffCooldown = data.IsExecutionOffCooldown(cooldown);
+        bool isOffCooldown = data.IsExecutionOffCooldown();
         if (!isOffCooldown)
         {
-            float pct = data.GetExecuteCooldownPct(cooldown);
+            float pct = data.GetExecuteCooldownPct();
             Widgets.FillableBar(rect.BottomPartPixels(14).ExpandedBy(-4, -3), pct);
         }
 
@@ -396,12 +394,11 @@ public class AnimationGizmo : Gizmo
     {
         GUI.DrawTexture(rect, Content.IconLongBG);
 
-        float cooldown = pawn.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
 
-        bool isOffCooldown = data.IsGrappleOffCooldown(cooldown);
+        bool isOffCooldown = data.IsGrappleOffCooldown();
         if (!isOffCooldown)
         {
-            float pct = data.GetGrappleCooldownPct(cooldown);
+            float pct = data.GetGrappleCooldownPct();
             Widgets.FillableBar(rect.BottomPartPixels(14).ExpandedBy(-4, -3), pct);
         }
 
@@ -484,8 +481,6 @@ public class AnimationGizmo : Gizmo
 
     private void OnSelectedExecutionTarget(LocalTargetInfo info)
     {
-        // TODO walk to execute.
-
         if (info.Thing is not Pawn target || target.Dead)
             return;
         if (target == pawn)
@@ -494,10 +489,29 @@ public class AnimationGizmo : Gizmo
         if (!forceDontUseLasso)
             forceDontUseLasso = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        var lasso = pawn.TryGetLasso();
+        bool allowFriendlies = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+        if (Core.Settings.WarnOfFriendlyExecution && !allowFriendlies && !target.AnimalOrWildMan() && !target.HostileTo(Faction.OfPlayerSilentFail))
+        {
+            Messages.Message("AAM.Gizmo.Grapple.AltForFriendlies".Trs(), MessageTypeDefOf.RejectInput, false);
+            return;
+        }
 
+        var lasso = pawn.TryGetLasso();
         bool canGrapple = !forceDontUseLasso && lasso != null && GrabUtility.CanStartGrapple(pawn, out _);
-        var targetPos = target.Position;
+        IntVec3 targetPos = target.Position;
+
+        // If grappling is enabled, but pawn is out of reach, send warning message
+        // letting the player know they can shift+click to send the pawn walking.
+        if (canGrapple)
+        {
+            float currDistanceSqr = (pawn.Position - targetPos).LengthHorizontalSquared;
+            float maxDistance = pawn.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
+            if (maxDistance * maxDistance < currDistanceSqr)
+            {
+                Messages.Message("AAM.Gizmo.Grapple.OutOfRange".Translate(new NamedArgument(pawn.NameShortColored, "Pawn")), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+        }
 
         var weaponDef = pawn.GetFirstMeleeWeapon().def;
         var possibilities = AnimDef.GetExecutionAnimationsForPawnAndWeapon(pawn, weaponDef);
@@ -572,6 +586,7 @@ public class AnimationGizmo : Gizmo
             // Cannot grapple.
 
             // Walk to and execute target.
+            // Make walk job and reset all verbs (stop firing, attacking).
             var walkJob = JobMaker.MakeJob(AAM_DefOf.AAM_WalkToExecution, target);
 
             if (pawn.verbTracker?.AllVerbs != null)
@@ -583,7 +598,8 @@ public class AnimationGizmo : Gizmo
                 foreach (var verb in pawn.equipment.AllEquipmentVerbs)
                     verb.Reset();
 
-            pawn.jobs.StartJob(walkJob, JobCondition.InterruptForced, null, false, true, null);
+            // Start walking.
+            pawn.jobs.StartJob(walkJob, JobCondition.InterruptForced);
 
             if (pawn.CurJobDef == AAM_DefOf.AAM_WalkToExecution)
                 return;

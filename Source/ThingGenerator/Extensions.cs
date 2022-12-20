@@ -49,6 +49,29 @@ public static class Extensions
 
     public static AnimRenderer TryGetAnimator(this Pawn pawn) => AnimRenderer.TryGetAnimator(pawn);
 
+    public static T AsDefOfType<T>(this string defName, T fallback = null) where T : Def
+    {
+        if (string.IsNullOrWhiteSpace(defName))
+            return fallback;
+
+        return (T)GenGeneric.InvokeStaticMethodOnGenericType(typeof(DefDatabase<>), typeof(T), "GetNamed", defName, true) ?? fallback;
+    }
+
+    public static BodyPartRecord TryGetPartFromDef(this Pawn pawn, BodyPartDef def)
+    {
+        if (def == null)
+            return null;
+        if (pawn?.health?.hediffSet == null)
+            return null;
+
+        foreach (BodyPartRecord bodyPartRecord in pawn.health.hediffSet.GetNotMissingParts())
+        {
+            if (bodyPartRecord.def == def)
+                return bodyPartRecord;
+        }
+        return null;
+    }
+
     public static ThingWithComps GetFirstMeleeWeapon(this Pawn pawn)
     {
         if (pawn?.equipment == null)

@@ -195,6 +195,7 @@ namespace AAM.Tweaks
             ov.FlipX = FlipX;
             ov.FlipY = FlipY;
             ov.UseDefaultTransparentMaterial = UseDefaultTransparentMaterial;
+            ov.TweakData = this;
 
             if (!string.IsNullOrWhiteSpace(CustomRendererClass))
             {

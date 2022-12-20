@@ -194,8 +194,15 @@ public class AnimRenderer : IExposable
     private static void DrawSingle(AnimRenderer renderer, float dt, Action<Pawn, Vector2> labelDraw = null)
     {
         // Draw and handle events.
-        // TODO handle exceptions.
-        var timePeriod = renderer.Draw(null, dt, labelDraw);
+        Vector2 timePeriod = default;
+        try
+        {
+            timePeriod = renderer.Draw(null, dt, labelDraw);
+        }
+        catch (Exception e)
+        {
+            Core.Error($"Rendering exception when doing animation {renderer}", e);
+        }
 
         EventsTimer.Start();
         foreach (var e in renderer.GetEventsInPeriod(timePeriod))
@@ -365,10 +372,10 @@ public class AnimRenderer : IExposable
     /// </summary>
     public AnimationRendererWorker AnimationRendererWorker;
 
+    private List<AnimPartData> bodies = new List<AnimPartData>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
-    private AnimPartData[] bodies = new AnimPartData[8]; // TODO REPLACE WITH LIST OR DICT.
     private PartWithSweep[] sweeps;
     private MaterialPropertyBlock pb;
     private float time = -1;
@@ -588,10 +595,7 @@ public class AnimRenderer : IExposable
         RegisterInt(this);
 
         if (!hasStarted)
-        {
-            hasStarted = true;
             OnStart();
-        }
 
         // This tempTime nonsense is necessary because time is written to directly by the ExposeData,
         // and Seek will not run if time is already the target (seek) time.
@@ -765,7 +769,7 @@ public class AnimRenderer : IExposable
                 ov.CustomRenderer.Part = snap.Part;
                 ov.CustomRenderer.Snapshot = snap;
                 ov.CustomRenderer.Renderer = this;
-                ov.CustomRenderer.TweakData = null; // TODO assign tweak data.
+                ov.CustomRenderer.TweakData = ov.TweakData;
                 ov.CustomRenderer.Mesh = mesh;
                 ov.CustomRenderer.Material = mat;
 
@@ -1003,6 +1007,8 @@ public class AnimRenderer : IExposable
 
     public void OnStart()
     {
+        hasStarted = true;
+
         // Give pawns their jobs.
         foreach (var pawn in Pawns)
         {
@@ -1207,6 +1213,8 @@ public class AnimRenderer : IExposable
 
         return true;
     }
+
+    public override string ToString() => Def.LabelCap;
 
     public class PartWithSweep
     {

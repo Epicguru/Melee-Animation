@@ -18,7 +18,7 @@ namespace AAM.Events.Workers
                 return;
             }
 
-            var fleck = i.GetDef<FleckDef>(e.MoteDef);
+            var fleck = e.MoteDef.AsDefOfType<FleckDef>();
             if (fleck == null)
             {
                 Core.Error($"Failed to spawn fleck: could not find fleck def '{e.MoteDef}'");

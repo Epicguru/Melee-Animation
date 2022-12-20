@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.Distributions;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
@@ -90,8 +91,12 @@ namespace AAM
 
         [Range(0, 10)]
         [Percentage]
-        [Description("A general modifier on the chance for execution animations to trigger. Affects all pawns.")]
-        public float ExecutionChanceModifier = 1f;
+        [Description("A general modifier on the lethality of execution animations. Higher values make executions more lethal. Affects all pawns.")]
+        public float ExecutionLethalityModifier = 1f;
+
+        [Label("Execution Are Non Lethal On Friendlies")]
+        [Description("If enabled, execution animations on friendly pawns are always non-lethal regardless of other settings.\nPrisoners are considered friendly.\n\nUseful when trying to stop a mental break or prisoner uprising without causing a bloodbath.")]
+        public bool ExecutionsOnFriendliesAreNotLethal = true;
 
         [Description("If true, executions can destroy specific vital body parts, such as the heart or head.\n" +
                      "If false, the pawn is simply killed by 'magic' (no specific part takes damage)\n" +
@@ -134,7 +139,39 @@ namespace AAM
                      "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
                      "<b>Note:</b> The offset corpses are reset after a save-reload.")]
         public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
+
+        [Label("Friendly Pawn Lethality Bonus")]
+        [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
+        [Percentage]
+        public float FriendlyPawnMeanNudge = 0f;
+
+        [Label("Friendly Pawn Duel Ability Bonus")]
+        [Description("Positive values act as a duel ability bonus for friendly pawns (including slaves), meaning that they will win duels more often.")]
+        [Percentage]
+        public float FriendlyPawnDuelMeanNudge = 0.1f;
+
+        [Label("Lethality Normal Distribution")]
+        [Description("Tl;Dr: Lower values make execution & duel outcomes less random (more dependent on Duel Ability), higher values make the outcome more random.\n\n" +
+                     "Detail: Changes the normal distribution used when comparing 2 pawn's Duel Ability stats. Lower values (<0.5) remove almost all randomness, higher values (>1) make the outcome much more random.")]
+        [Range(0.1f, 2f)]
+        [Percentage]
+        public float NormalDist = 0.5f;
+
+        [Label("Show Warning Before Executing Friendly")]
+        [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Alt] key when targeting a friendly pawn for execution.")]
+        public bool WarnOfFriendlyExecution = true;
+
         #endregion
+
+        private Normal normal;
+
+        public Normal GetNormalDistribution()
+        {
+            if (normal == null || Math.Abs(normal.StdDev - NormalDist) > 0.001f)
+                normal = new Normal(0.0, NormalDist);
+
+            return normal;
+        }
 
         public override void ExposeData()
         {

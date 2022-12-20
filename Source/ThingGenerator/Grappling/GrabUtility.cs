@@ -72,12 +72,11 @@ namespace AAM.Grappling
             }
 
             var data = grappler.GetMeleeData();
-            float cooldown = grappler.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
 
             // Grapple is on cooldown...
-            if (!data.IsGrappleOffCooldown(cooldown))
+            if (!data.IsGrappleOffCooldown())
             {
-                float timeRemaining = cooldown - data.TimeSinceGrappled;
+                float timeRemaining = data.GetGrappleCooldownMax() - data.TimeSinceGrappled;
                 reason = $"{grappler.NameShortColored}'s lasso is on cooldown for another {timeRemaining:F1} seconds!";
                 return false;
             }

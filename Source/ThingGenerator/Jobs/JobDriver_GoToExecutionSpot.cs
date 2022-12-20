@@ -14,14 +14,24 @@ namespace AAM.Jobs
 
         private readonly HashSet<AnimDef> except = new HashSet<AnimDef>();
 
-        public Toil MakeGoToToil()
+        protected Toil MakeGoToToil()
         {
+            job.playerForced = true;
+
+#if V13
+            var toil = new Toil();
+#else
             var toil = ToilMaker.MakeToil();
+#endif
 
             // Stop if target is despawned (includes flying/grappled)
             this.FailOnDespawnedOrNull(TargetIndex.A);
             // Stop if invalid or destroyed (includes killed, moved to different map).
+#if V13
+            this.FailOnDestroyedOrNull(TargetIndex.A);
+#else
             this.FailOnInvalidOrDestroyed(TargetIndex.A);
+#endif
             // Fail if target is down.
             this.FailOnDowned(TargetIndex.A);
 
@@ -84,10 +94,13 @@ namespace AAM.Jobs
             return toil;
         }
 
-        public Toil MakeExecutionToil()
+        protected virtual Toil MakeEndToil()
         {
+#if V13
+            var toil = new Toil();
+#else
             var toil = ToilMaker.MakeToil();
-
+#endif
             // Try do an execution animation.
             toil.initAction = () =>
             {
@@ -172,7 +185,7 @@ namespace AAM.Jobs
             job.locomotionUrgency = LocomotionUrgency.Sprint;
 
             yield return MakeGoToToil();
-            yield return MakeExecutionToil();
+            yield return MakeEndToil();
         }
     }
 }
