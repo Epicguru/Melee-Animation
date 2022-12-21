@@ -16,7 +16,7 @@ public class AnimationGizmo : Gizmo
     private readonly Pawn pawn;
     private readonly PawnMeleeData data;
     private readonly List<Pawn> pawns = new List<Pawn>();
-    private readonly HashSet<AnimDef> except = new HashSet<AnimDef>();
+    private static readonly HashSet<AnimDef> except = new HashSet<AnimDef>();
 
     private bool forceDontUseLasso;
 
@@ -360,8 +360,8 @@ public class AnimationGizmo : Gizmo
         {
             if(!isOffCooldown)
             {
-                string name = pawn.Name.ToStringShort;
-                Messages.Message($"{name}'s execution is on cooldown!", MessageTypeDefOf.RejectInput, false);
+                string error = "AAM.Gizmo.Execute.OnCooldown".Translate(new NamedArgument(pawn.NameShortColored, "Pawn"));
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
             }
             else if (pawn.GetFirstMeleeWeapon() == null)
             {
@@ -371,14 +371,14 @@ public class AnimationGizmo : Gizmo
             else
             {
                 forceDontUseLasso = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
-                var args = new TargetingParameters()
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera();
+                var args = new TargetingParameters
                 {
                     canTargetSelf = false,
                     canTargetBuildings = false,
                     validator = LassoTargetValidator
                 };
-                Find.Targeter.BeginTargeting(args, OnSelectedExecutionTarget, null, null, pawn);
+                Find.Targeter.BeginTargeting(args, target => OnSelectedExecutionTarget(forceDontUseLasso, pawn, target), null, null, pawn);
             }
                 
         }
@@ -393,7 +393,6 @@ public class AnimationGizmo : Gizmo
     private void DrawLassoTarget(Rect rect)
     {
         GUI.DrawTexture(rect, Content.IconLongBG);
-
 
         bool isOffCooldown = data.IsGrappleOffCooldown();
         if (!isOffCooldown)
@@ -419,7 +418,7 @@ public class AnimationGizmo : Gizmo
                     canTargetBuildings = false,
                     validator = LassoTargetValidator
                 };
-                Find.Targeter.BeginTargeting(args, OnSelectedLassoTarget, null, null, pawn);
+                Find.Targeter.BeginTargeting(args, target => OnSelectedLassoTarget(pawn, target), null, null, pawn);
             }
         }
 
@@ -435,26 +434,29 @@ public class AnimationGizmo : Gizmo
         return info.HasThing && info.Thing is Pawn { Dead: false, Spawned: true } p && p != pawn && (Core.Settings.AnimalsCanBeExecuted || !p.RaceProps.Animal);
     }
 
-    private void OnSelectedLassoTarget(LocalTargetInfo info)
+    public static void OnSelectedLassoTarget(Pawn pawn, LocalTargetInfo info) => OnSelectedLassoTarget(pawn, info, true);
+
+    public static string OnSelectedLassoTarget(Pawn pawn, LocalTargetInfo info, bool performAction)
     {
         if (info.Thing is not Pawn target || target.Dead)
-            return;
+            return "Target is dead or invalid"; // Should never be possible due to targeting.
 
         if (target == pawn)
-            return;
+            return "Cannot lasso self."; // Should never be possible due to targeting.
 
         var targetPos = target.Position;
-        string lastReason = "AAM.Gizmo.Grapple.CannotLassoDefault".Translate(new NamedArgument("Target", target.NameShortColored));
+        string lastReason = "AAM.Gizmo.Grapple.CannotLassoDefault".Translate(new NamedArgument(target.NameShortColored, "Target"));
 
         if (!GrabUtility.CanStartGrapple(pawn, out string reason, true))
         {
             string error = "AAM.Gizmo.Grapple.CannotLassoGeneric".Translate(
-                new NamedArgument("Pawn", pawn.NameShortColored),
-                new NamedArgument("Target", target.NameShortColored),
-                new NamedArgument("Reason", reason.CapitalizeFirst()));
+                new NamedArgument(pawn.NameShortColored, "Pawn"),
+                new NamedArgument(target.NameShortColored, "Target"),
+                new NamedArgument(reason.CapitalizeFirst(), "Reason"));
 
-            Messages.Message(error, MessageTypeDefOf.RejectInput, false);
-            return;
+            if (performAction)
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
         }
 
         // Enumerates free cells in the 3x3 area around the pawn.
@@ -462,38 +464,67 @@ public class AnimationGizmo : Gizmo
         foreach (var pos in GrabUtility.GetIdealGrappleSpots(pawn, target, false))
         {
             if (targetPos == pos)
-                return; // Yes, return, not continue. If the target is already in a good spot, there is nothing to do.
+                return null; // Yes, return, not continue. If the target is already in a good spot, there is nothing to do.
 
             if (GrabUtility.CanStartGrapple(pawn, target, pos, out lastReason))
             {
-                if (JobDriver_GrapplePawn.GiveJob(pawn, target, pos, true))
-                    data.TimeSinceGrappled = 0;
-                return;
+                if (performAction)
+                {
+                    var data = pawn.GetMeleeData();
+                    if (JobDriver_GrapplePawn.GiveJob(pawn, target, pos, true))
+                        data.TimeSinceGrappled = 0;
+                }
+                return null;
             }
         }
 
         string error2 = "AAM.Gizmo.Grapple.CannotLassoGeneric".Translate(
-            new NamedArgument("Pawn", pawn.NameShortColored),
-            new NamedArgument("Target", target.NameShortColored),
-            new NamedArgument("Reason", lastReason.CapitalizeFirst()));
-        Messages.Message(error2, MessageTypeDefOf.RejectInput, false);
+            new NamedArgument(pawn.NameShortColored, "Pawn"),
+            new NamedArgument(target.NameShortColored, "Target"),
+            new NamedArgument(lastReason.CapitalizeFirst(), "Reason"));
+        if (performAction)
+            Messages.Message(error2, MessageTypeDefOf.RejectInput, false);
+        return error2;
     }
 
-    private void OnSelectedExecutionTarget(LocalTargetInfo info)
+    public static void OnSelectedExecutionTarget(bool forceDontUseLasso, Pawn pawn, LocalTargetInfo info) => OnSelectedExecutionTarget(forceDontUseLasso, pawn, info, true);
+
+    public static string OnSelectedExecutionTarget(bool forceDontUseLasso, Pawn pawn, LocalTargetInfo info, bool performAction)
     {
         if (info.Thing is not Pawn target || target.Dead)
-            return;
+            return "Target is dead or invalid"; // Should not happen due to targeting.
+
         if (target == pawn)
-            return;
+            return "Cannot execute self!"; // Should not happen due to targeting.
+
+        if (target.Dead || target.Downed)
+        {
+            string reason = "AAM.Gizmo.Execute.NotDeadOrDowned".Translate(new NamedArgument(target.NameShortColored, "Target"));
+            string error = "AAM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
+            if (performAction)
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
+        }
+
+        // Cooldown.
+        if (!pawn.GetMeleeData().IsExecutionOffCooldown())
+        {
+            string error = "AAM.Gizmo.Execute.OnCooldown".Translate(new NamedArgument(pawn.NameShortColored, "Pawn"));
+            if (performAction)
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
+        }
 
         if (!forceDontUseLasso)
             forceDontUseLasso = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        bool allowFriendlies = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+        bool allowFriendlies = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
         if (Core.Settings.WarnOfFriendlyExecution && !allowFriendlies && !target.AnimalOrWildMan() && !target.HostileTo(Faction.OfPlayerSilentFail))
         {
-            Messages.Message("AAM.Gizmo.Grapple.AltForFriendlies".Trs(), MessageTypeDefOf.RejectInput, false);
-            return;
+            string error = "AAM.Gizmo.Grapple.CtrlForFriendlies".Trs();
+            if (performAction)
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
         }
 
         var lasso = pawn.TryGetLasso();
@@ -508,8 +539,9 @@ public class AnimationGizmo : Gizmo
             float maxDistance = pawn.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
             if (maxDistance * maxDistance < currDistanceSqr)
             {
-                Messages.Message("AAM.Gizmo.Grapple.OutOfRange".Translate(new NamedArgument(pawn.NameShortColored, "Pawn")), MessageTypeDefOf.RejectInput, false);
-                return;
+                string error = "AAM.Gizmo.Grapple.OutOfRange".Translate(new NamedArgument(pawn.NameShortColored, "Pawn"));
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+                return error;
             }
         }
 
@@ -525,8 +557,9 @@ public class AnimationGizmo : Gizmo
 
             string error = "AAM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
                 
-            Messages.Message(error, MessageTypeDefOf.RejectInput, false);
-            return;
+            if (performAction)
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
         }
 
         // Step 1: Check if the pawn is in the left or right position.
@@ -553,37 +586,54 @@ public class AnimationGizmo : Gizmo
 
                 if (result == 0)
                 {
+                    if (!performAction)
+                        return null;
+
                     // Can do the animation!
                     var startArgs = new AnimationStartParameters(anim, pawn, target)
                     {
-                        ExecutionOutcome = ExecutionOutcome.Kill, // TODO derive from skill/weapon
+                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(pawn, target),
                         FlipX = flipX,
                     };
 
                     if (startArgs.TryTrigger())
                     {
                         // Set execute cooldown.
-                        data.TimeSinceExecuted = 0;
+                        pawn.GetMeleeData().TimeSinceExecuted = 0;
                     }
                     else
                     {
                         Core.Error($"Failed to start execution animation (instant) for pawn {pawn} on {target}.");
                     }
 
-                    return;
+                    return null;
                 }
             }
 
             // At this point, the pawn is to the immediate left or right but none of the animations could be played due to space constraints.
             // Therefore, exit.
-            Messages.Message("AAM.Gizmo.Error.NoSpace".Translate(), MessageTypeDefOf.RejectInput, false);
-            return;
+            string error = "AAM.Gizmo.Error.NoSpace".Translate();
+            if (performAction)
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
         }
 
         // Step 2: The pawn needs to be grappled in because the target is not to the immediate left or right.
         if (!canGrapple)
         {
-            // Cannot grapple.
+            bool canReach = pawn.CanReach(target, PathEndMode.Touch, Danger.Deadly);
+            if (!canReach)
+            {
+                string r = "AAM.Gizmo.Error.CantReach".Translate(new NamedArgument(pawn.NameShortColored, "Pawn"));
+                string e = "AAM.Gizmo.Execute.Fail".Translate(new NamedArgument(r, "Reason"));
+                if (performAction)
+                    Messages.Message(e, MessageTypeDefOf.RejectInput, false);
+                return e;
+            }
+            
+            // If not performing, assume that they can complete the walk job just fine.
+            if (!performAction)
+                return null;
 
             // Walk to and execute target.
             // Make walk job and reset all verbs (stop firing, attacking).
@@ -602,25 +652,26 @@ public class AnimationGizmo : Gizmo
             pawn.jobs.StartJob(walkJob, JobCondition.InterruptForced);
 
             if (pawn.CurJobDef == AAM_DefOf.AAM_WalkToExecution)
-                return;
+                return null;
 
-            Core.Error($"CRITICAL ERROR: Failed to force interrupt {pawn}'s job with execution goto job. Likely a mod conflict.");
+            Core.Error($"CRITICAL ERROR: Failed to force interrupt {pawn}'s job with execution goto job. Likely a mod conflict or invalid start parameters.");
             string reason = "AAM.Gizmo.Error.NoLasso".Translate(
                 new NamedArgument(pawn.NameShortColored, "Pawn"),
                 new NamedArgument(target.NameShortColored, "Target"));
             string error = "AAM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
             Messages.Message(error, MessageTypeDefOf.RejectInput, false);
 
-            return;
+            return error;
         }
 
         // Try left and right position.
+        string lastReasonNoGrapple = null;
         foreach (var cell in GrabUtility.GetIdealGrappleSpots(pawn, target, true))
         {
             bool flipX = cell.x < pawn.Position.x;
 
             // Check line of sight and other details.
-            if (!GrabUtility.CanStartGrapple(pawn, target, cell, out string lastReasonNoGrapple))
+            if (!GrabUtility.CanStartGrapple(pawn, target, cell, out lastReasonNoGrapple))
                 continue;
 
             except.Clear();
@@ -641,11 +692,13 @@ public class AnimationGizmo : Gizmo
                 {
                     // There is space for the animation, and line of sight for the grapple.
                     // So good to go.
+                    if (!performAction)
+                        return null;
 
                     var startParams = new AnimationStartParameters
                     {
                         Animation = anim,
-                        ExecutionOutcome = ExecutionOutcome.Kill, // TODO decide based on stats, skill, weapon etc.
+                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(pawn, target),
                         FlipX = flipX,
                         MainPawn = pawn,
                         SecondPawn = target,
@@ -656,31 +709,35 @@ public class AnimationGizmo : Gizmo
 
                     // Give grapple job and pass in parameters which trigger the execution animation.
                     if (JobDriver_GrapplePawn.GiveJob(pawn, target, cell, true, startParams))
-                        data.TimeSinceGrappled = 0;
+                        pawn.GetMeleeData().TimeSinceGrappled = 0;
                     else
                         Core.Error($"Failed to give grapple job to {pawn}.");
 
-                    return;
+                    return null;
                 }
             }
+        }
 
-            // Failed to lasso, or failed to find any space for any animation.
-            if (lastReasonNoGrapple != null)
-            {
-                // Cannot lasso target.
-                string reason = "AAM.Gizmo.Error.CannotLasso".Translate(
-                    new NamedArgument(pawn.NameShortColored, "Pawn"),
-                    new NamedArgument(target.NameShortColored, "Target"),
-                    new NamedArgument(lastReasonNoGrapple, "Reason"));
+        // Failed to lasso, or failed to find any space for any animation.
+        if (lastReasonNoGrapple != null)
+        {
+            // Cannot lasso target.
+            string reason = "AAM.Gizmo.Error.CannotLasso".Translate(
+                new NamedArgument(pawn.NameShortColored, "Pawn"),
+                new NamedArgument(target.NameShortColored, "Target"),
+                new NamedArgument(lastReasonNoGrapple, "Reason"));
 
-                string error = "AAM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
+            string error = "AAM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
+            if (performAction)
                 Messages.Message(error, MessageTypeDefOf.RejectInput, false);
-            }
-            else
-            {
-                // No Space.
-                Messages.Message("AAM.Gizmo.Error.NoSpace".Translate(), MessageTypeDefOf.RejectInput, false);
-            }
+            return error;
+        }
+        else
+        {
+            // No Space.
+            string error = "AAM.Gizmo.Error.NoSpace".Translate();
+            Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
         }
     }
 

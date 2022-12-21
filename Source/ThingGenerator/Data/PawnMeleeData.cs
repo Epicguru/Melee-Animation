@@ -24,9 +24,9 @@ namespace AAM.Data
 
         public Pawn Pawn;
         public AutoOption AutoExecute;
-        public float TimeSinceExecuted;
+        public float TimeSinceExecuted = 100;
         public AutoOption AutoGrapple;
-        public float TimeSinceGrappled;
+        public float TimeSinceGrappled = 100;
 
         public int lastTickPresentedOptions = -1; // Not saved.
 
@@ -40,8 +40,8 @@ namespace AAM.Data
             Scribe_References.Look(ref Pawn, "pawn");
             Scribe_Values.Look(ref AutoExecute, "autoExecute");
             Scribe_Values.Look(ref AutoGrapple, "autoGrapple");
-            Scribe_Values.Look(ref TimeSinceExecuted, "timeSinceExecuted");
-            Scribe_Values.Look(ref TimeSinceGrappled, "timeSinceGrappled");
+            Scribe_Values.Look(ref TimeSinceExecuted, "timeSinceExecuted", 100);
+            Scribe_Values.Look(ref TimeSinceGrappled, "timeSinceGrappled", 100);
         }
 
         public float GetExecuteCooldownMax() => Pawn.GetStatValue(AAM_DefOf.AAM_ExecutionCooldown);
@@ -49,7 +49,7 @@ namespace AAM.Data
         public bool IsExecutionOffCooldown() => GetExecuteCooldownMax() <= TimeSinceExecuted;
 
         public float GetGrappleCooldownMax() => Pawn.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
-        public float GetGrappleCooldownPct() => GetExecuteCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / GetExecuteCooldownMax());
-        public bool IsGrappleOffCooldown() => GetExecuteCooldownMax() <= TimeSinceGrappled;
+        public float GetGrappleCooldownPct() => GetGrappleCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / GetGrappleCooldownMax());
+        public bool IsGrappleOffCooldown() => GetGrappleCooldownMax() <= TimeSinceGrappled;
     }
 }

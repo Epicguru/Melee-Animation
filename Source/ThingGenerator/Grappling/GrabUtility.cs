@@ -76,8 +76,7 @@ namespace AAM.Grappling
             // Grapple is on cooldown...
             if (!data.IsGrappleOffCooldown())
             {
-                float timeRemaining = data.GetGrappleCooldownMax() - data.TimeSinceGrappled;
-                reason = $"{grappler.NameShortColored}'s lasso is on cooldown for another {timeRemaining:F1} seconds!";
+                reason = $"{grappler.NameShortColored}'s lasso is on cooldown.";
                 return false;
             }
 
@@ -110,7 +109,7 @@ namespace AAM.Grappling
 
                 if (manipulation.Value < Core.Settings.MinManipulationToLasso)
                 {
-                    reason = $"{grappler.NameFullColored}'s current manipulation level is {manipulation.Value * 100f: F0}% which is below the {Core.Settings.MinManipulationToLasso * 100f:F0}% required to use a lasso.";
+                    reason = $"{grappler.NameShortColored}'s manipulation level is {manipulation.Value * 100f:F0}% which is below the {Core.Settings.MinManipulationToLasso * 100f:F0}% required to use a lasso.";
                     return false;
                 }
             }

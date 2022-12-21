@@ -21,15 +21,18 @@
   <AAM.Gizmo.Execute.Tooltip>Perform a stylish finishing blow on a target.\nLethality depends on pawn skill and weapon.\n\nIf this pawn has a lasso equipped, they will use it to pull the target into range.\n\nHint: Shift+Click this button to force this pawn to walk to the target instead of using the lasso.</AAM.Gizmo.Execute.Tooltip>
 
   <AAM.Gizmo.Execute.Fail>Cannot execute target: {Reason}</AAM.Gizmo.Execute.Fail>
+  <AAM.Gizmo.Execute.OnCooldown>{Pawn}'s execution is on cooldown.</AAM.Gizmo.Execute.OnCooldown>
+  <AAM.Gizmo.Execute.NotDeadOrDowned>{Target} is downed, so cannot be executed.</AAM.Gizmo.Execute.NotDeadOrDowned>
   <AAM.Gizmo.Error.NoAnimations>The {Weapon} cannot perform any animations, or {Pawn} does not have the skill to do any.</AAM.Gizmo.Error.NoAnimations>
   <AAM.Gizmo.Error.NoSpace>There is no space to perform an execution. Using a different weapon or having a higher melee skill may enable animations that work in tighter spaces.</AAM.Gizmo.Error.NoSpace>
   <AAM.Gizmo.Error.NoLasso>{Pawn} does not have a lasso or their lasso is on cooldown, so {Target} cannot be dragged in to perform an execution.</AAM.Gizmo.Error.NoLasso>
   <AAM.Gizmo.Error.CannotLasso>{Target} cannot be lassoed by {Pawn} at the moment ({Reason}).</AAM.Gizmo.Error.CannotLasso>
+  <AAM.Gizmo.Error.CantReach>{Pawn} has no path to the target.</AAM.Gizmo.Error.CantReach>
 
-  <AAM.Gizmo.Grapple.CannotLassoGeneric>{Pawn} cannot lasso {Target}: {Reason}</AAM.Gizmo.Grapple.CannotLassoGeneric>
+  <AAM.Gizmo.Grapple.CannotLassoGeneric>Cannot lasso {Target}: {Reason}</AAM.Gizmo.Grapple.CannotLassoGeneric>
   <AAM.Gizmo.Grapple.CannotLassoDefault>No valid position to drag {Target} to.</AAM.Gizmo.Grapple.CannotLassoDefault>
   <AAM.Gizmo.Grapple.OutOfRange>The target is out of the range of the lasso. Get closer, or hold the [Shift] key when targeting to make {Pawn} walk to execute the target.</AAM.Gizmo.Grapple.OutOfRange>
-  <AAM.Gizmo.Grapple.AltForFriendlies>The target pawn is friendly to your faction. Hold the [Alt] when targeting to confirm executing friendly pawn.</AAM.Gizmo.Grapple.AltForFriendlies>
+  <AAM.Gizmo.Grapple.CtrlForFriendlies>The target pawn is friendly to your faction. Hold the [Ctrl] key when targeting to confirm executing friendly pawn.</AAM.Gizmo.Grapple.CtrlForFriendlies>
 
   <AAM.Stats.BaseValue>Base Value: {0}</AAM.Stats.BaseValue>
   <AAM.Stats.MeleeSkillOffset>Melee Skill ({0}) Effect: {1}</AAM.Stats.MeleeSkillOffset>

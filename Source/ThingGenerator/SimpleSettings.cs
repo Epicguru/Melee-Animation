@@ -298,7 +298,7 @@ namespace AAM
                 inRect.y += titleHeight + 14;
                 Widgets.Label(inRect, description);
 
-                inRect.y += Text.CalcHeight(description, inRect.width) + 8;
+                inRect.y += Text.CalcHeight(description, inRect.width) + 32;
             }            
 
             if (highlightedMember.Options.AllowReset)
@@ -465,7 +465,9 @@ namespace AAM
 
             bool enabled = member.Get<bool>(settings);
             bool old = enabled;
-            Widgets.CheckboxLabeled(toggleRect, HighlightIfNotDefault(settings, member, $"<b>{member.DisplayName}</b>: "), ref enabled, placeCheckboxNearText: true);
+            string txt = HighlightIfNotDefault(settings, member, $"<b>{member.DisplayName}:</b> ");
+            toggleRect.width = Text.CalcSize(txt).x + 24f + 24f;
+            Widgets.CheckboxLabeled(toggleRect, txt, ref enabled, placeCheckboxNearText: false);
 
             if (old != enabled)
                 member.Set(settings, enabled);

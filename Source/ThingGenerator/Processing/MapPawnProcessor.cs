@@ -75,12 +75,12 @@ namespace AAM.Processing
         public uint TotalThreadedExceptionCount;
 
         private int lastIndex;
-        private readonly Stopwatch sw = new();
-        private readonly Stopwatch sw2 = new();
-        private readonly Stopwatch sw3 = new();
-        private readonly List<AnimationStartParameters> tempAnimationStarts = new(64);
-        private readonly List<PossibleGrapple> tempGrappleStarts = new(64);
-        private readonly List<Pawn> pawnList = new();
+        private readonly Stopwatch sw = new Stopwatch();
+        private readonly Stopwatch sw2 = new Stopwatch();
+        private readonly Stopwatch sw3 = new Stopwatch();
+        private readonly List<AnimationStartParameters> tempAnimationStarts = new List<AnimationStartParameters>(64);
+        private readonly List<PossibleGrapple> tempGrappleStarts = new List<PossibleGrapple>(64);
+        private readonly List<Pawn> pawnList = new List<Pawn>();
         private List<Pawn> pawnListWrite;
 
         private uint tick;
@@ -256,7 +256,11 @@ namespace AAM.Processing
                     if ((spaceMask & (flipX ? def.ClearMask : def.FlipClearMask)) != 0)
                         continue;
 
-                    tempAnimationStarts.Add(new AnimationStartParameters(def, pawn, victim) { FlipX = flipX });
+                    tempAnimationStarts.Add(new AnimationStartParameters(def, pawn, victim)
+                    {
+                        FlipX = flipX,
+                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(pawn, victim)
+                    });
                 }
             }
 
@@ -497,7 +501,6 @@ namespace AAM.Processing
             const float chancePerTick = chancePerSecond / 60f;
             float chance = chancePerTick * tickDelta;
 
-            Core.Log($"Final chance: {chance * 100f}% ({tickDelta})");
             if (!Rand.Chance(chance))
                 return false;
 
@@ -506,7 +509,11 @@ namespace AAM.Processing
             AnimationStartParameters? args = null;
             if (tryExecAtEnd)
             {
-                // TODO add the ability to immediately trigger execution animation.
+                // TODO figure out what animation to play, if any...
+                //args = new AnimationStartParameters()
+                //{
+
+                //};
             }
 
             bool worked = JobDriver_GrapplePawn.GiveJob(executioner, rand.Victim, rand.GrappleEndPos, animationStartParameters: args);

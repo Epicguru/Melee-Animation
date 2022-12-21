@@ -2,6 +2,7 @@
 using AAM.UI;
 using RimWorld;
 using System;
+using UnityEngine;
 using Verse;
 
 namespace AAM.Events.Workers
@@ -30,6 +31,18 @@ namespace AAM.Events.Workers
 
             if (pawn == null || pawn.Destroyed || pawn.Dead || killer == null)
                 return;
+
+            (string outcome, Color color) = animator.ExecutionOutcome switch
+            {
+                ExecutionOutcome.Damage => ("Injured", Color.yellow),
+                ExecutionOutcome.Down => ("Downed", Color.Lerp(Color.yellow, Color.red, 0.5f)),
+                ExecutionOutcome.Kill => ("Killed", Color.red),
+                _ => (null, default)
+            };
+            if (outcome != null)
+                MoteMaker.ThrowText(pawn.DrawPos + new Vector3(0, 0, 0.6f), pawn.Map, $"Execution Outcome: {outcome}", color);
+
+            Core.Log($"Execution outcome is {animator.ExecutionOutcome}");
 
             switch (animator.ExecutionOutcome)
             {

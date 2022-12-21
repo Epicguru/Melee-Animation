@@ -631,6 +631,12 @@ public class AnimRenderer : IExposable
         if (pawn == null)
             return null;
 
+        // TODO remove this nonsense and correctly link pawns with bodies when adding pawns.
+        while (bodies.Count < Pawns.Count)
+        {
+            bodies.Add(null);
+        }
+
         for (int i = 0; i < Pawns.Count; i++)
         {
             if (Pawns[i] == pawn)

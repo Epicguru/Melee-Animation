@@ -63,8 +63,10 @@ namespace AAM.Jobs
                 }
 
                 // Update pather destination if required.
-                if (forceNewPath || !toil.actor.pather.Moving && toil.actor.pather.Destination.Cell != destPos)
+                //bool targetTooFar = toil.actor.pather.Destination.Cell.DistanceToSquared(destPos) > 3;
+                if (forceNewPath || !toil.actor.pather.Moving && toil.actor.pather.Destination.Cell != destPos)// || targetTooFar)
                 {
+                    Core.Log($"Start new path to {destPos}");
                     toil.actor.pather.StartPath(destPos, PathEndMode.OnCell);
                 }
             }
@@ -146,7 +148,7 @@ namespace AAM.Jobs
                         // Can do the animation!
                         var args = new AnimationStartParameters(anim, toil.actor, Target)
                         {
-                            ExecutionOutcome = ExecutionOutcome.Kill, // TODO make this come from skill/melee weapon.
+                            ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(toil.actor, Target),
                             FlipX = flipX,
                         };
 

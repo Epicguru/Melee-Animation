@@ -96,6 +96,8 @@ public static class OutcomeUtility
         return Mathf.Clamp01((float)normal.CumulativeDistribution(diff));
     }
 
+    public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim) => GenerateRandomOutcome(attacker, victim, out _);
+
     public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim, out float pct)
     {
         Debug.Assert(attacker != null);
@@ -165,9 +167,17 @@ public static class OutcomeUtility
 
         float damageToDo = args.TargetDamageAmount;
         int missCount = 0;
+        int i = 0;
 
         while (damageToDo > 0 && partsToHit.Any())
         {
+            i++;
+            if (i > 500)
+            {
+                Core.Error("Stopped infinite loop. Investigate bug.");
+                break;
+            }
+
             BodyPartRecord partToHit = partsToHit.RandomElementByWeight(x => x.coverageAbs);
             float partHealth = pawn.health.hediffSet.GetPartHealth(partToHit);
 
@@ -188,6 +198,8 @@ public static class OutcomeUtility
                 // Reduce damage by 1 until it will no longer cause any serious damage.
                 if (WouldBeDownDeadOrAmputated(damageDef, pawn, partToHit, damage))
                     damage -= 1;
+                else
+                    break;
             }
 
             if (damage <= 0)
@@ -275,8 +287,6 @@ public static class OutcomeUtility
             {
                 result?.AssociateWithLog(log);
             }
-
-            return true;
         }
         else
         {

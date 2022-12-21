@@ -121,7 +121,10 @@ namespace AAM.Grappling
 
             // If the flyer is still active but does not have a pawn in it, it's not good. Always indicates an error.
             if (Flyer.Spawned && Flyer.FlyingPawn == null)
+            {
+                Core.Error("Lost flying grapple pawn!");
                 EndJobWith(JobCondition.Errored);
+            }
         }
 
         private void TickPreEnsnare()
@@ -162,6 +165,7 @@ namespace AAM.Grappling
                 // Where did our pawn go?
                 if (GrappledPawn == null)
                 {
+                    Core.Error("Lost flying grapple pawn!");
                     EndJobWith(JobCondition.Errored);
                     return;
                 }
