@@ -14,8 +14,6 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
     {
         canTargetAnimals = true,
         canTargetMechs = true,
-        canTargetBloodfeeders = true,
-        canTargetCorpses = false,
         canTargetItems = false,
         canTargetLocations = false,
         canTargetPawns = true,
@@ -24,6 +22,10 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         canTargetBuildings = false,
         canTargetSelf = false,
         canTargetFires = false,
+#if !V13
+        canTargetCorpses = false,
+        canTargetBloodfeeders = true,
+#endif
     };
 
     static void Postfix(Vector3 clickPos, Pawn pawn, List<FloatMenuOption> opts)

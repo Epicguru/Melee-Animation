@@ -424,7 +424,11 @@ namespace AAM
             float step = member.TryGetCustomAttribute<StepAttribute>()?.Step ?? -1;
 
             // Simple slider for now.
+#if V13
             float changed = Widgets.HorizontalSlider(sliderArea, value, min.Value, max.Value, roundTo: step);
+#else
+            float changed = Widgets.HorizontalSlider_NewTemp(sliderArea, value, min.Value, max.Value, roundTo: step);
+#endif
             if (changed != value)
             {
                 Type type = member.MemberType;

@@ -7,15 +7,11 @@ namespace AAM.Events.Workers
         public AnimData Data => Animator?.Data;
         public EventBase Event;
         public AnimRenderer Animator;
-        public bool IsSectionStart;
-        public AnimSection Section;
 
-        public AnimEventInput(EventBase e, AnimRenderer renderer, bool isSectionStart, AnimSection section)
+        public AnimEventInput(EventBase e, AnimRenderer renderer)
         {
             Event = e;
             Animator = renderer;
-            IsSectionStart = isSectionStart;
-            Section = section;
         }
 
         public AnimPartData GetPawnBody(int index) => Animator.GetPawnBody(GetPawnFromIndex(index));

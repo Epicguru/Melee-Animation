@@ -1,9 +1,11 @@
 ﻿using AAM.Data;
 using AAM.Grappling;
+using AAM.Reqs;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -184,7 +186,6 @@ public class AnimationGizmo : Gizmo
 
         string sThis = multi ? "these" : "this";
         string sPawns = multi ? $"{pawns.Count + 1} pawns" : "pawn";
-        string sIs = multi ? $"are" : "is";
         string sHas = multi ? "have" : "has";
         var pawnCount = new NamedArgument(pawns.Count + 1, "PawnCount");
 
@@ -739,6 +740,169 @@ public class AnimationGizmo : Gizmo
             Messages.Message(error, MessageTypeDefOf.RejectInput, false);
             return error;
         }
+    }
+
+    public static string OnSelectedDuelTarget(bool forceDontUseLasso, Pawn pawn, LocalTargetInfo info, bool performAction)
+    {
+        if (info.Thing is not Pawn target || target.Dead)
+            return "Target is dead or invalid"; // Should not happen due to targeting.
+
+        if (target == pawn)
+            return "Cannot duel self!"; // Should not happen due to targeting.
+
+        // Check for missing weapons.
+        var mainWeapon = pawn.GetFirstMeleeWeapon();
+        var targetWeapon = target.GetFirstMeleeWeapon();
+        if (mainWeapon == null || targetWeapon == null)
+        {
+            Pawn missing = mainWeapon == null ? pawn : target;
+            string reason = "AAM.Gizmo.Error.NoValidWeapon".Translate(new NamedArgument(missing.NameShortColored, "Pawn"));
+            string error  = "AAM.Gizmo.Duel.Fail".Translate(new NamedArgument(reason, "Reason"));
+
+            if (performAction)
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
+        }
+
+        ReqInput mainInput   = new ReqInput(mainWeapon.def);
+        ReqInput secondInput = new ReqInput(targetWeapon.def);
+
+        bool CanDuel(AnimDef def)
+        {
+            if (def.weaponFilterSecond == null)
+                return def.weaponFilter.Evaluate(mainInput) && def.weaponFilter.Evaluate(secondInput);
+
+            return (def.weaponFilter.Evaluate(mainInput) && def.weaponFilterSecond.Evaluate(secondInput)) ||
+                   (def.weaponFilter.Evaluate(secondInput) && def.weaponFilterSecond.Evaluate(mainInput));
+        }
+
+        // Get all possible duel animations.
+        var compatible = AnimDef.GetDefsOfType(AnimType.Duel).Where(CanDuel);
+        var selected = compatible.RandomElementByWeightWithFallback(d => d.Probability);
+        if (selected == null)
+        {
+            string reason = "AAM.Gizmo.NoDuelAnim".Translate(
+                new NamedArgument(pawn.NameShortColored, "Pawn"),
+                new NamedArgument(target.NameShortColored, "Target"));
+            string error = "AAM.Gizmo.Duel.Fail".Translate(new NamedArgument(reason, "Reason"));
+
+            if (performAction)
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            return error;
+        }
+
+        // Are the pawns standing next to each other?
+        int delta = pawn.Position.x - target.Position.x;
+        if (pawn.Position.z == target.Position.z && Mathf.Abs(delta) == 1)
+        {
+            // They are in the correct positions, start immediately!
+            // TODO start immediately.
+            return null;
+        }
+
+        IEnumerable<IntVec3> EnumerateGrappleSpots()
+        {
+            Map map = pawn.Map;
+            int w = map.info.Size.x;
+            int h = map.info.Size.z;
+
+            int dir = pawn.Position.x < target.Position.x ? 1 : -1;
+
+            if (SpaceChecker.IsValidPawnPosFast(map, w, h, pawn.Position + new IntVec3(dir, 0, 0)))
+                yield return pawn.Position + new IntVec3(dir, 0, 0);
+
+            if (SpaceChecker.IsValidPawnPosFast(map, w, h, pawn.Position - new IntVec3(dir, 0, 0)))
+                yield return pawn.Position - new IntVec3(dir, 0, 0);
+        }
+
+        // Check if the lasso can be used.
+        bool canGrapple = !forceDontUseLasso;
+        IntVec3 grappleTargetPos = default;
+        if (canGrapple)
+        {
+            bool foundGrappleSpot = false;
+            foreach (var spot in EnumerateGrappleSpots())
+            {
+                if (GrabUtility.CanStartGrapple(pawn, target, spot, out _, true))
+                {
+                    grappleTargetPos = spot;
+                    foundGrappleSpot = true;
+                    break;
+                }
+            }
+
+            if (!foundGrappleSpot)
+                canGrapple = false;
+        }
+
+        // Forced to walk to target.
+        if (!canGrapple)
+        {
+            // Quick pathfinding check.
+            bool canReach = pawn.CanReach(target, PathEndMode.Touch, Danger.Deadly);
+            if (!canReach)
+            {
+                string r = "AAM.Gizmo.Error.CantReach".Translate(new NamedArgument(pawn.NameShortColored, "Pawn"));
+                string e = "AAM.Gizmo.Duel.Fail".Translate(new NamedArgument(r, "Reason"));
+                if (performAction)
+                    Messages.Message(e, MessageTypeDefOf.RejectInput, false);
+                return e;
+            }
+
+            // If not performing, assume that they can complete the walk job just fine.
+            if (!performAction)
+                return null;
+
+            // Walk to and duel target.
+            // Make walk job and reset all verbs (stop firing, attacking).
+            var walkJob = JobMaker.MakeJob(AAM_DefOf.AAM_WalkToDuel, target);
+
+            if (pawn.verbTracker?.AllVerbs != null)
+                foreach (var verb in pawn.verbTracker.AllVerbs)
+                    verb.Reset();
+
+
+            if (pawn.equipment?.AllEquipmentVerbs != null)
+                foreach (var verb in pawn.equipment.AllEquipmentVerbs)
+                    verb.Reset();
+
+            // Start walking.
+            pawn.jobs.StartJob(walkJob, JobCondition.InterruptForced);
+
+            if (pawn.CurJobDef == AAM_DefOf.AAM_WalkToDuel)
+                return null;
+
+            Core.Error($"CRITICAL ERROR: Failed to force interrupt {pawn}'s job with duel goto job. Likely a mod conflict or invalid start parameters.");
+            string reason = "AAM.Gizmo.Error.NoLasso".Translate(
+                new NamedArgument(pawn.NameShortColored, "Pawn"),
+                new NamedArgument(target.NameShortColored, "Target"));
+            string error = "AAM.Gizmo.Duel.Fail".Translate(new NamedArgument(reason, "Reason"));
+            Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+
+            return error;
+        }
+
+        // Pull the target in.
+        // TODO important allow duel to be played on either pawn to increase animation variety!
+        bool flipX = grappleTargetPos.x < pawn.Position.x;
+        var startParams = new AnimationStartParameters
+        {
+            Animation = selected,
+            FlipX = flipX,
+            MainPawn = pawn,
+            SecondPawn = target,
+            ExtraPawns = null,
+            Map = pawn.Map,
+            RootTransform = pawn.MakeAnimationMatrix(),
+        };
+
+        // Give grapple job and pass in parameters which trigger the execution animation.
+        if (JobDriver_GrapplePawn.GiveJob(pawn, target, grappleTargetPos, false, startParams))
+            pawn.GetMeleeData().TimeSinceGrappled = 0;
+        else
+            Core.Error($"Failed to give grapple job to {pawn}.");
+
+        return null;
     }
 
     public override float GetWidth(float maxWidth)

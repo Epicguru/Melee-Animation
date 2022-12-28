@@ -72,6 +72,11 @@ public static class Extensions
         return null;
     }
 
+    /// <summary>
+    /// Attempts to get the equipped melee weapon of this pawn.
+    /// That includes sidearms if SimpleSidearms is installed.
+    /// This will only return the melee weapon if said melee weapon is compatible with the animation mod (i.e. it has valid tweak data).
+    /// </summary>
     public static ThingWithComps GetFirstMeleeWeapon(this Pawn pawn)
     {
         if (pawn?.equipment == null)

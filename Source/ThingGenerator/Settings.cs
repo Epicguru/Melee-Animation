@@ -25,6 +25,14 @@ namespace AAM
         [Description("A modifier on the speed of all animations.")]
         public float GlobalAnimationSpeed = 1f;
 
+        [Description("The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
+        [Min(1)]
+        public int MinDuelDuration = 4;
+
+        [Description("The maximum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
+        [Min(1)]
+        public int MaxDuelDuration = 8;
+
         [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
         public bool DrawNamesInAnimation = true;
 
@@ -82,12 +90,6 @@ namespace AAM
 
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
         public bool AnimalsCanBeExecuted = false;
-
-        [Label("Minimum Melee Skill")]
-        [Range(0, 20)]
-        [Description("The absolute minimum melee skill required to perform any execution.\n" +
-                     "Certain execution animations may require higher skill levels though.")]
-        public int MinMeleeSkillToExecute = 4;
 
         [Range(0, 10)]
         [Percentage]

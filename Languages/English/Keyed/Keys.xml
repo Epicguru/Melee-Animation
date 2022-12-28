@@ -21,6 +21,7 @@
   <AAM.Gizmo.Execute.Tooltip>Perform a stylish finishing blow on a target.\nLethality depends on pawn skill and weapon.\n\nIf this pawn has a lasso equipped, they will use it to pull the target into range.\n\nHint: Shift+Click this button to force this pawn to walk to the target instead of using the lasso.</AAM.Gizmo.Execute.Tooltip>
 
   <AAM.Gizmo.Execute.Fail>Cannot execute target: {Reason}</AAM.Gizmo.Execute.Fail>
+  <AAM.Gizmo.Duel.Fail>Cannot duel target: {Reason}</AAM.Gizmo.Duel.Fail>
   <AAM.Gizmo.Execute.OnCooldown>{Pawn}'s execution is on cooldown.</AAM.Gizmo.Execute.OnCooldown>
   <AAM.Gizmo.Execute.NotDeadOrDowned>{Target} is downed, so cannot be executed.</AAM.Gizmo.Execute.NotDeadOrDowned>
   <AAM.Gizmo.Error.NoAnimations>The {Weapon} cannot perform any animations, or {Pawn} does not have the skill to do any.</AAM.Gizmo.Error.NoAnimations>
@@ -28,6 +29,9 @@
   <AAM.Gizmo.Error.NoLasso>{Pawn} does not have a lasso or their lasso is on cooldown, so {Target} cannot be dragged in to perform an execution.</AAM.Gizmo.Error.NoLasso>
   <AAM.Gizmo.Error.CannotLasso>{Target} cannot be lassoed by {Pawn} at the moment ({Reason}).</AAM.Gizmo.Error.CannotLasso>
   <AAM.Gizmo.Error.CantReach>{Pawn} has no path to the target.</AAM.Gizmo.Error.CantReach>
+  <AAM.Gizmo.Error.NoValidWeapon>{Pawn} does not have a melee weapon that can be used in a duel.</AAM.Gizmo.Error.NoValidWeapon>
+  <AAM.Gizmo.Error.BadWeaponType>{Pawn}'s {Weapon} cannot be used to duel with.</AAM.Gizmo.Error.BadWeaponType>
+  <AAM.Gizmo.NoDuelAnim>{Pawn} and {Target} cannot duel because they do not have compatible weapons that can be used in a duel (missing animation!).</AAM.Gizmo.NoDuelAnim>
 
   <AAM.Gizmo.Grapple.CannotLassoGeneric>Cannot lasso {Target}: {Reason}</AAM.Gizmo.Grapple.CannotLassoGeneric>
   <AAM.Gizmo.Grapple.CannotLassoDefault>No valid position to drag {Target} to.</AAM.Gizmo.Grapple.CannotLassoDefault>

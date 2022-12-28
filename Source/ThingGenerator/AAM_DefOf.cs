@@ -14,6 +14,7 @@ namespace AAM
         public static JobDef AAM_InAnimation;
         public static JobDef AAM_GrapplePawn;
         public static JobDef AAM_WalkToExecution;
+        public static JobDef AAM_WalkToDuel;
         public static RulePackDef AAM_Execution_Generic;
         public static ThingDef AAM_GrappleFlyer;
         public static ThingDef AAM_KnockbackFlyer;
