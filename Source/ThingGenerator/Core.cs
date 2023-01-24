@@ -1,11 +1,13 @@
 ﻿using AAM.Patches;
 using AAM.Tweaks;
 using HarmonyLib;
+using ModRequestAPI;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
@@ -14,6 +16,8 @@ namespace AAM
     [HotSwapAll]
     public class Core : Mod
     {
+        private static readonly string GistID = "d1c22be7a26feb273008c4cea948be53";
+
         public static Func<Pawn, float> GetBodyDrawSizeFactor = _ => 1f;
         public static string ModTitle => "AAM.ModTitle".Trs();
         public static string ModFolder => ModContent.RootDir;
@@ -41,14 +45,35 @@ namespace AAM
                 Verse.Log.Error(e.ToString());
         }
 
+        [DebugAction("Advanced Animation Mod", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
+        private static void LogModRequests()
+        {
+            var task = Task.Run(() => new ModRequestClient(GistID).GetModRequests());
+            task.ContinueWith(t =>
+            {
+                if (!t.IsCompletedSuccessfully)
+                {
+                    Error("Failed to get mod requests:", t.Exception);
+                    return;
+                }
+
+                var list = from r in t.Result orderby r.data.RequestCount descending select r;
+                foreach (var pair in list)
+                {
+                    Log($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.");
+                }
+            });
+        }
+
         public Core(ModContentPack content) : base(content)
         {
             AddParsers();
 
-            Log("Hello, world!");
+            Log($"Hello, world!\n\nLoaded assemblies:\n{string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName)}");
+
             var h = new Harmony(content.PackageId);
             h.PatchAll();
-            ModContent = content;
+            ModContent = content; 
 
             // Initialize settings.
             Settings = GetSettings<Settings>();
@@ -61,7 +86,7 @@ namespace AAM
             });
 
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
-            AddLateLoadAction(false, "Loading weapon tweak data...", () => TweakDataManager.LoadAllForActiveMods());
+            AddLateLoadAction(false, "Loading weapon tweak data...", LoadAllTweakData);
             AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
             AddLateLoadAction(false, "Finding all lassos...", AAM.Content.FindAllLassos);
 
@@ -92,6 +117,57 @@ namespace AAM
             });
 
             AddLateLoadEvents();
+        }
+
+        private void LoadAllTweakData()
+        {
+            var modsAndMissingWeaponCount = new Dictionary<string, int>();
+
+            foreach (var pair in TweakDataManager.LoadAllForActiveMods())
+            {
+                if (!modsAndMissingWeaponCount.ContainsKey(pair.modPackageID))
+                    modsAndMissingWeaponCount.Add(pair.modPackageID, 0);
+
+                modsAndMissingWeaponCount[pair.modPackageID]++;
+            }
+
+            if (modsAndMissingWeaponCount.Count == 0)
+                return;
+
+            foreach (var pair in modsAndMissingWeaponCount)
+            {
+                Warn($"{pair.Key} has {pair.Value} missing weapon tweak data.");
+            }
+
+            Task.Run(() => UploadMissingModData(modsAndMissingWeaponCount)).ContinueWith(t =>
+            {
+                if (t.IsCompletedSuccessfully)
+                {
+                    Log("Successfully reported missing mod/weapons.");
+                    return;
+                }
+
+                Error("Reporting missing mod/weapons failed with exception:", t.Exception);
+            });
+        }
+
+        private async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
+        {
+            var client = new ModRequestClient(GistID);
+
+            bool UpdateAction(string modID, ModData data)
+            {
+                int missingWeaponCount = modAndWeaponCounts[modID];
+
+                data.RequestCount++;
+                if (data.MissingWeaponCount < missingWeaponCount)
+                    data.MissingWeaponCount = missingWeaponCount;
+
+                return true;
+            }
+
+            string desc = $"APIUpdate at {DateTime.UtcNow}. Game Version: {VersionControl.CurrentVersionStringWithRev}. Using steam: {SteamUtility.SteamPersonaName != null && SteamUtility.SteamPersonaName != "???"}";
+            await client.UpdateModRequests(modAndWeaponCounts.Keys, desc, UpdateAction);
         }
 
         private void AddLateLoadEvents()

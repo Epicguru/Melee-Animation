@@ -1,13 +1,10 @@
 ﻿using AAM.Patches;
-using MathNet.Numerics.Distributions;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using UnityEngine;
 using Verse;
-using Verse.Noise;
 
 namespace AAM;
 
@@ -93,7 +90,7 @@ public static class OutcomeUtility
         float bL = b.GetStatValue(AAM_DefOf.AAM_DuelAbility);
         float diff = aL - bL;
 
-        return Mathf.Clamp01((float)normal.CumulativeDistribution(diff));
+        return Mathf.Clamp01((float)normal.LeftProbability(diff));;
     }
 
     public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim) => GenerateRandomOutcome(attacker, victim, out _);

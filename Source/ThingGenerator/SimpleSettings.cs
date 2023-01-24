@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEngine;
 using Verse;
@@ -455,6 +454,9 @@ namespace AAM
             float minF = min ?? float.MinValue;
             float maxF = max ?? float.MaxValue;
             float newValue = value;
+            if (member.TextBuffer.Length == 0)
+                member.TextBuffer = member.DefaultValue.ToString();
+            //Core.Log($"Drawing {member.Name}, {newValue}, {member.TextBuffer}, {minF}, {maxF}");
             Widgets.TextFieldNumeric(field, ref newValue, ref member.TextBuffer, minF, maxF);
             if (newValue != value)
                 member.Set(settings, newValue);

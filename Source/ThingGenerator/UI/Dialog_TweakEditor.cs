@@ -95,7 +95,7 @@ namespace AAM.UI
         {            
             foreach(var def in Mod.AllDefs)
             {
-                if (def is ThingDef td && td.IsMeleeWeapon)
+                if (def is ThingDef { IsMeleeWeapon: true } td)
                     yield return td;
             }            
         }

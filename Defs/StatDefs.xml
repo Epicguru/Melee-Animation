@@ -20,7 +20,7 @@
     <category>PawnCombat</category>
     <defaultBaseValue>0.5</defaultBaseValue>
     <minValue>0</minValue>
-    <minValue>1</minValue>
+    <maxValue>1</maxValue>
     <toStringStyle>PercentZero</toStringStyle>
     <forInformationOnly>true</forInformationOnly>
     <displayPriorityInCategory>5100</displayPriorityInCategory>

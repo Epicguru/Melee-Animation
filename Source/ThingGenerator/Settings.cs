@@ -1,4 +1,4 @@
-﻿using MathNet.Numerics.Distributions;
+﻿using Meta.Numerics.Statistics.Distributions;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -165,12 +165,12 @@ namespace AAM
 
         #endregion
 
-        private Normal normal;
+        private NormalDistribution normal;
 
-        public Normal GetNormalDistribution()
+        public NormalDistribution GetNormalDistribution()
         {
-            if (normal == null || Math.Abs(normal.StdDev - NormalDist) > 0.001f)
-                normal = new Normal(0.0, NormalDist);
+            if (normal == null || Math.Abs(normal.StandardDeviation - NormalDist) > 0.001f)
+                normal = new NormalDistribution(0.0, NormalDist);
 
             return normal;
         }
@@ -223,7 +223,11 @@ namespace AAM
                 {
                     checkbox.x += 110;
                     checkbox.width = 200;
+#if V13
                     def.SData.Probability = Widgets.HorizontalSlider(checkbox, def.SData.Probability, 0f, 10f, label: $"Relative Probability: {def.SData.Probability * 100f:F0}%");
+#else
+                    def.SData.Probability = Widgets.HorizontalSlider_NewTemp(checkbox, def.SData.Probability, 0f, 10f, label: $"Relative Probability: {def.SData.Probability * 100f:F0}%", roundTo: 0.05f);
+#endif
                 }
 
                 return rect.height;

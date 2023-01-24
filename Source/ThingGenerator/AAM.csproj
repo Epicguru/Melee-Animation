@@ -9,7 +9,7 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <Configurations>v1.3;v1.4</Configurations>
-    <AssemblyName>AdvancedAnimationMod</AssemblyName>
+    <AssemblyName>zAdvancedAnimationMod</AssemblyName>
     <RootNamespace>AAM</RootNamespace>
     <Nullable>disable</Nullable>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -25,7 +25,8 @@
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+	<PackageReference Include="Portable.Meta.Numerics" Version="3.1.0.73149" />
+	<ProjectReference Include="..\ModRequestAPI\ModRequestAPI.csproj" />
     <Publicize Include="Assembly-CSharp" />
   </ItemGroup>
 
