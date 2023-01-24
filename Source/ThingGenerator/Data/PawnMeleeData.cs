@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
 
@@ -23,9 +24,9 @@ namespace AAM.Data
 
         public Pawn Pawn;
         public AutoOption AutoExecute;
-        public float TimeSinceExecuted;
+        public float TimeSinceExecuted = 100;
         public AutoOption AutoGrapple;
-        public float TimeSinceGrappled;
+        public float TimeSinceGrappled = 100;
 
         public int lastTickPresentedOptions = -1; // Not saved.
 
@@ -39,14 +40,16 @@ namespace AAM.Data
             Scribe_References.Look(ref Pawn, "pawn");
             Scribe_Values.Look(ref AutoExecute, "autoExecute");
             Scribe_Values.Look(ref AutoGrapple, "autoGrapple");
-            Scribe_Values.Look(ref TimeSinceExecuted, "timeSinceExecuted");
-            Scribe_Values.Look(ref TimeSinceGrappled, "timeSinceGrappled");
+            Scribe_Values.Look(ref TimeSinceExecuted, "timeSinceExecuted", 100);
+            Scribe_Values.Look(ref TimeSinceGrappled, "timeSinceGrappled", 100);
         }
 
-        public float GetExecuteCooldownPct(float cooldownTime) => cooldownTime <= 0 ? 1 : Mathf.Clamp01(TimeSinceExecuted / cooldownTime);
-        public bool IsExecutionOffCooldown(float cooldownTime) => cooldownTime <= TimeSinceExecuted;
+        public float GetExecuteCooldownMax() => Pawn.GetStatValue(AAM_DefOf.AAM_ExecutionCooldown);
+        public float GetExecuteCooldownPct() => GetExecuteCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceExecuted / GetExecuteCooldownMax());
+        public bool IsExecutionOffCooldown() => GetExecuteCooldownMax() <= TimeSinceExecuted;
 
-        public float GetGrappleCooldownPct(float cooldownTime) => cooldownTime <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / cooldownTime);
-        public bool IsGrappleOffCooldown(float cooldownTime) => cooldownTime <= TimeSinceGrappled;
+        public float GetGrappleCooldownMax() => Pawn.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
+        public float GetGrappleCooldownPct() => GetGrappleCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / GetGrappleCooldownMax());
+        public bool IsGrappleOffCooldown() => GetGrappleCooldownMax() <= TimeSinceGrappled;
     }
 }

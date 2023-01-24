@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEngine;
 using Verse;
@@ -298,7 +297,7 @@ namespace AAM
                 inRect.y += titleHeight + 14;
                 Widgets.Label(inRect, description);
 
-                inRect.y += Text.CalcHeight(description, inRect.width) + 8;
+                inRect.y += Text.CalcHeight(description, inRect.width) + 32;
             }            
 
             if (highlightedMember.Options.AllowReset)
@@ -424,7 +423,11 @@ namespace AAM
             float step = member.TryGetCustomAttribute<StepAttribute>()?.Step ?? -1;
 
             // Simple slider for now.
+#if V13
             float changed = Widgets.HorizontalSlider(sliderArea, value, min.Value, max.Value, roundTo: step);
+#else
+            float changed = Widgets.HorizontalSlider_NewTemp(sliderArea, value, min.Value, max.Value, roundTo: step);
+#endif
             if (changed != value)
             {
                 Type type = member.MemberType;
@@ -451,6 +454,9 @@ namespace AAM
             float minF = min ?? float.MinValue;
             float maxF = max ?? float.MaxValue;
             float newValue = value;
+            if (member.TextBuffer.Length == 0)
+                member.TextBuffer = member.DefaultValue.ToString();
+            //Core.Log($"Drawing {member.Name}, {newValue}, {member.TextBuffer}, {minF}, {maxF}");
             Widgets.TextFieldNumeric(field, ref newValue, ref member.TextBuffer, minF, maxF);
             if (newValue != value)
                 member.Set(settings, newValue);
@@ -465,7 +471,9 @@ namespace AAM
 
             bool enabled = member.Get<bool>(settings);
             bool old = enabled;
-            Widgets.CheckboxLabeled(toggleRect, HighlightIfNotDefault(settings, member, $"<b>{member.DisplayName}</b>: "), ref enabled, placeCheckboxNearText: true);
+            string txt = HighlightIfNotDefault(settings, member, $"<b>{member.DisplayName}:</b> ");
+            toggleRect.width = Text.CalcSize(txt).x + 24f + 24f;
+            Widgets.CheckboxLabeled(toggleRect, txt, ref enabled, placeCheckboxNearText: false);
 
             if (old != enabled)
                 member.Set(settings, enabled);

@@ -1,11 +1,13 @@
-﻿using AAM.Reqs;
+﻿using AAM.RendererWorkers;
+using AAM.Reqs;
 using AAM.Sweep;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using AAM.RendererWorkers;
+using UnityEngine;
 using Verse;
 
 namespace AAM
@@ -38,12 +40,14 @@ namespace AAM
         public static IEnumerable<AnimDef> GetDefsOfType(AnimType type)
         {
             if (defsOfType.TryGetValue(type, out var list))
-                foreach (var item in list)
-                    yield return item;            
+                return list;
+            return Array.Empty<AnimDef>();
         }
 
-        public static IEnumerable<AnimDef> GetExecutionAnimationsForWeapon(ThingDef def)
-            => GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(new ReqInput(def)));
+        public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef)
+        => GetDefsOfType(AnimType.Execution)
+            .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
+            .Where(d => (d.MinMeleeSkill ?? 0) <= pawn.skills.GetSkill(SkillDefOf.Melee).Level);
 
         [DebugAction("Advanced Animation Mod", "Reload all animations", actionType = DebugActionType.Action)]
         public static void ReloadAllAnimations()
@@ -120,11 +124,22 @@ namespace AAM
         public string jobString;
         public Type rendererWorker;
         public int pawnCount;
+        /// <summary>
+        /// The main and normally only weapon filter.
+        /// </summary>
         public Req weaponFilter;
+        /// <summary>
+        /// The optional secondary weapon filter.
+        /// Currently only used in some duel animations.
+        /// Allows filtering out the 'second' pawn based on weapon.
+        /// For example, if a duel animation only works for knife vs spear, you would have to use both filters.
+        /// </summary>
+        public Req weaponFilterSecond;
         public List<AnimCellData> cellData = new();
         public ISweepProvider sweepProvider;
         public bool drawDisabledPawns;
         public bool shadowDrawFromData;
+        public int? MinMeleeSkill = null;
 
         private Dictionary<string, string> additionalData = new Dictionary<string, string>();
         private float relativeProbability = 1;

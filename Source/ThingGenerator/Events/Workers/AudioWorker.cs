@@ -12,7 +12,7 @@ namespace AAM.Events.Workers
         {
             var e = i.Event as AudioEvent;
 
-            var def = i.GetDef<SoundDef>(e.AudioDefName);
+            var def = e.AudioDefName.AsDefOfType<SoundDef>();
 
             if (def == null)
             {

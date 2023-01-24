@@ -19,6 +19,13 @@ namespace AAM.Tweaks
             foreach (char c in Path.GetInvalidFileNameChars())
                 s = s.Replace(c, '_');
 
+            s = s.Replace("_copy", "");
+            s = s.Replace("_Copy", "");
+            s = s.Replace("_localcopy", "");
+            s = s.Replace("_LocalCopy", "");
+            s = s.Replace("_local", "");
+            s = s.Replace("_Local", "");
+
             return s;
         }
 
@@ -195,6 +202,7 @@ namespace AAM.Tweaks
             ov.FlipX = FlipX;
             ov.FlipY = FlipY;
             ov.UseDefaultTransparentMaterial = UseDefaultTransparentMaterial;
+            ov.TweakData = this;
 
             if (!string.IsNullOrWhiteSpace(CustomRendererClass))
             {

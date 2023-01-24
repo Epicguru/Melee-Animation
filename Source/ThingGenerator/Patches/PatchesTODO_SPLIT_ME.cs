@@ -129,7 +129,7 @@ namespace AAM.Patches
     /// Disables the default GUI (label) rendering of animated pawns.
     /// Instead, the label is drawn externally. See <see cref="AnimRenderer.DrawSingle(AnimRenderer, float, System.Action{Pawn, UnityEngine.Vector2})"/>
     /// </summary>
-    [HarmonyPatch(typeof(Pawn), "DrawGUIOverlay")]
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.DrawGUIOverlay))]
     static class PreventGUIPatch
     {
         [HarmonyPriority(Priority.First)]

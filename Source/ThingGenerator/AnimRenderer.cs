@@ -4,11 +4,10 @@ using AAM.Patches;
 using AAM.RendererWorkers;
 using AAM.Sweep;
 using AAM.Tweaks;
-using HarmonyLib;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -33,7 +32,6 @@ public class AnimRenderer : IExposable
     public static int TotalCapturedPawnCount => pawnToRenderer.Count;
     public static List<AnimRenderer> PostLoadPendingAnimators = new();
 
-    private static readonly MethodInfo drawShadowMethod = AccessTools.Method(typeof(PawnRenderer), "DrawInvisibleShadow");
     private static readonly MaterialPropertyBlock shadowMpb = new MaterialPropertyBlock();
     private static List<AnimRenderer> activeRenderers = new();
     private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new();
@@ -113,7 +111,6 @@ public class AnimRenderer : IExposable
             {
                 DestroyIntWorker(renderer);
                 i--;
-                continue;
             }
         }
         isItterating = false;
@@ -196,8 +193,15 @@ public class AnimRenderer : IExposable
     private static void DrawSingle(AnimRenderer renderer, float dt, Action<Pawn, Vector2> labelDraw = null)
     {
         // Draw and handle events.
-        // TODO handle exceptions.
-        var timePeriod = renderer.Draw(null, dt, labelDraw);
+        Vector2 timePeriod = default;
+        try
+        {
+            timePeriod = renderer.Draw(null, dt, labelDraw);
+        }
+        catch (Exception e)
+        {
+            Core.Error($"Rendering exception when doing animation {renderer}", e);
+        }
 
         EventsTimer.Start();
         foreach (var e in renderer.GetEventsInPeriod(timePeriod))
@@ -324,7 +328,7 @@ public class AnimRenderer : IExposable
     /// <summary>
     /// If true, the animation loops rather than ending.
     /// </summary>
-    public bool Loop = false;
+    public bool Loop;
     /// <summary>
     /// If true, the animation is mirrored on this axis.
     /// </summary>
@@ -366,17 +370,27 @@ public class AnimRenderer : IExposable
     /// The custom renderer worker, optional.
     /// </summary>
     public AnimationRendererWorker AnimationRendererWorker;
+    /// <summary>
+    /// Save data such as data used to track duel status.
+    /// </summary>
+    public SaveData SD = new SaveData();
+    /// <summary>
+    /// An action that is invoked when <see cref="OnEnd"/> is called.
+    /// This action is not serialized.
+    /// </summary>
+    public Action<AnimRenderer> OnEndAction;
 
+    private List<AnimPartData> bodies = new List<AnimPartData>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
-    private AnimPartData[] bodies = new AnimPartData[8]; // TODO REPLACE WITH LIST OR DICT.
     private PartWithSweep[] sweeps;
     private MaterialPropertyBlock pb;
     private float time = -1;
     private Pawn[] pawnsForPostLoad;
     private bool hasStarted;
 
+    [UsedImplicitly]
     public AnimRenderer()
     {
         
@@ -442,6 +456,8 @@ public class AnimRenderer : IExposable
         Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
         Scribe_Collections.Look(ref pawnsValidEvenIfDespawned, "pawnsValidEvenIfDespawned", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
+        Scribe_Values.Look(ref SD, "saveData");
+        SD ??= new SaveData();
 
         if (Scribe.mode == LoadSaveMode.PostLoadInit)
         {
@@ -544,7 +560,7 @@ public class AnimRenderer : IExposable
     /// <summary>
     /// Causes this animation renderer to be registered with the system, and finish setting up.
     /// Note: this is not the preferred way of starting an animation.
-    /// Instead, consider using <see cref="AnimationManager.StartAnimation(AnimDef, Matrix4x4, Pawn[])"/>.
+    /// Instead, consider using <see cref="AnimationManager.StartAnimation"/>.
     /// </summary>
     public bool Register()
     {
@@ -590,10 +606,7 @@ public class AnimRenderer : IExposable
         RegisterInt(this);
 
         if (!hasStarted)
-        {
-            hasStarted = true;
             OnStart();
-        }
 
         // This tempTime nonsense is necessary because time is written to directly by the ExposeData,
         // and Seek will not run if time is already the target (seek) time.
@@ -628,6 +641,12 @@ public class AnimRenderer : IExposable
     {
         if (pawn == null)
             return null;
+
+        // TODO remove this nonsense and correctly link pawns with bodies when adding pawns.
+        while (bodies.Count < Pawns.Count)
+        {
+            bodies.Add(null);
+        }
 
         for (int i = 0; i < Pawns.Count; i++)
         {
@@ -685,7 +704,7 @@ public class AnimRenderer : IExposable
 
     /// <summary>
     /// Gets the first captured pawn that is in an invalid state.
-    /// See <see cref="IsPawnValid(Pawn)"/> and <see cref="Pawns"/>.
+    /// See <see cref="IsPawnValid"/> and <see cref="Pawns"/>.
     /// </summary>
     /// <returns>The first invalid pawn or null if all pawns are valid, or there are no pawns in this animation.</returns>
     public Pawn GetFirstInvalidPawn(bool ignoreNotSpawned = false)
@@ -767,7 +786,7 @@ public class AnimRenderer : IExposable
                 ov.CustomRenderer.Part = snap.Part;
                 ov.CustomRenderer.Snapshot = snap;
                 ov.CustomRenderer.Renderer = this;
-                ov.CustomRenderer.TweakData = null; // TODO assign tweak data.
+                ov.CustomRenderer.TweakData = ov.TweakData;
                 ov.CustomRenderer.Mesh = mesh;
                 ov.CustomRenderer.Material = mat;
 
@@ -876,6 +895,14 @@ public class AnimRenderer : IExposable
 #endif
                     PreventDrawPatch.DoNotModify = false;
                     MakePawnConsideredInvisible.IsRendering = false;
+
+                    // Draw label.
+                    Vector3 drawPos2 = pawn.DrawPos;
+                    drawPos2.z -= 0.6f;
+                    Vector2 vector2 = Find.Camera.WorldToScreenPoint(drawPos2) / Prefs.UIScale;
+                    vector2.y = UI.screenHeight - vector2.y;
+                    labelDraw?.Invoke(pawn, vector2);
+
                 }
                 continue;
             }
@@ -887,11 +914,15 @@ public class AnimRenderer : IExposable
             // Worker pre-draw
             AnimationRendererWorker?.PreRenderPawn(pawnSS, ref pos, ref dir, pawn);
 
+            bool suppressShadow = Def.shadowDrawFromData && pawnSS.DataC > 0.2f;
+
             // Render pawn in custom position using patches.
             PreventDrawPatchUpper.AllowNext = true;
             PreventDrawPatch.AllowNext = true;
             MakePawnConsideredInvisible.IsRendering = true;
+            Patch_PawnRenderer_DrawInvisibleShadow.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
             pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
+            Patch_PawnRenderer_DrawInvisibleShadow.Suppress = false;
             MakePawnConsideredInvisible.IsRendering = false;
 
             // Render shadow.
@@ -900,20 +931,20 @@ public class AnimRenderer : IExposable
                 // DataC now drives the shadow rendering.
                 // Value of 0 means regular shadow rendering,
                 // value of 1 means shadow is a ground-based entity shadow (a-la-minecraft).
-                float v = pawnSS.DataC;
-                if (v < 0.2f)
-                    drawShadowMethod.Invoke(pawn.Drawer.renderer, new object[] { pos });
-
                 Vector3 groundPos = pos with { z = RootPosition.z };
                 Vector3 scale = new Vector3(1, 1, 0.5f);
-                Color color = new Color(0, 0, 0, 0.5f);
+                Color color = new Color(0, 0, 0, pawnSS.DataC * 0.6f);
 
-                DrawSimpleShadow(groundPos, scale, color);
+                if (pawnSS.DataC > 0f)
+                    DrawSimpleShadow(groundPos, scale, color);
             }
             else
             {
                 // Regular shadow draw, just like base game.
-                drawShadowMethod.Invoke(pawn.Drawer.renderer, new object[] { pos });
+                // Only required in Rimworld 1.3, in 1.4 it is baked into the RenderPawnAt method.
+#if V13
+                pawn.Drawer.renderer.DrawInvisibleShadow(pos);
+#endif
             }
 
             // Figure out where to draw the pawn label.
@@ -929,6 +960,7 @@ public class AnimRenderer : IExposable
     {
         var trs = Matrix4x4.TRS(pos, Quaternion.identity, size);
         shadowMpb.SetColor("_Color", color);
+        shadowMpb.SetTexture("_MainTex", Content.Shadow);
         Graphics.DrawMesh(MeshPool.plane10, trs, DefaultTransparent, 0, Camera, 0, shadowMpb);
     }
 
@@ -992,6 +1024,8 @@ public class AnimRenderer : IExposable
 
     public void OnStart()
     {
+        hasStarted = true;
+
         // Give pawns their jobs.
         foreach (var pawn in Pawns)
         {
@@ -1006,7 +1040,7 @@ public class AnimRenderer : IExposable
                 foreach (var verb in pawn.equipment.AllEquipmentVerbs)
                     verb.Reset();
 
-            pawn.jobs.StartJob(newJob, JobCondition.InterruptForced, null, false, true, null);
+            pawn.jobs.StartJob(newJob, JobCondition.InterruptForced);
 
             if (pawn.CurJobDef != AAM_DefOf.AAM_InAnimation)
             {
@@ -1017,7 +1051,7 @@ public class AnimRenderer : IExposable
         // Teleport pawns to their starting positions. They should already be there, but check just in case.
         IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
         basePos.y = 0;
-
+          
         for (int i = 0; i < Pawns.Count; i++)
         {
             var pawn = Pawns[i];
@@ -1048,30 +1082,41 @@ public class AnimRenderer : IExposable
 
     public void OnEnd()
     {
-        // Do not teleport to end if animation was interrupted.
-        if (WasInterrupted)
-            return;
-
-        IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
-        basePos.y = 0;
-
-        for (int i = 0; i < Pawns.Count; i++)
+        try
         {
-            var pawn = Pawns[i];
-            if (pawn == null)
-                continue;
+            // Do not teleport to end if animation was interrupted.
+            if (WasInterrupted)
+                return;
 
-            var posData = Def.TryGetCell(AnimCellData.Type.PawnEnd, MirrorHorizontal, MirrorVertical, i);
-            if (posData == null)
-                continue;
+            IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
+            basePos.y = 0;
 
-            TeleportPawn(pawn, basePos + posData.Value.ToIntVec3);
-            pawn.jobs?.EndCurrentJob(JobCondition.InterruptForced);
+            for (int i = 0; i < Pawns.Count; i++)
+            {
+                var pawn = Pawns[i];
+                if (pawn == null)
+                    continue;
+
+                var posData = Def.TryGetCell(AnimCellData.Type.PawnEnd, MirrorHorizontal, MirrorVertical, i);
+                if (posData == null)
+                    continue;
+
+                TeleportPawn(pawn, basePos + posData.Value.ToIntVec3);
+                pawn.jobs?.EndCurrentJob(JobCondition.InterruptForced);
+            }
         }
-
-        foreach (var sweep in sweeps)
+        catch (Exception e)
         {
-            sweep.Mesh.Dispose();
+            Core.Error("Exception in AnimRenderer.OnEnd", e);
+        }
+        finally
+        {
+            foreach (var sweep in sweeps)
+            {
+                sweep?.Mesh?.Dispose();
+            }
+
+            OnEndAction?.Invoke(this);
         }
     }
 
@@ -1197,152 +1242,20 @@ public class AnimRenderer : IExposable
         return true;
     }
 
-    public class PartWithSweep
+    public override string ToString() => Def.LabelCap;
+
+    public class SaveData : IExposable
     {
-        public readonly AnimPartData Part;
-        public readonly SweepPointCollection PointCollection;
-        public readonly SweepMesh<Data> Mesh;
-        public readonly AnimRenderer Renderer;
-        public float DownDst, UpDst;
-        public bool MirrorHorizontal;
-        public ISweepProvider ColorProvider;
+        public HashSet<int> DuelSegmentsDone = new HashSet<int>();
+        public int DuelSegmentsDoneCount;
+        public int TargetDuelSegmentCount;
 
-        private readonly SweepPoint[] points;
-        private float lastTime = -1;
-        private int lastIndex = -1;
-
-        public struct Data
+        public void ExposeData()
         {
-            public float Time;
-            public float DownVel;
-            public float UpVel;
-        }
-
-        public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection pointCollection, SweepMesh<Data> mesh, ISweepProvider colorProvider)
-        {
-            Renderer = renderer;
-            Part = part;
-            PointCollection = pointCollection;
-            Mesh = mesh;
-            points = pointCollection.CloneWithVelocities(DownDst, UpDst);
-            ColorProvider = colorProvider;
-        }
-
-        public void Draw(float time) 
-        {
-            DrawInt(time);
-
-            Graphics.DrawMesh(Mesh.Mesh, Renderer.RootTransform, DefaultTransparent, 0);
-        }
-
-        private bool DrawInt(float time)
-        {
-            if (Math.Abs(time - lastTime) < 0.0001f)
-                return false;
-
-            if (time < lastTime)
-            {
-                Rebuild(time);
-                return true;
-            }
-
-            for (int i = lastIndex + 1; i < points.Length; i++)
-            {
-                var point = points[i];
-                if (point.Time > time)
-                    break;
-
-                point.GetEndPoints(DownDst, UpDst, out var down, out var up);
-
-                if (MirrorHorizontal)
-                {
-                    down.x *= -1;
-                    up.x *= -1;
-                }
-
-                Mesh.AddLine(down, up, new Data()
-                {
-                    Time = point.Time,
-                    UpVel = point.VelocityTop,
-                    DownVel = point.VelocityBottom
-                });
-                lastIndex = i;
-            }
-
-            lastTime = time;
-            AddInterpolatedPos(lastIndex, time);
-
-            Mesh.UpdateColors(MakeColors);
-            Mesh.Rebuild();
-            return true;
-        }
-
-        private (Color low, Color high) MakeColors(in Data data)
-        {
-            return ColorProvider.GetTrailColors(new SweepProviderArgs()
-            {
-                DownVel = data.DownVel,
-                UpVel = data.UpVel,
-                LastTime = lastTime,
-                Time = data.Time,
-                Part = Part,
-                Renderer = Renderer
-            });
-        }
-
-        private void Rebuild(float upTo)
-        {
-            Mesh.Clear();
-            for(int i = 0; i < points.Length; i++)
-            {
-                var point = points[i];
-                if (point.Time > upTo)
-                    break;
-
-                point.GetEndPoints(DownDst, UpDst, out var down, out var up);
-                Mesh.AddLine(down, up, new Data()
-                {
-                    Time = point.Time,
-                    UpVel = point.VelocityTop,
-                    DownVel = point.VelocityBottom
-                }); lastIndex = i;
-            }
-            AddInterpolatedPos(lastIndex, upTo);
-
-            Mesh.UpdateColors(MakeColors);
-            Mesh.Rebuild();
-            lastTime = upTo;
-        }
-
-        private void AddInterpolatedPos(int lastIndex, float currentTime)
-        {
-            if (lastIndex < 0)
-                return;
-            if (lastIndex >= PointCollection.Count - 1)
-                return; // Can't interpolate if we don't have the end.
-
-            var lastPoint = points[lastIndex];
-            if (Mathf.Abs(lastPoint.Time - currentTime) < 0.001f)
-                return;
-
-            var nextPoint = points[lastIndex + 1];
-
-            float t = Mathf.InverseLerp(lastPoint.Time, nextPoint.Time, currentTime);
-            var newPoint = SweepPoint.Lerp(lastPoint, nextPoint, t);
-            newPoint.GetEndPoints(DownDst, UpDst, out var down, out var up);
-
-            if (MirrorHorizontal)
-            {
-                down.x *= -1;
-                up.x *= -1;
-            }
-
-            Mesh.AddLine(down, up, new Data()
-            {
-                Time = currentTime,
-                UpVel = newPoint.VelocityTop,
-                DownVel = newPoint.VelocityBottom
-            });
+            Scribe_Values.Look(ref DuelSegmentsDoneCount, "duelSegmentsDoneCount");
+            Scribe_Values.Look(ref TargetDuelSegmentCount, "targetDuelSegmentCount");
+            Scribe_Collections.Look(ref DuelSegmentsDone, "duelSegmentsDone", LookMode.Value);
+            DuelSegmentsDone ??= new HashSet<int>();
         }
     }
 }

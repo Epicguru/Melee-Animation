@@ -13,7 +13,7 @@ namespace AAM.Events
                 return;
             }
 
-            worker.Run(new AnimEventInput(e, animator, false, null));
+            worker.Run(new AnimEventInput(e, animator));
         }
     }
 }

@@ -75,12 +75,12 @@ namespace AAM.Processing
         public uint TotalThreadedExceptionCount;
 
         private int lastIndex;
-        private readonly Stopwatch sw = new();
-        private readonly Stopwatch sw2 = new();
-        private readonly Stopwatch sw3 = new();
-        private readonly List<AnimationStartParameters> tempAnimationStarts = new(64);
-        private readonly List<PossibleGrapple> tempGrappleStarts = new(64);
-        private readonly List<Pawn> pawnList = new();
+        private readonly Stopwatch sw = new Stopwatch();
+        private readonly Stopwatch sw2 = new Stopwatch();
+        private readonly Stopwatch sw3 = new Stopwatch();
+        private readonly List<AnimationStartParameters> tempAnimationStarts = new List<AnimationStartParameters>(64);
+        private readonly List<PossibleGrapple> tempGrappleStarts = new List<PossibleGrapple>(64);
+        private readonly List<Pawn> pawnList = new List<Pawn>();
         private List<Pawn> pawnListWrite;
 
         private uint tick;
@@ -205,9 +205,9 @@ namespace AAM.Processing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool IsPlayerControlled(Pawn pawn) => pawn.IsColonistPlayerControlled;
 
-        // TODO add better checks - including mod settings.
-        private bool ShouldAutoGrapple(Pawn pawn, PawnMeleeData data) => (!IsPlayerControlled(pawn) || data.ResolvedAutoGrapple) && data.IsGrappleOffCooldown(5f);
-        private bool ShouldAutoExecute(Pawn pawn, PawnMeleeData data) => (!IsPlayerControlled(pawn) || data.ResolvedAutoExecute) && data.IsExecutionOffCooldown(5f);
+        // TODO grapple and execute cooldown stat worker to use mod settings.
+        private bool ShouldAutoGrapple(Pawn pawn, PawnMeleeData data) => (!IsPlayerControlled(pawn) || data.ResolvedAutoGrapple) && data.IsGrappleOffCooldown();
+        private bool ShouldAutoExecute(Pawn pawn, PawnMeleeData data) => (!IsPlayerControlled(pawn) || data.ResolvedAutoExecute) && data.IsExecutionOffCooldown();
 
         public void Process(Pawn pawn)
         {
@@ -231,7 +231,7 @@ namespace AAM.Processing
             tempAnimationStarts.Clear();
             tempGrappleStarts.Clear();
 
-            var allowedExecutions = AnimDef.GetExecutionAnimationsForWeapon(meleeWeapon.def); // TODO cache.
+            var allowedExecutions = AnimDef.GetExecutionAnimationsForPawnAndWeapon(pawn, meleeWeapon.def); // TODO cache.
 
             ulong spaceMask = 0;
             uint smallSpaceMask = 0;
@@ -256,7 +256,11 @@ namespace AAM.Processing
                     if ((spaceMask & (flipX ? def.ClearMask : def.FlipClearMask)) != 0)
                         continue;
 
-                    tempAnimationStarts.Add(new AnimationStartParameters(def, pawn, victim) { FlipX = flipX });
+                    tempAnimationStarts.Add(new AnimationStartParameters(def, pawn, victim)
+                    {
+                        FlipX = flipX,
+                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(pawn, victim)
+                    });
                 }
             }
 
@@ -497,7 +501,6 @@ namespace AAM.Processing
             const float chancePerTick = chancePerSecond / 60f;
             float chance = chancePerTick * tickDelta;
 
-            Core.Log($"Final chance: {chance * 100f}% ({tickDelta})");
             if (!Rand.Chance(chance))
                 return false;
 
@@ -506,7 +509,11 @@ namespace AAM.Processing
             AnimationStartParameters? args = null;
             if (tryExecAtEnd)
             {
-                // TODO add the ability to immediately trigger execution animation.
+                // TODO figure out what animation to play, if any...
+                //args = new AnimationStartParameters()
+                //{
+
+                //};
             }
 
             bool worked = JobDriver_GrapplePawn.GiveJob(executioner, rand.Victim, rand.GrappleEndPos, animationStartParameters: args);

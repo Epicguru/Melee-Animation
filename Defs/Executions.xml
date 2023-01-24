@@ -21,6 +21,7 @@
 
   <AAM.AnimDef>
     <defName>AAM_GilgameshVictim</defName>
+    <label>Execution: Mystic Weapon Summon</label>
     <type>Execution</type>
     <pawnCount>1</pawnCount>
     <jobString>Uh oh...</jobString>

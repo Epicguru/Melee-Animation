@@ -11,18 +11,24 @@ namespace AAM.Tweaks
     {
         private static readonly Dictionary<ThingDef, ItemTweakData> itemTweaks = new();
 
-        public static void LoadAllForActiveMods(bool reset = true)
+        /// <summary>
+        /// Attempts to load all melee weapon tweak data for active mods.
+        /// Returns an enumeration of missing mod-weapon pairs, where tweak data could not be found or loaded.
+        /// </summary>
+        public static IEnumerable<(string modPackageID, string weaponDefName)> LoadAllForActiveMods(bool reset = true)
         {
             if (reset)
                 Reset();
 
             Dictionary<string, FileInfo> fileNames = IO.ListXmlFiles(IO.SaveDataPath).ToDictionary(item => Path.GetFileNameWithoutExtension(item.Name));
+            var loaded = new HashSet<string>();
 
             foreach (var mod in LoadedModManager.RunningModsListForReading)
             {
+                loaded.Clear();
                 string id = ItemTweakData.MakeModID(mod);
                 if (!fileNames.TryGetValue(id, out var fi))
-                    continue;
+                    goto OutputMissing;
 
                 try
                 {
@@ -30,11 +36,26 @@ namespace AAM.Tweaks
                     IO.LoadFromFile(container, fi.FullName);
 
                     foreach (var data in container.Items)
+                    {
                         RegisterTweak(data);
+                        loaded.Add(data.ItemDefName);
+                    }
                 }
                 catch (Exception e)
                 {
                     Core.Error($"Exception loading tweak data for mod '{mod.Name}':", e);
+                }
+
+                // I used goto, fight me.
+                OutputMissing:
+
+                foreach (var def in mod.AllDefs)
+                {
+                    if (def is ThingDef { IsMeleeWeapon: true })
+                    {
+                        if (!loaded.Contains(def.defName))
+                            yield return (id, def.defName);
+                    }
                 }
             }
         }
