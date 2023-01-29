@@ -58,6 +58,7 @@ namespace AAM.Events.Workers
                     Pawn winner = firstWins ? first : second;
                     Pawn loser = firstWins ? second : first;
                     ExecutionOutcome outcome = OutcomeUtility.GenerateRandomOutcome(winner, loser);
+                    outcome = ExecutionOutcome.Nothing;
 
                     ThrowMote(winner, loser, firstWins ? chanceToWin : 1f - chanceToWin);
                     End(input, winner, outcome);
@@ -101,7 +102,7 @@ namespace AAM.Events.Workers
 
         private void End(in AnimEventInput input, Pawn winner, ExecutionOutcome outcome)
         {
-            if (winner == null || outcome == ExecutionOutcome.Nothing)
+            if (winner == null)
             {
                 // Just go to the start of the end.
                 JumpTo(input.Animator, GetEndEvent());
@@ -116,8 +117,14 @@ namespace AAM.Events.Workers
             input.Animator.Destroy();
         }
 
-        private static void StartEndExecution(Pawn winner, Pawn loser, ExecutionOutcome outcome)
+        private static AnimDef GetWinAnimation(Pawn winner, Pawn loser, ExecutionOutcome outcome)
         {
+            // Check if it's a friendly duel.
+            if (outcome == ExecutionOutcome.Nothing)
+            {
+                return AAM_DefOf.AAM_Duel_WinFriendlyDuel;
+            }
+
             // List all possible execution animations.
             var allAnims = AnimDef.GetExecutionAnimationsForPawnAndWeapon(winner, winner.GetFirstMeleeWeapon()?.def).ToList();
 
@@ -132,7 +139,7 @@ namespace AAM.Events.Workers
                 if (rand == null)
                 {
                     Core.Error($"No possible execution animations for {winner} using {winner.GetFirstMeleeWeapon()}. End of duel will not go as planned...");
-                    return;
+                    return null;
                 }
 
                 // Check space.
@@ -149,6 +156,14 @@ namespace AAM.Events.Workers
                 break;
             }
 
+            return anim;
+        }
+
+        private static void StartEndExecution(Pawn winner, Pawn loser, ExecutionOutcome outcome)
+        {
+            var anim = GetWinAnimation(winner, loser, outcome);
+            bool flipX = winner.Position.x > loser.Position.x;
+
             if (anim == null)
             {
                 Core.Error("No execution animation can be performed at end of duel! Probably no space/skill for any of them!");
@@ -157,7 +172,8 @@ namespace AAM.Events.Workers
 
             var startArgs = new AnimationStartParameters(anim, winner, loser)
             {
-                ExecutionOutcome = outcome
+                ExecutionOutcome = outcome,
+                FlipX = flipX
             };
 
             if (!startArgs.TryTrigger())

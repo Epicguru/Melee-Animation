@@ -19,6 +19,7 @@ namespace AAM
 
         private static List<AnimDef> allDefs;
         private static Dictionary<AnimType, List<AnimDef>> defsOfType;
+        private static readonly HandsVisibilityData defaultHandsVisibilityData = new HandsVisibilityData();
 
         public static void Init()
         {
@@ -47,7 +48,7 @@ namespace AAM
         public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef)
         => GetDefsOfType(AnimType.Execution)
             .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
-            .Where(d => (d.MinMeleeSkill ?? 0) <= pawn.skills.GetSkill(SkillDefOf.Melee).Level);
+            .Where(d => (d.minMeleeSkill ?? 0) <= pawn.skills.GetSkill(SkillDefOf.Melee).Level);
 
         [DebugAction("Advanced Animation Mod", "Reload all animations", actionType = DebugActionType.Action)]
         public static void ReloadAllAnimations()
@@ -139,12 +140,36 @@ namespace AAM
         public ISweepProvider sweepProvider;
         public bool drawDisabledPawns;
         public bool shadowDrawFromData;
-        public int? MinMeleeSkill = null;
+        public int? minMeleeSkill = null;
+        public bool canEditProbability = true;
+
+        public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
+
+        public class HandsVisibilityData
+        {
+            public int pawnIndex = -1;
+            public bool? showMainHand = null;
+            public bool? showAltHand = null;
+        }
 
         private Dictionary<string, string> additionalData = new Dictionary<string, string>();
         private float relativeProbability = 1;
 
         private AnimData resolvedData, resolvedNonLethalData;
+
+        public HandsVisibilityData GetHandsVisibility(int pawnIndex)
+        {
+            if (pawnIndex < 0)
+                return defaultHandsVisibilityData;
+
+            foreach (var d in handsVisibility)
+            {
+                if (d.pawnIndex == pawnIndex)
+                    return d;
+            }
+
+            return defaultHandsVisibilityData;
+        }
 
         public void SetDefaultSData()
         {
@@ -221,6 +246,19 @@ namespace AAM
             for (int i = 0; i < cellData.Count; i++)
                 foreach (var error in cellData[i].ConfigErrors())
                     yield return $"[CellData, index:{i}] {error}";
+
+            var indexes = new HashSet<int>();
+            foreach (var d in handsVisibility)
+            {
+                if (d.pawnIndex < 0)
+                {
+                    yield return $"There is an item in <handsVisibility> that has <pawnIndex> of {d.pawnIndex} which is invalid. <pawnIndex> should be at least 0.";
+                }
+                else if (!indexes.Add(d.pawnIndex))
+                {
+                    yield return $"There is an item in <handsVisibility> that has duplicate <pawnIndex> of {d.pawnIndex}.";
+                }
+            }
         }
 
         public override void PostLoad()
