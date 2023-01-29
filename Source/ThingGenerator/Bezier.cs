@@ -35,7 +35,7 @@ namespace AAM
             P3 = p3;
         }
 
-        public Vector2 Evaluate(float t) => Bezier.Evaluate(t, P0, P1, P2, P3);
+        public Vector2 Evaluate(float t) => Bezier.Evaluate(t, P0, P1, P2, P3); 
 
         public void ExposeData()
         {

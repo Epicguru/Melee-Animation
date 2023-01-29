@@ -405,6 +405,9 @@ namespace AAM.UI
             ui.Label($"Local rot: {ss.LocalRotation}");
             ui.Label($"World rot: {ss.GetWorldRotation()}");
             ui.Label($"World dir: {ss.Direction}");
+            ui.Label($"Data A: {ss.DataA}");
+            ui.Label($"Data B: {ss.DataB}");
+            ui.Label($"Data C: {ss.DataC}");
 
             ui.GapLine();
 

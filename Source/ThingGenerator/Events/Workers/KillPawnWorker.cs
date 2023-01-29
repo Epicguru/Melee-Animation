@@ -2,6 +2,7 @@
 using AAM.UI;
 using RimWorld;
 using System;
+using UnityEngine;
 using Verse;
 
 namespace AAM.Events.Workers
@@ -30,6 +31,18 @@ namespace AAM.Events.Workers
 
             if (pawn == null || pawn.Destroyed || pawn.Dead || killer == null)
                 return;
+
+            (string outcome, Color color) = animator.ExecutionOutcome switch
+            {
+                ExecutionOutcome.Damage => ("Injured", Color.yellow),
+                ExecutionOutcome.Down => ("Downed", Color.Lerp(Color.yellow, Color.red, 0.5f)),
+                ExecutionOutcome.Kill => ("Killed", Color.red),
+                _ => (null, default)
+            };
+            if (outcome != null)
+                MoteMaker.ThrowText(pawn.DrawPos + new Vector3(0, 0, 0.6f), pawn.Map, $"Execution Outcome: {outcome}", color);
+
+            Core.Log($"Execution outcome is {animator.ExecutionOutcome}");
 
             switch (animator.ExecutionOutcome)
             {
@@ -67,99 +80,42 @@ namespace AAM.Events.Workers
 
         private void Injure(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
         {
-            // TODO implement me.
-            Core.Warn("IMPLEMENT ME");
+            var args = new OutcomeUtility.AdditionalArgs()
+            {
+                BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
+                DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                Weapon = killer.GetFirstMeleeWeapon(),
+                TargetDamageAmount = 20 // TODO pull from animation data, optional args or something along those lines.
+            };
+
+            OutcomeUtility.PerformOutcome(ExecutionOutcome.Damage, killer, pawn, args);
         }
 
         private void Down(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
         {
-            // TODO implement me.
-            Core.Warn("IMPLEMENT ME");
+            var args = new OutcomeUtility.AdditionalArgs()
+            {
+                BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
+                DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                Weapon = killer.GetFirstMeleeWeapon()
+            };
+
+            OutcomeUtility.PerformOutcome(ExecutionOutcome.Down, killer, pawn, args);
         }
 
         private void Kill(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
         {
-            if (Core.Settings.ExecutionsCanDestroyBodyParts)
+            var args = new OutcomeUtility.AdditionalArgs()
             {
-                BodyPartDef partDef = i.GetDef<BodyPartDef>(@event.TargetBodyPart);
-                DamageDef dmgDef = i.GetDef(@event.DamageDef, DamageDefOf.Cut);
-                RulePackDef logDef = i.GetDef(@event.BattleLogDef, AAM_DefOf.AAM_Execution_Generic);
-                var part = GetPartFromDef(pawn, partDef);
-                ThingDef weapon = killer.equipment?.Primary?.def;
+                BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
+                DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                Weapon = killer.GetFirstMeleeWeapon()
+            };
 
-                var dInfo = new DamageInfo(dmgDef, 99999, 99999, hitPart: part, instigator: killer, weapon: weapon);
-                var log = CreateLog(logDef, killer.equipment?.Primary, killer, pawn);
-                dInfo.SetAllowDamagePropagation(false);
-                dInfo.SetIgnoreArmor(true);
-                dInfo.SetIgnoreInstantKillProtection(true);
-
-                var oldEffecter = pawn.RaceProps?.FleshType?.damageEffecter;
-                if (oldEffecter != null)
-                    pawn.RaceProps.FleshType.damageEffecter = null;
-
-                DamageWorker.DamageResult result;
-                try
-                {
-                    result = pawn.TakeDamage(dInfo);
-                }
-                finally
-                {
-                    if (oldEffecter != null)
-                        pawn.RaceProps.FleshType.damageEffecter = oldEffecter;
-                }
-
-                if (!pawn.Dead)
-                {
-                    Find.BattleLog.RemoveEntry(log);
-                    pawn.Kill(dInfo, result?.hediffs?.FirstOrFallback());
-                }
-                else
-                {
-                    result?.AssociateWithLog(log);
-                }
-            }
-            else
-            {
-                // Magic kill...
-                BodyPartDef partDef = i.GetDef<BodyPartDef>(@event.TargetBodyPart);
-                DamageDef dmgDef = i.GetDef(@event.DamageDef, DamageDefOf.Cut);
-                var part = GetPartFromDef(pawn, partDef);
-                ThingDef weapon = killer.equipment?.Primary?.def;
-
-                // Does 0.01 damage, kills anyway.
-                var dInfo = new DamageInfo(dmgDef, 0.01f, 0f, hitPart: part, instigator: killer, weapon: weapon);
-                pawn.Kill(dInfo);
-            }
-
-            var animPart = i.Animator.GetPawnBody(pawn);
-            if (animPart == null)
-                return;
-
-            var ss = i.Animator.GetSnapshot(animPart);
-
-            if (pawn.Corpse != null)
-            {
-                // Do corpse interpolation - interpolates the corpse to the correct position, after the animated position.
-                Patch_Corpse_DrawAt.Interpolators[pawn.Corpse] = new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition());
-
-                Patch_PawnRenderer_LayingFacing.OverrideRotations[pawn] = ss.GetWorldDirection();
-            }
-            else
-                Core.Warn($"{pawn} did not spawn a corpse after death, or the corpse was destroyed...");
-
-            // Update the pawn wiggler so that the pawn corpse matches the final animation state.
-            // This does not change the body position, so when the animation ends and the corpse appears, the corpse often snaps to the center of the cell.
-            // I don't know if there is any easy fix for this.
-            var bodyRot = ss.GetWorldRotation();
-            pawn.Drawer.renderer.wiggler.downedAngle = bodyRot;
-        }
-
-        private LogEntry_DamageResult CreateLog(RulePackDef def, Thing weapon, Pawn inst, Pawn vict)
-        {
-            //var log = new BattleLogEntry_MeleeCombat(rulePackGetter(this.maneuver), alwaysShow, this.CasterPawn, this.currentTarget.Thing, base.ImplementOwnerType, this.tool.labelUsedInLogging ? this.tool.label : "", (base.EquipmentSource == null) ? null : base.EquipmentSource.def, (base.HediffCompSource == null) ? null : base.HediffCompSource.Def, this.maneuver.logEntryDef);
-            var log = new BattleLogEntry_MeleeCombat(def, true, inst, vict, ImplementOwnerTypeDefOf.Weapon, weapon?.Label, def: LogEntryDefOf.MeleeAttack);
-            Find.BattleLog.Add(log);
-            return log;
+            OutcomeUtility.PerformOutcome(ExecutionOutcome.Kill, killer, pawn, args);
         }
     }
 }

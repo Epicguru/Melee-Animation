@@ -3,7 +3,7 @@
 
   <JobDef>
     <defName>AAM_InAnimation</defName>
-    <driverClass>AAM.JobDriver_DoAnimation</driverClass>
+    <driverClass>AAM.Jobs.JobDriver_DoAnimation</driverClass>
     <reportString>in animation</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>false</playerInterruptible>
@@ -11,6 +11,32 @@
     <dropThingBeforeJob>false</dropThingBeforeJob>
     <suspendable>false</suspendable>
     <neverShowWeapon>true</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+
+  <JobDef>
+    <defName>AAM_WalkToExecution</defName>
+    <driverClass>AAM.Jobs.JobDriver_GoToExecutionSpot</driverClass>
+    <reportString>moving towards TargetA to perform execution.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+
+  <JobDef>
+    <defName>AAM_WalkToDuel</defName>
+    <driverClass>AAM.Jobs.JobDriver_GoToDuelSpot</driverClass>
+    <reportString>moving towards TargetA to duel them.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
     <isIdle>false</isIdle>
   </JobDef>
 

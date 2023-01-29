@@ -17,6 +17,7 @@
         <pawnIndex>1</pawnIndex>
       </li>
     </cellData>
+    <canEditProbability>false</canEditProbability>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimDuelBase">
@@ -25,6 +26,26 @@
       <types>Long_Blunt, Long_Stab, Long_Sharp</types>
     </weaponFilter>
     <data>Duel_Swords.anim</data>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimDuelBase">
+    <defName>AAM_Duel_WinFriendlyDuel</defName>
+    <label>Win Friendly Duel</label>
+    <data>Duel_FriendlyEnd.anim</data>
+    <jobString>Deafeating [OTHER] in a duel!</jobString>
+    <weaponFilter Class="AAM.Reqs.True"/> <!-- Allow anything to do this. Duel logic will handle weapon filtering -->
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+      <li>
+        <pawnIndex>1</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
   </AAM.AnimDef>
 
 </Defs>

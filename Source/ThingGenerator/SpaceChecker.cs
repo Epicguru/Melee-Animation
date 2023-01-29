@@ -53,6 +53,15 @@ namespace AAM
             return mask;
         }
 
+        /// <summary>
+        /// Makes a 7x7 cell mask around the <paramref name="center"/> position where each bit represents the
+        /// occupied state of that cell. A bit value of 1 means occupied (cannot stand there), 0 means free (can stand there).
+        /// The remaining 15 bits are unused.
+        /// </summary>
+        /// <param name="map">The map to check. Must not be null.</param>
+        /// <param name="center">The center cell coordinates.</param>
+        /// <param name="smallMask">A smaller version of the mask, 3x3 cells rather than the 7x7 that is the return value.</param>
+        /// <returns>A 7x7 cell bitmask.</returns>
         public static ulong MakeOccupiedMask(Map map, IntVec3 center, out uint smallMask)
         {
             // 1 means cell is occupied (cannot stand there).

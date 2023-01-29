@@ -113,15 +113,18 @@ namespace AAM.Grappling
                     bool worked = AnimationStartParameters.Value.TryTrigger();
                     if (!worked)
                         Core.Error($"AnimationOnFinish failed to trigger - Invalid object? Invalid state? Invalid pawn(s)? Pawns: {string.Join(", ", AnimationStartParameters.Value.EnumeratePawns())}");
-                    else
-                        pawn.GetMeleeData().TimeSinceExecuted = 0; // TODO animation is not necessarily execution...
+                    else if (AnimationStartParameters.Value.Animation.type == AnimType.Execution)
+                        pawn.GetMeleeData().TimeSinceExecuted = 0;
                 }
                 return;
             }
 
             // If the flyer is still active but does not have a pawn in it, it's not good. Always indicates an error.
             if (Flyer.Spawned && Flyer.FlyingPawn == null)
+            {
+                Core.Error("Lost flying grapple pawn!");
                 EndJobWith(JobCondition.Errored);
+            }
         }
 
         private void TickPreEnsnare()
@@ -144,7 +147,7 @@ namespace AAM.Grappling
             }
         }
 
-        protected override IEnumerable<Toil> MakeNewToils()
+        public override IEnumerable<Toil> MakeNewToils()
         {
             job.locomotionUrgency = LocomotionUrgency.None;
             job.collideWithPawns = true;
@@ -162,6 +165,7 @@ namespace AAM.Grappling
                 // Where did our pawn go?
                 if (GrappledPawn == null)
                 {
+                    Core.Error("Lost flying grapple pawn!");
                     EndJobWith(JobCondition.Errored);
                     return;
                 }

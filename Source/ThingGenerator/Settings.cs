@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Meta.Numerics.Statistics.Distributions;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
@@ -23,6 +24,17 @@ namespace AAM
         [Percentage]
         [Description("A modifier on the speed of all animations.")]
         public float GlobalAnimationSpeed = 1f;
+
+        [Description("The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
+        [Min(1)]
+        public int MinDuelDuration = 4;
+
+        [Description("The maximum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
+        [Min(1)]
+        public int MaxDuelDuration = 8;
+
+        [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
+        public bool DrawNamesInAnimation = true;
 
         [DrawMethod(nameof(DrawAnimationList))]
         [SettingOptions(drawValue: false, allowReset: false, drawHoverHighlight: false)]
@@ -79,16 +91,14 @@ namespace AAM
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
         public bool AnimalsCanBeExecuted = false;
 
-        [Label("Minimum Melee Skill")]
-        [Range(0, 20)]
-        [Description("The absolute minimum melee skill required to perform any execution.\n" +
-                     "Certain execution animations may require higher skill levels though.")]
-        public int MinMeleeSkillToExecute = 4;
-
         [Range(0, 10)]
         [Percentage]
-        [Description("A general modifier on the chance for execution animations to trigger. Affects all pawns.")]
-        public float ExecutionChanceModifier = 1f;
+        [Description("A general modifier on the lethality of execution animations. Higher values make executions more lethal. Affects all pawns.")]
+        public float ExecutionLethalityModifier = 1f;
+
+        [Label("Execution Are Non Lethal On Friendlies")]
+        [Description("If enabled, execution animations on friendly pawns are always non-lethal regardless of other settings.\nPrisoners are considered friendly.\n\nUseful when trying to stop a mental break or prisoner uprising without causing a bloodbath.")]
+        public bool ExecutionsOnFriendliesAreNotLethal = true;
 
         [Description("If true, executions can destroy specific vital body parts, such as the heart or head.\n" +
                      "If false, the pawn is simply killed by 'magic' (no specific part takes damage)\n" +
@@ -131,7 +141,39 @@ namespace AAM
                      "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
                      "<b>Note:</b> The offset corpses are reset after a save-reload.")]
         public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
+
+        [Label("Friendly Pawn Lethality Bonus")]
+        [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
+        [Percentage]
+        public float FriendlyPawnMeanNudge = 0f;
+
+        [Label("Friendly Pawn Duel Ability Bonus")]
+        [Description("Positive values act as a duel ability bonus for friendly pawns (including slaves), meaning that they will win duels more often.")]
+        [Percentage]
+        public float FriendlyPawnDuelMeanNudge = 0.1f;
+
+        [Label("Lethality Normal Distribution")]
+        [Description("Tl;Dr: Lower values make execution & duel outcomes less random (more dependent on Duel Ability), higher values make the outcome more random.\n\n" +
+                     "Detail: Changes the normal distribution used when comparing 2 pawn's Duel Ability stats. Lower values (<0.5) remove almost all randomness, higher values (>1) make the outcome much more random.")]
+        [Range(0.1f, 2f)]
+        [Percentage]
+        public float NormalDist = 0.5f;
+
+        [Label("Show Warning Before Executing Friendly")]
+        [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Alt] key when targeting a friendly pawn for execution.")]
+        public bool WarnOfFriendlyExecution = true;
+
         #endregion
+
+        private static NormalDistribution normal;
+
+        public NormalDistribution GetNormalDistribution()
+        {
+            if (normal == null || Math.Abs(normal.StandardDeviation - NormalDist) > 0.001f)
+                normal = new NormalDistribution(0.0, NormalDist);
+
+            return normal;
+        }
 
         public override void ExposeData()
         {
@@ -148,14 +190,14 @@ namespace AAM
                 if (def.SData != null)
                     Core.Error("EXPECTED NULL DATA!");
 
-                if (animSettings.TryGetValue(def.defName, out var found))
+                if (def.canEditProbability && animSettings.TryGetValue(def.defName, out var found))
                 {
                     def.SData = found;
                 }
                 else
                 {
                     def.SetDefaultSData();
-                    animSettings.Add(def.defName, def.SData);
+                    animSettings[def.defName] = def.SData;
                 }
             }
         }
@@ -181,7 +223,11 @@ namespace AAM
                 {
                     checkbox.x += 110;
                     checkbox.width = 200;
+#if V13
                     def.SData.Probability = Widgets.HorizontalSlider(checkbox, def.SData.Probability, 0f, 10f, label: $"Relative Probability: {def.SData.Probability * 100f:F0}%");
+#else
+                    def.SData.Probability = Widgets.HorizontalSlider_NewTemp(checkbox, def.SData.Probability, 0f, 10f, label: $"Relative Probability: {def.SData.Probability * 100f:F0}%", roundTo: 0.05f);
+#endif
                 }
 
                 return rect.height;
@@ -190,6 +236,9 @@ namespace AAM
             var animations = AnimDef.AllDefs;
             foreach (var anim in animations)
             {
+                if (!anim.canEditProbability)
+                    continue;
+
                 float h = DrawAnim(anim);
                 area.y += h;
                 height += h;

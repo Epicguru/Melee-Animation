@@ -43,7 +43,7 @@ namespace AAM.Patches
     /// Disables the texture caching introduced in Rimworld 1.3.
     /// Only applies when a pawn in being animated.
     /// </summary>
-    [HarmonyPatch(typeof(GlobalTextureAtlasManager), "TryGetPawnFrameSet")]
+    [HarmonyPatch(typeof(GlobalTextureAtlasManager), nameof(GlobalTextureAtlasManager.TryGetPawnFrameSet))]
     static class Patch_GlobalTextureAtlasManager_TryGetPawnFrameSet
     {
         [HarmonyPriority(Priority.First)]
@@ -63,7 +63,7 @@ namespace AAM.Patches
     /// Simply prevents the regular RenderPawnAt method from running while a pawn in being animated.
     /// This disables the regular rendering whenever a pawn in being animated.
     /// </summary>
-    [HarmonyPatch(typeof(PawnRenderer), "RenderPawnAt")]
+    [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnAt))]
     static class PreventDrawPatchUpper
     {
         public static bool AllowNext = false;
@@ -94,12 +94,15 @@ namespace AAM.Patches
     /// Overrides various parameters of the pawn rendering, specifically direction (north, east etc.)
     /// and body angle. Driven by the active animation.
     /// </summary>
-    [HarmonyPatch(typeof(PawnRenderer), "RenderPawnInternal")]
+    [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnInternal))]
     static class PreventDrawPatch
     {
         public static bool AllowNext = false;
+        public static bool DoNotModify = false;
 
         [HarmonyPriority(Priority.Last)] // As late as possible. We want to be the last to modify results.
+        [HarmonyAfter("com.yayo.yayoAni")] // Fuck off yayo :)
+        [HarmonyBefore("rimworld.Nals.FacialAnimation")] // Must go before facial animation otherwise the face gets fucky.
         static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, PawnRenderFlags flags)
         {
             if (flags.HasFlag(PawnRenderFlags.Portrait))
@@ -108,10 +111,12 @@ namespace AAM.Patches
             var anim = PatchMaster.GetAnimator(___pawn);
             if (anim != null)
             {
-                var body = anim.GetSnapshot(anim.GetPawnBody(___pawn));
-
-                angle = body.GetWorldRotation();
-                bodyFacing = body.GetWorldDirection();
+                if (!DoNotModify)
+                {
+                    var body = anim.GetSnapshot(anim.GetPawnBody(___pawn));
+                    angle = body.GetWorldRotation();
+                    bodyFacing = body.GetWorldDirection();
+                }
 
                 if(!AllowNext)
                     return false;
@@ -126,7 +131,7 @@ namespace AAM.Patches
     /// Disables the default GUI (label) rendering of animated pawns.
     /// Instead, the label is drawn externally. See <see cref="AnimRenderer.DrawSingle(AnimRenderer, float, System.Action{Pawn, UnityEngine.Vector2})"/>
     /// </summary>
-    [HarmonyPatch(typeof(Pawn), "DrawGUIOverlay")]
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.DrawGUIOverlay))]
     static class PreventGUIPatch
     {
         [HarmonyPriority(Priority.First)]
@@ -148,7 +153,7 @@ namespace AAM.Patches
     /// However, making pawns invincible during animations would be very overpowered and broken, so making them untargettable instead is a nice
     /// compromise.
     /// </summary>
-    [HarmonyPatch(typeof(PawnUtility), "IsInvisible")]
+    [HarmonyPatch(typeof(PawnUtility), nameof(PawnUtility.IsInvisible))]
     static class MakePawnConsideredInvisible
     {
         public static bool IsRendering;

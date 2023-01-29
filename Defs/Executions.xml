@@ -21,6 +21,7 @@
 
   <AAM.AnimDef>
     <defName>AAM_GilgameshVictim</defName>
+    <label>Execution: Mystic Weapon Summon</label>
     <type>Execution</type>
     <pawnCount>1</pawnCount>
     <jobString>Uh oh...</jobString>
@@ -112,6 +113,7 @@
         <pawnIndex>0</pawnIndex>
       </li>
     </cellData>
+    <shadowDrawFromData>true</shadowDrawFromData>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
@@ -153,13 +155,14 @@
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab, Long_Blunt, Long_Sharp</types>
     </weaponFilter>
-    <!-- <cellData>
+    <drawDisabledPawns>true</drawDisabledPawns>
+    <additionalData>
       <li>
-        <type>PawnEnd</type>
-        <position>(2, 0)</position>
-        <pawnIndex>1</pawnIndex>
+        <!-- How far the punt will send the victim flying, measured in cells -->
+        <key>PuntRange</key>
+        <value>10</value>
       </li>
-    </cellData> -->
+    </additionalData>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
@@ -231,6 +234,7 @@
         <pawnIndex>1</pawnIndex>
       </li>
     </cellData>
+    <shadowDrawFromData>true</shadowDrawFromData>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
@@ -249,6 +253,27 @@
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab</types>
     </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AAM_Execution_PocketSand</defName>
+    <label>Execution: Pocket Sand!</label>
+    <data>Execution_PocketSand.anim</data>
+    <weaponFilter Class="AAM.Reqs.True"/> <!-- Anything can pocket sand! -->
+
+    <!-- Force hands to be visible to throw sand with -->
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+      <li>
+        <pawnIndex>1</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
   </AAM.AnimDef>
 
 </Defs>

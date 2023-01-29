@@ -1,11 +1,13 @@
-﻿using AAM.Reqs;
+﻿using AAM.RendererWorkers;
+using AAM.Reqs;
 using AAM.Sweep;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using AAM.RendererWorkers;
+using UnityEngine;
 using Verse;
 
 namespace AAM
@@ -17,6 +19,7 @@ namespace AAM
 
         private static List<AnimDef> allDefs;
         private static Dictionary<AnimType, List<AnimDef>> defsOfType;
+        private static readonly HandsVisibilityData defaultHandsVisibilityData = new HandsVisibilityData();
 
         public static void Init()
         {
@@ -38,12 +41,14 @@ namespace AAM
         public static IEnumerable<AnimDef> GetDefsOfType(AnimType type)
         {
             if (defsOfType.TryGetValue(type, out var list))
-                foreach (var item in list)
-                    yield return item;            
+                return list;
+            return Array.Empty<AnimDef>();
         }
 
-        public static IEnumerable<AnimDef> GetExecutionAnimationsForWeapon(ThingDef def)
-            => GetDefsOfType(AnimType.Execution).Where(d => d.AllowsWeapon(new ReqInput(def)));
+        public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef)
+        => GetDefsOfType(AnimType.Execution)
+            .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
+            .Where(d => (d.minMeleeSkill ?? 0) <= pawn.skills.GetSkill(SkillDefOf.Melee).Level);
 
         [DebugAction("Advanced Animation Mod", "Reload all animations", actionType = DebugActionType.Action)]
         public static void ReloadAllAnimations()
@@ -120,13 +125,51 @@ namespace AAM
         public string jobString;
         public Type rendererWorker;
         public int pawnCount;
+        /// <summary>
+        /// The main and normally only weapon filter.
+        /// </summary>
         public Req weaponFilter;
+        /// <summary>
+        /// The optional secondary weapon filter.
+        /// Currently only used in some duel animations.
+        /// Allows filtering out the 'second' pawn based on weapon.
+        /// For example, if a duel animation only works for knife vs spear, you would have to use both filters.
+        /// </summary>
+        public Req weaponFilterSecond;
         public List<AnimCellData> cellData = new();
         public ISweepProvider sweepProvider;
+        public bool drawDisabledPawns;
+        public bool shadowDrawFromData;
+        public int? minMeleeSkill = null;
+        public bool canEditProbability = true;
 
+        public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
+
+        public class HandsVisibilityData
+        {
+            public int pawnIndex = -1;
+            public bool? showMainHand = null;
+            public bool? showAltHand = null;
+        }
+
+        private Dictionary<string, string> additionalData = new Dictionary<string, string>();
         private float relativeProbability = 1;
 
         private AnimData resolvedData, resolvedNonLethalData;
+
+        public HandsVisibilityData GetHandsVisibility(int pawnIndex)
+        {
+            if (pawnIndex < 0)
+                return defaultHandsVisibilityData;
+
+            foreach (var d in handsVisibility)
+            {
+                if (d.pawnIndex == pawnIndex)
+                    return d;
+            }
+
+            return defaultHandsVisibilityData;
+        }
 
         public void SetDefaultSData()
         {
@@ -144,6 +187,23 @@ namespace AAM
 
             if (File.Exists(FullNonLethalDataPath))
                 resolvedNonLethalData = AnimData.Load(FullNonLethalDataPath);
+        }
+
+        public T TryGetAdditionalData<T>(string id, T defaultValue = default)
+        {
+            string value = additionalData.TryGetValue(id);
+            if (value == null)
+                return defaultValue;
+
+            // Here, enjoy some hacky shit.
+            return defaultValue switch
+            {
+                string => (T)(object)value,
+                int => int.TryParse(value, out var i) ? (T)(object)i : defaultValue,
+                float => float.TryParse(value, out var f) ? (T)(object)f : defaultValue,
+                bool => bool.TryParse(value, out var b) ? (T)(object)b : defaultValue,
+                _ => throw new NotSupportedException($"Additional data of type '{typeof(T)}' is not supported.")
+            };
         }
 
         public virtual AnimationRendererWorker TryMakeRendererWorker()
@@ -186,6 +246,19 @@ namespace AAM
             for (int i = 0; i < cellData.Count; i++)
                 foreach (var error in cellData[i].ConfigErrors())
                     yield return $"[CellData, index:{i}] {error}";
+
+            var indexes = new HashSet<int>();
+            foreach (var d in handsVisibility)
+            {
+                if (d.pawnIndex < 0)
+                {
+                    yield return $"There is an item in <handsVisibility> that has <pawnIndex> of {d.pawnIndex} which is invalid. <pawnIndex> should be at least 0.";
+                }
+                else if (!indexes.Add(d.pawnIndex))
+                {
+                    yield return $"There is an item in <handsVisibility> that has duplicate <pawnIndex> of {d.pawnIndex}.";
+                }
+            }
         }
 
         public override void PostLoad()

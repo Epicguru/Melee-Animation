@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,6 +19,8 @@ namespace AAM
         public static Texture2D RopeCoil;
         [Content("AAM/BoundPawns/Male")]
         public static Texture2D BoundMaleRope;
+        [Content("AAM/Shadow")]
+        public static Texture2D Shadow;
 
         // UI
         [Content("AAM/UI/IconBG")]
@@ -32,8 +35,9 @@ namespace AAM
         public static Texture2D IconInfo;
         [Content("AAM/UI/IconSkill")]
         public static Texture2D IconSkill;
+        [Content("AAM/Scythe")]
+        public static Texture2D ScytheTexture;
 
-        // TEMP: Trail shader.
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;
         [BundleContent("CutoffCustom.mat")]
@@ -43,7 +47,7 @@ namespace AAM
         /// A hashset containing all lasso defs, used to check if a pawn has a lasso equipped.
         /// This is automatically populated with all apparel that has the 'Lasso' tag.
         /// </summary>
-        public static HashSet<ThingDef> LassoDefs = new();
+        public static readonly HashSet<ThingDef> LassoDefs = new HashSet<ThingDef>();
 
         public static void Load()
         {
@@ -103,6 +107,7 @@ namespace AAM
     }
 
     [AttributeUsage(AttributeTargets.Field)]
+    [MeansImplicitUse]
     public class ContentAttribute : Attribute
     {
         public readonly string Path;
@@ -114,6 +119,7 @@ namespace AAM
     }
 
     [AttributeUsage(AttributeTargets.Field)]
+    [MeansImplicitUse]
     public class BundleContentAttribute : Attribute
     {
         public readonly string Path;
