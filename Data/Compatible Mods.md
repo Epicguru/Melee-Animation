@@ -1,5 +1,5 @@
 # Compatible Mods List
-`Updated 12/14/2022 12:26:21.`  
+`Updated 01/29/2023 21:37:37.`  
 
 Mods listed here are fully compatible with this mod.  
 Mods that are **not** listed here are not *incompatible* - but they won't be able to perform animations.  
@@ -17,13 +17,14 @@ Maybe a weapon that is too large or small?
 Open an issue or leave a comment on the Workshop page - or even better, submit a Pull Request!
 </details>
 
-Currently supports 463 weapons from 81 mods.
+Currently supports 479 weapons from 82 mods.
   | Mod Name | Mod ID | Weapon Count | Patch Author |
 | --- | --- | --- | --- |
 | **[RF]Berserk - Character Apparel Pack** | rf.berserk.armory | 1 | *Epicguru* |
 | **[SYR] Thrumkin** | syrchalis.thrumkin | 2 | *Epicguru* |
 | **A RimWorld of Magic** | torann.arimworldofmagic | 8 | *Epicguru* |
 | **Advanced Animation** | co.uk.epicguru.advancedanimation | 1 | *Epicguru* |
+| **All-Tech Melee** | ev.all.tech.melee | 16 | *Epicguru* |
 | **Alpha Animals** | sarg.alphaanimals | 2 | *Epicguru* |
 | **Alpha Biomes** | sarg.alphabiomes | 22 | *Epicguru* |
 | **Ancient Eastern Armory** | eastern.armory.geminingen | 3 | *Epicguru* |
