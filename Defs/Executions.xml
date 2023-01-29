@@ -234,6 +234,7 @@
         <pawnIndex>1</pawnIndex>
       </li>
     </cellData>
+    <shadowDrawFromData>true</shadowDrawFromData>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
@@ -252,6 +253,27 @@
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab</types>
     </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AAM_Execution_PocketSand</defName>
+    <label>Execution: Pocket Sand!</label>
+    <data>Execution_PocketSand.anim</data>
+    <weaponFilter Class="AAM.Reqs.True"/> <!-- Anything can pocket sand! -->
+
+    <!-- Force hands to be visible to throw sand with -->
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+      <li>
+        <pawnIndex>1</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
   </AAM.AnimDef>
 
 </Defs>

@@ -87,6 +87,10 @@ namespace AAM
             if (obj.GetType().IsValueType)
                 return obj;
 
+            // Defs are not cloned. They are just refs.
+            if (obj.GetType().IsSubclassOf(typeof(Def)))
+                return obj;
+
             // Lists...
             var type = obj.GetType();
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
@@ -101,6 +105,25 @@ namespace AAM
                 foreach (var item in origList)
                     list.Add(SmartClone(item));
                 return list;
+            }
+
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+            {
+                // Make new dict of appropriate type.
+                var param = type.GenericTypeArguments[0];
+                var param2 = type.GenericTypeArguments[1];
+                var generic = typeof(Dictionary<,>).MakeGenericType(param, param2);
+                var dict = Activator.CreateInstance(generic) as IDictionary;
+
+                // Copy over each item from the original list.
+                var origDict = obj as IDictionary;
+                foreach (var key in origDict.Keys)
+                {
+                    var newKey = SmartClone(key);
+                    var newValue = SmartClone(origDict[key]);
+                    dict.Add(newKey, newValue);
+                }
+                return dict;
             }
 
             if (obj is ICloneable cl)

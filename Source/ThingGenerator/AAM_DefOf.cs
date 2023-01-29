@@ -15,15 +15,24 @@ namespace AAM
         public static JobDef AAM_GrapplePawn;
         public static JobDef AAM_WalkToExecution;
         public static JobDef AAM_WalkToDuel;
+
         public static RulePackDef AAM_Execution_Generic;
+
         public static ThingDef AAM_GrappleFlyer;
         public static ThingDef AAM_KnockbackFlyer;
+
         public static StatDef AAM_GrappleSpeed;
         public static StatDef AAM_GrappleCooldown;
         public static StatDef AAM_ExecutionCooldown;
         public static StatDef AAM_GrappleRadius;
         public static StatDef AAM_Lethality;
         public static StatDef AAM_DuelAbility;
+
+        public static AnimDef AAM_Duel_WinFriendlyDuel;
+
+        public static SoundDef AAM_MetalSwordClash;
+        public static SoundDef AAM_StoneSwordClash;
+        public static SoundDef AAM_WoodSwordClash;
 
         public static ToolCapacityDef Blunt;
         public static ToolCapacityDef Cut;

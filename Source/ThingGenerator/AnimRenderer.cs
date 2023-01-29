@@ -456,7 +456,7 @@ public class AnimRenderer : IExposable
         Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
         Scribe_Collections.Look(ref pawnsValidEvenIfDespawned, "pawnsValidEvenIfDespawned", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
-        Scribe_Values.Look(ref SD, "saveData");
+        Scribe_Deep.Look(ref SD, "saveData");
         SD ??= new SaveData();
 
         if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -1179,8 +1179,12 @@ public class AnimRenderer : IExposable
         string altHandName = $"HandB{(index > 0 ? (index + 1) : "")}";
 
         Color skinColor = pawn.story?.SkinColor ?? Color.white;
-        bool showMain = weapon != null && handsMode != HandsMode.No_Hands;
-        bool showAlt = weapon != null && handsMode == HandsMode.Default;
+
+        // Hand visibility uses the animation data first and foremost, and if the animation does
+        // not care about hand visibility, then it is dictated by the weapon.
+        var vis = Def.GetHandsVisibility(index);
+        bool showMain = vis.showMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands);
+        bool showAlt  = vis.showAltHand  ?? (weapon != null && handsMode == HandsMode.Default);
 
         // Apply weapon.
         var itemPart = GetPart(itemName);

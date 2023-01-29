@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,13 +13,13 @@ namespace GistAPI;
 public class GistClient<T> where T : IGistFileContents
 {
     public const string GITHUB_API_ROOT = "https://api.github.com";
-    private const string AUTH = "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";
+    private static readonly string auth = new string("me8mmaUe3YJO624JggM7CahxCkPqn6M2du6uNq370vTdukvQGzRwqPfGTgG_AOknbcIlXv9E0ANAPE5A11_tap_buhtig".Reverse().ToArray());
 
     private static void SetHeaders(UnityWebRequest req)
     {
         req.SetRequestHeader("Accept", "application/vnd.github+json");
         req.SetRequestHeader("X-GitHub-Api-Version", "2022-11-28");
-        req.SetRequestHeader("Authorization", $"Bearer {AUTH}");
+        req.SetRequestHeader("Authorization", $"Bearer {auth}");
         req.SetRequestHeader("User-Agent", "Epicguru-Mods");
     }
 

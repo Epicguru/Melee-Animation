@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace AAM.Events.Workers
 {
@@ -9,9 +10,6 @@ namespace AAM.Events.Workers
 
         public override void Run(AnimEventInput i)
         {
-            if (!Core.Settings.Gore_DamageEffect)
-                return;
-
             var e = i.Event as DamageEffectEvent;
             var pawn = i.GetPawnFromIndex(e.PawnIndex);
             if (pawn == null)
@@ -22,6 +20,11 @@ namespace AAM.Events.Workers
                     return;
             }
             var body = i.GetPawnBody(pawn);
+
+            PlayImpactSound(pawn.GetFirstMeleeWeapon(), pawn.Map, pawn.Position);
+
+            if (!Core.Settings.Gore_DamageEffect)
+                return;
 
             EffecterDef damageEffecter = pawn.RaceProps?.FleshType?.damageEffecter;
             if (pawn.health != null && damageEffecter != null)
@@ -38,6 +41,16 @@ namespace AAM.Events.Workers
                 pawn.health.woundedEffecter.offset = offset;
                 pawn.health.woundedEffecter.Trigger(pawn, pawn);
             }
+        }
+
+        private void PlayImpactSound(Thing weapon, Map map, IntVec3 position)
+        {
+            var sd = AudioUtility.GetPawnHitSound(weapon);
+            Core.Log($"Got hit sound: {sd}");
+            if (sd == null)
+                return;
+
+            sd.PlayOneShot(SoundInfo.InMap(new TargetInfo(position, map)));
         }
     }
 }

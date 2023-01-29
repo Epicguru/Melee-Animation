@@ -72,4 +72,71 @@
     </subSounds>
   </SoundDef>
 
+  <SoundDef ParentName="AAM_AnimSoundBase">
+    <defName>AAM_Clap</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AAM/Clap</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AAM_AnimSoundBase">
+    <defName>AAM_MetalSwordClash</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AAM/MetalSwordClash</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AAM_AnimSoundBase">
+    <defName>AAM_StoneSwordClash</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AAM/StoneSwordClash</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AAM_AnimSoundBase">
+    <defName>AAM_WoodSwordClash</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AAM/WoodSwordClash</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
 </Defs>

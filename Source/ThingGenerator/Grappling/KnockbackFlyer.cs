@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -20,15 +20,15 @@ public class KnockbackFlyer : PawnFlyer
     {
         var map = victim.Map;
         IntVec3 end = victim.Position + direction * maxRange;
+        IntVec3 ret = victim.Position;
         foreach (var cell in GetCellsFromTo(victim.Position, end))
         {
+            ret = cell;
             if (IsSolid(victim, cell, map))
                 break;
-
-            end = cell;
         }
 
-        return end;
+        return ret;
     }
 
     public static KnockbackFlyer MakeKnockbackFlyer(Pawn victim, IntVec3 targetPos)
@@ -57,8 +57,11 @@ public class KnockbackFlyer : PawnFlyer
             // This normally hard crashes the game!
             flyer.jobQueue = null;
 
-            GenSpawn.Spawn(flyer, targetPos, map, WipeMode.Vanish);
-            return flyer;
+            var t = GenSpawn.Spawn(flyer, targetPos, map, WipeMode.Vanish);
+            if (t == null)
+                flyer.RespawnPawn();
+            
+            return t != null ? flyer : null;
         }
 
         return null;

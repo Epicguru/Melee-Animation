@@ -165,7 +165,7 @@ namespace AAM
 
         #endregion
 
-        private NormalDistribution normal;
+        private static NormalDistribution normal;
 
         public NormalDistribution GetNormalDistribution()
         {
@@ -190,14 +190,14 @@ namespace AAM
                 if (def.SData != null)
                     Core.Error("EXPECTED NULL DATA!");
 
-                if (animSettings.TryGetValue(def.defName, out var found))
+                if (def.canEditProbability && animSettings.TryGetValue(def.defName, out var found))
                 {
                     def.SData = found;
                 }
                 else
                 {
                     def.SetDefaultSData();
-                    animSettings.Add(def.defName, def.SData);
+                    animSettings[def.defName] = def.SData;
                 }
             }
         }
@@ -236,6 +236,9 @@ namespace AAM
             var animations = AnimDef.AllDefs;
             foreach (var anim in animations)
             {
+                if (!anim.canEditProbability)
+                    continue;
+
                 float h = DrawAnim(anim);
                 area.y += h;
                 height += h;
