@@ -254,4 +254,11 @@
     </weaponFilter>
   </AAM.AnimDef>
 
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AAM_Execution_PocketSand</defName>
+    <label>Execution: Pocket Sand!</label>
+    <data>Execution_PocketSand.anim</data>
+    <weaponFilter Class="AAM.Reqs.True"/> <!-- Anything can pocket sand! -->
+  </AAM.AnimDef>
+
 </Defs>

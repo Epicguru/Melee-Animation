@@ -99,7 +99,7 @@ public class EditorRenderer : Editor
 
     private Rect Save(AnimationDataCreator t, AnimationClip clip)
     {
-        string FILE = @$"D:\Programs\Steam\steamapps\common\RimWorld\Mods\AdvancedAnimationMod\Animations\{clip.name}.anim";
+        string FILE = @$"../..\Animations\{clip.name}.anim";
 
         using var fs = new FileStream(FILE, FileMode.OpenOrCreate);
         using var writer = new BinaryWriter(fs);
@@ -107,7 +107,7 @@ public class EditorRenderer : Editor
         var bounds = PopulateSweeps(clip, t);
         AnimData.Save(writer, clip, t, bounds);
 
-        Debug.Log($"Wrote {clip.name} in {fs.Length} bytes. Bounds: {bounds}");
+        Debug.Log($"Wrote {clip.name} in {fs.Length} bytes to {new FileInfo(FILE).FullName}. Bounds: {bounds}");
         return bounds;
     }
 

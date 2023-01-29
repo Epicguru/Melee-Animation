@@ -11,7 +11,6 @@ using UnityEngine;
 public class AnimData
 {
     private static Mesh m, mfx, mfy, mfxy;
-    private static Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
     private static Dictionary<string, byte> propMap = new Dictionary<string, byte>()
     {
         // Transform
@@ -52,22 +51,6 @@ public class AnimData
             mfxy = MakeMesh(Vector2.one, true, true);
         }
         return (flipX && flipY) ? mfxy : flipX ? mfx : flipY ? mfy : m;
-    }
-
-    public static Texture2D ResolveTexture(string texturePath)
-    {
-        if (textureCache.TryGetValue(texturePath, out var found))
-            return found;
-
-        // Try load...
-        Texture2D loaded;
-        loaded = Resources.Load<Texture2D>(texturePath);
-
-        textureCache.Add(texturePath, loaded);
-        if (loaded == null)
-            Debug.LogError($"Failed to load texture '{texturePath}'.");
-
-        return loaded;
     }
 
     private static byte EncodeType(Type t)
