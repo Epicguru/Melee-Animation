@@ -37,6 +37,12 @@ namespace AAM
         public static Texture2D IconSkill;
         [Content("AAM/Scythe")]
         public static Texture2D ScytheTexture;
+        [Content("AAM/UI/ExtraGUIWalk")]
+        public static Texture2D ExtraGuiWalk;
+        [Content("AAM/UI/ExtraGUIForce")]
+        public static Texture2D ExtraGuiForce;
+        [Content("AAM/UI/ExtraGUIWhy")]
+        public static Texture2D ExtraGuiWhy;
 
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;

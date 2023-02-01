@@ -56,6 +56,7 @@ namespace AAM
         /// <summary>
         /// Makes a 7x7 cell mask around the <paramref name="center"/> position where each bit represents the
         /// occupied state of that cell. A bit value of 1 means occupied (cannot stand there), 0 means free (can stand there).
+        /// The index of a bit is: <c>(cx + cz * w)</c> where <c>cx, cz</c> are the offset of the cell from the bottom-left of the mask, and <c>w</c> is the width of the mask.
         /// The remaining 15 bits are unused.
         /// </summary>
         /// <param name="map">The map to check. Must not be null.</param>
