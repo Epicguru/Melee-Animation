@@ -68,6 +68,7 @@ namespace AAM.UI
             closeOnCancel = false;
             closeOnAccept = false;
             onlyOneOfTypeAllowed = false;
+            drawInScreenshotMode = false;
 
             Tabs.Add(("Active Animation Inspector", DrawAllAnimators));
             Tabs.Add(("Animation Starter", DrawAnimationStarter));

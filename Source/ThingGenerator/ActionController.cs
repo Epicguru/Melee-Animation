@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Verse;
+using Verse.AI;
+using static AAM.PossibleExecution;
 
 namespace AAM;
 
@@ -12,6 +14,7 @@ public class ActionController
 {
     private readonly IntVec3[] closestCells = new IntVec3[8];
     private readonly Comparer comparer = new Comparer();
+    private readonly List<AnimStartData> tempStartDataList = new List<AnimStartData>(64);
 
     /// <summary>
     /// Checks that a grapple can be performed by a pawn.
@@ -37,6 +40,10 @@ public class ActionController
             return new GrappleAttemptReport(req, "DeadTarget");
         if (req.Grappler.Downed)
             return new GrappleAttemptReport(req, "Downed");
+
+        // Check if grappler is in an animation.
+        if (req.Grappler.IsInAnimation())
+            return new GrappleAttemptReport(req, "SelfInAnimation");
 
         var data = req.Grappler.GetMeleeData();
 
@@ -151,33 +158,249 @@ public class ActionController
         return new GrappleAttemptReport(req, "MissingLOS");
     }
 
-    /// <summary>
-    /// Enumerates all possible animations that can be performed by the <see cref="PossibleExecutionRequestArgs.Executioner"/>
-    /// at their current position using their current melee weapon, ensuring that there is enough space to perform the animation.
-    /// Does not check any other factors such as health, cooldown etc.
-    /// </summary>
-    public IEnumerable<PossibleExecution> GetPossibleExecutions(PossibleExecutionRequestArgs args)
+    public IEnumerable<ExecutionAttemptReport> GetExecutionReport(ExecutionAttemptRequest req)
     {
-        if (!args.EastCell && !args.WestCell)
+        if (req.Executioner == null)
             yield break;
+
+        if (req.Target == null && (req.Targets == null || !req.Targets.Any()))
+            yield break;
+
+        // Missing weapon.
+        var weapon = req.Executioner.GetFirstMeleeWeapon();
+        if (weapon == null)
+        {
+            yield return new ExecutionAttemptReport(req, "NoWeapon");
+            yield break;
+        }
+
+        // Check spawned.
+        if (!req.Executioner.Spawned)
+        {
+            yield return new ExecutionAttemptReport(req, "Internal", "Executioner not spawned");
+            yield break;
+        }
+
+        // Check downed.
+        if (req.Executioner.Downed)
+        {
+            yield return new ExecutionAttemptReport(req, "Downed");
+            yield break;
+        }
+
+        // Check if grappler is in an animation.
+        if (req.Executioner.IsInAnimation())
+        {
+            yield return new ExecutionAttemptReport(req, "SelfInAnimation");
+            yield break;
+        }
+
+        var data = req.Executioner.GetMeleeData();
+
+        // Check cooldown.
+        if (!data.IsExecutionOffCooldown())
+        {
+            yield return new ExecutionAttemptReport(req, "Cooldown");
+            yield break;
+        }
+
+        // Get all animations.
+        var allAnims = AnimDef.GetExecutionAnimationsForPawnAndWeapon(req.Executioner, weapon.def).Where(d => d.Probability > 0);
+        if (!allAnims.Any())
+        {
+            yield return new ExecutionAttemptReport(req, "NoAnims");
+            yield break;
+        }
+
+        GetPossibleAdjacentExecutions(req, allAnims);
+        var ep = req.Executioner.Position;
+
+        // Check if the lasso can be used by getting a generic report.
+        bool canUseLasso = req.CanUseLasso;
+        if (canUseLasso)
+        {
+            var genericLassoReport = GetGrappleReport(new GrappleAttemptRequest
+            {
+                Grappler = req.Executioner,
+                OccupiedMask = req.SmallOccupiedMask,
+                NoErrorMessages = true
+            });
+            if (!genericLassoReport.CanGrapple)
+                canUseLasso = false;
+        }
+
+        ExecutionAttemptReport Process(Pawn target)
+        {
+            // Dead or downed.
+            if (target.Dead)
+                return new ExecutionAttemptReport(req, "DeadTarget");
+            if (target.Downed)
+                return new ExecutionAttemptReport(req, "DownedTarget");
+
+            // Animal when not allowed.
+            if (!Core.Settings.AnimalsCanBeExecuted && target.def.race.Animal)
+                return new ExecutionAttemptReport(req, "Internal", "Animals not allowed"); // Internal error because the UI should do the animal filtering.
+            
+            // In animation.
+            if (target.IsInAnimation())
+                return new ExecutionAttemptReport(req, "InAnimation");
+
+            // Make report assuming something will work out...
+            var report = new ExecutionAttemptReport
+            {
+                Target = target,
+                PossibleExecutions = ExecutionAttemptReport.BorrowList(),
+                CanExecute = true
+            };
+
+            // Check immediately adjacent.
+            var tp = target.Position;
+            if (tempStartDataList.Count > 0 && tp.z == ep.z)
+            {
+                bool east = tp.x == ep.x + 1;
+                bool west = tp.x == ep.x - 1;
+
+                if (west)
+                {
+                    foreach (var start in tempStartDataList)
+                    {
+                        if (start.FlipX)
+                        {
+                            report.PossibleExecutions.Add(new PossibleExecution
+                            {
+                                Animation = start,
+                                LassoToHere = null
+                            });
+                        }
+                    }
+
+                    // If anything can be done immediately, it takes priority over anything else.
+                    if (report.PossibleExecutions.Count > 0)
+                        return report;
+                }
+                else if (east)
+                {
+                    foreach (var start in tempStartDataList)
+                    {
+                        if (!start.FlipX)
+                        {
+                            report.PossibleExecutions.Add(new PossibleExecution
+                            {
+                                Animation = start,
+                                LassoToHere = null
+                            });
+                        }
+                    }
+
+                    // If anything can be done immediately, it takes priority over anything else.
+                    if (report.PossibleExecutions.Count > 0)
+                        return report;
+                }
+
+                // If the target is directly adjacent but still could not be executed,
+                // it must be because there was no space to perform any animation there.
+                if (east || west)
+                {
+                    report.Dispose();
+                    return new ExecutionAttemptReport(req, "NoSpace");
+                }
+            }
+
+            // Can the lasso be used?
+            if (canUseLasso)
+            {
+                // Generate a report.
+                var lassoReport = GetGrappleReport(new GrappleAttemptRequest
+                {
+                    DoNotCheckCooldown = true,
+                    DoNotCheckLasso = true,
+                    Grappler = req.Executioner,
+                    GrappleSpotPickingBehaviour = GrappleSpotPickingBehaviour.OnlyAdjacent,
+                    OccupiedMask = req.SmallOccupiedMask,
+                    Target = target,
+                    NoErrorMessages = true
+                });
+
+                // The lasso can bring them into range (directly adjacent)!
+                if (lassoReport.CanGrapple)
+                {
+                    bool flipX = lassoReport.DestinationCell.x < ep.x;
+
+                    // Find all execution animations that can be done from the grapple side.
+                    foreach (var start in tempStartDataList)
+                    {
+                        if (start.FlipX == flipX)
+                        {
+                            report.PossibleExecutions.Add(new PossibleExecution
+                            {
+                                Animation = start,
+                                LassoToHere = null
+                            });
+                        }
+                    }
+
+                    // If any executions can be done, then this is the optimal execution route.
+                    if (report.PossibleExecutions.Count > 0)
+                    {
+                        report.MustLasso = true;
+                        return report;
+                    }
+                }
+            }
+
+            // The target is not adjacent and the lasso cannot be used.
+            // Must walk...
+            bool canReach = req.Executioner.CanReach(target, PathEndMode.Touch, Danger.Deadly);
+            if (!canReach)
+            {
+                // There is absolutely no way to reach the target by walking.
+                // Oh well.
+                report.Dispose();
+                return new ExecutionAttemptReport(req, "NoPath");
+            }
+
+            // Okay, attempt to walk + execute.
+            return report;
+        }
+
+        if (req.Target != null)
+        {
+            yield return Process(req.Target);
+        }
+
+        if (req.Targets == null)
+            yield break;
+
+        foreach (var target in req.Targets)
+        {
+            yield return Process(target);
+        }
+        
+    }
+    
+    private void GetPossibleAdjacentExecutions(ExecutionAttemptRequest args, IEnumerable<AnimDef> animDefs)
+    {
+        tempStartDataList.Clear();
+
+        if (!args.EastCell && !args.WestCell)
+            return;
 
         var weapon = args.Executioner?.GetFirstMeleeWeapon();
         if (weapon == null)
-            yield break;
+            return;
 
-        var allAnimations = AnimDef.GetExecutionAnimationsForPawnAndWeapon(args.Executioner, weapon.def).Where(d => d.Probability > 0);
-        foreach (var anim in allAnimations)
+        foreach (var anim in animDefs)
         {
             if (args.WestCell)
             {
                 ulong animMask = anim.FlipClearMask;
                 if ((animMask & args.OccupiedMask) == 0)
                 {
-                    yield return new PossibleExecution
+                    tempStartDataList.Add(new AnimStartData
                     {
-                        Animation = anim,
+                        AnimDef = anim,
                         FlipX = true
-                    };
+                    });
                 }
             }
             if (args.EastCell)
@@ -185,11 +408,11 @@ public class ActionController
                 ulong animMask = anim.ClearMask;
                 if ((animMask & args.OccupiedMask) == 0)
                 {
-                    yield return new PossibleExecution
+                    tempStartDataList.Add(new AnimStartData
                     {
-                        Animation = anim,
+                        AnimDef = anim,
                         FlipX = false
-                    };
+                    });
                 }
             }
         }
@@ -434,7 +657,7 @@ public struct GrappleAttemptReport
     }
 }
 
-public struct PossibleExecutionRequestArgs
+public struct ExecutionAttemptRequest
 {
     /// <summary>
     /// The executioner pawn.
@@ -445,6 +668,10 @@ public struct PossibleExecutionRequestArgs
     /// </summary>
     public ulong OccupiedMask;
     /// <summary>
+    /// The small occupied mask for the executioner.
+    /// </summary>
+    public uint SmallOccupiedMask;
+    /// <summary>
     /// Should the west cell be checked?
     /// </summary>
     public bool WestCell;
@@ -452,18 +679,162 @@ public struct PossibleExecutionRequestArgs
     /// Should the east cell be checked?
     /// </summary>
     public bool EastCell;
+    /// <summary>
+    /// Is the <see cref="Executioner"/> allowed to use their lasso (if any)?
+    /// </summary>
+    public bool CanUseLasso;
+
+    /// <summary>
+    /// The main target.
+    /// </summary>
+    public Pawn Target;
+
+    /// <summary>
+    /// Optional additional targets.
+    /// </summary>
+    public IEnumerable<Pawn> Targets;
+
+    /// <summary>
+    /// If true no error messages will be translated to save time.
+    /// </summary>
+    public bool NoErrorMessages;
 }
 
 public struct PossibleExecution
 {
-    public float Probability => Animation.Probability;
+    /// <summary>
+    /// Info about the animation to be started.
+    /// </summary>
+    public AnimStartData Animation;
 
     /// <summary>
-    /// The animation to be played.
+    /// If not null, the pawn must be lassoed to this position in order for the execution to happen.
     /// </summary>
-    public AnimDef Animation;
+    public IntVec3? LassoToHere;
+
+    public struct AnimStartData
+    {
+        public float Probability => AnimDef.Probability;
+
+        /// <summary>
+        /// The animation to be played.
+        /// </summary>
+        public AnimDef AnimDef;
+
+        /// <summary>
+        /// Whether the animation needs to be mirrored horizontally.
+        /// </summary>
+        public bool FlipX;
+    }
+}
+
+public struct ExecutionAttemptReport : IDisposable
+{
+    private static readonly Queue<List<PossibleExecution>> listPool = new Queue<List<PossibleExecution>>(32);
+    private static readonly NamedArgument[] namedArgs = new NamedArgument[3];
+
+    public static List<PossibleExecution> BorrowList()
+    {
+        lock (listPool)
+        {
+            if (listPool.Count > 0)
+                return listPool.Dequeue();
+        }
+        return new List<PossibleExecution>(32);
+    }
+
+    private static void ReturnList(List<PossibleExecution> list)
+    {
+        lock (listPool)
+        {
+            listPool.Enqueue(list);
+        }
+    }
+
+    private static NamedArgument[] GetNamedArgs(in ExecutionAttemptRequest request, Pawn target, string intErrorMsg)
+    {
+        namedArgs[0] = new NamedArgument(request.Executioner, "Exec");
+        namedArgs[1] = new NamedArgument(target, "Target");
+        namedArgs[2] = new NamedArgument(intErrorMsg, "Error");
+        return namedArgs;
+    }
+
+    private static string GetShortTrs(string trsKey, string trs, NamedArgument[] args)
+    {
+        string shortKey = $"{trsKey}.Short";
+        if (shortKey.CanTranslate())
+            return shortKey.Translate(args);
+        return trs;
+    }
+
     /// <summary>
-    /// Whether the animation needs to be mirrored horizontally.
+    /// If true, indicates that this report means that the executioner cannot perform any execution,
+    /// such as because they are not holding a weapon or their execution is on cooldown.
     /// </summary>
-    public bool FlipX;
+    public bool IsFinal => !CanExecute && Target == null;
+
+    /// <summary>
+    /// If true, indicates that this report suggests that the only way to execute is by walking to the target.
+    /// </summary>
+    public bool IsWalking => CanExecute && !MustLasso && PossibleExecutions == null;
+
+    /// <summary>
+    /// Is any execution possible?
+    /// </summary>
+    public bool CanExecute;
+
+    /// <summary>
+    /// If <see cref="CanExecute"/> is true,
+    /// must a lasso be used to allow it?
+    /// </summary>
+    public bool MustLasso;
+
+    /// <summary>
+    /// An enumeration of possible executions.
+    /// Will be null if <see cref="CanExecute"/> is false.
+    /// </summary>
+    public List<PossibleExecution> PossibleExecutions;
+
+    /// <summary>
+    /// The pawn that could be executed.
+    /// </summary>
+    public Pawn Target;
+
+    public string ErrorMessage;
+
+    public string ErrorMessageShort;
+
+    public ExecutionAttemptReport(in ExecutionAttemptRequest req, string errorTrsKey, string intErrorMsg = null)
+        : this(req, null, errorTrsKey, intErrorMsg) { }
+    
+    public ExecutionAttemptReport(in ExecutionAttemptRequest req, Pawn target, string errorTrsKey, string intErrorMsg = null)
+    {
+        CanExecute = false;
+        MustLasso = false;
+        PossibleExecutions = null;
+        Target = target;
+
+        if (req.NoErrorMessages)
+        {
+            ErrorMessage = null;
+            ErrorMessageShort = null;
+        }
+        else
+        {
+            var args = GetNamedArgs(req, target, intErrorMsg);
+            errorTrsKey = $"AAM.Error.Exec.{errorTrsKey}";
+            ErrorMessage = errorTrsKey.Translate(args);
+            ErrorMessageShort = intErrorMsg == null ? GetShortTrs(errorTrsKey, ErrorMessage, args) : ErrorMessage;
+        }
+    }
+
+    public void Dispose()
+    {
+        if (PossibleExecutions == null)
+            return;
+
+        var temp = PossibleExecutions;
+        PossibleExecutions = null;
+        ReturnList(temp);
+    }
 }

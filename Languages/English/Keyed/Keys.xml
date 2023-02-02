@@ -10,12 +10,22 @@
   <AAM.Grapple.FloatMenu.Tip>Use a lasso to pull {1} towards {0}.\nThis does not harm {1}.</AAM.Grapple.FloatMenu.Tip>
   <AAM.Grapple.FloatMenu.TipEnemy>Use a lasso to pull {1} towards {0}.\nThis does not harm {1}, but it does put them into melee/execution range.</AAM.Grapple.FloatMenu.TipEnemy>
 
+  <AAM.Error.Exec.FloatMenu>Cannot execute: {0}</AAM.Error.Exec.FloatMenu>
+  <AAM.Exec.FloatMenu>Execute {0}</AAM.Exec.FloatMenu>
+  <AAM.Exec.FloatMenu.Tip>Perform an execution animation on {1}.\nWill attempt to use an lasso if available to pull {1} into melee range.\nPlease note, 'execution' animations are not always lethal - please read the workshop page and mod settings for more info.</AAM.Exec.FloatMenu.Tip>
+
   <AAM.Error.Grapple.Internal>Int.Error: {Error}</AAM.Error.Grapple.Internal>
+  <AAM.Error.Exec.Internal>Int.Error: {Error}</AAM.Error.Exec.Internal>
   <AAM.Error.Grapple.AlreadyAtTarget>{Target} is already in melee range</AAM.Error.Grapple.AlreadyAtTarget>
 
   <AAM.Error.Grapple.Dead>{Grappler} is dead</AAM.Error.Grapple.Dead>
+  <AAM.Error.Exec.Dead>{Exec} is dead</AAM.Error.Exec.Dead>
   <AAM.Error.Grapple.DeadTarget>{Target} is dead</AAM.Error.Grapple.DeadTarget>
+  <AAM.Error.Exec.DeadTarget>{Target} is dead</AAM.Error.Exec.DeadTarget>
   <AAM.Error.Grapple.Downed>{Grappler} is downed</AAM.Error.Grapple.Downed>
+  <AAM.Error.Exec.Downed>{Exec} is downed</AAM.Error.Exec.Downed>
+  <AAM.Error.Exec.DownedTarget>{Target} is downed. Downed pawns cannot be executed.</AAM.Error.Exec.DownedTarget>
+  <AAM.Error.Exec.DownedTarget.Short>{Target} is downed</AAM.Error.Exec.DownedTarget.Short>
 
   <AAM.Error.Grapple.AlreadyTarget>{Target} is already being lassoed</AAM.Error.Grapple.AlreadyTarget>
   <AAM.Error.Grapple.AlreadyTarget.Short>Already being lassoed</AAM.Error.Grapple.AlreadyTarget.Short>
@@ -26,6 +36,9 @@
   <AAM.Error.Grapple.TooFar.Short>Too far away</AAM.Error.Grapple.TooFar.Short>
 
   <AAM.Error.Grapple.InAnimation>{Target} cannot be lassoed right now</AAM.Error.Grapple.InAnimation>
+  <AAM.Error.Grapple.SelfInAnimation>{Grappler} cannot lasso right now</AAM.Error.Grapple.SelfInAnimation>
+  <AAM.Error.Exec.SelfInAnimation>{Grappler} cannot execute anyone right now</AAM.Error.Exec.SelfInAnimation>
+  <AAM.Error.Exec.InAnimation>{Target} cannot be executed right now</AAM.Error.Exec.InAnimation>
 
   <AAM.Error.Grapple.Mass>{Target} is too heavy for {Grappler} to lasso</AAM.Error.Grapple.Mass>
   <AAM.Error.Grapple.Mass.Short>{Target} is too heavy</AAM.Error.Grapple.Mass.Short>
@@ -45,6 +58,20 @@
   <AAM.Error.Grapple.NoDest>There is no free spot around {Grappler} to drag {Target} to</AAM.Error.Grapple.NoDest>
   <AAM.Error.Grapple.NoDest.Short>No free spot around {Grappler}</AAM.Error.Grapple.NoDest.Short>
 
+  <AAM.Error.Exec.NoWeapon>{Exec} is not wielding a valid melee weapon</AAM.Error.Exec.NoWeapon>
+  <AAM.Error.Exec.NoWeapon.Short>No melee weapon</AAM.Error.Exec.NoWeapon.Short>
+
+  <AAM.Error.Exec.Cooldown>{Exec}'s execution is on cooldown</AAM.Error.Exec.Cooldown>
+  <AAM.Error.Exec.Cooldown.Short>Execution on cooldown</AAM.Error.Exec.Cooldown.Short>
+
+  <AAM.Error.Exec.NoAnims>{Exec} cannot perform any execution animations using their {Weapon}.\nThis is probably due to a lack of melee skill or because all animations are disabled in the mod settings.</AAM.Error.Exec.NoAnims>
+  <AAM.Error.Exec.NoAnims.Short>No animations available</AAM.Error.Exec.NoAnims.Short>
+
+  <AAM.Error.Exec.NoSpace>There is not enough space to perform any execution animation here</AAM.Error.Exec.NoSpace>
+  <AAM.Error.Exec.NoSpace.Short>Not enough space</AAM.Error.Exec.NoSpace.Short>
+
+  <AAM.Error.Exec.NoPath>{Exec} cannot reach {Target} by walking, and their lasso is unavailable or unusable.</AAM.Error.Exec.NoPath>
+  <AAM.Error.Exec.NoPath.Short>No path to target</AAM.Error.Exec.NoPath.Short>
 
   <AAM.Stats.BaseValue>Base Value: {0}</AAM.Stats.BaseValue>
   <AAM.Stats.MeleeSkillOffset>Melee Skill ({0}) Effect: {1}</AAM.Stats.MeleeSkillOffset>

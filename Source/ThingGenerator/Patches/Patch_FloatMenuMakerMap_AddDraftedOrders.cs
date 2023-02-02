@@ -99,6 +99,12 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         TooltipHandler.TipRegion(new Rect(mp.x - 1, mp.y - 1, 3, 3), tt);
     }
 
+    //private static FloatMenuOption GetDisabledExecutionOption()
+    //{
+    //    string label = "AAM.Error.Exec.FloatMenu".Translate(report.ErrorMessageShort);
+
+    //}
+
     private static FloatMenuOption GetDisabledLassoOption(in GrappleAttemptReport report, Pawn grappler)
     {
         string label = "AAM.Error.Grapple.FloatMenu".Translate(report.ErrorMessageShort);

@@ -119,20 +119,6 @@ public static class Extensions
         return null;
     }
 
-    public static PawnType GetPawnType(this Pawn pawn)
-    {
-        if (pawn.IsColonist)
-            return PawnType.Colonist;
-
-        if (pawn.IsPrisonerOfColony)
-            return PawnType.Prisoner;
-
-        if (pawn.HostileTo(Faction.OfPlayerSilentFail))
-            return PawnType.Enemy;
-
-        return PawnType.Friendly;
-    }
-
     public static PawnMeleeData GetMeleeData(this Pawn pawn) => GameComp.Current?.GetOrCreateData(pawn);
 
     public static Vector3 ToWorld(this in Vector2 flatVector, float altitude = 0) => new(flatVector.x, altitude, flatVector.y);

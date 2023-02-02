@@ -7300,7 +7300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: c72d83348ac39224b8488e64f50dd4e8, type: 2}
+  Clip: {fileID: 7400000, guid: eadfd4841ef6fab4593097c7410f423b, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
