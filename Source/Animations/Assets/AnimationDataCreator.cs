@@ -138,7 +138,7 @@ namespace Assets.Editor
                 return found;
 
             var loaded = Resources.Load<Texture2D>(path);
-            Debug.Assert(loaded != null, $"Failed to load '{path}'");
+            Debug.Assert(loaded != null, $"Failed to load '{path}' for {partName}");
 
             texMap.Add(path, loaded);
             texNames.Add(path);

@@ -477,7 +477,7 @@ public class AnimPartData
 public struct AnimPartSnapshot
 {
     public bool Valid => Part != null;
-    public string TexturePath => Part?.TexturePath + (FrameIndex > 0 ? FrameIndex.ToString() : null);
+    public string TexturePath => Part?.TexturePath == null ? null : (Part.TexturePath + (FrameIndex > 0 ? FrameIndex.ToString() : null));
     public string PartName => Part?.Name;
     public float Depth => WorldMatrix.MultiplyPoint3x4(Vector3.zero).y;
     public AnimPartData SplitDrawPivot => Part?.SplitDrawPivot;
