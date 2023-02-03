@@ -1,5 +1,4 @@
-﻿using AAM.Patches;
-using AAM.Tweaks;
+﻿using AAM.Tweaks;
 using HarmonyLib;
 using ModRequestAPI;
 using RimWorld;
@@ -70,8 +69,7 @@ namespace AAM
             AddParsers();
 
             string assemblies = string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName);
-            string bundles = string.Join(",\n", from b in content.assetBundles.loadedAssetBundles select $"{b.name} ({b.GetAllAssetNames().Length} assets)");
-            Log($"Hello, world!\n\nLoaded assemblies:\n{assemblies}\n\nLoaded bundles:\n{bundles}");
+            Log($"Hello, world!\n\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
 
             var h = new Harmony(content.PackageId);
             h.PatchAll();
