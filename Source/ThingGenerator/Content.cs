@@ -46,7 +46,7 @@ namespace AAM
 
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;
-        [BundleContent("CutoffCustom.mat")]
+        [BundleContent("Materials/CutoffCustom.mat")]   
         public static Material CustomCutoffMaterial;
 
         /// <summary>

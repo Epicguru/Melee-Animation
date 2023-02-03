@@ -184,7 +184,7 @@ namespace AAM.UI
                 bar.y += 18;
                 Widgets.DrawBoxSolid(bar, Color.white * 0.45f);
                 float newLerp = Widgets.HorizontalSlider(bar.ExpandedBy(0, -2), lerp, 0, 1);
-                if (newLerp != lerp)
+                if (Math.Abs(newLerp - lerp) > 0.005f)
                     renderer.Seek(newLerp * renderer.Data.Duration, null);
 
                 rect.y += 20;
