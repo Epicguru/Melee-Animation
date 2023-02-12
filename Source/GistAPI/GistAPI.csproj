@@ -2,18 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-	  <OutputType>Library</OutputType>
-
-	  <ImplicitUsings>disable</ImplicitUsings>
+    <OutputType>Library</OutputType>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
-  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  <NoStdLib>false</NoStdLib>   
-  <LangVersion>11</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoStdLib>false</NoStdLib>   
+    <LangVersion>11</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3573-beta" />
-	<PackageReference Include="Unity.Newtonsoft.Json" Version="7.0.0" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3573-beta" />
+    <PackageReference Include="Unity.Newtonsoft.Json" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

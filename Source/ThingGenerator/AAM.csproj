@@ -26,10 +26,14 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
 	<PackageReference Include="Portable.Meta.Numerics" Version="3.1.0.73149" />
+	<ProjectReference Include="..\AAMRetextureSupport\AAMRetextureSupport.csproj" />
 	<ProjectReference Include="..\ModRequestAPI\ModRequestAPI.csproj" />
+	  
+	<!-- Ungodly hack to access rimworld private properties & methods -->
     <Publicize Include="Assembly-CSharp" />
   </ItemGroup>
 
+	
   <!-- _____ 1.3 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.3'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3389" />
