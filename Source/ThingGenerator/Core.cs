@@ -1,5 +1,4 @@
-﻿using AAM.Patches;
-using AAM.Tweaks;
+﻿using AAM.Tweaks;
 using HarmonyLib;
 using ModRequestAPI;
 using RimWorld;
@@ -69,7 +68,8 @@ namespace AAM
         {
             AddParsers();
 
-            Log($"Hello, world!\n\nLoaded assemblies:\n{string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName)}");
+            string assemblies = string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName);
+            Log($"Hello, world!\n\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
 
             var h = new Harmony(content.PackageId);
             h.PatchAll();
@@ -94,27 +94,6 @@ namespace AAM
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
             AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
-            AddLateLoadAction(true, "Nuking Yayo's Animation patches...", () => YayoKiller.Init(h));
-            AddLateLoadAction(true, "Checking asset bundles...", () =>
-            {
-                void Ensure(string path)
-                {
-                    string bundleName = path.Split(':')[0];
-                    var bundle = content.assetBundles.loadedAssetBundles.FirstOrDefault(b => b.name == bundleName);
-                    if (bundle == null)
-                    {
-                        Error($"Asset bundle '{bundleName}' failed to load, expect issues. This is normally caused by an updated engine version, the mod will need updating.");
-                        return;
-                    }
-
-                    string name = path.Split(':')[1];
-                    if (bundle.Contains(name))
-                        return;
-                    Error($"Failed to locate asset '{name}' within the {bundle.name} bundle. Expect errors. Please report this bug.");
-                }
-
-                Ensure("shaders:Assets/CutoffCustom.mat");
-            });
 
             AddLateLoadEvents();
         }

@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -37,10 +38,16 @@ namespace AAM
         public static Texture2D IconSkill;
         [Content("AAM/Scythe")]
         public static Texture2D ScytheTexture;
+        [Content("AAM/UI/ExtraGUIWalk")]
+        public static Texture2D ExtraGuiWalk;
+        [Content("AAM/UI/ExtraGUIForce")]
+        public static Texture2D ExtraGuiForce;
+        [Content("AAM/UI/ExtraGUIWhy")]
+        public static Texture2D ExtraGuiWhy;
 
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;
-        [BundleContent("CutoffCustom.mat")]
+        [BundleContent("Materials/CutoffCustom.mat")]   
         public static Material CustomCutoffMaterial;
 
         /// <summary>
@@ -49,8 +56,19 @@ namespace AAM
         /// </summary>
         public static readonly HashSet<ThingDef> LassoDefs = new HashSet<ThingDef>();
 
+        private static AssetBundle bundle;
+
         public static void Load()
         {
+            try
+            {
+                LoadBundle();
+            }
+            catch (Exception e)
+            {
+                Core.Error("Failed to load asset bundle!", e);
+            }
+
             foreach (var field in typeof(Content).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 var type = field.FieldType;
@@ -82,7 +100,7 @@ namespace AAM
                     if (!path.StartsWith("Assets/"))
                         path = "Assets/" + path;
 
-                    var value = Core.ModContent.assetBundles.loadedAssetBundles.Select(b => b.LoadAsset(path, field.FieldType)).FirstOrDefault(a => a != null);
+                    var value = bundle.LoadAsset(path, field.FieldType);
 
                     if (value == null)
                         Log.Error($"Failed to load bundle content: [{field.FieldType.Name}] {path} from any loaded bundle.");
@@ -91,6 +109,32 @@ namespace AAM
                 }
             }
         }
+
+        private static void LoadBundle()
+        {
+            string bundlePlatformName = GetPlatformName();
+            if (bundlePlatformName == null)
+            {
+                Core.Warn($"Platform: {Application.platform}, 64bit: {Environment.Is64BitOperatingSystem} does not have a corresponding asset bundle. Attempting to use StandaloneLinux64...");
+                bundlePlatformName = "StandaloneLinux64";
+            }
+
+            string bundlePath = Path.Combine(Core.ModContent.RootDir, "Bundles", bundlePlatformName, "animationmod");
+            if (!File.Exists(bundlePath))
+                throw new FileNotFoundException(bundlePath);
+
+            bundle = AssetBundle.LoadFromFile(new FileInfo(bundlePath).FullName);
+            if (bundle == null)
+                throw new Exception($"Asset bundle '{bundlePlatformName}' failed to load!");
+        }
+
+        private static string GetPlatformName() => Application.platform switch
+        {
+            RuntimePlatform.WindowsPlayer => "StandaloneWindows",
+            RuntimePlatform.OSXPlayer => "StandaloneOSX",
+            RuntimePlatform.LinuxPlayer => "StandaloneLinux64",
+            _ => null
+        };
 
         public static void FindAllLassos()
         {

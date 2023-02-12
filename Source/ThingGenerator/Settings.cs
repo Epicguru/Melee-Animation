@@ -104,11 +104,6 @@ namespace AAM
                      "If false, the pawn is simply killed by 'magic' (no specific part takes damage)\n" +
                      "Note: if disabled, combat log generation does not work properly for the execution, and will give a default message: \"<i>name was killed.</i>\"")]
         public bool ExecutionsCanDestroyBodyParts = true;
-
-        [Description("Allows you to finely control who can execute who. A summary of the default settings is:\n" +
-                     "Colonists will only execute hostile enemies.\n" +
-                     "This means colonists will not execute prisoners or friendly pawns from trade caravans.")]
-        public ExecutionMatrix ExecutionMatrix = new();
         #endregion
 
         #region Gore
@@ -246,26 +241,6 @@ namespace AAM
 
             return height;
         }
-
-        public bool IsExecutionAllowed(Pawn executioner, Pawn victim, out string explanation)
-        {
-            if (executioner == null || victim == null || victim == executioner)
-            {
-                explanation = "Invalid inputs";
-                return false;
-            }
-
-            PawnType exec = executioner.GetPawnType();
-            PawnType vic = victim.GetPawnType();
-
-            bool allow = ExecutionMatrix.GetLineOf(exec).Allows(vic);
-            if (allow)
-                explanation = $"[{exec}] is allowed to execute [{vic}]";
-            else
-                explanation = $"[{exec}] {executioner.NameShortColored} is not allowed to execute [{vic}] {victim.NameShortColored}.";
-
-            return allow;
-        }
     }
 
     public enum CorpseOffsetMode
@@ -273,132 +248,5 @@ namespace AAM
         None,
         InterpolateToCorrect,
         KeepOffset
-    }
-
-    public class ExecutionMatrix : IExposable
-    {
-        /// <summary>
-        /// Colonists of the player colony.
-        /// Includes imprisoned colonists.
-        /// </summary>
-        public ExecutionLine Colonists = new()
-        {
-            Colonists = false,
-            Prisoners = false,
-            Friendlies = false,
-            Enemies = true
-        };
-
-        /// <summary>
-        /// Prisoners of the player colony. Does not include imprisoned colonists.
-        /// </summary>
-        public ExecutionLine Prisoners = new()
-        {
-            Colonists = true,
-            Prisoners = false,
-            Friendlies = false,
-            Enemies = true
-        };
-
-        /// <summary>
-        /// Pawns that are friendly with the player faction, such as traders or allies.
-        /// </summary>
-        public ExecutionLine Friendlies = new()
-        {
-            Colonists = true,
-            Prisoners = true,
-            Friendlies = true,
-            Enemies = true
-        };
-
-        /// <summary>
-        /// Enemies of the player faction.
-        /// </summary>
-        public ExecutionLine Enemies = new()
-        {
-            Colonists = true,
-            Prisoners = true,
-            Friendlies = true,
-            Enemies = false
-        };
-
-        public ref bool AllowsRef(PawnType attacker, PawnType victim)
-        {
-            var line = GetLineOf(attacker);
-            return ref line.AllowsRef(victim);
-        }
-
-        public bool Allows(PawnType attacker, PawnType victim) => GetLineOf(attacker).Allows(victim);
-        
-        public ExecutionLine GetLineOf(PawnType type)
-            => type switch
-            {
-                PawnType.Colonist => Colonists,
-                PawnType.Prisoner => Prisoners,
-                PawnType.Friendly => Friendlies,
-                PawnType.Enemy => Enemies,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, $"Unhandled pawn type: {type}")
-            };
-
-        public void ExposeData()
-        {
-            Scribe_Deep.Look(ref Colonists, "colonists");
-            Scribe_Deep.Look(ref Prisoners, "prisoners");
-            Scribe_Deep.Look(ref Friendlies, "friendlies");
-            Scribe_Deep.Look(ref Enemies, "enemies");
-        }
-
-    }
-
-    public class ExecutionLine : IExposable
-    {
-        public bool Colonists;
-        public bool Prisoners;
-        public bool Friendlies;
-        public bool Enemies;
-
-        public bool Allows(PawnType type)
-            => type switch
-            {
-                PawnType.Colonist => Colonists,
-                PawnType.Prisoner => Prisoners,
-                PawnType.Friendly => Friendlies,
-                PawnType.Enemy => Enemies,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, $"Unhandled pawn type: {type}")
-            };
-
-        public ref bool AllowsRef(PawnType type)
-        {
-            switch (type)
-            {
-                case PawnType.Colonist:
-                    return ref Colonists;
-                case PawnType.Prisoner:
-                    return ref Prisoners;
-                case PawnType.Friendly:
-                    return ref Friendlies;
-                case PawnType.Enemy:
-                    return ref Enemies;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type));
-            }
-        }
-            
-
-        public void ExposeData()
-        {
-            Scribe_Values.Look(ref Colonists, "colonists");
-            Scribe_Values.Look(ref Prisoners, "prisoners");
-            Scribe_Values.Look(ref Friendlies, "friendlies");
-            Scribe_Values.Look(ref Enemies, "enemies");
-        }
-    }
-
-    public enum PawnType
-    {
-        Colonist,
-        Prisoner,
-        Friendly,
-        Enemy
     }
 }

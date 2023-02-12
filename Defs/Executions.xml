@@ -256,6 +256,24 @@
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AAM_Execution_JumpThrow</defName>
+    <label>Execution: Jump Throw</label>
+    <data>Execution_SpearThrow.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AAM_Execution_OmniSlash</defName>
+    <label>Execution: Double Ninja Slash</label>
+    <data>Execution_OmniSlash.anim</data>
+    <weaponFilter Class="AAM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab, Long_Sharp, Short_Sharp</types>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_PocketSand</defName>
     <label>Execution: Pocket Sand!</label>
     <data>Execution_PocketSand.anim</data>

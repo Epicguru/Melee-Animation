@@ -53,7 +53,7 @@ public class AnimRenderer : IExposable
         return null;
     }
 
-    public static Texture2D ResolveTexture(AnimPartSnapshot snapshot)
+    public static Texture2D ResolveTexture(in AnimPartSnapshot snapshot)
     {
         if (snapshot.Renderer == null)
             return null;
@@ -66,10 +66,10 @@ public class AnimRenderer : IExposable
         if (snapshot.TexturePath == null)
             return null;
 
-        return ResolveTexture(snapshot.TexturePath);
+        return ResolveTexture(snapshot.TexturePath, snapshot);
     }
 
-    public static Texture2D ResolveTexture(string texturePath)
+    public static Texture2D ResolveTexture(string texturePath, in AnimPartSnapshot snapshot)
     {
         if (textureCache.TryGetValue(texturePath, out var found))
             return found;
@@ -78,7 +78,7 @@ public class AnimRenderer : IExposable
         loaded = ContentFinder<Texture2D>.Get(texturePath, false);
         textureCache.Add(texturePath, loaded);
         if (loaded == null)
-            Core.Error($"Failed to load texture '{texturePath}'.");
+            Core.Error($"Failed to load texture '{texturePath}' for {snapshot.PartName} (frame: {snapshot.FrameIndex})");
 
         return loaded;
     }
