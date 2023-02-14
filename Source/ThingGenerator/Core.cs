@@ -1,12 +1,16 @@
-﻿using AAM.Tweaks;
+﻿using AAM.Retexture;
+using AAM.Tweaks;
 using HarmonyLib;
 using ModRequestAPI;
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
 
@@ -94,8 +98,15 @@ namespace AAM
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
             AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
+            AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
 
             AddLateLoadEvents();
+        }
+
+        private static void PreCacheAllRetextures()
+        {
+            var time = RetextureUtility.PreCacheAllTextureReports();
+            Log($"PreCached all retexture info in {time.TotalMilliseconds:F1}ms");
         }
 
         private void LoadAllTweakData()
@@ -130,7 +141,7 @@ namespace AAM
             });
         }
 
-        private async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
+        private static async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
         {
             var client = new ModRequestClient(GistID);
 
