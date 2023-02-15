@@ -1,4 +1,5 @@
 ﻿using AAM.Reqs;
+using AAM.Retexture;
 using AAM.Tweaks;
 using RimWorld;
 using System.Collections.Generic;
@@ -28,15 +29,14 @@ namespace AAM.UI
 
         public override Vector2 InitialSize => new(512, 700);
         public ModContentPack Mod;
-        public TweakContainer Container;
-        public ThingDef CurrentDef;
+        public ThingDef Def;
 
         private Vector2[] scrolls = new Vector2[32];
         private string[] strings = new string[32];
         private int scrollIndex, stringIndex;
         private Camera camera;
         private RenderTexture rt;
-        private Texture2D rt_tex;
+        private Texture2D rtTex;
         private Vector3 mousePos;
         private Vector3? startPos;
         private Vector2 tweakStart;
@@ -49,7 +49,7 @@ namespace AAM.UI
             doCloseButton = false;
             preventCameraMotion = false;
             resizeable = true;
-            draggable = true;            
+            draggable = true;
         }
 
         public override void PreOpen()
@@ -65,6 +65,9 @@ namespace AAM.UI
 
             camera.transform.position = new Vector3(0, 10, 0);
             camera.transform.localEulerAngles = new Vector3(90, 0, 0);
+
+            // Get full retexture report.
+            RetextureUtility.PreCacheAllTextureReports(_ => { }, true);
         }
 
         public override void PostClose()
@@ -72,10 +75,10 @@ namespace AAM.UI
             base.PostClose();
             Object.Destroy(camera.gameObject);
             Object.Destroy(rt);
-            Object.Destroy(rt_tex);
+            Object.Destroy(rtTex);
             camera = null;
             rt = null;
-            rt_tex = null;
+            rtTex = null;
         }
 
         private ref Vector2 GetScroll()
@@ -92,12 +95,11 @@ namespace AAM.UI
         }
 
         private IEnumerable<ThingDef> AllMeleeWeapons()
-        {            
-            foreach(var def in Mod.AllDefs)
+        {
+            foreach (var rep in RetextureUtility.GetModWeaponReports(Mod))
             {
-                if (def is ThingDef { IsMeleeWeapon: true } td)
-                    yield return td;
-            }            
+                yield return rep.Weapon;
+            }
         }
 
         private void ResetBuffers()
@@ -117,54 +119,93 @@ namespace AAM.UI
             var ui = new Listing_Standard();
             ui.Begin(inRect);
 
-            if(ui.ButtonText("RELOAD ALL"))
-                TweakDataManager.LoadAllForActiveMods();
-
-            if(ui.ButtonText("Select mod"))
+            if (ui.ButtonText("(RE)LOAD ALL"))
             {
-                string MakeName(ModContentPack mcp)
+                foreach (var _ in TweakDataManager.LoadAllForActiveMods(true))
                 {
-                    (int done, int total) = TweakDataManager.GetModCompletionStatus(mcp);
-                    bool all = total == 0 || done >= total;
-                    bool none = done == 0;
-                    string color = all ? "#97ff87" : none ? "#ff828a" : "#fffb85";
-                    return $"<color={color}>[{done}/{total}] {mcp.Name}</color>";
+
                 }
-                FloatMenuUtility.MakeMenu(LoadedModManager.RunningMods.Where(m => TweakDataManager.GetModCompletionStatus(m).total > 0), m => MakeName(m), m => () =>
+            }
+
+            if (ui.ButtonText("Select mod"))
+            {
+                string MakeName(ModTweakContainer container)
+                {
+                    int total = container.Reports.Count();
+                    int done = 0;
+                    foreach (var rep in container.Reports)
+                    {
+                        var tweak = TweakDataManager.TryGetTweak(rep.Weapon, container.Mod);
+                        if (tweak != null)
+                            done++;
+                    }
+
+                    string color = "red";
+                    if (done > 0)
+                    {
+                        color = done >= total ? "green" : "yellow";
+                    }
+
+                    return $"<color={color}>{container.Mod.Name} ({done}/{total})</color>";
+                }
+
+                var source = TweakDataManager.GetTweaksReportForActiveMods();
+
+                FloatMenuUtility.MakeMenu(source, MakeName, m => () =>
                 {
                     ResetBuffers();
-                    Mod = m;
-                    CurrentDef = null;
-                    Container = new TweakContainer(Mod);
-                    Container.PullActive();
+                    Mod = m.Mod;
+                    Def = null;
                 });
             }
 
-            if(Mod == null)
+            if (Mod == null)
             {
                 ui.End();
                 return;
-            }         
-            else if(Container != null)
+            }
+
+            if (ui.ButtonText("SAVE MOD CHANGES"))
             {
-                if(ui.ButtonText("SAVE MOD CHANGES"))
+                var toSave = from rep in RetextureUtility.GetModWeaponReports(Mod)
+                    let tweak = TweakDataManager.TryGetTweak(rep.Weapon, Mod)
+                    where tweak != null
+                    select tweak;
+
+                foreach (var item in toSave)
                 {
-                    string path = Path.Combine(IO.SaveDataPath, $"{Container.ModID}.xml");
-                    Container.PullActive();
-                    IO.SaveToFile(Container, path);
-                    Core.Log($"Saved to '{path}'");
+                    var file = TweakDataManager.GetFileForTweak(item.GetDef(), item.GetMod());
+                    item.SaveTo(file.FullName);
                 }
             }
 
-            if (ui.ButtonText($"Editing: {CurrentDef?.LabelCap ?? "nothing"}"))
+            if (ui.ButtonText($"Editing: {Def?.LabelCap ?? "nothing"}"))
             {
                 List<FloatMenuOption> list = new();
                 foreach (var def in AllMeleeWeapons())
                 {
-                    bool hasTweak = TweakDataManager.TweakExistsFor(def);
-                    list.Add(new FloatMenuOption($"<color={(hasTweak ? "#97ff87" : "#ff828a")}>{def.LabelCap}</color> ", () =>
+                    bool hasTweak = TweakDataManager.TryGetTweak(def, Mod) != null;
+                    bool hasFallback = false;
+                    if (!hasTweak)
                     {
-                        CurrentDef = def;
+                        // Find fallback tweak.
+                        var report = RetextureUtility.GetTextureReport(def);
+                        foreach (var retex in report.AllRetextures)
+                        {
+                            if (retex.mod == Mod)
+                                continue;
+
+                            var fallback = TweakDataManager.TryGetTweak(def, retex.mod);
+                            if (fallback != null)
+                            {
+                                hasFallback = true;
+                                break;
+                            }
+                        }
+                    }
+                    list.Add(new FloatMenuOption($"<color={(hasTweak ? "#97ff87" : hasFallback ? "#fff082" : "#ff828a")}>{def.LabelCap}</color> ", () =>
+                    {
+                        Def = def;
                         ResetBuffers();
 
                     },
@@ -173,28 +214,54 @@ namespace AAM.UI
                         Widgets.DefIcon(r, def);
                         return false;
                     },
-                    orderInPriority: hasTweak ? -1 : 0));
+                    orderInPriority: hasTweak ? -1 : 0) { extraPartRightJustified = true });
                 }
                 Find.WindowStack.Add(new FloatMenu(list));
             }
 
-            if(CurrentDef != null)
+            if (Def != null)
             {
-                var tweak = TweakDataManager.GetOrCreateDefaultTweak(CurrentDef);
+                var tweak = TweakDataManager.TryGetTweak(Def, Mod) ?? TweakDataManager.CreateNew(Def, Mod);
 
                 var copyPasta = ui.GetRect(28);
                 copyPasta.width = 120;
-                if(Widgets.ButtonText(copyPasta, "COPY"))                
+                if (Widgets.ButtonText(copyPasta, "COPY"))
                     clipboard = tweak;
-                
+
                 copyPasta.x += 130;
-                if(clipboard != null && Widgets.ButtonText(copyPasta, "PASTE"))
+                if (clipboard != null && Widgets.ButtonText(copyPasta, "PASTE"))
                 {
                     ResetBuffers();
-                    tweak.CopyTransformFrom(clipboard);                
+                    tweak.CopyTransformFrom(clipboard);
+                }
+
+                var rep = RetextureUtility.GetTextureReport(Def);
+                copyPasta.x += 130;
+                if (rep.AllRetextures.Count > 1 && Widgets.ButtonText(copyPasta, "PASTE PARENT"))
+                {
+                    var src = from retex in rep.AllRetextures
+                        where retex.mod != Mod && TweakDataManager.TryGetTweak(Def, retex.mod) != null
+                        orderby retex.mod.loadOrder
+                        select retex.mod;
+
+                    string MakeLabel(ModContentPack mcp)
+                    {
+                        if (Def.modContentPack == mcp)
+                            return $"[SRC] {mcp.Name}";
+                        return mcp.Name;
+                    }
+
+                    FloatMenuUtility.MakeMenu(src, MakeLabel, sel => () =>
+                    {
+                        var toCopyFrom = TweakDataManager.TryGetTweak(Def, sel);
+
+                        ResetBuffers();
+                        tweak.CopyTransformFrom(toCopyFrom);
+                    });
+                    
                 }
                 copyPasta.x += 130;
-                Widgets.DefLabelWithIcon(copyPasta, CurrentDef);
+                Widgets.DefLabelWithIcon(copyPasta, Def);
                 copyPasta.x += 130;
                 copyPasta.y += 3;
                 Widgets.Label(copyPasta, "Capacities...");
@@ -202,14 +269,14 @@ namespace AAM.UI
                 copyPasta.width = 300;
                 tweak.CustomRendererClass = Widgets.TextField(copyPasta, tweak.CustomRendererClass);
 
-                if(CurrentDef.tools != null)
+                if (Def.tools != null)
                 {
-                    string[] caps = new string[CurrentDef.tools.Count];
-                    for (int i = 0; i < CurrentDef.tools.Count; i++)
+                    string[] caps = new string[Def.tools.Count];
+                    for (int i = 0; i < Def.tools.Count; i++)
                     {
-                        var tool = CurrentDef.tools[i];
+                        var tool = Def.tools[i];
                         string s = $"{tool.LabelCap}: {tool.capacities[0].LabelCap}";
-                        if((tool.extraMeleeDamages?.Count) > 0)
+                        if ((tool.extraMeleeDamages?.Count) > 0)
                         {
                             s += " + (";
                             foreach (var extra in tool.extraMeleeDamages)
@@ -220,9 +287,7 @@ namespace AAM.UI
                         caps[i] = s;
                     }
                     TooltipHandler.TipRegion(copyPasta, string.Join(",\n", caps));
-                }                
-
-                tweak.TexturePath = ui.TextEntryLabeled($"Texture path: ", tweak.TexturePath);
+                }
 
                 ui.Gap();
                 ui.TextFieldNumericLabeled("Scale X:  ", ref tweak.ScaleX, ref GetBuffer(tweak.ScaleX));
@@ -261,7 +326,7 @@ namespace AAM.UI
                 Widgets.DrawBox(tagsArea.RightPart(0.2f));
                 Widgets.Label(tagsArea.RightPart(0.2f), "Allowed animations...");
                 string allowedAnimations = "";
-                foreach(var anim in AnimDef.AllDefs)
+                foreach (var anim in AnimDef.AllDefs)
                     if (anim.AllowsWeapon(new ReqInput(tweak)))
                         allowedAnimations += $"[{anim.type}] {anim.defName}\n";
                 TooltipHandler.TipRegion(tagsArea.RightPart(0.2f), allowedAnimations);
@@ -274,7 +339,7 @@ namespace AAM.UI
                         return $"<color={(flag ? "#97ff87" : "#ff828a")}>{tag.ToString().Replace('_', ' ')}</color>";
                     }
                     var list = System.Enum.GetValues(typeof(MeleeWeaponType)).Cast<MeleeWeaponType>();
-                    FloatMenuUtility.MakeMenu(list, t => MakeTagLabel(t), t => () =>
+                    FloatMenuUtility.MakeMenu(list, MakeTagLabel, t => () =>
                     {
                         if (Input.GetKey(KeyCode.LeftShift))
                         {
@@ -307,7 +372,7 @@ namespace AAM.UI
                     catch { }
                 }
 
-                if(rt_tex != null)
+                if (rtTex != null)
                 {
                     var view = ui.GetRect(inRect.height - ui.CurHeight - 30);
                     if ((int)view.width != rt.width || (int)view.height != rt.height)
@@ -325,7 +390,7 @@ namespace AAM.UI
                     mousePos = localMousePos * unitsPerPixel;
                     camera.backgroundColor = Color.grey * 0.25f;
 
-                    GUI.DrawTexture(view, rt_tex);
+                    GUI.DrawTexture(view, rtTex);
                     Widgets.DrawLine(new Vector2(view.xMin, view.center.y), new Vector2(view.xMax, view.center.y), new Color(0f, 1f, 0f, 0.333f), 1);
                     Widgets.DrawLine(new Vector2(view.center.x, view.yMin), new Vector2(view.center.x, view.yMax), new Color(0f, 1f, 0f, 0.333f), 1);
                     Widgets.Label(view, $"{localMousePos}, {mousePos}, {rt.width}x{rt.height} vs {(int)view.width}x{(int)view.height}");
@@ -365,9 +430,9 @@ namespace AAM.UI
                                 var newPos = tweakStart + (Vector2)offset;
 
                                 tweak.OffX = newPos.x;
-                                if(Input.GetKey(KeyCode.LeftShift))
+                                if (Input.GetKey(KeyCode.LeftShift))
                                     tweak.OffY = newPos.y;
-                                
+
 
                                 if (!Input.GetKey(KeyCode.G))
                                     startPos = null;
@@ -392,7 +457,7 @@ namespace AAM.UI
                                 break;
                         }
                     }
-                }                
+                }
 
                 const float MIN = 0.1f;
                 const float MAX = 5f;
@@ -422,14 +487,14 @@ namespace AAM.UI
             Graphics.DrawMesh(AnimData.GetMesh(tweak.FlipX, tweak.FlipY), Matrix4x4.TRS(pos, Quaternion.Euler(0f, offRot, 0f), new Vector3(tweak.ScaleX, 1f, tweak.ScaleY)), AnimRenderer.DefaultCutout, 0, camera, 0, block);
 
             var handScale = new Vector3(0.175f, 1f, 0.175f);
-            var handAPos  = new Vector3(0f, 1f, 0f);
-            var handBPos  = new Vector3(-0.146f, -1f, -0.011f);
+            var handAPos = new Vector3(0f, 1f, 0f);
+            var handBPos = new Vector3(-0.146f, -1f, -0.011f);
             var handTex = ContentFinder<Texture2D>.Get("AAM/Hand");
             block.SetTexture("_MainTex", handTex);
 
-            if(tweak.HandsMode != HandsMode.No_Hands)
+            if (tweak.HandsMode != HandsMode.No_Hands)
                 Graphics.DrawMesh(AnimData.GetMesh(false, false), Matrix4x4.TRS(handAPos, Quaternion.identity, handScale), AnimRenderer.DefaultCutout, 0, camera, 0, block);
-            if(tweak.HandsMode == HandsMode.Default)
+            if (tweak.HandsMode == HandsMode.Default)
                 Graphics.DrawMesh(AnimData.GetMesh(false, false), Matrix4x4.TRS(handBPos, Quaternion.identity, handScale), AnimRenderer.DefaultCutout, 0, camera, 0, block);
 
             Vector3 start = new(tweak.BladeStart, 0, 1);
@@ -444,10 +509,10 @@ namespace AAM.UI
 
             camera.Render();
 
-            if (rt_tex != null)
-                Object.Destroy(rt_tex);
+            if (rtTex != null)
+                Object.Destroy(rtTex);
 
-            rt_tex = rt.ToTexture2D();
+            rtTex = rt.ToTexture2D();
         }
     }
 }

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Morning_Star",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.202299148,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.108046539,
+  "BladeEnd": 0.710344851,
+  "MeleeWeaponType": 1
+}

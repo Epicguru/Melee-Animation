@@ -90,7 +90,6 @@ namespace AAM
             });
 
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
-            AddLateLoadAction(false, "Loading weapon tweak data...", LoadAllTweakData);
             AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
             AddLateLoadAction(false, "Finding all lassos...", AAM.Content.FindAllLassos);
 
@@ -99,13 +98,20 @@ namespace AAM
             AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
             AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
+            AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
 
             AddLateLoadEvents();
         }
 
         private static void PreCacheAllRetextures()
         {
-            var time = RetextureUtility.PreCacheAllTextureReports();
+            var time = RetextureUtility.PreCacheAllTextureReports(rep =>
+            {
+                if (rep.HasError)
+                {
+                    Error($"Error generating texture report [{rep.Weapon?.LabelCap}]: {rep.ErrorMessage}");
+                }
+            }, false);
             Log($"PreCached all retexture info in {time.TotalMilliseconds:F1}ms");
         }
 
@@ -113,13 +119,15 @@ namespace AAM
         {
             var modsAndMissingWeaponCount = new Dictionary<string, int>();
 
-            foreach (var pair in TweakDataManager.LoadAllForActiveMods())
+            foreach (var pair in TweakDataManager.LoadAllForActiveMods(false))
             {
                 if (!modsAndMissingWeaponCount.ContainsKey(pair.modPackageID))
                     modsAndMissingWeaponCount.Add(pair.modPackageID, 0);
 
                 modsAndMissingWeaponCount[pair.modPackageID]++;
             }
+
+            Log($"Loaded tweak data for {TweakDataManager.TweakDataLoadedCount} weapons.");
 
             if (modsAndMissingWeaponCount.Count == 0)
                 return;

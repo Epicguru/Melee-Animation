@@ -1,0 +1,12 @@
+{
+  "TextureModID": "xrushha.animagear",
+  "ItemDefName": "MeleeWeapon_AnimaStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.289655149,
+  "OffY": -0.009194851,
+  "Rotation": 35.0,
+  "BladeStart": 0.08046033,
+  "BladeEnd": 0.8528741,
+  "MeleeWeaponType": 9
+}

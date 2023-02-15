@@ -1,0 +1,12 @@
+{
+  "TextureModID": "kyrrisayo.weaponsplus",
+  "ItemDefName": "MeleeWeapon_Kukri",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.202299133,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 1,
+  "BladeStart": 0.0620689653,
+  "MeleeWeaponType": 6
+}

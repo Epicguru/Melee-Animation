@@ -1065,7 +1065,7 @@ public class AnimRenderer : IExposable
         // Custom sweep paths:
         ISweepProvider sweepProvider = BasicSweepProvider.DefaultInstance;
         var weapon = Pawns.Count == 0 ? null : Pawns[0].GetFirstMeleeWeapon();
-        var tweak = weapon == null ? null : TweakDataManager.GetOrCreateDefaultTweak(weapon.def);
+        var tweak = weapon == null ? null : TweakDataManager.TryGetTweak(weapon.def);
         if (tweak?.GetSweepProvider() != null)
             sweepProvider = tweak.GetSweepProvider();
         else if (Def.sweepProvider != null)
@@ -1171,7 +1171,7 @@ public class AnimRenderer : IExposable
         // Held item.
         string itemName = $"Item{tagChar}";
         var weapon = pawn.GetFirstMeleeWeapon();
-        var tweak = weapon == null ? null : TweakDataManager.GetOrCreateDefaultTweak(weapon.def);
+        var tweak = weapon == null ? null : TweakDataManager.TryGetTweak(weapon.def);
         var handsMode = tweak?.HandsMode ?? HandsMode.Default;
 
         // Hands and skin color...
@@ -1188,7 +1188,7 @@ public class AnimRenderer : IExposable
 
         // Apply weapon.
         var itemPart = GetPart(itemName);
-        if (weapon != null && itemPart != null)
+        if (weapon != null && itemPart != null && tweak != null)
         {
             tweak.Apply(this, itemPart);
             var ov = GetOverride(itemPart);

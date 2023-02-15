@@ -1,0 +1,13 @@
+{
+  "TextureModID": "zodgilla.vanillameleeretexture",
+  "ItemDefName": "MeleeWeapon_LongSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.355991662,
+  "OffY": -0.0459771752,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.1182266,
+  "BladeEnd": 0.862068951,
+  "MeleeWeaponType": 6
+}

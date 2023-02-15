@@ -1,0 +1,13 @@
+{
+  "TextureModID": "zodgilla.vanillameleeretexture",
+  "ItemDefName": "MeleeWeapon_Club",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.304104567,
+  "OffY": -0.00394143,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.07881773,
+  "BladeEnd": 0.793103456,
+  "MeleeWeaponType": 9
+}

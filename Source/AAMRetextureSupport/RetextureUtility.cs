@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using Verse;
@@ -13,19 +14,22 @@ public static class RetextureUtility
     public static int CachedReportCount => reportCache.Count;
 
     private static readonly Dictionary<ThingDef, ActiveTextureReport> reportCache = new Dictionary<ThingDef, ActiveTextureReport>(128);
+    private static readonly Dictionary<ThingDef, bool> reportCacheIsFull = new Dictionary<ThingDef, bool>(128);
+    private static HashSet<ModContentPack> OfficialMods;
+    private static ModContentPack CoreMCP;
 
     /// <summary>
     /// Gets the mod that is providing the active texture for this weapon def.
     /// </summary>
     public static ModContentPack GetTextureSupplier(ThingDef weapon)
-        => weapon == null ? null : GenerateTextureReport(weapon).ActiveRetextureMod;
+        => weapon == null ? null : GetTextureReport(weapon).ActiveRetextureMod;
 
-    public static TimeSpan PreCacheAllTextureReports()
+    public static TimeSpan PreCacheAllTextureReports(Action<ActiveTextureReport> onReport, bool full)
     {
         var sw = Stopwatch.StartNew();
         foreach (var weapon in DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon))
         {
-            GenerateTextureReport(weapon);
+            onReport(GetTextureReport(weapon, full));
         }
         sw.Stop();
         return sw.Elapsed;
@@ -34,14 +38,14 @@ public static class RetextureUtility
     /// <summary>
     /// Generates information about a weapon's textures, such as what mod(s) are supplying textures.
     /// </summary>
-    public static ActiveTextureReport GenerateTextureReport(ThingDef weapon, bool loadFromCache = true, bool saveToCache = true)
+    public static ActiveTextureReport GetTextureReport(ThingDef weapon, bool full = true, bool loadFromCache = true, bool saveToCache = true)
     {
         if (weapon == null)
             return default;
 
-        if (loadFromCache && reportCache.TryGetValue(weapon, out var found))
+        if (loadFromCache && reportCache.TryGetValue(weapon, out var found) && reportCacheIsFull[weapon] == full)
             return found;
-        
+
         // 0. Get active texture.
         string texPath = ResolveTexturePath(weapon);
         if (string.IsNullOrWhiteSpace(texPath))
@@ -71,6 +75,68 @@ public static class RetextureUtility
             }
 
             report.AllRetextures.Add((mod, texture));
+
+            if (full)
+                continue;
+            if (saveToCache)
+            {
+                reportCache[weapon] = report;
+                reportCacheIsFull[weapon] = false;
+            }
+            return report;
+        }
+
+        // 2. Check base game resources
+        // Resources load, which is how base game and dlc load content...
+        var resource = Resources.Load<Texture2D>($"Textures/{texPath}");
+        if (resource != null)
+        {
+            OfficialMods ??= LoadedModManager.RunningModsListForReading.Where(m => m.IsOfficialMod).ToHashSet();
+            CoreMCP ??= OfficialMods.First(m => m.PackageId == ModContentPack.CoreModPackageId);
+
+            // If the weapon comes from a dlc, then that dlc is the texture provider.
+            // Otherwise, just set the provider as one of the official mods (core or dlc).
+            ModContentPack mod = weapon.modContentPack;
+            if (!OfficialMods.Contains(mod))
+                mod = CoreMCP;
+
+            if (!hasFirst)
+            {
+                hasFirst = true;
+                report.ActiveTexture = resource;
+                report.ActiveRetextureMod = mod;
+            }
+            report.AllRetextures.Add((mod, resource));
+            if (!full)
+            {
+                if (!saveToCache)
+                    return report;
+                reportCache[weapon] = report;
+                reportCacheIsFull[weapon] = false;
+                return report;
+            }
+        }
+
+        // 3. Asset bundles scan.
+        // Used by DLC as well as some weird mods.
+        foreach (var pair in ScanAssetBundles(texPath))
+        {
+            if (!hasFirst)
+            {
+                hasFirst = true;
+                report.ActiveTexture = pair.texture;
+                report.ActiveRetextureMod = pair.mod;
+            }
+            report.AllRetextures.Add((pair.mod, pair.texture));
+
+            if (full)
+                continue;
+            if (saveToCache)
+            {
+                reportCache[weapon] = report;
+                reportCacheIsFull[weapon] = false;
+            }
+            return report;
         }
 
         if (report.AllRetextures.Count == 0)
@@ -80,7 +146,42 @@ public static class RetextureUtility
             return report;
 
         reportCache[weapon] = report;
+        reportCacheIsFull[weapon] = full;
         return report;
+    }
+
+    public static IEnumerable<ActiveTextureReport> GetModWeaponReports(ModContentPack mod)
+    {
+        if (mod == null)
+            yield break;
+
+        foreach (var pair in reportCache)
+        {
+            if (pair.Value.AllRetextures.Any(p => p.mod == mod))
+                yield return pair.Value;
+        }
+    }
+
+    private static IEnumerable<(ModContentPack mod, Texture2D texture)> ScanAssetBundles(string texPath)
+    {
+        var mods = LoadedModManager.RunningModsListForReading;
+        string path = Path.Combine("Assets", "Data");
+
+        for (int i = mods.Count - 1; i >= 0; i--)
+        {
+            string path2 = Path.Combine(path, mods[i].FolderName);
+            foreach (AssetBundle assetBundle in mods[i].assetBundles.loadedAssetBundles)
+            {
+                string str = Path.Combine(Path.Combine(path2, GenFilePaths.ContentPath<Texture2D>()), texPath);
+
+                foreach (string ext in ModAssetBundlesHandler.TextureExtensions)
+                {
+                    var loaded = assetBundle.LoadAsset<Texture2D>(str + ext);
+                    if (loaded != null)
+                        yield return (mods[i], loaded);
+                }
+            }
+        }
     }
 
     private static IEnumerable<(ModContentPack mod, Texture2D texture, string path)> GetAllModTextures()
@@ -99,9 +200,10 @@ public static class RetextureUtility
                 yield return (mod, pair.Value, pair.Key);
             }
         }
+
     }
 
-    [DebugAction("Advanced Animation Mod", allowedGameStates = AllowedGameStates.Entry)]
+    [DebugOutput("Advanced Animation Mod")]
     private static void LogAllTextureReports()
     {
         var meleeWeapons = DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon);
@@ -109,12 +211,12 @@ public static class RetextureUtility
         TableDataGetter<ThingDef>[] table = new TableDataGetter<ThingDef>[6];
         table[0] = new TableDataGetter<ThingDef>("Def Name", d => d.defName);
         table[1] = new TableDataGetter<ThingDef>("Name", d => d.LabelCap);
-        table[2] = new TableDataGetter<ThingDef>("Source", def => $"{GenerateTextureReport(def).SourceMod?.Name ?? "?"} ({GenerateTextureReport(def).SourceMod?.PackageId ?? "?"})");
-        table[3] = new TableDataGetter<ThingDef>("Texture Path", def => $"{GenerateTextureReport(def).TexturePath ?? "?"}");
-        table[4] = new TableDataGetter<ThingDef>("Texture Source", def => $"{GenerateTextureReport(def).ActiveRetextureMod?.Name ?? "?"} ({GenerateTextureReport(def).ActiveRetextureMod?.PackageId ?? "?"})");
+        table[2] = new TableDataGetter<ThingDef>("Source", def => $"{GetTextureReport(def).SourceMod?.Name ?? "?"} ({GetTextureReport(def).SourceMod?.PackageId ?? "?"})");
+        table[3] = new TableDataGetter<ThingDef>("Texture Path", def => $"{GetTextureReport(def).TexturePath ?? "?"}");
+        table[4] = new TableDataGetter<ThingDef>("Texture Source", def => $"{GetTextureReport(def).ActiveRetextureMod?.Name ?? "?"} ({GetTextureReport(def).ActiveRetextureMod?.PackageId ?? "?"})");
         table[5] = new TableDataGetter<ThingDef>("Retextures", def =>
         {
-            var report = GenerateTextureReport(def);
+            var report = GetTextureReport(def);
             if (report.HasError)
                 return report.ErrorMessage ?? "Error: ?";
 

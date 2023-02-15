@@ -1,0 +1,12 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Naginata",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.349425852,
+  "OffY": 0.009195261,
+  "Rotation": 45.0,
+  "BladeStart": 0.512643933,
+  "BladeEnd": 0.9632189,
+  "MeleeWeaponType": 7
+}

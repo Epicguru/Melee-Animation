@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dandman68.weaponplusretexture",
+  "ItemDefName": "MeleeWeapon_Morning_Star",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.202299148,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.108046539,
+  "BladeEnd": 0.6137931,
+  "MeleeWeaponType": 1
+}

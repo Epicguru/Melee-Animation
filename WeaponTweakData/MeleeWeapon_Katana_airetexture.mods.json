@@ -1,0 +1,12 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3862069,
+  "OffY": 0.00459784269,
+  "Rotation": 45.0,
+  "BladeStart": 0.0942534357,
+  "BladeEnd": 0.9862069,
+  "MeleeWeaponType": 6
+}

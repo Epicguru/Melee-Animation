@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dandman68.weaponplusretexture",
+  "ItemDefName": "MeleeWeapon_Primitive_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.188506,
+  "HandsMode": 1,
+  "BladeStart": 0.0620689653,
+  "BladeEnd": 0.3333336,
+  "MeleeWeaponType": 48
+}
