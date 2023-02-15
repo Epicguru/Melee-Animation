@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.swords",
+  "ItemDefName": "LS_Deathbringer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.872093,
+  "OffY": 0.07751961,
+  "Rotation": 40.0,
+  "ScaleX": 2.4,
+  "ScaleY": 2.4,
+  "BladeStart": 0.183139533,
+  "BladeEnd": 2.22577548,
+  "MeleeWeaponType": 6
+}

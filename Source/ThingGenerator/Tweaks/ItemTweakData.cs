@@ -1,5 +1,6 @@
 ﻿using AAM.Retexture;
 using AAM.Sweep;
+using AAM.UI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,13 @@ namespace AAM.Tweaks
 
         public static ItemTweakData LoadFrom(string filePath)
         {
-            return JsonConvert.DeserializeObject<ItemTweakData>(File.ReadAllText(filePath));
+            return JsonConvert.DeserializeObject<ItemTweakData>(File.ReadAllText(filePath), new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>()
+                {
+                    new ColorConverter()
+                }
+            });
         }
 
         [JsonIgnore]
@@ -65,6 +72,7 @@ namespace AAM.Tweaks
         [System.ComponentModel.DefaultValue("")]
         public string CustomRendererClass;
         public string SweepProviderClass;
+        public Color? TrailTint = null;
 
         private ThingDef cachedDef;
         private Texture2D cachedTex;
@@ -130,6 +138,7 @@ namespace AAM.Tweaks
             BladeEnd = data.BladeEnd;
             CustomRendererClass = data.CustomRendererClass;
             SweepProviderClass = data.SweepProviderClass;
+            TrailTint = data.TrailTint;
         }
 
         public Texture2D GetTexture(bool allowFromCache = true, bool saveToCache = true)
@@ -263,10 +272,20 @@ namespace AAM.Tweaks
             {
                 Formatting = Formatting.Indented,
                 DefaultValueHandling = DefaultValueHandling.Ignore,
-                
+                NullValueHandling = NullValueHandling.Ignore,
+                Error = (e, t) =>
+                {
+                    Core.Error($"Json saving error: {t.ErrorContext.Error.Message}");
+                },
+                Converters = new List<JsonConverter>()
+                {
+                    new ColorConverter()
+                }
             };
             string json = JsonConvert.SerializeObject(this, Formatting.Indented, settings);
             File.WriteAllText(filePath, json);
         }
+
+        
     }
 }

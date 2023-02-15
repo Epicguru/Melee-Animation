@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sarg.alphaanimals",
+  "ItemDefName": "AA_GallatrossHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1314556,
+  "OffY": 0.02629155,
+  "Rotation": 55.0,
+  "BladeEnd": 0.6093901,
+  "MeleeWeaponType": 42
+}

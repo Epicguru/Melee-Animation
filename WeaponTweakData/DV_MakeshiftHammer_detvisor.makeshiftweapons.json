@@ -1,0 +1,12 @@
+{
+  "TextureModID": "detvisor.makeshiftweapons",
+  "ItemDefName": "DV_MakeshiftHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2140845,
+  "OffY": -0.01126761,
+  "HandsMode": 1,
+  "BladeStart": 0.207511961,
+  "BladeEnd": 0.481690139,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "4ydra.arsenalofreaction",
+  "ItemDefName": "AOR_Melee_KukriP",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2553993,
+  "OffY": 0.01126761,
+  "Rotation": -20.0,
+  "HandsMode": 1,
+  "BladeStart": 0.09108027,
+  "MeleeWeaponType": 48
+}

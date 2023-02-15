@@ -1,0 +1,18 @@
+{
+  "TextureModID": "oskarpotocki.vfe.vikings",
+  "ItemDefName": "VFEV_CryptoHeavyAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.21901989,
+  "OffY": 0.0130759329,
+  "Rotation": -10.0,
+  "BladeStart": 0.3963612,
+  "BladeEnd": 0.7526773,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.182222068,
+    "g": 0.989097059,
+    "b": 1.0,
+    "a": 0.868888736
+  }
+}

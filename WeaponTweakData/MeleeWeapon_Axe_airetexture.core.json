@@ -3,6 +3,5 @@
   "ItemDefName": "MeleeWeapon_Axe",
   "ItemType": "ThingDef",
   "ItemTypeNamespace": "Verse",
-  "MeleeWeaponType": 6,
-  "CustomRendererClass": null
+  "MeleeWeaponType": 6
 }

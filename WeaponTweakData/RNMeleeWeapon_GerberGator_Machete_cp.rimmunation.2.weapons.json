@@ -1,0 +1,14 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_GerberGator_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.219020516,
+  "OffY": 0.003269054,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.2002238,
+  "BladeEnd": 0.824594736,
+  "MeleeWeaponType": 54
+}

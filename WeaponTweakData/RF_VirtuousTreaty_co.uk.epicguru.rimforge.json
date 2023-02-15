@@ -1,0 +1,13 @@
+{
+  "TextureModID": "co.uk.epicguru.rimforge",
+  "ItemDefName": "RF_VirtuousTreaty",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7501167,
+  "Rotation": 44.01484,
+  "ScaleX": 1.8,
+  "ScaleY": 1.8,
+  "BladeStart": 0.34505415,
+  "BladeEnd": 1.87529325,
+  "MeleeWeaponType": 6
+}

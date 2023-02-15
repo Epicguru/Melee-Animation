@@ -158,6 +158,18 @@ namespace AAM
         [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Alt] key when targeting a friendly pawn for execution.")]
         public bool WarnOfFriendlyExecution = true;
 
+        [Label("Weapon Trail Color")]
+        [Description("The base color of weapon trails. If you set the alpha to 0, trails will be disabled.")]
+        public Color TrailColor = Color.white;
+
+        [Label("Weapon Trail Length")]
+        [Description("A multiplier on the length of weapon trails. If 0%, trails are disabled.")]
+        [Percentage]
+        [Range(0f, 2f)]
+        public float TrailLengthScale = 1f;
+
+        public bool TrailsAreDisabled => TrailColor.a <= 0 || TrailLengthScale <= 0;
+
         #endregion
 
         private static NormalDistribution normal;

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "bucko.royalarsenal",
+  "ItemDefName": "RA_MonoGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4763242,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.146272853,
+  "BladeEnd": 1.12142539,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "4ydra.arsenalofreaction",
+  "ItemDefName": "AOR_Melee_Shashka",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3830986,
+  "Rotation": 5.0,
+  "HandsMode": 1,
+  "BladeStart": 0.10610351,
+  "BladeEnd": 0.868545055,
+  "MeleeWeaponType": 6
+}

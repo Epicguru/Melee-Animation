@@ -1,0 +1,13 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_BattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.209213048,
+  "OffY": -0.00653811265,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.160996318,
+  "BladeEnd": 0.6774917,
+  "MeleeWeaponType": 2
+}

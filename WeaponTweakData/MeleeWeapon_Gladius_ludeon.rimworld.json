@@ -10,6 +10,5 @@
   "HandsMode": 1,
   "BladeStart": 0.124795549,
   "BladeEnd": 0.6699507,
-  "MeleeWeaponType": 48,
-  "CustomRendererClass": ""
+  "MeleeWeaponType": 48
 }

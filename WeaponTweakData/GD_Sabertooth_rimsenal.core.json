@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rimsenal.core",
+  "ItemDefName": "GD_Sabertooth",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.262910545,
+  "OffY": -0.0187792256,
+  "Rotation": 45.0,
+  "BladeStart": 0.09483591,
+  "BladeEnd": 0.7295774,
+  "MeleeWeaponType": 54
+}

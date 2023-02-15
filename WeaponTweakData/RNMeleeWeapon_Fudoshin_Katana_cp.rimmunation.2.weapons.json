@@ -1,0 +1,12 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_Fudoshin_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.428233534,
+  "OffY": 0.0130759254,
+  "Rotation": 45.0,
+  "BladeStart": 0.076003246,
+  "BladeEnd": 1.10245585,
+  "MeleeWeaponType": 6
+}

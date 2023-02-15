@@ -1,0 +1,11 @@
+{
+  "TextureModID": "iexist.industrial.melee.weaponry",
+  "ItemDefName": "IMW_Chainsaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.255399317,
+  "OffY": 0.0338024721,
+  "BladeStart": 0.230047166,
+  "BladeEnd": 0.7070422,
+  "MeleeWeaponType": 7
+}

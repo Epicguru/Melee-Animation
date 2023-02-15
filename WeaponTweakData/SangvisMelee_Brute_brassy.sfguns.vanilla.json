@@ -1,0 +1,13 @@
+{
+  "TextureModID": "brassy.sfguns.vanilla",
+  "ItemDefName": "SangvisMelee_Brute",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.100774735,
+  "OffY": -0.0271318927,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.159883723,
+  "BladeEnd": 0.628876448,
+  "MeleeWeaponType": 54
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.cyberneticwarfare",
+  "ItemDefName": "CW_EnergyClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2596904,
+  "OffY": 0.124031261,
+  "HandsMode": 2,
+  "BladeStart": 0.2761628,
+  "BladeEnd": 0.609496355,
+  "MeleeWeaponType": 56
+}

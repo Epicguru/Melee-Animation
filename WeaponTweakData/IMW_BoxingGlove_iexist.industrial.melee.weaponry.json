@@ -1,0 +1,14 @@
+{
+  "TextureModID": "iexist.industrial.melee.weaponry",
+  "ItemDefName": "IMW_BoxingGlove",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1953049,
+  "OffY": 0.007511627,
+  "ScaleX": 0.5,
+  "ScaleY": 0.5,
+  "HandsMode": 2,
+  "BladeStart": 0.07981266,
+  "BladeEnd": 0.410328865,
+  "MeleeWeaponType": 8
+}

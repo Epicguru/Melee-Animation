@@ -1,0 +1,20 @@
+{
+  "TextureModID": "mlie.heavymeleeweapons",
+  "ItemDefName": "HMW_MeleeWeapon_FlameLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6734053,
+  "OffY": -0.0294206068,
+  "Rotation": 45.5132,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.08254136,
+  "BladeEnd": 1.75951624,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.978,
+    "g": 0.724,
+    "b": 0.072,
+    "a": 0.996
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "torann.arimworldofmagic",
+  "ItemDefName": "TM_Decimation",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.222288668,
+  "OffY": -0.00653781369,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.340788752,
+  "BladeEnd": 1.014194,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "grimworld.melee",
+  "ItemDefName": "MeleeWeapon_TrenchShovel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.172770411,
+  "OffY": 0.00751162134,
+  "BladeStart": 0.218779564,
+  "BladeEnd": 0.553052068,
+  "MeleeWeaponType": 56
+}

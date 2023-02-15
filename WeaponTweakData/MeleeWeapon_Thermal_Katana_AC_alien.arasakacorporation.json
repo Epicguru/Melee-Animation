@@ -1,0 +1,20 @@
+{
+  "TextureModID": "alien.arasakacorporation",
+  "ItemDefName": "MeleeWeapon_Thermal_Katana_AC",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.437984765,
+  "OffY": -0.0193800814,
+  "Rotation": 46.99616,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.15600799,
+  "BladeEnd": 1.13275218,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.987,
+    "g": 0.58,
+    "b": 0.061,
+    "a": 0.998
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "biowreck.kenshiarmory",
+  "ItemDefName": "Kenshi_RingedSabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.368075341,
+  "OffY": 0.0150235854,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.124883085,
+  "BladeEnd": 0.879812658,
+  "MeleeWeaponType": 6
+}

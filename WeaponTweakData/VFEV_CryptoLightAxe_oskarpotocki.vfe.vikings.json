@@ -1,0 +1,18 @@
+{
+  "TextureModID": "oskarpotocki.vfe.vikings",
+  "ItemDefName": "VFEV_CryptoLightAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.12422058,
+  "OffY": 0.0130756255,
+  "Rotation": 75.0,
+  "BladeStart": 0.108693212,
+  "BladeEnd": 0.425781816,
+  "MeleeWeaponType": 16,
+  "TrailTint": {
+    "r": 0.182222068,
+    "g": 0.989097059,
+    "b": 1.0,
+    "a": 0.868888736
+  }
+}

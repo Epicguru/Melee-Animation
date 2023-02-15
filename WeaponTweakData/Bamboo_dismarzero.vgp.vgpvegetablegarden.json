@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dismarzero.vgp.vgpvegetablegarden",
+  "ItemDefName": "Bamboo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.112676054,
+  "OffY": -0.093896836,
+  "Rotation": 43.27121,
+  "ScaleX": 0.6,
+  "ScaleY": 0.6,
+  "BladeStart": 0.03474224,
+  "BladeEnd": 0.43286407,
+  "MeleeWeaponType": 8
+}

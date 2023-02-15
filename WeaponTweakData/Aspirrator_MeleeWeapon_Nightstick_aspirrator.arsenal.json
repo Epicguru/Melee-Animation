@@ -1,0 +1,13 @@
+{
+  "TextureModID": "aspirrator.arsenal",
+  "ItemDefName": "Aspirrator_MeleeWeapon_Nightstick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.202816889,
+  "OffY": -0.04882607,
+  "FlipY": true,
+  "HandsMode": 1,
+  "BladeStart": 0.06478873,
+  "BladeEnd": 0.6394366,
+  "MeleeWeaponType": 9
+}

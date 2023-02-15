@@ -1,0 +1,13 @@
+{
+  "TextureModID": "regrowth.botr.extinctanimalspack",
+  "ItemDefName": "RG_RawCoelacanths",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.157746464,
+  "OffY": -0.09389682,
+  "Rotation": -160.0,
+  "FlipY": true,
+  "BladeStart": 0.0723006949,
+  "BladeEnd": 0.5755873,
+  "MeleeWeaponType": 8
+}

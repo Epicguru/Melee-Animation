@@ -11,5 +11,10 @@
   "BladeStart": 0.08538668,
   "BladeEnd": 0.466338664,
   "MeleeWeaponType": 8,
-  "CustomRendererClass": null
+  "TrailTint": {
+    "r": 0.987,
+    "g": 0.58,
+    "b": 0.061,
+    "a": 0.998
+  }
 }

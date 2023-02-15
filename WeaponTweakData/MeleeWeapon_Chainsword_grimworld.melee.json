@@ -1,0 +1,14 @@
+{
+  "TextureModID": "grimworld.melee",
+  "ItemDefName": "MeleeWeapon_Chainsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.338028133,
+  "OffY": 0.003755983,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 1,
+  "BladeStart": 0.154929578,
+  "BladeEnd": 0.7859155,
+  "MeleeWeaponType": 6
+}

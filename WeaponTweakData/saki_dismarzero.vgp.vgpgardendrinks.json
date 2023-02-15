@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dismarzero.vgp.vgpgardendrinks",
+  "ItemDefName": "saki",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.191549271,
+  "OffY": -0.0112676024,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.06478873,
+  "BladeEnd": 0.579342961,
+  "MeleeWeaponType": 8
+}

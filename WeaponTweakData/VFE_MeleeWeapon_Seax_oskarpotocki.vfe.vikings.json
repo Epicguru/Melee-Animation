@@ -1,0 +1,11 @@
+{
+  "TextureModID": "oskarpotocki.vfe.vikings",
+  "ItemDefName": "VFE_MeleeWeapon_Seax",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2484405,
+  "OffY": -0.003268756,
+  "BladeStart": 0.0792726055,
+  "BladeEnd": 0.638264239,
+  "MeleeWeaponType": 6
+}

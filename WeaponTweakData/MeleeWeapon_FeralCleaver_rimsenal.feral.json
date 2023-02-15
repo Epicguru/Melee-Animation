@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rimsenal.feral",
+  "ItemDefName": "MeleeWeapon_FeralCleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.120188057,
+  "OffY": 0.08638519,
+  "Rotation": 41.6698,
+  "HandsMode": 1,
+  "BladeStart": 0.1586859,
+  "BladeEnd": 0.5455401,
+  "MeleeWeaponType": 48
+}

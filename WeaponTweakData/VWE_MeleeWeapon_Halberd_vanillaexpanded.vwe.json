@@ -1,0 +1,14 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_Halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.444578558,
+  "OffY": -0.0490343533,
+  "Rotation": 47.61332,
+  "ScaleX": 1.21,
+  "ScaleY": 1.21,
+  "BladeStart": 0.6186505,
+  "BladeEnd": 1.1907177,
+  "MeleeWeaponType": 7
+}

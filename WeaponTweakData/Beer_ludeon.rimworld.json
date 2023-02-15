@@ -7,6 +7,5 @@
   "Rotation": -90.0,
   "HandsMode": 1,
   "BladeStart": 0.07881773,
-  "MeleeWeaponType": 8,
-  "CustomRendererClass": ""
+  "MeleeWeaponType": 8
 }

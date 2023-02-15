@@ -1,0 +1,14 @@
+{
+  "TextureModID": "oskarpotocki.vfe.pirates",
+  "ItemDefName": "VFEP_WarcasketMeleeWeapon_GravityHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.591681,
+  "OffY": -0.0261515528,
+  "Rotation": 45.0,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": 0.641532958,
+  "BladeEnd": 1.3280139,
+  "MeleeWeaponType": 1
+}

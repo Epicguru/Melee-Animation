@@ -1,0 +1,15 @@
+{
+  "TextureModID": "vanillaexpanded.vbrewe",
+  "ItemDefName": "VBE_Tequila",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2190199,
+  "OffY": -0.00653811544,
+  "Rotation": -90.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 0.497698665,
+  "MeleeWeaponType": 8
+}

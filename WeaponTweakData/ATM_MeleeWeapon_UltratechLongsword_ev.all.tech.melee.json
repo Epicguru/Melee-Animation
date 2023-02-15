@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ev.all.tech.melee",
+  "ItemDefName": "ATM_MeleeWeapon_UltratechLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.286821932,
+  "OffY": -0.0116279125,
+  "BladeStart": 0.121124268,
+  "BladeEnd": 1.016473,
+  "MeleeWeaponType": 6
+}

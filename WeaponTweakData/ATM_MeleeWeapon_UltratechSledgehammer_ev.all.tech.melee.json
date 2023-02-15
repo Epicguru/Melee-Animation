@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ev.all.tech.melee",
+  "ItemDefName": "ATM_MeleeWeapon_UltratechSledgehammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.360465884,
+  "OffY": -0.00387608819,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.718023241,
+  "BladeEnd": 0.9234499,
+  "MeleeWeaponType": 1
+}

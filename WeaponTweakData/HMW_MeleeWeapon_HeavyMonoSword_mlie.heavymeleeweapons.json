@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.heavymeleeweapons",
+  "ItemDefName": "HMW_MeleeWeapon_HeavyMonoSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4707298,
+  "OffY": -0.0294206068,
+  "Rotation": 15.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.170803189,
+  "BladeEnd": 1.171104,
+  "MeleeWeaponType": 6
+}

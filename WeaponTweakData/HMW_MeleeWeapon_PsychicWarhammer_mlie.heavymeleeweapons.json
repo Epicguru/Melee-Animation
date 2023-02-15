@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.heavymeleeweapons",
+  "ItemDefName": "HMW_MeleeWeapon_PsychicWarhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.431502283,
+  "OffY": -0.03268967,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.7624842,
+  "BladeEnd": 1.171104,
+  "MeleeWeaponType": 1
+}

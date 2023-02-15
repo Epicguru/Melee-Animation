@@ -25,6 +25,9 @@
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <Reference Include="0ColourPicker">
+	  <HintPath>0ColourPicker.dll</HintPath>
+    </Reference>
 	<PackageReference Include="Portable.Meta.Numerics" Version="3.1.0.73149" />
 	<ProjectReference Include="..\AAMRetextureSupport\AAMRetextureSupport.csproj" />
 	<ProjectReference Include="..\ModRequestAPI\ModRequestAPI.csproj" />
@@ -34,7 +37,7 @@
   </ItemGroup>
 
 	
-  <!-- _____ 1.3 _____ -->
+	<!-- _____ 1.3 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.3'">
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3389" />
   </ItemGroup>
@@ -51,6 +54,7 @@
   <ItemGroup Condition="'$(Configuration)'=='v1.4'">
 	  <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3573-beta" />
   </ItemGroup>
+
 
   <!-- Output -->
   <PropertyGroup Condition="'$(Configuration)'=='v1.4'">

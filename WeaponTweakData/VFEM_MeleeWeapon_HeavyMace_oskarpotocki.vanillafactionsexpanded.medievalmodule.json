@@ -1,0 +1,11 @@
+{
+  "TextureModID": "oskarpotocki.vanillafactionsexpanded.medievalmodule",
+  "ItemDefName": "VFEM_MeleeWeapon_HeavyMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.232095554,
+  "OffY": -0.0196137428,
+  "BladeStart": 0.144651338,
+  "BladeEnd": 0.6840292,
+  "MeleeWeaponType": 1
+}

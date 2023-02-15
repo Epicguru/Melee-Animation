@@ -1,0 +1,20 @@
+{
+  "TextureModID": "vali.ca",
+  "ItemDefName": "V_ChargeKhopesh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.284399241,
+  "OffY": 0.009806868,
+  "Rotation": 48.68732,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": -0.0743685663,
+  "BladeEnd": 0.8017117,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.0243355185,
+    "g": 0.555269957,
+    "b": 0.9955554,
+    "a": 1.0
+  }
+}

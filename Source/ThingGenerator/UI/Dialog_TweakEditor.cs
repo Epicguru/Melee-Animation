@@ -1,6 +1,7 @@
 ﻿using AAM.Reqs;
 using AAM.Retexture;
 using AAM.Tweaks;
+using ColourPicker;
 using RimWorld;
 using System.Collections.Generic;
 using System.Globalization;
@@ -127,7 +128,7 @@ namespace AAM.UI
                 }
             }
 
-            if (ui.ButtonText("Select mod"))
+            if (ui.ButtonText($"Select mod{(Mod == null ? null : $" ({Mod.Name})")}"))
             {
                 string MakeName(ModTweakContainer container)
                 {
@@ -264,10 +265,25 @@ namespace AAM.UI
                 Widgets.DefLabelWithIcon(copyPasta, Def);
                 copyPasta.x += 130;
                 copyPasta.y += 3;
-                Widgets.Label(copyPasta, "Capacities...");
-                copyPasta.x += 140;
-                copyPasta.width = 300;
+                Widgets.Label(copyPasta, "Caps");
+                copyPasta.x += 80;
+                copyPasta.width = 200;
                 tweak.CustomRendererClass = Widgets.TextField(copyPasta, tweak.CustomRendererClass);
+                copyPasta.x += 200;
+                copyPasta.width = 200;
+                Widgets.DrawBoxSolidWithOutline(copyPasta, tweak.TrailTint ?? Color.black, Color.white, 2);
+                if (Widgets.ButtonInvisible(copyPasta))
+                {
+                    tweak.TrailTint ??= default(Color);
+                    var picker = new Dialog_ColourPicker(tweak.TrailTint.Value, c =>
+                    {
+                        if (c.a <= 0)
+                            tweak.TrailTint = null;
+                        else
+                            tweak.TrailTint = c;
+                    });
+                    Find.WindowStack.Add(picker);
+                }
 
                 if (Def.tools != null)
                 {
@@ -427,7 +443,7 @@ namespace AAM.UI
                             case 0:
                                 // Move.
                                 var offset = mousePos - startPos.Value;
-                                var newPos = tweakStart + (Vector2)offset;
+                                var newPos = tweakStart + offset * new Vector2(tweak.FlipX ? -1 : 1, 1);
 
                                 tweak.OffX = newPos.x;
                                 if (Input.GetKey(KeyCode.LeftShift))
@@ -441,7 +457,7 @@ namespace AAM.UI
                             case 1:
                                 // Rotate.
                                 float a = Vector2.SignedAngle(startPos.Value, mousePos);
-                                tweak.Rotation = (tweakStart.x - a) % 360f;
+                                tweak.Rotation = (tweakStart.x + (a * (tweak.FlipX ^ tweak.FlipY ? 1f : -1f))) % 360f;
 
                                 if (!Input.GetKey(KeyCode.LeftShift))
                                     tweak.Rotation = Mathf.Round(tweak.Rotation / 5f) * 5f;

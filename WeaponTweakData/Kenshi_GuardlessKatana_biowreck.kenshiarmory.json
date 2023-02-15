@@ -1,0 +1,13 @@
+{
+  "TextureModID": "biowreck.kenshiarmory",
+  "ItemDefName": "Kenshi_GuardlessKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.356807053,
+  "OffY": -0.0563380346,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.09108027,
+  "BladeEnd": 0.924883068,
+  "MeleeWeaponType": 6
+}

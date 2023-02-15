@@ -1,0 +1,13 @@
+{
+  "TextureModID": "aspirrator.arsenal",
+  "ItemDefName": "Aspirrator_MeleeWeapon_JTHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.244131,
+  "Rotation": 90.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.3727704,
+  "BladeEnd": 0.8497655,
+  "MeleeWeaponType": 1
+}

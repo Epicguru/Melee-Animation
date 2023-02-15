@@ -9,6 +9,5 @@
   "ScaleY": 1.2,
   "BladeStart": 0.1182266,
   "BladeEnd": 0.8998362,
-  "MeleeWeaponType": 6,
-  "CustomRendererClass": ""
+  "MeleeWeaponType": 6
 }

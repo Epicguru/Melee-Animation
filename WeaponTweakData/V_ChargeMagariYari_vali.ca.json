@@ -1,0 +1,20 @@
+{
+  "TextureModID": "vali.ca",
+  "ItemDefName": "V_ChargeMagariYari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5099566,
+  "OffY": -0.0261518471,
+  "Rotation": 50.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.6513398,
+  "BladeEnd": 1.318207,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.0243355185,
+    "g": 0.555269957,
+    "b": 0.9955554,
+    "a": 1.0
+  }
+}

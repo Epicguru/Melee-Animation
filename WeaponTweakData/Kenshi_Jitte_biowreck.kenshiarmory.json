@@ -1,0 +1,10 @@
+{
+  "TextureModID": "biowreck.kenshiarmory",
+  "ItemDefName": "Kenshi_Jitte",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.24037534,
+  "BladeStart": 0.09483591,
+  "BladeEnd": 0.699530959,
+  "MeleeWeaponType": 9
+}

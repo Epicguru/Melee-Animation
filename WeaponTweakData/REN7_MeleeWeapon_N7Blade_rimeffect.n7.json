@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rimeffect.n7",
+  "ItemDefName": "REN7_MeleeWeapon_N7Blade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.292957723,
+  "OffY": 0.0187795758,
+  "BladeStart": 0.143661961,
+  "BladeEnd": 0.7633802,
+  "MeleeWeaponType": 6
+}

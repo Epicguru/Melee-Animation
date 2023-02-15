@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ev.all.tech.melee",
+  "ItemDefName": "ATM_MeleeWeapon_UltratechSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.341085,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.14825581,
+  "BladeEnd": 1.03972888,
+  "MeleeWeaponType": 5
+}

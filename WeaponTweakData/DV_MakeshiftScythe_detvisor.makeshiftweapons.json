@@ -1,0 +1,14 @@
+{
+  "TextureModID": "detvisor.makeshiftweapons",
+  "ItemDefName": "DV_MakeshiftScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.187793627,
+  "OffY": -0.112676039,
+  "Rotation": 20.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.357746452,
+  "BladeEnd": 0.643192947,
+  "MeleeWeaponType": 18
+}

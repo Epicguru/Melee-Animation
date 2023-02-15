@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rimsenal.core",
+  "ItemDefName": "JI_Ormbane",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.35305208,
+  "Rotation": 45.0,
+  "BladeStart": 0.496714056,
+  "BladeEnd": 0.8610331,
+  "MeleeWeaponType": 1
+}

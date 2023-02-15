@@ -1,0 +1,14 @@
+{
+  "TextureModID": "rf.berserk.armory",
+  "ItemDefName": "RS_WSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6497648,
+  "OffY": 0.0150235891,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.177464783,
+  "BladeEnd": 1.6460098,
+  "MeleeWeaponType": 6
+}

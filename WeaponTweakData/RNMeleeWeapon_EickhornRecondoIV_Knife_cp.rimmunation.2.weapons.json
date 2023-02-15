@@ -1,0 +1,15 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_EickhornRecondoIV_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.156909913,
+  "OffY": 0.0196137428,
+  "Rotation": 45.0,
+  "ScaleX": 0.85,
+  "ScaleY": 0.85,
+  "HandsMode": 1,
+  "BladeStart": 0.128306955,
+  "BladeEnd": 0.4650093,
+  "MeleeWeaponType": 48
+}

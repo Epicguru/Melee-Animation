@@ -1,0 +1,14 @@
+{
+  "TextureModID": "co.uk.epicguru.rimforge",
+  "ItemDefName": "RF_Khopesh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.446319252,
+  "OffY": -0.0487577319,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.3638073,
+  "BladeEnd": 1.17018282,
+  "MeleeWeaponType": 6
+}
