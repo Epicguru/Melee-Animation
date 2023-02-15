@@ -695,7 +695,7 @@ MonoBehaviour:
   DataC: 0
   FlipX: 0
   FlipY: 0
-  SplitDrawPivot: {fileID: 0}
+  SplitDrawPivot: {fileID: 1527055157}
   SplitDrawMode: 0
 --- !u!1 &202508721
 GameObject:
@@ -5959,6 +5959,67 @@ MonoBehaviour:
   MakeMesh: 0
   Filter: {fileID: 343237697}
   GhostTime: 1
+--- !u!1 &1527055155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1527055156}
+  - component: {fileID: 1527055157}
+  m_Layer: 0
+  m_Name: WeaponACutoff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1527055156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527055155}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1914720448}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1527055157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527055155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac72458fde51c546a95b850d16b9030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomName: 
+  TexturePath: 
+  DoNotIncludeTexture: 1
+  IdleOffset: {x: 0, y: 0}
+  IdleRotation: 0
+  IdleScale: {x: 1, y: 1}
+  IdleFlipX: 0
+  IdleFlipY: 0
+  TransparentByDefault: 0
+  Tint: {r: 1, g: 1, b: 1, a: 1}
+  DataA: 0
+  DataB: 0
+  DataC: 0
+  FlipX: 0
+  FlipY: 0
+  SplitDrawPivot: {fileID: 0}
+  SplitDrawMode: 0
 --- !u!1 &1529033373
 GameObject:
   m_ObjectHideFlags: 0
@@ -7265,6 +7326,7 @@ Transform:
   - {fileID: 739240442}
   - {fileID: 857622461}
   - {fileID: 1374862966}
+  - {fileID: 1527055156}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7300,7 +7362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: eadfd4841ef6fab4593097c7410f423b, type: 2}
+  Clip: {fileID: 7400000, guid: 0dc1a3885d2c182479fae0a7218906aa, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
@@ -7590,7 +7652,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2027639107}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.146, y: 0, z: -0.011}
+  m_LocalPosition: {x: -0.146, y: -0.05, z: -0.011}
   m_LocalScale: {x: 0.17500001, y: 0.17500001, z: 0.175}
   m_ConstrainProportionsScale: 0
   m_Children: []

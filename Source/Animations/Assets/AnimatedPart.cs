@@ -26,6 +26,8 @@ public class AnimatedPart : MonoBehaviour
     public Color Tint = Color.white;
     public float DataA, DataB, DataC;
     public bool FlipX, FlipY;
+    [Tooltip("Not fully supported!")]
+    public int FrameIndex;
 
     [Header("Other")]
     public AnimatedPart SplitDrawPivot;

@@ -383,6 +383,7 @@ public class AnimRenderer : IExposable
     private List<AnimPartData> bodies = new List<AnimPartData>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
     private AnimPartSnapshot[] snapshots;
+    private AnimPartSnapshot[] snapshotsSorted;
     private AnimPartOverrideData[] overrides;
     private PartWithSweep[] sweeps;
     private MaterialPropertyBlock pb;
@@ -412,6 +413,7 @@ public class AnimRenderer : IExposable
         }
 
         snapshots = new AnimPartSnapshot[Data.Parts.Count];
+        snapshotsSorted = new AnimPartSnapshot[Data.Parts.Count];
         overrides = new AnimPartOverrideData[Data.Parts.Count];
         pb = new MaterialPropertyBlock();
 
@@ -738,6 +740,13 @@ public class AnimRenderer : IExposable
         return (p.Spawned || ignoreNotSpawned) && ((p.ParentHolder is Map m && m == Map) || (p.ParentHolder == null && ignoreNotSpawned));
     }
 
+    public AnimPartSnapshot[] GetSortedSnapshots()
+    {
+        Array.Copy(snapshots, snapshotsSorted, snapshots.Length);
+        Array.Sort(snapshotsSorted, (a, b) => a.GetWorldPosition().y.CompareTo(b.GetWorldPosition().y));
+        return snapshotsSorted;
+    }
+
     public Vector2 Draw(float? atTime, float? dt, Action<Pawn, Vector2> labelDraw = null)
     {
         if (IsDestroyed)
@@ -757,8 +766,7 @@ public class AnimRenderer : IExposable
 
         foreach (var path in sweeps)
             path.Draw(time);
-
-        foreach (var snap in snapshots)
+        foreach (var snap in GetSortedSnapshots()) // Snapshots need to be sorted because of transparent rendering.
         {
             if (!ShouldDraw(snap))
                 continue;
@@ -767,7 +775,7 @@ public class AnimRenderer : IExposable
             if (tex == null)
                 continue;
             
-            var mat = GetMaterialFor(snap);
+            var mat = GetMaterialFor(snap, out bool forceMPB);
             if (mat == null)
                 continue;
 
@@ -795,7 +803,7 @@ public class AnimRenderer : IExposable
                     continue;
             }
 
-            bool useMPB = ov.UseMPB;
+            bool useMPB = forceMPB || ov.UseMPB;
             var color = snap.FinalColor;
 
             int passes = 1;
@@ -803,8 +811,33 @@ public class AnimRenderer : IExposable
             {
                 if (useMPB)
                 {
+                    pb.Clear();
+
+                    // Basic texture and color, always used. Color might be replaced, see below.
                     pb.SetTexture("_MainTex", tex);
                     pb.SetColor("_Color", color);
+
+                    if (ov.Material != null)
+                    {
+                        // Check for a mask...
+                        bool doesUseMask = ov.Material.HasProperty("_MaskTex");
+                        if (doesUseMask)
+                        {
+                            // Get the mask and mask color.
+                            var mask = ov.Material.GetTexture(ShaderPropertyIDs.MaskTex);
+
+                            // Tint is applied to the mask.
+                            pb.SetColor("_Color", color); // Color comes from animation.
+                            pb.SetColor("_ColorTwo", ov.Weapon.DrawColor); // Mask tint
+                            pb.SetTexture("_MaskTex", mask);
+
+                        }
+                        else
+                        {
+                            // Tint is applied straight to main color.
+                            pb.SetColor("_Color", color * ov.Weapon.DrawColor);
+                        }
+                    }
 
                     if (snap.SplitDrawMode != AnimData.SplitDrawMode.None && snap.SplitDrawPivot != null)
                     {
@@ -841,7 +874,7 @@ public class AnimRenderer : IExposable
             if (currentPass == 0)
                 passCount++;
             else
-                matrix *= Matrix4x4.Translate(new Vector3(0, -0.1f, 0));
+                matrix *= Matrix4x4.Translate(new Vector3(0, -0.9f, 0)); // This is the actual offset depth here.
         }
         pb.SetFloat("Polarity", mode == AnimData.SplitDrawMode.Before ? 1f : -1f);
 
@@ -1024,6 +1057,9 @@ public class AnimRenderer : IExposable
 
     public void OnStart()
     {
+        if (hasStarted)
+            Core.Error("Started twice!");
+        
         hasStarted = true;
 
         // Give pawns their jobs.
@@ -1143,16 +1179,25 @@ public class AnimRenderer : IExposable
         return snapshot.Active && !GetOverride(snapshot).PreventDraw && snapshot.FinalColor.a > 0;
     }
 
-    protected virtual Material GetMaterialFor(in AnimPartSnapshot snapshot)
+    protected virtual Material GetMaterialFor(in AnimPartSnapshot snapshot, out bool forceMPB)
     {
+        forceMPB = false;
+
+        // If drawing in split mode, must use the split shader.
+        if (snapshot.SplitDrawMode != AnimData.SplitDrawMode.None && snapshot.SplitDrawPivot != null)
+        {
+            // This shader is designed to work with the mpb.
+            forceMPB = true;
+            return Content.CustomCutoffMaterial;
+        }
+
+        // Otherwise check for an override material.
         var ov = GetOverride(snapshot);
         var ovMat = ov.Material;
         if (ovMat != null)        
             return ovMat;
 
-        if (snapshot.SplitDrawMode != AnimData.SplitDrawMode.None && snapshot.SplitDrawPivot != null)
-            return Content.CustomCutoffMaterial;
-
+        // Finally fall back to transparent or cutout.
         if (ov.UseDefaultTransparentMaterial || snapshot.Part.TransparentByDefault || snapshot.FinalColor.a < 1f)        
             return DefaultTransparent;        
 

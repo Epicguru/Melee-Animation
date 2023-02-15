@@ -18,21 +18,34 @@ public static class BundleExporter
     [MenuItem("Bundles/Build")]
     public static void ExportBundles()
     {
-        string dest = new DirectoryInfo(Destination).FullName;
-        Debug.Log($"Building bundles to {dest}");
-
-        foreach (var target in Targets)
+        try
         {
-            Debug.Log($"Building bundles for {target} ...");
-            var bundle = BuildPipeline.BuildAssetBundles(dest, Options, target);
-            PostProcess(target, dest, bundle);
+            string dest = new DirectoryInfo(Destination).FullName;
+            Debug.Log($"Building bundles to {dest}");
+
+            int i = 0;
+            foreach (var target in Targets)
+            {
+                if (EditorUtility.DisplayCancelableProgressBar("Exporting bundles", $"Platform: {target}", (i + 1f) / Targets.Count()))
+                {
+                    break;
+                }
+
+                Debug.Log($"Building bundles for {target} ...");
+                var bundle = BuildPipeline.BuildAssetBundles(dest, Options, target);
+                PostProcess(target, dest, bundle);
+            }
+
+            string toDelete = Path.Combine(dest, "Bundles");
+            string toDelete2 = Path.Combine(dest, "Bundles.manifest");
+
+            File.Delete(toDelete);
+            File.Delete(toDelete2);
         }
-
-        string toDelete = Path.Combine(dest, "Bundles");
-        string toDelete2 = Path.Combine(dest, "Bundles.manifest");
-
-        File.Delete(toDelete);
-        File.Delete(toDelete2);
+        finally
+        {
+            EditorUtility.ClearProgressBar();
+        }
     }
 
     private static void CreateDeep(DirectoryInfo dir)

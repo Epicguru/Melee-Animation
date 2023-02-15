@@ -59,10 +59,11 @@ namespace AAM
         {
             foreach (var def in allDefs)
             {
-                if(def.resolvedData == null)
+                if (def.resolvedData == null)
                     continue;
 
                 def.resolvedData = AnimData.Load(def.FullDataPath, false);
+                def.resolvedNonLethalData = File.Exists(def.FullNonLethalDataPath) ? AnimData.Load(def.FullNonLethalDataPath, false) : def.resolvedData;
             }
         }
 

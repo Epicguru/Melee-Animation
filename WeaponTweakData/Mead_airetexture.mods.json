@@ -1,0 +1,13 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "Mead",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.158581376,
+  "OffY": 0.008346245,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.100156493,
+  "BladeEnd": 0.4256651,
+  "MeleeWeaponType": 8
+}
