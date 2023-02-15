@@ -17,6 +17,8 @@ public class BasicSweepProvider : ISweepProvider
 
         float l = length * Core.Settings.TrailLengthScale;
         Color col = color * Core.Settings.TrailColor;
+        Color tint = args.Renderer.GetOverride(args.Part)?.TweakData.TrailTint ?? Color.white;
+        col *= tint;
 
         if (timeSinceHere > l)
             return (default, default);

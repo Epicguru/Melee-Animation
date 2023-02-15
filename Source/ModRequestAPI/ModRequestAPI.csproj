@@ -7,6 +7,7 @@
 	<Nullable>disable</Nullable>
 	<NoStdLib>false</NoStdLib>
 	<LangVersion>11</LangVersion>
+		<DebugType>none</DebugType>
   </PropertyGroup>
 
 	<ItemGroup>

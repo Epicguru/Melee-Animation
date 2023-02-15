@@ -1190,8 +1190,8 @@ public class AnimRenderer : IExposable
         var itemPart = GetPart(itemName);
         if (weapon != null && itemPart != null && tweak != null)
         {
-            tweak.Apply(this, itemPart);
-            var ov = GetOverride(itemPart);
+            var ov = tweak.Apply(this, itemPart);
+            ov.Weapon = weapon;
             ov.Material = weapon.Graphic?.MatSingleFor(weapon);
             ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
 

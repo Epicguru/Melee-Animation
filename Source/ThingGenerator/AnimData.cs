@@ -652,6 +652,7 @@ public class AnimPartOverrideData
     public PartRenderer CustomRenderer;
     public object UserData;
     public ItemTweakData TweakData;
+    public Thing Weapon;
 }
 
 [Serializable]

@@ -6,8 +6,9 @@
   "Rotation": 45.0,
   "ScaleX": 2.2,
   "ScaleY": 2.2,
-  "BladeStart": -1.87087524,
-  "BladeEnd": 1.83644187,
+  "BladeStart": -1.41587269,
+  "BladeEnd": 1.42857146,
   "MeleeWeaponType": 6,
-  "CustomRendererClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+  "CustomRendererClass": "AAM.LightsaberPatch.SaberRenderer",
+  "SweepProviderClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
 }
