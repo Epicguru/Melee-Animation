@@ -1,0 +1,11 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_SwitchBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.150372416,
+  "HandsMode": 1,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 0.448664337,
+  "MeleeWeaponType": 48
+}

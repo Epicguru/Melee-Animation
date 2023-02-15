@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Baton",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.147103056,
+  "OffY": 0.009806871,
+  "Rotation": 25.0,
+  "HandsMode": 1,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "vanillaexpanded.vwetb",
+  "ItemDefName": "VWE_MeleeWeapon_Shiv",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.134026825,
+  "OffY": 0.03268937,
+  "HandsMode": 1,
+  "BladeStart": 0.08907947,
+  "BladeEnd": 0.409436852,
+  "MeleeWeaponType": 48
+}

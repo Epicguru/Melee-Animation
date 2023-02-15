@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_scythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.304013,
+  "OffY": -0.0947996452,
+  "Rotation": 55.0,
+  "BladeStart": 0.599036753,
+  "BladeEnd": 0.7984429,
+  "MeleeWeaponType": 4
+}

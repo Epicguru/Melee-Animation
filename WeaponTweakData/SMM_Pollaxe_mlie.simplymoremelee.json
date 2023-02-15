@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Pollaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.392274827,
+  "OffY": -0.009806871,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.10542386,
+  "BladeEnd": 1.233214,
+  "MeleeWeaponType": 7
+}

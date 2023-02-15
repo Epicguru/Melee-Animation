@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.176523626,
+  "OffY": 0.104606517,
+  "Rotation": 46.6524,
+  "BladeStart": 0.357133746,
+  "BladeEnd": 0.5859605,
+  "MeleeWeaponType": 2
+}

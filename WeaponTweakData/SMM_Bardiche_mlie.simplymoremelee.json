@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Bardiche",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.304012954,
+  "Rotation": 46.70812,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.657878,
+  "BladeEnd": 1.13841462,
+  "MeleeWeaponType": 3
+}

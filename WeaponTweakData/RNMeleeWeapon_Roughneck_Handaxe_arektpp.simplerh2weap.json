@@ -1,0 +1,9 @@
+{
+  "TextureModID": "arektpp.simplerh2weap",
+  "ItemDefName": "RNMeleeWeapon_Roughneck_Handaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.20594427,
+  "Rotation": 45.0,
+  "MeleeWeaponType": 16
+}

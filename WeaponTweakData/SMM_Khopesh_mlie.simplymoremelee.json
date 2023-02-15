@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Khopesh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.27459237,
+  "OffY": 0.06537904,
+  "BladeStart": 0.167534441,
+  "BladeEnd": 0.7297948,
+  "MeleeWeaponType": 6
+}

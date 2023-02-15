@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_Woodcutteraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.212481812,
+  "OffY": -0.0555721745,
+  "Rotation": 45.0,
+  "BladeStart": 0.383285582,
+  "BladeEnd": 0.634994864,
+  "MeleeWeaponType": 18
+}

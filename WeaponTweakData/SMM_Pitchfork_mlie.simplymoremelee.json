@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Pitchfork",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.323626757,
+  "OffY": -0.03268937,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 1.092649,
+  "MeleeWeaponType": 5
+}

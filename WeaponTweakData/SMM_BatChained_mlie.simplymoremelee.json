@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_BatChained",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.251709878,
+  "OffY": -0.00326906145,
+  "Rotation": 45.0,
+  "BladeStart": 0.118500084,
+  "BladeEnd": 0.883435965,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "vanillaexpanded.vwetb",
+  "ItemDefName": "VWE_MeleeWeapon_TribalAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.183061182,
+  "OffY": 0.0228827968,
+  "BladeStart": 0.281947523,
+  "BladeEnd": 0.5826917,
+  "MeleeWeaponType": 25
+}

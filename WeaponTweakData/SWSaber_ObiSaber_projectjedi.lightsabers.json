@@ -1,0 +1,15 @@
+{
+  "TextureModID": "projectjedi.lightsabers",
+  "ItemDefName": "SWSaber_ObiSaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.206599712,
+  "OffY": -0.286944032,
+  "Rotation": 39.05209,
+  "ScaleX": 2.5,
+  "ScaleY": 2.5,
+  "BladeStart": 0.160688668,
+  "BladeEnd": 1.27020586,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Hatchet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.09153119,
+  "OffY": -0.00653811172,
+  "BladeStart": 0.06292762,
+  "BladeEnd": 0.471547425,
+  "MeleeWeaponType": 16
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1503718,
+  "OffY": 0.0163446851,
+  "HandsMode": 1,
+  "BladeStart": 0.1021551,
+  "BladeEnd": 0.445395559,
+  "MeleeWeaponType": 48
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Bat",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.326895475,
+  "OffY": 0.00326876342,
+  "Rotation": 45.0,
+  "BladeStart": 0.1479207,
+  "BladeEnd": 0.958621562,
+  "MeleeWeaponType": 1
+}

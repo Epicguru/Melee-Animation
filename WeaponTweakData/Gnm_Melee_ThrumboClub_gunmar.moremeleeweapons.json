@@ -1,0 +1,14 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_ThrumboClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.251709282,
+  "OffY": 0.07518591,
+  "Rotation": 40.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.08907947,
+  "BladeEnd": 0.7919048,
+  "MeleeWeaponType": 1
+}

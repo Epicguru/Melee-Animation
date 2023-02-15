@@ -1,0 +1,16 @@
+{
+  "TextureModID": "projectjedi.lightsabers",
+  "ItemDefName": "SWSaber_Yodasaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.267814219,
+  "OffY": 0.09564781,
+  "Rotation": 50.0,
+  "ScaleX": 1.9,
+  "ScaleY": 1.9,
+  "HandsMode": 1,
+  "BladeStart": 0.08799641,
+  "BladeEnd": 1.35055017,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+}

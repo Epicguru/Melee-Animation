@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sirvan.mwretextured",
+  "ItemDefName": "MeleeWeapon_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.230157524,
+  "OffY": -0.009958029,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.111658856,
+  "BladeEnd": 1.04034591,
+  "MeleeWeaponType": 5
+}

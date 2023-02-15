@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_flamberge",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.421695441,
+  "Rotation": 45.0,
+  "BladeStart": 0.174071953,
+  "BladeEnd": 1.092649,
+  "MeleeWeaponType": 6
+}

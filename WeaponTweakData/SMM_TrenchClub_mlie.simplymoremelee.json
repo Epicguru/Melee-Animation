@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_TrenchClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2353649,
+  "OffY": 0.0490343533,
+  "BladeStart": 0.08907947,
+  "BladeEnd": 0.6186505,
+  "MeleeWeaponType": 9
+}

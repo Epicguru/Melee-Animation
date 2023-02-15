@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Warclub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2353649,
+  "OffY": 0.006538108,
+  "BladeStart": 0.1021551,
+  "BladeEnd": 0.6546086,
+  "MeleeWeaponType": 9
+}

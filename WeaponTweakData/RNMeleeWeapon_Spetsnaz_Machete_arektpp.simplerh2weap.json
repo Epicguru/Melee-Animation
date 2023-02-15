@@ -1,0 +1,14 @@
+{
+  "TextureModID": "arektpp.simplerh2weap",
+  "ItemDefName": "RNMeleeWeapon_Spetsnaz_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.219020516,
+  "OffY": 0.003269054,
+  "Rotation": 50.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.134844467,
+  "BladeEnd": 0.6023055,
+  "MeleeWeaponType": 54
+}

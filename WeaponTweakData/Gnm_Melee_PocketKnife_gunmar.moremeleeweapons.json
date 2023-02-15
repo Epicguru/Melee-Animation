@@ -1,0 +1,12 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_PocketKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.147103056,
+  "OffY": 0.0228828,
+  "HandsMode": 1,
+  "BladeStart": 0.138113827,
+  "BladeEnd": 0.425781816,
+  "MeleeWeaponType": 48
+}

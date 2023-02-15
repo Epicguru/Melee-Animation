@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Mallet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.219020516,
+  "OffY": -0.006537825,
+  "Rotation": 20.0,
+  "BladeStart": 0.363671839,
+  "BladeEnd": 0.5826917,
+  "MeleeWeaponType": 9
+}

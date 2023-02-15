@@ -1,0 +1,13 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_StoneKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1830624,
+  "OffY": 0.0163449831,
+  "Rotation": 5.0,
+  "HandsMode": 1,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 0.448664337,
+  "MeleeWeaponType": 48
+}

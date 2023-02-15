@@ -1,0 +1,10 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_cleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.156909913,
+  "OffY": 0.00653781,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

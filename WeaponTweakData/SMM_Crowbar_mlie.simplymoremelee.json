@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Crowbar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.140565544,
+  "OffY": -0.0392274857,
+  "Rotation": 12.34753,
+  "BladeStart": 0.04985199,
+  "BladeEnd": 0.563078,
+  "MeleeWeaponType": 9
+}

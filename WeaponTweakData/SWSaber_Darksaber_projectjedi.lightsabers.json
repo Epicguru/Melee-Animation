@@ -1,0 +1,15 @@
+{
+  "TextureModID": "projectjedi.lightsabers",
+  "ItemDefName": "SWSaber_Darksaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4514584,
+  "OffY": 0.107125551,
+  "Rotation": 46.57022,
+  "ScaleX": 2.15,
+  "ScaleY": 2.15,
+  "BladeStart": 0.130081773,
+  "BladeEnd": 1.40411329,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+}

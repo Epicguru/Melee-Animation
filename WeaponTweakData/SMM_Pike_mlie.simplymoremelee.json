@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Pike",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.372661054,
+  "OffY": -0.00653781,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.0792726055,
+  "BladeEnd": 1.23648334,
+  "MeleeWeaponType": 7
+}

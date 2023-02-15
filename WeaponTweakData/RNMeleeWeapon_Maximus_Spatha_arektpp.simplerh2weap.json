@@ -1,0 +1,11 @@
+{
+  "TextureModID": "arektpp.simplerh2weap",
+  "ItemDefName": "RNMeleeWeapon_Maximus_Spatha",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.483806,
+  "Rotation": 45.0,
+  "BladeStart": 0.12176884,
+  "BladeEnd": 1.16783524,
+  "MeleeWeaponType": 6
+}

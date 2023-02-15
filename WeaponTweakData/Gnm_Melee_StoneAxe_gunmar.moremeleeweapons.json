@@ -1,0 +1,10 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_StoneAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.186330542,
+  "BladeStart": 0.259065032,
+  "BladeEnd": 0.4878918,
+  "MeleeWeaponType": 16
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_bardiche",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.45438543,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.6840292,
+  "BladeEnd": 1.265904,
+  "MeleeWeaponType": 6
+}

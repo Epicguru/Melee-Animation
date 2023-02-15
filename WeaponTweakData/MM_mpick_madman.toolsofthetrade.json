@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_mpick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.160178691,
+  "OffY": -0.06537904,
+  "BladeStart": 0.108693212,
+  "BladeEnd": 0.507505536,
+  "MeleeWeaponType": 24
+}

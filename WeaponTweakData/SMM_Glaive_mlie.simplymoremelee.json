@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Glaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3170886,
+  "OffY": -0.0163446814,
+  "Rotation": 44.09908,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.6088436,
+  "BladeEnd": 1.18417966,
+  "MeleeWeaponType": 7
+}

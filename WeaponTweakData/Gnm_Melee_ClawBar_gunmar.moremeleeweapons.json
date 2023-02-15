@@ -1,0 +1,13 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_ClawBar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.169985548,
+  "OffY": -0.0555724651,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.111961968,
+  "BladeEnd": 0.6088436,
+  "MeleeWeaponType": 9
+}

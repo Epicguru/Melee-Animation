@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Sledgehammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.307281762,
+  "OffY": -0.0196137428,
+  "Rotation": 47.94548,
+  "BladeStart": 0.09888634,
+  "BladeEnd": 0.8376704,
+  "MeleeWeaponType": 1
+}

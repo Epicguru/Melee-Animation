@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_shovel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.307281733,
+  "OffY": -0.009806871,
+  "Rotation": 45.0,
+  "BladeStart": 0.1250376,
+  "BladeEnd": 0.867091,
+  "MeleeWeaponType": 5
+}
