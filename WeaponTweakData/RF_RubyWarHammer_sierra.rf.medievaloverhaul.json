@@ -1,0 +1,20 @@
+{
+  "TextureModID": "sierra.rf.medievaloverhaul",
+  "ItemDefName": "RF_RubyWarHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.313325018,
+  "OffY": -0.03666562,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.398323417,
+  "BladeEnd": 0.7183151,
+  "MeleeWeaponType": 7,
+  "TrailTint": {
+    "r": 0.9977777,
+    "g": 0.212859213,
+    "b": 0.212859213,
+    "a": 1.0
+  }
+}

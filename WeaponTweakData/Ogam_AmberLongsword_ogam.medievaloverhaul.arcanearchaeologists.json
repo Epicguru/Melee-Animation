@@ -1,0 +1,17 @@
+{
+  "TextureModID": "ogam.medievaloverhaul.arcanearchaeologists",
+  "ItemDefName": "Ogam_AmberLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3766565,
+  "Rotation": 45.0,
+  "BladeStart": 0.114997022,
+  "BladeEnd": 0.988308132,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.7165029,
+    "b": 0.182222068,
+    "a": 0.996
+  }
+}

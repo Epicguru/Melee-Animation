@@ -6,7 +6,7 @@ env:
   SLN_PATH: Source/
   # Change this to what you want your folder name to be in people's Mods/
   # folder. It should be unique to your mod.
-  MOD_NAME: AdvancedAnimationMod
+  MOD_NAME: AdvancedMeleeAnimation
   # These two environment variables control whether all releases created by the
   # release job are drafts or prereleases.
   RELEASE_DRAFT: false
@@ -68,7 +68,7 @@ jobs:
           About/
           Animations/
           Bundles/
-          Data/
+          WeaponTweakData/
           Defs/
           Languages/
           Patch_AlienRaces/
@@ -110,7 +110,7 @@ jobs:
         mkdir -p ${{ env.MOD_PATH }}/About/
         mkdir -p ${{ env.MOD_PATH }}/Animations/
         mkdir -p ${{ env.MOD_PATH }}/Bundles/
-        mkdir -p ${{ env.MOD_PATH }}/Data/
+        mkdir -p ${{ env.MOD_PATH }}/WeaponTweakData/
         mkdir -p ${{ env.MOD_PATH }}/Defs/
         mkdir -p ${{ env.MOD_PATH }}/Languages/
         mkdir -p ${{ env.MOD_PATH }}/Patch_AlienRaces/

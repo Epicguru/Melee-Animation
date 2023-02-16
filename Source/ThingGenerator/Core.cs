@@ -5,12 +5,9 @@ using ModRequestAPI;
 using RimWorld;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
 
@@ -22,8 +19,7 @@ namespace AAM
         private static readonly string GistID = "d1c22be7a26feb273008c4cea948be53";
 
         public static Func<Pawn, float> GetBodyDrawSizeFactor = _ => 1f;
-        public static string ModTitle => "AAM.ModTitle".Trs();
-        public static string ModFolder => ModContent.RootDir;
+        public static string ModTitle => ModContent?.Name;
         public static ModContentPack ModContent;
         public static Settings Settings;
         public static bool IsSimpleSidearmsActive;
@@ -48,7 +44,7 @@ namespace AAM
                 Verse.Log.Error(e.ToString());
         }
 
-        [DebugAction("Advanced Animation Mod", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
+        [DebugAction("Advanced Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
         private static void LogModRequests()
         {
             var task = Task.Run(() => new ModRequestClient(GistID).GetModRequests());
@@ -244,10 +240,8 @@ namespace AAM
             ParseHelper.Parsers<T>.Register(func);
         }
 
-        public override string SettingsCategory()
-        {
-            return ModTitle;
-        }
+        public override string SettingsCategory() => ModTitle;
+        
 
         public override void DoSettingsWindowContents(Rect inRect)
         {

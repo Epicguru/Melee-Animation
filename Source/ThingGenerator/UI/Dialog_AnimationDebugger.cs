@@ -33,7 +33,7 @@ namespace AAM.UI
         private static float trailTime = 0.1f;
         private static ExecutionOutcome executionOutcome = ExecutionOutcome.Kill;
 
-        [DebugAction("Advanced Animation Mod", "Open Debugger", actionType = DebugActionType.Action)]
+        [DebugAction("Advanced Melee Animation", "Open Debugger", actionType = DebugActionType.Action)]
         private static void OpenInt()
         {
             Open();

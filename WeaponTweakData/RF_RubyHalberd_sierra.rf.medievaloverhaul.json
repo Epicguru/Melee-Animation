@@ -1,0 +1,20 @@
+{
+  "TextureModID": "sierra.rf.medievaloverhaul",
+  "ItemDefName": "RF_RubyHalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4833212,
+  "OffY": -0.0233325362,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.5316531,
+  "BladeEnd": 1.04163992,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9977777,
+    "g": 0.212859213,
+    "b": 0.212859213,
+    "a": 1.0
+  }
+}

@@ -9,7 +9,7 @@ namespace AAM.Grappling;
 
 public class KnockbackFlyer : PawnFlyer
 {
-    [DebugAction("Advanced Animation Mod", actionType = DebugActionType.ToolMapForPawns)]
+    [DebugAction("Advanced Melee Animation", actionType = DebugActionType.ToolMapForPawns)]
     private static void TestKnockback(Pawn victim)
     {
         var end = GetEndCell(victim, IntVec3.East, 20);

@@ -86,7 +86,7 @@ public static class Program
         const string TEMPLATE_PATH = "./Template.md";
         string template = File.ReadAllText(TEMPLATE_PATH);
 
-        string time = DateTime.UtcNow.ToString("M MMM yyyy, h:mm tt");
+        string time = DateTime.UtcNow.ToString("d MMM yyyy, h:mm tt");
         int modCount = table.Count;
         var lines = from row in table.Values
                     orderby row.ModName

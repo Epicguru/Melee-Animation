@@ -54,7 +54,7 @@ namespace AAM
                 .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
         }
 
-        [DebugAction("Advanced Animation Mod", "Reload all animations", actionType = DebugActionType.Action)]
+        [DebugAction("Advanced Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
         public static void ReloadAllAnimations()
         {
             foreach (var def in allDefs)

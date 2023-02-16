@@ -161,7 +161,7 @@ public static class Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetOccupiedMaskBitZ(this uint mask, int z) => (((uint)1 << 1 + (z + 1) * 3) & mask) != 0;
 
-    [DebugAction("Advanced Animation Mod", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void GimmeMeleeWeapons()
     {
         var pos = Verse.UI.MouseCell();
@@ -181,7 +181,7 @@ public static class Extensions
         }
     }
 
-    [DebugAction("Advanced Animation Mod", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Advanced Melee Animation", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void SpawnArmy()
     {
         List<DebugMenuOption> list = new();

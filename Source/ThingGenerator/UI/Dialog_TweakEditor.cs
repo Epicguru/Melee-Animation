@@ -16,9 +16,9 @@ namespace AAM.UI
     {
         private static ItemTweakData clipboard;
 
-        [DebugAction("Advanced Animation Mod", "Open Tweak Editor", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Playing)]
+        [DebugAction("Advanced Melee Animation", "Open Tweak Editor", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Playing)]
         private static void OpenInt() => Open();
-        [DebugAction("Advanced Animation Mod", "Open Tweak Editor", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
+        [DebugAction("Advanced Melee Animation", "Open Tweak Editor", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
         private static void OpenInt2() => Open();
 
         public static Dialog_TweakEditor Open()

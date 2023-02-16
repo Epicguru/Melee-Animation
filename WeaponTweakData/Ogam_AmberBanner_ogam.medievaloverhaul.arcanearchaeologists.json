@@ -1,0 +1,19 @@
+{
+  "TextureModID": "ogam.medievaloverhaul.arcanearchaeologists",
+  "ItemDefName": "Ogam_AmberBanner",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.526652634,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.1983286,
+  "BladeEnd": 1.3649646,
+  "MeleeWeaponType": 5,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.7165029,
+    "b": 0.182222068,
+    "a": 0.996
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sierra.rf.medievaloverhaul",
+  "ItemDefName": "RF_EmeraldSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3733235,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.4749877,
+  "BladeEnd": 1.05497265,
+  "MeleeWeaponType": 5,
+  "TrailTint": {
+    "r": 0.549,
+    "g": 0.749,
+    "b": 0.098,
+    "a": 0.9755554
+  }
+}

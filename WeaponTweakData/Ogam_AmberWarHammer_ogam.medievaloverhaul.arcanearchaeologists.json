@@ -1,0 +1,19 @@
+{
+  "TextureModID": "ogam.medievaloverhaul.arcanearchaeologists",
+  "ItemDefName": "Ogam_AmberWarHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.346657872,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.591651559,
+  "BladeEnd": 0.9183099,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.7165029,
+    "b": 0.182222068,
+    "a": 0.996
+  }
+}
