@@ -38,9 +38,6 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Build Mod 1.3
-      run: dotnet build ${{ env.SLN_PATH }} --configuration v1.3
-
     - name: Build Mod 1.4
       run: dotnet build ${{ env.SLN_PATH }} --configuration v1.4
 
@@ -63,7 +60,6 @@ jobs:
         name: build
         retention-days: 7
         path: |
-          1.3/
           1.4/
           About/
           Animations/
@@ -105,7 +101,6 @@ jobs:
     # artifacts, add them here. It may be neccessary to change this for v1.1 mods.
     - name: Create Mod Folders
       run: |
-        mkdir -p ${{ env.MOD_PATH }}/1.3/
         mkdir -p ${{ env.MOD_PATH }}/1.4/
         mkdir -p ${{ env.MOD_PATH }}/About/
         mkdir -p ${{ env.MOD_PATH }}/Animations/
