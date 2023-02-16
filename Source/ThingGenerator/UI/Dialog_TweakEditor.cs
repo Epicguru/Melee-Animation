@@ -122,10 +122,7 @@ namespace AAM.UI
 
             if (ui.ButtonText("(RE)LOAD ALL"))
             {
-                foreach (var _ in TweakDataManager.LoadAllForActiveMods(true))
-                {
-
-                }
+                foreach (var _ in TweakDataManager.LoadAllForActiveMods(true)) { }
             }
 
             if (ui.ButtonText($"Select mod{(Mod == null ? null : $" ({Mod.Name})")}"))
@@ -168,16 +165,41 @@ namespace AAM.UI
 
             if (ui.ButtonText("SAVE MOD CHANGES"))
             {
-                var toSave = from rep in RetextureUtility.GetModWeaponReports(Mod)
-                    let tweak = TweakDataManager.TryGetTweak(rep.Weapon, Mod)
-                    where tweak != null
-                    select tweak;
+                bool saveAll = Input.GetKey(KeyCode.LeftShift);
 
+                IEnumerable<ItemTweakData> toSave;
+
+                if (saveAll)
+                {
+                    toSave = from pair in TweakDataManager.GetTweaksReportForActiveMods()
+                             from report in pair.Reports
+                             let tweak = TweakDataManager.TryGetTweak(report.Weapon, pair.Mod)
+                             where tweak is not null
+                             select tweak;
+                }
+                else
+                {
+                    toSave = from rep in RetextureUtility.GetModWeaponReports(Mod)
+                             let tweak = TweakDataManager.TryGetTweak(rep.Weapon, Mod)
+                             where tweak != null
+                             select tweak;
+                }
+
+                int c = 0;
                 foreach (var item in toSave)
                 {
                     var file = TweakDataManager.GetFileForTweak(item.GetDef(), item.GetMod());
                     item.SaveTo(file.FullName);
+                    c++;
+
+                    var mapFile = new FileInfo(Path.Combine(file.Directory.FullName, $"{item.TextureModID}.txt"));
+                    if (!mapFile.Exists)
+                    {
+                        File.WriteAllText(mapFile.FullName, item.GetMod().Name);
+                    }
                 }
+
+                Messages.Message($"Saved {c} tweak data.", MessageTypeDefOf.PositiveEvent, false);
             }
 
             if (ui.ButtonText($"Editing: {Def?.LabelCap ?? "nothing"}"))
@@ -237,24 +259,38 @@ namespace AAM.UI
                 }
 
                 var rep = RetextureUtility.GetTextureReport(Def);
+                
                 copyPasta.x += 130;
-                if (rep.AllRetextures.Count > 1 && Widgets.ButtonText(copyPasta, "PASTE PARENT"))
+                if (Widgets.ButtonText(copyPasta, "PASTE PARENT"))
                 {
                     var src = from retex in rep.AllRetextures
                         where retex.mod != Mod && TweakDataManager.TryGetTweak(Def, retex.mod) != null
                         orderby retex.mod.loadOrder
-                        select retex.mod;
+                        select (retex.mod, Def);
 
-                    string MakeLabel(ModContentPack mcp)
+                    var src2 = from r in RetextureUtility.AllCachedReports
+                        where r.TexturePath == rep.TexturePath && r.Weapon != Def
+                        from pair in r.AllRetextures
+                        where pair.mod != Mod && TweakDataManager.TryGetTweak(r.Weapon, pair.mod) != null
+                        orderby pair.mod.loadOrder
+                        select (pair.mod, r.Weapon);
+
+                    IEnumerable<(ModContentPack mod, ThingDef def)> final = src.Concat(src2).Distinct();
+
+                    string MakeLabel((ModContentPack mcp, ThingDef def) pair)
                     {
-                        if (Def.modContentPack == mcp)
-                            return $"[SRC] {mcp.Name}";
-                        return mcp.Name;
+                        string prefix = null;
+                        if (Def != pair.def)
+                            prefix = $"<{pair.def.LabelCap}> ";
+
+                        if (Def.modContentPack == pair.mcp)
+                            return $"{prefix}[SRC] {pair.mcp.Name}";
+                        return prefix + pair.mcp.Name;
                     }
 
-                    FloatMenuUtility.MakeMenu(src, MakeLabel, sel => () =>
+                    FloatMenuUtility.MakeMenu(final, MakeLabel, sel => () =>
                     {
-                        var toCopyFrom = TweakDataManager.TryGetTweak(Def, sel);
+                        var toCopyFrom = TweakDataManager.TryGetTweak(sel.def, sel.mod);
 
                         ResetBuffers();
                         tweak.CopyTransformFrom(toCopyFrom);
@@ -265,6 +301,7 @@ namespace AAM.UI
                 Widgets.DefLabelWithIcon(copyPasta, Def);
                 copyPasta.x += 130;
                 copyPasta.y += 3;
+                Rect capsRect = copyPasta;
                 Widgets.Label(copyPasta, "Caps");
                 copyPasta.x += 80;
                 copyPasta.width = 200;
@@ -302,7 +339,7 @@ namespace AAM.UI
                         }
                         caps[i] = s;
                     }
-                    TooltipHandler.TipRegion(copyPasta, string.Join(",\n", caps));
+                    TooltipHandler.TipRegion(capsRect, string.Join(",\n", caps) + $"\nTexture path:{RetextureUtility.GetTextureReport(Def).TexturePath}");
                 }
 
                 ui.Gap();
@@ -310,11 +347,11 @@ namespace AAM.UI
                 ui.TextFieldNumericLabeled("Scale Y:  ", ref tweak.ScaleY, ref GetBuffer(tweak.ScaleY));
 
                 ui.Gap();
-                tweak.OffX = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffX, -2, 2, label: $"Offset X: {tweak.OffX:F3}");
-                tweak.OffY = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffY, -2, 2, label: $"Offset Y: {tweak.OffY:F3}");
+                tweak.OffX = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffX, -2, 2, label: $"Offset X <b>[G]</b>: {tweak.OffX:F3}");
+                tweak.OffY = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffY, -2, 2, label: $"Offset Y <b>[Shift+G]</b>: {tweak.OffY:F3}");
                 ui.Gap();
                 ref string tweakRotBuf = ref GetBuffer(tweak.Rotation);
-                ui.TextFieldNumericLabeled("Rotation:  ", ref tweak.Rotation, ref tweakRotBuf, -360, 360);
+                ui.TextFieldNumericLabeled("Rotation <b>[R]</b>:  ", ref tweak.Rotation, ref tweakRotBuf, -360, 360);
 
                 // Drawer class, sweep class.
                 var otherRect = ui.GetRect(28);

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_DryadWoodLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.177024722,
+  "OffY": -0.05649717,
+  "Rotation": 41.87545,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "MeleeWeaponType": 8
+}

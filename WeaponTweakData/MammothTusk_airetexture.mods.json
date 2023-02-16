@@ -1,0 +1,12 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MammothTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.223553181,
+  "OffY": 0.171657175,
+  "Rotation": 165.0,
+  "BladeStart": 0.0399206467,
+  "BladeEnd": 0.678643,
+  "MeleeWeaponType": 3
+}

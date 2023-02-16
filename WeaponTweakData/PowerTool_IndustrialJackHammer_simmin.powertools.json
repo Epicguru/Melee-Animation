@@ -1,0 +1,14 @@
+{
+  "TextureModID": "simmin.powertools",
+  "ItemDefName": "PowerTool_IndustrialJackHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.440677345,
+  "OffY": -0.0263654515,
+  "Rotation": -41.16069,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.218456209,
+  "BladeEnd": 1.07344627,
+  "MeleeWeaponType": 5
+}

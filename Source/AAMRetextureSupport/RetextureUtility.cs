@@ -12,6 +12,7 @@ namespace AAM.Retexture;
 public static class RetextureUtility
 {
     public static int CachedReportCount => reportCache.Count;
+    public static IEnumerable<ActiveTextureReport> AllCachedReports => reportCache.Values;
 
     private static readonly Dictionary<ThingDef, ActiveTextureReport> reportCache = new Dictionary<ThingDef, ActiveTextureReport>(128);
     private static readonly Dictionary<ThingDef, bool> reportCacheIsFull = new Dictionary<ThingDef, bool>(128);

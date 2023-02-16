@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "WoodLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.192090392,
+  "OffY": -0.07909605,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.0338983051,
+  "MeleeWeaponType": 8
+}

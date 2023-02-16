@@ -1,0 +1,13 @@
+{
+  "TextureModID": "spino.megafauna",
+  "ItemDefName": "PlatybelodonTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.191617489,
+  "OffY": -0.0798402,
+  "Rotation": -135.0,
+  "FlipY": true,
+  "BladeStart": 0.06387275,
+  "BladeEnd": 0.7225554,
+  "MeleeWeaponType": 45
+}

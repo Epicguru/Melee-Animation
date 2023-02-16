@@ -1,0 +1,12 @@
+{
+  "TextureModID": "fs.reviarace",
+  "ItemDefName": "ReviaSerratedDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.225988716,
+  "OffY": -0.007532842,
+  "ScaleX": 0.6,
+  "ScaleY": 0.6,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

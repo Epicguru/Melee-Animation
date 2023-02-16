@@ -1,0 +1,10 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_FencingSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.349893868,
+  "BladeStart": 0.09888305,
+  "BladeEnd": 0.831632137,
+  "MeleeWeaponType": 6
+}

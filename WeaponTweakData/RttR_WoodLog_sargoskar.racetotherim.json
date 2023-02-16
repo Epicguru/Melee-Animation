@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sargoskar.racetotherim",
+  "ItemDefName": "RttR_WoodLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.183150411,
+  "OffY": -0.0256411433,
+  "Rotation": 25.0,
+  "FlipY": true,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

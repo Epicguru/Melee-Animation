@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Goedendag",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.446241677,
+  "OffY": -0.0101416968,
+  "Rotation": 45.0,
+  "BladeStart": 0.09634774,
+  "BladeEnd": 1.11053276,
+  "MeleeWeaponType": 5
+}

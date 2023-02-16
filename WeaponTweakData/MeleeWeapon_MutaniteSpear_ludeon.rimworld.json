@@ -1,0 +1,9 @@
+{
+  "TextureModID": "ludeon.rimworld",
+  "ItemDefName": "MeleeWeapon_MutaniteSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.243513465,
+  "BladeEnd": 0.7225554,
+  "MeleeWeaponType": 7
+}

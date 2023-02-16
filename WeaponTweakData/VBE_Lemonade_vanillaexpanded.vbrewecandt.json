@@ -1,0 +1,15 @@
+{
+  "TextureModID": "vanillaexpanded.vbrewecandt",
+  "ItemDefName": "VBE_Lemonade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.278719574,
+  "OffY": -0.011299435,
+  "Rotation": -90.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.0602641143,
+  "BladeEnd": 0.5499061,
+  "MeleeWeaponType": 8
+}

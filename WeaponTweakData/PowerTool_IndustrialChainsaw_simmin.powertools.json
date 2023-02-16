@@ -1,0 +1,12 @@
+{
+  "TextureModID": "simmin.powertools",
+  "ItemDefName": "PowerTool_IndustrialChainsaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3879463,
+  "OffY": -0.105461508,
+  "Rotation": 41.54939,
+  "BladeStart": 0.3352168,
+  "BladeEnd": 1.01694918,
+  "MeleeWeaponType": 7
+}

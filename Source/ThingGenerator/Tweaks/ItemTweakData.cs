@@ -285,7 +285,5 @@ namespace AAM.Tweaks
             string json = JsonConvert.SerializeObject(this, Formatting.Indented, settings);
             File.WriteAllText(filePath, json);
         }
-
-        
     }
 }

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_WingedMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.245939746,
+  "OffY": -0.0278900135,
+  "BladeStart": 0.0431030244,
+  "BladeEnd": 0.638936639,
+  "MeleeWeaponType": 9
+}

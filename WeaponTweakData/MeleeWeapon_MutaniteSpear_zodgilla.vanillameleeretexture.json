@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zodgilla.vanillameleeretexture",
+  "ItemDefName": "MeleeWeapon_MutaniteSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.316773772,
+  "Rotation": 45.0,
+  "BladeStart": 0.100732826,
+  "BladeEnd": 0.998168945,
+  "MeleeWeaponType": 7
+}

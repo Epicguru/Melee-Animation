@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_RoxHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.403138548,
+  "OffY": 0.141986087,
+  "Rotation": -23.40605,
+  "FlipY": true,
+  "BladeStart": 0.0659221858,
+  "BladeEnd": 0.9153024,
+  "MeleeWeaponType": 1
+}

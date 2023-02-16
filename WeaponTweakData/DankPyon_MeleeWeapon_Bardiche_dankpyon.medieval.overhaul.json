@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Bardiche",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.357500255,
+  "OffY": -0.06085111,
+  "Rotation": 50.11311,
+  "BladeStart": 0.283972144,
+  "BladeEnd": 0.9609407,
+  "MeleeWeaponType": 2
+}

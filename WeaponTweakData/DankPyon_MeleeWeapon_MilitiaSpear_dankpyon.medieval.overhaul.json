@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_MilitiaSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354964972,
+  "OffY": -0.007606387,
+  "Rotation": 45.0,
+  "BladeStart": 0.09634774,
+  "BladeEnd": 1.02179182,
+  "MeleeWeaponType": 4
+}

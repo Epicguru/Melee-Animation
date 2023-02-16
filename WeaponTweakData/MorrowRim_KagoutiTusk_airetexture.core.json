@@ -1,0 +1,12 @@
+{
+  "TextureModID": "airetexture.core",
+  "ItemDefName": "MorrowRim_KagoutiTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2554888,
+  "OffY": -0.0399202853,
+  "Rotation": 10.0,
+  "BladeStart": 0.05988024,
+  "BladeEnd": 0.7185629,
+  "MeleeWeaponType": 5
+}

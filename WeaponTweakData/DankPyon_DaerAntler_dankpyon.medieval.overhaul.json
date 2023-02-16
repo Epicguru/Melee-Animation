@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_DaerAntler",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.453848,
+  "OffY": 0.002535537,
+  "Rotation": 140.0,
+  "BladeStart": 0.09634774,
+  "BladeEnd": 1.02432716,
+  "MeleeWeaponType": 1
+}
