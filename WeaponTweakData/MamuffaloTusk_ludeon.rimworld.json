@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ludeon.rimworld",
+  "ItemDefName": "MamuffaloTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.283432662,
+  "OffY": -0.03193601,
+  "Rotation": 10.0,
+  "BladeStart": 0.09181661,
+  "BladeEnd": 0.7465075,
+  "MeleeWeaponType": 5
+}

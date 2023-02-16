@@ -1,0 +1,18 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_ZKiller_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.349777967,
+  "OffY": -0.00653781742,
+  "Rotation": 47.56918,
+  "BladeStart": 0.1250376,
+  "BladeEnd": 0.958621562,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.549340665,
+    "g": 0.748888731,
+    "b": 0.09818744,
+    "a": 0.971111059
+  }
+}

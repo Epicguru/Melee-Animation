@@ -1,0 +1,9 @@
+{
+  "TextureModID": "ev.all.tech.melee",
+  "ItemDefName": "ATM_MeleeWeapon_IndustrialHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.209302336,
+  "OffY": -0.0232558139,
+  "MeleeWeaponType": 9
+}

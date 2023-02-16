@@ -1,0 +1,14 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_HeavyStoneAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.353047371,
+  "OffY": -0.0196137428,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.45520243,
+  "BladeEnd": 0.8311323,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Spetum",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.49187994,
+  "OffY": -0.007606387,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.124237992,
+  "BladeEnd": 1.34379542,
+  "MeleeWeaponType": 5
+}

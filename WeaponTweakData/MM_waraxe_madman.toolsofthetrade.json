@@ -1,0 +1,13 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_waraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.160179272,
+  "OffY": -0.04249654,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "BladeStart": 0.350595623,
+  "BladeEnd": 0.5859605,
+  "MeleeWeaponType": 26
+}

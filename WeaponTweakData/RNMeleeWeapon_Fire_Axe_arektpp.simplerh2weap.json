@@ -1,0 +1,11 @@
+{
+  "TextureModID": "arektpp.simplerh2weap",
+  "ItemDefName": "RNMeleeWeapon_Fire_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.268054217,
+  "Rotation": 45.0,
+  "BladeStart": 0.4650093,
+  "BladeEnd": 0.6872986,
+  "MeleeWeaponType": 6
+}

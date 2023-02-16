@@ -1,0 +1,13 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Maul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.331034482,
+  "Rotation": 46.05313,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.618391335,
+  "BladeEnd": 0.898850858,
+  "MeleeWeaponType": 1
+}

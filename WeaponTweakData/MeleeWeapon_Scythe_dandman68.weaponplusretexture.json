@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dandman68.weaponplusretexture",
+  "ItemDefName": "MeleeWeapon_Scythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.367816359,
+  "OffY": -0.02758579,
+  "Rotation": 45.0,
+  "BladeStart": 0.618391335,
+  "BladeEnd": 0.839081,
+  "MeleeWeaponType": 2
+}

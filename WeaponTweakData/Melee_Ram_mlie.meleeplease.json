@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Ram",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.431502938,
+  "OffY": 0.12422058,
+  "ScaleX": 1.8,
+  "ScaleY": 1.8,
+  "BladeStart": 0.09888634,
+  "BladeEnd": 1.30513144,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.cyberneticwarfare",
+  "ItemDefName": "CW_PowerFist",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.224806666,
+  "OffY": 0.03488372,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 2,
+  "BladeStart": 0.051356826,
+  "MeleeWeaponType": 40
+}

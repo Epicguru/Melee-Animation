@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_PikeAmboise",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6741999,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.399247169,
+  "BladeEnd": 1.67231643,
+  "MeleeWeaponType": 5
+}

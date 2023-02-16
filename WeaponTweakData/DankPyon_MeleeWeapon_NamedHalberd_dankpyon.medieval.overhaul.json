@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_NamedHalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5461392,
+  "OffY": -0.05273058,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.900188565,
+  "BladeEnd": 1.36723161,
+  "MeleeWeaponType": 3
+}

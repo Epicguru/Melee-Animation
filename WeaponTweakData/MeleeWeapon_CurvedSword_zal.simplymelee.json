@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.simplymelee",
+  "ItemDefName": "MeleeWeapon_CurvedSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.34324047,
+  "OffY": -0.06537904,
+  "BladeStart": 0.1021551,
+  "BladeEnd": 0.8017117,
+  "MeleeWeaponType": 6
+}

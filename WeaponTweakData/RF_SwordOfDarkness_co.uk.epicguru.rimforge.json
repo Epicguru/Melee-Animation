@@ -1,0 +1,19 @@
+{
+  "TextureModID": "co.uk.epicguru.rimforge",
+  "ItemDefName": "RF_SwordOfDarkness",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.543834746,
+  "Rotation": 43.56551,
+  "ScaleX": 1.35,
+  "ScaleY": 1.35,
+  "BladeStart": 0.386310816,
+  "BladeEnd": 1.38396621,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.1415681,
+    "g": 0.748888731,
+    "b": 0.09818744,
+    "a": 0.908888757
+  }
+}

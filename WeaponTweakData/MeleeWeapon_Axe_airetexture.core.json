@@ -1,0 +1,7 @@
+{
+  "TextureModID": "airetexture.core",
+  "ItemDefName": "MeleeWeapon_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "MeleeWeaponType": 6
+}

@@ -26,6 +26,7 @@ public class AnimatedPart : MonoBehaviour
     public Color Tint = Color.white;
     public float DataA, DataB, DataC;
     public bool FlipX, FlipY;
+    [Tooltip("Not fully supported!")]
     public int FrameIndex;
 
     [Header("Other")]
@@ -46,7 +47,7 @@ public class AnimatedPart : MonoBehaviour
         relativePath ??= AnimData.MakeRelativePath(GetComponentInParent<Animator>().gameObject, this.gameObject);
         bool dontDraw = false;
         string name = !string.IsNullOrWhiteSpace(CustomName) ? CustomName : relativePath; 
-        var tex = AnimationDataCreator.Instance?.ResolveTexture(name, TexturePath, FrameIndex, out dontDraw);
+        var tex = AnimationDataCreator.Instance?.ResolveTexture(name, TexturePath, out dontDraw);
         if (tex == null || dontDraw)
             return;
 

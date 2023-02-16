@@ -104,7 +104,7 @@ namespace Assets.Editor
             audioMap.Clear();
         }
 
-        public Texture2D ResolveTexture(string partName, string path, int index, out bool preventDraw)
+        public Texture2D ResolveTexture(string partName, string path, out bool preventDraw)
         {
             preventDraw = false;
             foreach(var value in OverridePairs)
@@ -118,9 +118,6 @@ namespace Assets.Editor
                         return value.Texture;
                 }
             }
-
-            if (index > 0)
-                path += (index - 1).ToString();
 
             if (path == null)
                 return null;
@@ -138,7 +135,7 @@ namespace Assets.Editor
                 return found;
 
             var loaded = Resources.Load<Texture2D>(path);
-            Debug.Assert(loaded != null, $"Failed to load '{path}' for {partName}");
+            Debug.Assert(loaded != null, $"Failed to load '{path}'");
 
             texMap.Add(path, loaded);
             texNames.Add(path);

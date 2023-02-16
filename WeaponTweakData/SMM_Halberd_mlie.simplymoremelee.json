@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4413092,
+  "OffY": -0.009806871,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.08581012,
+  "BladeEnd": 1.31166887,
+  "MeleeWeaponType": 7
+}

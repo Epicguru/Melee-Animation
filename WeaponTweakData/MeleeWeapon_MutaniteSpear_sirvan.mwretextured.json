@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sirvan.mwretextured",
+  "ItemDefName": "MeleeWeapon_MutaniteSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.309447527,
+  "Rotation": 45.0,
+  "BladeStart": 0.111721836,
+  "BladeEnd": 0.9542129,
+  "MeleeWeaponType": 7
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ludeon.rimworld",
+  "ItemDefName": "MeleeWeapon_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.288998753,
+  "OffY": -0.03284052,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.111658856,
+  "BladeEnd": 0.853859544,
+  "MeleeWeaponType": 5
+}

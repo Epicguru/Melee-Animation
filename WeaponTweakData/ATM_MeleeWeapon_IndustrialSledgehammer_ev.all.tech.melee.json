@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ev.all.tech.melee",
+  "ItemDefName": "ATM_MeleeWeapon_IndustrialSledgehammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.449612677,
+  "OffY": -0.00775181968,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.113372095,
+  "BladeEnd": 1.08624053,
+  "MeleeWeaponType": 1
+}

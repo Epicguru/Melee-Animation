@@ -1,0 +1,13 @@
+{
+  "TextureModID": "co.uk.epicguru.antimatterannihilation",
+  "ItemDefName": "Karambit_AA",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.17829299,
+  "OffY": 0.0387601852,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.218023255,
+  "BladeEnd": 0.454457849,
+  "MeleeWeaponType": 48
+}

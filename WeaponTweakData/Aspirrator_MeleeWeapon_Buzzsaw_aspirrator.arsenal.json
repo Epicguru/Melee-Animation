@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aspirrator.arsenal",
+  "ItemDefName": "Aspirrator_MeleeWeapon_Buzzsaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.191549271,
+  "OffY": -0.0375584662,
+  "Rotation": 90.0,
+  "BladeStart": 0.0572774522,
+  "BladeEnd": 0.590610564,
+  "MeleeWeaponType": 18
+}

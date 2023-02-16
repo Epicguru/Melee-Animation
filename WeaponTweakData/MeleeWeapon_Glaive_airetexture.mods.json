@@ -1,0 +1,13 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Glaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.390804321,
+  "Rotation": 43.05298,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.6873569,
+  "BladeEnd": 1.10574746,
+  "MeleeWeaponType": 7
+}

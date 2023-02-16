@@ -1,0 +1,13 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "ElasmotheriumHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.415169179,
+  "OffY": 0.0199602842,
+  "Rotation": 45.0,
+  "FlipX": true,
+  "BladeStart": 0.0678645149,
+  "BladeEnd": 0.9740524,
+  "MeleeWeaponType": 5
+}

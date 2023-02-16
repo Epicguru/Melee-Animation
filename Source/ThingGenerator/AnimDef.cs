@@ -54,15 +54,16 @@ namespace AAM
                 .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
         }
 
-        [DebugAction("Advanced Animation Mod", "Reload all animations", actionType = DebugActionType.Action)]
+        [DebugAction("Advanced Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
         public static void ReloadAllAnimations()
         {
             foreach (var def in allDefs)
             {
-                if(def.resolvedData == null)
+                if (def.resolvedData == null)
                     continue;
 
                 def.resolvedData = AnimData.Load(def.FullDataPath, false);
+                def.resolvedNonLethalData = File.Exists(def.FullNonLethalDataPath) ? AnimData.Load(def.FullNonLethalDataPath, false) : def.resolvedData;
             }
         }
 

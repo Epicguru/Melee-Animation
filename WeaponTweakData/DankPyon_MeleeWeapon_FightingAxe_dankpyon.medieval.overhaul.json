@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_FightingAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.299184918,
+  "OffY": -0.007606389,
+  "BladeStart": 0.362571329,
+  "BladeEnd": 0.783458,
+  "MeleeWeaponType": 6
+}

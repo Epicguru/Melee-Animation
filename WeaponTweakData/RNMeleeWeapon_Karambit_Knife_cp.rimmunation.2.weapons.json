@@ -1,0 +1,13 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_Karambit_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.07518563,
+  "OffY": 0.0555724651,
+  "Rotation": -125.0,
+  "FlipY": true,
+  "BladeStart": 0.170803189,
+  "BladeEnd": 0.471547425,
+  "MeleeWeaponType": 48
+}

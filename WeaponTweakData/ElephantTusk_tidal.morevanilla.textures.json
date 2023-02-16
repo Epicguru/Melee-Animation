@@ -1,0 +1,12 @@
+{
+  "TextureModID": "tidal.morevanilla.textures",
+  "ItemDefName": "ElephantTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.304029524,
+  "OffY": -0.06593406,
+  "Rotation": 10.0,
+  "BladeStart": 0.078754805,
+  "BladeEnd": 0.789377749,
+  "MeleeWeaponType": 5
+}

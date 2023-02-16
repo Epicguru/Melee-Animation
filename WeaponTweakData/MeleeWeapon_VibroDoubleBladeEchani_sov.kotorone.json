@@ -1,0 +1,15 @@
+{
+  "TextureModID": "sov.kotorone",
+  "ItemDefName": "MeleeWeapon_VibroDoubleBladeEchani",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.08172369,
+  "OffY": -0.0228828043,
+  "Rotation": 45.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "FlipY": true,
+  "BladeStart": -1.15966249,
+  "BladeEnd": 1.05669034,
+  "MeleeWeaponType": 6
+}

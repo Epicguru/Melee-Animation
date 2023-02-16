@@ -1,0 +1,14 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Bo_Staff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2758621,
+  "OffY": -0.0045978413,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": -0.37471208,
+  "BladeEnd": 0.958620667,
+  "MeleeWeaponType": 1
+}

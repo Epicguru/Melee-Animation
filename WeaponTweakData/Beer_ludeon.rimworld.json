@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ludeon.rimworld",
+  "ItemDefName": "Beer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.137931034,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.07881773,
+  "MeleeWeaponType": 8
+}

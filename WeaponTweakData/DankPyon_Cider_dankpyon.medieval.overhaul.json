@@ -1,0 +1,15 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_Cider",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1431264,
+  "OffY": -0.03389831,
+  "Rotation": -90.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.04896468,
+  "BladeEnd": 0.482109457,
+  "MeleeWeaponType": 8
+}

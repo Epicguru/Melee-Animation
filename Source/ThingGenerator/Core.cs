@@ -1,4 +1,5 @@
-﻿using AAM.Tweaks;
+﻿using AAM.Retexture;
+using AAM.Tweaks;
 using HarmonyLib;
 using ModRequestAPI;
 using RimWorld;
@@ -18,8 +19,7 @@ namespace AAM
         private static readonly string GistID = "d1c22be7a26feb273008c4cea948be53";
 
         public static Func<Pawn, float> GetBodyDrawSizeFactor = _ => 1f;
-        public static string ModTitle => "AAM.ModTitle".Trs();
-        public static string ModFolder => ModContent.RootDir;
+        public static string ModTitle => ModContent?.Name;
         public static ModContentPack ModContent;
         public static Settings Settings;
         public static bool IsSimpleSidearmsActive;
@@ -44,7 +44,7 @@ namespace AAM
                 Verse.Log.Error(e.ToString());
         }
 
-        [DebugAction("Advanced Animation Mod", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
+        [DebugAction("Advanced Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
         private static void LogModRequests()
         {
             var task = Task.Run(() => new ModRequestClient(GistID).GetModRequests());
@@ -86,7 +86,6 @@ namespace AAM
             });
 
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
-            AddLateLoadAction(false, "Loading weapon tweak data...", LoadAllTweakData);
             AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
             AddLateLoadAction(false, "Finding all lassos...", AAM.Content.FindAllLassos);
 
@@ -94,21 +93,37 @@ namespace AAM
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
             AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
+            AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
+            AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
 
             AddLateLoadEvents();
+        }
+
+        private static void PreCacheAllRetextures()
+        {
+            var time = RetextureUtility.PreCacheAllTextureReports(rep =>
+            {
+                if (rep.HasError)
+                {
+                    Error($"Error generating texture report [{rep.Weapon?.LabelCap}]: {rep.ErrorMessage}");
+                }
+            }, false);
+            Log($"PreCached all retexture info in {time.TotalMilliseconds:F1}ms");
         }
 
         private void LoadAllTweakData()
         {
             var modsAndMissingWeaponCount = new Dictionary<string, int>();
 
-            foreach (var pair in TweakDataManager.LoadAllForActiveMods())
+            foreach (var pair in TweakDataManager.LoadAllForActiveMods(false))
             {
                 if (!modsAndMissingWeaponCount.ContainsKey(pair.modPackageID))
                     modsAndMissingWeaponCount.Add(pair.modPackageID, 0);
 
                 modsAndMissingWeaponCount[pair.modPackageID]++;
             }
+
+            Log($"Loaded tweak data for {TweakDataManager.TweakDataLoadedCount} weapons.");
 
             if (modsAndMissingWeaponCount.Count == 0)
                 return;
@@ -130,7 +145,7 @@ namespace AAM
             });
         }
 
-        private async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
+        private static async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
         {
             var client = new ModRequestClient(GistID);
 
@@ -225,10 +240,8 @@ namespace AAM
             ParseHelper.Parsers<T>.Register(func);
         }
 
-        public override string SettingsCategory()
-        {
-            return ModTitle;
-        }
+        public override string SettingsCategory() => ModTitle;
+        
 
         public override void DoSettingsWindowContents(Rect inRect)
         {

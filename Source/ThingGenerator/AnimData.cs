@@ -284,6 +284,12 @@ public class AnimData
             list.Add(sweep);
         }
 
+        // Ensure that all data was read.
+        if (reader.BaseStream.Position != reader.BaseStream.Length)
+        {
+            Core.Error($"Read {reader.BaseStream.Position} bytes but should have read {reader.BaseStream.Length} ({clipName})");
+        }
+
         return new AnimData(clipName, length, parts, events)
         {
             sweeps = sweeps,
@@ -602,7 +608,7 @@ public struct AnimPartSnapshot
 
     public void UpdateWorldMatrix(bool mirrorX, bool mirrorY)
     {
-        var preProc = Matrix4x4.Scale(new Vector3(mirrorX ? -1f : 1f, 1f, mirrorY ? -1f : 1f));
+        var preProc  = Matrix4x4.Scale(new Vector3(mirrorX ? -1f : 1f, 1f, mirrorY ? -1f : 1f));
         var postProc = Matrix4x4.Scale(new Vector3(mirrorX ? -1f : 1f, 1f, mirrorY ? -1f : 1f));
 
         var ov = Renderer.GetOverride(this);
@@ -652,6 +658,7 @@ public class AnimPartOverrideData
     public PartRenderer CustomRenderer;
     public object UserData;
     public ItemTweakData TweakData;
+    public Thing Weapon;
 }
 
 [Serializable]

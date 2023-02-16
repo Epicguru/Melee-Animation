@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.heavymeleeweapons",
+  "ItemDefName": "HMW_MeleeWeapon_HeavyZeushammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3922748,
+  "OffY": 0.0163446814,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.1250376,
+  "BladeEnd": 1.24955893,
+  "MeleeWeaponType": 1
+}

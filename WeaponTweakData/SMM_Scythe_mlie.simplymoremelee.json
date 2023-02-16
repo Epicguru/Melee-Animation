@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Scythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.418426752,
+  "OffY": -0.0523034036,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.226375654,
+  "BladeEnd": 1.11553156,
+  "MeleeWeaponType": 2
+}

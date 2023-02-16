@@ -1,0 +1,12 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_StoneSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3563167,
+  "OffY": -0.00653781369,
+  "Rotation": 45.0,
+  "BladeStart": 0.08907947,
+  "BladeEnd": 0.8899735,
+  "MeleeWeaponType": 5
+}

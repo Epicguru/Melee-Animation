@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_ArmingSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.342287481,
+  "HandsMode": 1,
+  "BladeStart": 0.10902521,
+  "BladeEnd": 0.8037419,
+  "MeleeWeaponType": 54
+}

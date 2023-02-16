@@ -1,0 +1,13 @@
+{
+  "TextureModID": "trasheddt.industrialisation",
+  "ItemDefName": "Ind_Concrete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.210328877,
+  "OffY": 0.03380247,
+  "Rotation": 45.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeEnd": 0.620657742,
+  "MeleeWeaponType": 1
+}

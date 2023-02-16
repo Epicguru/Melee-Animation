@@ -1,0 +1,14 @@
+{
+  "TextureModID": "al9000.tvmelee",
+  "ItemDefName": "MeleeWeapon_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.262846917,
+  "OffY": -0.006688684,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.111658856,
+  "BladeEnd": 1.08284211,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Kukri",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.160178691,
+  "OffY": 0.0424962342,
+  "BladeStart": 0.09561699,
+  "BladeEnd": 0.612112343,
+  "MeleeWeaponType": 54
+}

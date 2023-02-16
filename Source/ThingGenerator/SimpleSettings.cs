@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using ColourPicker;
 using UnityEngine;
 using Verse;
 
@@ -31,6 +32,7 @@ namespace AAM
             { typeof(double), DrawNumeric },
             { typeof(decimal), DrawNumeric },
             { typeof(bool), DrawToggle },
+            { typeof(Color), DrawColor }
         };
         
         private static readonly Dictionary<Type, FieldHolder> settingsFields = new();
@@ -321,8 +323,9 @@ namespace AAM
                 Widgets.Label(inRect, description);
 
                 inRect.y += Text.CalcHeight(description, inRect.width) + 32;
-            }            
+            }
 
+            Core.Log($"Can reset {highlightedMember.Name}: {highlightedMember.Options.AllowReset}");
             if (highlightedMember.Options.AllowReset)
             {
                 string defaultValue = highlightedMember.ValueToString(highlightedMember.GetDefault<object>());
@@ -502,6 +505,36 @@ namespace AAM
                 member.Set(settings, enabled);
 
             return toggleRect.height;
+        }
+
+        private static float DrawColor(ModSettings settings, MemberWrapper member, Rect area)
+        {
+            float h = 28;
+
+            Color c = member.Get<Color>(settings);
+            float height = DrawFieldHeader(settings, member, area);
+
+            area.yMin += height;
+            area.height = h;
+            area = area.ExpandedBy(-2, -2);
+
+            void SelectedColor(Color newColor)
+            {
+                member.Set(settings, newColor);
+            }
+
+            Widgets.DrawBoxSolidWithOutline(area, c, Color.black, 2);
+            if (Widgets.ClickedInsideRect(area))
+            {
+                var picker = new Dialog_ColourPicker(c, SelectedColor)
+                {
+                    autoApply = false,
+                };
+
+                Find.WindowStack.Add(picker);
+            }
+
+            return h + height;
         }
 
         private static float DrawEnum(ModSettings settings, MemberWrapper member, Rect area)
@@ -765,6 +798,9 @@ namespace AAM
                 object temp = (T)DefaultValue;
                 if (temp == null)
                     return default;
+
+                if (typeof(K) == typeof(object))
+                    return (K)temp;
 
                 if (typeof(T) != typeof(K))
                     return (K)Convert.ChangeType(temp, typeof(K));

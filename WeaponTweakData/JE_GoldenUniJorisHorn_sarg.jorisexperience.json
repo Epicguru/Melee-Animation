@@ -1,0 +1,20 @@
+{
+  "TextureModID": "sarg.jorisexperience",
+  "ItemDefName": "JE_GoldenUniJorisHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.241757572,
+  "OffY": 0.003662765,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.05677678,
+  "BladeEnd": 0.6831504,
+  "MeleeWeaponType": 3,
+  "TrailTint": {
+    "r": 0.978,
+    "g": 0.881,
+    "b": 0.072,
+    "a": 0.996
+  }
+}

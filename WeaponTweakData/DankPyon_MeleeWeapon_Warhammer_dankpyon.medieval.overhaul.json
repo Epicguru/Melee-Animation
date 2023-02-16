@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Warhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.177482247,
+  "OffY": -0.0152127743,
+  "BladeStart": 0.301720232,
+  "BladeEnd": 0.562872767,
+  "MeleeWeaponType": 9
+}

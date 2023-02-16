@@ -1,0 +1,10 @@
+{
+  "TextureModID": "dismarzero.vgp.rimfortressdwarvenplants",
+  "ItemDefName": "DF_BloodThornLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.188323468,
+  "OffY": -0.0753297955,
+  "Rotation": 43.25351,
+  "MeleeWeaponType": 8
+}

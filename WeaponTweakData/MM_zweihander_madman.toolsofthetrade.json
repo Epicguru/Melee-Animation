@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_zweihander",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.483805418,
+  "Rotation": 45.0,
+  "BladeStart": 0.242720038,
+  "BladeEnd": 1.14822149,
+  "MeleeWeaponType": 6
+}

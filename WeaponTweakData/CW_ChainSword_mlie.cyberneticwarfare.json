@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.cyberneticwarfare",
+  "ItemDefName": "CW_ChainSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.387596637,
+  "OffY": -0.0697674453,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.101744182,
+  "BladeEnd": 0.977713645,
+  "MeleeWeaponType": 3
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "4ydra.arsenalofreaction",
+  "ItemDefName": "AOR_Melee_Schmetterling",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.338028133,
+  "OffY": 0.06760563,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.23380281,
+  "BladeEnd": 0.9098591,
+  "MeleeWeaponType": 6
+}

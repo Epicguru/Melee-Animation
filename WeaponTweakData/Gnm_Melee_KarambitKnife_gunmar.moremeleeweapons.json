@@ -1,0 +1,14 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_KarambitKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.179791838,
+  "OffY": -0.01961374,
+  "Rotation": 15.0,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 0.448664337,
+  "MeleeWeaponType": 48
+}

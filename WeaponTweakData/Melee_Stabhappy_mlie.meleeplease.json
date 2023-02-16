@@ -1,0 +1,20 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Stabhappy",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1438343,
+  "OffY": 0.0196137428,
+  "Rotation": 2.293796,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.10542386,
+  "BladeEnd": 0.478084922,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.182222068,
+    "g": 0.989097059,
+    "b": 1.0,
+    "a": 0.868888736
+  }
+}

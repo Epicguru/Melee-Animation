@@ -1,0 +1,13 @@
+{
+  "TextureModID": "4ydra.arsenalofreaction",
+  "ItemDefName": "AOR_Melee_Butterfly",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.315492958,
+  "OffY": 0.0150235891,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.23380281,
+  "BladeEnd": 0.8948359,
+  "MeleeWeaponType": 6
+}

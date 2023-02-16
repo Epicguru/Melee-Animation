@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Falchion",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.33214578,
+  "OffY": -0.04056748,
+  "BladeStart": 0.101418823,
+  "BladeEnd": 0.8012066,
+  "MeleeWeaponType": 6
+}

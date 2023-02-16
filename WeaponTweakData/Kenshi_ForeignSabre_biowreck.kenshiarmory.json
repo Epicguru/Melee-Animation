@@ -1,0 +1,14 @@
+{
+  "TextureModID": "biowreck.kenshiarmory",
+  "ItemDefName": "Kenshi_ForeignSabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3755866,
+  "OffY": -0.0976524651,
+  "Rotation": 10.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.0985915437,
+  "BladeEnd": 0.9624415,
+  "MeleeWeaponType": 6
+}

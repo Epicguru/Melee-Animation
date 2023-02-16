@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Fireaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.238633633,
+  "OffY": -0.0294206142,
+  "Rotation": 35.0,
+  "BladeStart": 0.559809268,
+  "BladeEnd": 0.7396017,
+  "MeleeWeaponType": 2
+}

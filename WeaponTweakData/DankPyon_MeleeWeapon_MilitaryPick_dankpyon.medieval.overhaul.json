@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_MilitaryPick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.180018008,
+  "OffY": -0.0152127743,
+  "BladeStart": 0.354964942,
+  "BladeEnd": 0.552731037,
+  "MeleeWeaponType": 16
+}

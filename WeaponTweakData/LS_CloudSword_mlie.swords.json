@@ -1,0 +1,15 @@
+{
+  "TextureModID": "mlie.swords",
+  "ItemDefName": "LS_CloudSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.15116274,
+  "OffY": 0.0271319,
+  "Rotation": 48.24854,
+  "ScaleX": 2.4,
+  "ScaleY": 2.4,
+  "FlipY": true,
+  "BladeStart": 0.404069752,
+  "BladeEnd": 2.79941869,
+  "MeleeWeaponType": 6
+}

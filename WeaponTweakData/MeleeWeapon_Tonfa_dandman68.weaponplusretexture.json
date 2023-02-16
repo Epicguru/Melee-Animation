@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dandman68.weaponplusretexture",
+  "ItemDefName": "MeleeWeapon_Tonfa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.151724964,
+  "OffY": 0.00459826365,
+  "Rotation": 65.0,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.0390810221,
+  "BladeEnd": 0.475862056,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_NamedTwoHandedHammer1c",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.286252141,
+  "OffY": -0.0263651311,
+  "Rotation": 45.0,
+  "BladeStart": 0.436911732,
+  "BladeEnd": 0.8210925,
+  "MeleeWeaponType": 1
+}

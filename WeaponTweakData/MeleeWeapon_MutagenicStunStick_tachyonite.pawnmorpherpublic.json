@@ -1,0 +1,11 @@
+{
+  "TextureModID": "tachyonite.pawnmorpherpublic",
+  "ItemDefName": "MeleeWeapon_MutagenicStunStick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.203389838,
+  "Rotation": 45.0,
+  "BladeStart": 0.0866292343,
+  "BladeEnd": 0.5875706,
+  "MeleeWeaponType": 9
+}

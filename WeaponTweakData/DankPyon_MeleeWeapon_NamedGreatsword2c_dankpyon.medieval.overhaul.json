@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_NamedGreatsword2c",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.523540258,
+  "OffY": -0.0150660276,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.124293789,
+  "BladeEnd": 1.38983047,
+  "MeleeWeaponType": 6
+}

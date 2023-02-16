@@ -1,0 +1,11 @@
+{
+  "TextureModID": "iexist.industrial.melee.weaponry",
+  "ItemDefName": "IMW_ClawHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.135211259,
+  "HandsMode": 1,
+  "BladeStart": 0.16995351,
+  "BladeEnd": 0.4478873,
+  "MeleeWeaponType": 8
+}

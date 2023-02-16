@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_Pitchfork",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3367023,
+  "OffY": -0.0163446814,
+  "Rotation": 45.0,
+  "BladeStart": 0.134844467,
+  "BladeEnd": 0.952084064,
+  "MeleeWeaponType": 3
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "kyrrisayo.weaponsplus",
+  "ItemDefName": "MeleeWeapon_Bardiche",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3172414,
+  "Rotation": 43.67293,
+  "BladeStart": 0.310344815,
+  "BladeEnd": 0.9310345,
+  "MeleeWeaponType": 6
+}

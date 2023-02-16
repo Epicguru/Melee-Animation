@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sierra.rf.medievaloverhaul",
+  "ItemDefName": "RF_SapphireSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3733235,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.554985642,
+  "BladeEnd": 1.05497265,
+  "MeleeWeaponType": 5,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

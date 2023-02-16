@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_FightingSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3473581,
+  "OffY": -0.005071074,
+  "Rotation": 45.0,
+  "BladeStart": 0.08367027,
+  "BladeEnd": 1.01925611,
+  "MeleeWeaponType": 5
+}

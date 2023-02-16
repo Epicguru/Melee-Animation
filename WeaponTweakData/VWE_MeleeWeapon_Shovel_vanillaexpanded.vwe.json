@@ -1,0 +1,13 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_Shovel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.169985563,
+  "OffY": -0.0163446814,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.164265081,
+  "BladeEnd": 0.6644155,
+  "MeleeWeaponType": 13
+}

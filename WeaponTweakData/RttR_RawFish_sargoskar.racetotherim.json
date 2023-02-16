@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sargoskar.racetotherim",
+  "ItemDefName": "RttR_RawFish",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.186813176,
+  "OffY": -0.0219780058,
+  "Rotation": -160.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "FlipY": true,
+  "BladeEnd": 0.510989,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "arektpp.simplerh2weap",
+  "ItemDefName": "RNMeleeWeapon_DMMFly_IceAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3432405,
+  "OffY": -0.0163446814,
+  "Rotation": 45.0,
+  "BladeStart": 0.144651338,
+  "BladeEnd": 0.8736291,
+  "MeleeWeaponType": 9
+}

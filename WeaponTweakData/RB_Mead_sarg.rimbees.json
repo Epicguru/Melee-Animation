@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sarg.rimbees",
+  "ItemDefName": "RB_Mead",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.209302336,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.06686047,
+  "BladeEnd": 0.528101,
+  "MeleeWeaponType": 8
+}

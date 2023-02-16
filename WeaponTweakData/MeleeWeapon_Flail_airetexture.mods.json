@@ -1,0 +1,11 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Flail",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.183907717,
+  "OffY": -0.128735349,
+  "BladeStart": 0.103448272,
+  "BladeEnd": 0.6137931,
+  "MeleeWeaponType": 24
+}

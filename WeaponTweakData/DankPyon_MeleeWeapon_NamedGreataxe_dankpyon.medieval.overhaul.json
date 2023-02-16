@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_NamedGreataxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.32015115,
+  "OffY": -0.08286232,
+  "Rotation": 53.3446,
+  "BladeStart": 0.399247169,
+  "BladeEnd": 0.8399251,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "vanillaexpanded.vtexe",
+  "ItemDefName": "MeleeWeapon_Club",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3021645,
+  "OffY": 0.003207989,
+  "BladeStart": 0.07881773,
+  "BladeEnd": 0.6872986,
+  "MeleeWeaponType": 9
+}

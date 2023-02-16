@@ -1,0 +1,13 @@
+{
+  "TextureModID": "vanillaexpanded.vtexe",
+  "ItemDefName": "MeleeWeapon_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.137931019,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 1,
+  "BladeStart": 0.0722499862,
+  "BladeEnd": 0.4400665,
+  "MeleeWeaponType": 48
+}

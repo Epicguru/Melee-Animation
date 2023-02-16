@@ -1,0 +1,13 @@
+{
+  "TextureModID": "co.uk.epicguru.advancedanimation",
+  "ItemDefName": "AAM_Weebstick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.551724136,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.195402578,
+  "BladeEnd": 1.377012,
+  "MeleeWeaponType": 6
+}

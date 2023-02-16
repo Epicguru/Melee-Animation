@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_polehammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.349778563,
+  "OffY": -0.0163446851,
+  "Rotation": 45.71621,
+  "BladeStart": 0.15445821,
+  "BladeEnd": 0.99131155,
+  "MeleeWeaponType": 5
+}

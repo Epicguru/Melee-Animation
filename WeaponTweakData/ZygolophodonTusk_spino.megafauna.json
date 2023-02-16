@@ -1,0 +1,12 @@
+{
+  "TextureModID": "spino.megafauna",
+  "ItemDefName": "ZygolophodonTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.42315346,
+  "OffY": 0.0399202853,
+  "Rotation": 45.0,
+  "BladeStart": 0.08383234,
+  "BladeEnd": 1.08982038,
+  "MeleeWeaponType": 5
+}

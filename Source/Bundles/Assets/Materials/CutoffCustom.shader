@@ -2,11 +2,13 @@
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _MainTex("Texture", 2D) = "white" {}
+        _MaskTex("Texture", 2D) = "black" {}
         CutoffAngle ("Cutoff Angle", float) = 0
         Distance("Distance", float) = 0
         Polarity("Polarity", float) = -1
-        _Color ("Tint", Color) = (1, 1, 1, 1)
+        _Color("Tint", Color) = (1, 1, 1, 1)
+        _ColorTwo ("Tint2", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -38,12 +40,19 @@
 
             const float PI = 3.141592653589793238462;
 
+            // Main
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            float4 _Color;
+
+            // Mask
+            sampler2D _MaskTex;
+            float4 _MaskTex_ST;
+            float4 _ColorTwo;
+
             float CutoffAngle;
             float Distance;
             float Polarity;
-            float4 _Color;
 
             v2f vert (appdata v)
             {
@@ -59,7 +68,12 @@
 
                 // sample the texture and do alpha clipping.
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
-                clip(col.a - 0.05);
+                fixed4 mask = tex2D(_MaskTex, i.uv);
+
+                float maskStrength = mask.r;
+                col = lerp(col, col * _ColorTwo, maskStrength);
+
+                //clip(col.a - 0.05);
 
                 float2 dir = float2(cos(CutoffAngle + 3.141592653589793238462 * 0.5), sin(CutoffAngle + 3.141592653589793238462 * 0.5));
                 float2 a = dir *  10 + 0.5;

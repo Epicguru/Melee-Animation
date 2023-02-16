@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_glaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3857367,
+  "Rotation": 45.0,
+  "BladeStart": 0.576153636,
+  "BladeEnd": 1.06322837,
+  "MeleeWeaponType": 7
+}

@@ -1,13 +1,19 @@
-﻿using AAM.Sweep;
+﻿using AAM.Retexture;
+using AAM.Sweep;
+using AAM.UI;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 using Verse;
 
 namespace AAM.Tweaks
 {
-    public class ItemTweakData : IExposable
+    public class ItemTweakData
     {
         public static string MakeModID(ModContentPack mcp)
         {
@@ -29,29 +35,53 @@ namespace AAM.Tweaks
             return s;
         }
 
+        public static string MakeFileName(ThingDef weaponDef, ModContentPack weaponTextureMod)
+            => $"{weaponDef.defName}_{MakeModID(weaponTextureMod)}.json";
+
+        public static ItemTweakData LoadFrom(string filePath)
+        {
+            return JsonConvert.DeserializeObject<ItemTweakData>(File.ReadAllText(filePath), new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>()
+                {
+                    new ColorConverter()
+                }
+            });
+        }
+
+        [JsonIgnore]
+        public string FileName => $"{TextureModID}_{ItemDefName}.json";
+
+        public string TextureModID;
         public string ItemDefName;
         public string ItemType;
         public string ItemTypeNamespace;
-        public string TexturePath;
         public float OffX, OffY;
         public float Rotation;
-        public float ScaleX = 1, ScaleY = 1;
+        [System.ComponentModel.DefaultValue(1f)]
+        public float ScaleX = 1;
+        [System.ComponentModel.DefaultValue(1f)]
+        public float ScaleY = 1;
         public bool FlipX, FlipY;
         public bool UseDefaultTransparentMaterial;
         public HandsMode HandsMode = HandsMode.Default;
-        public float BladeStart, BladeEnd = 0.5f;
+        public float BladeStart;
+        [System.ComponentModel.DefaultValue(0.5f)]
+        public float BladeEnd = 0.5f;
         public MeleeWeaponType MeleeWeaponType = MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp;
+        [System.ComponentModel.DefaultValue("")]
         public string CustomRendererClass;
         public string SweepProviderClass;
+        public Color? TrailTint = null;
 
         private ThingDef cachedDef;
         private Texture2D cachedTex;
+        private ModContentPack cachedMod;
         private ISweepProvider cachedSweepProvider;
-        private Dictionary<float, Vector2> widthAtPosition;
 
         public ItemTweakData() { }
 
-        public ItemTweakData(ThingDef def)
+        public ItemTweakData(ThingDef def, ModContentPack textureMod)
         {
             if (def == null)
                 return;
@@ -62,15 +92,12 @@ namespace AAM.Tweaks
             ItemType = def.GetType().Name;
             ItemTypeNamespace = def.GetType().Namespace;
 
-            TexturePath = def.graphicData.texPath;
-            if (GetTexture(false, false) == null)
-            {
-                var replacement = ContentFinder<Texture2D>.GetAllInFolder(TexturePath).FirstOrFallback();
-                if (replacement != null)
-                {
-                    TexturePath = TexturePath + '/' + replacement.name;
-                }
-            }
+            var report = RetextureUtility.GetTextureReport(def);
+            if (report.HasError)
+                throw new Exception($"Retexture utility had error: {report.ErrorMessage}");
+            var mod = textureMod ?? report.ActiveRetextureMod;
+
+            TextureModID = MakeModID(mod);
 
             Rotation = 0f;
             ScaleX = def.graphic.drawSize.x;
@@ -111,13 +138,18 @@ namespace AAM.Tweaks
             BladeEnd = data.BladeEnd;
             CustomRendererClass = data.CustomRendererClass;
             SweepProviderClass = data.SweepProviderClass;
+            TrailTint = data.TrailTint;
         }
 
         public Texture2D GetTexture(bool allowFromCache = true, bool saveToCache = true)
         {
             if (!allowFromCache || cachedTex == null)
             {
-                var found = ContentFinder<Texture2D>.Get(TexturePath, false);
+                var report = RetextureUtility.GetTextureReport(GetDef());
+                if (report.HasError)
+                    throw new Exception($"Retexture utility had error: {report.ErrorMessage}");
+
+                var found = report.AllRetextures.FirstOrDefault(p => MakeModID(p.mod) == TextureModID).texture;
                 if (saveToCache)
                     cachedTex = found;
                 else
@@ -144,6 +176,23 @@ namespace AAM.Tweaks
                     return obj;
             }
             return cachedDef;
+        }
+
+        public ModContentPack GetMod()
+        {
+            if (cachedMod != null)
+                return cachedMod;
+
+            foreach (var mcp in LoadedModManager.RunningModsListForReading)
+            {
+                if (MakeModID(mcp) == TextureModID)
+                {
+                    cachedMod = mcp;
+                    break;
+                }
+            }
+
+            return cachedMod;
         }
 
         public ISweepProvider GetSweepProvider()
@@ -217,32 +266,24 @@ namespace AAM.Tweaks
             return ov;
         }
 
-        public void ExposeData()
+        public void SaveTo(string filePath)
         {
-            if (string.IsNullOrWhiteSpace(CustomRendererClass))
-                CustomRendererClass = null;
-
-            Scribe_Values.Look(ref ItemDefName, "dId");
-            Scribe_Values.Look(ref ItemType, "typ");
-            Scribe_Values.Look(ref ItemTypeNamespace, "nsp");
-            Scribe_Values.Look(ref TexturePath, "tex");
-            Scribe_Values.Look(ref OffX, "ofX");
-            Scribe_Values.Look(ref OffY, "ofY");
-            Scribe_Values.Look(ref Rotation, "rot");
-            Scribe_Values.Look(ref ScaleX, "scX", 1);
-            Scribe_Values.Look(ref ScaleY, "scY", 1);
-            Scribe_Values.Look(ref FlipX, "flX");
-            Scribe_Values.Look(ref FlipY, "flY");
-            Scribe_Values.Look(ref HandsMode, "hnd");
-            Scribe_Values.Look(ref UseDefaultTransparentMaterial, "trs");
-            Scribe_Values.Look(ref BladeStart, "blS", 0);
-            Scribe_Values.Look(ref BladeEnd, "blE", 0.5f);
-            Scribe_Values.Look(ref CustomRendererClass, "crc", null);
-            Scribe_Values.Look(ref SweepProviderClass, "spc", null);
-
-            int flag = (int)MeleeWeaponType;
-            Scribe_Values.Look(ref flag, "tag", (int)(MeleeWeaponType.Long_Stab | MeleeWeaponType.Long_Sharp));
-            MeleeWeaponType = (MeleeWeaponType)flag;
+            var settings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore,
+                Error = (e, t) =>
+                {
+                    Core.Error($"Json saving error: {t.ErrorContext.Error.Message}");
+                },
+                Converters = new List<JsonConverter>()
+                {
+                    new ColorConverter()
+                }
+            };
+            string json = JsonConvert.SerializeObject(this, Formatting.Indented, settings);
+            File.WriteAllText(filePath, json);
         }
     }
 }

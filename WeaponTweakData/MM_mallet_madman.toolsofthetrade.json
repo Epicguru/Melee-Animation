@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_mallet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.313819855,
+  "OffY": -0.03268967,
+  "Rotation": 45.0,
+  "BladeStart": 0.07273449,
+  "BladeEnd": 0.867091,
+  "MeleeWeaponType": 1
+}

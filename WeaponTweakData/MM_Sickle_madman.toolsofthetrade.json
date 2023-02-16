@@ -1,0 +1,10 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_Sickle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1830618,
+  "OffY": 0.0490343533,
+  "BladeStart": 0.151189446,
+  "MeleeWeaponType": 16
+}

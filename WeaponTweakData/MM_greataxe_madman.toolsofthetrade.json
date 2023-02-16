@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_greataxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.447846651,
+  "Rotation": 45.0,
+  "BladeStart": 0.530388653,
+  "BladeEnd": 1.014194,
+  "MeleeWeaponType": 2
+}

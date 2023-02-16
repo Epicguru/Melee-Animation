@@ -1,0 +1,14 @@
+{
+  "TextureModID": "projectjedi.lightsabers",
+  "ItemDefName": "SWSaber_Inquis",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 2.2,
+  "ScaleY": 2.2,
+  "BladeStart": -1.41587269,
+  "BladeEnd": 1.42857146,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "AAM.LightsaberPatch.SaberRenderer",
+  "SweepProviderClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+}

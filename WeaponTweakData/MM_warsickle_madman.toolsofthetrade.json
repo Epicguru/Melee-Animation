@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_warsickle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.169985563,
+  "OffY": 0.006538093,
+  "HandsMode": 1,
+  "BladeStart": 0.09234823,
+  "BladeEnd": 0.4584712,
+  "MeleeWeaponType": 16
+}

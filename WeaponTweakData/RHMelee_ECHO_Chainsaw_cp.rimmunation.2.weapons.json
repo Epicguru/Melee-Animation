@@ -1,0 +1,12 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RHMelee_ECHO_Chainsaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.261516154,
+  "OffY": -0.06864809,
+  "Rotation": 44.493,
+  "BladeStart": 0.2459894,
+  "BladeEnd": 0.7624842,
+  "MeleeWeaponType": 11
+}

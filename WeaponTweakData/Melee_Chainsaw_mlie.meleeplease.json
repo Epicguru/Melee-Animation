@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Chainsaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3693923,
+  "OffY": 0.07518591,
+  "Rotation": 3.382505,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.370209366,
+  "BladeEnd": 1.05015278,
+  "MeleeWeaponType": 25
+}

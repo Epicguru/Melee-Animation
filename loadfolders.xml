@@ -10,7 +10,7 @@
     <li>/</li>
     <li>1.4</li>
     <li IfModActive="Nals.FacialAnimation">Patch_FacialAnimation/1.4</li>
-    <li IfModActive="Mlie.StarWarsFullyFunctionalLightsabers">Patch_Lightsabers/1.4</li>
+    <li IfModActive="projectjedi.lightsabers">Patch_Lightsabers/1.4</li>
     <li IfModActive="erdelf.humanoidalienraces">Patch_AlienRaces/1.4</li>
   </v1.4>
 </loadFolders>

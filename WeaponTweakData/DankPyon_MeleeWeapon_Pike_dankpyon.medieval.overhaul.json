@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Pike",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6110469,
+  "OffY": -0.0101417005,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.1977661,
+  "BladeEnd": 1.59734154,
+  "MeleeWeaponType": 5
+}

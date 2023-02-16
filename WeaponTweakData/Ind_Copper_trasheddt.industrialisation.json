@@ -1,0 +1,13 @@
+{
+  "TextureModID": "trasheddt.industrialisation",
+  "ItemDefName": "Ind_Copper",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.116431683,
+  "OffY": -0.0863852054,
+  "Rotation": 45.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeEnd": 0.3727704,
+  "MeleeWeaponType": 8
+}

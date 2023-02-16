@@ -1,0 +1,13 @@
+{
+  "TextureModID": "oskarpotocki.vfe.vikings",
+  "ItemDefName": "VFEV_LothurrAntler",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.225558013,
+  "OffY": 0.0196137354,
+  "Rotation": -2.560632,
+  "FlipY": true,
+  "BladeStart": 0.08254136,
+  "BladeEnd": 0.6644155,
+  "MeleeWeaponType": 1
+}

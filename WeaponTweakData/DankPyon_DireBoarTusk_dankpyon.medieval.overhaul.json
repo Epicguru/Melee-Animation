@@ -1,0 +1,10 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_DireBoarTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.205372468,
+  "OffY": -0.0557802469,
+  "Rotation": 6.338772,
+  "MeleeWeaponType": 5
+}

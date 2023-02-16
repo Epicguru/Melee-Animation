@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sirvan.mwretextured",
+  "ItemDefName": "MeleeWeapon_BreachAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.193533123,
+  "OffY": -0.05902261,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.236182526,
+  "BladeEnd": 0.572884858,
+  "MeleeWeaponType": 18
+}

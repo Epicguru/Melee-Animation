@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dandman68.weaponplusretexture",
+  "ItemDefName": "MeleeWeapon_Nunchaku",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.229883671,
+  "OffY": -0.0137935281,
+  "HandsMode": 1,
+  "BladeStart": 0.0298853386,
+  "BladeEnd": 0.448275864,
+  "MeleeWeaponType": 8
+}

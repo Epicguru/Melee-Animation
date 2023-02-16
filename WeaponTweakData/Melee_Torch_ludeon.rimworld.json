@@ -1,0 +1,20 @@
+{
+  "TextureModID": "ludeon.rimworld",
+  "ItemDefName": "Melee_Torch",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.243020952,
+  "Rotation": 90.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 1,
+  "BladeStart": 0.08538668,
+  "BladeEnd": 0.466338664,
+  "MeleeWeaponType": 8,
+  "TrailTint": {
+    "r": 0.987,
+    "g": 0.58,
+    "b": 0.061,
+    "a": 0.998
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "trasheddt.industrialisation",
+  "ItemDefName": "Ind_HighGradeSteel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.138966888,
+  "OffY": -0.05258239,
+  "Rotation": 25.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeEnd": 0.3727704,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "vanillaexpanded.vwetb",
+  "ItemDefName": "VWE_MeleeWeapon_LightClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.202674925,
+  "OffY": 0.0294206142,
+  "BladeStart": 0.111961968,
+  "BladeEnd": 0.5271193,
+  "MeleeWeaponType": 8
+}

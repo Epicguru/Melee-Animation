@@ -1,0 +1,17 @@
+{
+  "TextureModID": "albion.sparklingworlds.full",
+  "ItemDefName": "PainStickSW",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.26151675,
+  "OffY": 0.0130759254,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 0.755946636,
+  "MeleeWeaponType": 9,
+  "TrailTint": {
+    "r": 0.182222068,
+    "g": 0.989097059,
+    "b": 1.0,
+    "a": 0.868888736
+  }
+}

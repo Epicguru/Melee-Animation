@@ -104,7 +104,7 @@ public class AnimData
         if (root == null)
             yield break;
 
-        
+
         foreach (Transform child in root.transform)
         {
             if (child.CompareTag("AnimIgnore"))
@@ -158,18 +158,18 @@ public class AnimData
             case 2:
                 return prop switch
                 {
-                    1  => data?.DataA ?? 0,
-                    2  => data?.DataB ?? 0,
-                    3  => data?.DataC ?? 0,
-                    4  => data?.Tint.r ?? 1,
-                    5  => data?.Tint.g ?? 1,
-                    6  => data?.Tint.b ?? 1,
-                    7  => data?.Tint.a ?? 1,
-                    8  => (data?.FlipX ?? false) ? 1 : 0,
-                    9  => (data?.FlipY ?? false) ? 1 : 0,
+                    1 => data?.DataA ?? 0,
+                    2 => data?.DataB ?? 0,
+                    3 => data?.DataC ?? 0,
+                    4 => data?.Tint.r ?? 1,
+                    5 => data?.Tint.g ?? 1,
+                    6 => data?.Tint.b ?? 1,
+                    7 => data?.Tint.a ?? 1,
+                    8 => (data?.FlipX ?? false) ? 1 : 0,
+                    9 => (data?.FlipY ?? false) ? 1 : 0,
                     10 => (int)(data?.SplitDrawMode ?? 0),
                     11 => data?.FrameIndex ?? 0,
-                    _  => throw new NotImplementedException()
+                    _ => throw new NotImplementedException()
                 };
 
             // GameObject
@@ -271,7 +271,7 @@ public class AnimData
             {
                 //Debug.LogWarning($"Saved {path} from being stripped from the output.");
             }
-        }        
+        }
 
         var pathList = new List<string>(paths);
 
@@ -304,7 +304,7 @@ public class AnimData
             }
 
             var obj = raw.objectReferenceParameter as EventBase;
-            if(obj == null)
+            if (obj == null)
             {
                 Debug.LogWarning($"Null object in event at {raw.time}s.");
                 continue;

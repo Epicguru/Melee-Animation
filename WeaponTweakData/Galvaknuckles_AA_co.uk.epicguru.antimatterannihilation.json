@@ -1,0 +1,12 @@
+{
+  "TextureModID": "co.uk.epicguru.antimatterannihilation",
+  "ItemDefName": "Galvaknuckles_AA",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.143410608,
+  "OffY": -0.0155036394,
+  "HandsMode": 2,
+  "BladeStart": 0.04360465,
+  "BladeEnd": 0.303295046,
+  "MeleeWeaponType": 40
+}

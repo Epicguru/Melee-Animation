@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Hatchet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.157198846,
+  "OffY": -0.0354964,
+  "BladeStart": 0.180018023,
+  "BladeEnd": 0.43863523,
+  "MeleeWeaponType": 16
+}

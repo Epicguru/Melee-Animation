@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.408619881,
+  "Rotation": 45.0,
+  "BladeStart": 0.579423,
+  "BladeEnd": 1.09591782,
+  "MeleeWeaponType": 7
+}

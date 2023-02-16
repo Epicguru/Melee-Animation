@@ -1,0 +1,11 @@
+{
+  "TextureModID": "oskarpotocki.vfe.vikings",
+  "ItemDefName": "VFE_MeleeWeapon_BeardedAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.179792434,
+  "OffY": -0.00653781369,
+  "BladeStart": 0.334251225,
+  "BladeEnd": 0.6153811,
+  "MeleeWeaponType": 18
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dandman68.weaponplusretexture",
+  "ItemDefName": "MeleeWeapon_Bo_Staff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2758621,
+  "OffY": -0.0045978413,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": -0.489655167,
+  "BladeEnd": 1.04137933,
+  "MeleeWeaponType": 1
+}

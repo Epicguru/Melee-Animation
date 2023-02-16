@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_khopesh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3268961,
+  "OffY": -0.055572167,
+  "BladeStart": 0.206761912,
+  "BladeEnd": 0.778829157,
+  "MeleeWeaponType": 6
+}

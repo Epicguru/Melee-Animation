@@ -271,5 +271,11 @@ public class EditorRenderer : Editor
                 throw new ArgumentOutOfRangeException();
         }
     }
+
+    [MenuItem("Assets/Build AssetBundles")]
+    static void BuildAllAssetBundles()
+    {
+        BuildPipeline.BuildAssetBundles("./Assets/AssetBundles", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
+    }
 }
 #endif

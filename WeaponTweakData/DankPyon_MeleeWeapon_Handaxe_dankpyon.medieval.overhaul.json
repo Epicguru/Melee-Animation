@@ -1,0 +1,10 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Handaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.162269935,
+  "OffY": -0.0177480876,
+  "BladeStart": 0.2636883,
+  "MeleeWeaponType": 16
+}

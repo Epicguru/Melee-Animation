@@ -1,0 +1,20 @@
+{
+  "TextureModID": "vali.ca",
+  "ItemDefName": "V_ChargeHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5393779,
+  "OffY": -0.006538123,
+  "Rotation": 45.97939,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.6644155,
+  "BladeEnd": 1.09918714,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.0243355185,
+    "g": 0.555269957,
+    "b": 0.9955554,
+    "a": 1.0
+  }
+}

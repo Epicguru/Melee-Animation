@@ -1,0 +1,11 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_Kukri_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.268054277,
+  "Rotation": 45.0,
+  "BladeStart": 0.09561699,
+  "BladeEnd": 0.6774917,
+  "MeleeWeaponType": 54
+}

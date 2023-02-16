@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Swordlance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.491879463,
+  "OffY": -0.0126774758,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.884876847,
+  "BladeEnd": 1.450285,
+  "MeleeWeaponType": 7
+}

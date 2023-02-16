@@ -1,0 +1,11 @@
+{
+  "TextureModID": "al9000.tvmelee",
+  "ItemDefName": "MeleeWeapon_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.228187919,
+  "OffY": -0.0178972278,
+  "BladeStart": 0.471547425,
+  "BladeEnd": 0.706912339,
+  "MeleeWeaponType": 2
+}

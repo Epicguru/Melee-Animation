@@ -1,0 +1,19 @@
+{
+  "TextureModID": "co.uk.epicguru.rimforge",
+  "ItemDefName": "RF_SwordOfRapture",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.543834746,
+  "Rotation": 43.56551,
+  "ScaleX": 1.35,
+  "ScaleY": 1.35,
+  "BladeStart": 0.386310816,
+  "BladeEnd": 1.38396621,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.978,
+    "g": 0.9296796,
+    "b": 0.0719999745,
+    "a": 0.7844444
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.464191675,
+  "OffY": -0.0130759254,
+  "Rotation": 45.0,
+  "ScaleX": 1.05,
+  "ScaleY": 1.05,
+  "BladeStart": 0.07273449,
+  "BladeEnd": 1.154759,
+  "MeleeWeaponType": 6
+}

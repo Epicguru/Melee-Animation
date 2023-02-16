@@ -1,0 +1,12 @@
+{
+  "TextureModID": "oskarpotocki.vfe.vikings",
+  "ItemDefName": "VFE_MeleeWeapon_DaneAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.300744265,
+  "OffY": -0.134027123,
+  "Rotation": 52.28178,
+  "BladeStart": 0.393092453,
+  "BladeEnd": 0.847477257,
+  "MeleeWeaponType": 2
+}

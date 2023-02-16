@@ -1,0 +1,16 @@
+{
+  "TextureModID": "projectjedi.lightsabers",
+  "ItemDefName": "SWSaber_Quigon",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5394548,
+  "OffY": 0.0306072533,
+  "Rotation": 47.84379,
+  "ScaleX": 2.5,
+  "ScaleY": 2.5,
+  "BladeStart": 0.160688668,
+  "BladeEnd": 1.27020586,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "AAM.LightsaberPatch.SaberRenderer",
+  "SweepProviderClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+}

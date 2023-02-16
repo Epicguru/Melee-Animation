@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_heavymace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3988129,
+  "Rotation": 45.0,
+  "BladeStart": 0.566346765,
+  "BladeEnd": 0.9782353,
+  "MeleeWeaponType": 1
+}

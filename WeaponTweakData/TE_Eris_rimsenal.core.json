@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rimsenal.core",
+  "ItemDefName": "TE_Eris",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.142723233,
+  "OffY": 0.0112676024,
+  "HandsMode": 1,
+  "BladeStart": 0.07605634,
+  "BladeEnd": 0.25633803,
+  "MeleeWeaponType": 40
+}

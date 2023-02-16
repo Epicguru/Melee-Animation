@@ -1,0 +1,11 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Brass_Knuckles",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0689655244,
+  "Rotation": 70.0,
+  "HandsMode": 1,
+  "BladeEnd": 0.163218945,
+  "MeleeWeaponType": 8
+}

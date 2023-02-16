@@ -1,0 +1,11 @@
+{
+  "TextureModID": "kyrrisayo.weaponsplus",
+  "ItemDefName": "MeleeWeapon_Great_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.367816329,
+  "Rotation": 45.0,
+  "BladeStart": 0.577012062,
+  "BladeEnd": 0.9402302,
+  "MeleeWeaponType": 2
+}

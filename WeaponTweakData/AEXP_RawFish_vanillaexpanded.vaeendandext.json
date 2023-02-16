@@ -1,0 +1,14 @@
+{
+  "TextureModID": "vanillaexpanded.vaeendandext",
+  "ItemDefName": "AEXP_RawFish",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.164835185,
+  "OffY": -0.0146517921,
+  "Rotation": -160.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "FlipY": true,
+  "BladeStart": 0.0641030148,
+  "MeleeWeaponType": 6
+}

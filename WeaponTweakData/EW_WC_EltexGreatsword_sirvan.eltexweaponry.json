@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sirvan.eltexweaponry",
+  "ItemDefName": "EW_WC_EltexGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.60852766,
+  "OffY": -0.05038736,
+  "ScaleX": 1.8,
+  "ScaleY": 1.8,
+  "BladeStart": 0.3653103,
+  "BladeEnd": 1.47383726,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182222068,
+    "g": 0.989097059,
+    "b": 1.0,
+    "a": 0.868888736
+  }
+}

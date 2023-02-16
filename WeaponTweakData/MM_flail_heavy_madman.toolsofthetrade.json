@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_flail_heavy",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.297474861,
+  "OffY": -0.09153059,
+  "Rotation": 56.52547,
+  "BladeStart": 0.128306955,
+  "BladeEnd": 0.78536725,
+  "MeleeWeaponType": 1
+}

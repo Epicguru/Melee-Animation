@@ -1,0 +1,12 @@
+{
+  "TextureModID": "4ydra.arsenalofrevolution",
+  "ItemDefName": "AOR_Melee_Grabenaxt",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.187793672,
+  "OffY": 0.09014084,
+  "Rotation": 4.67026,
+  "BladeStart": 0.11737112,
+  "BladeEnd": 0.541784465,
+  "MeleeWeaponType": 18
+}

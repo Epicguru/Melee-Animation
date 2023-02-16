@@ -1,0 +1,14 @@
+{
+  "TextureModID": "oskarpotocki.vfe.pirates",
+  "ItemDefName": "VFEP_WarcasketMeleeWeapon_Broadsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.666867137,
+  "OffY": 0.019613741,
+  "Rotation": 45.0,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": 0.22310631,
+  "BladeEnd": 1.66471624,
+  "MeleeWeaponType": 6
+}

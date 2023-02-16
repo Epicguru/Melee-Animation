@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using Verse;
@@ -44,6 +43,8 @@ namespace AAM
         public static Texture2D ExtraGuiForce;
         [Content("AAM/UI/ExtraGUIWhy")]
         public static Texture2D ExtraGuiWhy;
+        [Content("AAM/UI/BG/Sketch1")]
+        public static Texture2D BGSketch1;
 
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;

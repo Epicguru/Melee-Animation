@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Drill",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.336702377,
+  "OffY": 0.0424965359,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.108693212,
+  "BladeEnd": 1.13187647,
+  "MeleeWeaponType": 5
+}
