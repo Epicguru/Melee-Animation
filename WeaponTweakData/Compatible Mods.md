@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 16 Feb 2023, 2:39 PM.`  
+`Updated 16 Feb 2023, 3:19 PM.`  
 
-**Advanced Melee Animation supports 701 weapons from 86 mods.**  
+**Advanced Melee Animation supports 723 weapons from 88 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -54,6 +54,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Makeshift Melee Weapons** | detvisor.makeshiftweapons | 3 | *Epicguru* |
 | **Medieval Madness: Tools of the Trade** | madman.toolsofthetrade | 44 | *Epicguru* |
 | **Medieval Overhaul** | dankpyon.medieval.overhaul | 68 | *Epicguru* |
+| **Medieval Overhaul: Arcane Archaeologists** | ogam.medievaloverhaul.arcanearchaeologists | 4 | *Epicguru* |
 | **Megafauna** | spino.megafauna | 6 | *Epicguru* |
 | **Melee Please (Continued)** | mlie.meleeplease | 11 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
@@ -69,6 +70,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Revia Race** | fs.reviarace | 8 | *Epicguru* |
 | **Rim of Madness - Bones** | sihv.rombones | 1 | *Epicguru* |
 | **Rim-Effect: N7** | rimeffect.n7 | 1 | *Epicguru* |
+| **RimFantasy - Medieval Overhaul Edition** | sierra.rf.medievaloverhaul | 18 | *Epicguru* |
 | **RimForge** | co.uk.epicguru.rimforge | 6 | *Epicguru* |
 | **RimFortress: Dwarven Plants** | dismarzero.vgp.rimfortressdwarvenplants | 6 | *Epicguru* |
 | **Rimsenal - Core** | rimsenal.core | 5 | *Epicguru* |
