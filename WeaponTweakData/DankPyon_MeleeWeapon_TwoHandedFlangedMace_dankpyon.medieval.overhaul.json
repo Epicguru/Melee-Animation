@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_TwoHandedFlangedMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.319468319,
+  "OffY": -0.0101421475,
+  "Rotation": 45.0,
+  "BladeStart": 0.07352858,
+  "BladeEnd": 0.93051517,
+  "MeleeWeaponType": 1
+}

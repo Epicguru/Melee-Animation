@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_Pickaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.19776611,
+  "OffY": -0.0354964137,
+  "BladeStart": 0.111560524,
+  "BladeEnd": 0.59836936,
+  "MeleeWeaponType": 24
+}

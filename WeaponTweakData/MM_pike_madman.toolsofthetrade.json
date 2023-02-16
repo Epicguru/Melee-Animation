@@ -1,0 +1,12 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_pike",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.34324047,
+  "OffY": -0.009806871,
+  "Rotation": 45.0,
+  "BladeStart": 0.134844467,
+  "BladeEnd": 1.01746285,
+  "MeleeWeaponType": 5
+}

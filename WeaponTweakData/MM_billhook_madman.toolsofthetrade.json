@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_billhook",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.392274857,
+  "Rotation": 45.0,
+  "BladeStart": 0.0694657341,
+  "BladeEnd": 1.06976652,
+  "MeleeWeaponType": 7
+}

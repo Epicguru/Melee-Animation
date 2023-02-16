@@ -1,0 +1,11 @@
+{
+  "TextureModID": "al9000.tvmelee",
+  "ItemDefName": "MeleeWeapon_MutaniteSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.298458576,
+  "Rotation": 45.0,
+  "BladeStart": 0.111721836,
+  "BladeEnd": 0.9761909,
+  "MeleeWeaponType": 7
+}

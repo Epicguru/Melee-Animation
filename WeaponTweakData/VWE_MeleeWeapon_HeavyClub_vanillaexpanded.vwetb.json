@@ -1,0 +1,12 @@
+{
+  "TextureModID": "vanillaexpanded.vwetb",
+  "ItemDefName": "VWE_MeleeWeapon_HeavyClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.336702347,
+  "OffY": -0.00326906145,
+  "Rotation": 47.13645,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 0.8965116,
+  "MeleeWeaponType": 1
+}

@@ -46,7 +46,6 @@ namespace AAM.Events.Workers
         private void PlayImpactSound(Thing weapon, Map map, IntVec3 position)
         {
             var sd = AudioUtility.GetPawnHitSound(weapon);
-            Core.Log($"Got hit sound: {sd}");
             if (sd == null)
                 return;
 

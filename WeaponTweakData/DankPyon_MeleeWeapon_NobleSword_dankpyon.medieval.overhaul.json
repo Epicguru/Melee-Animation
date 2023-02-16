@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_NobleSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354965,
+  "OffY": -0.005071074,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.106489442,
+  "BladeEnd": 0.887412131,
+  "MeleeWeaponType": 6
+}

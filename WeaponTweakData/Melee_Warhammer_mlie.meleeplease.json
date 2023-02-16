@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Warhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.307281762,
+  "OffY": -0.05230341,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.5924986,
+  "BladeEnd": 0.9324703,
+  "MeleeWeaponType": 1
+}

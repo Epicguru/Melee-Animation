@@ -1,0 +1,13 @@
+{
+  "TextureModID": "iexist.industrial.melee.weaponry",
+  "ItemDefName": "IMW_PocketKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.169014066,
+  "OffY": 0.0225352086,
+  "ScaleX": 0.5,
+  "ScaleY": 0.5,
+  "BladeStart": 0.0985915437,
+  "BladeEnd": 0.3953056,
+  "MeleeWeaponType": 32
+}

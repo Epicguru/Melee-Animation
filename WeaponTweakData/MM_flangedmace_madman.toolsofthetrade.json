@@ -1,0 +1,13 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_flangedmace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2386342,
+  "OffY": -0.0130756292,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 0.6480711,
+  "MeleeWeaponType": 9
+}

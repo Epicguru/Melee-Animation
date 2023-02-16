@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rimsenal.feral",
+  "ItemDefName": "Sunderer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.334272563,
+  "OffY": -0.06384966,
+  "Rotation": 45.42119,
+  "BladeStart": 0.124883085,
+  "BladeEnd": 0.9511739,
+  "MeleeWeaponType": 2
+}

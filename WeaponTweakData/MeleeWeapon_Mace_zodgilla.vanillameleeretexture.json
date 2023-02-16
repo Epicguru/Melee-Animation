@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zodgilla.vanillameleeretexture",
+  "ItemDefName": "MeleeWeapon_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.187192231,
+  "OffY": -0.00788182952,
+  "HandsMode": 1,
+  "BladeStart": 0.07881773,
+  "BladeEnd": 0.6045983,
+  "MeleeWeaponType": 8
+}

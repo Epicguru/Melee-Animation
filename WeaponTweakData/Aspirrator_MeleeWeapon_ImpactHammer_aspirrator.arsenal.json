@@ -1,0 +1,13 @@
+{
+  "TextureModID": "aspirrator.arsenal",
+  "ItemDefName": "Aspirrator_MeleeWeapon_ImpactHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.274178147,
+  "OffY": -0.0413143635,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.143661961,
+  "BladeEnd": 0.688263357,
+  "MeleeWeaponType": 1
+}

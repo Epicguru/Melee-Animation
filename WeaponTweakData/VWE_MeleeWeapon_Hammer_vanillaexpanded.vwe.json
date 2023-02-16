@@ -1,0 +1,11 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_Hammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2190205,
+  "OffY": -0.00653781369,
+  "BladeStart": 0.2525269,
+  "BladeEnd": 0.569616139,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rimsenal.federation",
+  "ItemDefName": "AD_FedConcussionBaton",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.202816889,
+  "OffY": 0.236619711,
+  "HandsMode": 1,
+  "BladeStart": 0.09108027,
+  "BladeEnd": 0.699530959,
+  "MeleeWeaponType": 9
+}

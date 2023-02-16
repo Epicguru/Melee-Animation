@@ -1,0 +1,18 @@
+{
+  "TextureModID": "mlie.cyberneticwarfare",
+  "ItemDefName": "CW_EnergySword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.430232584,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.113372095,
+  "BladeEnd": 1.08624053,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182222068,
+    "g": 0.989097059,
+    "b": 1.0,
+    "a": 0.868888736
+  }
+}

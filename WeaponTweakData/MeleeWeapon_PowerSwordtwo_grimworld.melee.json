@@ -1,0 +1,19 @@
+{
+  "TextureModID": "grimworld.melee",
+  "ItemDefName": "MeleeWeapon_PowerSwordtwo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.19906126,
+  "OffY": -0.007511623,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.07981266,
+  "BladeEnd": 0.5981225,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182222068,
+    "g": 0.989097059,
+    "b": 1.0,
+    "a": 0.74666667
+  }
+}

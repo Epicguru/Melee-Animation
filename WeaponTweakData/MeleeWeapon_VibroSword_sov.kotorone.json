@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sov.kotorone",
+  "ItemDefName": "MeleeWeapon_VibroSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.441309184,
+  "OffY": -0.0163449943,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.2002238,
+  "BladeEnd": 1.07957339,
+  "MeleeWeaponType": 6
+}

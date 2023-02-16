@@ -1,0 +1,16 @@
+{
+  "TextureModID": "projectjedi.lightsabers",
+  "ItemDefName": "SWSaber_DookuSaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1262554,
+  "OffY": -0.2448594,
+  "Rotation": 40.0,
+  "ScaleX": 2.5,
+  "ScaleY": 2.5,
+  "BladeStart": 0.0459110476,
+  "BladeEnd": 1.4729799,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "AAM.LightsaberPatch.SaberRenderer",
+  "SweepProviderClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+}

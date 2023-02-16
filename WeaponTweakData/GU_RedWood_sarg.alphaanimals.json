@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sarg.alphaanimals",
+  "ItemDefName": "GU_RedWood",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.174418628,
+  "OffY": -0.07751926,
+  "Rotation": 45.0,
+  "BladeStart": 0.02422528,
+  "BladeEnd": 0.442829937,
+  "MeleeWeaponType": 8
+}

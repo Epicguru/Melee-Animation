@@ -1,0 +1,12 @@
+{
+  "TextureModID": "airetexture.core",
+  "ItemDefName": "MeleeWeapon_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.210181028,
+  "OffY": -0.0262727737,
+  "HandsMode": 1,
+  "BladeStart": 0.07881773,
+  "BladeEnd": 0.525451958,
+  "MeleeWeaponType": 8
+}

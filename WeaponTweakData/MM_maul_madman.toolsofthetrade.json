@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_maul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.382468,
+  "Rotation": 45.0,
+  "BladeStart": 0.6186505,
+  "BladeEnd": 0.9128566,
+  "MeleeWeaponType": 1
+}

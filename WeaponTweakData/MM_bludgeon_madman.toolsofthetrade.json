@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_bludgeon",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.160178691,
+  "OffY": -0.013075632,
+  "BladeStart": 0.08907947,
+  "BladeEnd": 0.612112343,
+  "MeleeWeaponType": 9
+}

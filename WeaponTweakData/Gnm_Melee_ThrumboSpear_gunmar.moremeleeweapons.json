@@ -1,0 +1,12 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_ThrumboSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1797924,
+  "OffY": -0.0849927738,
+  "Rotation": 43.80319,
+  "BladeStart": 0.0661963746,
+  "BladeEnd": 0.7657535,
+  "MeleeWeaponType": 7
+}

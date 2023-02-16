@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_hatchet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.107875578,
+  "OffY": -0.05230342,
+  "BladeStart": 0.08254136,
+  "BladeEnd": 0.4421268,
+  "MeleeWeaponType": 16
+}

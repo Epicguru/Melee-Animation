@@ -1,0 +1,13 @@
+{
+  "TextureModID": "syrchalis.thrumkin",
+  "ItemDefName": "Thrumkin_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.422988772,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.2137931,
+  "BladeEnd": 1.114943,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "grimworld.melee",
+  "ItemDefName": "MeleeWeapon_PowerFist",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1389669,
+  "OffY": 0.0225352123,
+  "HandsMode": 2,
+  "BladeStart": 0.0122070313,
+  "BladeEnd": 0.290140837,
+  "MeleeWeaponType": 40
+}

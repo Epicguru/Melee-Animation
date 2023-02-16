@@ -1,0 +1,14 @@
+{
+  "TextureModID": "fs.reviarace",
+  "ItemDefName": "ReviaBlessedSerratedScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.546139836,
+  "OffY": -0.0527305752,
+  "Rotation": 46.281,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.7532959,
+  "BladeEnd": 1.34086657,
+  "MeleeWeaponType": 2
+}

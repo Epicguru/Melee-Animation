@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2484411,
+  "OffY": 0.04903435,
+  "BladeStart": 0.076003246,
+  "BladeEnd": 0.706912339,
+  "MeleeWeaponType": 6
+}

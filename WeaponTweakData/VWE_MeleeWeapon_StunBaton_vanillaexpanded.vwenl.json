@@ -1,0 +1,11 @@
+{
+  "TextureModID": "vanillaexpanded.vwenl",
+  "ItemDefName": "VWE_MeleeWeapon_StunBaton",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.215751156,
+  "OffY": -0.0130756274,
+  "BladeStart": 0.09561699,
+  "BladeEnd": 0.625188,
+  "MeleeWeaponType": 9
+}

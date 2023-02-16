@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rimsenal.feral",
+  "ItemDefName": "MeleeWeapon_FeralGlaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.345540136,
+  "OffY": -0.0413147733,
+  "Rotation": 47.11584,
+  "BladeStart": 0.496714056,
+  "BladeEnd": 0.9699535,
+  "MeleeWeaponType": 7
+}

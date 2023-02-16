@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Scimitar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.235364318,
+  "OffY": 0.05884123,
+  "Rotation": 5.134158,
+  "BladeStart": 0.08907947,
+  "BladeEnd": 0.7265261,
+  "MeleeWeaponType": 6
+}

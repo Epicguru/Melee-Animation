@@ -1,0 +1,13 @@
+{
+  "TextureModID": "kyrrisayo.weaponsplus",
+  "ItemDefName": "MeleeWeapon_Tonfa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.174712092,
+  "OffY": -0.02758621,
+  "Rotation": 20.0,
+  "HandsMode": 2,
+  "BladeStart": 0.0114948144,
+  "BladeEnd": 0.577012062,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 2568781495
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c082277721b04ca1aaf2f193c47a3cea
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 10a6a558690295dadb3dd990eda0821a
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Materials/CutoffCustom.mat
+- Assets/Materials/TrailShader.mat
+- Assets/Materials/BlitMaterial.mat
+Dependencies: []

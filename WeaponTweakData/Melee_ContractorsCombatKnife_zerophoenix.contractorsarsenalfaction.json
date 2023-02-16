@@ -1,0 +1,18 @@
+{
+  "TextureModID": "zerophoenix.contractorsarsenalfaction",
+  "ItemDefName": "Melee_ContractorsCombatKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.197674423,
+  "OffY": -0.00775181968,
+  "HandsMode": 1,
+  "BladeStart": 0.15600799,
+  "BladeEnd": 0.466085732,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182222068,
+    "g": 0.56385237,
+    "b": 1.0,
+    "a": 0.868888736
+  }
+}

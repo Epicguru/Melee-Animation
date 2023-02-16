@@ -284,6 +284,12 @@ public class AnimData
             list.Add(sweep);
         }
 
+        // Ensure that all data was read.
+        if (reader.BaseStream.Position != reader.BaseStream.Length)
+        {
+            Core.Error($"Read {reader.BaseStream.Position} bytes but should have read {reader.BaseStream.Length} ({clipName})");
+        }
+
         return new AnimData(clipName, length, parts, events)
         {
             sweeps = sweeps,
@@ -386,6 +392,7 @@ public class AnimPartData
     public AnimationCurve Active;
     public AnimationCurve Direction;
     public AnimationCurve SplitDrawModeCurve;
+    public AnimationCurve FrameIndex;
 
     public ref AnimationCurve GetCurve(byte type, byte field)
     {
@@ -443,6 +450,8 @@ public class AnimPartData
                 return ref FlipY;
             if (field == 10)
                 return ref SplitDrawModeCurve;
+            if (field == 11)
+                return ref FrameIndex;
         }
 
         // TYPE: GameObject
@@ -474,7 +483,7 @@ public class AnimPartData
 public struct AnimPartSnapshot
 {
     public bool Valid => Part != null;
-    public string TexturePath => Part?.TexturePath;
+    public string TexturePath => Part?.TexturePath == null ? null : (Part.TexturePath + (FrameIndex > 0 ? FrameIndex.ToString() : null));
     public string PartName => Part?.Name;
     public float Depth => WorldMatrix.MultiplyPoint3x4(Vector3.zero).y;
     public AnimPartData SplitDrawPivot => Part?.SplitDrawPivot;
@@ -505,6 +514,7 @@ public struct AnimPartSnapshot
     public bool FlipX, FlipY;
     public bool Active;
     public Rot4 Direction;
+    public int FrameIndex;
     public AnimData.SplitDrawMode SplitDrawMode;
 
     public Matrix4x4 LocalMatrix;
@@ -535,6 +545,7 @@ public struct AnimPartSnapshot
 
         Active = Eval(d.Active, t) >= 0.5f;
         SplitDrawMode = (AnimData.SplitDrawMode)(int)Eval(d.SplitDrawModeCurve, t);
+        FrameIndex = (int)Eval(d.FrameIndex, t);
 
         Direction = new Rot4((byte)Eval(d.Direction, t));
 
@@ -597,7 +608,7 @@ public struct AnimPartSnapshot
 
     public void UpdateWorldMatrix(bool mirrorX, bool mirrorY)
     {
-        var preProc = Matrix4x4.Scale(new Vector3(mirrorX ? -1f : 1f, 1f, mirrorY ? -1f : 1f));
+        var preProc  = Matrix4x4.Scale(new Vector3(mirrorX ? -1f : 1f, 1f, mirrorY ? -1f : 1f));
         var postProc = Matrix4x4.Scale(new Vector3(mirrorX ? -1f : 1f, 1f, mirrorY ? -1f : 1f));
 
         var ov = Renderer.GetOverride(this);
@@ -647,6 +658,7 @@ public class AnimPartOverrideData
     public PartRenderer CustomRenderer;
     public object UserData;
     public ItemTweakData TweakData;
+    public Thing Weapon;
 }
 
 [Serializable]

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rimsenal.feral",
+  "ItemDefName": "Carver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.184037328,
+  "OffY": 0.0300471745,
+  "Rotation": 50.58554,
+  "HandsMode": 2,
+  "BladeStart": 0.07605634,
+  "BladeEnd": 0.5830986,
+  "MeleeWeaponType": 11
+}

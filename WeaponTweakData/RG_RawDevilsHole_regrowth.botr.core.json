@@ -1,0 +1,12 @@
+{
+  "TextureModID": "regrowth.botr.core",
+  "ItemDefName": "RG_RawDevilsHole",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3062013,
+  "Rotation": -160.0,
+  "HandsMode": 1,
+  "BladeStart": 0.07461264,
+  "BladeEnd": 0.6521323,
+  "MeleeWeaponType": 8
+}

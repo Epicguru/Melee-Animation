@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_scramasax",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.320357978,
+  "OffY": -0.009806871,
+  "BladeStart": 0.06292762,
+  "BladeEnd": 0.7592154,
+  "MeleeWeaponType": 6
+}

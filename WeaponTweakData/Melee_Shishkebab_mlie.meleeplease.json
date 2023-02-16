@@ -1,0 +1,18 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Shishkebab",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.434771061,
+  "OffY": 0.00653811544,
+  "Rotation": 45.0,
+  "BladeStart": 0.229644418,
+  "BladeEnd": 1.06649721,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.99333334,
+    "g": 0.5440223,
+    "b": 0.00220724754,
+    "a": 0.9866667
+  }
+}

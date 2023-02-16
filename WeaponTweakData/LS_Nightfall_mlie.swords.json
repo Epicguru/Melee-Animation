@@ -1,0 +1,15 @@
+{
+  "TextureModID": "mlie.swords",
+  "ItemDefName": "LS_Nightfall",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.15891492,
+  "OffY": 0.00387608632,
+  "Rotation": 45.0,
+  "ScaleX": 2.4,
+  "ScaleY": 2.4,
+  "FlipY": true,
+  "BladeStart": 0.18701598,
+  "BladeEnd": 2.64050436,
+  "MeleeWeaponType": 6
+}

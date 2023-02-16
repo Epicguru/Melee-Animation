@@ -1,0 +1,10 @@
+{
+  "TextureModID": "tidal.morevanilla.textures",
+  "ItemDefName": "ThrumboHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.14449878,
+  "OffY": -0.05911331,
+  "BladeEnd": 0.5648608,
+  "MeleeWeaponType": 56
+}

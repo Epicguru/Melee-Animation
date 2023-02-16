@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.medievaloverhaul",
+  "ItemDefName": "RF_SapphireLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.373323441,
+  "Rotation": 45.0,
+  "BladeStart": 0.09833119,
+  "BladeEnd": 0.9149763,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "projectjedi.lightsabers",
+  "ItemDefName": "SWSaber_JGuard",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 44.14591,
+  "ScaleX": 2.2,
+  "ScaleY": 2.2,
+  "BladeStart": -1.83261585,
+  "BladeEnd": 1.77140176,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "AAM.LightsaberPatch.SaberRenderer",
+  "SweepProviderClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+}

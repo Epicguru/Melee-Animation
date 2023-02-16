@@ -1,0 +1,14 @@
+{
+  "TextureModID": "brassy.sfguns.vanilla",
+  "ItemDefName": "SangvisMelee_Executioner",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.313953459,
+  "OffY": -0.06589134,
+  "Rotation": 15.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.190891713,
+  "BladeEnd": 0.946705639,
+  "MeleeWeaponType": 6
+}

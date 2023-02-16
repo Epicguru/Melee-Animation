@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_rapier",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3857367,
+  "HandsMode": 1,
+  "BladeStart": 0.144651338,
+  "BladeEnd": 0.804981,
+  "MeleeWeaponType": 4
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dandman68.weaponplusretexture",
+  "ItemDefName": "MeleeWeapon_Bardiche",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.344827622,
+  "OffY": -0.00919568352,
+  "Rotation": 45.0,
+  "BladeStart": 0.296551734,
+  "BladeEnd": 0.981609464,
+  "MeleeWeaponType": 6
+}

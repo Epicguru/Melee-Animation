@@ -1,0 +1,11 @@
+{
+  "TextureModID": "iexist.industrial.melee.weaponry",
+  "ItemDefName": "IMW_Sledgehammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.251643658,
+  "OffY": -0.0375588,
+  "BladeStart": 0.09483591,
+  "BladeEnd": 0.7070422,
+  "MeleeWeaponType": 9
+}

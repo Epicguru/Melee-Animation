@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zodgilla.vanillameleeretexture",
+  "ItemDefName": "MeleeWeapon_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3487694,
+  "OffY": -0.0190478377,
+  "Rotation": 45.0,
+  "BladeStart": 0.111658856,
+  "BladeEnd": 1.03218448,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,15 @@
+{
+  "TextureModID": "sihv.rombones",
+  "ItemDefName": "BoneItem",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0878241062,
+  "OffY": 0.0319360048,
+  "Rotation": -65.0,
+  "ScaleX": 0.6,
+  "ScaleY": 0.6,
+  "HandsMode": 1,
+  "BladeStart": 0.0376652442,
+  "BladeEnd": 0.406779647,
+  "MeleeWeaponType": 8
+}

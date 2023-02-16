@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.swords",
+  "ItemDefName": "LS_Executioner",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.08914685,
+  "OffY": 0.0155039951,
+  "Rotation": 39.52687,
+  "ScaleX": 2.4,
+  "ScaleY": 2.4,
+  "BladeStart": 0.477713645,
+  "BladeEnd": 2.34980655,
+  "MeleeWeaponType": 6
+}

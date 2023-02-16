@@ -1,0 +1,11 @@
+{
+  "TextureModID": "simmin.powertools",
+  "ItemDefName": "PowerTool_IndustrialDrill",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.105461158,
+  "OffY": -0.09416207,
+  "BladeStart": 0.08286298,
+  "BladeEnd": 0.425612271,
+  "MeleeWeaponType": 40
+}

@@ -1,0 +1,20 @@
+{
+  "TextureModID": "sierra.rf.medievaloverhaul",
+  "ItemDefName": "RF_EmeraldBattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.279992759,
+  "OffY": -0.01666613,
+  "Rotation": 45.0,
+  "ScaleX": 1.05,
+  "ScaleY": 1.05,
+  "BladeStart": 0.254993379,
+  "BladeEnd": 0.7083154,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.549,
+    "g": 0.749,
+    "b": 0.098,
+    "a": 0.9755554
+  }
+}

@@ -1,31 +1,33 @@
 ﻿using AAM.Sweep;
 using SWSaber;
 using UnityEngine;
-using Verse;
 
 namespace AAM.LightsaberPatch;
 
 public class LightsaberSweepProvider : ISweepProvider
 {
-    public Color color = Color.white;
     public const float length = 0.15f;
     public const float minVel = 1f;
     public const float maxVel = 2f;
 
-    public LightsaberSweepProvider(Thing lightsaber)
-    {
-        var color = lightsaber.TryGetLightsaberColor();
-        if (color == null)
-        {
-            Core.Error($"Tried to use {nameof(LightsaberSweepProvider)} with a Thing that does not have a {nameof(CompLightsaberActivatableEffect)}! ({lightsaber})");
-            return;
-        }
-
-        this.color = color.Value;
-    }
+    public LightsaberSweepProvider() { }
 
     public (Color low, Color high) GetTrailColors(in SweepProviderArgs args)
     {
+        var saber = args.Renderer.GetOverride(args.Part)?.Weapon;
+        if (saber == null)
+        {
+            return (Color.green, default);
+        }
+
+        var color = saber.TryGetLightsaberColor() ?? default;
+        if (color == default)
+        {
+            Core.Error($"Tried to use {nameof(LightsaberSweepProvider)} with a Thing that does not have a {nameof(CompLightsaberActivatableEffect)}! ({saber})");
+            return (default, default);
+        }
+
+        color.a = 1f;
         float timeSinceHere = args.LastTime - args.Time;
         if (timeSinceHere > length)
             return (default, default);

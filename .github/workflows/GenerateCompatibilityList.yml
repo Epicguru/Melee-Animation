@@ -8,7 +8,7 @@ on:
   push:
     branches: [ master ]
     paths:
-      - Data/*
+      - WeaponTweakData/*
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run generator.
-      run: ./Source/CI/CompatibilityGenerator.exe "./Data" "./Data/Compatible Mods.md"
+      run: ./Source/CompatibilityReportGenerator/bin/Debug/net472/CompatibilityReportGenerator.exe "./WeaponTweakData" "./WeaponTweakData/Compatible Mods.md"
     - name: Check for changes.
       run: git status
     - name: Stage changes.

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sirvan.mwretextured",
+  "ItemDefName": "MeleeWeapon_Club",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.305432647,
+  "OffY": 0.0260907933,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.07881773,
+  "BladeEnd": 0.7750418,
+  "MeleeWeaponType": 9
+}

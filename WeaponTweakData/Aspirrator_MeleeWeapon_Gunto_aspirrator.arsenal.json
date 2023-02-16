@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aspirrator.arsenal",
+  "ItemDefName": "Aspirrator_MeleeWeapon_Gunto",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3004697,
+  "OffY": -0.0901408345,
+  "Rotation": 5.0,
+  "BladeStart": 0.11737112,
+  "BladeEnd": 0.7708922,
+  "MeleeWeaponType": 6
+}

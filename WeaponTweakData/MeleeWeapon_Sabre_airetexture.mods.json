@@ -1,0 +1,12 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Sabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4000008,
+  "OffY": -0.0597706735,
+  "HandsMode": 1,
+  "BladeStart": 0.06666723,
+  "BladeEnd": 0.894253433,
+  "MeleeWeaponType": 6
+}

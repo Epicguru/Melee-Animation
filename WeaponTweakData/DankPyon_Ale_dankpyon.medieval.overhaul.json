@@ -1,0 +1,15 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_Ale",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.222222418,
+  "OffY": -0.0112994313,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.04896468,
+  "BladeEnd": 0.391713977,
+  "MeleeWeaponType": 8
+}

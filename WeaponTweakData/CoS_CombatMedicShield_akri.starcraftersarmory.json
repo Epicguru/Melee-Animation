@@ -1,0 +1,15 @@
+{
+  "TextureModID": "akri.starcraftersarmory",
+  "ItemDefName": "CoS_CombatMedicShield",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.209213048,
+  "OffY": 0.0130759273,
+  "Rotation": -55.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 2,
+  "BladeStart": 0.04985199,
+  "BladeEnd": 0.579423,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_SHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.160178691,
+  "OffY": -0.013075632,
+  "BladeStart": 0.236182526,
+  "BladeEnd": 0.572884858,
+  "MeleeWeaponType": 8
+}

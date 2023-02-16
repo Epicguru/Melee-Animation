@@ -1,0 +1,12 @@
+{
+  "TextureModID": "airetexture.mods",
+  "ItemDefName": "MeleeWeapon_Zweihander",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.386206925,
+  "OffY": -0.00459784269,
+  "Rotation": 45.0,
+  "BladeStart": 0.1724138,
+  "BladeEnd": 1.04597759,
+  "MeleeWeaponType": 6
+}

@@ -15,16 +15,37 @@ namespace AAM.Grappling
         private static readonly MaterialPropertyBlock mpb = new();
         private static readonly HashSet<Pawn> pawnsBeingTargetedByGrapples = new();
 
-        public static bool IsBeingTargetedForGrapple(Pawn pawn) => pawn != null && !pawnsBeingTargetedByGrapples.Contains(pawn);
+        public static bool IsBeingTargetedForGrapple(Pawn pawn)
+        {
+            if (pawn == null)
+                return false;
+
+            lock (pawnsBeingTargetedByGrapples)
+            {
+                return pawnsBeingTargetedByGrapples.Contains(pawn);
+            }
+        }
 
         public static bool TryRegisterGrabAttempt(Pawn pawn)
         {
-            return pawn != null && pawnsBeingTargetedByGrapples.Add(pawn);
+            if (pawn == null)
+                return false;
+
+            lock (pawnsBeingTargetedByGrapples)
+            {
+                return pawnsBeingTargetedByGrapples.Add(pawn);
+            }
         }
 
         public static bool EndGrabAttempt(Pawn pawn)
         {
-            return pawn != null && pawnsBeingTargetedByGrapples.Remove(pawn);
+            if (pawn == null)
+                return false;
+
+            lock (pawnsBeingTargetedByGrapples)
+            {
+                return pawnsBeingTargetedByGrapples.Remove(pawn);
+            }
         }
 
         public static void Tick()

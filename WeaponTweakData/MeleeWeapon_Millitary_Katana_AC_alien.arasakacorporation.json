@@ -1,0 +1,14 @@
+{
+  "TextureModID": "alien.arasakacorporation",
+  "ItemDefName": "MeleeWeapon_Millitary_Katana_AC",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.457364857,
+  "OffY": -0.0581395365,
+  "Rotation": 3.437694,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.15600799,
+  "BladeEnd": 1.14825583,
+  "MeleeWeaponType": 6
+}

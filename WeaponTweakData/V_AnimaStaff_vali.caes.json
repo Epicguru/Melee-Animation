@@ -1,0 +1,18 @@
+{
+  "TextureModID": "vali.caes",
+  "ItemDefName": "V_AnimaStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 41.67421,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": -0.6791258,
+  "BladeEnd": 0.6905673,
+  "MeleeWeaponType": 9,
+  "TrailTint": {
+    "r": 0.0719999745,
+    "g": 0.978,
+    "b": 0.531039536,
+    "a": 0.99333334
+  }
+}

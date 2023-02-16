@@ -1,0 +1,12 @@
+{
+  "TextureModID": "arektpp.simplerh2weap",
+  "ItemDefName": "RNMeleeWeapon_GerberSurvival_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.202675521,
+  "OffY": -0.0196137354,
+  "Rotation": 50.0,
+  "BladeStart": 0.183878824,
+  "BladeEnd": 0.4650093,
+  "MeleeWeaponType": 16
+}

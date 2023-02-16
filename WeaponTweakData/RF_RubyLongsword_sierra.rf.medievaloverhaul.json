@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.medievaloverhaul",
+  "ItemDefName": "RF_RubyLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.373323441,
+  "Rotation": 45.0,
+  "BladeStart": 0.1349965,
+  "BladeEnd": 0.9149763,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9977777,
+    "g": 0.212859213,
+    "b": 0.212859213,
+    "a": 1.0
+  }
+}

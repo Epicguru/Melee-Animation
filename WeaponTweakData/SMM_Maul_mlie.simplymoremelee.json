@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Maul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.294206142,
+  "OffY": 0.0130759329,
+  "Rotation": 42.87235,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.272140652,
+  "BladeEnd": 0.92266345,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dandman68.weaponplusretexture",
+  "ItemDefName": "MeleeWeapon_Sabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3264379,
+  "OffY": -0.050575,
+  "Rotation": 10.0,
+  "HandsMode": 1,
+  "BladeStart": 0.0896551758,
+  "BladeEnd": 0.7747129,
+  "MeleeWeaponType": 6
+}

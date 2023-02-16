@@ -1,0 +1,10 @@
+{
+  "TextureModID": "biowreck.kenshiarmory",
+  "ItemDefName": "Kenshi_MercenaryClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.259154916,
+  "BladeStart": 0.252582371,
+  "BladeEnd": 0.740845,
+  "MeleeWeaponType": 9
+}

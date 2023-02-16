@@ -1,0 +1,12 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_Baton",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.140565529,
+  "OffY": -0.00980687,
+  "HandsMode": 1,
+  "BladeStart": 0.15445821,
+  "BladeEnd": 0.6088436,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,18 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_FlameEdge",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.215751141,
+  "OffY": 0.009806871,
+  "HandsMode": 1,
+  "BladeStart": 0.1021551,
+  "BladeEnd": 0.5401955,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.99333334,
+    "g": 0.5440223,
+    "b": 0.00220724754,
+    "a": 0.9866667
+  }
+}

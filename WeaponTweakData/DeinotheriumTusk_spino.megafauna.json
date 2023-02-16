@@ -1,0 +1,12 @@
+{
+  "TextureModID": "spino.megafauna",
+  "ItemDefName": "DeinotheriumTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.267464817,
+  "OffY": -0.055888474,
+  "Rotation": -90.0,
+  "FlipY": true,
+  "BladeEnd": 0.742514968,
+  "MeleeWeaponType": 5
+}

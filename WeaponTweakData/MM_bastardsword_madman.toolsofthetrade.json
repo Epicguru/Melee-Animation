@@ -1,0 +1,13 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_bastardsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4282335,
+  "Rotation": 45.0,
+  "ScaleX": 0.95,
+  "ScaleY": 0.95,
+  "BladeStart": 0.07273449,
+  "BladeEnd": 1.0534215,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "iexist.industrial.melee.weaponry",
+  "ItemDefName": "IMW_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.300469667,
+  "OffY": -0.041314438,
+  "BladeStart": 0.07981266,
+  "BladeEnd": 0.8009394,
+  "MeleeWeaponType": 6
+}

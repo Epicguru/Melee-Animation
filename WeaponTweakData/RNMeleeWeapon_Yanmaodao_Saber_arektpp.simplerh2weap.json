@@ -1,0 +1,11 @@
+{
+  "TextureModID": "arektpp.simplerh2weap",
+  "ItemDefName": "RNMeleeWeapon_Yanmaodao_Saber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4707298,
+  "Rotation": 45.0,
+  "BladeStart": 0.08907947,
+  "BladeEnd": 1.15149021,
+  "MeleeWeaponType": 6
+}

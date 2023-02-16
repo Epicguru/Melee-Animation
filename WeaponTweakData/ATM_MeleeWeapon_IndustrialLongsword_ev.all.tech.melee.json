@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ev.all.tech.melee",
+  "ItemDefName": "ATM_MeleeWeapon_IndustrialLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2906977,
+  "OffY": -0.0465116277,
+  "BladeStart": 0.08236481,
+  "BladeEnd": 0.7257754,
+  "MeleeWeaponType": 6
+}

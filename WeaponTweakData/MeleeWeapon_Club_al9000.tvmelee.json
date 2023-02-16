@@ -1,0 +1,13 @@
+{
+  "TextureModID": "al9000.tvmelee",
+  "ItemDefName": "MeleeWeapon_Club",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.308702,
+  "OffY": -0.0131366923,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.07881773,
+  "BladeEnd": 0.883435965,
+  "MeleeWeaponType": 9
+}

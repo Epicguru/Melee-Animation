@@ -1,0 +1,12 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_BrooklynSmasher_Bat",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.369391739,
+  "OffY": -0.00653781369,
+  "Rotation": 45.0,
+  "BladeStart": 0.15445821,
+  "BladeEnd": 0.997849047,
+  "MeleeWeaponType": 1
+}

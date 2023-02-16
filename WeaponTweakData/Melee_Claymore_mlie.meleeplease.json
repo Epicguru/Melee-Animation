@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.359585464,
+  "OffY": 0.120951496,
+  "ScaleX": 2.2,
+  "ScaleY": 2.2,
+  "BladeStart": 0.1021551,
+  "BladeEnd": 1.396662,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "al9000.tvmelee",
+  "ItemDefName": "MeleeWeapon_Warhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.236442387,
+  "OffY": 0.119398944,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.4966443,
+  "BladeEnd": 0.7561527,
+  "MeleeWeaponType": 1
+}

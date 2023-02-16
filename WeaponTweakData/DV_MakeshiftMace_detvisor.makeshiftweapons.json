@@ -1,0 +1,11 @@
+{
+  "TextureModID": "detvisor.makeshiftweapons",
+  "ItemDefName": "DV_MakeshiftMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.232864067,
+  "OffY": -0.0262908526,
+  "BladeStart": 0.09108027,
+  "BladeEnd": 0.6807514,
+  "MeleeWeaponType": 9
+}

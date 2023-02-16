@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Sickle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.156909943,
+  "OffY": -0.0392274857,
+  "Rotation": 57.25715,
+  "BladeStart": 0.10542386,
+  "BladeEnd": 0.569616139,
+  "MeleeWeaponType": 18
+}

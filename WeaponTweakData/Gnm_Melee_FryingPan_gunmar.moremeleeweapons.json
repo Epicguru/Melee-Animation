@@ -1,0 +1,11 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_FryingPan",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.169986188,
+  "OffY": 0.03595844,
+  "BladeStart": 0.08254136,
+  "BladeEnd": 0.530388653,
+  "MeleeWeaponType": 8
+}

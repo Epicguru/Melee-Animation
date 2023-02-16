@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Hooksword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.225558013,
+  "OffY": 0.0196137428,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.111961968,
+  "BladeEnd": 0.7755604,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "kyrrisayo.weaponsplus",
+  "ItemDefName": "MeleeWeapon_Scythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.262068957,
+  "OffY": -0.15632157,
+  "Rotation": 60.0,
+  "BladeStart": 0.439081,
+  "BladeEnd": 0.6735638,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "madman.toolsofthetrade",
+  "ItemDefName": "MM_doubleblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.019613713,
+  "OffY": -0.003269054,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": -0.901414752,
+  "BladeEnd": 0.8736291,
+  "MeleeWeaponType": 6
+}

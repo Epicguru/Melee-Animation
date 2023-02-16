@@ -14,15 +14,21 @@ public class BasicSweepProvider : ISweepProvider
     public (Color low, Color high) GetTrailColors(in SweepProviderArgs args)
     {
         float timeSinceHere = args.LastTime - args.Time;
-        if (timeSinceHere > length)
+
+        float l = length * Core.Settings.TrailLengthScale;
+        Color col = color * Core.Settings.TrailColor;
+        Color tint = args.Renderer.GetOverride(args.Part)?.TweakData.TrailTint ?? Color.white;
+        col *= tint;
+
+        if (timeSinceHere > l)
             return (default, default);
 
         float sa = Mathf.InverseLerp(minVel, maxVel, args.DownVel);
         float sb = Mathf.InverseLerp(minVel, maxVel, args.UpVel);
 
-        float a = Mathf.Clamp01(1f - timeSinceHere / length);
-        var low = color;
-        var high = color;
+        float a = Mathf.Clamp01(1f - timeSinceHere / l);
+        var low = col;
+        var high = col;
         low.a = a * sa;
         high.a = a * sb;
 

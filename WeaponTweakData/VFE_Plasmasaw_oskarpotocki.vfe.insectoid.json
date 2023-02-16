@@ -1,0 +1,18 @@
+{
+  "TextureModID": "oskarpotocki.vfe.insectoid",
+  "ItemDefName": "VFE_Plasmasaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.258247375,
+  "OffY": -0.068648085,
+  "Rotation": 44.73386,
+  "BladeStart": 0.174071953,
+  "BladeEnd": 0.8017117,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.987,
+    "g": 0.58,
+    "b": 0.061,
+    "a": 0.998
+  }
+}

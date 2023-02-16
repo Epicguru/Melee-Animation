@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Cleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.163448066,
+  "OffY": -0.0228825063,
+  "HandsMode": 1,
+  "BladeStart": 0.134844467,
+  "BladeEnd": 0.530388653,
+  "MeleeWeaponType": 48
+}

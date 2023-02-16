@@ -1,0 +1,15 @@
+{
+  "TextureModID": "mlie.heavymeleeweapons",
+  "ItemDefName": "HMW_MeleeWeapon_RocketHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.483805478,
+  "OffY": 0.0719174743,
+  "Rotation": -120.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "FlipY": true,
+  "BladeStart": 0.67422235,
+  "BladeEnd": 1.086111,
+  "MeleeWeaponType": 1
+}

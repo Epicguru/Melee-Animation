@@ -1,0 +1,13 @@
+{
+  "TextureModID": "oskarpotocki.vfe.pirates",
+  "ItemDefName": "VFEP_WarcasketMeleeWeapon_CombatKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2190205,
+  "OffY": -0.00653781742,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": 0.138113827,
+  "BladeEnd": 0.7657535,
+  "MeleeWeaponType": 6
+}

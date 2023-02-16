@@ -119,20 +119,6 @@ public static class Extensions
         return null;
     }
 
-    public static PawnType GetPawnType(this Pawn pawn)
-    {
-        if (pawn.IsColonist)
-            return PawnType.Colonist;
-
-        if (pawn.IsPrisonerOfColony)
-            return PawnType.Prisoner;
-
-        if (pawn.HostileTo(Faction.OfPlayerSilentFail))
-            return PawnType.Enemy;
-
-        return PawnType.Friendly;
-    }
-
     public static PawnMeleeData GetMeleeData(this Pawn pawn) => GameComp.Current?.GetOrCreateData(pawn);
 
     public static Vector3 ToWorld(this in Vector2 flatVector, float altitude = 0) => new(flatVector.x, altitude, flatVector.y);
@@ -175,7 +161,7 @@ public static class Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetOccupiedMaskBitZ(this uint mask, int z) => (((uint)1 << 1 + (z + 1) * 3) & mask) != 0;
 
-    [DebugAction("Advanced Animation Mod", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void GimmeMeleeWeapons()
     {
         var pos = Verse.UI.MouseCell();
@@ -195,7 +181,7 @@ public static class Extensions
         }
     }
 
-    [DebugAction("Advanced Animation Mod", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Advanced Melee Animation", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void SpawnArmy()
     {
         List<DebugMenuOption> list = new();

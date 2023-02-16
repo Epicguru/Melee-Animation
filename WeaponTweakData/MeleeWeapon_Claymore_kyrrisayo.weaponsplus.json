@@ -1,0 +1,12 @@
+{
+  "TextureModID": "kyrrisayo.weaponsplus",
+  "ItemDefName": "MeleeWeapon_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.377012074,
+  "OffY": 0.009195683,
+  "Rotation": 46.66894,
+  "BladeStart": 0.296551734,
+  "BladeEnd": 1.03218448,
+  "MeleeWeaponType": 6
+}

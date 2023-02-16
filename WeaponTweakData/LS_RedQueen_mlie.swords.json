@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.swords",
+  "ItemDefName": "LS_RedQueen",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.9069767,
+  "OffY": -0.03100764,
+  "Rotation": 45.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.2877907,
+  "BladeEnd": 2.17926383,
+  "MeleeWeaponType": 6
+}

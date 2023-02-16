@@ -1,0 +1,12 @@
+{
+  "TextureModID": "arektpp.simplerh2weap",
+  "ItemDefName": "RNMeleeWeapon_Gerber_Tomahawk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.251709282,
+  "OffY": -0.00653781,
+  "Rotation": 45.0,
+  "BladeStart": 0.1021551,
+  "BladeEnd": 0.644801736,
+  "MeleeWeaponType": 18
+}

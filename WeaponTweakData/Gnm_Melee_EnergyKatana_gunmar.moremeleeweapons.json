@@ -1,0 +1,20 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_EnergyKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.28766802,
+  "OffY": -0.0163446888,
+  "Rotation": 2.376111,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.07273449,
+  "BladeEnd": 0.7984429,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9723389,
+    "g": 0.07656763,
+    "b": 0.9844444,
+    "a": 1.0
+  }
+}

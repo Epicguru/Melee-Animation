@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dismarzero.vgp.vgpvegetablegarden",
+  "ItemDefName": "VG_IronWoodLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.135211259,
+  "OffY": -0.116432041,
+  "Rotation": 43.27121,
+  "BladeStart": 0.03474224,
+  "BladeEnd": 0.43286407,
+  "MeleeWeaponType": 8
+}

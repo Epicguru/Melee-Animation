@@ -1,0 +1,10 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_CombatKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2190199,
+  "OffY": -0.00326875737,
+  "BladeStart": 0.08254136,
+  "MeleeWeaponType": 48
+}

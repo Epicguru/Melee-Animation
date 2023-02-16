@@ -1,0 +1,11 @@
+{
+  "TextureModID": "brrainz.zombieland",
+  "ItemDefName": "Chainsaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.251642942,
+  "OffY": -0.0187792331,
+  "BladeStart": 0.23755914,
+  "BladeEnd": 0.6957746,
+  "MeleeWeaponType": 7
+}

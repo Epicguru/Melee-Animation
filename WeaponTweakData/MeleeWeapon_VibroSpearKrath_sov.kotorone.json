@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sov.kotorone",
+  "ItemDefName": "MeleeWeapon_VibroSpearKrath",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4936129,
+  "OffY": -0.022882808,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.710181057,
+  "BladeEnd": 1.48165512,
+  "MeleeWeaponType": 7
+}

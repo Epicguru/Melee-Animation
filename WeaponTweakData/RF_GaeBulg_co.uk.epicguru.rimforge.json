@@ -1,0 +1,19 @@
+{
+  "TextureModID": "co.uk.epicguru.rimforge",
+  "ItemDefName": "RF_GaeBulg",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.412564,
+  "Rotation": 45.0,
+  "ScaleX": 1.65,
+  "ScaleY": 1.65,
+  "BladeStart": 0.11251758,
+  "BladeEnd": 1.45897818,
+  "MeleeWeaponType": 7,
+  "TrailTint": {
+    "r": 0.6977777,
+    "g": 0.0868343338,
+    "b": 0.0868343338,
+    "a": 0.808888733
+  }
+}

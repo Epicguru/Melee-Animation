@@ -1,0 +1,12 @@
+{
+  "TextureModID": "simmin.powertools",
+  "ItemDefName": "PowerTool_IndustrialGrinder",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.233521163,
+  "OffY": -0.09039547,
+  "Rotation": 10.0,
+  "BladeStart": 0.06779661,
+  "BladeEnd": 0.681733,
+  "MeleeWeaponType": 24
+}

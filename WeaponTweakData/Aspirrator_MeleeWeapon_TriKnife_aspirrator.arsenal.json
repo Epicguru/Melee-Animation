@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aspirrator.arsenal",
+  "ItemDefName": "Aspirrator_MeleeWeapon_TriKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2741775,
+  "OffY": -0.0187792275,
+  "HandsMode": 1,
+  "BladeStart": 0.136150688,
+  "BladeEnd": 0.5643197,
+  "MeleeWeaponType": 32
+}

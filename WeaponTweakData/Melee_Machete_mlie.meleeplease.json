@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3530473,
+  "OffY": 0.0719171539,
+  "Rotation": 40.0,
+  "BladeStart": 0.108693212,
+  "BladeEnd": 0.9357391,
+  "MeleeWeaponType": 6
+}

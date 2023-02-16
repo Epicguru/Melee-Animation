@@ -1,0 +1,11 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.254978627,
+  "OffY": -0.009806871,
+  "BladeStart": 0.07273449,
+  "BladeEnd": 0.6774917,
+  "MeleeWeaponType": 6
+}

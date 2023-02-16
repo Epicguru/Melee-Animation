@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zodgilla.vanillameleeretexture",
+  "ItemDefName": "MeleeWeapon_Ikwa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.203613281,
+  "HandsMode": 1,
+  "BladeStart": 0.1773399,
+  "BladeEnd": 0.551724136,
+  "MeleeWeaponType": 32
+}

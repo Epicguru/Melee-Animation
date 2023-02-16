@@ -1,0 +1,16 @@
+{
+  "TextureModID": "projectjedi.lightsabers",
+  "ItemDefName": "SWSaber_KyloSaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.221903145,
+  "OffY": -0.263988525,
+  "Rotation": 40.0,
+  "ScaleX": 2.5,
+  "ScaleY": 2.5,
+  "BladeStart": 0.09947417,
+  "BladeEnd": 1.34289813,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "AAM.LightsaberPatch.SaberRenderer",
+  "SweepProviderClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+}

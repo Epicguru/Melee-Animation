@@ -1,0 +1,11 @@
+{
+  "TextureModID": "4ydra.arsenalofreaction",
+  "ItemDefName": "AOR_Melee_KultSchwert",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.315492928,
+  "OffY": -0.0187795758,
+  "BladeStart": 0.06854506,
+  "BladeEnd": 0.7934274,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_Tanto_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.169985563,
+  "OffY": 0.02942061,
+  "Rotation": 45.0,
+  "BladeStart": 0.115230732,
+  "BladeEnd": 0.5565399,
+  "MeleeWeaponType": 48
+}

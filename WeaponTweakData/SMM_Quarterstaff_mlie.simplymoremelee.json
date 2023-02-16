@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Quarterstaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.0228824615,
+  "OffY": 0.00653781369,
+  "Rotation": 44.46514,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": -0.783732,
+  "BladeEnd": 0.7592154,
+  "MeleeWeaponType": 1
+}

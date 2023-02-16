@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ev.all.tech.melee",
+  "ItemDefName": "ATM_MeleeWeapon_SpacerLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.310077071,
+  "OffY": -0.0116279125,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.113372095,
+  "BladeEnd": 0.8149229,
+  "MeleeWeaponType": 6
+}

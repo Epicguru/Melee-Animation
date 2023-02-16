@@ -33,7 +33,7 @@ namespace AAM.UI
         private static float trailTime = 0.1f;
         private static ExecutionOutcome executionOutcome = ExecutionOutcome.Kill;
 
-        [DebugAction("Advanced Animation Mod", "Open Debugger", actionType = DebugActionType.Action)]
+        [DebugAction("Advanced Melee Animation", "Open Debugger", actionType = DebugActionType.Action)]
         private static void OpenInt()
         {
             Open();
@@ -68,6 +68,7 @@ namespace AAM.UI
             closeOnCancel = false;
             closeOnAccept = false;
             onlyOneOfTypeAllowed = false;
+            drawInScreenshotMode = false;
 
             Tabs.Add(("Active Animation Inspector", DrawAllAnimators));
             Tabs.Add(("Animation Starter", DrawAnimationStarter));
@@ -183,7 +184,7 @@ namespace AAM.UI
                 bar.y += 18;
                 Widgets.DrawBoxSolid(bar, Color.white * 0.45f);
                 float newLerp = Widgets.HorizontalSlider(bar.ExpandedBy(0, -2), lerp, 0, 1);
-                if (newLerp != lerp)
+                if (Math.Abs(newLerp - lerp) > 0.005f)
                     renderer.Seek(newLerp * renderer.Data.Duration, null);
 
                 rect.y += 20;
@@ -400,14 +401,17 @@ namespace AAM.UI
             ui.Label("<color=cyan>CURRENT INFO</color>");
             ui.Gap(6);
             ui.Label($"Active: {ss.Active} (self: {selectedPart.Active.Evaluate(selectedRenderer.CurrentTime)})");
-            ui.Label($"Local pos: {ss.LocalPosition}");
-            ui.Label($"World pos: {ss.GetWorldPosition()}");
+            ui.Label($"Local pos: {ss.LocalPosition.ToString("F2")}");
+            ui.Label($"Local scl: {ss.LocalScale.ToString("F2")}");
+            ui.Label($"World pos: {ss.GetWorldPosition().ToString("F2")}");
             ui.Label($"Local rot: {ss.LocalRotation}");
             ui.Label($"World rot: {ss.GetWorldRotation()}");
             ui.Label($"World dir: {ss.Direction}");
             ui.Label($"Data A: {ss.DataA}");
             ui.Label($"Data B: {ss.DataB}");
             ui.Label($"Data C: {ss.DataC}");
+            ui.Label($"DrawBefore Mode: {ss.SplitDrawMode}");
+            ui.Label($"DrawBefore Pivot: {ss.SplitDrawPivot?.Name ?? "<none>"}");
 
             ui.GapLine();
 
@@ -417,7 +421,8 @@ namespace AAM.UI
                 {
                     var pos = ss.GetWorldPosition();
                     var dir = ss.GetWorldRotation().AngleToWorldDir();
-                    GenDraw.DrawLineBetween(pos, pos + dir, SimpleColor.Blue);
+                    //GenDraw.DrawLineBetween(pos, pos + dir, SimpleColor.Blue);
+                    GenDraw.DrawArrowRotated(pos - new Vector3(0f, 0f, 0.5f), 0f, false);
                 });
             }
         }

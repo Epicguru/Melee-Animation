@@ -46,19 +46,24 @@ namespace AAM
         }
 
         public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef)
-        => GetDefsOfType(AnimType.Execution)
-            .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
-            .Where(d => (d.minMeleeSkill ?? 0) <= pawn.skills.GetSkill(SkillDefOf.Melee).Level);
+        {
+            int meleeSkill = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
 
-        [DebugAction("Advanced Animation Mod", "Reload all animations", actionType = DebugActionType.Action)]
+            return GetDefsOfType(AnimType.Execution)
+                .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
+                .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
+        }
+
+        [DebugAction("Advanced Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
         public static void ReloadAllAnimations()
         {
             foreach (var def in allDefs)
             {
-                if(def.resolvedData == null)
+                if (def.resolvedData == null)
                     continue;
 
                 def.resolvedData = AnimData.Load(def.FullDataPath, false);
+                def.resolvedNonLethalData = File.Exists(def.FullNonLethalDataPath) ? AnimData.Load(def.FullNonLethalDataPath, false) : def.resolvedData;
             }
         }
 

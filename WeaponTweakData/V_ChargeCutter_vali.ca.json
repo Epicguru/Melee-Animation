@@ -1,0 +1,21 @@
+{
+  "TextureModID": "vali.ca",
+  "ItemDefName": "V_ChargeCutter",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.176523685,
+  "OffY": 0.0228824914,
+  "Rotation": 32.38876,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "HandsMode": 1,
+  "BladeStart": 0.157727569,
+  "BladeEnd": 0.60557425,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.0243355185,
+    "g": 0.555269957,
+    "b": 0.9955554,
+    "a": 1.0
+  }
+}

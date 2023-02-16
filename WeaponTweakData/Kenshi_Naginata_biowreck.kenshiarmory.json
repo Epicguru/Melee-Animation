@@ -1,0 +1,13 @@
+{
+  "TextureModID": "biowreck.kenshiarmory",
+  "ItemDefName": "Kenshi_Naginata",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.43568027,
+  "Rotation": 42.18471,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.571831,
+  "BladeEnd": 1.18028164,
+  "MeleeWeaponType": 7
+}

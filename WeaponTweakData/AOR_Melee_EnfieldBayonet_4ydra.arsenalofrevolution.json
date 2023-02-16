@@ -1,0 +1,11 @@
+{
+  "TextureModID": "4ydra.arsenalofrevolution",
+  "ItemDefName": "AOR_Melee_EnfieldBayonet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.210328862,
+  "OffY": -0.03380282,
+  "HandsMode": 1,
+  "BladeStart": 0.124883085,
+  "MeleeWeaponType": 48
+}

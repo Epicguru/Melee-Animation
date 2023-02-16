@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.meleeplease",
+  "ItemDefName": "Melee_Stick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": -0.999483466,
+  "BladeEnd": 0.99131155,
+  "MeleeWeaponType": 1
+}

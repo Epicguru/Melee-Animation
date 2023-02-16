@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.simplymoremelee",
+  "ItemDefName": "SMM_Billhook",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.209213048,
+  "OffY": 0.05230342,
+  "HandsMode": 1,
+  "BladeStart": 0.0661963746,
+  "BladeEnd": 0.569616139,
+  "MeleeWeaponType": 48
+}

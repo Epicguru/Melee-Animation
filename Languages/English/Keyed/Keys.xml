@@ -5,38 +5,73 @@
 
   <AAM.Animation>Animation</AAM.Animation>
 
-  <AAM.Gizmo.Title>Advanced Melee</AAM.Gizmo.Title>
-  <AAM.Gizmo.DifferingReset>These {PawnCount} pawns have differing auto-execute settings. Click to set them all to '{Mode}'.</AAM.Gizmo.DifferingReset>
-  <AAM.Gizmo.Enabled>enabled</AAM.Gizmo.Enabled>
-  <AAM.Gizmo.Disabled>disabled</AAM.Gizmo.Disabled>
+  <AAM.Error.Grapple.FloatMenu>Cannot lasso: {0}</AAM.Error.Grapple.FloatMenu>
+  <AAM.Grapple.FloatMenu>Lasso {0}</AAM.Grapple.FloatMenu>
+  <AAM.Grapple.FloatMenu.Tip>Use a lasso to pull {1} towards {0}.\nThis does not harm {1}.</AAM.Grapple.FloatMenu.Tip>
+  <AAM.Grapple.FloatMenu.TipEnemy>Use a lasso to pull {1} towards {0}.\nThis does not harm {1}, but it does put them into melee/execution range.</AAM.Grapple.FloatMenu.TipEnemy>
 
-  <AAM.Gizmo.Execute.ExplainResolved>This means that this pawn will automatically execute enemies whenever they can.</AAM.Gizmo.Execute.ExplainResolved>  
-  <AAM.Gizmo.Execute.ExplainResolvedPlural>This means that these {PawnCount} pawns will automatically execute enemies whenever they can.</AAM.Gizmo.Execute.ExplainResolvedPlural>  
-  
-  <AAM.Gizmo.Execute.Explain>This means that this pawn will <b>NOT</b> automatically execute enemies.</AAM.Gizmo.Execute.Explain>  
-  <AAM.Gizmo.Execute.ExplainPlural>This means that these {PawnCount} pawns will <b>NOT</b> automatically execute enemies.</AAM.Gizmo.Execute.ExplainPlural>  
-  
-  <AAM.Gizmo.Execute.Mode.Default>This pawn is using the Default auto-execute setting, which is {Mode}.\n\n{Explanation}</AAM.Gizmo.Execute.Mode.Default>
-  <AAM.Gizmo.Execute.Mode.DefaultPlural>These {PawnCount} pawns are using the Default auto-execute setting, which is {Mode}.\n\n{Explanation}</AAM.Gizmo.Execute.Mode.DefaultPlural>
-  <AAM.Gizmo.Execute.Tooltip>Perform a stylish finishing blow on a target.\nLethality depends on pawn skill and weapon.\n\nIf this pawn has a lasso equipped, they will use it to pull the target into range.\n\nHint: Shift+Click this button to force this pawn to walk to the target instead of using the lasso.</AAM.Gizmo.Execute.Tooltip>
+  <AAM.Error.Exec.FloatMenu>Cannot execute: {0}</AAM.Error.Exec.FloatMenu>
+  <AAM.Exec.FloatMenu>Execute {0}</AAM.Exec.FloatMenu>
+  <AAM.Exec.FloatMenu.Tip>Perform an execution animation on {1}.\nWill attempt to use an lasso if available to pull {1} into melee range.\nPlease note, 'execution' animations are not always lethal - please read the workshop page and mod settings for more info.</AAM.Exec.FloatMenu.Tip>
 
-  <AAM.Gizmo.Execute.Fail>Cannot execute target: {Reason}</AAM.Gizmo.Execute.Fail>
-  <AAM.Gizmo.Duel.Fail>Cannot duel target: {Reason}</AAM.Gizmo.Duel.Fail>
-  <AAM.Gizmo.Execute.OnCooldown>{Pawn}'s execution is on cooldown.</AAM.Gizmo.Execute.OnCooldown>
-  <AAM.Gizmo.Execute.NotDeadOrDowned>{Target} is downed, so cannot be executed.</AAM.Gizmo.Execute.NotDeadOrDowned>
-  <AAM.Gizmo.Error.NoAnimations>The {Weapon} cannot perform any animations, or {Pawn} does not have the skill to do any.</AAM.Gizmo.Error.NoAnimations>
-  <AAM.Gizmo.Error.NoSpace>There is no space to perform an execution. Using a different weapon or having a higher melee skill may enable animations that work in tighter spaces.</AAM.Gizmo.Error.NoSpace>
-  <AAM.Gizmo.Error.NoLasso>{Pawn} does not have a lasso or their lasso is on cooldown, so {Target} cannot be dragged in to perform an execution.</AAM.Gizmo.Error.NoLasso>
-  <AAM.Gizmo.Error.CannotLasso>{Target} cannot be lassoed by {Pawn} at the moment ({Reason}).</AAM.Gizmo.Error.CannotLasso>
-  <AAM.Gizmo.Error.CantReach>{Pawn} has no path to the target.</AAM.Gizmo.Error.CantReach>
-  <AAM.Gizmo.Error.NoValidWeapon>{Pawn} does not have a melee weapon that can be used in a duel.</AAM.Gizmo.Error.NoValidWeapon>
-  <AAM.Gizmo.Error.BadWeaponType>{Pawn}'s {Weapon} cannot be used to duel with.</AAM.Gizmo.Error.BadWeaponType>
-  <AAM.Gizmo.NoDuelAnim>{Pawn} and {Target} cannot duel because they do not have compatible weapons that can be used in a duel (missing animation!).</AAM.Gizmo.NoDuelAnim>
+  <AAM.Error.Grapple.Internal>Int.Error: {Error}</AAM.Error.Grapple.Internal>
+  <AAM.Error.Exec.Internal>Int.Error: {Error}</AAM.Error.Exec.Internal>
+  <AAM.Error.Grapple.AlreadyAtTarget>{Target} is already in melee range</AAM.Error.Grapple.AlreadyAtTarget>
 
-  <AAM.Gizmo.Grapple.CannotLassoGeneric>Cannot lasso {Target}: {Reason}</AAM.Gizmo.Grapple.CannotLassoGeneric>
-  <AAM.Gizmo.Grapple.CannotLassoDefault>No valid position to drag {Target} to.</AAM.Gizmo.Grapple.CannotLassoDefault>
-  <AAM.Gizmo.Grapple.OutOfRange>The target is out of the range of the lasso. Get closer, or hold the [Shift] key when targeting to make {Pawn} walk to execute the target.</AAM.Gizmo.Grapple.OutOfRange>
-  <AAM.Gizmo.Grapple.CtrlForFriendlies>The target pawn is friendly to your faction. Hold the [Ctrl] key when targeting to confirm executing friendly pawn.</AAM.Gizmo.Grapple.CtrlForFriendlies>
+  <AAM.Error.Grapple.Dead>{Grappler} is dead</AAM.Error.Grapple.Dead>
+  <AAM.Error.Exec.Dead>{Exec} is dead</AAM.Error.Exec.Dead>
+  <AAM.Error.Grapple.DeadTarget>{Target} is dead</AAM.Error.Grapple.DeadTarget>
+  <AAM.Error.Exec.DeadTarget>{Target} is dead</AAM.Error.Exec.DeadTarget>
+  <AAM.Error.Grapple.Downed>{Grappler} is downed</AAM.Error.Grapple.Downed>
+  <AAM.Error.Exec.Downed>{Exec} is downed</AAM.Error.Exec.Downed>
+  <AAM.Error.Exec.DownedTarget>{Target} is downed. Downed pawns cannot be executed.</AAM.Error.Exec.DownedTarget>
+  <AAM.Error.Exec.DownedTarget.Short>{Target} is downed</AAM.Error.Exec.DownedTarget.Short>
+
+  <AAM.Error.Grapple.AlreadyTarget>{Target} is already being lassoed</AAM.Error.Grapple.AlreadyTarget>
+  <AAM.Error.Grapple.AlreadyTarget.Short>Already being lassoed</AAM.Error.Grapple.AlreadyTarget.Short>
+
+  <AAM.Error.Grapple.MissingLOS>No line of sight</AAM.Error.Grapple.MissingLOS>
+
+  <AAM.Error.Grapple.TooFar>{Target} is out of reach of {Grappler}'s lasso</AAM.Error.Grapple.TooFar>
+  <AAM.Error.Grapple.TooFar.Short>Too far away</AAM.Error.Grapple.TooFar.Short>
+
+  <AAM.Error.Grapple.InAnimation>{Target} cannot be lassoed right now</AAM.Error.Grapple.InAnimation>
+  <AAM.Error.Grapple.SelfInAnimation>{Grappler} cannot lasso right now</AAM.Error.Grapple.SelfInAnimation>
+  <AAM.Error.Exec.SelfInAnimation>{Grappler} cannot execute anyone right now</AAM.Error.Exec.SelfInAnimation>
+  <AAM.Error.Exec.InAnimation>{Target} cannot be executed right now</AAM.Error.Exec.InAnimation>
+
+  <AAM.Error.Grapple.Mass>{Target} is too heavy for {Grappler} to lasso</AAM.Error.Grapple.Mass>
+  <AAM.Error.Grapple.Mass.Short>{Target} is too heavy</AAM.Error.Grapple.Mass.Short>
+
+  <AAM.Error.Grapple.Size>{Target} is too large for {Grappler} to lasso</AAM.Error.Grapple.Size>
+  <AAM.Error.Grapple.Size.Short>{Target} is too large</AAM.Error.Grapple.Size.Short>
+
+  <AAM.Error.Grapple.Cooldown>{Grappler}'s lasso is on cooldown</AAM.Error.Grapple.Cooldown>
+  <AAM.Error.Grapple.Cooldown.Short>Lasso on cooldown</AAM.Error.Grapple.Cooldown.Short>
+
+  <AAM.Error.Grapple.SkillIssue>{Grappler} does not have the required melee skill ({MeleeSkill}) to use their lasso</AAM.Error.Grapple.SkillIssue>
+  <AAM.Error.Grapple.SkillIssue.Short>Not enough melee skill</AAM.Error.Grapple.SkillIssue.Short>
+
+  <AAM.Error.Grapple.Manipulation>{Grappler} does not have the required manipulation to use their lasso</AAM.Error.Grapple.Manipulation>
+  <AAM.Error.Grapple.Manipulation.Short>Not enough manipulation</AAM.Error.Grapple.Manipulation.Short>
+
+  <AAM.Error.Grapple.NoDest>There is no free spot around {Grappler} to drag {Target} to</AAM.Error.Grapple.NoDest>
+  <AAM.Error.Grapple.NoDest.Short>No free spot around {Grappler}</AAM.Error.Grapple.NoDest.Short>
+
+  <AAM.Error.Exec.NoWeapon>{Exec} is not wielding a valid melee weapon</AAM.Error.Exec.NoWeapon>
+  <AAM.Error.Exec.NoWeapon.Short>No melee weapon</AAM.Error.Exec.NoWeapon.Short>
+
+  <AAM.Error.Exec.Cooldown>{Exec}'s execution is on cooldown</AAM.Error.Exec.Cooldown>
+  <AAM.Error.Exec.Cooldown.Short>Execution on cooldown</AAM.Error.Exec.Cooldown.Short>
+
+  <AAM.Error.Exec.NoAnims>{Exec} cannot perform any execution animations using their {Weapon}.\nThis is probably due to a lack of melee skill or because all animations are disabled in the mod settings.</AAM.Error.Exec.NoAnims>
+  <AAM.Error.Exec.NoAnims.Short>No animations available</AAM.Error.Exec.NoAnims.Short>
+
+  <AAM.Error.Exec.NoSpace>There is not enough space to perform any execution animation here</AAM.Error.Exec.NoSpace>
+  <AAM.Error.Exec.NoSpace.Short>Not enough space</AAM.Error.Exec.NoSpace.Short>
+
+  <AAM.Error.Exec.NoPath>{Exec} cannot reach {Target} by walking, and their lasso is unavailable or unusable.</AAM.Error.Exec.NoPath>
+  <AAM.Error.Exec.NoPath.Short>No path to target</AAM.Error.Exec.NoPath.Short>
 
   <AAM.Stats.BaseValue>Base Value: {0}</AAM.Stats.BaseValue>
   <AAM.Stats.MeleeSkillOffset>Melee Skill ({0}) Effect: {1}</AAM.Stats.MeleeSkillOffset>

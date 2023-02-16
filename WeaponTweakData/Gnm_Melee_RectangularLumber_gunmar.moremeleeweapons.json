@@ -1,0 +1,11 @@
+{
+  "TextureModID": "gunmar.moremeleeweapons",
+  "ItemDefName": "Gnm_Melee_RectangularLumber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2811299,
+  "OffY": -0.0457652956,
+  "BladeStart": 0.09888634,
+  "BladeEnd": 0.6709536,
+  "MeleeWeaponType": 9
+}
