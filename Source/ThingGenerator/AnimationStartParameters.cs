@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Security.Cryptography;
 using UnityEngine;
 using Verse;
 
@@ -67,12 +69,19 @@ namespace AAM
             if (!IsValid())
                 return false;
 
-            animation = Map.GetAnimManager().StartAnimation(Animation, RootTransform, FlipX, FlipY, EnumeratePawns());
+            var renderer = new AnimRenderer(Animation, Map)
+            {
+                RootTransform = RootTransform,
+                MirrorHorizontal = FlipX,
+                MirrorVertical = FlipY,
+                ExecutionOutcome = ExecutionOutcome
+            };
 
-            if (animation != null)
-                animation.ExecutionOutcome = ExecutionOutcome;
-            
-            return animation is { IsDestroyed: false };
+            foreach (var pawn in EnumeratePawns())
+                renderer.AddPawn(pawn);
+
+            animation = renderer;
+            return renderer.Register();
         }
 
         public IEnumerable<Pawn> EnumeratePawns()

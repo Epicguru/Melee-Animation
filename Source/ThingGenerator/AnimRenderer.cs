@@ -383,7 +383,6 @@ public class AnimRenderer : IExposable
     private List<AnimPartData> bodies = new List<AnimPartData>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
     private AnimPartSnapshot[] snapshots;
-    private AnimPartSnapshot[] snapshotsSorted;
     private AnimPartOverrideData[] overrides;
     private PartWithSweep[] sweeps;
     private MaterialPropertyBlock pb;
@@ -413,7 +412,6 @@ public class AnimRenderer : IExposable
         }
 
         snapshots = new AnimPartSnapshot[Data.Parts.Count];
-        snapshotsSorted = new AnimPartSnapshot[Data.Parts.Count];
         overrides = new AnimPartOverrideData[Data.Parts.Count];
         pb = new MaterialPropertyBlock();
 
@@ -740,13 +738,6 @@ public class AnimRenderer : IExposable
         return (p.Spawned || ignoreNotSpawned) && ((p.ParentHolder is Map m && m == Map) || (p.ParentHolder == null && ignoreNotSpawned));
     }
 
-    public AnimPartSnapshot[] GetSortedSnapshots()
-    {
-        Array.Copy(snapshots, snapshotsSorted, snapshots.Length);
-        Array.Sort(snapshotsSorted, (a, b) => a.GetWorldPosition().y.CompareTo(b.GetWorldPosition().y));
-        return snapshotsSorted;
-    }
-
     public Vector2 Draw(float? atTime, float? dt, Action<Pawn, Vector2> labelDraw = null)
     {
         if (IsDestroyed)
@@ -766,7 +757,17 @@ public class AnimRenderer : IExposable
 
         foreach (var path in sweeps)
             path.Draw(time);
-        foreach (var snap in GetSortedSnapshots()) // Snapshots need to be sorted because of transparent rendering.
+
+        foreach (var item in snapshots)
+        {
+            var final = ResolveTexture(item);
+            string path = item.TexturePath;
+            var ov = GetOverride(item).Texture;
+            if (Input.GetKeyDown(KeyCode.L))
+                Core.Log($"[{item.Part.Index}] {item.PartName} -> prt:{item}, path:{path}, ov:{ov}, final:{final}");
+        }
+
+        foreach (var snap in snapshots)
         {
             if (!ShouldDraw(snap))
                 continue;
@@ -1211,6 +1212,7 @@ public class AnimRenderer : IExposable
 
         int index = Pawns.Count;
         Pawns.Add(pawn);
+
         char tagChar = AnimRenderer.Alphabet[index];
 
         // Held item.
@@ -1235,7 +1237,8 @@ public class AnimRenderer : IExposable
         var itemPart = GetPart(itemName);
         if (weapon != null && itemPart != null && tweak != null)
         {
-            var ov = tweak.Apply(this, itemPart);
+            tweak.Apply(this, itemPart);
+            var ov = GetOverride(itemPart);
             ov.Weapon = weapon;
             ov.Material = weapon.Graphic?.MatSingleFor(weapon);
             ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
