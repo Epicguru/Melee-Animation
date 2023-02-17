@@ -1,4 +1,5 @@
-﻿using AAM.RendererWorkers;
+﻿using AAM.Idle;
+using AAM.RendererWorkers;
 using AAM.Reqs;
 using AAM.Sweep;
 using RimWorld;
@@ -35,6 +36,39 @@ namespace AAM
                     defsOfType.Add(t, list);
                 }
                 list.Add(def);
+            }
+        }
+
+        public static AnimDef GetMainIdleAnim(WeaponSize weaponSize, bool sharp)
+        {
+            // TODO optimize.
+            foreach (var def in defsOfType[AnimType.Idle])
+            {
+                if (def.idleType == IdleType.Idle && def.weaponSize == weaponSize && (def.forSharpWeapons == null || def.forSharpWeapons.Value == sharp))
+                    return def;
+            }
+            return null;
+        }
+
+        public static AnimDef GetMoveIdleAnim(WeaponSize weaponSize, bool sharp, bool horizontal)
+        {
+            // TODO optimize.
+            var type = horizontal ? IdleType.MoveHorizontal : IdleType.MoveVertical;
+            foreach (var def in defsOfType[AnimType.Idle])
+            {
+                if (def.idleType == type && def.weaponSize == weaponSize && (def.forSharpWeapons == null || def.forSharpWeapons.Value == sharp))
+                    return def;
+            }
+            return null;
+        }
+
+        public static IEnumerable<AnimDef> GetIdleFlavours(WeaponSize weaponSize, bool sharp)
+        {
+            // TODO optimize.
+            foreach (var def in defsOfType[AnimType.Idle])
+            {
+                if (def.idleType == IdleType.Flavour && def.weaponSize == weaponSize && (def.forSharpWeapons == null || def.forSharpWeapons.Value == sharp))
+                    yield return def;
             }
         }
 
@@ -147,6 +181,9 @@ namespace AAM
         public bool shadowDrawFromData;
         public int? minMeleeSkill = null;
         public bool canEditProbability = true;
+        public WeaponSize weaponSize;
+        public IdleType idleType;
+        public bool? forSharpWeapons;
 
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 

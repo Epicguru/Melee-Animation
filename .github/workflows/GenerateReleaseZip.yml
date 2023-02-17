@@ -66,6 +66,7 @@ jobs:
           Bundles/
           WeaponTweakData/
           Defs/
+          Patches/
           Languages/
           Patch_AlienRaces/
           Patch_FacialAnimation/
@@ -107,6 +108,7 @@ jobs:
         mkdir -p ${{ env.MOD_PATH }}/Bundles/
         mkdir -p ${{ env.MOD_PATH }}/WeaponTweakData/
         mkdir -p ${{ env.MOD_PATH }}/Defs/
+        mkdir -p ${{ env.MOD_PATH }}/Patches/
         mkdir -p ${{ env.MOD_PATH }}/Languages/
         mkdir -p ${{ env.MOD_PATH }}/Patch_AlienRaces/
         mkdir -p ${{ env.MOD_PATH }}/Patch_FacialAnimation/

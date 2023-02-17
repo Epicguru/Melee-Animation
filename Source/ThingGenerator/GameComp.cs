@@ -90,7 +90,7 @@ namespace AAM
             if (Prefs.DevMode && Dialog_AnimationDebugger.IsInRehearsalMode)
             {
                 GUILayout.Space(100);
-                GUILayout.Label($"<b><color=green>IN REHEARSAL MODE!</color></b>");
+                GUILayout.Label("<b><color=green>IN REHEARSAL MODE!</color></b>");
             }
 
             if (!drawTextureExtractor)

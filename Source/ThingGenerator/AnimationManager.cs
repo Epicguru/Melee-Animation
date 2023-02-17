@@ -15,11 +15,11 @@ namespace AAM
             HandTexture = ContentFinder<Texture2D>.Get("AAM/Hand");
         }
 
-        public MapPawnProcessor PawnProcessor;
+        public readonly MapPawnProcessor PawnProcessor;
 
-        private readonly List<Action> toDraw = new();
+        private readonly List<Action> toDraw = new List<Action>();
         private readonly List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
-        private HashSet<AnimRenderer> ioRenderers = new();
+        private HashSet<AnimRenderer> ioRenderers = new HashSet<AnimRenderer>();
 
         public AnimationManager(Map map) : base(map)
         {
@@ -88,7 +88,7 @@ namespace AAM
                     // Collect the active renderers that are on this map.
                     foreach (var renderer in AnimRenderer.ActiveRenderers)
                     {
-                        if (!renderer.IsDestroyed && renderer.Map == this.map)
+                        if (renderer.ShouldSave && renderer.Map == this.map)
                         {
                             if (!ioRenderers.Add(renderer))
                                 Core.Error("There was a duplicate renderer in the list!");

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Adds the IdleControllerComp to all pawns -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[@Name="BasePawn"]/comps</xpath>
+    <value>
+      <li>
+        <compClass>AAM.Idle.IdleControllerComp</compClass>
+      </li>
+    </value>
+  </Operation>
+</Patch>

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Security.Cryptography;
 using UnityEngine;
 using Verse;
 
@@ -15,6 +13,7 @@ namespace AAM
         public Map Map;
         public Matrix4x4 RootTransform;
         public bool FlipX, FlipY;
+        public bool DoNotRegisterPawns;
         public ExecutionOutcome ExecutionOutcome = ExecutionOutcome.Down;
 
         public AnimationStartParameters(AnimDef animation, Map map, Matrix4x4 rootTransform)
@@ -48,7 +47,6 @@ namespace AAM
  
             if(pawns.Length >= 1)
                 SetMainPawn(pawns[0]);
-
         }
 
         public bool IsValid()
@@ -74,11 +72,11 @@ namespace AAM
                 RootTransform = RootTransform,
                 MirrorHorizontal = FlipX,
                 MirrorVertical = FlipY,
-                ExecutionOutcome = ExecutionOutcome
+                ExecutionOutcome = ExecutionOutcome,
             };
 
             foreach (var pawn in EnumeratePawns())
-                renderer.AddPawn(pawn);
+                renderer.AddPawn(pawn, renderer.Pawns.Count, !DoNotRegisterPawns);
 
             animation = renderer;
             return renderer.Register();

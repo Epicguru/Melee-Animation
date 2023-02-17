@@ -1,6 +1,7 @@
 ﻿using AAM.Data;
 using AAM.Events;
 using AAM.Events.Workers;
+using AAM.Idle;
 using AAM.Tweaks;
 using RimWorld;
 using System;
@@ -32,8 +33,8 @@ public static class Extensions
     public static AnimationManager GetAnimManager(this Pawn pawn)
         => pawn?.Map?.GetComponent<AnimationManager>();
 
-    public static Matrix4x4 MakeAnimationMatrix(this Pawn pawn)
-        => Matrix4x4.TRS(pawn.Position.ToVector3ShiftedWithAltitude(pawn.DrawPos.y), Quaternion.identity, Vector3.one);
+    public static Matrix4x4 MakeAnimationMatrix(this Pawn pawn, float yOffset = 0)
+        => Matrix4x4.TRS(pawn.Position.ToVector3ShiftedWithAltitude(pawn.DrawPos.y + yOffset), Quaternion.identity, Vector3.one);
 
     public static Matrix4x4 MakeAnimationMatrix(this in LocalTargetInfo target)
         => Matrix4x4.TRS(new Vector3(target.CenterVector3.x, AltitudeLayer.Pawn.AltitudeFor(), target.CenterVector3.z), Quaternion.identity, Vector3.one);
@@ -152,6 +153,8 @@ public static class Extensions
 
     public static Vector3 AngleToWorldDir(this float angleDeg) => -new Vector3(Mathf.Cos(angleDeg * Mathf.Deg2Rad), 0f, Mathf.Sin(angleDeg * Mathf.Deg2Rad));
 
+    public static ItemTweakData TryGetTweakData(this Thing weapon) => TweakDataManager.TryGetTweak(weapon.def);
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetOccupiedMaskBit(this uint mask, int x, int z) => (((uint)1 << (x + 1) + (z + 1) * 3) & mask) != 0;
 
@@ -161,22 +164,41 @@ public static class Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetOccupiedMaskBitZ(this uint mask, int z) => (((uint)1 << 1 + (z + 1) * 3) & mask) != 0;
 
+    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons (tiny)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    private static void GimmeMeleeWeaponsTiny() => GimmeMeleeWeapons(WeaponSize.Tiny);
+
+    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons (medium)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    private static void GimmeMeleeWeaponsMedium() => GimmeMeleeWeapons(WeaponSize.Medium);
+
+    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons (colossal)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    private static void GimmeMeleeWeaponsColossal() => GimmeMeleeWeapons(WeaponSize.Colossal);
+
     [DebugAction("Advanced Melee Animation", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-    private static void GimmeMeleeWeapons()
+    private static void GimmeMeleeWeaponsAll() => GimmeMeleeWeapons(null);
+
+    private static void GimmeMeleeWeapons(WeaponSize? onlySize)
     {
         var pos = Verse.UI.MouseCell();
         foreach (var def in DefDatabase<ThingDef>.AllDefsListForReading)
         {
-            if (def.IsMeleeWeapon)
+            var tweak = TweakDataManager.TryGetTweak(def);
+            if (!def.IsMeleeWeapon || tweak == null)
+                continue;
+
+            if (onlySize != null)
             {
-                try
-                {
-                    DebugThingPlaceHelper.DebugSpawn(def, pos, 1, false);
-                }
-                catch (Exception e)
-                {
-                    Core.Warn($"Failed to spawn {def}: [{e.GetType().Name}] {e.Message}");
-                }
+                var cat = IdleClassifier.Classify(tweak);
+                if (cat.size != onlySize.Value)
+                    continue;
+            }
+
+            try
+            {
+                DebugThingPlaceHelper.DebugSpawn(def, pos, 1, false);
+            }
+            catch (Exception e)
+            {
+                Core.Warn($"Failed to spawn {def}: [{e.GetType().Name}] {e.Message}");
             }
         }
     }
