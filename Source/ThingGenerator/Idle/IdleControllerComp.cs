@@ -134,7 +134,7 @@ public class IdleControllerComp : ThingComp
             else
             {
                 CurrentAnimation.Loop = true;
-                Core.Log($"[{pawn}] Started {CurrentAnimation?.ToString() ?? "null"}");
+                //Core.Log($"[{pawn}] Started {CurrentAnimation?.ToString() ?? "null"}");
             }
         }
 
@@ -171,7 +171,7 @@ public class IdleControllerComp : ThingComp
         // Random interrupt.
         if (CurrentAnimation.Def.idleType == IdleType.Idle && facing == Rot4.South && TicksSinceFlavour > GenTicks.TicksPerRealSecond * 5)
         {
-            float mtbSeconds = 10;
+            float mtbSeconds = 20;
             if (Rand.MTBEventOccurs(mtbSeconds, GenTicks.TicksPerRealSecond, 1))
             {
                 ClearAnimation();
@@ -212,7 +212,7 @@ public class IdleControllerComp : ThingComp
         if (CurrentAnimation == null)
             return;
 
-        Core.Log($"[{parent}] Cleared {CurrentAnimation?.ToString() ?? "null"}");
+        //Core.Log($"[{parent}] Cleared {CurrentAnimation?.ToString() ?? "null"}");
 
         if (!CurrentAnimation.IsDestroyed)
             CurrentAnimation.Destroy();
