@@ -45,14 +45,14 @@ public class EditorRenderer : Editor
                 EditorCoroutineUtility.StartCoroutine(SaveAllCoroutine(t), this);
             }
 
-            //if (!t.InspectAllCurves)
+            if (!t.InspectAllCurves)
                 return;
 
             var bindings = AnimationUtility.GetCurveBindings(t.Clip);
             foreach (var binding in bindings)
             {
                 var curve = AnimationUtility.GetEditorCurve(t.Clip, binding);
-                GUILayout.Label($"Prop: [{binding.type.Name}] {binding.path}:{binding.propertyName}");
+                GUILayout.Label($"Prop: {binding.type.Name}.{binding.propertyName} ({binding.path})");
                 EditorGUILayout.CurveField(curve);
             }
         }

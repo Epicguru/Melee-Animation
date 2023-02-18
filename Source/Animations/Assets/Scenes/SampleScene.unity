@@ -2070,7 +2070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CustomName: BodyA
   TexturePath: Naked_Female_east
-  DoNotIncludeTexture: 0
+  DoNotIncludeTexture: 1
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
   IdleScale: {x: 1.5, y: 1.5}
@@ -2475,7 +2475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CustomName: HeadA
   TexturePath: Female_Average_Normal_east
-  DoNotIncludeTexture: 0
+  DoNotIncludeTexture: 1
   IdleOffset: {x: 0.1, y: 0.34}
   IdleRotation: 0
   IdleScale: {x: 1.5, y: 1.5}
@@ -4179,7 +4179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CustomName: BodyB
   TexturePath: Naked_Female_east
-  DoNotIncludeTexture: 0
+  DoNotIncludeTexture: 1
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
   IdleScale: {x: 1.5, y: 1.5}
@@ -8057,7 +8057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: 053f4948bdb71a84c8899b8da0c7cf58, type: 2}
+  Clip: {fileID: 7400000, guid: f95b71d607f3e2e4bbc9256b7cc7e67e, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
@@ -8074,7 +8074,7 @@ MonoBehaviour:
   - PartName: HandB2
     Texture: {fileID: 2800000, guid: c1217ca012db3f64ba08c19db5e8cec1, type: 3}
     PreventDraw: 0
-  InspectAllCurves: 1
+  InspectAllCurves: 0
   Points: []
   MirrorHorizontal: 0
   MirrorVertical: 0
@@ -8715,7 +8715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CustomName: HeadB
   TexturePath: Female_Average_Normal_east
-  DoNotIncludeTexture: 0
+  DoNotIncludeTexture: 1
   IdleOffset: {x: 0.1, y: 0.34}
   IdleRotation: 0
   IdleScale: {x: 1.5, y: 1.5}
