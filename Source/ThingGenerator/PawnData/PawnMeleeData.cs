@@ -1,9 +1,9 @@
-﻿using RimWorld;
-using System;
+﻿using System;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Data
+namespace AAM.PawnData
 {
     public class PawnMeleeData : IExposable
     {

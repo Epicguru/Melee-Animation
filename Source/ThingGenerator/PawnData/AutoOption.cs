@@ -1,4 +1,4 @@
-﻿namespace AAM.Data
+﻿namespace AAM.PawnData
 {
     public enum AutoOption
     {

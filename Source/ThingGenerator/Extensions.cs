@@ -1,5 +1,4 @@
-﻿using AAM.Data;
-using AAM.Events;
+﻿using AAM.Events;
 using AAM.Events.Workers;
 using AAM.Idle;
 using AAM.Tweaks;
@@ -8,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using AAM.PawnData;
 using UnityEngine;
 using Verse;
 using Verse.AI;
