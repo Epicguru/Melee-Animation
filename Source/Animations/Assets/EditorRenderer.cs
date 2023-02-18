@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -99,15 +100,14 @@ public class EditorRenderer : Editor
 
     private Rect Save(AnimationDataCreator t, AnimationClip clip)
     {
-        string FILE = @$"../..\Animations\{clip.name}.anim";
-
-        using var fs = new FileStream(FILE, FileMode.OpenOrCreate);
-        using var writer = new BinaryWriter(fs);
+        string FILE = @$"../..\Animations\{clip.name}.json";
 
         var bounds = PopulateSweeps(clip, t);
-        AnimData.Save(writer, clip, t, bounds);
+        string json = AnimData.Save(clip, t, bounds);
 
-        Debug.Log($"Wrote {clip.name} in {fs.Length} bytes to {new FileInfo(FILE).FullName}. Bounds: {bounds}");
+        File.WriteAllText(FILE, json);
+
+        Debug.Log($"Wrote {clip.name} in {new FileInfo(FILE).Length / 1024f:F1} Kb to {new FileInfo(FILE).FullName}. Bounds: {bounds}");
         return bounds;
     }
 
@@ -270,12 +270,6 @@ public class EditorRenderer : Editor
             default:
                 throw new ArgumentOutOfRangeException();
         }
-    }
-
-    [MenuItem("Assets/Build AssetBundles")]
-    static void BuildAllAssetBundles()
-    {
-        BuildPipeline.BuildAssetBundles("./Assets/AssetBundles", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
     }
 }
 #endif

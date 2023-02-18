@@ -104,9 +104,11 @@ public class AnimData
         return loaded;
     }
 
-    public static AnimData Load(string json)
+    private static AnimData Load(string json)
     {
-        var model = JsonConvert.DeserializeObject<AnimDataModel>(json, new JsonSerializerSettings());
+        var settings = new JsonSerializerSettings();
+        settings.Converters.Add(new RectConverter());
+        var model = JsonConvert.DeserializeObject<AnimDataModel>(json, settings);
 
         var data = new AnimData()
         {
@@ -150,7 +152,9 @@ public class AnimData
 
             // Split draw pivot.
             if (part.SplitDrawPivotPartID != 0)
+            {
                 dp.SplitDrawPivot = idToPart[part.SplitDrawPivotPartID];
+            }
         }
 
         // Make events.

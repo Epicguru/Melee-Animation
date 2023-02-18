@@ -27,8 +27,6 @@ using System;
 using System.Globalization;
 using UnityEngine;
 
-namespace AAM.Tweaks;
-
 public class ColorConverter : PartialConverter<Color>
 {
     protected override void ReadValue(ref Color value, string name, JsonReader reader, JsonSerializer serializer)

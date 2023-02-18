@@ -5,5 +5,7 @@ public enum IdleType
     Idle,
     MoveHorizontal,
     MoveVertical,
-    Flavour
+    Flavour,
+    AttackHorizontal,
+    AttackVertical
 }

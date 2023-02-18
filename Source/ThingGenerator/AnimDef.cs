@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Xml.Serialization;
 using UnityEngine;
 using Verse;
@@ -86,6 +87,18 @@ namespace AAM
             return GetDefsOfType(AnimType.Execution)
                 .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
                 .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
+        }
+
+        public static IEnumerable<AnimDef> GetAttackAnimations(WeaponSize weaponSize, bool sharp, bool horizontal)
+        {
+            foreach (var anim in defsOfType[AnimType.Idle])
+            {
+                if (anim.idleType == (horizontal ? IdleType.AttackHorizontal : IdleType.AttackVertical))
+                {
+                    if (anim.weaponSize == weaponSize && (anim.forSharpWeapons == null || anim.forSharpWeapons.Value == sharp))
+                        yield return anim;
+                }
+            }
         }
 
         [DebugAction("Advanced Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
@@ -184,6 +197,7 @@ namespace AAM
         public WeaponSize weaponSize;
         public IdleType idleType;
         public bool? forSharpWeapons;
+        public float mainAttackDuration;
 
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 
@@ -301,6 +315,9 @@ namespace AAM
                     yield return $"There is an item in <handsVisibility> that has duplicate <pawnIndex> of {d.pawnIndex}.";
                 }
             }
+
+            if ( type == AnimType.Idle && (idleType is IdleType.AttackHorizontal or IdleType.AttackVertical) && mainAttackDuration <= 0)
+                yield return $"Failed to specify <{nameof(mainAttackDuration)}> for attack animation!";
         }
 
         public override void PostLoad()
