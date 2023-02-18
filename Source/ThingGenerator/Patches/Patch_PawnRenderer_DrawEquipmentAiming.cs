@@ -10,7 +10,7 @@ namespace AAM.Patches;
 [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.DrawEquipmentAiming))]
 public static class Patch_PawnRenderer_DrawEquipmentAiming
 {
-    [HarmonyPriority(Priority.First - 100)]
+    [HarmonyPriority(Priority.First + 100)]
     static bool Prefix(PawnRenderer __instance)
     {
         var pawn = __instance.pawn;

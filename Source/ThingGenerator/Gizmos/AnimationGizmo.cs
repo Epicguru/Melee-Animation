@@ -1,11 +1,11 @@
-﻿using AAM.Data;
-using AAM.Grappling;
+﻿using AAM.Grappling;
 using AAM.Reqs;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using AAM.PawnData;
 using UnityEngine;
 using Verse;
 using Verse.AI;
