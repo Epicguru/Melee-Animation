@@ -1,5 +1,5 @@
 {
-  "ExportTimeUTC": "2023-02-18T18:33:24.6019814Z",
+  "ExportTimeUTC": "2023-02-18T20:46:46.1432287Z",
   "Name": "Idle_Medium_MoveHorizontal",
   "Length": 0.7,
   "Events": [],
@@ -54,7 +54,7 @@
         "AnimatedPart.Tint.g": 1.0,
         "AnimatedPart.Tint.b": 1.0,
         "AnimatedPart.Tint.a": 1.0,
-        "AnimatedPart.FlipX": 1.0,
+        "AnimatedPart.FlipX": 0.0,
         "AnimatedPart.FlipY": 0.0,
         "AnimatedPart.SplitDrawMode": 0.0,
         "AnimatedPart.FrameIndex": 0.0
@@ -346,7 +346,7 @@
         "AnimatedPart.Tint.g": 1.0,
         "AnimatedPart.Tint.b": 1.0,
         "AnimatedPart.Tint.a": 1.0,
-        "AnimatedPart.FlipX": 1.0,
+        "AnimatedPart.FlipX": 0.0,
         "AnimatedPart.FlipY": 0.0,
         "AnimatedPart.SplitDrawMode": 0.0,
         "AnimatedPart.FrameIndex": 0.0,

@@ -89,11 +89,11 @@ namespace AAM
                 .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
         }
 
-        public static IEnumerable<AnimDef> GetAttackAnimations(WeaponSize weaponSize, bool sharp, bool horizontal)
+        public static IEnumerable<AnimDef> GetAttackAnimations(WeaponSize weaponSize, bool sharp, IdleType dir)
         {
             foreach (var anim in defsOfType[AnimType.Idle])
             {
-                if (anim.idleType == (horizontal ? IdleType.AttackHorizontal : IdleType.AttackVertical))
+                if (anim.idleType == dir)
                 {
                     if (anim.weaponSize == weaponSize && (anim.forSharpWeapons == null || anim.forSharpWeapons.Value == sharp))
                         yield return anim;
@@ -197,7 +197,7 @@ namespace AAM
         public WeaponSize weaponSize;
         public IdleType idleType;
         public bool? forSharpWeapons;
-        public float mainAttackDuration;
+        public int mainAttackDuration;
 
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 
@@ -292,7 +292,7 @@ namespace AAM
             else if (!File.Exists(FullDataPath))
                 yield return $"Failed to find animation file at '{FullDataPath}'!";
 
-            if (weaponFilter == null)
+            if (type is AnimType.Execution or AnimType.Duel && weaponFilter == null)
                 yield return "weaponFilter is not assigned.";
 
             var p1StartCell = TryGetCell(AnimCellData.Type.PawnStart, false, false, 1);
@@ -316,7 +316,7 @@ namespace AAM
                 }
             }
 
-            if ( type == AnimType.Idle && (idleType is IdleType.AttackHorizontal or IdleType.AttackVertical) && mainAttackDuration <= 0)
+            if ( type == AnimType.Idle && (idleType is IdleType.AttackHorizontal or IdleType.AttackSouth or IdleType.AttackNorth) && mainAttackDuration <= 0)
                 yield return $"Failed to specify <{nameof(mainAttackDuration)}> for attack animation!";
         }
 

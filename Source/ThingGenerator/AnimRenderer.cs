@@ -384,6 +384,10 @@ public class AnimRenderer : IExposable
     /// This action is not serialized.
     /// </summary>
     public Action<AnimRenderer> OnEndAction;
+    /// <summary>
+    /// A scale on the speed of this animation.
+    /// </summary>
+    public float TimeScale = 1f;
 
     private List<AnimPartData> bodies = new List<AnimPartData>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
@@ -461,6 +465,7 @@ public class AnimRenderer : IExposable
         Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
         Scribe_Collections.Look(ref pawnsValidEvenIfDespawned, "pawnsValidEvenIfDespawned", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
+        Scribe_Values.Look(ref TimeScale, "timeScale", 1f);
         Scribe_Deep.Look(ref SD, "saveData");
         SD ??= new SaveData();
 
@@ -1022,7 +1027,7 @@ public class AnimRenderer : IExposable
     {
         SeekTimer.Start();
 
-        float t = atTime ?? (this.time + dt.Value);
+        float t = atTime ?? (this.time + dt.Value * TimeScale);
         var range = SeekInt(t, MirrorHorizontal, MirrorVertical);
 
         if (t > Data.Duration)

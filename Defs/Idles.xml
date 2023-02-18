@@ -53,6 +53,38 @@
     <idleType>MoveVertical</idleType>
   </AAM.AnimDef>  
 
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumAttackHor</defName>
+    <data>Idle_Medium_SlashHorizontal1.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>AttackHorizontal</idleType>
+    <mainAttackDuration>20</mainAttackDuration>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumAttackSouth</defName>
+    <data>Idle_Medium_SlashSouth1.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>AttackSouth</idleType>
+    <mainAttackDuration>20</mainAttackDuration>
+  </AAM.AnimDef>  
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumAttackNorth</defName>
+    <data>Idle_Medium_SlashNorth1.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>AttackNorth</idleType>
+    <mainAttackDuration>20</mainAttackDuration>
+  </AAM.AnimDef>  
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumAttackSouth</defName>
+    <data>Idle_Medium_SlashSouth1.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>AttackSouth</idleType>
+    <mainAttackDuration>20</mainAttackDuration>
+  </AAM.AnimDef>  
+
   <!-- Colossal sharp -->
   <AAM.AnimDef ParentName="AnimIdleMain">
     <defName>AAM_Idle_ColossalSharpMain</defName>

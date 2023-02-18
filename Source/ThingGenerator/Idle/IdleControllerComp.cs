@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using RimWorld;
 using System;
 using UnityEngine;
 using Verse;
@@ -18,7 +19,7 @@ public class IdleControllerComp : ThingComp
         try
         {
             // Should never happen but just in case:
-            if (parent is not Pawn pawn || (pawn.CurJob != null && pawn.CurJob.def.neverShowWeapon))
+            if (!Core.Settings.AnimateAtIdle || parent is not Pawn pawn || (pawn.CurJob != null && pawn.CurJob.def.neverShowWeapon))
             {
                 ClearAnimation();
                 return;
@@ -30,14 +31,18 @@ public class IdleControllerComp : ThingComp
                 if (pawn.stances.curStance is Stance_Busy {neverAimWeapon: false, focusTarg.IsValid: true})
                     vanillaShouldDraw = true;
             }
+
+            var weapon = GetMeleeWeapon();
+            if (vanillaShouldDraw && weapon == null)
+                vanillaShouldDraw = false;
+
             if (!vanillaShouldDraw)
             {
                 ClearAnimation();
                 return;
             }
 
-            var weapon = pawn.GetFirstMeleeWeapon();
-            bool shouldBeDrawing = Core.Settings.AnimateAtIdle && weapon != null && !pawn.Downed && !pawn.Dead &&
+            bool shouldBeDrawing = Core.Settings.AnimateAtIdle && !pawn.Downed && !pawn.Dead &&
                                    pawn.Spawned;
             if (!shouldBeDrawing)
             {
@@ -53,10 +58,20 @@ public class IdleControllerComp : ThingComp
         }
     }
 
+    private Thing GetMeleeWeapon()
+    {
+        var weapon = (parent as Pawn)?.equipment?.Primary;
+        if (weapon != null && weapon.def.IsMeleeWeapon) // TODO Check for tweak data?
+            return weapon;
+        return null;
+    }
+
     private Rot4 GetCurrentAnimFacing() => CurrentAnimation.Def.idleType switch
     {
         IdleType.MoveVertical => CurrentAnimation.MirrorHorizontal ? Rot4.North : Rot4.South,
-        IdleType.MoveHorizontal => CurrentAnimation.MirrorHorizontal ? Rot4.West : Rot4.East,
+        IdleType.MoveHorizontal or IdleType.AttackHorizontal => CurrentAnimation.MirrorHorizontal ? Rot4.West : Rot4.East,
+        IdleType.AttackSouth => Rot4.South,
+        IdleType.AttackNorth => Rot4.North,
         _ => Rot4.South
     };
 
@@ -99,7 +114,7 @@ public class IdleControllerComp : ThingComp
             if (!isMoving)
             {
                 // If facing south, use idle anim.
-                if (facing == Rot4.South)
+                if (facing == Rot4.South && !inMelee)
                 {
                     flipX = false;
                     return AnimDef.GetMainIdleAnim(cat.size, cat.isSharp);
@@ -143,8 +158,6 @@ public class IdleControllerComp : ThingComp
             StartNew();
         }
         
-        // Check if the current state is valid...
-
         // Facing in the right direction?
         var currentFacing = GetCurrentAnimFacing();
         if (currentFacing != facing)
@@ -152,17 +165,30 @@ public class IdleControllerComp : ThingComp
             StartNew();
         }
 
-        // Is the animation a moving one when it should be an idle one?
-        if (isMoving == CurrentAnimation.Def.idleType is IdleType.Idle or IdleType.Flavour)
+        // Idle -> move and mode -> idle
+        if (isMoving)
         {
-            if (!isMoving && facing != Rot4.South)
-            {
-                CurrentAnimation.Seek(0f, 0f);
-                // TODO better way to pin time to 0?
-            }
-            else
-            {
+            // If moving but idle animation is playing, change it out.
+            if (CurrentAnimation.Def.idleType is IdleType.Idle or IdleType.Flavour)
                 StartNew();
+        }
+        else
+        {
+            // Not moving...
+            // If moving animation is playing, change it out.
+            bool moveIsPlaying = CurrentAnimation.Def.idleType is IdleType.MoveHorizontal or IdleType.MoveVertical;
+
+            if (moveIsPlaying)
+            {
+                if (!inMelee)
+                {
+                    StartNew();
+                }
+                else
+                {
+                    CurrentAnimation.Seek(0, null);
+                    CurrentAnimation.TimeScale = 0f;
+                }
             }
         }
 
@@ -188,6 +214,42 @@ public class IdleControllerComp : ThingComp
         TicksSinceFlavour++;
 
         CurrentAnimation.RootTransform = MakePawnMatrix(pawn, facing == Rot4.North);
+    }
+
+    public void NotifyPawnDidMeleeAttack(Thing target, Verb_MeleeAttack verbUsed)
+    {
+        var pawn = parent as Pawn;
+        var weapon = GetMeleeWeapon();
+        var tweak = weapon?.TryGetTweakData();
+        if (tweak == null)
+            return;
+
+        var rot = pawn.Rotation;
+        bool horizontal = rot.IsHorizontal;
+        var northOrSouth = rot == Rot4.South ? IdleType.AttackSouth : IdleType.AttackNorth;
+        var cat = tweak.GetCategory();
+        var anim = AnimDef.GetAttackAnimations(cat.size, cat.isSharp, horizontal ? IdleType.AttackHorizontal : northOrSouth).RandomElementByWeightWithFallback(a => a.Probability);
+        if (anim == null)
+        {
+            Core.Warn($"Failed to find any attack animation to play for {weapon}!");
+            return;
+        }
+
+        float cooldown = verbUsed?.verbProps.AdjustedCooldownTicks(verbUsed, pawn).TicksToSeconds() ?? 100f;
+        bool flipX = rot == Rot4.West;
+
+        var args = new AnimationStartParameters(anim, pawn)
+        {
+            FlipX = flipX,
+            DoNotRegisterPawns = true,
+            RootTransform = MakePawnMatrix(pawn, rot == Rot4.North)
+        };
+
+        ClearAnimation();
+        if (!args.TryTrigger(out CurrentAnimation))
+        {
+            Core.Error($"Failed to trigger attack animation for {pawn} ({args})");
+        }
     }
 
     private static Matrix4x4 MakePawnMatrix(Pawn pawn, bool north)
