@@ -1225,7 +1225,7 @@ public class AnimRenderer : IExposable
         if (register)
             Pawns.Add(pawn);
 
-        char tagChar = AnimRenderer.Alphabet[index];
+        char tagChar = Alphabet[index];
 
         // Hands.
         ConfigureHandsForPawn(pawn, index);
