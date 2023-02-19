@@ -32,14 +32,14 @@
         <pawnIndex>0</pawnIndex>
       </li>
     </cellData>
-    <data>Special_GilgameshVictim.anim</data>
+    <data>Special_GilgameshVictim.json</data>
     <rendererWorker>AAM.RendererWorkers.GilgameshRendererWorker</rendererWorker>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_Stab</defName>
     <label>Execution: Stab</label>
-    <data>Execution_Stab.anim</data>
+    <data>Execution_Stab.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Short_Stab, Long_Stab</types>
     </weaponFilter>
@@ -48,7 +48,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_Shank</defName>
     <label>Execution: Shank</label>
-    <data>Execution_Shank.anim</data>
+    <data>Execution_Shank.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Short_Stab</types>
     </weaponFilter>
@@ -57,7 +57,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_Bash</defName>
     <label>Execution: Bash</label>
-    <data>Execution_Bash.anim</data>
+    <data>Execution_Bash.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Short_Blunt</types>
     </weaponFilter>
@@ -66,7 +66,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_BashLarge</defName>
     <label>Execution: Big Bash</label>
-    <data>Execution_BashLarge.anim</data>
+    <data>Execution_BashLarge.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Blunt</types>
     </weaponFilter>
@@ -75,7 +75,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_UpSlash</defName>
     <label>Execution: Upwards Slash</label>
-    <data>Execution_UpSlash.anim</data>
+    <data>Execution_UpSlash.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Blunt, Long_Sharp, Short_Blunt</types>
     </weaponFilter>
@@ -84,7 +84,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_UpSlash_Doubletap</defName>
     <label>Execution: Upwards Slash (doubletap)</label>
-    <data>Execution_UpSlash_DoubleTap.anim</data>
+    <data>Execution_UpSlash_DoubleTap.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab</types>
     </weaponFilter>
@@ -93,7 +93,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_UpDownSlash</defName>
     <label>Execution: Up &#38; Down Slash</label>
-    <data>Execution_UpAndDownSlash.anim</data>
+    <data>Execution_UpAndDownSlash.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Blunt, Long_Sharp</types>
     </weaponFilter>
@@ -102,7 +102,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_GaeBulg</defName>
     <label>Execution: Gáe Bulg</label>
-    <data>Execution_GaeBulgAir.anim</data>
+    <data>Execution_GaeBulgAir.json</data>
     <weaponFilter Class="AAM.Reqs.SpecificWeapon">
       <weapon>RF_GaeBulg</weapon>
     </weaponFilter>
@@ -119,7 +119,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_SekiroBS</defName>
     <label>Execution: Acrobatic Backstab</label>
-    <data>Execution_SekiroBS.anim</data>
+    <data>Execution_SekiroBS.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab, Short_Stab, Long_Sharp, Short_Sharp</types>
     </weaponFilter>
@@ -135,7 +135,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_ThrowSharp</defName>
     <label>Execution: Throw Sharp</label>
-    <data>Execution_ThrowSharp.anim</data>
+    <data>Execution_ThrowSharp.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab, Short_Stab</types>
     </weaponFilter>
@@ -151,7 +151,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_Punt</defName>
     <label>Execution: Punt</label>
-    <data>Execution_BluntPunt.anim</data>
+    <data>Execution_BluntPunt.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab, Long_Blunt, Long_Sharp</types>
     </weaponFilter>
@@ -168,7 +168,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_HeadStab</defName>
     <label>Execution: Head Stab</label>
-    <data>Execution_HeadStab.anim</data>
+    <data>Execution_HeadStab.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab, Short_Stab</types>
     </weaponFilter>
@@ -177,7 +177,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_KnockdownStab</defName>
     <label>Execution: Knockdown Stab</label>
-    <data>Execution_KnockdownStab.anim</data>
+    <data>Execution_KnockdownStab.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab, Short_Stab</types>
     </weaponFilter>
@@ -198,7 +198,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_Weebstick</defName>
     <label>Execution: You insulted m'lady</label>
-    <data>Execution_Weebstick.anim</data>
+    <data>Execution_Weebstick.json</data>
     <weaponFilter Class="AAM.Reqs.SpecificWeapon">
       <weapon>AAM_Weebstick</weapon>
     </weaponFilter>
@@ -223,7 +223,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_Passover</defName>
     <label>Execution: Passover</label>
-    <data>Execution_Passover.anim</data>
+    <data>Execution_Passover.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab</types>      
     </weaponFilter>
@@ -240,7 +240,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_Whirlwind</defName>
     <label>Execution: Whirlwind</label>
-    <data>Execution_Whirlwind.anim</data>
+    <data>Execution_Whirlwind.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab</types>
     </weaponFilter>
@@ -249,7 +249,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_SpearLift</defName>
     <label>Execution: Spear Stab</label>
-    <data>Execution_Spear.anim</data>
+    <data>Execution_Spear.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab</types>
     </weaponFilter>
@@ -258,7 +258,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_JumpThrow</defName>
     <label>Execution: Jump Throw</label>
-    <data>Execution_SpearThrow.anim</data>
+    <data>Execution_SpearThrow.json</data>
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Stab</types>
     </weaponFilter>
@@ -267,7 +267,7 @@
   <AAM.AnimDef ParentName="AnimExecutionBase">
     <defName>AAM_Execution_PocketSand</defName>
     <label>Execution: Pocket Sand!</label>
-    <data>Execution_PocketSand.anim</data>
+    <data>Execution_PocketSand.json</data>
     <weaponFilter Class="AAM.Reqs.True"/> <!-- Anything can pocket sand! -->
 
     <!-- Force hands to be visible to throw sand with -->

@@ -1,10 +1,10 @@
-﻿using AAM.Data;
-using AAM.Grappling;
+﻿using AAM.Grappling;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using AAM.PawnData;
 using UnityEngine;
 using Verse;
 using Verse.AI;

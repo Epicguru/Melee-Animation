@@ -5,6 +5,7 @@ using AAM.RendererWorkers;
 using AAM.Sweep;
 using AAM.Tweaks;
 using JetBrains.Annotations;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -297,6 +298,10 @@ public class AnimRenderer : IExposable
     /// Same as the <see cref="Duration"/>, but expressed in Rimworld ticks.
     /// </summary>
     public int DurationTicks => Mathf.RoundToInt(Duration * 60);
+    /// <summary>
+    /// Should the animator be saved with the map?
+    /// </summary>
+    public bool ShouldSave => !IsDestroyed && PawnCount > 0;
 
     /// <summary>
     /// The root world position of this animation.
@@ -379,6 +384,10 @@ public class AnimRenderer : IExposable
     /// This action is not serialized.
     /// </summary>
     public Action<AnimRenderer> OnEndAction;
+    /// <summary>
+    /// A scale on the speed of this animation.
+    /// </summary>
+    public float TimeScale = 1f;
 
     private List<AnimPartData> bodies = new List<AnimPartData>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
@@ -456,6 +465,7 @@ public class AnimRenderer : IExposable
         Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
         Scribe_Collections.Look(ref pawnsValidEvenIfDespawned, "pawnsValidEvenIfDespawned", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
+        Scribe_Values.Look(ref TimeScale, "timeScale", 1f);
         Scribe_Deep.Look(ref SD, "saveData");
         SD ??= new SaveData();
 
@@ -600,8 +610,8 @@ public class AnimRenderer : IExposable
             }
         }
 
-        if (PawnCount != Def.pawnCount)
-            Core.Warn($"Started AnimRenderer with bad number of pawns! Expected {Def.pawnCount}, got {PawnCount}. (Def: {Def})");
+        //if (PawnCount != Def.pawnCount)
+        //    Core.Warn($"Started AnimRenderer with bad number of pawns! Expected {Def.pawnCount}, got {PawnCount}. (Def: {Def})");
 
         RegisterInt(this);
 
@@ -1017,7 +1027,7 @@ public class AnimRenderer : IExposable
     {
         SeekTimer.Start();
 
-        float t = atTime ?? (this.time + dt.Value);
+        float t = atTime ?? (this.time + dt.Value * TimeScale);
         var range = SeekInt(t, MirrorHorizontal, MirrorVertical);
 
         if (t > Data.Duration)
@@ -1205,33 +1215,25 @@ public class AnimRenderer : IExposable
         return DefaultCutout;
     }
 
-    public bool AddPawn(Pawn pawn)
+    public bool AddPawn(Pawn pawn) => AddPawn(pawn, Pawns.Count, true);
+
+    public bool AddPawn(Pawn pawn, int index, bool register)
     {
         if (pawn == null)
             return false;
 
-        int index = Pawns.Count;
-        Pawns.Add(pawn);
+        if (register)
+            Pawns.Add(pawn);
 
-        char tagChar = AnimRenderer.Alphabet[index];
+        char tagChar = Alphabet[index];
+
+        // Hands.
+        ConfigureHandsForPawn(pawn, index);
 
         // Held item.
         string itemName = $"Item{tagChar}";
         var weapon = pawn.GetFirstMeleeWeapon();
         var tweak = weapon == null ? null : TweakDataManager.TryGetTweak(weapon.def);
-        var handsMode = tweak?.HandsMode ?? HandsMode.Default;
-
-        // Hands and skin color...
-        string mainHandName = $"HandA{(index > 0 ? (index + 1) : "")}";
-        string altHandName = $"HandB{(index > 0 ? (index + 1) : "")}";
-
-        Color skinColor = pawn.story?.SkinColor ?? Color.white;
-
-        // Hand visibility uses the animation data first and foremost, and if the animation does
-        // not care about hand visibility, then it is dictated by the weapon.
-        var vis = Def.GetHandsVisibility(index);
-        bool showMain = vis.showMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands);
-        bool showAlt  = vis.showAltHand  ?? (weapon != null && handsMode == HandsMode.Default);
 
         // Apply weapon.
         var itemPart = GetPart(itemName);
@@ -1271,6 +1273,27 @@ public class AnimRenderer : IExposable
             }
         }
 
+        return true;
+    }
+
+    private void ConfigureHandsForPawn(Pawn pawn, int index)
+    {
+        var weapon = pawn.GetFirstMeleeWeapon();
+        var tweak = weapon?.TryGetTweakData();
+        var handsMode = tweak?.HandsMode ?? HandsMode.Default;
+
+        // Hands and skin color...
+        string mainHandName = $"HandA{(index > 0 ? (index + 1) : "")}";
+        string altHandName = $"HandB{(index > 0 ? (index + 1) : "")}";
+
+        Color skinColor = pawn.story?.SkinColor ?? Color.white;
+
+        // Hand visibility uses the animation data first and foremost, and if the animation does
+        // not care about hand visibility, then it is dictated by the weapon.
+        var vis = Def.GetHandsVisibility(index);
+        bool showMain = vis.showMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands);
+        bool showAlt = vis.showAltHand ?? (weapon != null && handsMode == HandsMode.Default);
+
         // Apply main hand.
         var mainHandPart = GetPart(mainHandName);
         if (mainHandPart != null)
@@ -1290,11 +1313,9 @@ public class AnimRenderer : IExposable
             ov.Texture = AnimationManager.HandTexture;
             ov.ColorOverride = skinColor;
         }
-
-        return true;
     }
 
-    public override string ToString() => Def.LabelCap;
+    public override string ToString() => Def.label == null ? Def.defName : Def.LabelCap;
 
     public class SaveData : IExposable
     {

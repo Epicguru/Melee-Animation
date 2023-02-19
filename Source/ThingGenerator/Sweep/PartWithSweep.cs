@@ -1,4 +1,5 @@
 ﻿using System;
+using AAM.Data.Model;
 using UnityEngine;
 
 namespace AAM.Sweep;

@@ -1,4 +1,5 @@
-﻿using AAM.Retexture;
+﻿using AAM.Idle;
+using AAM.Retexture;
 using AAM.Sweep;
 using AAM.UI;
 using Newtonsoft.Json;
@@ -51,6 +52,10 @@ namespace AAM.Tweaks
 
         [JsonIgnore]
         public string FileName => $"{TextureModID}_{ItemDefName}.json";
+        [JsonIgnore]
+        public float BladeLength => Mathf.Abs(BladeStart - BladeEnd);
+        [JsonIgnore]
+        public float MaxDistanceFromHand => Mathf.Max(Mathf.Abs(BladeEnd), Mathf.Abs(BladeEnd));
 
         public string TextureModID;
         public string ItemDefName;
@@ -104,6 +109,8 @@ namespace AAM.Tweaks
             ScaleY = def.graphic.drawSize.y;
             HandsMode = HandsMode.Default;
         }
+
+        public (WeaponSize size, bool isSharp) GetCategory() => IdleClassifier.Classify(this);
 
         public Vector2? TryGetWidthAtPosition(float distance)
         {

@@ -63,6 +63,40 @@ public class ColorConverter : PartialConverter<Color>
     }
 }
 
+public class RectConverter : PartialConverter<Rect>
+{
+    protected override void ReadValue(ref Rect value, string name, JsonReader reader, JsonSerializer serializer)
+    {
+        switch (name)
+        {
+            case nameof(value.x):
+                value.x = reader.ReadAsFloat() ?? 0f;
+                break;
+            case nameof(value.y):
+                value.y = reader.ReadAsFloat() ?? 0f;
+                break;
+            case nameof(value.width):
+                value.width = reader.ReadAsFloat() ?? 0f;
+                break;
+            case nameof(value.height):
+                value.height = reader.ReadAsFloat() ?? 0f;
+                break;
+        }
+    }
+
+    protected override void WriteJsonProperties(JsonWriter writer, Rect value, JsonSerializer serializer)
+    {
+        writer.WritePropertyName(nameof(value.x));
+        writer.WriteValue(value.x);
+        writer.WritePropertyName(nameof(value.y));
+        writer.WriteValue(value.y);
+        writer.WritePropertyName(nameof(value.width));
+        writer.WriteValue(value.width);
+        writer.WritePropertyName(nameof(value.height));
+        writer.WriteValue(value.height);
+    }
+}
+
 /// <summary>
 /// Custom base <c>Newtonsoft.Json.JsonConverter</c> to filter serialized properties.
 /// </summary>

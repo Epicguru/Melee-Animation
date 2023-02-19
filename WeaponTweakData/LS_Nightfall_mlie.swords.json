@@ -11,5 +11,11 @@
   "FlipY": true,
   "BladeStart": 0.18701598,
   "BladeEnd": 2.64050436,
-  "MeleeWeaponType": 6
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.0,
+    "g": 0.0,
+    "b": 0.0,
+    "a": 0.913333356
+  }
 }

@@ -14,6 +14,11 @@ namespace AAM
                      "If enabled, the Advanced Melee gizmo will be shown even if the pawn does not have a valid (compatible) melee weapon.")]
         public bool ShowGizmosWithoutMeleeWeapon = false;
 
+        [Label("Always Animate Weapons")]
+        [Description("If enabled, melee weapons are animated whenever they are held, such as when standing drafted or while moving in combat.\nIf disabled, animations are limited to duels, special skills and executions.\n\n" +
+                     "<b>Leaving this enabled can have a large performance impact on densely populated maps.\nPlease reload your save after changing this setting.</b>")]
+        public bool AnimateAtIdle = true;
+
         [Label("Animated Pawns Considered Invisible")]
         [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
                      "they will not be actively targeted or shot at. This makes executions less risky.\n" +

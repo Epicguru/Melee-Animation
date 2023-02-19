@@ -441,7 +441,7 @@ namespace AAM.UI
             // Animation selection.
             if (ui.ButtonText($"Animation: {startDef?.LabelCap ?? "<None>"}"))
             {
-                var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, d.LabelCap, tooltip: $"[{d.type}]\nData: {d.DataPath}\nPawns: {d.pawnCount}\n{d.description}".TrimEnd()));
+                var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, string.IsNullOrEmpty(d.label) ? d.defName : d.LabelCap, tooltip: $"[{d.type}]\nData: {d.DataPath}\nPawns: {d.pawnCount}\n{d.description}".TrimEnd()));
                 BetterFloatMenu.Open(items, i =>
                 {
                     startDef = i.GetPayload<AnimDef>();

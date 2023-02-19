@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+  <AAM.AnimDef Name="AnimIdleMain" Abstract="True">
+    <type>Idle</type>
+    <pawnCount>1</pawnCount>
+    <idleType>Idle</idleType>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef Name="AnimIdleFlavour" Abstract="True">
+    <type>Idle</type>
+    <pawnCount>1</pawnCount>
+    <idleType>Flavour</idleType>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef Name="AnimIdle" Abstract="True">
+    <type>Idle</type>
+    <pawnCount>1</pawnCount>
+  </AAM.AnimDef>
+
+  <!-- Medium sharp -->
+  <AAM.AnimDef ParentName="AnimIdleMain">
+    <defName>AAM_Idle_MediumSharpMain</defName>
+    <data>Idle_MediumSharp_Idle.json</data>
+    <weaponSize>Medium</weaponSize>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdleFlavour">
+    <defName>AAM_Idle_MediumSharpFlavour1</defName>
+    <data>Idle_MediumSharp_Flavour1.json</data>
+    <weaponSize>Medium</weaponSize>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdleFlavour">
+    <defName>AAM_Idle_MediumSharpFlavour2</defName>
+    <data>Idle_MediumSharp_Flavour2.json</data>
+    <weaponSize>Medium</weaponSize>
+    <forSharpWeapons>true</forSharpWeapons>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumMoveHor</defName>
+    <data>Idle_Medium_MoveHorizontal.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>MoveHorizontal</idleType>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumMoveVert</defName>
+    <data>Idle_Medium_MoveVertical.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>MoveVertical</idleType>
+  </AAM.AnimDef>  
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumAttackHor</defName>
+    <data>Idle_Medium_SlashHorizontal1.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>AttackHorizontal</idleType>
+    <mainAttackDuration>20</mainAttackDuration>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumAttackSouth</defName>
+    <data>Idle_Medium_SlashSouth1.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>AttackSouth</idleType>
+    <mainAttackDuration>20</mainAttackDuration>
+  </AAM.AnimDef>  
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumAttackNorth</defName>
+    <data>Idle_Medium_SlashNorth1.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>AttackNorth</idleType>
+    <mainAttackDuration>20</mainAttackDuration>
+  </AAM.AnimDef>  
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_MediumAttackSouth</defName>
+    <data>Idle_Medium_SlashSouth1.json</data>
+    <weaponSize>Medium</weaponSize>
+    <idleType>AttackSouth</idleType>
+    <mainAttackDuration>20</mainAttackDuration>
+  </AAM.AnimDef>  
+
+  <!-- Colossal sharp -->
+  <AAM.AnimDef ParentName="AnimIdleMain">
+    <defName>AAM_Idle_ColossalSharpMain</defName>
+    <data>Idle_ColossalSharp_Idle.json</data>
+    <weaponSize>Colossal</weaponSize>
+    <forSharpWeapons>true</forSharpWeapons>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdleFlavour">
+    <defName>AAM_Idle_ColossalSharpFlavour</defName>
+    <data>Idle_Colossal_Flavour1.json</data>
+    <weaponSize>Colossal</weaponSize>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_ColossalMoveHor</defName>
+    <data>Idle_Colossal_MoveHorizontal.json</data>
+    <weaponSize>Colossal</weaponSize>
+    <idleType>MoveHorizontal</idleType>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_ColossalMoveVert</defName>
+    <data>Idle_Colossal_MoveVertical.json</data>
+    <weaponSize>Colossal</weaponSize>
+    <idleType>MoveVertical</idleType>
+  </AAM.AnimDef>
+
+</Defs>

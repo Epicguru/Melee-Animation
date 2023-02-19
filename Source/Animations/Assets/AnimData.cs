@@ -5,42 +5,15 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Assets.Editor;
+using Newtonsoft.Json;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using static UnityEditor.ShaderData;
 
 public class AnimData
 {
     private static Mesh m, mfx, mfy, mfxy;
-    private static Dictionary<string, byte> propMap = new Dictionary<string, byte>()
-    {
-        // Transform
-        { "m_LocalPosition.x", 1 },
-        { "m_LocalPosition.y", 2 },
-        { "m_LocalPosition.z", 3 },
-        { "localEulerAnglesRaw.x", 4 },
-        { "localEulerAnglesRaw.y", 5 },
-        { "localEulerAnglesRaw.z", 6 },
-        { "m_LocalScale.x", 7 },
-        { "m_LocalScale.y", 8 },
-        { "m_LocalScale.z", 9 },
-
-        // AnimatedPart.cs
-        { "DataA", 1 },
-        { "DataB", 2 },
-        { "DataC", 3 },
-        { "Tint.r", 4 },
-        { "Tint.g", 5 },
-        { "Tint.b", 6 },
-        { "Tint.a", 7 },
-        { "FlipX", 8 },
-        { "FlipY", 9 },
-        { "SplitDrawMode", 10 },
-        { "FrameIndex", 11 },
-
-        // PawnBody.cs
-        { "m_IsActive", 1 },
-        { "Direction", 1 }
-    };
 
     public static Mesh GetMesh(bool flipX, bool flipY)
     {
@@ -52,30 +25,6 @@ public class AnimData
             mfxy = MakeMesh(Vector2.one, true, true);
         }
         return (flipX && flipY) ? mfxy : flipX ? mfx : flipY ? mfy : m;
-    }
-
-    private static byte EncodeType(Type t)
-    {
-        if (t == typeof(Transform))
-            return 1;
-        if (t == typeof(AnimatedPart))
-            return 2;
-        if (t == typeof(GameObject))
-            return 3;
-        if (t == typeof(PawnBody))
-            return 4;
-
-        Debug.LogWarning($"Failed to encode type: {t.FullName}");
-        return 0;
-    }
-
-    private static byte EncodeField(string propName)
-    {
-        if (propMap.TryGetValue(propName, out var found))
-            return found;
-
-        Debug.LogWarning($"Failed to encode field: {propName}");
-        return 0;
     }
 
     private static GameObject FindGO(GameObject root, string path)
@@ -116,124 +65,80 @@ public class AnimData
         }
     }
 
-    private static int CountFalse(bool[][] array)
-    {
-        int count = 0;
-        for (int i = 0; i < array.Length; i++)
-        {
-            for (int j = 0; j < array[i].Length; j++)
-            {
-                if (!array[i][j])
-                    count++;
-            }
-        }
-        return count;
-    }
-
-    private static float GetDefaultValue(byte type, byte prop, GameObject go)
+    private static float GetDefaultValue(string prop, GameObject go)
     {
         var trs = go.transform;
         var data = go.GetComponent<AnimatedPart>();
         var body = go.GetComponent<PawnBody>();
 
-        switch (type)
+        return prop switch
         {
-            // Transform
-            case 1:
-                return prop switch
-                {
-                    1 => trs.localPosition.x,
-                    2 => trs.localPosition.y,
-                    3 => trs.localPosition.z,
-                    4 => trs.localEulerAngles.x,
-                    5 => trs.localEulerAngles.y,
-                    6 => trs.localEulerAngles.z,
-                    7 => trs.localScale.x,
-                    8 => trs.localScale.y,
-                    9 => trs.localScale.z,
-                    _ => throw new NotImplementedException()
-                };
+            // GameObject
+            "GameObject.m_IsActive" => go.activeSelf ? 1 : 0,
+
+            // Transform.
+            "Transform.m_LocalPosition.x" => trs.localPosition.x,
+            "Transform.m_LocalPosition.y" => trs.localPosition.y,
+            "Transform.m_LocalPosition.z" => trs.localPosition.z,
+            "Transform.localEulerAnglesRaw.x" => trs.localEulerAngles.x,
+            "Transform.localEulerAnglesRaw.y" => trs.localEulerAngles.y,
+            "Transform.localEulerAnglesRaw.z" => trs.localEulerAngles.z,
+            "Transform.m_LocalScale.x" => trs.localScale.x,
+            "Transform.m_LocalScale.y" => trs.localScale.y,
+            "Transform.m_LocalScale.z" => trs.localScale.z,
 
             // AnimatedPart.cs
-            case 2:
-                return prop switch
-                {
-                    1 => data?.DataA ?? 0,
-                    2 => data?.DataB ?? 0,
-                    3 => data?.DataC ?? 0,
-                    4 => data?.Tint.r ?? 1,
-                    5 => data?.Tint.g ?? 1,
-                    6 => data?.Tint.b ?? 1,
-                    7 => data?.Tint.a ?? 1,
-                    8 => (data?.FlipX ?? false) ? 1 : 0,
-                    9 => (data?.FlipY ?? false) ? 1 : 0,
-                    10 => (int)(data?.SplitDrawMode ?? 0),
-                    11 => data?.FrameIndex ?? 0,
-                    _ => throw new NotImplementedException()
-                };
-
-            // GameObject
-            case 3:
-                return prop switch
-                {
-                    1 => go.activeSelf ? 1 : 0,
-                    _ => throw new NotImplementedException()
-                };
+            "AnimatedPart.DataA" => data?.DataA ?? 0,
+            "AnimatedPart.DataB" => data?.DataB ?? 0,
+            "AnimatedPart.DataC" => data?.DataC ?? 0,
+            "AnimatedPart.Tint.r" => data?.Tint.r ?? 0,
+            "AnimatedPart.Tint.g" => data?.Tint.g ?? 0,
+            "AnimatedPart.Tint.b" => data?.Tint.b ?? 0,
+            "AnimatedPart.Tint.a" => data?.Tint.a ?? 0,
+            "AnimatedPart.FlipX" => (data?.FlipX ?? false) ? 1 : 0,
+            "AnimatedPart.FlipY" => (data?.FlipY ?? false) ? 1 : 0,
+            "AnimatedPart.SplitDrawMode" => (int)(data?.SplitDrawMode ?? 0),
+            "AnimatedPart.FrameIndex" => data?.FrameIndex ?? 0,
 
             // PawnBody.cs
-            case 4:
-                return prop switch
-                {
-                    1 => (int)(body?.Direction ?? 0),
-                    _ => throw new NotImplementedException()
-                };
+            "PawnBody.Direction" => (int)(body?.Direction ?? 0),
 
-            default:
-                Debug.LogError($"Invalid type {type} (prop {prop}, GO {go})");
-                return 0;
-        }
+            _ => float.NaN
+        };
     }
 
-    private static void WriteCurve(BinaryWriter writer, AnimationCurve curve, Type curveDataType)
+    private static readonly HashSet<string> AllProps = new HashSet<string>()
     {
-        // UNITY BUG (in modern engine versions): AnimationCurves store enum data as floats, but do not correctly cast from int to float.
-        // Instead, it simply converts the int bits into float bits i.e. float floatVar = *((float*)&intVar)
-        // This breaks enum curves when exporting.
-        bool fixEnumBug = curveDataType?.IsEnum ?? false;
+        // GameObject
+        "GameObject.m_IsActive",
 
-        // Wrap modes.
-        writer.Write((byte)curve.preWrapMode);
-        writer.Write((byte)curve.postWrapMode);
+        // Transform.
+        "Transform.m_LocalPosition.x",
+        "Transform.m_LocalPosition.y",
+        "Transform.m_LocalPosition.z",
+        "Transform.localEulerAnglesRaw.x",
+        "Transform.localEulerAnglesRaw.y",
+        "Transform.localEulerAnglesRaw.z",
+        "Transform.m_LocalScale.x",
+        "Transform.m_LocalScale.y",
+        "Transform.m_LocalScale.z",
 
-        // Key count.
-        writer.Write(curve.length);
+        // AnimatedPart.cs
+        "AnimatedPart.DataA",
+        "AnimatedPart.DataB",
+        "AnimatedPart.DataC",
+        "AnimatedPart.Tint.r",
+        "AnimatedPart.Tint.g",
+        "AnimatedPart.Tint.b",
+        "AnimatedPart.Tint.a",
+        "AnimatedPart.FlipX",
+        "AnimatedPart.FlipY",
+        "AnimatedPart.SplitDrawMode",
+        "AnimatedPart.FrameIndex",
 
-        // Key data.
-        for (int i = 0; i < curve.length; i++)
-        {
-            var key = curve.keys[i];
-
-            writer.Write(key.time);
-
-            if (fixEnumBug)
-            {
-                // See above for explanation (it's a Unity issue)
-                int asInt = BitConverter.ToInt32(BitConverter.GetBytes(key.value));
-                writer.Write((float)asInt);
-            }
-            else
-            {
-                writer.Write(key.value);
-            }
-
-            writer.Write(key.inTangent);
-            writer.Write(key.outTangent);
-
-            writer.Write(key.inWeight);
-            writer.Write(key.outWeight);
-            writer.Write((byte)key.weightedMode);
-        }
-    }
+        // PawnBody.cs
+        "PawnBody.Direction"
+    };
 
     public enum SplitDrawMode
     {
@@ -244,57 +149,17 @@ public class AnimData
     }
 
 #if UNITY_EDITOR
-    public static void Save(BinaryWriter writer, AnimationClip clip, AnimationDataCreator creator, Rect bounds)
+    public static string Save(AnimationClip clip, AnimationDataCreator creator, Rect bounds)
     {
-        HashSet<string> paths = new HashSet<string>();
-
-        var bindings = AnimationUtility.GetCurveBindings(clip);
-        int count = 0;
-        foreach (var binding in bindings)
+        var model = new AnimDataModel
         {
-            if (EncodeType(binding.type) != 0)
-            {
-                paths.Add(binding.path);
-                count++;
-            }
-            else
-            {
-                Debug.LogError($"Ignoring binding: {binding.propertyName} ({binding.type})");
-            }
-        }
+            ExportTimeUTC = DateTime.UtcNow,
+            Length = clip.length,
+            Name = clip.name,
+            Bounds = bounds
+        };
 
-        var animatorRoot = creator.gameObject;
-        foreach (var go in EnumerateChildrenDeep(animatorRoot))
-        {
-            string path = MakeRelativePath(animatorRoot, go);
-            if (paths.Add(path))
-            {
-                //Debug.LogWarning($"Saved {path} from being stripped from the output.");
-            }
-        }
-
-        var pathList = new List<string>(paths);
-
-        // Format Version.
-        writer.Write(0);
-
-        // Name.
-        writer.Write(clip.name);
-
-        // Length.
-        writer.Write(clip.length);
-
-        // Part count.
-        writer.Write(pathList.Count);
-
-        // Bounds.
-        writer.Write(bounds.x);
-        writer.Write(bounds.y);
-        writer.Write(bounds.width);
-        writer.Write(bounds.height);
-
-        // Animation events.
-        var events = new List<(string data, float time)>();
+        // Events.
         foreach (var raw in clip.events)
         {
             if (raw.functionName != "AnimEvent")
@@ -310,154 +175,125 @@ public class AnimData
                 continue;
             }
 
-            events.Add((obj.MakeSaveData(), raw.time));
-        }
-        writer.Write(events.Count);
-        foreach (var e in events)
-        {
-            writer.Write(e.data);
-            writer.Write(e.time);
+            model.Events.Add(new EventModel
+            {
+                Time = raw.time,
+                Data = obj.MakeSaveData()
+            });
         }
 
+        var paths = new HashSet<string>();
+        var bindings = AnimationUtility.GetCurveBindings(clip);
+        foreach (var binding in bindings)
+        {
+            if (AllProps.Contains($"{binding.type.Name}.{binding.propertyName}"))
+            {
+                paths.Add(binding.path);
+            }
+            else
+            {
+                Debug.LogError($"Unexpected binding: {binding.propertyName} ({binding.type})");
+            }
+        }
+
+        var animatorRoot = creator.gameObject;
+        foreach (var go in EnumerateChildrenDeep(animatorRoot))
+        {
+            string path = MakeRelativePath(animatorRoot, go);
+            if (paths.Add(path))
+            {
+                //Debug.LogWarning($"Saved {path} from being stripped from the output.");
+            }
+        }
+        var pathList = new List<string>(paths);
+
         // Object paths, parents & textures.
+        var parts = new List<AnimPartModel>();
+        var bindingsWritten = new HashSet<string>();
+        model.Parts = parts;
         foreach (var path in pathList)
         {
+            bindingsWritten.Clear();
+
             var go = FindGO(animatorRoot, path);
             Debug.Assert(go != null);
             var parentGO = go.transform.parent.gameObject;
             Debug.Assert(parentGO != null);
 
-            // Path.
-            writer.Write(path);
-
-            // Parent index.
-            int parentIndex = parentGO == animatorRoot ? -1 : pathList.IndexOf(MakeRelativePath(animatorRoot, parentGO));
-            writer.Write((short)parentIndex);
-
             var comp = go.GetComponent<AnimatedPart>();
 
-            // Custom name.
-            writer.Write(comp != null && comp.HasCustomName);
-            if (comp != null && comp.HasCustomName)
-                writer.Write(comp.CustomName);
-
-            // Texture path.
-            writer.Write(comp != null && comp.HasTexturePath);
-            if (comp != null && comp.HasTexturePath)
-                writer.Write(comp.TexturePath);
-
-            // Use default transparency.
-            writer.Write(comp?.TransparentByDefault ?? false);
-
-            // Split draw mode and pivot.
-            writer.Write(comp?.SplitDrawPivot != null);
-            if (comp?.SplitDrawPivot != null)
+            var part = new AnimPartModel()
             {
-                int foundIndex = -1;
-                foreach (var path2 in pathList)
+                ID = go.GetInstanceID(),
+                ParentID = parentGO == null || parentGO == animatorRoot ? 0 : parentGO.GetInstanceID(),
+                Path = path,
+                CustomName = (comp?.HasCustomName ?? false) ? comp.CustomName : null,
+                TexturePath = (comp?.HasTexturePath ?? false) ? comp.TexturePath : null,
+                TransparentByDefault = comp?.TransparentByDefault ?? false,
+                SplitDrawPivotPartID = comp?.SplitDrawPivot == null || parentGO == animatorRoot ? 0 : comp.SplitDrawPivot.gameObject.GetInstanceID()
+            };
+
+            // Curves.
+            foreach (var binding in bindings)
+            {
+                if (binding.path != path)
+                    continue;
+
+                Type propType = binding.type.GetField(binding.propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.FieldType
+                          ?? binding.type.GetProperty(binding.propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.PropertyType;
+                string key = $"{binding.type.Name}.{binding.propertyName}";
+                var animCurve = AnimationUtility.GetEditorCurve(clip, binding);
+                var curveModel = CurveModel.FromAnimationCurve(animCurve);
+                
+                // UNITY BUG (in modern engine versions): AnimationCurves store enum data as floats, but do not correctly cast from int to float.
+                // Instead, it simply converts the int bits into float bits i.e. float floatVar = *((float*)&intVar)
+                // This breaks enum curves when exporting.
+                if (propType != null && propType.IsEnum)
                 {
-                    foundIndex++;
-                    var go2 = FindGO(animatorRoot, path2);
-                    if (go2.TryGetComponent<AnimatedPart>(out var found) && found == comp.SplitDrawPivot)
+                    for (int j = 0; j < curveModel.Keyframes.Length; j++)
                     {
-                        writer.Write(foundIndex);
-                        break;
+                        var old = curveModel.Keyframes[j];
+                        // See above for explanation (it's a Unity issue)
+                        int asInt = BitConverter.ToInt32(BitConverter.GetBytes(old.value));
+                        old.value = asInt;
+
+                        curveModel.Keyframes[j] = old;
                     }
                 }
+                part.Curves.Add(key, curveModel);
+                bindingsWritten.Add(key);
             }
-        }
 
-        // Curve count.
-        writer.Write(count);
-
-        int leftOver = pathList.Count * propMap.Count;
-        bool[][][] hasValue = new bool[pathList.Count][][];
-        for (int i = 0; i < hasValue.Length; i++)
-        {
-            bool[][] temp = new bool[4][];
-            temp[0] = new bool[9];  // Transform
-            temp[1] = new bool[11]; // Data
-            temp[2] = new bool[1];  // IsActive
-            temp[3] = new bool[1];  // Direction
-            Debug.Assert(temp.Select(arr => arr.Length).Sum() == propMap.Count);
-            hasValue[i] = temp;
-        }
-
-        // Write active curves.
-        foreach (var binding in bindings)
-        {
-            if (EncodeType(binding.type) == 0)
-                continue;
-
-            var curve = AnimationUtility.GetEditorCurve(clip, binding);
-            byte type = EncodeType(binding.type);
-            byte prop = EncodeField(binding.propertyName);
-            int objIndex = pathList.IndexOf(binding.path);
-
-            // Type.
-            writer.Write(type);
-
-            // Prop name.
-            writer.Write(prop);
-
-            // Part path.
-            writer.Write((byte)objIndex);
-
-            // Curve data.
-            Type propType = binding.type.GetField(binding.propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.FieldType;
-            WriteCurve(writer, curve, propType);
-
-            hasValue[objIndex][type - 1][prop - 1] = true;
-            leftOver--;
-        }
-
-        // Write default values.
-        for (int i = 0; i < pathList.Count; i++)
-        {
-            writer.Write((byte)CountFalse(hasValue[i]));
-
-            for (int j = 0; j < hasValue[i].Length; j++)
+            // Default values.
+            foreach (var key in AllProps)
             {
-                for (int k = 0; k < hasValue[i][j].Length; k++)
-                {
-                    if (hasValue[i][j][k])
-                        continue;
+                // No need to write default value if there is already an active curve.
+                if (bindingsWritten.Contains(key))
+                    continue;
 
-                    // Get default value.
-                    float def = GetDefaultValue((byte)(j + 1), (byte)(k + 1), FindGO(animatorRoot, pathList[i]));
-
-                    // Write default value.
-                    writer.Write((byte)(j + 1));
-                    writer.Write((byte)(k + 1));
-                    writer.Write(def);
-
-                    leftOver--;
-                }
+                part.DefaultValues.Add(key, GetDefaultValue(key, go));
             }
+
+            // Sweep curves.
+            int i = -1;
+            foreach (var anchor in creator.SweepAnchors)
+            {
+                i++;
+                var forPart = anchor.ForPart == null ? anchor.gameObject : anchor.ForPart;
+                if (forPart != go)
+                    continue;
+
+                part.SweepPaths.Add(creator.Sweeps[i].Points);
+            }
+
+            parts.Add(part);
         }
-        Debug.Assert(leftOver == 0);
 
-        // Write sweeps.
-        var anchors = creator.SweepAnchors;
-        writer.Write(anchors.Length); // Count.
-        for (int i = 0; i < anchors.Length; i++)
-        {
-            var anchor = anchors[i];
-            var sweep = creator.Sweeps[i];
-
-            // Find anim part that this is for.
-            var go = anchor.ForPart == null ? anchor.gameObject : anchor.ForPart;
-
-            int sweepObjIndex = pathList.IndexOf(MakeRelativePath(animatorRoot, go));
-            if (sweepObjIndex < 0)
-                throw new Exception("Failed to find sweep object in animation");
-
-            // Sweep object index.
-            writer.Write(sweepObjIndex);
-
-            // Write data.
-            sweep.Write(writer);
-        }
+        // To json...
+        var settings = new JsonSerializerSettings();
+        settings.Converters.Add(new RectConverter());
+        settings.DefaultValueHandling = DefaultValueHandling.Ignore;
+        return JsonConvert.SerializeObject(model, Formatting.Indented, settings);
     }
 
 #endif
@@ -518,13 +354,10 @@ public class AnimData
 
 public class SweepPointCollection
 {
-    public int Count => points?.Length ?? 0;
-    public IReadOnlyList<SweepPoint> Points => points ?? (IReadOnlyList<SweepPoint>)writePoints;
+    public int Count => Points?.Length ?? 0;
+    public SweepPoint[] Points { get; private set; }
 
     private readonly List<SweepPoint> writePoints = new List<SweepPoint>();
-    private SweepPoint[] points;
-    private float currTime;
-    private int currIndex;
 
     public void Add(in SweepPoint point)
     {
@@ -533,80 +366,8 @@ public class SweepPointCollection
 
     public void EndAdd()
     {
-        points = writePoints.ToArray();
+        Points = writePoints.ToArray();
         writePoints.Clear();
-    }
-
-    public void Write(BinaryWriter writer)
-    {
-        // Length.
-        writer.Write(points?.Length ?? 0);
-
-        // Points.
-        if (points != null)
-        {
-            foreach (var p in points)
-                p.Write(writer);
-        }
-    }
-
-    public void Read(BinaryReader reader)
-    {
-        int count = reader.ReadInt32();
-        points = new SweepPoint[count];
-        foreach (var p in points)
-            p.Read(reader);
-    }
-
-    public IEnumerable<SweepPoint> Seek(float newTime)
-    {
-        // Check for no movement.
-        if (newTime == currTime)
-            yield break;
-
-        // Check rewind.
-        bool rewind = newTime < currTime;
-        if (rewind)
-        {
-            currTime = newTime;
-            currIndex = GetIndexForTime(newTime);
-            yield break;
-        }
-
-        // Moving forwards...
-        int c = currIndex;
-        while (points[c].Time < newTime)
-        {
-            yield return points[c];
-            c++;
-        }
-        currTime = newTime;
-        currIndex = c;
-    }
-
-    private int GetIndexForTime(float time)
-    {
-        for (int i = 0; i < points.Length; i++)
-        {
-            if (points[i].Time > time)
-                return i;
-        }
-        return points.Length - 1;
-    }
-
-    public SweepPointCollection Clone()
-    {
-        var created = new SweepPointCollection();
-        created.points = new SweepPoint[points?.Length ?? 0];
-        if (points != null)
-            Array.Copy(points, created.points, points.Length);
-        return created;
-    }
-
-    public void Clear()
-    {
-        writePoints.Clear();
-        points = null;
     }
 }
 
@@ -626,26 +387,6 @@ public struct SweepPoint
         DX = dx;
         DZ = dz;
         Disable = disable;
-    }
-
-    public void Write(BinaryWriter writer)
-    {
-        writer.Write(Time);
-        writer.Write(X);
-        writer.Write(Z);
-        writer.Write(DX);
-        writer.Write(DZ);
-        writer.Write(Disable);
-    }
-
-    public void Read(BinaryReader reader)
-    {
-        Time = reader.ReadSingle();
-        X = reader.ReadSingle();
-        Z = reader.ReadSingle();
-        DX = reader.ReadSingle();
-        DZ = reader.ReadSingle();
-        Disable = reader.ReadBoolean();
     }
 
     public void GetEndPoints(float radius, out Vector3 up, out Vector3 down)
