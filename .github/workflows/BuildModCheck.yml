@@ -35,8 +35,5 @@ jobs:
       with:
         dotnet-version: 6.x.x
 
-    - name: Build Mod 1.3
-      run: dotnet build ${{ env.SLN_PATH }} --configuration v1.3
-
     - name: Build Mod 1.4
       run: dotnet build ${{ env.SLN_PATH }} --configuration v1.4
