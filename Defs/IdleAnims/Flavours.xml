@@ -7,6 +7,15 @@
     <idleType>Flavour</idleType>
   </AAM.AnimDef>
 
+  <!-- Tiny -->
+  <AAM.AnimDef ParentName="AnimFlavour">
+    <defName>AAM_Idle_TinyFlavour1</defName>
+    <data>Idle_Tiny_Flavour1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
   <!-- Medium -->
   <AAM.AnimDef ParentName="AnimFlavour">
     <defName>AAM_Idle_MediumFlavour1</defName>

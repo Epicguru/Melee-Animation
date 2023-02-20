@@ -11,6 +11,15 @@
 
   <!-- Medium -->
   <AAM.AnimDef ParentName="AnimIdle">
+    <defName>AAM_Idle_TinyIdle</defName>
+    <data>Idle_Tiny_Idle.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <!-- Medium -->
+  <AAM.AnimDef ParentName="AnimIdle">
     <defName>AAM_Idle_MediumIdle</defName>
     <data>Idle_MediumSharp_Idle.json</data>
     <weaponFilter Class="AAM.Reqs.AnySize">
