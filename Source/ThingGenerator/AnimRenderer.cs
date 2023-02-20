@@ -768,15 +768,6 @@ public class AnimRenderer : IExposable
         foreach (var path in sweeps)
             path.Draw(time);
 
-        foreach (var item in snapshots)
-        {
-            var final = ResolveTexture(item);
-            string path = item.TexturePath;
-            var ov = GetOverride(item).Texture;
-            if (Input.GetKeyDown(KeyCode.L))
-                Core.Log($"[{item.Part.Index}] {item.PartName} -> prt:{item}, path:{path}, ov:{ov}, final:{final}");
-        }
-
         foreach (var snap in snapshots)
         {
             if (!ShouldDraw(snap))
@@ -831,7 +822,8 @@ public class AnimRenderer : IExposable
                     if (ov.Material != null)
                     {
                         // Check for a mask...
-                        bool doesUseMask = ov.Material.HasProperty("_MaskTex");
+                        int id = Shader.PropertyToID("_MaskTex");
+                        bool doesUseMask = ov.Material.HasProperty(id);
                         if (doesUseMask)
                         {
                             // Get the mask and mask color.
@@ -840,7 +832,7 @@ public class AnimRenderer : IExposable
                             // Tint is applied to the mask.
                             pb.SetColor("_Color", color); // Color comes from animation.
                             pb.SetColor("_ColorTwo", ov.Weapon.DrawColor); // Mask tint
-                            pb.SetTexture("_MaskTex", mask);
+                            pb.SetTexture(id, mask);
 
                         }
                         else

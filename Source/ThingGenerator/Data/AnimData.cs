@@ -387,6 +387,7 @@ public struct AnimPartSnapshot
     public Matrix4x4 LocalMatrix;
     public Matrix4x4 WorldMatrix;
     public Matrix4x4 WorldMatrixNoOverride;
+    public Matrix4x4 WorldMatrixPreserveFlip;
 
     public AnimPartSnapshot(AnimPartData part, AnimRenderer renderer, float time)
     {
@@ -488,8 +489,11 @@ public struct AnimPartSnapshot
         var adjust = Matrix4x4.TRS(new Vector3(off.x, 0f, off.y), Quaternion.Euler(0, offRot, 0f), new Vector3(ov.LocalScaleFactor.x, 1f, ov.LocalScaleFactor.y));
 
         Active = MakeHierarchyActive();
-        WorldMatrix = preProc * MakeWorldMatrix() * adjust * postProc;
-        WorldMatrixNoOverride = preProc * MakeWorldMatrix() * postProc;
+
+        var mat = MakeWorldMatrix();
+        WorldMatrix = preProc * mat * adjust * postProc;
+        WorldMatrixNoOverride = preProc * mat * postProc;
+        WorldMatrixPreserveFlip = preProc * mat;
     }
 
     private static float Eval(AnimationCurve curve, float time, float fallback = 0f)

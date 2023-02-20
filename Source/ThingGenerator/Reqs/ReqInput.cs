@@ -1,4 +1,5 @@
-﻿using AAM.Tweaks;
+﻿using AAM.Idle;
+using AAM.Tweaks;
 using Verse;
 
 namespace AAM.Reqs
@@ -7,29 +8,23 @@ namespace AAM.Reqs
     {
         public ThingDef WeaponDef;
         public ItemTweakData TweakData;
-        public MeleeWeaponType TypeFlags => _typeFlags ?? TweakData?.MeleeWeaponType ?? 0;
+        public MeleeWeaponType TypeFlags;
+        public WeaponSize SizeFlags;
+        public WeaponCat CategoryFlags;
 
-        public MeleeWeaponType? _typeFlags;
-
-        public ReqInput(ThingDef weapon)
+        public ReqInput(ThingDef weapon) : this(TweakDataManager.TryGetTweak(weapon))
         {
             WeaponDef = weapon;
-            TweakData = TweakDataManager.TryGetTweak(weapon);
-            _typeFlags = null;
         }
 
         public ReqInput(ItemTweakData td)
         {
             WeaponDef = td.GetDef();
             TweakData = td;
-            _typeFlags = null;
-        }
 
-        public ReqInput(MeleeWeaponType flags)
-        {
-            WeaponDef = null;
-            TweakData = null;
-            _typeFlags = flags;
+            var pair = td.GetCategory();
+            SizeFlags = pair.size;
+            CategoryFlags = pair.category;
         }
     }
 }

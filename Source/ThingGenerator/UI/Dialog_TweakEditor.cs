@@ -381,7 +381,7 @@ namespace AAM.UI
                 Widgets.Label(tagsArea.RightPart(0.2f), "Allowed animations...");
                 string allowedAnimations = "";
                 foreach (var anim in AnimDef.AllDefs)
-                    if (anim.AllowsWeapon(new ReqInput(tweak)))
+                    if (anim.Allows(new ReqInput(tweak)))
                         allowedAnimations += $"[{anim.type}] {anim.defName}\n";
                 TooltipHandler.TipRegion(tagsArea.RightPart(0.2f), allowedAnimations);
 
@@ -448,7 +448,7 @@ namespace AAM.UI
                     Widgets.DrawLine(new Vector2(view.xMin, view.center.y), new Vector2(view.xMax, view.center.y), new Color(0f, 1f, 0f, 0.333f), 1);
                     Widgets.DrawLine(new Vector2(view.center.x, view.yMin), new Vector2(view.center.x, view.yMax), new Color(0f, 1f, 0f, 0.333f), 1);
                     var idleCat = IdleClassifier.Classify(tweak);
-                    Widgets.Label(view, $"Mouse: {localMousePos}, Weapon Idle Cat: {idleCat.size}, IsSharp: {idleCat.isSharp}");
+                    Widgets.Label(view, $"Mouse: {localMousePos}, Weapon Size: {idleCat.size}, Category: {idleCat.category}");
 
                     if (Widgets.ButtonInvisible(view, false))
                     {

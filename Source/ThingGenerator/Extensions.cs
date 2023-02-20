@@ -58,6 +58,26 @@ public static class Extensions
         return (T)GenGeneric.InvokeStaticMethodOnGenericType(typeof(DefDatabase<>), typeof(T), "GetNamed", defName, true) ?? fallback;
     }
 
+    public static float ToAngleFlatNew(this in Vector3 vector) => Mathf.Atan2(vector.z, vector.x) * Mathf.Rad2Deg;
+
+    public static bool Polarity(this float f) => f > 0;
+
+    public static WeaponCat ToCategory(this MeleeWeaponType type)
+    {
+        WeaponCat cat = 0;
+
+        if (type.HasFlag(MeleeWeaponType.Long_Sharp) || type.HasFlag(MeleeWeaponType.Short_Sharp))
+            cat |= WeaponCat.Sharp;
+
+        if (type.HasFlag(MeleeWeaponType.Long_Stab) || type.HasFlag(MeleeWeaponType.Short_Stab))
+            cat |= WeaponCat.Stab;
+
+        if (type.HasFlag(MeleeWeaponType.Long_Blunt) || type.HasFlag(MeleeWeaponType.Short_Blunt))
+            cat |= WeaponCat.Blunt;
+
+        return cat;
+    }
+
     public static BodyPartRecord TryGetPartFromDef(this Pawn pawn, BodyPartDef def)
     {
         if (def == null)
@@ -72,6 +92,9 @@ public static class Extensions
         }
         return null;
     }
+
+    public static bool IsAttack(this IdleType type) =>
+        type is IdleType.AttackHorizontal or IdleType.AttackSouth or IdleType.AttackNorth;
 
     /// <summary>
     /// Attempts to get the equipped melee weapon of this pawn.

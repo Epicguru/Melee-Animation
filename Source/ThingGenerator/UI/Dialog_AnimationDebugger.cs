@@ -419,10 +419,9 @@ namespace AAM.UI
             {
                 toDraw.Enqueue(() =>
                 {
-                    var pos = ss.GetWorldPosition();
-                    var dir = ss.GetWorldRotation().AngleToWorldDir();
-                    //GenDraw.DrawLineBetween(pos, pos + dir, SimpleColor.Blue);
-                    GenDraw.DrawArrowRotated(pos - new Vector3(0f, 0f, 0.5f), 0f, false);
+                    var pos = ss.GetWorldPositionNoOverride();
+                    var dir = ss.WorldMatrixPreserveFlip.MultiplyVector(Vector3.right).normalized;
+                    GenDraw.DrawArrowRotated(pos + dir * -0.5f, dir.ToAngleFlatNew(), false);
                 });
             }
         }

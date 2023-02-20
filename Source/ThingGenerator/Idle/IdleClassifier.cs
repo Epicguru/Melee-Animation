@@ -13,25 +13,20 @@ public static class IdleClassifier
     [TweakValue("Advanced Melee Animation", 0f, 5f)]
     public static float TinySizeThreshold = 0.63f;
 
-    public static (WeaponSize size, bool isSharp) Classify(ItemTweakData tweakData)
+    public static (WeaponSize size, WeaponCat category) Classify(ItemTweakData tweakData)
     {
         if (tweakData == null)
             return default;
 
-        bool HasAnyFlag(MeleeWeaponType flag) => (tweakData.MeleeWeaponType & flag) != 0;
-
-        // Type is as simple:
-        // Stab sharp takes priorty over blunt.
-        bool isSharp = HasAnyFlag(MeleeWeaponType.Long_Sharp | MeleeWeaponType.Short_Sharp | MeleeWeaponType.Long_Stab | MeleeWeaponType.Short_Stab);
-
         float length = GetLength(tweakData);
         bool isTiny = length <= TinySizeThreshold;
+        var cat = tweakData.MeleeWeaponType.ToCategory();
 
         if (isTiny)
-            return (WeaponSize.Tiny, isSharp);
+            return (WeaponSize.Tiny, cat);
 
         bool isColossal = length >= ColossalSizeThreshold;
-        return isColossal ? (WeaponSize.Colossal, isSharp) : (WeaponSize.Medium, isSharp);
+        return isColossal ? (WeaponSize.Colossal, cat) : (WeaponSize.Medium, cat);
     }
 
     private static float GetLength(ItemTweakData tweakData) => Mathf.Max(tweakData.BladeLength, tweakData.MaxDistanceFromHand);
@@ -41,7 +36,7 @@ public static class IdleClassifier
         public ThingDef Def;
         public ItemTweakData Tweak;
         public WeaponSize Size;
-        public bool IsSharp;
+        public WeaponCat Category;
     }
 
     [DebugOutput("Advanced Melee Animation")]
@@ -56,7 +51,7 @@ public static class IdleClassifier
            {
                Def = def,
                Tweak = tweak,
-               IsSharp = cat.isSharp,
+               Category = cat.category,
                Size = cat.size
            };
 
@@ -64,7 +59,7 @@ public static class IdleClassifier
         table[0] = new TableDataGetter<TableRow>("Def Name", row => row.Def.defName);
         table[1] = new TableDataGetter<TableRow>("Name", row => row.Def.LabelCap);
         table[2] = new TableDataGetter<TableRow>("Size", row => row.Size);
-        table[3] = new TableDataGetter<TableRow>("Sharp?", row => row.IsSharp.ToStringCheckBlank());
+        table[3] = new TableDataGetter<TableRow>("Category", row => row.Category);
         table[4] = new TableDataGetter<TableRow>("Length", row => GetLength(row.Tweak).ToString("F3"));
 
         DebugTables.MakeTablesDialog(data, table);

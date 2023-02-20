@@ -40,39 +40,6 @@ namespace AAM
             }
         }
 
-        public static AnimDef GetMainIdleAnim(WeaponSize weaponSize, bool sharp)
-        {
-            // TODO optimize.
-            foreach (var def in defsOfType[AnimType.Idle])
-            {
-                if (def.idleType == IdleType.Idle && def.weaponSize == weaponSize && (def.forSharpWeapons == null || def.forSharpWeapons.Value == sharp))
-                    return def;
-            }
-            return null;
-        }
-
-        public static AnimDef GetMoveIdleAnim(WeaponSize weaponSize, bool sharp, bool horizontal)
-        {
-            // TODO optimize.
-            var type = horizontal ? IdleType.MoveHorizontal : IdleType.MoveVertical;
-            foreach (var def in defsOfType[AnimType.Idle])
-            {
-                if (def.idleType == type && def.weaponSize == weaponSize && (def.forSharpWeapons == null || def.forSharpWeapons.Value == sharp))
-                    return def;
-            }
-            return null;
-        }
-
-        public static IEnumerable<AnimDef> GetIdleFlavours(WeaponSize weaponSize, bool sharp)
-        {
-            // TODO optimize.
-            foreach (var def in defsOfType[AnimType.Idle])
-            {
-                if (def.idleType == IdleType.Flavour && def.weaponSize == weaponSize && (def.forSharpWeapons == null || def.forSharpWeapons.Value == sharp))
-                    yield return def;
-            }
-        }
-
         public static IEnumerable<AnimDef> GetDefsOfType(AnimType type)
         {
             if (defsOfType.TryGetValue(type, out var list))
@@ -85,20 +52,8 @@ namespace AAM
             int meleeSkill = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
 
             return GetDefsOfType(AnimType.Execution)
-                .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
+                .Where(d => d.Allows(new ReqInput(weaponDef)))
                 .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
-        }
-
-        public static IEnumerable<AnimDef> GetAttackAnimations(WeaponSize weaponSize, bool sharp, IdleType dir)
-        {
-            foreach (var anim in defsOfType[AnimType.Idle])
-            {
-                if (anim.idleType == dir)
-                {
-                    if (anim.weaponSize == weaponSize && (anim.forSharpWeapons == null || anim.forSharpWeapons.Value == sharp))
-                        yield return anim;
-                }
-            }
         }
 
         [DebugAction("Advanced Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
@@ -194,10 +149,10 @@ namespace AAM
         public bool shadowDrawFromData;
         public int? minMeleeSkill = null;
         public bool canEditProbability = true;
-        public WeaponSize weaponSize;
         public IdleType idleType;
-        public bool? forSharpWeapons;
         public int mainAttackDuration;
+        public bool pointAtTarget;
+        public int returnToIdleStart, returnToIdleEnd;
 
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 
@@ -292,7 +247,7 @@ namespace AAM
             else if (!File.Exists(FullDataPath))
                 yield return $"Failed to find animation file at '{FullDataPath}'!";
 
-            if (type is AnimType.Execution or AnimType.Duel && weaponFilter == null)
+            if (type is AnimType.Execution or AnimType.Duel or AnimType.Idle && weaponFilter == null)
                 yield return "weaponFilter is not assigned.";
 
             var p1StartCell = TryGetCell(AnimCellData.Type.PawnStart, false, false, 1);
@@ -357,7 +312,7 @@ namespace AAM
 
         private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new(fx ? -input.x : input.x, fy ? -input.z : input.z);
 
-        public bool AllowsWeapon(ReqInput input)
+        public bool Allows(ReqInput input)
         {
             return weaponFilter != null && weaponFilter.Evaluate(input);
         }
@@ -365,7 +320,7 @@ namespace AAM
         public IEnumerable<ThingDef> GetAllAllowedWeapons()
         {
             foreach (var thing in DefDatabase<ThingDef>.AllDefsListForReading)
-                if (thing.IsMeleeWeapon && AllowsWeapon(new ReqInput(thing)))
+                if (thing.IsMeleeWeapon && Allows(new ReqInput(thing)))
                     yield return thing;
         }
     }

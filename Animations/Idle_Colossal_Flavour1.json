@@ -1,11 +1,11 @@
 {
-  "ExportTimeUTC": "2023-02-18T18:33:40.1481168Z",
+  "ExportTimeUTC": "2023-02-20T18:04:15.3849152Z",
   "Name": "Idle_Colossal_Flavour1",
   "Length": 9.316667,
   "Events": [],
   "Parts": [
     {
-      "ID": 19176,
+      "ID": 19182,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -220,10 +220,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19108,
+      "ID": 19114,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": 19176,
+      "ParentID": 19182,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
           "Keyframes": [
@@ -963,14 +963,14 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19378,
+      "SplitDrawPivotPartID": 19384,
       "SweepPaths": []
     },
     {
-      "ID": 19602,
+      "ID": 19608,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": 19176,
+      "ParentID": 19182,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
           "Keyframes": [
@@ -1757,10 +1757,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19256,
+      "ID": 19262,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": 19176,
+      "ParentID": 19182,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -2083,7 +2083,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19620,
+      "ID": 19626,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {},
@@ -2114,10 +2114,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 18898,
+      "ID": 18904,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 19620,
+      "ParentID": 19626,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -2146,7 +2146,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19378,
+      "ID": 19384,
       "Path": "WeaponACutoff",
       "Curves": {},
       "DefaultValues": {

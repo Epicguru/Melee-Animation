@@ -1,4 +1,5 @@
 ﻿using AAM.Idle;
+using AAM.Reqs;
 using AAM.Retexture;
 using AAM.Sweep;
 using AAM.UI;
@@ -84,6 +85,12 @@ namespace AAM.Tweaks
         private ModContentPack cachedMod;
         private ISweepProvider cachedSweepProvider;
 
+        private AnimDef idleAnimCached;
+        private AnimDef moveHorAnimCached;
+        private AnimDef moveVertAnimCached;
+        private AnimDef[] flavourAnimsCached;
+        private AnimDef[][] attackAnimationsCached;
+
         public ItemTweakData() { }
 
         public ItemTweakData(ThingDef def, ModContentPack textureMod)
@@ -110,21 +117,70 @@ namespace AAM.Tweaks
             HandsMode = HandsMode.Default;
         }
 
-        public (WeaponSize size, bool isSharp) GetCategory() => IdleClassifier.Classify(this);
+        public (WeaponSize size, WeaponCat category) GetCategory() => IdleClassifier.Classify(this);
 
-        public Vector2? TryGetWidthAtPosition(float distance)
+        public AnimDef GetIdleAnimation()
         {
-            var tex = GetTexture();
-            if (tex == null)
-                return null;
+            if (idleAnimCached != null)
+                return idleAnimCached;
 
-            if (!tex.isReadable)
-            {
-                Core.Warn($"Texture '{tex}' is not readable so some effects will not work.");
-                return null;
-            }
+            var reqArgs = new ReqInput(this);
+            idleAnimCached = AnimDef.GetDefsOfType(AnimType.Idle).FirstOrDefault(d => d.idleType == IdleType.Idle && d.Allows(reqArgs));
 
-            return null;
+            return idleAnimCached;
+        }
+
+        public IReadOnlyList<AnimDef> GetFlavourAnimations()
+        {
+            if (flavourAnimsCached != null)
+                return flavourAnimsCached;
+
+            var reqArgs = new ReqInput(this);
+            flavourAnimsCached = AnimDef.GetDefsOfType(AnimType.Idle).Where(d => d.idleType == IdleType.Flavour && d.Allows(reqArgs)).ToArray();
+
+            return flavourAnimsCached;
+        }
+
+        public AnimDef GetMoveHorizontalAnimation()
+        {
+            if (moveHorAnimCached != null)
+                return moveHorAnimCached;
+
+            var reqArgs = new ReqInput(this);
+            moveHorAnimCached = AnimDef.GetDefsOfType(AnimType.Idle).FirstOrDefault(d => d.idleType == IdleType.MoveHorizontal && d.Allows(reqArgs));
+
+            return moveHorAnimCached;
+        }
+
+        public AnimDef GetMoveVerticalAnimation()
+        {
+            if (moveVertAnimCached != null)
+                return moveVertAnimCached;
+
+            var reqArgs = new ReqInput(this);
+            moveVertAnimCached = AnimDef.GetDefsOfType(AnimType.Idle).FirstOrDefault(d => d.idleType == IdleType.MoveVertical && d.Allows(reqArgs));
+
+            return moveVertAnimCached;
+        }
+
+        public IReadOnlyList<AnimDef> GetAttackAnimations(Rot4 direction)
+        {
+            if (attackAnimationsCached != null)
+                return attackAnimationsCached[direction.AsInt];
+
+            var reqArgs = new ReqInput(this);
+            attackAnimationsCached = new AnimDef[4][];
+
+            // Horizontal.
+            var hor = AnimDef.GetDefsOfType(AnimType.Idle).Where(d => d.idleType == IdleType.AttackHorizontal && d.Allows(reqArgs)).ToArray();
+            attackAnimationsCached[Rot4.EastInt] = hor;
+            attackAnimationsCached[Rot4.WestInt] = hor;
+
+            // Vertical.
+            attackAnimationsCached[Rot4.NorthInt] = AnimDef.GetDefsOfType(AnimType.Idle).Where(d => d.idleType == IdleType.AttackNorth && d.Allows(reqArgs)).ToArray();
+            attackAnimationsCached[Rot4.SouthInt] = AnimDef.GetDefsOfType(AnimType.Idle).Where(d => d.idleType == IdleType.AttackSouth && d.Allows(reqArgs)).ToArray();
+
+            return attackAnimationsCached[direction.AsInt];
         }
 
         public void CopyTransformFrom(ItemTweakData data)

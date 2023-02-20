@@ -1,8 +1,10 @@
 ﻿using JetBrains.Annotations;
 using RimWorld;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
+using Patch = AAM.Patches.Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget;
 
 namespace AAM.Idle;
 
@@ -11,6 +13,14 @@ public class IdleControllerComp : ThingComp
 {
     public AnimRenderer CurrentAnimation;
     public int TicksSinceFlavour;
+
+    private float pauseAngle;
+    private int pauseTicks;
+    private bool isPausing;
+    private float lastSpeed;
+    private float lastDelta;
+    private AnimDef lastAttack;
+    private AnimDef lastFlavour;
 
     public override void CompTick()
     {
@@ -50,12 +60,30 @@ public class IdleControllerComp : ThingComp
                 return;
             }
 
-            UpdateAnimationIfRequired(pawn, weapon);
+            TickAnimation(pawn, weapon);
         }
         catch (Exception e)
         {
             Core.Error($"Exception processing idling animation for '{parent}':", e);
         }
+    }
+
+    private AnimDef Random(IReadOnlyList<AnimDef> anims, AnimDef preferNotThis)
+    {
+        if (anims.Count == 0)
+            return null;
+
+        if (anims.Count == 1)
+            return anims[0];
+
+        for (int i = 0; i < 20; i++)
+        {
+            var picked = anims.RandomElementByWeight(d => d.Probability);
+            if (picked != preferNotThis)
+                return picked;
+        }
+
+        return anims.RandomElementByWeight(d => d.Probability);
     }
 
     private Thing GetMeleeWeapon()
@@ -75,41 +103,16 @@ public class IdleControllerComp : ThingComp
         _ => Rot4.South
     };
 
-    public AnimDef GetDirectionalMovementAnimDef(Rot4 facing, Thing weapon, out bool flipX)
-    {
-        var cat = weapon.TryGetTweakData().GetCategory();
-        switch (facing.AsInt)
-        {
-            case Rot4.NorthInt:
-                flipX = true;
-                return AnimDef.GetMoveIdleAnim(cat.size, cat.isSharp, false);
-
-            case Rot4.SouthInt:
-                flipX = false;
-                return AnimDef.GetMoveIdleAnim(cat.size, cat.isSharp, false);
-
-            case Rot4.EastInt:
-                flipX = false;
-                return AnimDef.GetMoveIdleAnim(cat.size, cat.isSharp, true);
-
-            case Rot4.WestInt:
-                flipX = true;
-                return AnimDef.GetMoveIdleAnim(cat.size, cat.isSharp, true);
-        }
-
-        flipX = false;
-        return null;
-    }
-
-    private void UpdateAnimationIfRequired(Pawn pawn, Thing weapon)
+    private void TickAnimation(Pawn pawn, Thing weapon)
     {
         bool isMoving = pawn.pather.MovingNow;
         bool inMelee = pawn.IsInActiveMeleeCombat();
         Rot4 facing = pawn.Rotation;
-        var cat = weapon.TryGetTweakData().GetCategory();
 
         AnimDef MakeNewAnim(out bool flipX)
         {
+            var tweak = weapon.TryGetTweakData();
+
             // Not moving, can either be idle or melee.
             if (!isMoving)
             {
@@ -117,15 +120,19 @@ public class IdleControllerComp : ThingComp
                 if (facing == Rot4.South && !inMelee)
                 {
                     flipX = false;
-                    return AnimDef.GetMainIdleAnim(cat.size, cat.isSharp);
+                    return tweak.GetIdleAnimation();
                 }
-
-                // Otherwise use the walk animations but freeze them.
-                return GetDirectionalMovementAnimDef(facing, weapon, out flipX);
             }
 
             // Moving, use the directional movement anims.
-            return GetDirectionalMovementAnimDef(facing, weapon, out flipX);
+            if (facing.IsHorizontal)
+            {
+                flipX = facing == Rot4.West;
+                return tweak.GetMoveHorizontalAnimation();
+            }
+
+            flipX = facing == Rot4.North;
+            return tweak.GetMoveVerticalAnimation();
         }
 
         void StartNew()
@@ -149,7 +156,6 @@ public class IdleControllerComp : ThingComp
             else
             {
                 CurrentAnimation.Loop = true;
-                //Core.Log($"[{pawn}] Started {CurrentAnimation?.ToString() ?? "null"}");
             }
         }
 
@@ -187,57 +193,119 @@ public class IdleControllerComp : ThingComp
                 else
                 {
                     CurrentAnimation.Seek(0, null);
-                    CurrentAnimation.TimeScale = 0f;
+                    CurrentAnimation.TimeScale = 0.0f;
                 }
             }
         }
 
-        // TODO swing animations.
-
-        // Random interrupt.
+        // Random idle interrupt (flavour).
         if (CurrentAnimation.Def.idleType == IdleType.Idle && facing == Rot4.South && TicksSinceFlavour > GenTicks.TicksPerRealSecond * 5)
         {
             float mtbSeconds = 20;
             if (Rand.MTBEventOccurs(mtbSeconds, GenTicks.TicksPerRealSecond, 1))
             {
                 ClearAnimation();
-                var startParams = new AnimationStartParameters(weapon.TryGetTweakData().GetRandomFlavourAnim(), pawn)
+                var anim = Random(weapon.TryGetTweakData().GetFlavourAnimations(), lastFlavour);
+                if (anim != null)
                 {
-                    FlipX = false,
-                    DoNotRegisterPawns = true,
-                    RootTransform = MakePawnMatrix(pawn, false)
-                };
-                startParams.TryTrigger(out CurrentAnimation);
-                TicksSinceFlavour = 0;
+                    lastFlavour = anim;
+                    var startParams = new AnimationStartParameters(anim, pawn)
+                    {
+                        FlipX = false,
+                        DoNotRegisterPawns = true,
+                        RootTransform = MakePawnMatrix(pawn, false)
+                    };
+                    startParams.TryTrigger(out CurrentAnimation);
+                    TicksSinceFlavour = 0;
+                }
             }
         }
         TicksSinceFlavour++;
 
+        // Update animator position to match pawn.
         CurrentAnimation.RootTransform = MakePawnMatrix(pawn, facing == Rot4.North);
+
+        // Update animation pausing.
+        if (CurrentAnimation == null || !CurrentAnimation.Def.idleType.IsAttack())
+        {
+            pauseTicks = 0;
+            isPausing = false;
+        }
+        if (pauseTicks > 0)
+        {
+            if (isPausing)
+            {
+                pauseTicks--;
+            }
+            else
+            {
+                // Check weapon angle.
+                // Once the weapon swings by the target, do a brief pause to indicate a hit.
+                var ss = CurrentAnimation.GetPart("ItemA").GetSnapshot(CurrentAnimation);
+                var dir = (CurrentAnimation.RootTransform * ss.WorldMatrixPreserveFlip).MultiplyVector(Vector3.right).normalized;
+                float angle = dir.ToAngleFlatNew();
+                float delta = Mathf.DeltaAngle(angle, pauseAngle);
+                bool shouldStartPausing = Mathf.Abs(delta) < 5f || (lastDelta != 0 && lastDelta.Polarity() != delta.Polarity() && Mathf.Abs(lastDelta) < 120);
+                //Core.Log($"{angle:F0} vs {pauseAngle:F0} is Delta: {delta} ({dir.ToString("F2")})"); 
+                lastDelta = delta;
+                if (shouldStartPausing)
+                {
+                    isPausing = true;
+                    lastSpeed = CurrentAnimation.TimeScale;
+                    CurrentAnimation.TimeScale = 0;
+                    lastDelta = 0;
+                } 
+            }
+        }
+        else
+        {
+            if (isPausing)
+            {
+                isPausing = false;
+                CurrentAnimation.TimeScale = lastSpeed;
+            }
+        }
     }
 
     public void NotifyPawnDidMeleeAttack(Thing target, Verb_MeleeAttack verbUsed)
     {
+        // Check valid state.
         var pawn = parent as Pawn;
         var weapon = GetMeleeWeapon();
         var tweak = weapon?.TryGetTweakData();
         if (tweak == null)
             return;
 
+        // Attempt to get an attack animation for current weapon and stance.
         var rot = pawn.Rotation;
-        bool horizontal = rot.IsHorizontal;
-        var northOrSouth = rot == Rot4.South ? IdleType.AttackSouth : IdleType.AttackNorth;
-        var cat = tweak.GetCategory();
-        var anim = AnimDef.GetAttackAnimations(cat.size, cat.isSharp, horizontal ? IdleType.AttackHorizontal : northOrSouth).RandomElementByWeightWithFallback(a => a.Probability);
+        var anim = Random(tweak.GetAttackAnimations(rot), lastAttack);
+        lastAttack = anim;
         if (anim == null)
         {
             Core.Warn($"Failed to find any attack animation to play for {weapon}!");
             return;
         }
 
+        // Adjust animation speed if the attack cooldown is very low.
         float cooldown = verbUsed?.verbProps.AdjustedCooldownTicks(verbUsed, pawn).TicksToSeconds() ?? 100f;
         bool flipX = rot == Rot4.West;
 
+        isPausing = false;
+        pauseTicks = -1;
+        if (target != null)
+        {
+            // Set target angle regardless of hit (it's used by some animations).
+            float angle = (target.DrawPos - pawn.DrawPos).ToAngleFlatNew();
+            pauseAngle = angle;
+
+            // Only if we actually hit:
+            if (Patch.lastTarget == target)
+                pauseTicks = 5;
+        }
+
+        Patch.lastTarget = null;
+
+        // Play animation.
         var args = new AnimationStartParameters(anim, pawn)
         {
             FlipX = flipX,
@@ -252,9 +320,24 @@ public class IdleControllerComp : ThingComp
         }
     }
 
-    private static Matrix4x4 MakePawnMatrix(Pawn pawn, bool north)
+    private Matrix4x4 MakePawnMatrix(Pawn pawn, bool north)
     {
-        return Matrix4x4.TRS(pawn.DrawPos + new Vector3(0, north ? -0.8f : 0.1f), Quaternion.identity, Vector3.one);
+        var mat = Matrix4x4.TRS(pawn.DrawPos + new Vector3(0, north ? -0.8f : 0.1f), Quaternion.identity, Vector3.one);
+        if (CurrentAnimation == null || !CurrentAnimation.Def.pointAtTarget)
+            return mat;
+
+        float frame = CurrentAnimation.CurrentTime * 60f;
+        float lerp = Mathf.InverseLerp(CurrentAnimation.Def.returnToIdleStart, CurrentAnimation.Def.returnToIdleEnd, frame);
+
+        float idle = 0;
+        float point = -pauseAngle;
+        if (CurrentAnimation.MirrorHorizontal)
+        {
+            point = point - 180;
+        }
+
+        float a = Mathf.LerpAngle(point, idle, lerp);
+        return mat * Matrix4x4.Rotate(Quaternion.Euler(0f, a, 0f));
     }
 
     public override void PostDeSpawn(Map map)

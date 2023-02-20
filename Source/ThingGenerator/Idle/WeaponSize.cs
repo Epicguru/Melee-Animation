@@ -1,17 +1,20 @@
-﻿namespace AAM.Idle;
+﻿using System;
 
+namespace AAM.Idle;
+
+[Flags]
 public enum WeaponSize
 {
     /// <summary>
     /// Daggers, hatchets, small clubs etc.
     /// </summary>
-    Tiny,
+    Tiny = 1,
     /// <summary>
     /// Most swords, lances, maces etc.
     /// </summary>
-    Medium,
+    Medium = 2,
     /// <summary>
     /// Huge hammers, swords, clubs.
     /// </summary>
-    Colossal
+    Colossal = 4
 }

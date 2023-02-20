@@ -1,15 +1,11 @@
-﻿using System;
+﻿using Assets.Editor;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Assets.Editor;
-using Newtonsoft.Json;
 using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using static UnityEditor.ShaderData;
 
 public class AnimData
 {

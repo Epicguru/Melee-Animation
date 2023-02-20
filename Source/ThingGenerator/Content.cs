@@ -35,8 +35,6 @@ namespace AAM
         public static Texture2D IconInfo;
         [Content("AAM/UI/IconSkill")]
         public static Texture2D IconSkill;
-        [Content("AAM/Scythe")]
-        public static Texture2D ScytheTexture;
         [Content("AAM/UI/ExtraGUIWalk")]
         public static Texture2D ExtraGuiWalk;
         [Content("AAM/UI/ExtraGUIForce")]
@@ -82,7 +80,7 @@ namespace AAM
 
                     if (type == typeof(Texture2D))
                     {
-                        value = ContentFinder<Texture2D>.Get(path);
+                        value = ContentFinder<Texture2D>.Get(path, false);
                     }
                     else
                     {
@@ -152,7 +150,6 @@ namespace AAM
     }
 
     [AttributeUsage(AttributeTargets.Field)]
-    [MeansImplicitUse]
     public class ContentAttribute : Attribute
     {
         public readonly string Path;
@@ -164,7 +161,6 @@ namespace AAM
     }
 
     [AttributeUsage(AttributeTargets.Field)]
-    [MeansImplicitUse]
     public class BundleContentAttribute : Attribute
     {
         public readonly string Path;
