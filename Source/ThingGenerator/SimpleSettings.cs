@@ -9,6 +9,9 @@ using System.Text;
 using ColourPicker;
 using UnityEngine;
 using Verse;
+using AAM.Video;
+using UnityEngine.Networking;
+using UnityEngine.Video;
 
 namespace AAM
 {
@@ -322,10 +325,21 @@ namespace AAM
                 inRect.y += titleHeight + 14;
                 Widgets.Label(inRect, description);
 
+                //string url = @"https://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_480_1_5MG.mp4";
+                string url = @"C:/Users/spain/Videos/Desktop/Video.mp4"; // file://
+                var tex = VideoPlayerUtil.GetVideoTexture(url);
+                if (tex == null)
+                {
+                    Widgets.DrawBoxSolid(inRect, Color.magenta);
+                }
+                else
+                {
+                    GUI.DrawTexture(inRect, tex);
+                }
+
                 inRect.y += Text.CalcHeight(description, inRect.width) + 32;
             }
 
-            Core.Log($"Can reset {highlightedMember.Name}: {highlightedMember.Options.AllowReset}");
             if (highlightedMember.Options.AllowReset)
             {
                 string defaultValue = highlightedMember.ValueToString(highlightedMember.GetDefault<object>());

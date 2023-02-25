@@ -11,6 +11,8 @@ namespace AAM
     [StaticConstructorOnStartup]
     public static class Content
     {
+        public static AssetBundle WebBundle { get; private set; }
+
         [Content("AAM/Rope/Rope")]
         public static Texture2D Rope;
         [Content("AAM/Rope/End")]
@@ -68,6 +70,15 @@ namespace AAM
                 Core.Error("Failed to load asset bundle!", e);
             }
 
+            try
+            {
+                StartWebBundleLoad();
+            }
+            catch (Exception e)
+            {
+                Core.Error("Failed to load web-only asset bundle!", e);
+            }
+
             foreach (var field in typeof(Content).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 var type = field.FieldType;
@@ -107,6 +118,11 @@ namespace AAM
                     field.SetValue(null, value);
                 }
             }
+        }
+
+        private static void StartWebBundleLoad()
+        {
+
         }
 
         private static void LoadBundle()

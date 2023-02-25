@@ -7,6 +7,7 @@ using UnityEngine;
 public static class BundleExporter
 {
     public static string Destination => "../../Bundles";
+    public static string DestinationWeb => "../../BundlesWebOnly";
     public static BuildAssetBundleOptions Options => BuildAssetBundleOptions.None;
     public static IEnumerable<BuildTarget> Targets => new[]
     {
@@ -21,6 +22,7 @@ public static class BundleExporter
         try
         {
             string dest = new DirectoryInfo(Destination).FullName;
+            string destWeb = new DirectoryInfo(DestinationWeb).FullName;
             Debug.Log($"Building bundles to {dest}");
 
             int i = 0;
@@ -33,7 +35,7 @@ public static class BundleExporter
 
                 Debug.Log($"Building bundles for {target} ...");
                 var bundle = BuildPipeline.BuildAssetBundles(dest, Options, target);
-                PostProcess(target, dest, bundle);
+                PostProcess(target, dest, destWeb, bundle);
             }
 
             string toDelete = Path.Combine(dest, "Bundles");
@@ -57,22 +59,26 @@ public static class BundleExporter
         dir.Create();
     }
 
-    private static void PostProcess(BuildTarget target, string destinationFolder, AssetBundleManifest manifest)
+    private static void PostProcess(BuildTarget target, string dest, string destWeb, AssetBundleManifest manifest)
     {
-        var bundle = manifest.GetAllAssetBundles().First();
-        
-        string path = Path.Combine(destinationFolder, bundle);
-        string path2 = Path.Combine(destinationFolder, $"{bundle}.manifest");
+        foreach (var bundle in manifest.GetAllAssetBundles())
+        {
+            bool isForWeb = bundle.Contains("web");
 
-        string dir = Path.Combine(destinationFolder, target.ToString());
-        CreateDeep(new DirectoryInfo(dir));
+            foreach (var fn in new[] {bundle, $"{bundle}.manifest"})
+            {
+                // The path of the actual file that was generated.
+                string path = Path.Combine(dest, fn);
 
-        if (File.Exists(Path.Combine(dir, bundle)))
-            File.Delete(Path.Combine(dir, bundle));
-        File.Move(path, Path.Combine(dir, bundle));
+                // The target directory.
+                string dir = Path.Combine(isForWeb ? destWeb : dest, target.ToString());
+                CreateDeep(new DirectoryInfo(dir));
 
-        if (File.Exists(Path.Combine(dir,  $"{bundle}.manifest")))
-            File.Delete(Path.Combine(dir,  $"{bundle}.manifest"));
-        File.Move(path2, Path.Combine(dir, $"{bundle}.manifest"));
+                // Move the file from existing dir to target.
+                if (File.Exists(Path.Combine(dir, fn)))
+                    File.Delete(Path.Combine(dir, fn));
+                File.Move(path, Path.Combine(dir, fn));
+            }
+        }
     }
 }
