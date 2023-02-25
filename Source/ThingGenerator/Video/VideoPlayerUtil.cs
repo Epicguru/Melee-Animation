@@ -33,7 +33,6 @@ public static class VideoPlayerUtil
         if (vidName == null)
             return null;
 
-        Messages.Message($"Getting {vidName} curr: {currentBundleHandle?.BundleName} which is {currentBundleHandle?.LoadedState}", MessageTypeDefOf.SilentInput, false);
         if (currentBundleHandle != null && currentBundleHandle.BundleName == vidName)
         {
             // Check if video has finished loading:

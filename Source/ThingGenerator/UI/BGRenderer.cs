@@ -19,7 +19,7 @@ public static class BGRenderer
         Widgets.DrawTexturePart(area, uv, texture);
     }
 
-    public static Rect FitRect(Texture tex, Rect area, float scale)
+    public static Rect FitRect(Texture tex, Rect area, float scale, bool fit = false)
     {
         float w = tex.width;
         float h = tex.height;
@@ -36,17 +36,21 @@ public static class BGRenderer
             h = area.height;
             w *= inc;
         }
-        if (w > area.width)
+
+        if (fit)
         {
-            float inc = area.width / w;
-            w = area.width;
-            h *= inc;
-        }
-        if (h > area.height)
-        {
-            float inc = area.height / h;
-            h = area.height;
-            w *= inc;
+            if (w > area.width)
+            {
+                float inc = area.width / w;
+                w = area.width;
+                h *= inc;
+            }
+            if (h > area.height)
+            {
+                float inc = area.height / h;
+                h = area.height;
+                w *= inc;
+            }
         }
 
         return new Rect(0, 0, w, h).CenteredOnXIn(area).CenteredOnYIn(area).ScaledBy(scale);

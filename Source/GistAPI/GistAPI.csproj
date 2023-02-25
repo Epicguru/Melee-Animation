@@ -9,7 +9,8 @@
     <NoStdLib>false</NoStdLib>   
     <LangVersion>11</LangVersion>
 	  <DebugType>none</DebugType>
-
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

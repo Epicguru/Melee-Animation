@@ -25,13 +25,13 @@ jobs:
       matrix:
         # You can configure operating systems to build on here. It shouldn't make a difference 
         # operating-system: [ubuntu-latest, windows-latest, macOS-latest]
-        operating-system: [windows-2019]
+        operating-system: [ubuntu-latest]
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
       
     - name: Setup Dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x.x
 

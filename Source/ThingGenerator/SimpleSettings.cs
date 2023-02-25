@@ -367,8 +367,7 @@ namespace AAM
                 }
                 else
                 {
-                    var fitted = BGRenderer.FitRect(tex, inRect, 1f);
-                    Core.Log($"{fitted} vs {inRect}");
+                    var fitted = BGRenderer.FitRect(tex, inRect, 1f, true);
                     GUI.DrawTexture(fitted, tex);
                 }
             }

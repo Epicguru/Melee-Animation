@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -112,33 +113,19 @@ public static class BundleManager
         {
             var timer = Stopwatch.StartNew();
 
-            string bundlePlatformName = Content.GetPlatformName();
-            if (bundlePlatformName == null)
+            string path = Path.Combine(Core.ModContent.RootDir, "Bundles", Content.GetPlatformName(), bundleName);
+            var req = AssetBundle.LoadFromFileAsync(path);
+            while (!req.isDone)
             {
-                Core.Warn($"Platform: {Application.platform}, 64bit: {Environment.Is64BitOperatingSystem} does not have a corresponding asset bundle. Attempting to use StandaloneLinux64...");
-                bundlePlatformName = "StandaloneLinux64";
+                await Task.Delay(15);
             }
 
-            string url = Content.WEB_BUNDLE_URL + bundlePlatformName + $"/{bundleName}";
-            Core.Log($"Loading from: '{url}' ...");
-
-            var request = UnityWebRequestAssetBundle.GetAssetBundle(url);
-            var op = request.SendWebRequest();
-            while (!op.isDone)
-            {
-                await Task.Delay(16);
-            }
-
-            if (request.isHttpError || request.isNetworkError)
-                throw new Exception(request.error);
-
-            var bundle = DownloadHandlerAssetBundle.GetContent(request);
-            if (bundle == null)
-                throw new Exception("Returned bundle was null!");
+            if (req.assetBundle == null)
+                throw new Exception($"Bundle {bundleName} failed to load from {path}");
 
             timer.Stop();
             Core.Log($"Downloaded {bundleName} in {timer.ElapsedMilliseconds}ms");
-            return bundle;
+            return req.assetBundle;
         }
     }
 

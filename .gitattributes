@@ -1,1 +1,1 @@
-BundlesWebOnly/** filter=lfs diff=lfs merge=lfs -text
+Bundles/** filter=lfs diff=lfs merge=lfs -text

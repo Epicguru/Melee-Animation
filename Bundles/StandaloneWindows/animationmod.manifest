@@ -1,21 +1,3 @@
-ManifestFileVersion: 0
-CRC: 3442296685
-Hashes:
-  AssetFileHash:
-    serializedVersion: 2
-    Hash: a278a26dc1f7110f593212176fc54d69
-  TypeTreeHash:
-    serializedVersion: 2
-    Hash: 10a6a558690295dadb3dd990eda0821a
-HashAppended: 0
-ClassTypes:
-- Class: 21
-  Script: {instanceID: 0}
-- Class: 48
-  Script: {instanceID: 0}
-SerializeReferenceClassIdentifiers: []
-Assets:
-- Assets/Materials/CutoffCustom.mat
-- Assets/Materials/TrailShader.mat
-- Assets/Materials/BlitMaterial.mat
-Dependencies: []
+version https://git-lfs.github.com/spec/v1
+oid sha256:4e83f100470fa3b2b34fb1ed0439ee3bfa6da47582a57769ff2856684a4148b6
+size 491

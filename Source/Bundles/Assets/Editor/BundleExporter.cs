@@ -8,7 +8,6 @@ using UnityEngine;
 public static class BundleExporter
 {
     public static string Destination => "../../Bundles";
-    public static string DestinationWeb => "../../BundlesWebOnly";
     public static BuildAssetBundleOptions Options => BuildAssetBundleOptions.None;
     public static IEnumerable<BuildTarget> Targets => new[]
     {
@@ -23,7 +22,6 @@ public static class BundleExporter
         try
         {
             string dest = new DirectoryInfo(Destination).FullName;
-            string destWeb = new DirectoryInfo(DestinationWeb).FullName;
             Debug.Log($"Building bundles to {dest}");
 
             int i = 0;
@@ -54,7 +52,7 @@ public static class BundleExporter
                     Debug.Log($"Asset: {resourcePath}");
                     var fileName = new FileInfo(vid).Name;
                     fileName = fileName.Substring(0, fileName.Length - 4);
-                    string path = Path.Combine(destWeb, target.ToString());
+                    string path = Path.Combine(dest, target.ToString());
                     CreateDeep(new DirectoryInfo(path));
                     AssetBundleBuild[] assets = 
                     {
