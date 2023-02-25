@@ -14,7 +14,7 @@ namespace AAM
     [StaticConstructorOnStartup]
     public static class Content
     {
-        public const string WEB_BUNDLE_URL = "https://raw.githubusercontent.com/Epicguru/AdvancedAnimationMod/develop/BundlesWebOnly/";
+        public const string WEB_BUNDLE_URL = "https://media.githubusercontent.com/media/Epicguru/AdvancedAnimationMod/develop/BundlesWebOnly/";
 
         [Content("AAM/Rope/Rope")]
         public static Texture2D Rope;
