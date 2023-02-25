@@ -12,7 +12,7 @@ namespace AAM
         [Header("General")]
         [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
                      "If enabled, the Advanced Melee gizmo will be shown even if the pawn does not have a valid (compatible) melee weapon.")]
-        [WebContent("SomeExampleVid", false)]
+        [WebContent("Wallpaper", false)]
         public bool ShowGizmosWithoutMeleeWeapon = false;
 
         [Label("Always Animate Weapons")]
