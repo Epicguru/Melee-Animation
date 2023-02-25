@@ -69,7 +69,7 @@ public static class BundleExporter
                         }
                     };
 
-                    BuildPipeline.BuildAssetBundles(path, assets, BuildAssetBundleOptions.ChunkBasedCompression, target);
+                    BuildPipeline.BuildAssetBundles(path, assets, BuildAssetBundleOptions.None, target);
                 }
             }
         }
