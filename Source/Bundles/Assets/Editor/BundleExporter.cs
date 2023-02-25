@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Video;
 
 public static class BundleExporter
 {
@@ -35,7 +37,7 @@ public static class BundleExporter
 
                 Debug.Log($"Building bundles for {target} ...");
                 var bundle = BuildPipeline.BuildAssetBundles(dest, Options, target);
-                PostProcess(target, dest, destWeb, bundle);
+                PostProcess(target, dest, bundle);
             }
 
             string toDelete = Path.Combine(dest, "Bundles");
@@ -43,6 +45,33 @@ public static class BundleExporter
 
             File.Delete(toDelete);
             File.Delete(toDelete2);
+
+            // Build web bundles.
+            foreach (var target in Targets)
+            {
+                foreach (var vid in Directory.EnumerateFiles(Application.dataPath, "*.mp4", SearchOption.AllDirectories))
+                {
+                    string resourcePath = vid.Substring(vid.IndexOf("Assets", StringComparison.Ordinal));
+                    Debug.Log($"Asset: {resourcePath}");
+                    var fileName = new FileInfo(vid).Name;
+                    fileName = fileName.Substring(0, fileName.Length - 4);
+                    string path = Path.Combine(destWeb, target.ToString());
+                    CreateDeep(new DirectoryInfo(path));
+                    AssetBundleBuild[] assets = 
+                    {
+                        new AssetBundleBuild
+                        {
+                            assetBundleName = fileName,
+                            assetNames = new[]
+                            {
+                                resourcePath
+                            }
+                        }
+                    };
+
+                    BuildPipeline.BuildAssetBundles(path, assets, BuildAssetBundleOptions.ChunkBasedCompression, target);
+                }
+            }
         }
         finally
         {
@@ -59,19 +88,17 @@ public static class BundleExporter
         dir.Create();
     }
 
-    private static void PostProcess(BuildTarget target, string dest, string destWeb, AssetBundleManifest manifest)
+    private static void PostProcess(BuildTarget target, string dest,  AssetBundleManifest manifest)
     {
         foreach (var bundle in manifest.GetAllAssetBundles())
         {
-            bool isForWeb = bundle.Contains("web");
-
             foreach (var fn in new[] {bundle, $"{bundle}.manifest"})
             {
                 // The path of the actual file that was generated.
                 string path = Path.Combine(dest, fn);
 
                 // The target directory.
-                string dir = Path.Combine(isForWeb ? destWeb : dest, target.ToString());
+                string dir = Path.Combine(dest, target.ToString());
                 CreateDeep(new DirectoryInfo(dir));
 
                 // Move the file from existing dir to target.

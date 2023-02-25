@@ -1,7 +1,5 @@
-﻿using RimWorld;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Video;
-using Verse;
 
 namespace AAM.Video;
 
@@ -9,6 +7,7 @@ public static class VideoPlayerUtil
 {
     private static readonly GameObject go;
     private static readonly VideoPlayer player;
+    private static BundleManager.BundleHandle currentBundleHandle;
 
     static VideoPlayerUtil()
     {
@@ -20,55 +19,50 @@ public static class VideoPlayerUtil
 
         player = go.AddComponent<VideoPlayer>();
         player.playOnAwake = false;
-
-        player.errorReceived += OnError;
-        player.started += OnStarted;
-        player.prepareCompleted += Player_prepareCompleted;
-    }
-
-    private static void Player_prepareCompleted(VideoPlayer source)
-    {
-        Messages.Message("Video prepared", MessageTypeDefOf.SilentInput, false);
-    }
-
-    private static void OnStarted(VideoPlayer source)
-    {
-        Messages.Message("Started playback", MessageTypeDefOf.SilentInput, false);
-
-    }
-
-    private static void OnError(VideoPlayer source, string message)
-    {
-        Messages.Message($"Video player error: {message}", MessageTypeDefOf.SilentInput, false);
-
     }
 
     /// <summary>
     /// Get the texture for a video at the url.
     /// If the video is not ready or found, it will return null.
     /// </summary>
-    public static Texture GetVideoTexture(string url)
+    public static Texture GetVideoTexture(string vidName, out BundleManager.LoadedState state)
     {
-        player.url = url;
-        player.isLooping = true;
-        player.renderMode = VideoRenderMode.APIOnly;
-        player.audioOutputMode = VideoAudioOutputMode.None;
-        player.source = VideoSource.Url;
+        state = BundleManager.LoadedState.Unloaded;
+        if (vidName == null)
+            return null;
 
-        //string msg = $"Prepared: {player.isPrepared}, playing: {player.isPlaying}, src: {player.source}";
-        //Messages.Message(msg, MessageTypeDefOf.SilentInput, false);
-
-        //if (!player.isPrepared)
-        //{
-        //    player.Prepare();
-        //    return null;
-        //}
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (currentBundleHandle != null && currentBundleHandle.BundleName == vidName)
         {
-            Messages.Message("Attempt start play...", MessageTypeDefOf.SilentInput, false);
-            player.Play();
+            // Check if video has finished loading:
+            if (player.clip == null && currentBundleHandle.LoadedState == BundleManager.LoadedState.Loaded)
+            {
+                // Apply loaded video.
+                var loaded = currentBundleHandle.GetFirstAsset<VideoClip>();
+                if (loaded == null)
+                    return player.texture;
+
+                player.time = 0;
+                player.isLooping = true;
+                player.renderMode = VideoRenderMode.APIOnly;
+                player.audioOutputMode = VideoAudioOutputMode.None;
+                player.clip = loaded;
+
+                if (!player.isPlaying)
+                    player.Play();
+            }
+
+            state = currentBundleHandle.LoadedState;
+            return player.texture;
         }
+
+        // Stop old:
+        player.Stop();
+        player.clip = null;
+        currentBundleHandle?.Unload();
+
+        // Load new:
+        currentBundleHandle = BundleManager.GetHandle(vidName);
+        currentBundleHandle.Load();
 
         return player.texture;
     }

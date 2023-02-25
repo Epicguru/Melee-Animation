@@ -1,4 +1,6 @@
-﻿using RimWorld;
+﻿using AAM.Video;
+using ColourPicker;
+using RimWorld;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,12 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using ColourPicker;
 using UnityEngine;
 using Verse;
-using AAM.Video;
-using UnityEngine.Networking;
-using UnityEngine.Video;
 
 namespace AAM
 {
@@ -217,8 +215,11 @@ namespace AAM
             string selectedHeader = holder.UI_SelectedTab;
             allHeaders.Clear();
 
+            int it = -1;
             foreach (var member in holder.Members.Values)
             {
+                it++;
+
                 bool isCurrentTab = currentHeader == selectedHeader;
 
                 // TODO draw header.
@@ -325,12 +326,12 @@ namespace AAM
                 inRect.y += titleHeight + 14;
                 Widgets.Label(inRect, description);
 
-                //string url = @"https://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_480_1_5MG.mp4";
-                string url = @"C:/Users/spain/Videos/Desktop/Video.mp4"; // file://
-                var tex = VideoPlayerUtil.GetVideoTexture(url);
+                string url = it % 2 == 0 ? "video" : "someexamplevid";
+                var tex = VideoPlayerUtil.GetVideoTexture(url, out var state);
                 if (tex == null)
                 {
                     Widgets.DrawBoxSolid(inRect, Color.magenta);
+                    Widgets.Label(inRect, state.ToString());
                 }
                 else
                 {

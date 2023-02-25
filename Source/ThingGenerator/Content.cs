@@ -1,9 +1,12 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using Verse;
 
 namespace AAM
@@ -11,7 +14,7 @@ namespace AAM
     [StaticConstructorOnStartup]
     public static class Content
     {
-        public static AssetBundle WebBundle { get; private set; }
+        public const string WEB_BUNDLE_URL = "https://raw.githubusercontent.com/Epicguru/AdvancedAnimationMod/develop/BundlesWebOnly/";
 
         [Content("AAM/Rope/Rope")]
         public static Texture2D Rope;
@@ -70,15 +73,6 @@ namespace AAM
                 Core.Error("Failed to load asset bundle!", e);
             }
 
-            try
-            {
-                StartWebBundleLoad();
-            }
-            catch (Exception e)
-            {
-                Core.Error("Failed to load web-only asset bundle!", e);
-            }
-
             foreach (var field in typeof(Content).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 var type = field.FieldType;
@@ -120,11 +114,6 @@ namespace AAM
             }
         }
 
-        private static void StartWebBundleLoad()
-        {
-
-        }
-
         private static void LoadBundle()
         {
             string bundlePlatformName = GetPlatformName();
@@ -143,7 +132,7 @@ namespace AAM
                 throw new Exception($"Asset bundle '{bundlePlatformName}' failed to load!");
         }
 
-        private static string GetPlatformName() => Application.platform switch
+        public static string GetPlatformName() => Application.platform switch
         {
             RuntimePlatform.WindowsPlayer => "StandaloneWindows",
             RuntimePlatform.OSXPlayer => "StandaloneOSX",
