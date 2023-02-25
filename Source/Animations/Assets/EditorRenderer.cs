@@ -1,10 +1,12 @@
 ﻿#if UNITY_EDITOR
 using Assets.Editor;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -46,6 +48,49 @@ public class EditorRenderer : Editor
                 EditorCoroutineUtility.StartCoroutine(SaveAllCoroutine(t), this);
             }
 
+            if (t.AllowLoadingFromJson && GUILayout.Button("Load Current From Json"))
+            {
+                var clip = t.Clip;
+                string FILE = @$"../..\Animations\{clip.name}.json";
+
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new RectConverter());
+                settings.DefaultValueHandling = DefaultValueHandling.Ignore;
+                var loaded = JsonConvert.DeserializeObject<AnimDataModel>(File.ReadAllText(FILE), settings);
+
+                foreach (var part in loaded.Parts)
+                {
+                    foreach (var pair in part.Curves)
+                    {
+                        string[] parts = pair.Key.Split('.');
+                        Type propType = GetType(parts[0]);
+                        string prop = pair.Key[(pair.Key.IndexOf('.') + 1)..];
+                        var binding = new EditorCurveBinding
+                        {
+                            path = part.Path,
+                            propertyName = prop,
+                            type = propType
+                        };
+
+                        Debug.Log($"Path: '{binding.path}', prop name: '{prop}'");
+
+                        Type fieldType = binding.type.GetField(binding.propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.FieldType
+                                        ?? binding.type.GetProperty(binding.propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.PropertyType;
+
+                        if (fieldType is { IsEnum: true })
+                        {
+                            for (int i = 0; i < pair.Value.Keyframes.Length; i++)
+                            {
+                                var key = pair.Value.Keyframes[i];
+                                key.value = BitConverter.ToSingle(BitConverter.GetBytes((int)key.value));
+                                pair.Value.Keyframes[i] = key;
+                            }
+                        }
+                        AnimationUtility.SetEditorCurve(clip, binding, pair.Value.ToAnimationCurve());
+                    }
+                }
+            }
+
             if (!t.InspectAllCurves)
                 return;
 
@@ -57,6 +102,22 @@ public class EditorRenderer : Editor
                 EditorGUILayout.CurveField(curve);
             }
         }
+    }
+
+    private static Type GetType(string name)
+    {
+        foreach (var ass in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            var t = ass.GetType(name, false);
+            if (t != null)
+                return t;
+        }
+        foreach (var t in AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()))
+        {
+            if (t.Name == name)
+                return t;
+        }
+        return null;
     }
 
     private IEnumerator SaveCoroutine(AnimationDataCreator t, AnimationClip clip)

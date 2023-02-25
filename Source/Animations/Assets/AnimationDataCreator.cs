@@ -17,6 +17,7 @@ namespace Assets.Editor
 
         public AnimationClip Clip;
         public SweepParameters SweepParams;
+        public bool AllowLoadingFromJson;
 
         [Header("Visualizing")]
         public DisplayMode SweepDisplayMode = DisplayMode.Ghost;

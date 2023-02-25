@@ -25,6 +25,7 @@ public static class Patch_PawnRenderer_DrawEquipment
 
         // Only for melee weapons...
         bool isMeleeWeapon = pawn.equipment?.Primary?.def.IsMeleeWeapon ?? false;
+        comp.PreDraw();
         return !isMeleeWeapon;
     }
 }

@@ -7,6 +7,13 @@
     <idleType>Flavour</idleType>
   </AAM.AnimDef>
 
+  <!-- All -->
+  <AAM.AnimDef ParentName="AnimFlavour">
+    <defName>AAM_Idle_CheerFlavour</defName>
+    <data>Idle_CheerFlavour.json</data>
+    <weaponFilter Class="AAM.Reqs.True" />
+  </AAM.AnimDef>
+
   <!-- Tiny -->
   <AAM.AnimDef ParentName="AnimFlavour">
     <defName>AAM_Idle_TinyFlavour1</defName>
@@ -14,6 +21,13 @@
     <weaponFilter Class="AAM.Reqs.AnySize">
       <size>Tiny</size>
     </weaponFilter>
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
   </AAM.AnimDef>
 
   <!-- Medium -->

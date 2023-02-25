@@ -153,6 +153,7 @@ namespace AAM
         public int mainAttackDuration;
         public bool pointAtTarget;
         public int returnToIdleStart, returnToIdleEnd;
+        public int idleFrame;
 
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 

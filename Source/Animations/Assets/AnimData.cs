@@ -244,7 +244,7 @@ public class AnimData
                 // UNITY BUG (in modern engine versions): AnimationCurves store enum data as floats, but do not correctly cast from int to float.
                 // Instead, it simply converts the int bits into float bits i.e. float floatVar = *((float*)&intVar)
                 // This breaks enum curves when exporting.
-                if (propType != null && propType.IsEnum)
+                if (propType is { IsEnum: true })
                 {
                     for (int j = 0; j < curveModel.Keyframes.Length; j++)
                     {

@@ -1,11 +1,11 @@
 {
-  "ExportTimeUTC": "2023-02-20T18:52:07.8470971Z",
+  "ExportTimeUTC": "2023-02-25T18:20:35.557366Z",
   "Name": "Idle_Tiny_Idle",
   "Length": 2.0,
   "Events": [],
   "Parts": [
     {
-      "ID": -9782576,
+      "ID": 19588,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -180,7 +180,7 @@
       "SweepPaths": []
     },
     {
-      "ID": -9782568,
+      "ID": 19764,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {},
@@ -211,10 +211,10 @@
       "SweepPaths": []
     },
     {
-      "ID": -9782566,
+      "ID": 19332,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": -9782568,
+      "ParentID": 19764,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -243,10 +243,10 @@
       "SweepPaths": []
     },
     {
-      "ID": -9782572,
+      "ID": 18878,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": -9782576,
+      "ParentID": 19588,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -275,10 +275,10 @@
       "SweepPaths": []
     },
     {
-      "ID": -9782580,
+      "ID": 19478,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": -9782576,
+      "ParentID": 19588,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -307,10 +307,10 @@
       "SweepPaths": []
     },
     {
-      "ID": -9782574,
+      "ID": 18908,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": -9782576,
+      "ParentID": 19588,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -336,11 +336,11 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": -9782578,
+      "SplitDrawPivotPartID": 18944,
       "SweepPaths": []
     },
     {
-      "ID": -9782578,
+      "ID": 18944,
       "Path": "WeaponACutoff",
       "Curves": {},
       "DefaultValues": {

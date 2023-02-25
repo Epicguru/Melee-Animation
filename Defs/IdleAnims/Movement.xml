@@ -13,6 +13,37 @@
     <idleType>MoveVertical</idleType>
   </AAM.AnimDef>
 
+  <!-- Tiny -->
+  <AAM.AnimDef ParentName="AnimMovementHorizontal">
+    <defName>AAM_Idle_TinyMoveHor</defName>
+    <data>Idle_Tiny_MoveHorizontal.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+    <idleFrame>7</idleFrame>
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
+  </AAM.AnimDef>
+  <AAM.AnimDef ParentName="AnimMovementVertical">
+    <defName>AAM_Idle_TinyMoveVert</defName>
+    <data>Idle_Tiny_MoveVertical.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
+  </AAM.AnimDef>
+
   <!-- Medium -->
   <AAM.AnimDef ParentName="AnimMovementHorizontal">
     <defName>AAM_Idle_MediumMoveHor</defName>

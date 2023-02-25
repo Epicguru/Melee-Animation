@@ -168,9 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: HeadA
-  TexturePath: Female_Average_Normal_east
+  TexturePath: Female_Average_Normal_south
   DoNotIncludeTexture: 1
-  IdleOffset: {x: 0.1, y: 0.34}
+  IdleOffset: {x: 0, y: 0.34}
   IdleRotation: 0
   IdleScale: {x: 1.5, y: 1.5}
   IdleFlipX: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 0
+  FlipX: 1
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
@@ -1353,7 +1353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: BodyA
-  TexturePath: Naked_Female_east
+  TexturePath: Naked_Female_south
   DoNotIncludeTexture: 1
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -1365,7 +1365,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 0
+  FlipX: 1
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
@@ -1422,6 +1422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 7400000, guid: d35221e8aae2a384e8e887daef107c2b, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
+  AllowLoadingFromJson: 0
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
   OverridePairs:
@@ -2318,8 +2319,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: d757f49cdc582744f9f18b933fe58b1c, type: 2}
+  Clip: {fileID: 7400000, guid: 72577121cfc6cdc4eab00360235bf748, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
+  AllowLoadingFromJson: 0
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
   OverridePairs:
@@ -4197,6 +4199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 7400000, guid: e0828bc49b5fb194db0f115864bb9a37, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
+  AllowLoadingFromJson: 0
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
   OverridePairs:
@@ -4357,6 +4360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 7400000, guid: 0a3c8e83c3ab8f44f9398a1395f1e5e7, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
+  AllowLoadingFromJson: 0
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
   OverridePairs:
@@ -4810,9 +4814,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: HeadA
-  TexturePath: Female_Average_Normal_south
+  TexturePath: Female_Average_Normal_east
   DoNotIncludeTexture: 1
-  IdleOffset: {x: 0, y: 0.34}
+  IdleOffset: {x: 0.1, y: 0.34}
   IdleRotation: 0
   IdleScale: {x: 1.5, y: 1.5}
   IdleFlipX: 0
@@ -4822,7 +4826,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 1
+  FlipX: 0
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
@@ -7521,6 +7525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 7400000, guid: 8d9e1901f4490a343931aed3332dadc3, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
+  AllowLoadingFromJson: 0
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
   OverridePairs:
@@ -8554,6 +8559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 7400000, guid: 780f36af385a304478f5941d5eda6317, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
+  AllowLoadingFromJson: 0
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
   OverridePairs:
@@ -9083,6 +9089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clip: {fileID: 7400000, guid: f218eae606a8dc54d9071bb894e18021, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
+  AllowLoadingFromJson: 0
   SweepDisplayMode: 3
   SweepGhostTime: 0.25
   OverridePairs:
@@ -9225,7 +9232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: BodyA
-  TexturePath: Naked_Female_south
+  TexturePath: Naked_Female_east
   DoNotIncludeTexture: 1
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -9237,7 +9244,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 1
+  FlipX: 0
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}

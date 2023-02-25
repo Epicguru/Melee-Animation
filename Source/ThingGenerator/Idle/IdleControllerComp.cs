@@ -3,6 +3,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 using Verse;
 using Patch = AAM.Patches.Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget;
 
@@ -66,6 +67,19 @@ public class IdleControllerComp : ThingComp
         {
             Core.Error($"Exception processing idling animation for '{parent}':", e);
         }
+    }
+
+    public void PreDraw()
+    {
+        if (CurrentAnimation == null)
+            return;
+
+        var pawn = parent as Pawn;
+        if (pawn == null)
+            return;
+
+        // Update animator position to match pawn.
+        CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
     }
 
     private AnimDef Random(IReadOnlyList<AnimDef> anims, AnimDef preferNotThis)
@@ -192,8 +206,10 @@ public class IdleControllerComp : ThingComp
                 }
                 else
                 {
-                    CurrentAnimation.Seek(0, null);
+                    // Freeze frame the move animation.
+                    float idleTime = CurrentAnimation.Def.idleFrame / 60f;
                     CurrentAnimation.TimeScale = 0.0f;
+                    CurrentAnimation.Seek(idleTime, null);
                 }
             }
         }
@@ -222,8 +238,23 @@ public class IdleControllerComp : ThingComp
         }
         TicksSinceFlavour++;
 
-        // Update animator position to match pawn.
-        CurrentAnimation.RootTransform = MakePawnMatrix(pawn, facing == Rot4.North);
+        // Update walk animation speed based on pawn speed.
+        if (CurrentAnimation.Def.idleType is IdleType.MoveHorizontal or IdleType.MoveVertical && isMoving)
+        {
+            float refSpeed = 4f;
+            float minCoef = 0.4f;
+            float maxCoef = 2.5f;
+            float exp = 0.6f;
+
+            bool isDiagonal = pawn.pather.nextCell.x != pawn.pather.lastCell.x && pawn.pather.nextCell.z != pawn.pather.lastCell.z;
+            float dst = isDiagonal ? 1.41421f : 1f;
+            float pctPerTick = pawn.pather.CostToPayThisTick() / pawn.pather.nextCellCostTotal;
+            float dstPerSecond = 60f * dst * pctPerTick;
+            float coef = Mathf.Clamp(Mathf.Pow(dstPerSecond / refSpeed, exp), minCoef, maxCoef);
+
+            if (!isPausing)
+                CurrentAnimation.TimeScale = coef;
+        }
 
         // Update animation pausing.
         if (CurrentAnimation == null || !CurrentAnimation.Def.idleType.IsAttack())
