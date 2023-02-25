@@ -48,6 +48,8 @@ namespace AAM
         public static Texture2D ExtraGuiWhy;
         [Content("AAM/UI/BG/Sketch1")]
         public static Texture2D BGSketch1;
+        [Content("AAM/UI/Loading")]
+        public static Texture2D Loading;
 
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;

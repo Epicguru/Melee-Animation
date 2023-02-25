@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Video;
 
 public static class BundleExporter
 {
@@ -49,7 +48,7 @@ public static class BundleExporter
             // Build web bundles.
             foreach (var target in Targets)
             {
-                foreach (var vid in Directory.EnumerateFiles(Application.dataPath, "*.mp4", SearchOption.AllDirectories))
+                foreach (var vid in Directory.EnumerateFiles(Path.Combine(Application.dataPath, "Web"), "*", SearchOption.AllDirectories).Where(p => p.EndsWith(".png") || p.EndsWith(".mp4")))
                 {
                     string resourcePath = vid.Substring(vid.IndexOf("Assets", StringComparison.Ordinal));
                     Debug.Log($"Asset: {resourcePath}");

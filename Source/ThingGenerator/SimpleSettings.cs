@@ -1,4 +1,5 @@
-﻿using AAM.Video;
+﻿using AAM.UI;
+using AAM.Video;
 using ColourPicker;
 using RimWorld;
 using System;
@@ -214,12 +215,9 @@ namespace AAM
             string currentHeader = null;
             string selectedHeader = holder.UI_SelectedTab;
             allHeaders.Clear();
-
-            int it = -1;
+            
             foreach (var member in holder.Members.Values)
             {
-                it++;
-
                 bool isCurrentTab = currentHeader == selectedHeader;
 
                 // TODO draw header.
@@ -326,19 +324,8 @@ namespace AAM
                 inRect.y += titleHeight + 14;
                 Widgets.Label(inRect, description);
 
-                string url = it % 2 == 0 ? "video" : "someexamplevid";
-                var tex = VideoPlayerUtil.GetVideoTexture(url, out var state);
-                if (tex == null)
-                {
-                    Widgets.DrawBoxSolid(inRect, Color.magenta);
-                    Widgets.Label(inRect, state.ToString());
-                }
-                else
-                {
-                    GUI.DrawTexture(inRect, tex);
-                }
-
-                inRect.y += Text.CalcHeight(description, inRect.width) + 32;
+                float h = Text.CalcHeight(description, inRect.width) + 32;
+                inRect.y += h;
             }
 
             if (highlightedMember.Options.AllowReset)
@@ -351,7 +338,34 @@ namespace AAM
                     highlightedMember.Set(settings, highlightedMember.DefaultValue);
                     highlightedMember.TextBuffer = highlightedMember.DefaultValue.ToString();
                 }
-            }            
+            }
+
+            if (highlightedMember.WebContent?.BundleName != null)
+            {
+                // Web content:
+                string url = highlightedMember.WebContent.BundleName;
+
+                var tex = highlightedMember.WebContent.IsVideo ? VideoPlayerUtil.GetVideoTexture(url, out var state) : VideoPlayerUtil.GetStaticTexture(url, out state);
+                if (tex == null)
+                {
+                    Widgets.DrawBoxSolid(inRect, new Color(1, 1, 1, 0.1f));
+
+                    var oldFont = Text.Font;
+                    var oldAnchor = Text.Anchor;
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Text.Font = GameFont.Medium;
+
+                    Widgets.Label(inRect, "Loading...");
+
+                    Text.Font = oldFont;
+                    Text.Anchor = oldAnchor;
+                }
+                else
+                {
+                    var fitted = BGRenderer.FitRect(tex, inRect, 1f);
+                    GUI.DrawTexture(fitted, tex);
+                }
+            }
         }
 
         public static DrawHandler DefaultDrawHandlerSelector(MemberWrapper wrapper)
@@ -842,6 +856,7 @@ namespace AAM
             public DrawHandler OverrideDrawHandler { get; set; }
             public bool ShouldExpose { get; set; } = true;
             public SettingOptionsAttribute Options { get; protected set; }
+            public WebContentAttribute WebContent { get; protected set; }
 
             protected readonly FieldInfo field;
             protected readonly PropertyInfo prop;
@@ -862,6 +877,7 @@ namespace AAM
                 }
 
                 Options = member.TryGetAttribute<SettingOptionsAttribute>() ?? SettingOptionsAttribute.CreateDefault();
+                WebContent = member.TryGetAttribute<WebContentAttribute>();
                 DefaultValue = GetDefaultValue(obj);
             }
 
@@ -1006,6 +1022,19 @@ namespace AAM
         public DrawMethodAttribute(string methodName)
         {
             this.MethodName = methodName;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class WebContentAttribute : Attribute
+    {
+        public readonly string BundleName;
+        public readonly bool IsVideo;
+
+        public WebContentAttribute(string bundleName, bool isVideo)
+        {
+            BundleName = bundleName?.ToLower();
+            IsVideo = isVideo;
         }
     }
 

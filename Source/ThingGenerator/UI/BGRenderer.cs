@@ -14,12 +14,12 @@ public static class BGRenderer
         var screenArea = new Rect(0, 0, Verse.UI.screenWidth, Verse.UI.screenHeight);
         Rect uv = new Rect(0, 0, 1, 1);
 
-        var area = Filled(texture, screenArea, 1f);
+        var area = FitRect(texture, screenArea, 1f);
 
         Widgets.DrawTexturePart(area, uv, texture);
     }
 
-    private static Rect Filled(Texture tex, Rect area, float scale)
+    public static Rect FitRect(Texture tex, Rect area, float scale)
     {
         float w = tex.width;
         float h = tex.height;

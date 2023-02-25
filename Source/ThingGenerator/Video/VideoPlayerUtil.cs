@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using RimWorld;
+using UnityEngine;
 using UnityEngine.Video;
+using Verse;
 
 namespace AAM.Video;
 
@@ -31,6 +33,7 @@ public static class VideoPlayerUtil
         if (vidName == null)
             return null;
 
+        Messages.Message($"Getting {vidName} curr: {currentBundleHandle?.BundleName} which is {currentBundleHandle?.LoadedState}", MessageTypeDefOf.SilentInput, false);
         if (currentBundleHandle != null && currentBundleHandle.BundleName == vidName)
         {
             // Check if video has finished loading:
@@ -65,5 +68,25 @@ public static class VideoPlayerUtil
         currentBundleHandle.Load();
 
         return player.texture;
+    }
+
+    public static Texture GetStaticTexture(string textureName, out BundleManager.LoadedState state)
+    {
+        state = BundleManager.LoadedState.Unloaded;
+        if (textureName == null)
+            return null;
+
+        if (currentBundleHandle != null && currentBundleHandle.BundleName == textureName)
+        {
+            state = currentBundleHandle.LoadedState;
+            if (currentBundleHandle.LoadedState == BundleManager.LoadedState.Loaded)
+                return currentBundleHandle.GetFirstAsset<Texture2D>();
+            return null;
+        }
+
+        currentBundleHandle?.Unload();
+        currentBundleHandle = BundleManager.GetHandle(textureName);
+        currentBundleHandle.Load();
+        return null;
     }
 }
