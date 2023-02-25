@@ -36,6 +36,18 @@ public static class BGRenderer
             h = area.height;
             w *= inc;
         }
+        if (w > area.width)
+        {
+            float inc = area.width / w;
+            w = area.width;
+            h *= inc;
+        }
+        if (h > area.height)
+        {
+            float inc = area.height / h;
+            h = area.height;
+            w *= inc;
+        }
 
         return new Rect(0, 0, w, h).CenteredOnXIn(area).CenteredOnYIn(area).ScaledBy(scale);
     }

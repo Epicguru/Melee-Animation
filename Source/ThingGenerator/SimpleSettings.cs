@@ -198,6 +198,7 @@ namespace AAM
             if (settings == null)
                 return;
 
+            var baseArea = inRect;
             Rect tabBar = inRect;
             tabBar.height = 28;
 
@@ -324,14 +325,17 @@ namespace AAM
                 inRect.y += titleHeight + 14;
                 Widgets.Label(inRect, description);
 
-                float h = Text.CalcHeight(description, inRect.width) + 32;
+                float h = Text.CalcHeight(description, inRect.width) + 16;
                 inRect.y += h;
             }
 
             if (highlightedMember.Options.AllowReset)
             {
                 string defaultValue = highlightedMember.ValueToString(highlightedMember.GetDefault<object>());
-                Widgets.Label(inRect, $"<color=grey><i>Default value: </i>{defaultValue}\n\nRight-click to reset to default.</color>");
+                string desc = $"<color=grey><i>Default value: </i>{defaultValue}\n\nRight-click to reset to default.</color>";
+                Widgets.Label(inRect, desc);
+                float h = Text.CalcHeight(desc, inRect.width) + 16;
+                inRect.y += h;
 
                 if (Input.GetMouseButtonUp(1))
                 {
@@ -344,6 +348,7 @@ namespace AAM
             {
                 // Web content:
                 string url = highlightedMember.WebContent.BundleName;
+                inRect.height = baseArea.height - inRect.y + 32;
 
                 var tex = highlightedMember.WebContent.IsVideo ? VideoPlayerUtil.GetVideoTexture(url, out var state) : VideoPlayerUtil.GetStaticTexture(url, out state);
                 if (tex == null)
@@ -363,6 +368,7 @@ namespace AAM
                 else
                 {
                     var fitted = BGRenderer.FitRect(tex, inRect, 1f);
+                    Core.Log($"{fitted} vs {inRect}");
                     GUI.DrawTexture(fitted, tex);
                 }
             }
