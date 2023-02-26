@@ -80,6 +80,8 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
 
         bool HasLos(IntVec3 c)
         {
+            // TODO this should technically be LOS from any free spot around grappler.
+            // More expensive to calculate though.
             return GenSight.LineOfSight(pawn.Position, c, pawn.Map);
         }
 

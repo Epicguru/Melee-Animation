@@ -46,16 +46,18 @@ namespace AAM.UI
             return instance;
         }
 
+        public readonly List<(string name, Action<Listing_Standard> tab)> Tabs = new List<(string name, Action<Listing_Standard> tab)>();
         public int SelectedIndex;
-        public List<(string name, Action<Listing_Standard> tab)> Tabs = new();
 
-        private Vector2[] scrolls = new Vector2[32];
+        private const bool AUTO_SELECT_RENDERER = true;
+        private readonly Vector2[] scrolls = new Vector2[32];
+        private readonly Queue<Action> toDraw = new Queue<Action>();
+        private readonly List<AnimationManager> allManagers = new List<AnimationManager>();
+        private readonly List<IntVec3> tempCells = new List<IntVec3>(128);
+
         private int scrollIndex;
         private AnimDef spaceCheckDef;
-        private bool spaceCheckMX, spaceCheckMY;
-        private bool autoSelectRenderer = true;
-        private Queue<Action> toDraw = new();
-        private List<AnimationManager> allManagers = new();
+        private bool spaceCheckMX;
 
         public Dialog_AnimationDebugger()
         {
@@ -94,7 +96,7 @@ namespace AAM.UI
         {
             if (selectedRenderer != null && selectedRenderer.IsDestroyed)
                 selectedRenderer = null;
-            if (autoSelectRenderer && selectedRenderer == null)
+            if (AUTO_SELECT_RENDERER && selectedRenderer == null)
                 selectedRenderer = AnimRenderer.ActiveRenderers.FirstOrDefault(r => !r.IsDestroyed && r.Map == Find.CurrentMap);
 
             scrollIndex = 0;
@@ -260,12 +262,34 @@ namespace AAM.UI
 
         private void DrawSpaceChecker(Listing_Standard ui)
         {
-            if (Event.current.type == EventType.Repaint)
+            if (Event.current.type == EventType.Repaint && spaceCheckDef != null)
             {
                 toDraw.Enqueue(() =>
                 {
                     IntVec3 mp = Verse.UI.MouseCell();
-                    foreach (var cell in spaceCheckDef.GetMustBeClearCells(spaceCheckMX, spaceCheckMY, mp))
+
+                    ulong occupiedMask = SpaceChecker.MakeOccupiedMask(Find.CurrentMap, mp, out uint smallMask);
+                    ulong clearMask = !spaceCheckMX ? spaceCheckDef.ClearMask : spaceCheckDef.FlipClearMask;
+                    bool isClear = (occupiedMask & clearMask) == 0;
+
+                    tempCells.Clear();
+                    for (int x = mp.x - 3; x <= mp.x + 3; x++)
+                    {
+                        for (int z = mp.z - 3; z <= mp.z + 3; z++)
+                        {
+                            int offX = x - mp.x;
+                            int offZ = z - mp.z;
+                            bool isOccupied = occupiedMask.GetBit(offX, offZ);
+
+                            if (!isOccupied)
+                                tempCells.Add(new IntVec3(x, 0, z));
+
+                        }
+                    }
+
+                    GenDraw.DrawFieldEdges(tempCells, isClear ? Color.green : Color.red);
+
+                    foreach (var cell in spaceCheckDef.GetMustBeClearCells(spaceCheckMX, false, mp))
                     {
                         GenDraw.DrawTargetHighlight(new LocalTargetInfo(cell));
                     }
@@ -274,7 +298,7 @@ namespace AAM.UI
 
             if (ui.ButtonText(spaceCheckDef?.LabelCap.ToString() ?? "<Select Def>"))
             {
-                var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, d.LabelCap, tooltip: d.defName));
+                var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, d.LabelOrFallback, tooltip: d.defName));
                 BetterFloatMenu.Open(items, i =>
                 {
                     spaceCheckDef = i.GetPayload<AnimDef>();
@@ -282,7 +306,26 @@ namespace AAM.UI
             }
 
             ui.CheckboxLabeled("Mirror X", ref spaceCheckMX);
-            ui.CheckboxLabeled("Mirror Y", ref spaceCheckMY);
+            IntVec3 mp = Verse.UI.MouseCell();
+            ulong occupiedMask = SpaceChecker.MakeOccupiedMask(Find.CurrentMap, mp, out _);
+            ulong clearMask = spaceCheckDef == null ? 0 : !spaceCheckMX ? spaceCheckDef.ClearMask : spaceCheckDef.FlipClearMask;
+
+            string toString = "";
+            string toString2 = "";
+            for (int i = sizeof(ulong) * 8 - 1; i >= 0; i--)
+            {
+                if ((occupiedMask & ((ulong)1 << i)) == 0)
+                    toString += '0';
+                else
+                    toString += '1';
+
+                if ((clearMask & ((ulong)1 << i)) == 0)
+                    toString2 += '0';
+                else
+                    toString2 += '1';
+            }
+            ui.Label(toString);
+            ui.Label(toString2);
         }
 
         private void DrawAllLists(Listing_Standard ui)
@@ -438,7 +481,7 @@ namespace AAM.UI
             }
 
             // Animation selection.
-            if (ui.ButtonText($"Animation: {startDef?.LabelCap ?? "<None>"}"))
+            if (ui.ButtonText($"Animation: {startDef?.LabelOrFallback ?? "<None>"}"))
             {
                 var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, string.IsNullOrEmpty(d.label) ? d.defName : d.LabelCap, tooltip: $"[{d.type}]\nData: {d.DataPath}\nPawns: {d.pawnCount}\n{d.description}".TrimEnd()));
                 BetterFloatMenu.Open(items, i =>
@@ -466,10 +509,10 @@ namespace AAM.UI
                     }
 
                     var pawn = startPawns[i];
-                    if (pawn != null && !pawn.Spawned)
+                    if (pawn is { Spawned: false })
                         pawn = null;
 
-                    string name = pawn != null ? pawn.NameShortColored : "<Missing>";
+                    string name = pawn?.NameShortColored ?? "<Missing>";
 
                     var rect = ui.GetRect(28);
                     if (pawn != null)
@@ -603,17 +646,6 @@ namespace AAM.UI
             GUI.color = Color.white;
         }
 
-        private static void DrawLineBetween(in Vector3 A, in Vector3 B, float len, in Color color, float yOff, float width = 0.2f)
-        {
-            mpb.SetFloat("_Alpha", color.r);
-
-            Vector3 mid = (A + B) * 0.5f;
-            mid.y += yOff;
-            var rot = Quaternion.Euler(0, (B - A).ToAngleFlat(), 0);
-            var trs = Matrix4x4.TRS(mid, rot, new Vector3(len, 1, width));
-            Graphics.DrawMesh(MeshPool.plane10, trs, Content.TrailMaterial, 0, null, 0, mpb);
-        }
-
         private void DrawPerformanceAnalyzer(Listing_Standard ui)
         {
             allManagers.Clear();
@@ -681,17 +713,6 @@ namespace AAM.UI
             // Lazy :)
             if(Event.current.type == EventType.Repaint)
                 AnimRenderer.ResetTimers();
-        }
-
-        private IEnumerable<(Vector3 start, Vector3 end, float speed)> MakeSegments(Vector3 down, Vector3 up, int segmentCount, float bottomVel, float topVel)
-        {
-            for (int i = 0; i < segmentCount; i++)
-            {
-                float st = ((float)i / segmentCount);
-                float et = ((float)(i + 1) / segmentCount);
-
-                yield return (Vector3.Lerp(down, up, st), Vector3.Lerp(down, up, et), Mathf.Lerp(bottomVel, topVel, et));
-            }
         }
 
         private struct Node
