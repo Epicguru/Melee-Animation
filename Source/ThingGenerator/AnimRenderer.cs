@@ -1283,8 +1283,8 @@ public class AnimRenderer : IExposable
         // Hand visibility uses the animation data first and foremost, and if the animation does
         // not care about hand visibility, then it is dictated by the weapon.
         var vis = Def.GetHandsVisibility(index);
-        bool showMain = vis.showMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands);
-        bool showAlt = vis.showAltHand ?? (weapon != null && handsMode == HandsMode.Default);
+        bool showMain = Core.Settings.ShowHands && (vis.showMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands));
+        bool showAlt = Core.Settings.ShowHands && (vis.showAltHand ?? (weapon != null && handsMode == HandsMode.Default));
 
         // Apply main hand.
         var mainHandPart = GetPart(mainHandName);

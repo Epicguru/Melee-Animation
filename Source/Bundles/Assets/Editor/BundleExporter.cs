@@ -44,9 +44,12 @@ public static class BundleExporter
             File.Delete(toDelete2);
 
             // Build web bundles.
-            foreach (var target in Targets)
+            // These are non-essential bundles used in the settings menu.
+            // Only for windows to save disk space.
+            // Sorry mac and linux users.
+            foreach (var target in new[]{ BuildTarget.StandaloneWindows})
             {
-                foreach (var vid in Directory.EnumerateFiles(Path.Combine(Application.dataPath, "Web"), "*", SearchOption.AllDirectories).Where(p => p.EndsWith(".png") || p.EndsWith(".mp4")))
+                foreach (var vid in Directory.EnumerateFiles(Path.Combine(Application.dataPath, "Web"), "*", SearchOption.AllDirectories).Where(p => p.EndsWith(".png") || p.EndsWith(".mov")))
                 {
                     string resourcePath = vid.Substring(vid.IndexOf("Assets", StringComparison.Ordinal));
                     Debug.Log($"Asset: {resourcePath}");

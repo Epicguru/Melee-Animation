@@ -12,20 +12,18 @@ namespace AAM
         [Header("General")]
         [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
                      "If enabled, the Advanced Melee gizmo will be shown even if the pawn does not have a valid (compatible) melee weapon.")]
-        [WebContent("Wallpaper", false)]
         public bool ShowGizmosWithoutMeleeWeapon = false;
 
         [Label("Always Animate Weapons")]
         [Description("If enabled, melee weapons are animated whenever they are held, such as when standing drafted or while moving in combat.\nIf disabled, animations are limited to duels, special skills and executions.\n\n" +
                      "<b>Leaving this enabled can have a large performance impact on densely populated maps.\nPlease reload your save after changing this setting.</b>")]
-        [WebContent("Video", true)]
+        [WebContent("AlwaysAnimate", true)]
         public bool AnimateAtIdle = true;
 
         [Label("Animated Pawns Considered Invisible")]
         [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
                      "they will not be actively targeted or shot at. This makes executions less risky.\n" +
                      "Note that pawns in animations can still take damage, such as from stray gunfire or explosions.")]
-        [WebContent("SomeExampleVid", true)]
         public bool AllowInvisiblePawns = true;
 
         [Range(0.01f, 5f)]
@@ -42,6 +40,7 @@ namespace AAM
         public int MaxDuelDuration = 8;
 
         [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
+        [WebContent("ShowNames", false)]
         public bool DrawNamesInAnimation = true;
 
         [DrawMethod(nameof(DrawAnimationList))]
@@ -139,10 +138,16 @@ namespace AAM
         #endregion
 
         #region Other
+
         [Header("Other")]
+        [Description("Should pawn hands be displayed holding melee weapons?")]
+        [WebContent("HandsEnabled", false)]
+        public bool ShowHands = true;
+
         [Description("In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.\n" +
                      "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
                      "<b>Note:</b> The offset corpses are reset after a save-reload.")]
+        [WebContent("OffsetMode", false)]
         public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
 
         [Label("Friendly Pawn Lethality Bonus")]
@@ -168,12 +173,14 @@ namespace AAM
 
         [Label("Weapon Trail Color")]
         [Description("The base color of weapon trails. If you set the alpha to 0, trails will be disabled.")]
+        [WebContent("SweepColor", false)]
         public Color TrailColor = Color.white;
 
         [Label("Weapon Trail Length")]
         [Description("A multiplier on the length of weapon trails. If 0%, trails are disabled.")]
         [Percentage]
         [Range(0f, 2f)]
+        [WebContent("SweepLength", false)]
         public float TrailLengthScale = 1f;
 
         public bool TrailsAreDisabled => TrailColor.a <= 0 || TrailLengthScale <= 0;
