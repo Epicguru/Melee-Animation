@@ -1,6 +1,8 @@
 ﻿using Meta.Numerics.Statistics.Distributions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using AAM.Idle;
 using UnityEngine;
 using Verse;
 
@@ -29,20 +31,8 @@ namespace AAM
 
         [Range(0.01f, 5f)]
         [Percentage]
-        [Description("A modifier on the speed of all animations.")]
+        [Description("A modifier on the speed of all animations.\nHigher is faster.")]
         public float GlobalAnimationSpeed = 1f;
-
-        [Description("The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
-        [Min(1)]
-        public int MinDuelDuration = 4;
-
-        [Description("The maximum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
-        [Min(1)]
-        public int MaxDuelDuration = 8;
-
-        [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
-        [WebContent("ShowNames", false)]
-        public bool DrawNamesInAnimation = true;
 
         [DrawMethod(nameof(DrawAnimationList))]
         [SettingOptions(drawValue: false, allowReset: false, drawHoverHighlight: false)]
@@ -89,8 +79,8 @@ namespace AAM
         public float GrappleSpeed = 1f;
         #endregion
 
-        #region Executions
-        [Header("Executions")]
+        #region Executions & Duels
+        [Header("Executions & Duels")]
         [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
                      "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
@@ -112,10 +102,22 @@ namespace AAM
                      "If false, the pawn is simply killed by 'magic' (no specific part takes damage)\n" +
                      "Note: if disabled, combat log generation does not work properly for the execution, and will give a default message: \"<i>name was killed.</i>\"")]
         public bool ExecutionsCanDestroyBodyParts = true;
+
+        [Description("The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
+        [Min(1)]
+        public int MinDuelDuration = 4;
+
+        [Description("The maximum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
+        [Min(1)]
+        public int MaxDuelDuration = 8;
         #endregion
 
-        #region Gore
-        [Header("Gore")]
+        #region Visuals
+        [Header("Visuals")]
+        [Description("Should pawn hands be displayed holding melee weapons?")]
+        [WebContent("HandsEnabled", false)]
+        public bool ShowHands = true;
+
         [Label("Damage Effect")]
         [Description("Enable or disable the damage affect in animations.\n" +
                      "The damage effect is normally a small, temporary puff of blood.")]
@@ -126,6 +128,30 @@ namespace AAM
                      "The blood is filth that must be cleaned up. Includes modded blood and mechanoid blood (oil).")]
         public bool Gore_FloorBlood = true;
 
+        [Description("In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.\n" +
+                     "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
+                     "<b>Note:</b> The offset corpses are reset after a save-reload.")]
+        [WebContent("OffsetMode", false)]
+        public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
+
+        [Label("Weapon Trail Color")]
+        [Description("The base color of weapon trails. If you set the alpha to 0, trails will be disabled.")]
+        [WebContent("SweepColor", false)]
+        public Color TrailColor = Color.white;
+
+        [Label("Weapon Trail Length")]
+        [Description("A multiplier on the length of weapon trails. If 0%, trails are disabled.")]
+        [Percentage]
+        [Range(0f, 2f)]
+        [WebContent("SweepLength", false)]
+        public float TrailLengthScale = 1f;
+
+        [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
+        [WebContent("ShowNames", false)]
+        public bool DrawNamesInAnimation = true;
+        #endregion
+
+        #region Performance
         [Header("Performance")]
         [Description("The interval, in ticks, between a complex pawn calculation that runs on each map.\nDon't touch this unless you know what you are doing.")]
         [Range(1, 240)]
@@ -141,16 +167,6 @@ namespace AAM
         #region Other
 
         [Header("Other")]
-        [Description("Should pawn hands be displayed holding melee weapons?")]
-        [WebContent("HandsEnabled", false)]
-        public bool ShowHands = true;
-
-        [Description("In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.\n" +
-                     "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
-                     "<b>Note:</b> The offset corpses are reset after a save-reload.")]
-        [WebContent("OffsetMode", false)]
-        public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
-
         [Label("Friendly Pawn Lethality Bonus")]
         [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
         [Percentage]
@@ -170,18 +186,6 @@ namespace AAM
         [Label("Show Warning Before Executing Friendly")]
         [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Alt] key when targeting a friendly pawn for execution.")]
         public bool WarnOfFriendlyExecution = true;
-
-        [Label("Weapon Trail Color")]
-        [Description("The base color of weapon trails. If you set the alpha to 0, trails will be disabled.")]
-        [WebContent("SweepColor", false)]
-        public Color TrailColor = Color.white;
-
-        [Label("Weapon Trail Length")]
-        [Description("A multiplier on the length of weapon trails. If 0%, trails are disabled.")]
-        [Percentage]
-        [Range(0f, 2f)]
-        [WebContent("SweepLength", false)]
-        public float TrailLengthScale = 1f;
 
         public bool TrailsAreDisabled => TrailColor.a <= 0 || TrailLengthScale <= 0;
 
@@ -234,7 +238,7 @@ namespace AAM
                 var rect = area;
                 rect.height = 32;
 
-                Widgets.Label(rect, def.LabelCap);
+                Widgets.Label(rect, def.LabelOrFallback);
 
                 var checkbox = rect;
                 checkbox.x += 230;
@@ -255,10 +259,12 @@ namespace AAM
                 return rect.height;
             }
 
-            var animations = AnimDef.AllDefs;
+            var animations = AnimDef.AllDefs.OrderBy(d => d.type).ThenBy(d => d.idleType).ThenBy(d => d.LabelOrFallback);
             foreach (var anim in animations)
             {
                 if (!anim.canEditProbability)
+                    continue;
+                if (anim.type == AnimType.Idle && anim.idleType is IdleType.Idle or IdleType.MoveHorizontal or IdleType.MoveVertical)
                     continue;
 
                 float h = DrawAnim(anim);

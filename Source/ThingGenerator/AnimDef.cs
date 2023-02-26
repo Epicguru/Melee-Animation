@@ -83,6 +83,7 @@ namespace AAM
             }
         }
 
+        public string LabelOrFallback => string.IsNullOrEmpty(label) ? defName : LabelCap;
         public virtual string FullDataPath
         {
             get
@@ -123,6 +124,10 @@ namespace AAM
             }
         }
         public string DataPath => data;
+        /// <summary>
+        /// A mask where a high bit means that the spot must be clear (standable)
+        /// in a 7x7 cell grid around the animation root cell.
+        /// </summary>
         public ulong ClearMask, FlipClearMask;
         public float Probability => relativeProbability * ((SData?.Enabled ?? true) ? (SData?.Probability ?? 1f) : 0f);
         [XmlIgnore] public SettingsData SData;
@@ -302,16 +307,16 @@ namespace AAM
 
         public IEnumerable<IntVec3> GetMustBeClearCells(bool flipX, bool flipY, IntVec3 offset)
         {
-            foreach (var data in cellData)
+            foreach (var cells in cellData)
             {
-                foreach (var cell in data.GetCells())
+                foreach (var cell in cells.GetCells())
                 {
                     yield return Flip(cell, flipX, flipY).ToIntVec3 + offset;
                 }
             }
         }
 
-        private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new(fx ? -input.x : input.x, fy ? -input.z : input.z);
+        private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new IntVec2(fx ? -input.x : input.x, fy ? -input.z : input.z);
 
         public bool Allows(ReqInput input)
         {
