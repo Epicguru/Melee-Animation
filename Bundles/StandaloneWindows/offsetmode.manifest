@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:effd488d9fd5563affc4d666329e2f3c44ad5e6a5a67b90e5df092a5249ed8cd
-size 373
+ManifestFileVersion: 0
+CRC: 717095009
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2429107195ac698445c88258f9a84d5a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7859cd501ea75098bcf7e53f1b477c26
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Web/OffsetMode.png
+Dependencies: []

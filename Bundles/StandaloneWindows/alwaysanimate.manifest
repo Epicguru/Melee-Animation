@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b54c3e3ebd220670033d885abbf4908f5dc02c6f0508896feb1484e3483fc432
-size 378
+ManifestFileVersion: 0
+CRC: 2248558608
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 458505d816d04ab5101cc2861f648154
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9533ec91352ac8573a011616e38420f1
+HashAppended: 0
+ClassTypes:
+- Class: 329
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Web/AlwaysAnimate.mov
+Dependencies: []

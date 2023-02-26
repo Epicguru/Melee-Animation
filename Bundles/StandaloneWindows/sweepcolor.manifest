@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f05e65cf76b5d567fa989e3d2d53e74af9c1b3f7a326f0d7f36f33f9dfda7fd2
-size 374
+ManifestFileVersion: 0
+CRC: 3464584278
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 79353748bcd6bc94beb022ee9e25df02
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7859cd501ea75098bcf7e53f1b477c26
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Web/SweepColor.png
+Dependencies: []

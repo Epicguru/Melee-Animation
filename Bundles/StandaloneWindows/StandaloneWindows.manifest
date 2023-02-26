@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:12f9448c580781481cdf2e5f5a755deeb7bcfc299b1fbebf4d797e8d5550b771
-size 138
+ManifestFileVersion: 0
+CRC: 427229830
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: sweeplength
+      Dependencies: {}

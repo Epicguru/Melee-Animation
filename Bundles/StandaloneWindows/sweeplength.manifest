@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cbda938a1549cb321321dff0282835244cf0b3e3d67344c99e5f5770504f74fb
-size 375
+ManifestFileVersion: 0
+CRC: 1240046791
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c265ffc7167775fc8027ad3b1847d27c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7859cd501ea75098bcf7e53f1b477c26
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Web/SweepLength.png
+Dependencies: []
