@@ -5,6 +5,7 @@ using Verse;
 
 namespace AAM.Video;
 
+[IgnoreHotSwap]
 public static class VideoPlayerUtil
 {
     private static readonly GameObject go;
@@ -19,7 +20,7 @@ public static class VideoPlayerUtil
         };
         Object.DontDestroyOnLoad(go);
 
-        player = go.AddComponent<VideoPlayer>();
+        player = go.AddComponent<VideoPlayer>(); 
         player.playOnAwake = false;
     }
 

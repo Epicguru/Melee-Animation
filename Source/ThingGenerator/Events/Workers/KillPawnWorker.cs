@@ -42,7 +42,7 @@ namespace AAM.Events.Workers
             if (outcome != null)
                 MoteMaker.ThrowText(pawn.DrawPos + new Vector3(0, 0, 0.6f), pawn.Map, $"Execution Outcome: {outcome}", color);
 
-            Core.Log($"Execution outcome is {animator.ExecutionOutcome}");
+            //Core.Log($"Execution outcome is {animator.ExecutionOutcome}");
 
             switch (animator.ExecutionOutcome)
             {

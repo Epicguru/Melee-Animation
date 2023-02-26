@@ -316,4 +316,5 @@ namespace AAM
     }
 
     public class HotSwapAllAttribute : Attribute { }
+    public class IgnoreHotSwapAttribute : Attribute { }
 }

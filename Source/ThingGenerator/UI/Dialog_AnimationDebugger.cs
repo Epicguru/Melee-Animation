@@ -651,68 +651,13 @@ namespace AAM.UI
             allManagers.Clear();
             allManagers.AddRange(Find.Maps.Select(m => m.GetAnimManager()));
 
-            ui.Label("<b><color=cyan>SCAN TIMES</color></b>");
+            ui.Label("Not implemented");
 
-            double totalScanTime = 0;
-            double totalProcessTime = 0;
-            foreach (var manager in allManagers)
-            {
-                var pp = manager.PawnProcessor;
-                totalScanTime += pp.LastListUpdateTimeMS;
-                totalProcessTime += pp.LastProcessTimeMS;
-                ui.Label($"<b>Map: {manager.map}</b>");
-                ui.Indent();
-                ui.Label($"Last scan time: {pp.LastListUpdateTimeMS:F2} ms");
-
-                string extra = null;
-                if (pp.LastProcessTimeMS >= Core.Settings.MaxCPUTimePerTick)
-                    extra = "<color=red>[!!!]</color>";
-                ui.Label($"Last process time: {pp.LastProcessTimeMS:F2} ms  {extra}");
-                ui.Label($"Process average interval per pawn: {pp.ProcessAverageInterval:F3} ms ({pp.ProcessAverageInterval / (100f / 6f):F0} ticks)");
-                ui.Label("Last process pass involved:");
-                ui.Indent();
-                ui.Label($"Processed {pp.LastProcessedPawnCount} out of {pp.TargetProcessedPawnCount} ({(float)pp.LastProcessedPawnCount / pp.TargetProcessedPawnCount * 100f:F0}%) pawns.");
-                ui.Label($"Checked {pp.LastAnimationsConsideredCount * 2} animations against {pp.LastTargetsConsideredCount} targets.");
-                ui.Label($"This caused {pp.LastCellsConsideredCount} cells to be checked.");
-                ui.Outdent();
-                ui.Outdent();
-            }
-
-            ui.Gap();
-            ui.Label($"Total scan time: {totalScanTime:F3} ms");
-            ui.Label($"Total process time: {totalProcessTime:F3} ms ({totalProcessTime / Core.Settings.MaxCPUTimePerTick * 100f:F0}% of limit) {(totalProcessTime >= Core.Settings.MaxCPUTimePerTick ? "  <color=red>[!!!]</color>" : "")}");
-            ui.GapLine();
-
-            ui.Label("<b><color=cyan>RENDERING</color></b>");
-            ui.Label($"Active: {AnimRenderer.ActiveRenderers.Count} renderers.");
-            ui.Label("<b>Total times:</b>");
-            ui.Indent();
-            ui.Label($"Events: {AnimRenderer.EventsTimer.Elapsed.TotalMilliseconds:F3} ms");
-            ui.Label($"Seek: {AnimRenderer.SeekTimer.Elapsed.TotalMilliseconds:F3} ms");
-            ui.Label($"Draw: {AnimRenderer.DrawTimer.Elapsed.TotalMilliseconds:F3} ms");
-            ui.Outdent();
-
-            var curve = new SimpleCurve();
-            for (int i = 0; i < 100; i++)
-            {
-                float x = i;
-                float y = Mathf.Sin(x * Mathf.Deg2Rad);
-                curve.Add(x, y, false);
-            }
-
-            var drawInfo = new SimpleCurveDrawInfo()
-            {
-                color = Color.green,
-                curve = curve,
-                label = "My curve",
-                valueFormat = "F2"
-            };
-
-            SimpleCurveDrawer.DrawCurveLines(ui.GetRect(200), drawInfo, false, new Rect(0, 0, 100, 1), true, true);
+            //SimpleCurveDrawer.DrawCurveLines(ui.GetRect(200), drawInfo, false, new Rect(0, 0, 100, 1), true, true);
 
             // Lazy :)
-            if(Event.current.type == EventType.Repaint)
-                AnimRenderer.ResetTimers();
+            //if(Event.current.type == EventType.Repaint)
+            //    AnimRenderer.ResetTimers();
         }
 
         private struct Node

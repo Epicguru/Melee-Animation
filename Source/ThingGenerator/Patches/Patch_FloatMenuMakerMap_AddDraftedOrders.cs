@@ -2,8 +2,10 @@
 using HarmonyLib;
 using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace AAM.Patches;
 
@@ -44,9 +46,10 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         if (weapon == null && lasso == null)
             return;
 
-        SpaceChecker.MakeOccupiedMask(pawn.Map, pawn.Position, out uint smallMask);
+        ulong occupiedMask = SpaceChecker.MakeOccupiedMask(pawn.Map, pawn.Position, out uint smallMask);
 
         var targets = GenUI.TargetsAt(clickPos, targetingArgs, true);
+        bool noExecEver = false;
 
         foreach (var t in targets)
         {
@@ -55,6 +58,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
                 continue;
 
             bool isEnemy = target.HostileTo(Faction.OfPlayer);
+            GrappleAttemptReport grappleReport = default;
 
             if (lasso != null)
             {
@@ -66,9 +70,37 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
                     GrappleSpotPickingBehaviour = isEnemy ? GrappleSpotPickingBehaviour.PreferAdjacent : GrappleSpotPickingBehaviour.Closest,
                     OccupiedMask = smallMask
                 };
-                var report = controller.GetGrappleReport(request);
+                grappleReport = controller.GetGrappleReport(request);
 
-                opts.Add(report.CanGrapple ? GetEnabledLassoOption(request, report, pawn, target) : GetDisabledLassoOption(report, pawn));
+                opts.Add(grappleReport.CanGrapple ? GetEnabledLassoOption(request, grappleReport, pawn, target) : GetDisabledLassoOption(grappleReport, pawn));
+            }
+
+            if (weapon != null && !noExecEver)
+            {
+                var request = new ExecutionAttemptRequest
+                {
+                    CanUseLasso = lasso != null,
+                    CanWalk = true,
+                    EastCell = !occupiedMask.GetBit(1, 0),
+                    WestCell = !occupiedMask.GetBit(-1, 0),
+                    Executioner = pawn,
+                    OccupiedMask = occupiedMask,
+                    SmallOccupiedMask = smallMask,
+                    Target = target
+                };
+
+                var reports = controller.GetExecutionReport(request);
+                foreach (var report in reports)
+                {
+                    if (report.IsFinal && !report.CanExecute)
+                    {
+                        noExecEver = true;
+                        opts.Add(GetDisabledExecutionOption(report, pawn));
+                        break;
+                    }
+
+                    opts.Add(report.CanExecute ? GetEnabledExecuteOption(request, report, pawn, target) : GetDisabledExecutionOption(report, pawn));
+                }
             }
         }
     }
@@ -85,7 +117,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
             return GenSight.LineOfSight(pawn.Position, c, pawn.Map);
         }
 
-        if (Event.current.type == EventType.Repaint)
+        if (Event.current.type == EventType.Repaint && pawn.TryGetLasso() != null)
         {
             pawn.GetAnimManager().AddPostDraw(() =>
             {
@@ -101,11 +133,145 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         TooltipHandler.TipRegion(new Rect(mp.x - 1, mp.y - 1, 3, 3), tt);
     }
 
-    //private static FloatMenuOption GetDisabledExecutionOption()
-    //{
-    //    string label = "AAM.Error.Exec.FloatMenu".Translate(report.ErrorMessageShort);
+    private static FloatMenuOption GetDisabledExecutionOption(in ExecutionAttemptReport report, Pawn grappler)
+    {
+        string label = "AAM.Error.Exec.FloatMenu".Translate(report.ErrorMessageShort);
+        string tooltip = report.ErrorMessage;
+        var icon = Content.ExtraGuiWhy;
+        var iconSize = new Rect(0, 0, icon.width, icon.height);
 
-    //}
+        return new FloatMenuOption(label, null, MenuOptionPriority.DisabledOption)
+        {
+            tooltip = tooltip,
+            Disabled = true,
+            extraPartWidth = 54,
+            extraPartRightJustified = true,
+            extraPartOnGUI = r =>
+            {
+                var bounds = iconSize.CenteredOnYIn(r).CenteredOnXIn(r);
+                var c = GUI.color;
+                GUI.color = new Color(1, 1, 1, 0.7f);
+                Widgets.DrawTexturePart(bounds, new Rect(0, 0, 1, 1), icon);
+                GUI.color = c;
+                if (Mouse.IsOver(r))
+                    HoverAction(grappler, tooltip);
+                return false;
+            }
+        };
+    }
+
+    private static FloatMenuOption GetEnabledExecuteOption(ExecutionAttemptRequest request, ExecutionAttemptReport report, Pawn grappler, Pawn target)
+    {
+        void OnClick()
+        {
+            // Update request.
+            SpaceChecker.MakeOccupiedMask(grappler.Map, grappler.Position, out uint newMask);
+            request.OccupiedMask = newMask;
+
+            // Get new report
+            report.Dispose();
+            report = controller.GetExecutionReport(request).FirstOrDefault();
+            if (!report.CanExecute)
+            {
+                Messages.Message(report.ErrorMessage, MessageTypeDefOf.RejectInput, false);
+                report.Dispose();
+                return;
+            }
+
+            // Sanity check:
+            if (report.Target != target)
+                throw new System.Exception("Target is not expected target!");
+
+            if (report.IsWalking)
+            {
+                // Walk to and execute target.
+                // Make walk job and reset all verbs (stop firing, attacking).
+                var walkJob = JobMaker.MakeJob(AAM_DefOf.AAM_WalkToExecution, target);
+
+                if (grappler.verbTracker?.AllVerbs != null)
+                    foreach (var verb in grappler.verbTracker.AllVerbs)
+                        verb.Reset();
+
+                if (grappler.equipment?.AllEquipmentVerbs != null)
+                    foreach (var verb in grappler.equipment.AllEquipmentVerbs)
+                        verb.Reset();
+
+                // Start walking.
+                grappler.jobs.StartJob(walkJob, JobCondition.InterruptForced);
+
+                if (grappler.CurJobDef == AAM_DefOf.AAM_WalkToExecution)
+                    return;
+
+                Core.Error($"CRITICAL ERROR: Failed to force interrupt {grappler}'s job with execution goto job. Likely a mod conflict or invalid start parameters.");
+                string reason = "AAM.Gizmo.Error.NoLasso".Translate(
+                    new NamedArgument(grappler.NameShortColored, "Pawn"),
+                    new NamedArgument(target.NameShortColored, "Target"));
+                string error = "AAM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
+                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            }
+            else
+            {
+                // Check for adjacent:
+                var selectedAdjacent = report.PossibleExecutions.Where(p => p.LassoToHere == null).RandomElementByWeightWithFallback(p => p.Animation.Probability);
+                if (selectedAdjacent.IsValid)
+                {
+                    var startArgs = new AnimationStartParameters(selectedAdjacent.Animation.AnimDef, grappler, report.Target)
+                    {
+                        FlipX = selectedAdjacent.Animation.FlipX,
+                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
+                    };
+
+                    if (!startArgs.TryTrigger())
+                    {
+                        Core.Error("Instant adjacent execution (from float menu) failed to trigger!");
+                        return;
+                    }
+
+                    // Set cooldown.
+                    grappler.GetMeleeData().TimeSinceExecuted = 0;
+                    return;
+                }
+
+                // Lasso executions:
+                var selectedLasso = report.PossibleExecutions.Where(p => p.LassoToHere != null).RandomElementByWeightWithFallback(p => p.Animation.Probability);
+                if (selectedLasso.IsValid)
+                {
+                    var startArgs2 = new AnimationStartParameters(selectedLasso.Animation.AnimDef, grappler, report.Target)
+                    {
+                        FlipX = selectedLasso.Animation.FlipX,
+                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
+                    };
+
+                    if (!JobDriver_GrapplePawn.GiveJob(grappler, target, selectedLasso.LassoToHere.Value, false, startArgs2))
+                    {
+                        Core.Error($"Failed to give grapple job to {grappler}.");
+                        return;
+                    }
+
+                    // Set grapple cooldown.
+                    grappler.GetMeleeData().TimeSinceGrappled = 0;
+                    return;
+                }
+
+                Core.Warn("Failed to start any execution via adjacent or grapple, maybe they are disabled in the settings.");
+            }
+        }
+
+        string targetName = target.Name?.ToStringShort ?? target.LabelDefinite();
+        bool enemy = target.HostileTo(Faction.OfPlayer);
+        bool isWalk = report.IsWalking;
+        bool isLasso = report.PossibleExecutions?.FirstOrDefault().LassoToHere != null;
+        string append = isLasso ? " (lasso)" : isWalk ? " (walk to target)" : null;
+
+        string label = "AAM.Exec.FloatMenu".Translate(targetName) + append;
+        string tt = enemy ? "AAM.Exec.FloatMenu.TipEnemy" : "AAM.Exec.FloatMenu.Tip";
+        tt = tt.Translate(grappler.Name.ToStringShort, targetName);
+
+        return new FloatMenuOption(label, OnClick, MenuOptionPriority.AttackEnemy, revalidateClickTarget: target)
+        {
+            mouseoverGuiAction = _ => HoverAction(grappler, tt)
+        };
+    }
 
     private static FloatMenuOption GetDisabledLassoOption(in GrappleAttemptReport report, Pawn grappler)
     {

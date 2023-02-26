@@ -20,6 +20,8 @@
 
   <AAM.Error.Grapple.Dead>{Grappler} is dead</AAM.Error.Grapple.Dead>
   <AAM.Error.Exec.Dead>{Exec} is dead</AAM.Error.Exec.Dead>
+  <AAM.Error.Exec.NoWalk>{Target} is not adjacent to {Exec}, and cannot be lassoed or walked to.</AAM.Error.Exec.NoWalk>
+  <AAM.Error.Exec.NoWalk.Short>{Target} cannot be reached</AAM.Error.Exec.NoWalk.Short>
   <AAM.Error.Grapple.DeadTarget>{Target} is dead</AAM.Error.Grapple.DeadTarget>
   <AAM.Error.Exec.DeadTarget>{Target} is dead</AAM.Error.Exec.DeadTarget>
   <AAM.Error.Grapple.Downed>{Grappler} is downed</AAM.Error.Grapple.Downed>
