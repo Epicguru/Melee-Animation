@@ -104,12 +104,11 @@ public class StatWorker_Lethality : StatWorker
         if (capMod != null)
             str?.AppendLine("AAM.Stats.WeaponDamageTypeOffset".Translate(capMod.LabelCap, capOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
 
-
         // Friendly bonus.
         float friendBonus = 0f;
-        if ((pawn.IsColonist || pawn.IsSlaveOfColony) && Core.Settings.FriendlyPawnMeanNudge != 0f)
+        if ((pawn.IsColonist || pawn.IsSlaveOfColony) && Core.Settings.FriendlyPawnLethalityBonus != 0f)
         {
-            friendBonus = Core.Settings.FriendlyPawnMeanNudge;
+            friendBonus = Core.Settings.FriendlyPawnLethalityBonus;
             str?.AppendLine("AAM.Stats.FriendlyPawnBonus".Translate(friendBonus.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
         }
 

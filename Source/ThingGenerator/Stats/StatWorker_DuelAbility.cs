@@ -77,9 +77,9 @@ public class StatWorker_DuelAbility : StatWorker
 
         // Friendly bonus
         float friendBonus = 0f;
-        if ((pawn.IsColonist || pawn.IsSlaveOfColony) && Core.Settings.FriendlyPawnDuelMeanNudge != 0f)
+        if ((pawn.IsColonist || pawn.IsSlaveOfColony) && Core.Settings.FriendlyPawnDuelBonus != 0f)
         {
-            friendBonus = Core.Settings.FriendlyPawnDuelMeanNudge;
+            friendBonus = Core.Settings.FriendlyPawnDuelBonus;
             str?.AppendLine("AAM.Stats.FriendlyPawnBonus".Translate(friendBonus.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
         }
 

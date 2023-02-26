@@ -24,6 +24,7 @@ namespace AAM
         [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
                      "they will not be actively targeted or shot at. This makes executions less risky.\n" +
                      "Note that pawns in animations can still take damage, such as from stray gunfire or explosions.")]
+        [WebContent("Invisible", true)]
         public bool AllowInvisiblePawns = true;
 
         [Range(0.01f, 5f)]
@@ -153,16 +154,15 @@ namespace AAM
         [Label("Friendly Pawn Lethality Bonus")]
         [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
         [Percentage]
-        public float FriendlyPawnMeanNudge = 0f;
+        public float FriendlyPawnLethalityBonus = 0f;
 
         [Label("Friendly Pawn Duel Ability Bonus")]
         [Description("Positive values act as a duel ability bonus for friendly pawns (including slaves), meaning that they will win duels more often.")]
         [Percentage]
-        public float FriendlyPawnDuelMeanNudge = 0.1f;
+        public float FriendlyPawnDuelBonus = 0.1f;
 
-        [Label("Lethality Normal Distribution")]
-        [Description("Tl;Dr: Lower values make execution & duel outcomes less random (more dependent on Duel Ability), higher values make the outcome more random.\n\n" +
-                     "Detail: Changes the normal distribution used when comparing 2 pawn's Duel Ability stats. Lower values (<0.5) remove almost all randomness, higher values (>1) make the outcome much more random.")]
+        [Label("Duel Normal Distribution")]
+        [Description("Higher values make duel outcomes less dependent on duel ability and more on randomness, lower values make the outcome more dependent on duel ability and less on randomness.\n\nTechnical: This is the standard deviation used in the duel outcome normal distribution curve.")]
         [Range(0.1f, 2f)]
         [Percentage]
         public float NormalDist = 0.5f;
