@@ -419,10 +419,9 @@ namespace AAM.UI
             {
                 toDraw.Enqueue(() =>
                 {
-                    var pos = ss.GetWorldPosition();
-                    var dir = ss.GetWorldRotation().AngleToWorldDir();
-                    //GenDraw.DrawLineBetween(pos, pos + dir, SimpleColor.Blue);
-                    GenDraw.DrawArrowRotated(pos - new Vector3(0f, 0f, 0.5f), 0f, false);
+                    var pos = ss.GetWorldPositionNoOverride();
+                    var dir = ss.WorldMatrixPreserveFlip.MultiplyVector(Vector3.right).normalized;
+                    GenDraw.DrawArrowRotated(pos + dir * -0.5f, dir.ToAngleFlatNew(), false);
                 });
             }
         }
@@ -441,7 +440,7 @@ namespace AAM.UI
             // Animation selection.
             if (ui.ButtonText($"Animation: {startDef?.LabelCap ?? "<None>"}"))
             {
-                var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, d.LabelCap, tooltip: $"[{d.type}]\nData: {d.DataPath}\nPawns: {d.pawnCount}\n{d.description}".TrimEnd()));
+                var items = BetterFloatMenu.MakeItems(AnimDef.AllDefs, d => new MenuItemText(d, string.IsNullOrEmpty(d.label) ? d.defName : d.LabelCap, tooltip: $"[{d.type}]\nData: {d.DataPath}\nPawns: {d.pawnCount}\n{d.description}".TrimEnd()));
                 BetterFloatMenu.Open(items, i =>
                 {
                     startDef = i.GetPayload<AnimDef>();

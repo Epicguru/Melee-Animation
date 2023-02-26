@@ -1,4 +1,5 @@
-﻿using AAM.Reqs;
+﻿using AAM.Idle;
+using AAM.Reqs;
 using AAM.Retexture;
 using AAM.Tweaks;
 using ColourPicker;
@@ -380,7 +381,7 @@ namespace AAM.UI
                 Widgets.Label(tagsArea.RightPart(0.2f), "Allowed animations...");
                 string allowedAnimations = "";
                 foreach (var anim in AnimDef.AllDefs)
-                    if (anim.AllowsWeapon(new ReqInput(tweak)))
+                    if (anim.Allows(new ReqInput(tweak)))
                         allowedAnimations += $"[{anim.type}] {anim.defName}\n";
                 TooltipHandler.TipRegion(tagsArea.RightPart(0.2f), allowedAnimations);
 
@@ -446,7 +447,8 @@ namespace AAM.UI
                     GUI.DrawTexture(view, rtTex);
                     Widgets.DrawLine(new Vector2(view.xMin, view.center.y), new Vector2(view.xMax, view.center.y), new Color(0f, 1f, 0f, 0.333f), 1);
                     Widgets.DrawLine(new Vector2(view.center.x, view.yMin), new Vector2(view.center.x, view.yMax), new Color(0f, 1f, 0f, 0.333f), 1);
-                    Widgets.Label(view, $"{localMousePos}, {mousePos}, {rt.width}x{rt.height} vs {(int)view.width}x{(int)view.height}");
+                    var idleCat = IdleClassifier.Classify(tweak);
+                    Widgets.Label(view, $"Mouse: {localMousePos}, Weapon Size: {idleCat.size}, Category: {idleCat.category}");
 
                     if (Widgets.ButtonInvisible(view, false))
                     {
@@ -525,10 +527,6 @@ namespace AAM.UI
         {
             var block = new MaterialPropertyBlock();
             var itemTex = tweak.GetTexture(false, false);
-            if (itemTex == null || Mathf.Abs(tweak.ScaleX) < 0.1f || Mathf.Abs(tweak.ScaleY) < 0.1f)
-            {
-                Core.Error("WHOA");
-            }
             block.SetTexture("_MainTex", itemTex ?? Widgets.CheckboxOffTex);
             var pos = new Vector3(tweak.OffX, 0f, tweak.OffY);
             if (tweak.FlipX)
@@ -550,8 +548,8 @@ namespace AAM.UI
             if (tweak.HandsMode == HandsMode.Default)
                 Graphics.DrawMesh(AnimData.GetMesh(false, false), Matrix4x4.TRS(handBPos, Quaternion.identity, handScale), AnimRenderer.DefaultCutout, 0, camera, 0, block);
 
-            Vector3 start = new(tweak.BladeStart, 0, 1);
-            Vector3 end = new(tweak.BladeStart, 0, -1);
+            Vector3 start = new Vector3(tweak.BladeStart, 0, 1);
+            Vector3 end = new Vector3(tweak.BladeStart, 0, -1);
             for (int i = 0; i < 3; i++)
                 GenDraw.DrawLineBetween(start, end, SimpleColor.Green, 0.1f);
 

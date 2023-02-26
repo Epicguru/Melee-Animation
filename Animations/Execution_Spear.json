@@ -1,0 +1,2442 @@
+{
+  "ExportTimeUTC": "2023-02-19T00:18:33.3666972Z",
+  "Name": "Execution_Spear",
+  "Length": 2.91666675,
+  "Bounds": {
+    "x": -1.126462,
+    "y": -1.28738987,
+    "width": 3.53480458,
+    "height": 3.08439636
+  },
+  "Events": [
+    {
+      "Time": 0.783333361,
+      "Data": "DamageEffect;1;0,0,0"
+    },
+    {
+      "Time": 1.38333333,
+      "Data": "GoreSplash;1;5;0.5"
+    },
+    {
+      "Time": 1.75,
+      "Data": "KillPawn;0;1;Heart;Stab;AAM_Execution_Stab;True"
+    }
+  ],
+  "Parts": [
+    {
+      "ID": 19430,
+      "Path": "PawnAHolding",
+      "Curves": {
+        "Transform.localEulerAnglesRaw.x": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.y": {
+          "Keyframes": [
+            {
+              "value": -28.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "value": 13.968,
+              "inTangent": 17.6640015,
+              "outTangent": 17.6640015,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "value": 16.912,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": -27.047,
+              "inTangent": -169.659943,
+              "outTangent": -169.659943,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": -35.53,
+              "inTangent": -17.4400063,
+              "outTangent": -17.4400063,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": -36.62,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": -12.095,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "value": -21.961,
+              "inTangent": -29.3029366,
+              "outTangent": -29.3029366,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "value": -28.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "value": -28.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.z": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.x": {
+          "Keyframes": [
+            {
+              "value": -0.015,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.25,
+              "value": -0.218499988,
+              "inTangent": -0.814,
+              "outTangent": -0.814,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "value": -0.422,
+              "inTangent": -0.43200022,
+              "outTangent": -0.43200022,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "value": -0.467,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": 0.604,
+              "inTangent": 2.640002,
+              "outTangent": 2.640002,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 0.736,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 0.732,
+              "inTangent": -0.05052643,
+              "outTangent": -0.05052643,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": 0.065,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "value": 0.112,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "value": -0.015,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.08333325,
+              "value": 0.054,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "value": 0.03,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "value": 0.253,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.y": {
+          "Keyframes": [
+            {
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.25,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.08333325,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "value": 0.2,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.z": {
+          "Keyframes": [
+            {
+              "value": -0.203,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.25,
+              "value": -0.072,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "value": -0.122,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "value": -0.104,
+              "inTangent": 0.2541176,
+              "outTangent": 0.2541176,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": -0.019,
+              "inTangent": 0.890000045,
+              "outTangent": 0.890000045,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 0.074,
+              "inTangent": 0.36800018,
+              "outTangent": 0.36800018,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 0.097,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": -0.191,
+              "inTangent": -1.11999977,
+              "outTangent": -1.11999977,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "value": -0.295,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "value": -0.203,
+              "inTangent": 0.222857147,
+              "outTangent": 0.222857147,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.08333325,
+              "value": -0.139,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "value": -0.226,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "value": -0.187,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        }
+      },
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 0.0,
+        "AnimatedPart.Tint.g": 0.0,
+        "AnimatedPart.Tint.b": 0.0,
+        "AnimatedPart.Tint.a": 0.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19452,
+      "Path": "BodyA",
+      "CustomName": "BodyA",
+      "Curves": {
+        "Transform.m_LocalPosition.x": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.25,
+              "value": -0.118999995,
+              "inTangent": -0.476,
+              "outTangent": -0.476,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "value": -0.238,
+              "inTangent": -0.259199858,
+              "outTangent": -0.259199858,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "value": -0.265,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": 0.152,
+              "inTangent": 1.6400001,
+              "outTangent": 1.6400001,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 0.234,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 0.234,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": -0.151,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "value": -0.05,
+              "inTangent": 0.266470551,
+              "outTangent": 0.266470551,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.08333325,
+              "value": -0.0992268845,
+              "inTangent": -0.2775153,
+              "outTangent": -0.2775153,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "value": -0.157258645,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.y": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.25,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.08333325,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.z": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.25,
+              "value": 0.0905,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "inTangent": -0.20159997,
+              "outTangent": -0.20159997,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "value": -0.021,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": 0.033,
+              "inTangent": 0.405000031,
+              "outTangent": 0.405000031,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 0.06,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 0.06,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": 0.053,
+              "inTangent": -0.07999998,
+              "outTangent": -0.07999998,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "value": 0.003,
+              "inTangent": -0.0211764518,
+              "outTangent": -0.0211764518,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.08333325,
+              "value": 0.06842897,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.x": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.y": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": -11.926,
+              "inTangent": -22.429615,
+              "outTangent": -22.429615,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": -19.439,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": -19.439,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": -1.21,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "value": -2.854,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.z": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        }
+      },
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 1.0,
+        "AnimatedPart.Tint.b": 1.0,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 1.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19138,
+      "Path": "BodyB",
+      "CustomName": "BodyB",
+      "Curves": {
+        "Transform.localEulerAnglesRaw.x": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.6,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.y": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": -22.618,
+              "inTangent": -197.999969,
+              "outTangent": -197.999969,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": -33.0,
+              "inTangent": -17.4400063,
+              "outTangent": -17.4400063,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": -34.09,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": -19.049,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "value": -59.377,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "value": -59.377,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "value": 26.026,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.6,
+              "value": 14.902,
+              "inTangent": -43.3766556,
+              "outTangent": -43.3766556,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.z": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.6,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.x": {
+          "Keyframes": [
+            {
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": 1.169,
+              "inTangent": 1.596,
+              "outTangent": 1.596,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 1.266,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 1.258,
+              "inTangent": -0.101052858,
+              "outTangent": -0.101052858,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": 1.045,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 1.38333333,
+              "value": 1.074,
+              "inTangent": 0.370921463,
+              "inWeight": 0.152298778,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 1.45,
+              "value": 1.074,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 1.5333333,
+              "value": 1.074,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 1.75,
+              "value": 1.074,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 2.3166666,
+              "value": 1.346,
+              "inTangent": -0.0807272643,
+              "outTangent": -0.0807272643,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 2.6,
+              "value": 1.18,
+              "inTangent": -0.6919999,
+              "outTangent": -0.6919999,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 2.91666675,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.y": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.38333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.45,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.5333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.3166666,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.6,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.z": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": 0.281,
+              "inTangent": 2.85599971,
+              "outTangent": 2.85599971,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 0.476,
+              "inTangent": 0.8639997,
+              "outTangent": 0.8639997,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 0.53,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": 0.301,
+              "inTangent": -2.17999983,
+              "outTangent": -0.623847544,
+              "inWeight": 0.333333343,
+              "outWeight": 0.3043627,
+              "tangentMode": 1
+            },
+            {
+              "time": 1.38333333,
+              "value": -0.233,
+              "inTangent": -5.417529,
+              "outTangent": 1.23109818,
+              "inWeight": 0.10966894,
+              "outWeight": 0.261493564,
+              "tangentMode": 1
+            },
+            {
+              "time": 1.5333333,
+              "value": -0.248005852,
+              "inTangent": -0.6644235,
+              "outTangent": 0.182414368,
+              "inWeight": 0.28561914,
+              "outWeight": 0.297337264,
+              "tangentMode": 1
+            },
+            {
+              "time": 1.75,
+              "value": -0.2475786,
+              "inTangent": -0.1194812,
+              "inWeight": 0.4536619,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 2.3166666,
+              "value": -0.047,
+              "inTangent": 0.270085722,
+              "outTangent": 0.270085722,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 2.6,
+              "value": 0.05,
+              "inTangent": 0.0240000021,
+              "outTangent": 0.0240000021,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            },
+            {
+              "time": 2.91666675,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 1
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        }
+      },
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 1.0,
+        "AnimatedPart.Tint.b": 1.0,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 1.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 3.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19522,
+      "Path": "WeaponACutoff",
+      "Curves": {
+        "Transform.m_LocalPosition.x": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "value": 0.962,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "value": 0.962,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": 1.176,
+              "inTangent": 1.78799963,
+              "outTangent": 1.78799963,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 1.26,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 1.26,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.11666667,
+              "value": 1.14923167,
+              "inTangent": -1.26666641,
+              "outTangent": -1.26666641,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": 1.07,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.y": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.11666667,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.m_LocalPosition.z": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.6666667,
+              "value": -0.019,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.7,
+              "value": -0.019,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.783333361,
+              "value": 0.241,
+              "inTangent": 2.89799953,
+              "outTangent": 2.89799953,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.8666667,
+              "value": 0.464,
+              "inTangent": 0.5920001,
+              "outTangent": 0.5920001,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.0333333,
+              "value": 0.501,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.11666667,
+              "value": 0.397,
+              "inTangent": -1.4000001,
+              "outTangent": -1.4000001,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 1.18333328,
+              "value": 0.291,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        }
+      },
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 1.0,
+        "AnimatedPart.Tint.b": 1.0,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 18920,
+      "Path": "PawnAHolding/ItemA",
+      "CustomName": "ItemA",
+      "ParentID": 19430,
+      "Curves": {
+        "AnimatedPart.SplitDrawMode": {
+          "Keyframes": [
+            {
+              "inTangent": "Infinity",
+              "outTangent": "Infinity",
+              "tangentMode": 103
+            },
+            {
+              "time": 0.716666639,
+              "value": 3.0,
+              "inTangent": "Infinity",
+              "outTangent": "Infinity",
+              "tangentMode": 103
+            },
+            {
+              "time": 1.13333333,
+              "inTangent": "Infinity",
+              "outTangent": "Infinity",
+              "tangentMode": 103
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        }
+      },
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": 0.0,
+        "Transform.m_LocalPosition.y": 0.0,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 1.0,
+        "AnimatedPart.Tint.b": 1.0,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SplitDrawPivotPartID": 19522,
+      "SweepPaths": [
+        [
+          {
+            "Time": 0.08333334,
+            "X": -0.05268519,
+            "Z": -0.169037029,
+            "DX": 0.9007449,
+            "DZ": 0.434348434
+          },
+          {
+            "Time": 0.125,
+            "X": -0.0913125,
+            "Z": -0.137499988,
+            "DX": 0.924232244,
+            "DZ": 0.381830722
+          },
+          {
+            "Time": 0.15625,
+            "X": -0.124301746,
+            "Z": -0.113449216,
+            "DX": 0.943241,
+            "DZ": 0.332109
+          },
+          {
+            "Time": 0.1875,
+            "X": -0.158085927,
+            "Z": -0.09246874,
+            "DX": 0.961377859,
+            "DZ": 0.275232
+          },
+          {
+            "Time": 0.21875,
+            "X": -0.190280274,
+            "Z": -0.0776288956,
+            "DX": 0.9770597,
+            "DZ": 0.212965444
+          },
+          {
+            "Time": 0.2604167,
+            "X": -0.227138057,
+            "Z": -0.07225318,
+            "DX": 0.9921553,
+            "DZ": 0.125011355
+          },
+          {
+            "Time": 0.302083373,
+            "X": -0.2641773,
+            "Z": -0.0776062,
+            "DX": 0.9993464,
+            "DZ": 0.0361496545
+          },
+          {
+            "Time": 0.34375006,
+            "X": -0.3032061,
+            "Z": -0.08782033,
+            "DX": 0.998833835,
+            "DZ": -0.0482802726
+          },
+          {
+            "Time": 0.385416746,
+            "X": -0.3415717,
+            "Z": -0.100117788,
+            "DX": 0.992396533,
+            "DZ": -0.123081557
+          },
+          {
+            "Time": 0.435416758,
+            "X": -0.3829999,
+            "Z": -0.113713622,
+            "DX": 0.9811204,
+            "DZ": -0.193398
+          },
+          {
+            "Time": 0.5354167,
+            "X": -0.436720878,
+            "Z": -0.121413104,
+            "DX": 0.9672753,
+            "DZ": -0.253729075
+          },
+          {
+            "Time": 0.689583361,
+            "X": -0.368812859,
+            "Z": -0.09490842,
+            "DX": 0.9739614,
+            "DZ": -0.226713777
+          },
+          {
+            "Time": 0.6979167,
+            "X": -0.293819636,
+            "Z": -0.09016904,
+            "DX": 0.984258831,
+            "DZ": -0.176732913
+          },
+          {
+            "Time": 0.7052083,
+            "X": -0.2160837,
+            "Z": -0.085496,
+            "DX": 0.9922544,
+            "DZ": -0.124222465
+          },
+          {
+            "Time": 0.7114583,
+            "X": -0.142588913,
+            "Z": -0.08114225,
+            "DX": 0.997255266,
+            "DZ": -0.07404002
+          },
+          {
+            "Time": 0.717708349,
+            "X": -0.06454456,
+            "Z": -0.0765026,
+            "DX": 0.9997939,
+            "DZ": -0.0203019436
+          },
+          {
+            "Time": 0.7239584,
+            "X": 0.0163575113,
+            "Z": -0.0716107339,
+            "DX": 0.999360263,
+            "DZ": 0.035764534
+          },
+          {
+            "Time": 0.7302084,
+            "X": 0.09842545,
+            "Z": -0.06650035,
+            "DX": 0.995676637,
+            "DZ": 0.09288746
+          },
+          {
+            "Time": 0.7364584,
+            "X": 0.179967463,
+            "Z": -0.06120513,
+            "DX": 0.988718867,
+            "DZ": 0.149783045
+          },
+          {
+            "Time": 0.742708445,
+            "X": 0.259291768,
+            "Z": -0.0557587557,
+            "DX": 0.978722453,
+            "DZ": 0.205188558
+          },
+          {
+            "Time": 0.748958468,
+            "X": 0.3347065,
+            "Z": -0.0501949377,
+            "DX": 0.9661716,
+            "DZ": 0.25789988
+          },
+          {
+            "Time": 0.7552085,
+            "X": 0.4045198,
+            "Z": -0.044547338,
+            "DX": 0.9517748,
+            "DZ": 0.306797624
+          },
+          {
+            "Time": 0.762500167,
+            "X": 0.476632,
+            "Z": -0.0378975645,
+            "DX": 0.9338462,
+            "DZ": 0.357674956
+          },
+          {
+            "Time": 0.7708335,
+            "X": 0.543444037,
+            "Z": -0.03028299,
+            "DX": 0.913895667,
+            "DZ": 0.4059492
+          },
+          {
+            "Time": 0.7833335,
+            "X": 0.6040003,
+            "Z": -0.0189998932,
+            "DX": 0.890633762,
+            "DZ": 0.4547214
+          },
+          {
+            "Time": 0.8083335,
+            "X": 0.6648523,
+            "Z": 0.0100587141,
+            "DX": 0.858368337,
+            "DZ": 0.5130339
+          },
+          {
+            "Time": 0.8395835,
+            "X": 0.718920648,
+            "Z": 0.0516626462,
+            "DX": 0.826912045,
+            "DZ": 0.5623313
+          },
+          {
+            "Time": 1.06875014,
+            "X": 0.63696146,
+            "Z": 0.06356919,
+            "DX": 0.8371091,
+            "DZ": 0.547036
+          },
+          {
+            "Time": 1.08125019,
+            "X": 0.570171,
+            "Z": 0.03927619,
+            "DX": 0.8597549,
+            "DZ": 0.510706842
+          },
+          {
+            "Time": 1.09375024,
+            "X": 0.493454337,
+            "Z": 0.0107470676,
+            "DX": 0.883856058,
+            "DZ": 0.467758954
+          },
+          {
+            "Time": 1.10625029,
+            "X": 0.4114171,
+            "Z": -0.0206014886,
+            "DX": 0.9072774,
+            "DZ": 0.420532674
+          },
+          {
+            "Time": 1.11875033,
+            "X": 0.328665,
+            "Z": -0.053352803,
+            "DX": 0.928361654,
+            "DZ": 0.371678084
+          },
+          {
+            "Time": 1.13125038,
+            "X": 0.249803752,
+            "Z": -0.08609018,
+            "DX": 0.9460175,
+            "DZ": 0.3241155
+          },
+          {
+            "Time": 1.14375043,
+            "X": 0.179439008,
+            "Z": -0.117396936,
+            "DX": 0.9597215,
+            "DZ": 0.280953139
+          },
+          {
+            "Time": 1.15833378,
+            "X": 0.114230037,
+            "Z": -0.150223255,
+            "DX": 0.9706679,
+            "DZ": 0.240424365
+          },
+          {
+            "Time": 1.19114625,
+            "X": 0.06520957,
+            "Z": -0.199543938,
+            "DX": 0.977671862,
+            "DZ": 0.210137457
+          },
+          {
+            "Time": 1.25364637,
+            "X": 0.07834278,
+            "Z": -0.253636539,
+            "DX": 0.9684696,
+            "DZ": 0.249131814
+          },
+          {
+            "Time": 1.31197977,
+            "X": 0.09832166,
+            "Z": -0.2830725,
+            "DX": 0.949837744,
+            "DZ": 0.312743157
+          },
+          {
+            "Time": 1.41197968,
+            "X": 0.1097956,
+            "Z": -0.2938629,
+            "DX": 0.9219217,
+            "DZ": 0.387376368
+          },
+          {
+            "Time": 1.52864623,
+            "X": 0.0679701641,
+            "Z": -0.270852178,
+            "DX": 0.8999447,
+            "DZ": 0.436004
+          },
+          {
+            "Time": 1.62864614,
+            "X": 0.01752562,
+            "Z": -0.23866722,
+            "DX": 0.884894252,
+            "DZ": 0.465791941
+          },
+          {
+            "Time": 1.96197939,
+            "X": 0.03322296,
+            "Z": -0.152010083,
+            "DX": 0.8771462,
+            "DZ": 0.480223477
+          }
+        ]
+      ]
+    },
+    {
+      "ID": 19008,
+      "Path": "BodyA/HeadA",
+      "CustomName": "HeadA",
+      "ParentID": 19452,
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": 0.0,
+        "Transform.m_LocalPosition.y": 0.05,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 1.0,
+        "AnimatedPart.Tint.b": 1.0,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19412,
+      "Path": "PawnAHolding/HandA",
+      "CustomName": "HandA",
+      "ParentID": 19430,
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": 0.0,
+        "Transform.m_LocalPosition.y": 0.05,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 0.175000012,
+        "Transform.m_LocalScale.y": 0.175000012,
+        "Transform.m_LocalScale.z": 0.175,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 0.8509804,
+        "AnimatedPart.Tint.g": 0.7254902,
+        "AnimatedPart.Tint.b": 0.5176471,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19712,
+      "Path": "PawnAHolding/HandB",
+      "CustomName": "HandB",
+      "ParentID": 19430,
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": -0.146,
+        "Transform.m_LocalPosition.y": -0.05,
+        "Transform.m_LocalPosition.z": -0.011,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 0.175000012,
+        "Transform.m_LocalScale.y": 0.175000012,
+        "Transform.m_LocalScale.z": 0.175,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 0.8509804,
+        "AnimatedPart.Tint.g": 0.7254902,
+        "AnimatedPart.Tint.b": 0.5176471,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19628,
+      "Path": "BodyB/HeadB",
+      "CustomName": "HeadB",
+      "ParentID": 19138,
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": 0.0,
+        "Transform.m_LocalPosition.y": 0.05,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 1.0,
+        "AnimatedPart.Tint.b": 1.0,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 1.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19198,
+      "Path": "PawnBHolding",
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 0.0,
+        "Transform.m_LocalPosition.x": 1.0,
+        "Transform.m_LocalPosition.y": 0.2,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 0.0,
+        "AnimatedPart.Tint.g": 0.0,
+        "AnimatedPart.Tint.b": 0.0,
+        "AnimatedPart.Tint.a": 0.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19440,
+      "Path": "PawnBHolding/HandA",
+      "CustomName": "HandA2",
+      "ParentID": 19198,
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": 0.0,
+        "Transform.m_LocalPosition.y": 0.05,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 0.175,
+        "Transform.m_LocalScale.y": 0.175000012,
+        "Transform.m_LocalScale.z": 0.175,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 0.8509804,
+        "AnimatedPart.Tint.g": 0.7254902,
+        "AnimatedPart.Tint.b": 0.5176471,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19180,
+      "Path": "PawnBHolding/HandB",
+      "CustomName": "HandB2",
+      "ParentID": 19198,
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": 0.146,
+        "Transform.m_LocalPosition.y": 0.0,
+        "Transform.m_LocalPosition.z": -0.011,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 0.175000012,
+        "Transform.m_LocalScale.y": 0.175000012,
+        "Transform.m_LocalScale.z": 0.175,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 0.8509804,
+        "AnimatedPart.Tint.g": 0.7254902,
+        "AnimatedPart.Tint.b": 0.5176471,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19552,
+      "Path": "PawnBHolding/ItemB",
+      "CustomName": "ItemB",
+      "ParentID": 19198,
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": 0.0,
+        "Transform.m_LocalPosition.y": 0.0,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 1.0,
+        "AnimatedPart.Tint.b": 1.0,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 1.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": [
+        []
+      ]
+    },
+    {
+      "ID": 19424,
+      "Path": "HandGrabSparks",
+      "TexturePath": "AAM/HandGrabSparks",
+      "Curves": {},
+      "DefaultValues": {
+        "GameObject.m_IsActive": 0.0,
+        "Transform.m_LocalPosition.x": 0.0,
+        "Transform.m_LocalPosition.y": 0.0,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.localEulerAnglesRaw.x": 0.0,
+        "Transform.localEulerAnglesRaw.y": 0.0,
+        "Transform.localEulerAnglesRaw.z": 0.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 1.0,
+        "AnimatedPart.Tint.b": 1.0,
+        "AnimatedPart.Tint.a": 1.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    }
+  ]
+}

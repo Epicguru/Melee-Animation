@@ -1,0 +1,116 @@
+<Defs>
+
+  <!-- Bases -->
+  <AAM.AnimDef Name="AnimAttackHorizontal" Abstract="True">
+    <type>Idle</type>
+    <pawnCount>1</pawnCount>
+    <idleType>AttackHorizontal</idleType>
+  </AAM.AnimDef>
+  <AAM.AnimDef Name="AnimAttackSouth" Abstract="True">
+    <type>Idle</type>
+    <pawnCount>1</pawnCount>
+    <idleType>AttackSouth</idleType>
+  </AAM.AnimDef>
+  <AAM.AnimDef Name="AnimAttackNorth" Abstract="True">
+    <type>Idle</type>
+    <pawnCount>1</pawnCount>
+    <idleType>AttackNorth</idleType>
+  </AAM.AnimDef>
+
+  <!-- Tiny -->
+  <AAM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AAM_Idle_TinyAttackHor1</defName>
+    <data>Idle_Tiny_StabHorizontal.json</data>
+    <!-- This is a stab animation: -->
+    <weaponFilter Class="AAM.Reqs.And">
+      <subs>
+        <li Class="AAM.Reqs.AnySize"><size>Tiny</size></li>
+        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+      </subs>
+    </weaponFilter>
+    <pointAtTarget>true</pointAtTarget>
+    <returnToIdleStart>33</returnToIdleStart>
+    <returnToIdleEnd>68</returnToIdleEnd>
+  </AAM.AnimDef>
+  <AAM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AAM_Idle_TinyAttackHor2</defName>
+    <data>Idle_TinySlashHorizontal.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <!-- Medium -->
+  <AAM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AAM_Idle_MediumAttackHor1</defName>
+    <data>Idle_Medium_SlashHorizontal1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Medium</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimAttackNorth">
+    <defName>AAM_Idle_MediumAttackNorth1</defName>
+    <data>Idle_Medium_SlashNorth1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Medium</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimAttackSouth">
+    <defName>AAM_Idle_MediumAttackSouth1</defName>
+    <data>Idle_Medium_SlashSouth1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Medium</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <!-- Colossal -->
+  <AAM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AAM_Idle_ColossalAttackHor1</defName>
+    <data>Idle_Colossal_SlashHorizontal1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Colossal</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AAM_Idle_ColossalAttackHor2</defName>
+    <data>Idle_Colossal_SlashHorizontal2.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Colossal</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AAM_Idle_ColossalAttackHor3</defName>
+    <data>Idle_Colossal_StabHorizontal1.json</data>
+    <!-- This is a stab animation: -->
+    <weaponFilter Class="AAM.Reqs.And">
+      <subs>
+        <li Class="AAM.Reqs.AnySize"><size>Colossal</size></li>
+        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+      </subs>
+    </weaponFilter>
+    <pointAtTarget>true</pointAtTarget>
+    <returnToIdleStart>25</returnToIdleStart>
+    <returnToIdleEnd>63</returnToIdleEnd>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimAttackNorth">
+    <defName>AAM_Idle_ColossalAttackNorth1</defName>
+    <data>Idle_Colossal_SlashNorth1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Colossal</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimAttackSouth">
+    <defName>AAM_Idle_ColossalAttackSouth1</defName>
+    <data>Idle_Colossal_SlashSouth1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Colossal</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+</Defs>

@@ -1,0 +1,63 @@
+<Defs>
+
+  <!-- Base -->
+  <AAM.AnimDef Name="AnimFlavour" Abstract="True">
+    <type>Idle</type>
+    <pawnCount>1</pawnCount>
+    <idleType>Flavour</idleType>
+  </AAM.AnimDef>
+
+  <!-- All -->
+  <AAM.AnimDef ParentName="AnimFlavour">
+    <defName>AAM_Idle_CheerFlavour</defName>
+    <data>Idle_CheerFlavour.json</data>
+    <weaponFilter Class="AAM.Reqs.True" />
+  </AAM.AnimDef>
+
+  <!-- Tiny -->
+  <AAM.AnimDef ParentName="AnimFlavour">
+    <defName>AAM_Idle_TinyFlavour1</defName>
+    <data>Idle_Tiny_Flavour1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
+  </AAM.AnimDef>
+
+  <!-- Medium -->
+  <AAM.AnimDef ParentName="AnimFlavour">
+    <defName>AAM_Idle_MediumFlavour1</defName>
+    <data>Idle_MediumSharp_Flavour1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Medium</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <AAM.AnimDef ParentName="AnimFlavour">
+    <defName>AAM_Idle_MediumFlavour2</defName>
+    <data>Idle_MediumSharp_Flavour2.json</data>
+    <!-- Animation stabs into ground so must support that: -->
+    <weaponFilter Class="AAM.Reqs.And">
+      <subs>
+        <li Class="AAM.Reqs.AnySize"><size>Medium</size></li>
+        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+      </subs>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+  <!-- Colossal -->
+  <AAM.AnimDef ParentName="AnimFlavour">
+    <defName>AAM_Idle_ColossalFlavour1</defName>
+    <data>Idle_Colossal_Flavour1.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Colossal</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+
+</Defs>

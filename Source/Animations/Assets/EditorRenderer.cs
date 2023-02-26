@@ -1,9 +1,12 @@
 ﻿#if UNITY_EDITOR
 using Assets.Editor;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -45,17 +48,76 @@ public class EditorRenderer : Editor
                 EditorCoroutineUtility.StartCoroutine(SaveAllCoroutine(t), this);
             }
 
-            //if (!t.InspectAllCurves)
+            if (t.AllowLoadingFromJson && GUILayout.Button("Load Current From Json"))
+            {
+                var clip = t.Clip;
+                string FILE = @$"../..\Animations\{clip.name}.json";
+
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new RectConverter());
+                settings.DefaultValueHandling = DefaultValueHandling.Ignore;
+                var loaded = JsonConvert.DeserializeObject<AnimDataModel>(File.ReadAllText(FILE), settings);
+
+                foreach (var part in loaded.Parts)
+                {
+                    foreach (var pair in part.Curves)
+                    {
+                        string[] parts = pair.Key.Split('.');
+                        Type propType = GetType(parts[0]);
+                        string prop = pair.Key[(pair.Key.IndexOf('.') + 1)..];
+                        var binding = new EditorCurveBinding
+                        {
+                            path = part.Path,
+                            propertyName = prop,
+                            type = propType
+                        };
+
+                        Debug.Log($"Path: '{binding.path}', prop name: '{prop}'");
+
+                        Type fieldType = binding.type.GetField(binding.propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.FieldType
+                                        ?? binding.type.GetProperty(binding.propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.PropertyType;
+
+                        if (fieldType is { IsEnum: true })
+                        {
+                            for (int i = 0; i < pair.Value.Keyframes.Length; i++)
+                            {
+                                var key = pair.Value.Keyframes[i];
+                                key.value = BitConverter.ToSingle(BitConverter.GetBytes((int)key.value));
+                                pair.Value.Keyframes[i] = key;
+                            }
+                        }
+                        AnimationUtility.SetEditorCurve(clip, binding, pair.Value.ToAnimationCurve());
+                    }
+                }
+            }
+
+            if (!t.InspectAllCurves)
                 return;
 
             var bindings = AnimationUtility.GetCurveBindings(t.Clip);
             foreach (var binding in bindings)
             {
                 var curve = AnimationUtility.GetEditorCurve(t.Clip, binding);
-                GUILayout.Label($"Prop: [{binding.type.Name}] {binding.path}:{binding.propertyName}");
+                GUILayout.Label($"Prop: {binding.type.Name}.{binding.propertyName} ({binding.path})");
                 EditorGUILayout.CurveField(curve);
             }
         }
+    }
+
+    private static Type GetType(string name)
+    {
+        foreach (var ass in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            var t = ass.GetType(name, false);
+            if (t != null)
+                return t;
+        }
+        foreach (var t in AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()))
+        {
+            if (t.Name == name)
+                return t;
+        }
+        return null;
     }
 
     private IEnumerator SaveCoroutine(AnimationDataCreator t, AnimationClip clip)
@@ -99,15 +161,14 @@ public class EditorRenderer : Editor
 
     private Rect Save(AnimationDataCreator t, AnimationClip clip)
     {
-        string FILE = @$"../..\Animations\{clip.name}.anim";
-
-        using var fs = new FileStream(FILE, FileMode.OpenOrCreate);
-        using var writer = new BinaryWriter(fs);
+        string FILE = @$"../..\Animations\{clip.name}.json";
 
         var bounds = PopulateSweeps(clip, t);
-        AnimData.Save(writer, clip, t, bounds);
+        string json = AnimData.Save(clip, t, bounds);
 
-        Debug.Log($"Wrote {clip.name} in {fs.Length} bytes to {new FileInfo(FILE).FullName}. Bounds: {bounds}");
+        File.WriteAllText(FILE, json);
+
+        Debug.Log($"Wrote {clip.name} in {new FileInfo(FILE).Length / 1024f:F1} Kb to {new FileInfo(FILE).FullName}. Bounds: {bounds}");
         return bounds;
     }
 
@@ -270,12 +331,6 @@ public class EditorRenderer : Editor
             default:
                 throw new ArgumentOutOfRangeException();
         }
-    }
-
-    [MenuItem("Assets/Build AssetBundles")]
-    static void BuildAllAssetBundles()
-    {
-        BuildPipeline.BuildAssetBundles("./Assets/AssetBundles", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
     }
 }
 #endif

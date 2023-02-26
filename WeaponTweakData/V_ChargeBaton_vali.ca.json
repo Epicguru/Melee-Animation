@@ -3,11 +3,12 @@
   "ItemDefName": "V_ChargeBaton",
   "ItemType": "ThingDef",
   "ItemTypeNamespace": "Verse",
-  "OffX": 0.202675492,
+  "OffX": 0.229461163,
   "OffY": -0.055572167,
   "Rotation": 50.0,
   "ScaleX": 1.2,
   "ScaleY": 1.2,
   "HandsMode": 1,
+  "BladeEnd": 0.669657,
   "MeleeWeaponType": 9
 }

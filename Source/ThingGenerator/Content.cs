@@ -1,9 +1,12 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using Verse;
 
 namespace AAM
@@ -11,6 +14,8 @@ namespace AAM
     [StaticConstructorOnStartup]
     public static class Content
     {
+        public const string WEB_BUNDLE_URL = "https://media.githubusercontent.com/media/Epicguru/AdvancedAnimationMod/develop/BundlesWebOnly/";
+
         [Content("AAM/Rope/Rope")]
         public static Texture2D Rope;
         [Content("AAM/Rope/End")]
@@ -35,8 +40,6 @@ namespace AAM
         public static Texture2D IconInfo;
         [Content("AAM/UI/IconSkill")]
         public static Texture2D IconSkill;
-        [Content("AAM/Scythe")]
-        public static Texture2D ScytheTexture;
         [Content("AAM/UI/ExtraGUIWalk")]
         public static Texture2D ExtraGuiWalk;
         [Content("AAM/UI/ExtraGUIForce")]
@@ -45,6 +48,8 @@ namespace AAM
         public static Texture2D ExtraGuiWhy;
         [Content("AAM/UI/BG/Sketch1")]
         public static Texture2D BGSketch1;
+        [Content("AAM/UI/Loading")]
+        public static Texture2D Loading;
 
         [BundleContent("Materials/TrailShader.mat")]
         public static Material TrailMaterial;
@@ -82,7 +87,7 @@ namespace AAM
 
                     if (type == typeof(Texture2D))
                     {
-                        value = ContentFinder<Texture2D>.Get(path);
+                        value = ContentFinder<Texture2D>.Get(path, false);
                     }
                     else
                     {
@@ -129,7 +134,7 @@ namespace AAM
                 throw new Exception($"Asset bundle '{bundlePlatformName}' failed to load!");
         }
 
-        private static string GetPlatformName() => Application.platform switch
+        public static string GetPlatformName() => Application.platform switch
         {
             RuntimePlatform.WindowsPlayer => "StandaloneWindows",
             RuntimePlatform.OSXPlayer => "StandaloneOSX",
@@ -152,7 +157,6 @@ namespace AAM
     }
 
     [AttributeUsage(AttributeTargets.Field)]
-    [MeansImplicitUse]
     public class ContentAttribute : Attribute
     {
         public readonly string Path;
@@ -164,7 +168,6 @@ namespace AAM
     }
 
     [AttributeUsage(AttributeTargets.Field)]
-    [MeansImplicitUse]
     public class BundleContentAttribute : Attribute
     {
         public readonly string Path;

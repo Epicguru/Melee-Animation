@@ -25,13 +25,13 @@
     <weaponFilter Class="AAM.Reqs.AnyType">
       <types>Long_Blunt, Long_Stab, Long_Sharp</types>
     </weaponFilter>
-    <data>Duel_Swords.anim</data>
+    <data>Duel_Swords.json</data>
   </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimDuelBase">
     <defName>AAM_Duel_WinFriendlyDuel</defName>
     <label>Win Friendly Duel</label>
-    <data>Duel_FriendlyEnd.anim</data>
+    <data>Duel_FriendlyEnd.json</data>
     <jobString>Deafeating [OTHER] in a duel!</jobString>
     <weaponFilter Class="AAM.Reqs.True"/> <!-- Allow anything to do this. Duel logic will handle weapon filtering -->
     <handsVisibility>

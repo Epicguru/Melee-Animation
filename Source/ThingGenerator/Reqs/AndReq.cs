@@ -2,7 +2,7 @@
 
 namespace AAM.Reqs
 {
-    public class AndReq : Req
+    public class And : Req
     {
         public List<Req> subs = new();
 

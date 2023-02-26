@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 230081487
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d54268a0f5bd5f6302ae211ca175150b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7859cd501ea75098bcf7e53f1b477c26
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Web/ShowNames.png
+Dependencies: []

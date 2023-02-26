@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 427229830
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: sweeplength
+      Dependencies: {}

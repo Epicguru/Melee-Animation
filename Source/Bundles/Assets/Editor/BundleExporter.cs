@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -41,6 +42,36 @@ public static class BundleExporter
 
             File.Delete(toDelete);
             File.Delete(toDelete2);
+
+            // Build web bundles.
+            // These are non-essential bundles used in the settings menu.
+            // Only for windows to save disk space.
+            // Sorry mac and linux users.
+            foreach (var target in new[]{ BuildTarget.StandaloneWindows})
+            {
+                foreach (var vid in Directory.EnumerateFiles(Path.Combine(Application.dataPath, "Web"), "*", SearchOption.AllDirectories).Where(p => p.EndsWith(".png") || p.EndsWith(".mov")))
+                {
+                    string resourcePath = vid.Substring(vid.IndexOf("Assets", StringComparison.Ordinal));
+                    Debug.Log($"Asset: {resourcePath}");
+                    var fileName = new FileInfo(vid).Name;
+                    fileName = fileName.Substring(0, fileName.Length - 4);
+                    string path = Path.Combine(dest, target.ToString());
+                    CreateDeep(new DirectoryInfo(path));
+                    AssetBundleBuild[] assets = 
+                    {
+                        new AssetBundleBuild
+                        {
+                            assetBundleName = fileName,
+                            assetNames = new[]
+                            {
+                                resourcePath
+                            }
+                        }
+                    };
+
+                    BuildPipeline.BuildAssetBundles(path, assets, BuildAssetBundleOptions.None, target);
+                }
+            }
         }
         finally
         {
@@ -57,22 +88,24 @@ public static class BundleExporter
         dir.Create();
     }
 
-    private static void PostProcess(BuildTarget target, string destinationFolder, AssetBundleManifest manifest)
+    private static void PostProcess(BuildTarget target, string dest,  AssetBundleManifest manifest)
     {
-        var bundle = manifest.GetAllAssetBundles().First();
-        
-        string path = Path.Combine(destinationFolder, bundle);
-        string path2 = Path.Combine(destinationFolder, $"{bundle}.manifest");
+        foreach (var bundle in manifest.GetAllAssetBundles())
+        {
+            foreach (var fn in new[] {bundle, $"{bundle}.manifest"})
+            {
+                // The path of the actual file that was generated.
+                string path = Path.Combine(dest, fn);
 
-        string dir = Path.Combine(destinationFolder, target.ToString());
-        CreateDeep(new DirectoryInfo(dir));
+                // The target directory.
+                string dir = Path.Combine(dest, target.ToString());
+                CreateDeep(new DirectoryInfo(dir));
 
-        if (File.Exists(Path.Combine(dir, bundle)))
-            File.Delete(Path.Combine(dir, bundle));
-        File.Move(path, Path.Combine(dir, bundle));
-
-        if (File.Exists(Path.Combine(dir,  $"{bundle}.manifest")))
-            File.Delete(Path.Combine(dir,  $"{bundle}.manifest"));
-        File.Move(path2, Path.Combine(dir, $"{bundle}.manifest"));
+                // Move the file from existing dir to target.
+                if (File.Exists(Path.Combine(dir, fn)))
+                    File.Delete(Path.Combine(dir, fn));
+                File.Move(path, Path.Combine(dir, fn));
+            }
+        }
     }
 }

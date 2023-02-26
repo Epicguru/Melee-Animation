@@ -3,7 +3,7 @@ using Verse;
 
 namespace AAM.Reqs
 {
-    public class OrReq : Req
+    public class Or : Req
     {
         public List<Req> subs = new();
 

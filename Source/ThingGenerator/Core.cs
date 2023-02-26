@@ -241,7 +241,6 @@ namespace AAM
         }
 
         public override string SettingsCategory() => ModTitle;
-        
 
         public override void DoSettingsWindowContents(Rect inRect)
         {

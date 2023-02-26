@@ -1,4 +1,7 @@
-﻿using RimWorld;
+﻿using AAM.UI;
+using AAM.Video;
+using ColourPicker;
+using RimWorld;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using ColourPicker;
 using UnityEngine;
 using Verse;
 
@@ -196,6 +198,7 @@ namespace AAM
             if (settings == null)
                 return;
 
+            var baseArea = inRect;
             Rect tabBar = inRect;
             tabBar.height = 28;
 
@@ -213,7 +216,7 @@ namespace AAM
             string currentHeader = null;
             string selectedHeader = holder.UI_SelectedTab;
             allHeaders.Clear();
-
+            
             foreach (var member in holder.Members.Values)
             {
                 bool isCurrentTab = currentHeader == selectedHeader;
@@ -322,21 +325,52 @@ namespace AAM
                 inRect.y += titleHeight + 14;
                 Widgets.Label(inRect, description);
 
-                inRect.y += Text.CalcHeight(description, inRect.width) + 32;
+                float h = Text.CalcHeight(description, inRect.width) + 16;
+                inRect.y += h;
             }
 
-            Core.Log($"Can reset {highlightedMember.Name}: {highlightedMember.Options.AllowReset}");
             if (highlightedMember.Options.AllowReset)
             {
                 string defaultValue = highlightedMember.ValueToString(highlightedMember.GetDefault<object>());
-                Widgets.Label(inRect, $"<color=grey><i>Default value: </i>{defaultValue}\n\nRight-click to reset to default.</color>");
+                string desc = $"<color=grey><i>Default value: </i>{defaultValue}\n\nRight-click to reset to default.</color>";
+                Widgets.Label(inRect, desc);
+                float h = Text.CalcHeight(desc, inRect.width) + 16;
+                inRect.y += h;
 
                 if (Input.GetMouseButtonUp(1))
                 {
                     highlightedMember.Set(settings, highlightedMember.DefaultValue);
                     highlightedMember.TextBuffer = highlightedMember.DefaultValue.ToString();
                 }
-            }            
+            }
+
+            if (highlightedMember.WebContent?.BundleName != null)
+            {
+                // Web content:
+                string url = highlightedMember.WebContent.BundleName;
+                inRect.height = baseArea.height - inRect.y + 32;
+
+                var tex = highlightedMember.WebContent.IsVideo ? VideoPlayerUtil.GetVideoTexture(url, out var state) : VideoPlayerUtil.GetStaticTexture(url, out state);
+                if (tex == null)
+                {
+                    Widgets.DrawBoxSolid(inRect, new Color(1, 1, 1, 0.1f));
+
+                    var oldFont = Text.Font;
+                    var oldAnchor = Text.Anchor;
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Text.Font = GameFont.Medium;
+
+                    Widgets.Label(inRect, "Loading...");
+
+                    Text.Font = oldFont;
+                    Text.Anchor = oldAnchor;
+                }
+                else
+                {
+                    var fitted = BGRenderer.FitRect(tex, inRect, 1f, true);
+                    GUI.DrawTexture(fitted, tex);
+                }
+            }
         }
 
         public static DrawHandler DefaultDrawHandlerSelector(MemberWrapper wrapper)
@@ -827,6 +861,7 @@ namespace AAM
             public DrawHandler OverrideDrawHandler { get; set; }
             public bool ShouldExpose { get; set; } = true;
             public SettingOptionsAttribute Options { get; protected set; }
+            public WebContentAttribute WebContent { get; protected set; }
 
             protected readonly FieldInfo field;
             protected readonly PropertyInfo prop;
@@ -847,6 +882,7 @@ namespace AAM
                 }
 
                 Options = member.TryGetAttribute<SettingOptionsAttribute>() ?? SettingOptionsAttribute.CreateDefault();
+                WebContent = member.TryGetAttribute<WebContentAttribute>();
                 DefaultValue = GetDefaultValue(obj);
             }
 
@@ -991,6 +1027,19 @@ namespace AAM
         public DrawMethodAttribute(string methodName)
         {
             this.MethodName = methodName;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class WebContentAttribute : Attribute
+    {
+        public readonly string BundleName;
+        public readonly bool IsVideo;
+
+        public WebContentAttribute(string bundleName, bool isVideo)
+        {
+            BundleName = bundleName?.ToLower();
+            IsVideo = isVideo;
         }
     }
 

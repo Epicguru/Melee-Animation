@@ -53,7 +53,6 @@ public abstract class EventBase : ScriptableObject
 
     public abstract string EventID { get; }
     public float Time;
-    public int Index;
 
     public abstract void Expose();
 
@@ -62,7 +61,7 @@ public abstract class EventBase : ScriptableObject
     private string saveDataInt;
     private bool reading;
 
-    public virtual bool IsInTimeWindow(Vector2 timeWindow)
+    public bool IsInTimeWindow(Vector2 timeWindow)
     {
         return (Time == 0 ? Time >= timeWindow.x : Time > timeWindow.x) && Time <= timeWindow.y;
     }

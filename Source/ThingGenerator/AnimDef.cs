@@ -1,4 +1,5 @@
-﻿using AAM.RendererWorkers;
+﻿using AAM.Idle;
+using AAM.RendererWorkers;
 using AAM.Reqs;
 using AAM.Sweep;
 using RimWorld;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Xml.Serialization;
 using UnityEngine;
 using Verse;
@@ -50,7 +52,7 @@ namespace AAM
             int meleeSkill = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
 
             return GetDefsOfType(AnimType.Execution)
-                .Where(d => d.AllowsWeapon(new ReqInput(weaponDef)))
+                .Where(d => d.Allows(new ReqInput(weaponDef)))
                 .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
         }
 
@@ -147,6 +149,11 @@ namespace AAM
         public bool shadowDrawFromData;
         public int? minMeleeSkill = null;
         public bool canEditProbability = true;
+        public IdleType idleType;
+        public int mainAttackDuration;
+        public bool pointAtTarget;
+        public int returnToIdleStart, returnToIdleEnd;
+        public int idleFrame;
 
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 
@@ -241,7 +248,7 @@ namespace AAM
             else if (!File.Exists(FullDataPath))
                 yield return $"Failed to find animation file at '{FullDataPath}'!";
 
-            if (weaponFilter == null)
+            if (type is AnimType.Execution or AnimType.Duel or AnimType.Idle && weaponFilter == null)
                 yield return "weaponFilter is not assigned.";
 
             var p1StartCell = TryGetCell(AnimCellData.Type.PawnStart, false, false, 1);
@@ -264,6 +271,9 @@ namespace AAM
                     yield return $"There is an item in <handsVisibility> that has duplicate <pawnIndex> of {d.pawnIndex}.";
                 }
             }
+
+            if ( type == AnimType.Idle && (idleType is IdleType.AttackHorizontal or IdleType.AttackSouth or IdleType.AttackNorth) && mainAttackDuration <= 0)
+                yield return $"Failed to specify <{nameof(mainAttackDuration)}> for attack animation!";
         }
 
         public override void PostLoad()
@@ -303,7 +313,7 @@ namespace AAM
 
         private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new(fx ? -input.x : input.x, fy ? -input.z : input.z);
 
-        public bool AllowsWeapon(ReqInput input)
+        public bool Allows(ReqInput input)
         {
             return weaponFilter != null && weaponFilter.Evaluate(input);
         }
@@ -311,7 +321,7 @@ namespace AAM
         public IEnumerable<ThingDef> GetAllAllowedWeapons()
         {
             foreach (var thing in DefDatabase<ThingDef>.AllDefsListForReading)
-                if (thing.IsMeleeWeapon && AllowsWeapon(new ReqInput(thing)))
+                if (thing.IsMeleeWeapon && Allows(new ReqInput(thing)))
                     yield return thing;
         }
     }
