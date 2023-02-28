@@ -56,7 +56,7 @@ public class ActionController
             return new GrappleAttemptReport(req, "MissingLasso");
 
         // Check skill.
-        if (Core.Settings.MinMeleeSkillToLasso > 0)
+        if (Core.Settings.MinMeleeSkillToLasso > 0 && !req.TrustLassoUsability)
         {
             int meleeSkill = req.Grappler.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
             if (meleeSkill < Core.Settings.MinMeleeSkillToLasso)
@@ -64,7 +64,7 @@ public class ActionController
         }
 
         // Check manipulation.
-        if (Core.Settings.MinManipulationToLasso > 0)
+        if (Core.Settings.MinManipulationToLasso > 0 && !req.TrustLassoUsability)
         {
             float manipulation = req.Grappler.health?.capacities?.GetLevel(PawnCapacityDefOf.Manipulation) ?? 0;
             if (manipulation < Core.Settings.MinManipulationToLasso)
@@ -100,7 +100,7 @@ public class ActionController
             return new GrappleAttemptReport(req, "InAnimation");
 
         // Check range.
-        float range = req.Grappler.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
+        float range = req.LassoRange ?? req.Grappler.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
         float dst = req.Grappler.Position.DistanceToSquared(req.Target.Position);
         if (dst > range * range)
             return new GrappleAttemptReport(req, "TooFar");
@@ -222,7 +222,9 @@ public class ActionController
             {
                 Grappler = req.Executioner,
                 OccupiedMask = req.SmallOccupiedMask,
-                NoErrorMessages = true
+                NoErrorMessages = true,
+                TrustLassoUsability = req.TrustLassoUsability,
+                LassoRange = req.LassoRange
             });
             if (!genericLassoReport.CanGrapple)
             {
@@ -319,7 +321,9 @@ public class ActionController
                     GrappleSpotPickingBehaviour = GrappleSpotPickingBehaviour.OnlyAdjacent,
                     OccupiedMask = req.SmallOccupiedMask,
                     Target = target,
-                    NoErrorMessages = true
+                    NoErrorMessages = true,
+                    TrustLassoUsability = req.TrustLassoUsability,
+                    LassoRange = req.LassoRange
                 });
 
                 // The lasso can bring them into range (directly adjacent)!
@@ -452,10 +456,13 @@ public class ActionController
         }
 
         // Sort.
-        comparer.TargetPos = req.Target.Position;
-        comparer.CenterZ = center.z;
-        comparer.PreferAdjacent = req.GrappleSpotPickingBehaviour != GrappleSpotPickingBehaviour.Closest;
-        Array.Sort(closestCells, 0, count, comparer);
+        if (req.Target != null)
+        {
+            comparer.TargetPos = req.Target.Position;
+            comparer.CenterZ = center.z;
+            comparer.PreferAdjacent = req.GrappleSpotPickingBehaviour != GrappleSpotPickingBehaviour.Closest;
+            Array.Sort(closestCells, 0, count, comparer);
+        }
 
         return count;
     }
@@ -574,6 +581,16 @@ public struct GrappleAttemptRequest
     /// If supplied, it speeds up the operation by avoiding checking the map constantly.
     /// </summary>
     public uint? OccupiedMask;
+
+    /// <summary>
+    /// If true, most lasso checks are skipped (such as melee skill, manipulation etc.)
+    /// </summary>
+    public bool TrustLassoUsability;
+
+    /// <summary>
+    /// Allows the specification of lasso range. If null, it is extracted from the <see cref="Grappler"/>'s stats.
+    /// </summary>
+    public float? LassoRange;
 }
 
 public enum GrappleSpotPickingBehaviour
@@ -696,6 +713,16 @@ public struct ExecutionAttemptRequest
     /// Is the executioner allowed to walk to the target(s) to execute them?
     /// </summary>
     public bool CanWalk;
+    /// <summary>
+    /// If true, most lasso checks are skipped (such as melee skill, manipulation etc.)
+    /// Only valid if <see cref="CanUseLasso"/> is true.
+    /// </summary>
+    public bool TrustLassoUsability;
+
+    /// <summary>
+    /// Allows the specification of lasso range. If null, it is extracted from the <see cref="Executioner"/>'s stats.
+    /// </summary>
+    public float? LassoRange;
 
     /// <summary>
     /// The main target.

@@ -11,24 +11,24 @@ namespace AAM.PawnData
         {
             AutoOption.Enabled => true,
             AutoOption.Disabled => false,
-            AutoOption.Default => Core.Settings.AutoExecute,
+            AutoOption.Default => IsControlledByPlayer ? Core.Settings.AutoExecute : Core.Settings.EnemiesCanExecute,
             _ => throw new ArgumentOutOfRangeException()
         };
         public bool ResolvedAutoGrapple => AutoGrapple switch
         {
             AutoOption.Enabled => true,
             AutoOption.Disabled => false,
-            AutoOption.Default => Core.Settings.AutoGrapple,
+            AutoOption.Default => IsControlledByPlayer ? Core.Settings.AutoGrapple : Core.Settings.EnemiesCanGrapple,
             _ => throw new ArgumentOutOfRangeException()
         };
+
+        public bool IsControlledByPlayer => Pawn.IsColonistPlayerControlled;
 
         public Pawn Pawn;
         public AutoOption AutoExecute;
         public float TimeSinceExecuted = 100;
         public AutoOption AutoGrapple;
         public float TimeSinceGrappled = 100;
-
-        public int lastTickPresentedOptions = -1; // Not saved.
 
         public bool ShouldSave()
         {

@@ -1,0 +1,23 @@
+﻿using System.Diagnostics;
+
+namespace AAM.Processing;
+
+public readonly ref struct RefTimer
+{
+    private static readonly double tickFrequency = 1000.0 / Stopwatch.Frequency;
+
+    private readonly long startTime;
+
+    public RefTimer()
+    {
+        startTime = Stopwatch.GetTimestamp();
+    }
+
+    public double GetElapsedMilliseconds() => (Stopwatch.GetTimestamp() - startTime) * tickFrequency;
+
+    public void GetElapsedMilliseconds(out double milliseconds) => milliseconds = GetElapsedMilliseconds();
+
+    public void GetElapsedMilliseconds(out float milliseconds) => milliseconds = (float)GetElapsedMilliseconds();
+
+    public void GetElapsedMilliseconds(out long milliseconds) => milliseconds = (long)GetElapsedMilliseconds();
+}

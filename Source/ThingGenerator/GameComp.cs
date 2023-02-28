@@ -16,12 +16,14 @@ namespace AAM
         public static GameComp Current;
 
         public readonly Game Game;
+        public static ulong FrameCounter;
+
         [TweakValue("__AAM")]
         private static bool drawTextureExtractor;
 
         private string texPath;
-        private Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new();
-        private List<PawnMeleeData> allMeleeData = new();
+        private Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new Dictionary<Pawn, PawnMeleeData>();
+        private List<PawnMeleeData> allMeleeData = new List<PawnMeleeData>();
 
         public GameComp(Game game)
         {
@@ -61,8 +63,10 @@ namespace AAM
             if (pawnMeleeData.TryGetValue(pawn, out var found))
                 return found;
 
-            var created = new PawnMeleeData();
-            created.Pawn = pawn;
+            var created = new PawnMeleeData
+            {
+                Pawn = pawn
+            };
             allMeleeData.Add(created);
             pawnMeleeData.Add(pawn, created);
             return created;
@@ -73,6 +77,7 @@ namespace AAM
             base.GameComponentTick();
 
             AnimRenderer.TickAll();
+            AnimRenderer.RemoveDestroyed();
             GrabUtility.Tick();
 
             Patch_Corpse_DrawAt.Tick();
@@ -83,6 +88,12 @@ namespace AAM
                 data.TimeSinceExecuted += 1 / 60f;
                 data.TimeSinceGrappled += 1 / 60f;
             }
+        }
+
+        public override void GameComponentUpdate()
+        {
+            base.GameComponentUpdate();
+            FrameCounter++;
         }
 
         public override void GameComponentOnGUI()

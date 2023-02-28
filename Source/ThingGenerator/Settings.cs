@@ -46,6 +46,9 @@ namespace AAM
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoGrapple = true;
 
+        [Description("Can enemies use lassos (if they have any) to pull your colonists into melee range?")]
+        public bool EnemiesCanGrapple = true;
+
         [Label("Minimum Melee Skill")]
         [Description("The minumum melee skill required to use a lasso.\nAffects all pawns.")]
         [Range(0, 20)]
@@ -85,6 +88,10 @@ namespace AAM
                      "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoExecute = true;
+
+        [Label("Enemies Can Perform Executions")]
+        [Description("Can enemies perform execution animations?")]
+        public bool EnemiesCanExecute = true;
 
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
         public bool AnimalsCanBeExecuted = false;
@@ -153,15 +160,19 @@ namespace AAM
 
         #region Performance
         [Header("Performance")]
-        [Description("The interval, in ticks, between a complex pawn calculation that runs on each map.\nDon't touch this unless you know what you are doing.")]
-        [Range(1, 240)]
-        public int PawnProcessorTickInterval = 20;
+        [Description("The maximum number of CPU threads to use when processing pawns for automatic executions & lasso usage.\n" +
+                     "If set to 0, the thread count is automatically determined based on your CPU, and if set to 1 then multi-threaded processing is disabled.\n" +
+                     "Set to 1 if you experience error spam caused by a mod conflict, although it will decrease performance considerably.")]
+        [Range(0, 64)]
+        public int MaxProcessingThreads = 0;
 
-        [Label("Max CPU Time Per Tick")]
-        [Description("The maximum amount of time, in milliseconds, that the mod can spend processing pawns <b>per tick, per map</b>.\n" +
-                     "Higher values can increase the responsiveness of automatic grappling and executions, but can also greatly lower performance on very populated maps.")]
-        [Range(0.25f, 10f)]
-        public double MaxCPUTimePerTick = 1;
+        [Description("When enabled, multiple CPU threads are used to calculate complex matrix transformation needed for animations.\n" +
+                     "The number of threads is given by the Max Processing Threads setting.")]
+        public bool MultithreadedMatrixCalculations = true;
+
+        [Description("When enabled, offscreen animations are not drawn to save time and increase FPS.\n" +
+                     "This option is only here in case there are unexpected bugs related to this culling.")]
+        public bool OffscreenCulling = true;
         #endregion
 
         #region Other

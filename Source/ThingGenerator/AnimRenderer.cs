@@ -1,6 +1,7 @@
 ﻿using AAM;
 using AAM.Events;
 using AAM.Patches;
+using AAM.Processing;
 using AAM.RendererWorkers;
 using AAM.Sweep;
 using AAM.Tweaks;
@@ -23,21 +24,17 @@ public class AnimRenderer : IExposable
 {
     #region Static stuff
 
-    public static readonly Stopwatch SeekTimer = new();
-    public static readonly Stopwatch DrawTimer = new();
-    public static readonly Stopwatch EventsTimer = new();
     public static readonly char[] Alphabet = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+    public static readonly List<AnimRenderer> PostLoadPendingAnimators = new List<AnimRenderer>();
     public static Material DefaultCutout, DefaultTransparent;
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
     public static IReadOnlyCollection<Pawn> CapturedPawns => pawnToRenderer.Keys;
     public static int TotalCapturedPawnCount => pawnToRenderer.Count;
-    public static List<AnimRenderer> PostLoadPendingAnimators = new();
 
     private static readonly MaterialPropertyBlock shadowMpb = new MaterialPropertyBlock();
-    private static List<AnimRenderer> activeRenderers = new();
-    private static Dictionary<Pawn, AnimRenderer> pawnToRenderer = new();
-    private static Dictionary<string, Texture2D> textureCache = new();
-    private static bool isItterating;
+    private static readonly List<AnimRenderer> activeRenderers = new List<AnimRenderer>();
+    private static readonly Dictionary<Pawn, AnimRenderer> pawnToRenderer = new Dictionary<Pawn, AnimRenderer>();
+    private static readonly Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
 
     /// <summary>
     /// Tries to get the <see cref="AnimRenderer"/> that a pawn currently belongs to.
@@ -89,76 +86,51 @@ public class AnimRenderer : IExposable
         activeRenderers.Clear();
         pawnToRenderer.Clear();
         PostLoadPendingAnimators.Clear();
-        isItterating = false;
-    }
-
-    public static void ResetTimers()
-    {
-        SeekTimer.Reset();
-        DrawTimer.Reset();
-        EventsTimer.Reset();
     }
 
     public static void TickAll()
     {
         AddFromPostLoad();
 
-        isItterating = true;
-        for (int i = 0; i < activeRenderers.Count; i++)
+        foreach (AnimRenderer renderer in activeRenderers)
         {
-            var renderer = activeRenderers[i];
-            renderer.Tick();
-            if (renderer.IsDestroyed)
-            {
-                DestroyIntWorker(renderer);
-                i--;
-            }
+            if (!renderer.IsDestroyed)
+                renderer.Tick();
         }
-        isItterating = false;
     }
 
-    public static void DrawAll(float dt, Map map, Action<Pawn, Vector2> labelDraw = null)
+    public static void DrawAll(float dt, Map map, in CellRect viewBounds, List<Vector2> seekTimes, Action<Pawn, Vector2> labelDraw = null)
     {
         AddFromPostLoad();
 
-        isItterating = true;
-        for(int i = 0; i < activeRenderers.Count; i++)
+        bool shouldSeek = seekTimes == null;
+
+        for (int i = 0 ; i < activeRenderers.Count; i++)
         {
             var renderer = activeRenderers[i];
-
-            if (renderer.Map != map)
+            if (renderer.Map != map || renderer.IsDestroyed)
                 continue;
-
-            if (renderer.IsDestroyed)
-            {
-                DestroyIntWorker(renderer);
-                i--;
-                continue;
-            }
 
             try
             {
-                DrawSingle(renderer, dt, labelDraw);
+                DrawSingle(renderer, shouldSeek ? dt : null, !shouldSeek ? seekTimes[i] : null, viewBounds, labelDraw);
             }
             catch(Exception e)
             {
                 Core.Error($"Exception rendering animator '{renderer}'", e);
             }
-
         }
-        isItterating = false;
     }
 
     public static void DrawAllGUI(Map map)
     {
         AddFromPostLoad();
 
-        isItterating = true;
         for (int i = 0; i < activeRenderers.Count; i++)
         {
             var renderer = activeRenderers[i];
 
-            if (renderer.Map != map)
+            if (renderer.Map != map || renderer.IsDestroyed)
                 continue;
 
             try
@@ -171,7 +143,6 @@ public class AnimRenderer : IExposable
             }
 
         }
-        isItterating = false;
     }
 
     private static void AddFromPostLoad()
@@ -191,21 +162,35 @@ public class AnimRenderer : IExposable
         PostLoadPendingAnimators.Clear();
     }
 
-    private static void DrawSingle(AnimRenderer renderer, float dt, Action<Pawn, Vector2> labelDraw = null)
+    public static void RemoveDestroyed()
+    {
+        // Remove destroyed.
+        for (int i = 0; i < activeRenderers.Count; i++)
+        {
+            var r = activeRenderers[i];
+            if (r.IsDestroyed)
+            {
+                DestroyNew(r);
+                i--;
+            }
+        }
+    }
+
+    private static void DrawSingle(AnimRenderer renderer, float? dt, Vector2? tp, CellRect viewBounds, Action<Pawn, Vector2> labelDraw = null)
     {
         // Draw and handle events.
         Vector2 timePeriod = default;
         try
         {
-            timePeriod = renderer.Draw(null, dt, labelDraw);
+            bool cull = Core.Settings.OffscreenCulling && !viewBounds.Contains(renderer.RootPosition.ToIntVec3());
+            timePeriod = renderer.Draw(null, dt ?? 0, dt != null, cull, labelDraw);
         }
         catch (Exception e)
         {
             Core.Error($"Rendering exception when doing animation {renderer}", e);
         }
 
-        EventsTimer.Start();
-        foreach (var e in renderer.GetEventsInPeriod(timePeriod))
+        foreach (var e in renderer.GetEventsInPeriod(tp ?? timePeriod))
         {
             try
             {
@@ -216,10 +201,9 @@ public class AnimRenderer : IExposable
                 Core.Error($"{ex.GetType().Name} when handling animation event '{e}':", ex);
             }
         }
-        EventsTimer.Stop();
     }
 
-    private static void DestroyIntWorker(AnimRenderer renderer)
+    private static void DestroyNew(AnimRenderer renderer)
     {
         if (renderer.Pawns != null)
         {
@@ -257,30 +241,8 @@ public class AnimRenderer : IExposable
         }
     }
 
-    private static void DestroyInt(AnimRenderer renderer)
-    {
-        renderer.IsDestroyed = true;
-        if (!isItterating)
-        {
-            DestroyIntWorker(renderer);
-        }
-    }
-
     public static float Remap(float value, float a, float b, float a2, float b2)
         => Mathf.Lerp(a2, b2, Mathf.InverseLerp(a, b, value));
-
-    public static float InverseLerp(in Vector2 start, in Vector2 end, in Vector2 pos)
-    {
-        Vector2 dir = end - start;
-        float dirLen = dir.magnitude;
-        Vector2 realDir = pos - start;
-        float realLen = realDir.magnitude;
-
-        if (Vector2.Dot(dir / dirLen, realDir / realLen) < 0)
-            return 0f;
-
-        return Mathf.Clamp01(realLen / dirLen);
-    }
 
     #endregion
 
@@ -315,7 +277,7 @@ public class AnimRenderer : IExposable
     /// <summary>
     /// A list of pawns included in this animation.
     /// </summary>
-    public List<Pawn> Pawns = new();
+    public List<Pawn> Pawns = new List<Pawn>();
     /// <summary>
     /// The base transform that the animation is centered on.
     /// Useful functions to modify this are <see cref="Matrix4x4.TRS(Vector3, Quaternion, Vector3)"/>
@@ -388,6 +350,10 @@ public class AnimRenderer : IExposable
     /// A scale on the speed of this animation.
     /// </summary>
     public float TimeScale = 1f;
+
+    public double DrawMS;
+    public double SeekMS;
+    public double SweepMS;
 
     private List<AnimPartData> bodies = new List<AnimPartData>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
@@ -622,7 +588,7 @@ public class AnimRenderer : IExposable
         // and Seek will not run if time is already the target (seek) time.
         float tempTime = time;
         time = -1;
-        Seek(tempTime < 0 ? 0 : tempTime, null); // This will set time back to the correct value.
+        Seek(tempTime < 0 ? 0 : tempTime, 0); // This will set time back to the correct value.
 
         AnimationRendererWorker?.SetupRenderer(this);
         return true;
@@ -639,7 +605,8 @@ public class AnimRenderer : IExposable
             Core.Warn("Tried to destroy renderer that is already destroyed...");
             return;
         }
-        DestroyInt(this);
+
+        IsDestroyed = true;
     }
 
     /// <summary>
@@ -748,25 +715,33 @@ public class AnimRenderer : IExposable
         return (p.Spawned || ignoreNotSpawned) && ((p.ParentHolder is Map m && m == Map) || (p.ParentHolder == null && ignoreNotSpawned));
     }
 
-    public Vector2 Draw(float? atTime, float? dt, Action<Pawn, Vector2> labelDraw = null)
+    public Vector2 Draw(float? atTime, float dt, bool seek, bool cullDraw, Action<Pawn, Vector2> labelDraw = null)
     {
         if (IsDestroyed)
             return Vector2.zero;
 
+        var timer = new RefTimer();
         InitSweepMeshes();
         foreach (var item in sweeps)
             if (item != null)
                 item.MirrorHorizontal = MirrorHorizontal;
 
-        var range = Seek(atTime, dt * Core.Settings.GlobalAnimationSpeed);
+        var range = new Vector2(-1, -1);
+        if (seek)
+            range = Seek(atTime, dt);
+        else
+            SeekMS = 0;
 
-        if (Find.CurrentMap != Map)
-            return range; // Do not actually draw if not on the current map...
+        if (Find.CurrentMap != Map || cullDraw)
+        {
+            DrawMS = 0;
+            return range; // Do not actually draw if not on the current map or culled.
+        }
 
-        DrawTimer.Start();
-
+        var timer2 = new RefTimer();
         foreach (var path in sweeps)
             path.Draw(time);
+        timer2.GetElapsedMilliseconds(out SweepMS);
 
         foreach (var snap in snapshots)
         {
@@ -857,7 +832,7 @@ public class AnimRenderer : IExposable
 
         DrawPawns(labelDraw);
 
-        DrawTimer.Stop();
+        timer.GetElapsedMilliseconds(out DrawMS);
         return range;
     }
 
@@ -1015,31 +990,32 @@ public class AnimRenderer : IExposable
     /// Changes the current time of this animation.
     /// Depending on the parameters specified, this may act as a 'jump' (<paramref name="atTime"/>) or a continuous movement (<paramref name="dt"/>).
     /// </summary>
-    public Vector2 Seek(float? atTime, float? dt)
+    public Vector2 Seek(float? atTime, float dt)
     {
-        SeekTimer.Start();
+        float t = atTime ?? (time + dt * TimeScale * Core.Settings.GlobalAnimationSpeed);
 
-        float t = atTime ?? (this.time + dt.Value * TimeScale);
+        if (Math.Abs(this.time - t) < 0.0001f)
+            return new Vector2(-1, -1);
+
+        var timer = new RefTimer();
+
         var range = SeekInt(t, MirrorHorizontal, MirrorVertical);
+
+        timer.GetElapsedMilliseconds(out SeekMS);
 
         if (t > Data.Duration)
         {
             if (Loop)
-                this.time = 0;
+                time = 0;
             else
                 Destroy();
         }
-
-        SeekTimer.Stop();
         return range;
     }
 
     private Vector2 SeekInt(float time, bool mirrorX = false, bool mirrorY = false)
     {
         time = Mathf.Clamp(time, 0f, Duration);
-
-        if (Math.Abs(this.time - time) < 0.0001f)
-            return new Vector2(-1, -1);
 
         // Pass 1: Evaluate curves, make local matrices.
         for (int i = 0; i < Data.Parts.Count; i++)

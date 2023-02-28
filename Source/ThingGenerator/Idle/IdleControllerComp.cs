@@ -13,7 +13,7 @@ namespace AAM.Idle;
 public class IdleControllerComp : ThingComp
 {
     public AnimRenderer CurrentAnimation;
-    public int TicksSinceFlavour;
+    public int RareTicksSinceFlavour;
 
     private float pauseAngle;
     private int pauseTicks;
@@ -23,63 +23,72 @@ public class IdleControllerComp : ThingComp
     private AnimDef lastAttack;
     private AnimDef lastFlavour;
 
+    public void PreDraw()
+    {
+        if (parent is not Pawn pawn || CurrentAnimation == null)
+            return;
+
+        if (CurrentAnimation.IsDestroyed)
+        {
+            TickAnimation(pawn, GetMeleeWeapon());
+        }
+
+        // Update animator position to match pawn.
+        CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
+    }
+
+    private bool ShouldBeActive()
+    {
+        // Should never happen but just in case:
+        if (!Core.Settings.AnimateAtIdle || parent is not Pawn pawn || (pawn.CurJob != null && pawn.CurJob.def.neverShowWeapon))
+        {
+            return false;
+        }
+
+        bool vanillaShouldDraw = pawn.drawer.renderer.CarryWeaponOpenly();
+        if (!vanillaShouldDraw)
+        {
+            if (pawn.stances.curStance is Stance_Busy { neverAimWeapon: false, focusTarg.IsValid: true })
+                vanillaShouldDraw = true;
+        }
+
+        var weapon = GetMeleeWeapon();
+        if (vanillaShouldDraw && weapon == null)
+            vanillaShouldDraw = false;
+
+        if (!vanillaShouldDraw)
+        {
+            return false;
+        }
+
+        bool shouldBeDrawing = Core.Settings.AnimateAtIdle && !pawn.Downed && !pawn.Dead &&
+                               pawn.Spawned;
+        if (!shouldBeDrawing)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public override void CompTick()
     {
         base.CompTick();
 
         try
         {
-            // Should never happen but just in case:
-            if (!Core.Settings.AnimateAtIdle || parent is not Pawn pawn || (pawn.CurJob != null && pawn.CurJob.def.neverShowWeapon))
+            if (!ShouldBeActive())
             {
                 ClearAnimation();
                 return;
             }
 
-            bool vanillaShouldDraw = pawn.drawer.renderer.CarryWeaponOpenly();
-            if (!vanillaShouldDraw)
-            {
-                if (pawn.stances.curStance is Stance_Busy {neverAimWeapon: false, focusTarg.IsValid: true})
-                    vanillaShouldDraw = true;
-            }
-
-            var weapon = GetMeleeWeapon();
-            if (vanillaShouldDraw && weapon == null)
-                vanillaShouldDraw = false;
-
-            if (!vanillaShouldDraw)
-            {
-                ClearAnimation();
-                return;
-            }
-
-            bool shouldBeDrawing = Core.Settings.AnimateAtIdle && !pawn.Downed && !pawn.Dead &&
-                                   pawn.Spawned;
-            if (!shouldBeDrawing)
-            {
-                ClearAnimation();
-                return;
-            }
-
-            TickAnimation(pawn, weapon);
+            TickAnimation(parent as Pawn, GetMeleeWeapon());
         }
         catch (Exception e)
         {
             Core.Error($"Exception processing idling animation for '{parent}':", e);
         }
-    }
-
-    public void PreDraw()
-    {
-        if (CurrentAnimation == null)
-            return;
-
-        var pawn = parent as Pawn;
-        if (pawn == null)
-            return;
-
-        // Update animator position to match pawn.
-        CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
     }
 
     private AnimDef Random(IReadOnlyList<AnimDef> anims, AnimDef preferNotThis)
@@ -116,6 +125,87 @@ public class IdleControllerComp : ThingComp
         IdleType.AttackNorth => Rot4.North,
         _ => Rot4.South
     };
+
+    public override void CompTickRare()
+    {
+        base.CompTickRare();
+
+        if (parent is not Pawn pawn || CurrentAnimation == null)
+            return;
+
+        var weapon = GetMeleeWeapon();
+        if (weapon == null)
+            return;
+
+        Rot4 facing = pawn.Rotation;
+
+        // Random idle interrupt (flavour).
+        // Done 
+        if (CurrentAnimation.Def.idleType == IdleType.Idle && facing == Rot4.South && RareTicksSinceFlavour > 2)
+        {
+            float mtbSeconds = 20;
+            if (Rand.MTBEventOccurs(mtbSeconds, GenTicks.TicksPerRealSecond, GenTicks.TickRareInterval))
+            {
+                ClearAnimation();
+                var anim = Random(weapon.TryGetTweakData().GetFlavourAnimations(), lastFlavour);
+                if (anim != null)
+                {
+                    lastFlavour = anim;
+                    var startParams = new AnimationStartParameters(anim, pawn)
+                    {
+                        FlipX = false,
+                        DoNotRegisterPawns = true,
+                        RootTransform = MakePawnMatrix(pawn, false)
+                    };
+                    startParams.TryTrigger(out CurrentAnimation);
+                    RareTicksSinceFlavour = 0;
+                }
+            }
+        }
+        RareTicksSinceFlavour++;
+
+
+        // Update animation pausing.
+        if (CurrentAnimation == null || !CurrentAnimation.Def.idleType.IsAttack())
+        {
+            pauseTicks = 0;
+            isPausing = false;
+        }
+        if (pauseTicks > 0)
+        {
+            if (isPausing)
+            {
+                pauseTicks--;
+            }
+            else
+            {
+                // Check weapon angle.
+                // Once the weapon swings by the target, do a brief pause to indicate a hit.
+                var ss = CurrentAnimation.GetPart("ItemA").GetSnapshot(CurrentAnimation);
+                var dir = (CurrentAnimation.RootTransform * ss.WorldMatrixPreserveFlip).MultiplyVector(Vector3.right).normalized;
+                float angle = dir.ToAngleFlatNew();
+                float delta = Mathf.DeltaAngle(angle, pauseAngle);
+                bool shouldStartPausing = Mathf.Abs(delta) < 5f || (lastDelta != 0 && lastDelta.Polarity() != delta.Polarity() && Mathf.Abs(lastDelta) < 120);
+                //Core.Log($"{angle:F0} vs {pauseAngle:F0} is Delta: {delta} ({dir.ToString("F2")})"); 
+                lastDelta = delta;
+                if (shouldStartPausing)
+                {
+                    isPausing = true;
+                    lastSpeed = CurrentAnimation.TimeScale;
+                    CurrentAnimation.TimeScale = 0;
+                    lastDelta = 0;
+                }
+            }
+        }
+        else
+        {
+            if (isPausing)
+            {
+                isPausing = false;
+                CurrentAnimation.TimeScale = lastSpeed;
+            }
+        }
+    }
 
     private void TickAnimation(Pawn pawn, Thing weapon)
     {
@@ -177,6 +267,8 @@ public class IdleControllerComp : ThingComp
         {
             StartNew();
         }
+
+        return;
         
         // Facing in the right direction?
         var currentFacing = GetCurrentAnimFacing();
@@ -209,34 +301,10 @@ public class IdleControllerComp : ThingComp
                     // Freeze frame the move animation.
                     float idleTime = CurrentAnimation.Def.idleFrame / 60f;
                     CurrentAnimation.TimeScale = 0.0f;
-                    CurrentAnimation.Seek(idleTime, null);
+                    //CurrentAnimation.Seek(idleTime, 0);
                 }
             }
         }
-
-        // Random idle interrupt (flavour).
-        if (CurrentAnimation.Def.idleType == IdleType.Idle && facing == Rot4.South && TicksSinceFlavour > GenTicks.TicksPerRealSecond * 5)
-        {
-            float mtbSeconds = 20;
-            if (Rand.MTBEventOccurs(mtbSeconds, GenTicks.TicksPerRealSecond, 1))
-            {
-                ClearAnimation();
-                var anim = Random(weapon.TryGetTweakData().GetFlavourAnimations(), lastFlavour);
-                if (anim != null)
-                {
-                    lastFlavour = anim;
-                    var startParams = new AnimationStartParameters(anim, pawn)
-                    {
-                        FlipX = false,
-                        DoNotRegisterPawns = true,
-                        RootTransform = MakePawnMatrix(pawn, false)
-                    };
-                    startParams.TryTrigger(out CurrentAnimation);
-                    TicksSinceFlavour = 0;
-                }
-            }
-        }
-        TicksSinceFlavour++;
 
         // Update walk animation speed based on pawn speed.
         if (CurrentAnimation.Def.idleType is IdleType.MoveHorizontal or IdleType.MoveVertical && isMoving)
@@ -252,49 +320,8 @@ public class IdleControllerComp : ThingComp
             float dstPerSecond = 60f * dst * pctPerTick;
             float coef = Mathf.Clamp(Mathf.Pow(dstPerSecond / refSpeed, exp), minCoef, maxCoef);
 
-            if (!isPausing)
+            if (!isPausing && dstPerSecond > 0.05f)
                 CurrentAnimation.TimeScale = coef;
-        }
-
-        // Update animation pausing.
-        if (CurrentAnimation == null || !CurrentAnimation.Def.idleType.IsAttack())
-        {
-            pauseTicks = 0;
-            isPausing = false;
-        }
-        if (pauseTicks > 0)
-        {
-            if (isPausing)
-            {
-                pauseTicks--;
-            }
-            else
-            {
-                // Check weapon angle.
-                // Once the weapon swings by the target, do a brief pause to indicate a hit.
-                var ss = CurrentAnimation.GetPart("ItemA").GetSnapshot(CurrentAnimation);
-                var dir = (CurrentAnimation.RootTransform * ss.WorldMatrixPreserveFlip).MultiplyVector(Vector3.right).normalized;
-                float angle = dir.ToAngleFlatNew();
-                float delta = Mathf.DeltaAngle(angle, pauseAngle);
-                bool shouldStartPausing = Mathf.Abs(delta) < 5f || (lastDelta != 0 && lastDelta.Polarity() != delta.Polarity() && Mathf.Abs(lastDelta) < 120);
-                //Core.Log($"{angle:F0} vs {pauseAngle:F0} is Delta: {delta} ({dir.ToString("F2")})"); 
-                lastDelta = delta;
-                if (shouldStartPausing)
-                {
-                    isPausing = true;
-                    lastSpeed = CurrentAnimation.TimeScale;
-                    CurrentAnimation.TimeScale = 0;
-                    lastDelta = 0;
-                } 
-            }
-        }
-        else
-        {
-            if (isPausing)
-            {
-                isPausing = false;
-                CurrentAnimation.TimeScale = lastSpeed;
-            }
         }
     }
 

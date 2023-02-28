@@ -3,7 +3,9 @@ using EpicUtils;
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -187,7 +189,7 @@ namespace AAM.UI
                 Widgets.DrawBoxSolid(bar, Color.white * 0.45f);
                 float newLerp = Widgets.HorizontalSlider(bar.ExpandedBy(0, -2), lerp, 0, 1);
                 if (Math.Abs(newLerp - lerp) > 0.005f)
-                    renderer.Seek(newLerp * renderer.Data.Duration, null);
+                    renderer.Seek(newLerp * renderer.Data.Duration, 0);
 
                 rect.y += 20;
 
@@ -651,7 +653,45 @@ namespace AAM.UI
             allManagers.Clear();
             allManagers.AddRange(Find.Maps.Select(m => m.GetAnimManager()));
 
-            ui.Label("Not implemented");
+            ui.Label($"Max threads: {JobsUtility.JobWorkerCount}");
+            if (AnimationManager.IsDoingMultithreadedSeek)
+            {
+                ui.Label("Multithreaded matrix calculation is active:");
+                ui.Label($" - Multithreaded seek time is {AnimationManager.MultithreadedSeekTimeMS:F2} on {AnimationManager.MultithreadedThreadsUsed} threads.");
+            }
+
+            foreach (var manager in allManagers)
+            {
+                var d = manager.PawnProcessor.Diagnostics;
+
+                double totalDraw = 0;
+                double totalSeek = 0;
+                double totalSweep = 0;
+                int animatorCount = 0;
+
+                foreach (var anim in AnimRenderer.ActiveRenderers.Where(r => r.Map == manager.map))
+                {
+                    totalDraw += anim.DrawMS;
+                    totalSeek += anim.SeekMS;
+                    totalSweep += anim.SweepMS;
+                    animatorCount++;
+                }
+
+                ui.Label($"Map {manager.map}:");
+                ui.Indent();
+
+                ui.Label($"{animatorCount} active animators:");
+                ui.Indent();
+                ui.Label($"- Total {totalSeek + totalDraw:F1} MS per frame ({totalSeek:F2} seek, {totalDraw:F2} draw).");
+                ui.Label($"- Of which {totalSweep:F2} was sweep path calculation and rendering.");
+
+
+                ui.Outdent();
+
+                ui.Label($"- Processing {d.PawnCount} pawns took {d.TotalTimeMS:F1} MS on {d.ThreadsUsed} threads.");
+                ui.Outdent();
+
+            }
 
             //SimpleCurveDrawer.DrawCurveLines(ui.GetRect(200), drawInfo, false, new Rect(0, 0, 100, 1), true, true);
 
