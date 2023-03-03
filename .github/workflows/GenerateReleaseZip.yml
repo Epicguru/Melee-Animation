@@ -6,7 +6,7 @@ env:
   SLN_PATH: Source/
   # Change this to what you want your folder name to be in people's Mods/
   # folder. It should be unique to your mod.
-  MOD_NAME: AdvancedMeleeAnimation
+  MOD_NAME: MeleeAnimation
   # These two environment variables control whether all releases created by the
   # release job are drafts or prereleases.
   RELEASE_DRAFT: false
