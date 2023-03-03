@@ -1,4 +1,5 @@
-﻿using AAM.Retexture;
+﻿using AAM.Patches;
+using AAM.Retexture;
 using AAM.Tweaks;
 using HarmonyLib;
 using ModRequestAPI;
@@ -22,6 +23,7 @@ namespace AAM
         public static string ModTitle => ModContent?.Name;
         public static ModContentPack ModContent;
         public static Settings Settings;
+        public static Harmony Harmony;
         public static bool IsSimpleSidearmsActive;
 
         private readonly Queue<(string title, Action action)> lateLoadActions = new();
@@ -71,8 +73,8 @@ namespace AAM
             string assemblies = string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName);
             Log($"Hello, world!\n\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
 
-            var h = new Harmony(content.PackageId);
-            h.PatchAll();
+            Harmony = new Harmony(content.PackageId);
+            Harmony.PatchAll();
             ModContent = content; 
 
             // Initialize settings.
@@ -86,7 +88,7 @@ namespace AAM
             });
 
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
-            AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
+            AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(Harmony));
             AddLateLoadAction(false, "Finding all lassos...", AAM.Content.FindAllLassos);
 
             AddLateLoadAction(true, "Loading main content...", AAM.Content.Load);
@@ -95,8 +97,17 @@ namespace AAM
             AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
             AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
             AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
+            AddLateLoadAction(true, "Patch VBE", PatchVBE);
 
             AddLateLoadEvents();
+        }
+
+        private static void PatchVBE()
+        {
+            if (ModLister.GetActiveModWithIdentifier("vanillaexpanded.backgrounds") == null)
+                return;
+
+            Patch_VBE_Utils_DrawBG.TryApplyPatch();
         }
 
         private static void PreCacheAllRetextures()

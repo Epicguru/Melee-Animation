@@ -24,18 +24,6 @@ public static class BGRenderer
 
         var screenArea = new Rect(0, 0, Verse.UI.screenWidth, Verse.UI.screenHeight);
         DrawLayers(screenArea);
-        //DrawEditor(new Rect(200, 200, 200, 1000));
-
-        //var texture = Content.BGSketch1;
-        //if (texture == null)
-        //    return;
-
-        //var screenArea = new Rect(0, 0, Verse.UI.screenWidth, Verse.UI.screenHeight);
-        //Rect uv = new Rect(0, 0, 1, 1);
-
-        //var area = FitRect(texture, screenArea, 1f);
-
-        //Widgets.DrawTexturePart(area, uv, texture);
     }
 
     private static void InitLayers()

@@ -143,8 +143,6 @@ namespace AAM
                     LassoDefs.Add(ap);
                 }
             }
-
-            Core.Log($"Found {LassoDefs.Count} lassos!");
         }
     }
 
