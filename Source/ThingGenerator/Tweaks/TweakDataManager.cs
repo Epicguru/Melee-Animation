@@ -117,7 +117,7 @@ namespace AAM.Tweaks
             return true;
         }
 
-        [DebugOutput("Advanced Melee Animation")]
+        [DebugOutput("Melee Animation")]
         private static void LogAllRetextureCompletion()
         {
             var all = from td in DefDatabase<ThingDef>.AllDefsListForReading

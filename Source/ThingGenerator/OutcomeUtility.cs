@@ -22,7 +22,7 @@ public static class OutcomeUtility
         public float TargetDamageAmount;
     }
 
-    [DebugAction("Advanced Melee Animation", "Compare Lethality", allowedGameStates = AllowedGameStates.PlayingOnMap, actionType = DebugActionType.ToolMapForPawns)]
+    [DebugAction("Melee Animation", "Compare Lethality", allowedGameStates = AllowedGameStates.PlayingOnMap, actionType = DebugActionType.ToolMapForPawns)]
     private static void CompareLethalityDebug(Pawn pawn)
     {
         Pawn selected = Find.Selector.SelectedPawns.FirstOrDefault();

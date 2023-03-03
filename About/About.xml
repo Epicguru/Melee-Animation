@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-  <packageId>co.uk.epicguru.advancedmeleeanimation</packageId>
-  <name>Advanced Melee Animation</name>
+  <packageId>co.uk.epicguru.meleeanimation</packageId>
+  <name>Melee Animation</name>
   <author>Epicguru</author>
   <supportedVersions>
     <li>1.4</li>

@@ -190,16 +190,16 @@ public static class Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetOccupiedMaskBitZ(this uint mask, int z) => (((uint)1 << 1 + (z + 1) * 3) & mask) != 0;
 
-    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons (tiny)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Melee Animation", "Spawn all melee weapons (tiny)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void GimmeMeleeWeaponsTiny() => GimmeMeleeWeapons(WeaponSize.Tiny);
 
-    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons (medium)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Melee Animation", "Spawn all melee weapons (medium)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void GimmeMeleeWeaponsMedium() => GimmeMeleeWeapons(WeaponSize.Medium);
 
-    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons (colossal)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Melee Animation", "Spawn all melee weapons (colossal)", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void GimmeMeleeWeaponsColossal() => GimmeMeleeWeapons(WeaponSize.Colossal);
 
-    [DebugAction("Advanced Melee Animation", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Melee Animation", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void GimmeMeleeWeaponsAll() => GimmeMeleeWeapons(null);
 
     private static void GimmeMeleeWeapons(WeaponSize? onlySize)
@@ -229,7 +229,7 @@ public static class Extensions
         }
     }
 
-    [DebugAction("Advanced Melee Animation", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    [DebugAction("Melee Animation", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static List<DebugActionNode> SpawnArmy()
     {
         List<DebugActionNode> list = new List<DebugActionNode>();

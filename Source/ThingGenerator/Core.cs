@@ -16,7 +16,7 @@ namespace AAM
     [HotSwapAll]
     public class Core : Mod
     {
-        private static readonly string GistID = "d1c22be7a26feb273008c4cea948be53";
+        private const string GIST_ID = "d1c22be7a26feb273008c4cea948be53";
 
         public static Func<Pawn, float> GetBodyDrawSizeFactor = _ => 1f;
         public static string ModTitle => ModContent?.Name;
@@ -29,25 +29,25 @@ namespace AAM
 
         public static void Log(string msg)
         {
-            Verse.Log.Message($"<color=#66ffb5>[Adv.MeleeAnim]</color> {msg}");
+            Verse.Log.Message($"<color=#66ffb5>[MeleeAnim]</color> {msg}");
         }
 
         public static void Warn(string msg)
         {
-            Verse.Log.Warning($"<color=#66ffb5>[Adv.MeleeAnim]</color> {msg}");
+            Verse.Log.Warning($"<color=#66ffb5>[MeleeAnim]</color> {msg}");
         }
 
         public static void Error(string msg, Exception e = null)
         {
-            Verse.Log.Error($"<color=#66ffb5>[Adv.MeleeAnim]</color> {msg}");
+            Verse.Log.Error($"<color=#66ffb5>[MeleeAnim]</color> {msg}");
             if (e != null)
                 Verse.Log.Error(e.ToString());
         }
 
-        [DebugAction("Advanced Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
+        [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
         private static void LogModRequests()
         {
-            var task = Task.Run(() => new ModRequestClient(GistID).GetModRequests());
+            var task = Task.Run(() => new ModRequestClient(GIST_ID).GetModRequests());
             task.ContinueWith(t =>
             {
                 if (!t.IsCompletedSuccessfully)
@@ -147,7 +147,7 @@ namespace AAM
 
         private static async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
         {
-            var client = new ModRequestClient(GistID);
+            var client = new ModRequestClient(GIST_ID);
 
             bool UpdateAction(string modID, ModData data)
             {
