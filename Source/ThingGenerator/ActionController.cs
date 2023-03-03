@@ -256,6 +256,7 @@ public class ActionController
                 PossibleExecutions = ExecutionAttemptReport.BorrowList(),
                 CanExecute = true
             };
+            report.PossibleExecutions.Clear();
 
             // Check immediately adjacent.
             var tp = target.Position;

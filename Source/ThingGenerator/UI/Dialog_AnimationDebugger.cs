@@ -1,4 +1,5 @@
-﻿using EpicUtils;
+﻿using AAM.Idle;
+using EpicUtils;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -652,6 +653,9 @@ namespace AAM.UI
             allManagers.AddRange(Find.Maps.Select(m => m.GetAnimManager()));
 
             ui.Label($"Max threads: {JobsUtility.JobWorkerCount + 1}");
+
+            ui.Label($"There are {IdleControllerComp.TotalActive} active idle animators that took {IdleControllerComp.TotalTickTimeMS:F2} MS to tick.");
+
             if (AnimationManager.IsDoingMultithreadedSeek)
             {
                 ui.Label("Multithreaded matrix calculation is active:");
@@ -700,6 +704,7 @@ namespace AAM.UI
                     ui.Label($"Startup: {d.StartupTimesMS[i]:F2}, Get Targets: {d.TargetFindTimesMS[i]:F2}, Make Reports: {d.ReportTimesMS[i]:F2}");
                 }
 
+                ui.Outdent();
                 ui.Outdent();
 
             }

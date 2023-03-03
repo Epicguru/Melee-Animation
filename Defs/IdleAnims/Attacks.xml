@@ -52,7 +52,7 @@
     <pointAtTarget>true</pointAtTarget>
     <returnToIdleStart>31</returnToIdleStart>
     <returnToIdleEnd>60</returnToIdleEnd>
-    <relativeProbability>0.3</relativeProbability>
+    <relativeProbability>0.6</relativeProbability> <!-- Less common that others -->
   </AAM.AnimDef>
 
   <!-- Medium -->
@@ -63,6 +63,27 @@
       <size>Medium</size>
     </weaponFilter>
   </AAM.AnimDef>
+  <AAM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AAM_Idle_MediumAttackHor2</defName>
+    <data>Idle_Medium_SlashHorizontal2.json</data>
+    <weaponFilter Class="AAM.Reqs.AnySize">
+      <size>Medium</size>
+    </weaponFilter>
+  </AAM.AnimDef>
+  <AAM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AAM_Idle_MediumAttackHor3</defName>
+    <data>Idle_Medium_StabHorizontal1.json</data>
+    <!-- This is a stab animation: -->
+    <weaponFilter Class="AAM.Reqs.And">
+      <subs>
+        <li Class="AAM.Reqs.AnySize"><size>Medium</size></li>
+        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+      </subs>
+    </weaponFilter>
+    <pointAtTarget>true</pointAtTarget>
+    <returnToIdleStart>32</returnToIdleStart>
+    <returnToIdleEnd>98</returnToIdleEnd>
+  </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimAttackNorth">
     <defName>AAM_Idle_MediumAttackNorth1</defName>
@@ -71,6 +92,20 @@
       <size>Medium</size>
     </weaponFilter>
   </AAM.AnimDef>
+  <AAM.AnimDef ParentName="AnimAttackNorth">
+    <defName>AAM_Idle_MediumAttackNorth2</defName>
+    <data>Idle_Medium_StabNorth.json</data>
+    <!-- This is a stab animation: -->
+    <weaponFilter Class="AAM.Reqs.And">
+      <subs>
+        <li Class="AAM.Reqs.AnySize"><size>Medium</size></li>
+        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+      </subs>
+    </weaponFilter>
+    <pointAtTarget>true</pointAtTarget>
+    <returnToIdleStart>27</returnToIdleStart>
+    <returnToIdleEnd>54</returnToIdleEnd>
+  </AAM.AnimDef>
 
   <AAM.AnimDef ParentName="AnimAttackSouth">
     <defName>AAM_Idle_MediumAttackSouth1</defName>
@@ -78,6 +113,20 @@
     <weaponFilter Class="AAM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
+  </AAM.AnimDef>
+  <AAM.AnimDef ParentName="AnimAttackSouth">
+    <defName>AAM_Idle_MediumAttackSouth2</defName>
+    <data>Idle_Medium_StabSouth.json</data>
+    <!-- This is a stab animation: -->
+    <weaponFilter Class="AAM.Reqs.And">
+      <subs>
+        <li Class="AAM.Reqs.AnySize"><size>Medium</size></li>
+        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+      </subs>
+    </weaponFilter>
+    <pointAtTarget>true</pointAtTarget>
+    <returnToIdleStart>28</returnToIdleStart>
+    <returnToIdleEnd>62</returnToIdleEnd>
   </AAM.AnimDef>
 
   <!-- Colossal -->

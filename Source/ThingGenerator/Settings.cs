@@ -158,6 +158,25 @@ namespace AAM
         [WebContent("OffsetMode", false)]
         public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
 
+        [Label("Move Animation Speed")]
+        [Description("Changes the speed of the movement animations.\nHigher values increase the speed. This is just a visual change, it obviously doesn't change the pawn's movement speed.")]
+        [Percentage]
+        [Range(0.1f, 3f)]
+        [Step(0.01f)]
+        public float MoveAnimSpeedCoef = 1f;
+
+        [Label("Idle Animation Average Interval")]
+        [Description("Pawns standing with their weapon out (such as when drafted) will sometimes play an animation where they swing their weapon about, flourish it etc.\n" +
+                     "This option controls the average time, in seconds, between the occurrence of this animation.\nSet to 0 to disable the animations entirely.")]
+        [Range(0, 60)]
+        [Step(0.5f)]
+        public float FlavourMTB = 10f;
+
+        [Description("When doing a regular melee attack, the animation will very briefly pause at the point when the weapon intersects the target.\n" +
+                     "This lets you know whether an attack connected, as well as giving the hit a bit more visual <i>oomph</i>.\n" +
+                     "This setting changes the duration of that pause, or disables it entirely. This is a purely visual change and does not affect combat.")]
+        public AttackPauseIntensity AttackPauseDuration = AttackPauseIntensity.Medium;
+
         [Label("Weapon Trail Color")]
         [Description("The base color of weapon trails. If you set the alpha to 0, trails will be disabled.")]
         [WebContent("SweepColor", false)]
@@ -314,5 +333,13 @@ namespace AAM
         None,
         InterpolateToCorrect,
         KeepOffset
+    }
+
+    public enum AttackPauseIntensity
+    {
+        Disabled = 0,
+        Short = 4,
+        Medium = 8,
+        Long = 12
     }
 }

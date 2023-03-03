@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Verse;
 
 namespace AAM.UI;
@@ -69,7 +70,7 @@ public static class BGRenderer
         {
             var layer = layers[i];
 
-            var fit = FitRect(layer.Texture, screen, layer.Scale * 1.1f, true);
+            var fit = FitRect(layer.Texture, screen, ScaleMode.Cover, layer.Scale * 1.1f);
             var offset = mouseOffset;
             fit.position += offset * 0.05f * layer.ParallaxFactor;
 
@@ -96,12 +97,12 @@ public static class BGRenderer
         ui.End();
     }
 
-    public static Rect FitRect(Texture tex, Rect area, float scale, bool shrink = false)
+    public static Rect FitRect(this Texture tex, Rect area, ScaleMode mode, float scale = 1f)
     {
         float w = tex.width;
         float h = tex.height;
 
-        if (shrink)
+        void Shrink()
         {
             if (w > area.width)
             {
@@ -117,19 +118,69 @@ public static class BGRenderer
             }
         }
 
-        if (w < area.width)
+        void Expand()
         {
-            float inc = area.width / w;
-            w = area.width;
-            h *= inc;
+            if (w < area.width)
+            {
+                float inc = area.width / w;
+                w = area.width;
+                h *= inc;
+            }
+            if (h < area.height)
+            {
+                float inc = area.height / h;
+                h = area.height;
+                w *= inc;
+            }
         }
-        if (h < area.height)
+
+        switch (mode)
         {
-            float inc = area.height / h;
-            h = area.height;
-            w *= inc;
+            case ScaleMode.Expand:
+                Expand();
+                break;
+
+            case ScaleMode.Shrink:
+                Shrink();
+                break;
+            case ScaleMode.Cover:
+                Shrink();
+                Expand();
+                break;
+            case ScaleMode.Fit:
+                Expand();
+                Shrink();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
         }
 
         return new Rect(0, 0, w, h).CenteredOnXIn(area).CenteredOnYIn(area).ScaledBy(scale);
     }
+}
+
+public enum ScaleMode
+{
+    /// <summary>
+    /// The texture expands until it covers the entire rect.
+    /// If it is already larger than the rect nothing happens.
+    /// </summary>
+    Expand,
+    /// <summary>
+    /// The texture is shrunk until it fits entirely within the rect.
+    /// If it is already smaller than the rect nothing happens.
+    /// </summary>
+    Shrink,
+
+    /// <summary>
+    /// The same as <see cref="Expand"/> but the texture is scaled such that it is as small as possible while still covering the entire rect.
+    /// The texture may still expand beyond the rect.
+    /// </summary>
+    Cover,
+
+    /// <summary>
+    /// The texture is scaled such that it expands as large as possible within the rect
+    /// without spilling outside the rect.
+    /// </summary>
+    Fit
 }

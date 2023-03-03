@@ -89,7 +89,7 @@ namespace AAM
             var viewBounds = Find.CameraDriver.CurrentViewRect.ExpandedBy(CullingPadding);
 
             AnimRenderer.DrawAll(deltaTime, map, viewBounds, IsDoingMultithreadedSeek ? seekTimes : null, Core.Settings.DrawNamesInAnimation ? DrawLabel : null);
-            AnimRenderer.RemoveDestroyed();
+            AnimRenderer.RemoveDestroyed(IsDoingMultithreadedSeek ? seekTimes : null);
         }
 
         private static void SeekMultithreaded(float dt)

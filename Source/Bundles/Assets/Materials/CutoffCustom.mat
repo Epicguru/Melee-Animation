@@ -28,9 +28,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - CutoffAngle: 0
+    - CutoffAngle: 1
     - Distance: 0
-    - Polarity: -1
+    - Polarity: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorTwo: {r: 1, g: 1, b: 1, a: 1}

@@ -137,11 +137,11 @@ public class MapPawnProcessor : IDisposable
             if (pair.lassoToHere == null)
             {
                 // Instant trigger.
-                bool worked = (args with
+                var finalArgs = args with
                 {
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn)
-                })
-                .TryTrigger();
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
+                };
+                bool worked = finalArgs.TryTrigger();
 
                 // Set execution cooldown.
                 if (worked)
@@ -149,8 +149,13 @@ public class MapPawnProcessor : IDisposable
             }
             else
             {
+                var finalArgs = args with
+                {
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
+                };
+
                 // Lasso.
-                if (!JobDriver_GrapplePawn.GiveJob(args.MainPawn, args.SecondPawn, pair.lassoToHere.Value, false, args))
+                if (!JobDriver_GrapplePawn.GiveJob(args.MainPawn, args.SecondPawn, pair.lassoToHere.Value, false, finalArgs))
                 {
                     Core.Error($"Failed to give grapple job to {args.MainPawn}.");
                     return;
@@ -344,12 +349,12 @@ public class MapPawnProcessor : IDisposable
         if (pawn.IsColonist || pawn.IsSlaveOfColony)
         {
             execute = Core.Settings.ExecuteAttemptMTBSeconds;
-            lasso = 0.25f;
+            lasso = 10;
         }
         else
         {
             execute = Core.Settings.ExecuteAttemptMTBSecondsEnemy;
-            lasso = 0.25f;
+            lasso = 10; // TODO implement lasso MTB
         }
     }
 

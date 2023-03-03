@@ -46,9 +46,7 @@ public class AnimRenderer : IExposable
         if (pawn == null)
             return null;
 
-        if (pawnToRenderer.TryGetValue(pawn, out var found))
-            return found;
-        return null;
+        return pawnToRenderer.TryGetValue(pawn, out var found) ? found : null;
     }
 
     public static Texture2D ResolveTexture(in AnimPartSnapshot snapshot)
@@ -162,17 +160,34 @@ public class AnimRenderer : IExposable
         PostLoadPendingAnimators.Clear();
     }
 
-    public static void RemoveDestroyed()
+    public static void RemoveDestroyed(List<Vector2> seekTimes)
     {
+        // Do final seeking if seek times are provided.
+        // Needs to be done because when doing multithreaded seeking
+        // it is possible to seek, destroy because of end of animation,
+        // but the final events not be triggered because they are normally triggered from the draw method.
+        // And the draw method is not called if destroyed...
+        if (seekTimes != null)
+        {
+            for (int i = 0; i < activeRenderers.Count; i++)
+            {
+                var r = activeRenderers[i];
+                if (!r.IsDestroyed)
+                    continue;
+
+                TryDoEventsForPeriod(r, seekTimes[i]);
+            }
+        }
+
         // Remove destroyed.
         for (int i = 0; i < activeRenderers.Count; i++)
         {
             var r = activeRenderers[i];
-            if (r.IsDestroyed)
-            {
-                DestroyNew(r);
-                i--;
-            }
+            if (!r.IsDestroyed)
+                continue;
+
+            DestroyNew(r);
+            i--;
         }
     }
 
@@ -190,7 +205,15 @@ public class AnimRenderer : IExposable
             Core.Error($"Rendering exception when doing animation {renderer}", e);
         }
 
-        foreach (var e in renderer.GetEventsInPeriod(tp ?? timePeriod))
+        TryDoEventsForPeriod(renderer, tp ?? timePeriod);
+    }
+
+    private static void TryDoEventsForPeriod(AnimRenderer renderer, Vector2 tp)
+    {
+        if (tp.y < 0)
+            return;
+
+        foreach (var e in renderer.GetEventsInPeriod(tp))
         {
             try
             {
@@ -215,7 +238,6 @@ public class AnimRenderer : IExposable
         }
 
         activeRenderers.Remove(renderer);
-
         try
         {
             renderer.OnEnd();
@@ -228,17 +250,17 @@ public class AnimRenderer : IExposable
 
     private static void RegisterInt(AnimRenderer renderer)
     {
-        if (!activeRenderers.Contains(renderer))
-        {
-            activeRenderers.Add(renderer);
-            foreach (var item in renderer.Pawns)
-            {
-                if (item != null)
-                    pawnToRenderer.Add(item, renderer);
-            }
+        if (activeRenderers.Contains(renderer))
+            return;
 
-            renderer.OnStart();
+        activeRenderers.Add(renderer);
+        foreach (var item in renderer.Pawns)
+        {
+            if (item != null)
+                pawnToRenderer.Add(item, renderer);
         }
+
+        renderer.OnStart();
     }
 
     public static float Remap(float value, float a, float b, float a2, float b2)
@@ -364,6 +386,7 @@ public class AnimRenderer : IExposable
     private float time = -1;
     private Pawn[] pawnsForPostLoad;
     private bool hasStarted;
+    private bool lastMirrorX, lastMirrorZ;
 
     [UsedImplicitly]
     public AnimRenderer()
@@ -432,6 +455,7 @@ public class AnimRenderer : IExposable
         Scribe_Collections.Look(ref pawnsValidEvenIfDespawned, "pawnsValidEvenIfDespawned", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
         Scribe_Values.Look(ref TimeScale, "timeScale", 1f);
+        Scribe_Values.Look(ref ExecutionOutcome, "execOutcome");
         Scribe_Deep.Look(ref SD, "saveData");
         SD ??= new SaveData();
 
@@ -994,11 +1018,15 @@ public class AnimRenderer : IExposable
     {
         float t = atTime ?? (time + dt * TimeScale * Core.Settings.GlobalAnimationSpeed);
 
-        if (Math.Abs(this.time - t) < 0.0001f)
+        bool mirrorsAreSame = lastMirrorX == MirrorHorizontal && lastMirrorZ == MirrorVertical;
+
+        if (Math.Abs(this.time - t) < 0.0001f && mirrorsAreSame)
             return new Vector2(-1, -1);
 
         var timer = new RefTimer();
 
+        lastMirrorX = MirrorHorizontal;
+        lastMirrorZ = MirrorVertical;
         var range = SeekInt(t, MirrorHorizontal, MirrorVertical);
 
         timer.GetElapsedMilliseconds(out SeekMS);
@@ -1006,9 +1034,13 @@ public class AnimRenderer : IExposable
         if (t > Data.Duration)
         {
             if (Loop)
+            {
                 time = 0;
+            }
             else
+            {
                 Destroy();
+            }
         }
         return range;
     }

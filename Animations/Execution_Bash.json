@@ -1,5 +1,5 @@
 {
-  "ExportTimeUTC": "2023-02-19T00:18:33.0441605Z",
+  "ExportTimeUTC": "2023-03-03T21:02:29.9399839Z",
   "Name": "Execution_Bash",
   "Length": 2.51666665,
   "Bounds": {
@@ -20,7 +20,7 @@
   ],
   "Parts": [
     {
-      "ID": 19430,
+      "ID": 19504,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -684,7 +684,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19452,
+      "ID": 19526,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {
@@ -1313,7 +1313,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19138,
+      "ID": 19200,
       "Path": "BodyB",
       "CustomName": "BodyB",
       "Curves": {
@@ -1854,10 +1854,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19008,
+      "ID": 19062,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 19452,
+      "ParentID": 19526,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -1886,10 +1886,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19412,
+      "ID": 19480,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": 19430,
+      "ParentID": 19504,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -1918,10 +1918,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19712,
+      "ID": 19798,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": 19430,
+      "ParentID": 19504,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -1950,10 +1950,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 18920,
+      "ID": 18974,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": 19430,
+      "ParentID": 19504,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -1979,7 +1979,7 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19522,
+      "SplitDrawPivotPartID": 19600,
       "SweepPaths": [
         [
           {
@@ -2798,10 +2798,10 @@
       ]
     },
     {
-      "ID": 19628,
+      "ID": 19706,
       "Path": "BodyB/HeadB",
       "CustomName": "HeadB",
-      "ParentID": 19138,
+      "ParentID": 19200,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -2830,7 +2830,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19198,
+      "ID": 19260,
       "Path": "PawnBHolding",
       "Curves": {},
       "DefaultValues": {
@@ -2860,10 +2860,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19440,
+      "ID": 19514,
       "Path": "PawnBHolding/HandA",
       "CustomName": "HandA2",
-      "ParentID": 19198,
+      "ParentID": 19260,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -2892,10 +2892,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19180,
+      "ID": 19242,
       "Path": "PawnBHolding/HandB",
       "CustomName": "HandB2",
-      "ParentID": 19198,
+      "ParentID": 19260,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -2924,10 +2924,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19552,
+      "ID": 19630,
       "Path": "PawnBHolding/ItemB",
       "CustomName": "ItemB",
-      "ParentID": 19198,
+      "ParentID": 19260,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -2958,7 +2958,7 @@
       ]
     },
     {
-      "ID": 19424,
+      "ID": 19498,
       "Path": "HandGrabSparks",
       "TexturePath": "AAM/HandGrabSparks",
       "Curves": {},
@@ -2989,7 +2989,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19522,
+      "ID": 19600,
       "Path": "WeaponACutoff",
       "Curves": {},
       "DefaultValues": {

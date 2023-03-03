@@ -8,6 +8,7 @@ using AAM.PawnData;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
+using AAM.Idle;
 
 namespace AAM
 {
@@ -74,10 +75,14 @@ namespace AAM
 
         public override void GameComponentTick()
         {
+            IdleControllerComp.TotalTickTimeMS = 0;
+            IdleControllerComp.TotalActive = 0;
+
             base.GameComponentTick();
 
+
             AnimRenderer.TickAll();
-            AnimRenderer.RemoveDestroyed();
+            AnimRenderer.RemoveDestroyed(null);
             GrabUtility.Tick();
 
             Patch_Corpse_DrawAt.Tick();

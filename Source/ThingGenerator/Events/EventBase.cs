@@ -22,7 +22,6 @@ public abstract class EventBase : ScriptableObject
     public static EventBase CreateFromSaveData(string data)
     {
         var split = data.Split(';');
-        Core.Log($"Split: {string.Join(", ", split)}");
         string id = split[0];
         if (!allBases.TryGetValue(id, out var maker))
             return null;
@@ -48,7 +47,7 @@ public abstract class EventBase : ScriptableObject
             allBases.Add(id, () => Activator.CreateInstance(type) as EventBase);
         }
 
-        Core.Log($"Loaded {allBases.Count} EventBases.");
+        //Core.Log($"Loaded {allBases.Count} EventBases.");
     }
 
     public abstract string EventID { get; }
