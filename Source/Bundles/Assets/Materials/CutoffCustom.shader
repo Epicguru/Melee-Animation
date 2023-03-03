@@ -75,7 +75,7 @@
 
                 //clip(col.a - 0.05);
 
-                float2 dir = float2(cos(CutoffAngle + 3.141592653589793238462 * 0.5), sin(CutoffAngle + 3.141592653589793238462 * 0.5));
+                float2 dir = float2(cos(CutoffAngle + PI * 0.5), sin(CutoffAngle + PI * 0.5));
                 float2 a = dir *  10 + 0.5;
                 float2 b = dir * -10 + 0.5;
 

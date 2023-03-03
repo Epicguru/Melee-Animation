@@ -18,7 +18,7 @@ namespace AAM
         public readonly Game Game;
         public static ulong FrameCounter;
 
-        [TweakValue("__AAM")]
+        [TweakValue("Advanced Melee Animation")]
         private static bool drawTextureExtractor;
 
         private string texPath;
@@ -98,6 +98,8 @@ namespace AAM
 
         public override void GameComponentOnGUI()
         {
+            //GUILayout.Label($"Mem: {System.GC.GetTotalMemory(false)/(1024f*1024f):F1} MB");
+
             if (Prefs.DevMode && Dialog_AnimationDebugger.IsInRehearsalMode)
             {
                 GUILayout.Space(100);

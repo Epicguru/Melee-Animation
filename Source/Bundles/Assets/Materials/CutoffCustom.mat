@@ -19,10 +19,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - WoundTex:
-        m_Texture: {fileID: 2800000, guid: afa896913541c8e449102053246183bc, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -32,10 +28,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - CutoffAngle: 0.71
-    - Distance: 0.05
-    - Polarity: 0.43
+    - CutoffAngle: 0
+    - Distance: 0
+    - Polarity: -1
     m_Colors:
-    - WoundColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorTwo: {r: 0, g: 1, b: 1, a: 1}
+    - _ColorTwo: {r: 1, g: 1, b: 1, a: 1}

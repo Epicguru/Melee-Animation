@@ -720,7 +720,6 @@ public class AnimRenderer : IExposable
         if (IsDestroyed)
             return Vector2.zero;
 
-        var timer = new RefTimer();
         InitSweepMeshes();
         foreach (var item in sweeps)
             if (item != null)
@@ -738,6 +737,7 @@ public class AnimRenderer : IExposable
             return range; // Do not actually draw if not on the current map or culled.
         }
 
+        var timer = new RefTimer();
         var timer2 = new RefTimer();
         foreach (var path in sweeps)
             path.Draw(time);
@@ -788,6 +788,7 @@ public class AnimRenderer : IExposable
             {
                 if (useMPB)
                 {
+                    //Core.Log($"Use mpb mat is {mat} for {ov.TweakData?.ItemDefName} on {snap.PartName} with mode {snap.SplitDrawMode}");
                     pb.Clear();
 
                     // Basic texture and color, always used. Color might be replaced, see below.
@@ -797,8 +798,7 @@ public class AnimRenderer : IExposable
                     if (ov.Material != null)
                     {
                         // Check for a mask...
-                        int id = Shader.PropertyToID("_MaskTex");
-                        bool doesUseMask = ov.Material.HasProperty(id);
+                        bool doesUseMask = ov.Material.HasProperty(ShaderPropertyIDs.MaskTex);
                         if (doesUseMask)
                         {
                             // Get the mask and mask color.
@@ -807,7 +807,7 @@ public class AnimRenderer : IExposable
                             // Tint is applied to the mask.
                             pb.SetColor("_Color", color); // Color comes from animation.
                             pb.SetColor("_ColorTwo", ov.Weapon.DrawColor); // Mask tint
-                            pb.SetTexture(id, mask);
+                            pb.SetTexture(ShaderPropertyIDs.MaskTex, mask);
 
                         }
                         else
@@ -1222,7 +1222,7 @@ public class AnimRenderer : IExposable
                 if(main != null)
                     main.wrapMode = TextureWrapMode.Repeat;
 
-                var mask = ov.Material.GetTexture(ShaderPropertyIDs.MaskTex);
+                var mask = ov.Material.HasProperty(ShaderPropertyIDs.MaskTex) ? ov.Material.GetTexture(ShaderPropertyIDs.MaskTex) : null;
                 if (mask != null)
                     mask.wrapMode = TextureWrapMode.Repeat;
             }

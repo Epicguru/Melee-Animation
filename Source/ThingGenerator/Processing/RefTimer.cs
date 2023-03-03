@@ -6,11 +6,14 @@ public readonly ref struct RefTimer
 {
     private static readonly double tickFrequency = 1000.0 / Stopwatch.Frequency;
 
+    public static long GetTickNow() => Stopwatch.GetTimestamp();
+    public static double ToMilliseconds(long startTick, long endTick) => (endTick - startTick) * tickFrequency;
+
     private readonly long startTime;
 
     public RefTimer()
     {
-        startTime = Stopwatch.GetTimestamp();
+        startTime = GetTickNow();
     }
 
     public double GetElapsedMilliseconds() => (Stopwatch.GetTimestamp() - startTime) * tickFrequency;

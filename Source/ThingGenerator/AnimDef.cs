@@ -150,7 +150,7 @@ namespace AAM
         /// For example, if a duel animation only works for knife vs spear, you would have to use both filters.
         /// </summary>
         public Req weaponFilterSecond;
-        public List<AnimCellData> cellData = new();
+        public List<AnimCellData> cellData = new List<AnimCellData>();
         public ISweepProvider sweepProvider;
         public bool drawDisabledPawns;
         public bool shadowDrawFromData;
@@ -161,7 +161,6 @@ namespace AAM
         public bool pointAtTarget;
         public int returnToIdleStart, returnToIdleEnd;
         public int idleFrame;
-
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 
         public class HandsVisibilityData

@@ -58,7 +58,6 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
                 continue;
 
             bool isEnemy = target.HostileTo(Faction.OfPlayer);
-            GrappleAttemptReport grappleReport = default;
 
             if (lasso != null)
             {
@@ -70,7 +69,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
                     GrappleSpotPickingBehaviour = isEnemy ? GrappleSpotPickingBehaviour.PreferAdjacent : GrappleSpotPickingBehaviour.Closest,
                     OccupiedMask = smallMask
                 };
-                grappleReport = controller.GetGrappleReport(request);
+                var grappleReport = controller.GetGrappleReport(request);
 
                 opts.Add(grappleReport.CanGrapple ? GetEnabledLassoOption(request, grappleReport, pawn, target) : GetDisabledLassoOption(grappleReport, pawn));
             }

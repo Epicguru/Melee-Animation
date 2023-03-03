@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2568781495
+CRC: 3063775878
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 377112919cb6ef821936184a7bbf2467
+    Hash: aedc84da904ffdd4d7c9617f52d3c55c
   TypeTreeHash:
     serializedVersion: 2
     Hash: 10a6a558690295dadb3dd990eda0821a
@@ -17,5 +17,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Materials/CutoffCustom.mat
 - Assets/Materials/TrailShader.mat
-- Assets/Materials/BlitMaterial.mat
 Dependencies: []

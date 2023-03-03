@@ -89,9 +89,26 @@ namespace AAM
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoExecute = true;
 
+        [Label("Automatic Execution Average Interval (Friendly)")]
+        [Description("This is the average time, in seconds, at which friendly pawns will attempt to start an execution animation on the enemy they are currently fighting.\n" +
+                     "For example, if this is set to 5 and your pawn is fighting in melee, an execution animation will be triggered on average after 5 seconds.\n" +
+                     "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
+        [Range(0.5f, 120)]
+        [Step(1f)]
+        public float ExecuteAttemptMTBSeconds = 8;
+
         [Label("Enemies Can Perform Executions")]
         [Description("Can enemies perform execution animations?")]
         public bool EnemiesCanExecute = true;
+
+        
+        [Label("Automatic Execution Average Interval (Enemy)")]
+        [Description("This is the average time, in seconds, at which enemy pawns will attempt to start an execution animation on the target they are currently fighting.\n" +
+                     "For example, if this is set to 5 and an enemy is fighting in melee, an execution animation will be triggered on average after 5 seconds.\n" +
+                     "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
+        [Range(0.5f, 120)]
+        [Step(1f)]
+        public float ExecuteAttemptMTBSecondsEnemy = 14;
 
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
         public bool AnimalsCanBeExecuted = false;
@@ -173,6 +190,11 @@ namespace AAM
         [Description("When enabled, offscreen animations are not drawn to save time and increase FPS.\n" +
                      "This option is only here in case there are unexpected bugs related to this culling.")]
         public bool OffscreenCulling = true;
+
+        [Description("The number of ticks between scanning all pawns on the map for automatic execution/duel/lasso opportunities.\n" +
+                     "Higher values can increase FPS at the cost of less responsiveness.")]
+        [Range(1, 60)]
+        public int ScanTickInterval = 5;
         #endregion
 
         #region Other

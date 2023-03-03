@@ -36,6 +36,12 @@ namespace AAM
             PawnProcessor = new MapPawnProcessor(map);
         }
 
+        public override void MapRemoved()
+        {
+            base.MapRemoved();
+            PawnProcessor.Dispose();
+        }
+
         public void AddPostDraw(Action draw)
         {
             if (draw != null)

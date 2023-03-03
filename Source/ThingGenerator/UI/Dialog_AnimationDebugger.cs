@@ -1,9 +1,7 @@
-﻿using AAM.Tweaks;
-using EpicUtils;
+﻿using EpicUtils;
 using RimWorld;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
@@ -653,7 +651,7 @@ namespace AAM.UI
             allManagers.Clear();
             allManagers.AddRange(Find.Maps.Select(m => m.GetAnimManager()));
 
-            ui.Label($"Max threads: {JobsUtility.JobWorkerCount}");
+            ui.Label($"Max threads: {JobsUtility.JobWorkerCount + 1}");
             if (AnimationManager.IsDoingMultithreadedSeek)
             {
                 ui.Label("Multithreaded matrix calculation is active:");
@@ -682,13 +680,26 @@ namespace AAM.UI
 
                 ui.Label($"{animatorCount} active animators:");
                 ui.Indent();
-                ui.Label($"- Total {totalSeek + totalDraw:F1} MS per frame ({totalSeek:F2} seek, {totalDraw:F2} draw).");
+
+                ui.Label($"- Total {totalSeek + totalDraw + (AnimationManager.IsDoingMultithreadedSeek ? AnimationManager.MultithreadedSeekTimeMS : 0):F1} MS per frame ({totalSeek + (AnimationManager.IsDoingMultithreadedSeek ? AnimationManager.MultithreadedSeekTimeMS : 0):F2} {(AnimationManager.IsDoingMultithreadedSeek ? "multithreaded " : "")}seek, {totalDraw:F2} draw).");
                 ui.Label($"- Of which {totalSweep:F2} was sweep path calculation and rendering.");
 
 
                 ui.Outdent();
+                ui.Label("Auto Map Processing:");
+                ui.Indent();
 
-                ui.Label($"- Processing {d.PawnCount} pawns took {d.TotalTimeMS:F1} MS on {d.ThreadsUsed} threads.");
+                ui.Label($"- Total time for {d.PawnCount} pawns was {d.TotalTimeMS:F2} MS on {d.ThreadsUsed} threads.");
+                ui.Label($"- Scan time was {d.CompileTimeMS:F2} MS vs {d.ProcessTimeMS:F2} MS processing.");
+
+                ui.Outdent();
+                ui.Label("Threaded times:");
+                ui.Indent();
+                for (int i = 0; i < d.ThreadsUsed; i++)
+                {
+                    ui.Label($"Startup: {d.StartupTimesMS[i]:F2}, Get Targets: {d.TargetFindTimesMS[i]:F2}, Make Reports: {d.ReportTimesMS[i]:F2}");
+                }
+
                 ui.Outdent();
 
             }

@@ -1,12 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 using Verse;
 
 namespace AAM
@@ -14,8 +10,6 @@ namespace AAM
     [StaticConstructorOnStartup]
     public static class Content
     {
-        public const string WEB_BUNDLE_URL = "https://media.githubusercontent.com/media/Epicguru/AdvancedAnimationMod/develop/BundlesWebOnly/";
-
         [Content("AAM/Rope/Rope")]
         public static Texture2D Rope;
         [Content("AAM/Rope/End")]
@@ -51,8 +45,6 @@ namespace AAM
         [Content("AAM/UI/Loading")]
         public static Texture2D Loading;
 
-        [BundleContent("Materials/TrailShader.mat")]
-        public static Material TrailMaterial;
         [BundleContent("Materials/CutoffCustom.mat")]   
         public static Material CustomCutoffMaterial;
 

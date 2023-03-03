@@ -1,9 +1,10 @@
 ﻿using AAM.Grappling;
-using AAM.Reqs;
 using RimWorld;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.Jobs.LowLevel.Unsafe;
@@ -13,12 +14,15 @@ using Verse.AI;
 
 namespace AAM.Processing;
 
-public class MapPawnProcessor
+public class MapPawnProcessor : IDisposable
 {
     [TweakValue("Advanced Melee Animation", 0f, 5f)]
     public static float PawnPerThreadThreshold = 0.2f;
+    [TweakValue("Advanced Melee Animation")]
+    public static bool LogPerformanceToDesktop;
 
     private static readonly Dictionary<int, Task[]> taskArrayPool = new Dictionary<int, Task[]>();
+    private static StreamWriter debugWriter;
 
     private static Task[] GetTaskArray(int count)
     {
@@ -32,12 +36,12 @@ public class MapPawnProcessor
         return found;
     }
 
-    public DiagnosticInfo Diagnostics;
+    public readonly DiagnosticInfo Diagnostics = new DiagnosticInfo();
 
     private readonly List<AttackerData> attackers = new List<AttackerData>(128);
     private readonly List<IntRange> slices = new List<IntRange>(32);
     private readonly List<TaskData> targetsPool = new List<TaskData>();
-    private readonly ConcurrentQueue<AnimationStartParameters> toStart = new ConcurrentQueue<AnimationStartParameters>();
+    private readonly ConcurrentQueue<(AnimationStartParameters args, IntVec3? lassoToHere)> toStart = new ConcurrentQueue<(AnimationStartParameters, IntVec3?)>();
     private readonly ActionController generalController = new ActionController();
     private readonly Map map;
     private int targetsIndex;
@@ -51,8 +55,8 @@ public class MapPawnProcessor
     {
         if (targetsIndex == targetsPool.Count)
         {
+            var created = new TaskData(targetsIndex);
             targetsIndex++;
-            var created = new TaskData();
             targetsPool.Add(created);
             return created;
         }
@@ -64,6 +68,19 @@ public class MapPawnProcessor
 
     public void Tick()
     {
+        if (GenTicks.TicksAbs % Core.Settings.ScanTickInterval != 0)
+            return;
+
+        if (LogPerformanceToDesktop && debugWriter == null)
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "AnimationModPerformanceReport.csv");
+            debugWriter = new StreamWriter(path, true);
+        }
+        else
+        {
+            Dispose();
+        }
+
         var timer = new RefTimer();
 
         toStart.Clear();
@@ -82,7 +99,8 @@ public class MapPawnProcessor
         {
             // Run sync.
             var taskData = GetTaskData();
-            ProcessSlice(attackers, new IntRange(0, attackers.Count - 1), map, taskData, toStart);
+            taskData.ScheduleTick = RefTimer.GetTickNow();
+            ProcessSlice(attackers, new IntRange(0, attackers.Count - 1), map, taskData, toStart, Diagnostics);
         }
         else if (slices.Count > 1)
         {
@@ -94,7 +112,8 @@ public class MapPawnProcessor
             {
                 int j = i;
                 var taskData = GetTaskData();
-                var task = Task.Run(() => ProcessSlice(attackers, slices[j], map, taskData, toStart));
+                taskData.ScheduleTick = RefTimer.GetTickNow();
+                var task = Task.Run(() => ProcessSlice(attackers, slices[j], map, taskData, toStart, Diagnostics));
                 arr[i] = task;
             }
 
@@ -106,21 +125,55 @@ public class MapPawnProcessor
                 arr[i] = null;
         }
 
+        // Debug output, optional.
+        debugWriter?.WriteLine($"{attackers.Count},{slices.Count},{timer2.GetElapsedMilliseconds().ToString(CultureInfo.InvariantCulture)},{PawnPerThreadThreshold}");
+
         // Start all pending animations.
         // Must be done here, in main thread, because otherwise
         // sweep meshes created will crash unity.
-        while (toStart.TryDequeue(out var args))
+        while (toStart.TryDequeue(out var pair))
         {
-            (args with 
+            var args = pair.args;
+            if (pair.lassoToHere == null)
             {
-                ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn)
-            })
-            .TryTrigger();
+                // Instant trigger.
+                bool worked = (args with
+                {
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn)
+                })
+                .TryTrigger();
+
+                // Set execution cooldown.
+                if (worked)
+                    args.MainPawn.GetMeleeData().TimeSinceExecuted = 0;
+            }
+            else
+            {
+                // Lasso.
+                if (!JobDriver_GrapplePawn.GiveJob(args.MainPawn, args.SecondPawn, pair.lassoToHere.Value, false, args))
+                {
+                    Core.Error($"Failed to give grapple job to {args.MainPawn}.");
+                    return;
+                }
+
+                // Set lasso cooldown. Execution cooldown is set buy the job driver.
+                args.MainPawn.GetMeleeData().TimeSinceGrappled = 0;
+            }
+            
         }
 
         Diagnostics.ThreadsUsed = slices.Count;
         timer2.GetElapsedMilliseconds(out Diagnostics.ProcessTimeMS);
         timer.GetElapsedMilliseconds(out Diagnostics.TotalTimeMS);
+    }
+
+    public void Dispose()
+    {
+        if (debugWriter == null)
+            return;
+
+        debugWriter.Dispose();
+        debugWriter = null;
     }
 
     private static void GetPotentialTargets(List<IAttackTarget> output, Pawn attacker, AttackTargetsCache cache, Map map)
@@ -178,45 +231,6 @@ public class MapPawnProcessor
         }
     }
 
-    private static void GetStartableAnimations(bool east, bool west, ulong mask, in AttackerData attackerData, TaskData taskData)
-    {
-        taskData.EastAnimations.Clear();
-        taskData.WestAnimations.Clear();
-
-        foreach (var anim in AnimDef.GetExecutionAnimationsForPawnAndWeapon(attackerData.Pawn, attackerData.MeleeWeapon.def, attackerData.PawnMeleeLevel))
-        {
-            if (east)
-            {
-                var animMask = anim.ClearMask;
-                if ((animMask & mask) == 0)
-                {
-                    taskData.EastAnimations.Add(new PotentialAnimation
-                    {
-                        Anim = anim,
-                        FlipX = false
-                    });
-                }
-            }
-            if (west)
-            {
-                var animMask = anim.FlipClearMask;
-                if ((animMask & mask) == 0)
-                {
-                    taskData.WestAnimations.Add(new PotentialAnimation
-                    {
-                        Anim = anim,
-                        FlipX = true
-                    });
-                }
-            }
-        }
-    }
-
-    // TODO implement these:
-    // TODO move to settings.
-    public static float MTBGrapple = 10;
-    public static float MTBExecute = 10;
-
     private static bool TargetFilter(IAttackTarget target)
     {
         if (target.Thing is not Pawn targetPawn)
@@ -229,18 +243,24 @@ public class MapPawnProcessor
         return true;
     }
 
-    private static void ProcessSlice(List<AttackerData> attackers, IntRange slice, Map map, TaskData taskData, ConcurrentQueue<AnimationStartParameters> startArgs)
+    private static void ProcessSlice(List<AttackerData> attackers, IntRange slice, Map map, TaskData taskData, ConcurrentQueue<(AnimationStartParameters, IntVec3?)> startArgs, DiagnosticInfo diag)
     {
+        diag.StartupTimesMS[taskData.Index] = RefTimer.ToMilliseconds(taskData.ScheduleTick, RefTimer.GetTickNow());
+        diag.TargetFindTimesMS[taskData.Index] = 0;
+        diag.ReportTimesMS[taskData.Index] = 0;
+
         try
         {
             for (int i = slice.min; i <= slice.max; i++)
             {
-                // TODO MTB
                 var data = attackers[i];
                 var pawn = data.Pawn;
 
                 // Make a list of enemies.
+                var targetsTimer = new RefTimer();
                 GetPotentialTargets(taskData.Targets, pawn, map.attackTargetsCache, map);
+                diag.TargetFindTimesMS[taskData.Index] += targetsTimer.GetElapsedMilliseconds();
+
                 if (taskData.Targets.Count == 0)
                     continue;
 
@@ -251,6 +271,7 @@ public class MapPawnProcessor
 
                 // Do instant executions:
                 PotentialAnimation toPerform = default;
+                var reportTimer = new RefTimer();
                 if (data.CanExecute && (eastFree || westFree))
                 {
                     var reports = taskData.Controller.GetExecutionReport(new ExecutionAttemptRequest
@@ -267,7 +288,6 @@ public class MapPawnProcessor
                         LassoRange = data.LassoRange,
                         Targets = taskData.Targets.Where(TargetFilter).Select(t => (Pawn)t)
                     });
-
 
                     foreach (var report in reports)
                     {
@@ -287,39 +307,49 @@ public class MapPawnProcessor
                             continue;
                         }
 
-                        if (selected.LassoToHere != null)
+                        // Populate the action to be performed:
+                        toPerform = new PotentialAnimation
                         {
-                            // TODO lasso.
-                        }
-                        else
-                        {
-                            toPerform = new PotentialAnimation
-                            {
-                                Anim = selected.Animation.AnimDef,
-                                FlipX = selected.Animation.FlipX,
-                                Target = report.Target
-                            };
-                            break;
-                        }
+                            Anim = selected.Animation.AnimDef,
+                            FlipX = selected.Animation.FlipX,
+                            Target = report.Target,
+                            LassoToHere = selected.LassoToHere
+                        };
+                        break;
                     }
 
                     foreach (var report in reports)
                         report.Dispose();
                 }
+                diag.ReportTimesMS[taskData.Index] += reportTimer.GetElapsedMilliseconds();
 
                 if (toPerform.IsValid)
                 {
                     // Start instant execution animation.
-                    startArgs.Enqueue(new AnimationStartParameters(toPerform.Anim, pawn, toPerform.Target)
+                    startArgs.Enqueue((new AnimationStartParameters(toPerform.Anim, pawn, toPerform.Target)
                     {
                         FlipX = toPerform.FlipX
-                    });
+                    }, toPerform.LassoToHere));
                 }
             }
         }
         catch (Exception e)
         {
             Core.Error("Processing thread error:", e);
+        }
+    }
+
+    private static void GetSecondsMTB(Pawn pawn, out float execute, out float lasso)
+    {
+        if (pawn.IsColonist || pawn.IsSlaveOfColony)
+        {
+            execute = Core.Settings.ExecuteAttemptMTBSeconds;
+            lasso = 0.25f;
+        }
+        else
+        {
+            execute = Core.Settings.ExecuteAttemptMTBSecondsEnemy;
+            lasso = 0.25f;
         }
     }
 
@@ -358,6 +388,14 @@ public class MapPawnProcessor
             if (pawn.IsInAnimation() || GrabUtility.IsBeingTargetedForGrapple(pawn))
                 continue;
 
+            // Should this pawn even be scanned?
+            GetSecondsMTB(pawn, out float execMTB, out float lassoMTB);
+            bool execRandom = Rand.MTBEventOccurs(execMTB, 60f, Core.Settings.ScanTickInterval);
+            bool lassoRandom = Rand.MTBEventOccurs(lassoMTB, 60f, Core.Settings.ScanTickInterval);
+
+            if (!execRandom && !lassoRandom)
+                continue;
+
             var mData  = pawn.GetMeleeData();
             var weapon = pawn.GetFirstMeleeWeapon();
             var lasso  = pawn.TryGetLasso();
@@ -370,8 +408,8 @@ public class MapPawnProcessor
                 PawnMeleeLevel = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0,
                 MeleeWeapon = weapon,
                 Lasso = lasso,
-                CanExecute = weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
-                CanGrapple = lasso != null && mData.ResolvedAutoGrapple && mData.IsGrappleOffCooldown() && FormalGrappleCheck(pawn),
+                CanExecute = execRandom && weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
+                CanGrapple = lassoRandom && lasso != null && mData.ResolvedAutoGrapple && mData.IsGrappleOffCooldown() && FormalGrappleCheck(pawn),
                 LassoRange = lasso != null ? pawn.GetStatValue(AAM_DefOf.AAM_GrappleRadius) : 0
             };
 
@@ -445,7 +483,8 @@ public class MapPawnProcessor
 
         public required AnimDef Anim { get; init; }
         public required bool FlipX { get; init; }
-        public Pawn Target { get; init; }
+        public required Pawn Target { get; init; }
+        public IntVec3? LassoToHere { get; init; }
     }
 
     private class TaskData
@@ -454,10 +493,20 @@ public class MapPawnProcessor
         public readonly List<PotentialAnimation> EastAnimations = new List<PotentialAnimation>();
         public readonly List<PotentialAnimation> WestAnimations = new List<PotentialAnimation>();
         public readonly ActionController Controller = new ActionController();
+        public readonly int Index;
+        public long ScheduleTick;
+
+        public TaskData(int index)
+        {
+            Index = index;
+        }
     }
 
-    public struct DiagnosticInfo
+    public class DiagnosticInfo
     {
+        public readonly double[] StartupTimesMS = new double[64];
+        public readonly double[] TargetFindTimesMS = new double[64];
+        public readonly double[] ReportTimesMS = new double[64];
         public int ThreadsUsed;
         public double CompileTimeMS;
         public double ProcessTimeMS;

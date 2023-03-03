@@ -1,6 +1,7 @@
 ﻿using AAM.Grappling;
 using RimWorld;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -772,27 +773,13 @@ public struct PossibleExecution
 
 public struct ExecutionAttemptReport : IDisposable
 {
-    private static readonly Queue<List<PossibleExecution>> listPool = new Queue<List<PossibleExecution>>(32);
+    private static readonly ConcurrentQueue<List<PossibleExecution>> listPool = new ConcurrentQueue<List<PossibleExecution>>();
     private static readonly NamedArgument[] namedArgs = new NamedArgument[3];
 
-    public static List<PossibleExecution> BorrowList()
-    {
-        lock (listPool)
-        {
-            if (listPool.Count > 0)
-                return listPool.Dequeue();
-        }
-        return new List<PossibleExecution>(32);
-    }
+    public static List<PossibleExecution> BorrowList() => listPool.TryDequeue(out var found) ? found : new List<PossibleExecution>(32);
 
-    private static void ReturnList(List<PossibleExecution> list)
-    {
-        lock (listPool)
-        {
-            listPool.Enqueue(list);
-        }
-    }
-
+    private static void ReturnList(List<PossibleExecution> list) => listPool.Enqueue(list);
+    
     private static NamedArgument[] GetNamedArgs(in ExecutionAttemptRequest request, Pawn target, string intErrorMsg)
     {
         namedArgs[0] = new NamedArgument(request.Executioner, "Exec");

@@ -163,48 +163,6 @@ public class IdleControllerComp : ThingComp
             }
         }
         RareTicksSinceFlavour++;
-
-
-        // Update animation pausing.
-        if (CurrentAnimation == null || !CurrentAnimation.Def.idleType.IsAttack())
-        {
-            pauseTicks = 0;
-            isPausing = false;
-        }
-        if (pauseTicks > 0)
-        {
-            if (isPausing)
-            {
-                pauseTicks--;
-            }
-            else
-            {
-                // Check weapon angle.
-                // Once the weapon swings by the target, do a brief pause to indicate a hit.
-                var ss = CurrentAnimation.GetPart("ItemA").GetSnapshot(CurrentAnimation);
-                var dir = (CurrentAnimation.RootTransform * ss.WorldMatrixPreserveFlip).MultiplyVector(Vector3.right).normalized;
-                float angle = dir.ToAngleFlatNew();
-                float delta = Mathf.DeltaAngle(angle, pauseAngle);
-                bool shouldStartPausing = Mathf.Abs(delta) < 5f || (lastDelta != 0 && lastDelta.Polarity() != delta.Polarity() && Mathf.Abs(lastDelta) < 120);
-                //Core.Log($"{angle:F0} vs {pauseAngle:F0} is Delta: {delta} ({dir.ToString("F2")})"); 
-                lastDelta = delta;
-                if (shouldStartPausing)
-                {
-                    isPausing = true;
-                    lastSpeed = CurrentAnimation.TimeScale;
-                    CurrentAnimation.TimeScale = 0;
-                    lastDelta = 0;
-                }
-            }
-        }
-        else
-        {
-            if (isPausing)
-            {
-                isPausing = false;
-                CurrentAnimation.TimeScale = lastSpeed;
-            }
-        }
     }
 
     private void TickAnimation(Pawn pawn, Thing weapon)
@@ -268,7 +226,7 @@ public class IdleControllerComp : ThingComp
             StartNew();
         }
 
-        return;
+        //return;
         
         // Facing in the right direction?
         var currentFacing = GetCurrentAnimFacing();
@@ -322,6 +280,47 @@ public class IdleControllerComp : ThingComp
 
             if (!isPausing && dstPerSecond > 0.05f)
                 CurrentAnimation.TimeScale = coef;
+        }
+
+        // Update animation pausing.
+        if (CurrentAnimation == null || !CurrentAnimation.Def.idleType.IsAttack())
+        {
+            pauseTicks = 0;
+            isPausing = false;
+        }
+        if (pauseTicks > 0)
+        {
+            if (isPausing)
+            {
+                pauseTicks--;
+            }
+            else
+            {
+                // Check weapon angle.
+                // Once the weapon swings by the target, do a brief pause to indicate a hit.
+                var ss = CurrentAnimation.GetPart("ItemA").GetSnapshot(CurrentAnimation);
+                var dir = (CurrentAnimation.RootTransform * ss.WorldMatrixPreserveFlip).MultiplyVector(Vector3.right).normalized;
+                float angle = dir.ToAngleFlatNew();
+                float delta = Mathf.DeltaAngle(angle, pauseAngle);
+                bool shouldStartPausing = Mathf.Abs(delta) < 5f || (lastDelta != 0 && lastDelta.Polarity() != delta.Polarity() && Mathf.Abs(lastDelta) < 120);
+                //Core.Log($"{angle:F0} vs {pauseAngle:F0} is Delta: {delta} ({dir.ToString("F2")})"); 
+                lastDelta = delta;
+                if (shouldStartPausing)
+                {
+                    isPausing = true;
+                    lastSpeed = CurrentAnimation.TimeScale;
+                    CurrentAnimation.TimeScale = 0;
+                    lastDelta = 0;
+                }
+            }
+        }
+        else
+        {
+            if (isPausing)
+            {
+                isPausing = false;
+                CurrentAnimation.TimeScale = lastSpeed;
+            }
         }
     }
 
