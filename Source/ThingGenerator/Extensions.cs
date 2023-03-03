@@ -93,8 +93,11 @@ public static class Extensions
         return null;
     }
 
-    public static bool IsAttack(this IdleType type) =>
-        type is IdleType.AttackHorizontal or IdleType.AttackSouth or IdleType.AttackNorth;
+    public static bool IsAttack(this IdleType type) => type is IdleType.AttackHorizontal or IdleType.AttackSouth or IdleType.AttackNorth;
+
+    public static bool IsMove(this IdleType type) => type is IdleType.MoveVertical or IdleType.MoveHorizontal;
+
+    public static bool IsIdle(this IdleType type, bool includeFlavour = true) => type is IdleType.Idle || (includeFlavour && type is IdleType.Flavour);
 
     /// <summary>
     /// Attempts to get the equipped melee weapon of this pawn.
@@ -227,40 +230,29 @@ public static class Extensions
     }
 
     [DebugAction("Advanced Melee Animation", "Spawn army", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
-    private static void SpawnArmy()
+    private static List<DebugActionNode> SpawnArmy()
     {
-        List<DebugMenuOption> list = new();
+        List<DebugActionNode> list = new List<DebugActionNode>();
         foreach (PawnKindDef localKindDef2 in from kd in DefDatabase<PawnKindDef>.AllDefs
                  orderby kd.defName
                  select kd)
         {
             PawnKindDef localKindDef = localKindDef2;
-            list.Add(new DebugMenuOption(localKindDef.defName, DebugMenuOptionMode.Tool, delegate()
+            list.Add(new DebugActionNode(localKindDef.defName, DebugActionType.ToolMap, null, null)
             {
-                var pos = Verse.UI.MouseCell();
-                Faction faction = FactionUtility.DefaultFactionFrom(localKindDef.defaultFactionType);
-
-                for (int i = 0; i < 50; i++)
+                category = DebugToolsSpawning.GetCategoryForPawnKind(localKindDef),
+                action = delegate ()
                 {
-                    Pawn newPawn = PawnGenerator.GeneratePawn(localKindDef, faction);
-                    GenSpawn.Spawn(newPawn, Verse.UI.MouseCell(), Find.CurrentMap, WipeMode.Vanish);
-                    if (faction != null && faction != Faction.OfPlayer)
+                    Faction faction = FactionUtility.DefaultFactionFrom(localKindDef.defaultFactionType);
+                    for (int i = 0; i < 50; i++)
                     {
-                        Lord lord = null;
-                        if (newPawn.Map.mapPawns.SpawnedPawnsInFaction(faction).Any((Pawn p) => p != newPawn))
-                        {
-                            lord = ((Pawn)GenClosest.ClosestThing_Global(newPawn.Position, newPawn.Map.mapPawns.SpawnedPawnsInFaction(faction), 99999f, (Thing p) => p != newPawn && ((Pawn)p).GetLord() != null, null)).GetLord();
-                        }
-                        if (lord == null)
-                        {
-                            LordJob_DefendPoint lordJob = new(newPawn.Position, null, false, true);
-                            lord = LordMaker.MakeNewLord(faction, lordJob, Find.CurrentMap, null);
-                        }
-                        lord.AddPawn(newPawn);
+                        Pawn pawn = PawnGenerator.GeneratePawn(localKindDef, faction);
+                        GenSpawn.Spawn(pawn, Verse.UI.MouseCell(), Find.CurrentMap, WipeMode.Vanish);
+                        DebugToolsSpawning.PostPawnSpawn(pawn);
                     }
                 }
-            }));
+            });
         }
-        Find.WindowStack.Add(new Dialog_DebugOptionListLister(list));
+        return list;
     }
 }

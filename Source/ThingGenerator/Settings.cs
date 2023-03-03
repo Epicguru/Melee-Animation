@@ -1,6 +1,8 @@
 ﻿using Meta.Numerics.Statistics.Distributions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using AAM.Idle;
 using UnityEngine;
 using Verse;
 
@@ -29,20 +31,8 @@ namespace AAM
 
         [Range(0.01f, 5f)]
         [Percentage]
-        [Description("A modifier on the speed of all animations.")]
+        [Description("A modifier on the speed of all animations.\nHigher is faster.")]
         public float GlobalAnimationSpeed = 1f;
-
-        [Description("The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
-        [Min(1)]
-        public int MinDuelDuration = 4;
-
-        [Description("The maximum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
-        [Min(1)]
-        public int MaxDuelDuration = 8;
-
-        [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
-        [WebContent("ShowNames", false)]
-        public bool DrawNamesInAnimation = true;
 
         [DrawMethod(nameof(DrawAnimationList))]
         [SettingOptions(drawValue: false, allowReset: false, drawHoverHighlight: false)]
@@ -55,6 +45,9 @@ namespace AAM
         [Description("If true, your colonists will automatically use their lassos against enemies.\n\n" +
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoGrapple = true;
+
+        [Description("Can enemies use lassos (if they have any) to pull your colonists into melee range?")]
+        public bool EnemiesCanGrapple = true;
 
         [Label("Minimum Melee Skill")]
         [Description("The minumum melee skill required to use a lasso.\nAffects all pawns.")]
@@ -89,12 +82,33 @@ namespace AAM
         public float GrappleSpeed = 1f;
         #endregion
 
-        #region Executions
-        [Header("Executions")]
+        #region Executions & Duels
+        [Header("Executions & Duels")]
         [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
                      "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoExecute = true;
+
+        [Label("Automatic Execution Average Interval (Friendly)")]
+        [Description("This is the average time, in seconds, at which friendly pawns will attempt to start an execution animation on the enemy they are currently fighting.\n" +
+                     "For example, if this is set to 5 and your pawn is fighting in melee, an execution animation will be triggered on average after 5 seconds.\n" +
+                     "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
+        [Range(0.5f, 120)]
+        [Step(1f)]
+        public float ExecuteAttemptMTBSeconds = 8;
+
+        [Label("Enemies Can Perform Executions")]
+        [Description("Can enemies perform execution animations?")]
+        public bool EnemiesCanExecute = true;
+
+        
+        [Label("Automatic Execution Average Interval (Enemy)")]
+        [Description("This is the average time, in seconds, at which enemy pawns will attempt to start an execution animation on the target they are currently fighting.\n" +
+                     "For example, if this is set to 5 and an enemy is fighting in melee, an execution animation will be triggered on average after 5 seconds.\n" +
+                     "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
+        [Range(0.5f, 120)]
+        [Step(1f)]
+        public float ExecuteAttemptMTBSecondsEnemy = 14;
 
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
         public bool AnimalsCanBeExecuted = false;
@@ -112,10 +126,22 @@ namespace AAM
                      "If false, the pawn is simply killed by 'magic' (no specific part takes damage)\n" +
                      "Note: if disabled, combat log generation does not work properly for the execution, and will give a default message: \"<i>name was killed.</i>\"")]
         public bool ExecutionsCanDestroyBodyParts = true;
+
+        [Description("The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
+        [Min(1)]
+        public int MinDuelDuration = 4;
+
+        [Description("The maximum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
+        [Min(1)]
+        public int MaxDuelDuration = 8;
         #endregion
 
-        #region Gore
-        [Header("Gore")]
+        #region Visuals
+        [Header("Visuals")]
+        [Description("Should pawn hands be displayed holding melee weapons?")]
+        [WebContent("HandsEnabled", false)]
+        public bool ShowHands = true;
+
         [Label("Damage Effect")]
         [Description("Enable or disable the damage affect in animations.\n" +
                      "The damage effect is normally a small, temporary puff of blood.")]
@@ -126,31 +152,73 @@ namespace AAM
                      "The blood is filth that must be cleaned up. Includes modded blood and mechanoid blood (oil).")]
         public bool Gore_FloorBlood = true;
 
-        [Header("Performance")]
-        [Description("The interval, in ticks, between a complex pawn calculation that runs on each map.\nDon't touch this unless you know what you are doing.")]
-        [Range(1, 240)]
-        public int PawnProcessorTickInterval = 20;
-
-        [Label("Max CPU Time Per Tick")]
-        [Description("The maximum amount of time, in milliseconds, that the mod can spend processing pawns <b>per tick, per map</b>.\n" +
-                     "Higher values can increase the responsiveness of automatic grappling and executions, but can also greatly lower performance on very populated maps.")]
-        [Range(0.25f, 10f)]
-        public double MaxCPUTimePerTick = 1;
-        #endregion
-
-        #region Other
-
-        [Header("Other")]
-        [Description("Should pawn hands be displayed holding melee weapons?")]
-        [WebContent("HandsEnabled", false)]
-        public bool ShowHands = true;
-
         [Description("In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.\n" +
                      "This offset can be confusing however, because the corpse no longer occupies the center of the tile.\n" +
                      "<b>Note:</b> The offset corpses are reset after a save-reload.")]
         [WebContent("OffsetMode", false)]
         public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
 
+        [Label("Move Animation Speed")]
+        [Description("Changes the speed of the movement animations.\nHigher values increase the speed. This is just a visual change, it obviously doesn't change the pawn's movement speed.")]
+        [Percentage]
+        [Range(0.1f, 3f)]
+        [Step(0.01f)]
+        public float MoveAnimSpeedCoef = 1f;
+
+        [Label("Idle Animation Average Interval")]
+        [Description("Pawns standing with their weapon out (such as when drafted) will sometimes play an animation where they swing their weapon about, flourish it etc.\n" +
+                     "This option controls the average time, in seconds, between the occurrence of this animation.\nSet to 0 to disable the animations entirely.")]
+        [Range(0, 60)]
+        [Step(0.5f)]
+        public float FlavourMTB = 10f;
+
+        [Description("When doing a regular melee attack, the animation will very briefly pause at the point when the weapon intersects the target.\n" +
+                     "This lets you know whether an attack connected, as well as giving the hit a bit more visual <i>oomph</i>.\n" +
+                     "This setting changes the duration of that pause, or disables it entirely. This is a purely visual change and does not affect combat.")]
+        public AttackPauseIntensity AttackPauseDuration = AttackPauseIntensity.Medium;
+
+        [Label("Weapon Trail Color")]
+        [Description("The base color of weapon trails. If you set the alpha to 0, trails will be disabled.")]
+        [WebContent("SweepColor", false)]
+        public Color TrailColor = Color.white;
+
+        [Label("Weapon Trail Length")]
+        [Description("A multiplier on the length of weapon trails. If 0%, trails are disabled.")]
+        [Percentage]
+        [Range(0f, 2f)]
+        [WebContent("SweepLength", false)]
+        public float TrailLengthScale = 1f;
+
+        [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
+        [WebContent("ShowNames", false)]
+        public bool DrawNamesInAnimation = true;
+        #endregion
+
+        #region Performance
+        [Header("Performance")]
+        [Description("The maximum number of CPU threads to use when processing pawns for automatic executions & lasso usage.\n" +
+                     "If set to 0, the thread count is automatically determined based on your CPU, and if set to 1 then multi-threaded processing is disabled.\n" +
+                     "Set to 1 if you experience error spam caused by a mod conflict, although it will decrease performance considerably.")]
+        [Range(0, 64)]
+        public int MaxProcessingThreads = 0;
+
+        [Description("When enabled, multiple CPU threads are used to calculate complex matrix transformation needed for animations.\n" +
+                     "The number of threads is given by the Max Processing Threads setting.")]
+        public bool MultithreadedMatrixCalculations = true;
+
+        [Description("When enabled, offscreen animations are not drawn to save time and increase FPS.\n" +
+                     "This option is only here in case there are unexpected bugs related to this culling.")]
+        public bool OffscreenCulling = true;
+
+        [Description("The number of ticks between scanning all pawns on the map for automatic execution/duel/lasso opportunities.\n" +
+                     "Higher values can increase FPS at the cost of less responsiveness.")]
+        [Range(1, 60)]
+        public int ScanTickInterval = 5;
+        #endregion
+
+        #region Other
+
+        [Header("Other")]
         [Label("Friendly Pawn Lethality Bonus")]
         [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
         [Percentage]
@@ -170,18 +238,6 @@ namespace AAM
         [Label("Show Warning Before Executing Friendly")]
         [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Alt] key when targeting a friendly pawn for execution.")]
         public bool WarnOfFriendlyExecution = true;
-
-        [Label("Weapon Trail Color")]
-        [Description("The base color of weapon trails. If you set the alpha to 0, trails will be disabled.")]
-        [WebContent("SweepColor", false)]
-        public Color TrailColor = Color.white;
-
-        [Label("Weapon Trail Length")]
-        [Description("A multiplier on the length of weapon trails. If 0%, trails are disabled.")]
-        [Percentage]
-        [Range(0f, 2f)]
-        [WebContent("SweepLength", false)]
-        public float TrailLengthScale = 1f;
 
         public bool TrailsAreDisabled => TrailColor.a <= 0 || TrailLengthScale <= 0;
 
@@ -234,7 +290,7 @@ namespace AAM
                 var rect = area;
                 rect.height = 32;
 
-                Widgets.Label(rect, def.LabelCap);
+                Widgets.Label(rect, def.LabelOrFallback);
 
                 var checkbox = rect;
                 checkbox.x += 230;
@@ -255,10 +311,12 @@ namespace AAM
                 return rect.height;
             }
 
-            var animations = AnimDef.AllDefs;
+            var animations = AnimDef.AllDefs.OrderBy(d => d.type).ThenBy(d => d.idleType).ThenBy(d => d.LabelOrFallback);
             foreach (var anim in animations)
             {
                 if (!anim.canEditProbability)
+                    continue;
+                if (anim.type == AnimType.Idle && anim.idleType is IdleType.Idle or IdleType.MoveHorizontal or IdleType.MoveVertical)
                     continue;
 
                 float h = DrawAnim(anim);
@@ -275,5 +333,13 @@ namespace AAM
         None,
         InterpolateToCorrect,
         KeepOffset
+    }
+
+    public enum AttackPauseIntensity
+    {
+        Disabled = 0,
+        Short = 4,
+        Medium = 8,
+        Long = 12
     }
 }

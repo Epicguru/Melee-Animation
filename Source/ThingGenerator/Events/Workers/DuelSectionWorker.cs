@@ -182,7 +182,7 @@ namespace AAM.Events.Workers
 
         private void JumpTo(AnimRenderer animator, EventBase e)
         {
-            animator.Seek(e.Time, null);
+            animator.Seek(e.Time, 0);
         }
 
         private void UpdateEventPoints(AnimData data)

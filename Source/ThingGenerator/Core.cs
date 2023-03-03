@@ -29,17 +29,17 @@ namespace AAM
 
         public static void Log(string msg)
         {
-            Verse.Log.Message($"<color=green>[ThingGenerator]</color> {msg}");
+            Verse.Log.Message($"<color=#66ffb5>[Adv.MeleeAnim]</color> {msg}");
         }
 
         public static void Warn(string msg)
         {
-            Verse.Log.Warning($"<color=green>[ThingGenerator]</color> {msg}");
+            Verse.Log.Warning($"<color=#66ffb5>[Adv.MeleeAnim]</color> {msg}");
         }
 
         public static void Error(string msg, Exception e = null)
         {
-            Verse.Log.Error($"<color=green>[ThingGenerator]</color> {msg}");
+            Verse.Log.Error($"<color=#66ffb5>[Adv.MeleeAnim]</color> {msg}");
             if (e != null)
                 Verse.Log.Error(e.ToString());
         }
@@ -316,4 +316,5 @@ namespace AAM
     }
 
     public class HotSwapAllAttribute : Attribute { }
+    public class IgnoreHotSwapAttribute : Attribute { }
 }

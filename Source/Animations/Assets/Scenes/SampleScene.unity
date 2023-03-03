@@ -2286,7 +2286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &523862468
 Animator:
   serializedVersion: 4
@@ -2319,7 +2319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: 72577121cfc6cdc4eab00360235bf748, type: 2}
+  Clip: {fileID: 7400000, guid: 0e70444c0dd186e4d826cc2a72ce3755, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -4814,9 +4814,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: HeadA
-  TexturePath: Female_Average_Normal_east
+  TexturePath: Female_Average_Normal_south
   DoNotIncludeTexture: 1
-  IdleOffset: {x: 0.1, y: 0.34}
+  IdleOffset: {x: 0, y: 0.34}
   IdleRotation: 0
   IdleScale: {x: 1.5, y: 1.5}
   IdleFlipX: 0
@@ -4826,7 +4826,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 0
+  FlipX: 1
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
@@ -8557,7 +8557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: 780f36af385a304478f5941d5eda6317, type: 2}
+  Clip: {fileID: 7400000, guid: 2aa360e59633a8d48bbc125628878a8b, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -9033,7 +9033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1914720448
 Transform:
   m_ObjectHideFlags: 0
@@ -9087,7 +9087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: f218eae606a8dc54d9071bb894e18021, type: 2}
+  Clip: {fileID: 7400000, guid: 613098d2841809246b480d7444c6d018, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -9232,7 +9232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: BodyA
-  TexturePath: Naked_Female_east
+  TexturePath: Naked_Female_south
   DoNotIncludeTexture: 1
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -9244,7 +9244,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 0
+  FlipX: 1
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}

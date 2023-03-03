@@ -269,6 +269,13 @@
     <label>Execution: Pocket Sand!</label>
     <data>Execution_PocketSand.json</data>
     <weaponFilter Class="AAM.Reqs.True"/> <!-- Anything can pocket sand! -->
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
 
     <!-- Force hands to be visible to throw sand with -->
     <handsVisibility>

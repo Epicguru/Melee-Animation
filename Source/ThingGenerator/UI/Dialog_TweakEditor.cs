@@ -382,7 +382,7 @@ namespace AAM.UI
                 string allowedAnimations = "";
                 foreach (var anim in AnimDef.AllDefs)
                     if (anim.Allows(new ReqInput(tweak)))
-                        allowedAnimations += $"[{anim.type}] {anim.defName}\n";
+                        allowedAnimations += $"[{anim.type}] {anim.defName} ({anim.Probability:P0})\n";
                 TooltipHandler.TipRegion(tagsArea.RightPart(0.2f), allowedAnimations);
 
                 if (Widgets.ButtonText(tagsArea.LeftPart(0.75f), $"Tags: <b>{tweak.MeleeWeaponType}</b>"))

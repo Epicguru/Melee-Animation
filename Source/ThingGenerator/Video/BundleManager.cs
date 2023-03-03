@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 
 namespace AAM.Video;
 
+[IgnoreHotSwap]
 public static class BundleManager
 {
     public static int LoadedBundleCount { get; private set; }
@@ -30,6 +31,7 @@ public static class BundleManager
         return handle;
     }
 
+    [IgnoreHotSwap]
     public class BundleHandle
     {
         public string BundleName { get; internal set; }

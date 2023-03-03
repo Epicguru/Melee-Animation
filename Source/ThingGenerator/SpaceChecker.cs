@@ -31,11 +31,11 @@ namespace AAM
             {
                 for (int z = -3; z <= 3; z++)
                 {
-                    IntVec3 pos = new(x, 0, z);
+                    var pos = new IntVec3(x, 0, z);
                     bool mustBeClear = false;
                     foreach (var cell in def.GetMustBeClearCells(flipX, false, IntVec3.Zero))
                     {
-                        if (cell == pos)
+                        if (cell == pos with { y = cell.y })
                         {
                             mustBeClear = true;
                             break;
@@ -46,7 +46,7 @@ namespace AAM
                         continue;
 
                     int index = (x + 3) + (z + 3) * 7;
-                    mask &= (ulong)1 << index;
+                    mask |= (ulong)1 << index;
                 }
             }
 
@@ -75,19 +75,23 @@ namespace AAM
             {
                 for (int z = -3; z <= 3; z++)
                 {
-                    if (!IsValidPawnPosFast(map, w, h, new IntVec3(x, 0, z) + center))
+                    if (IsValidPawnPosFast(map, w, h, new IntVec3(x, 0, z) + center))
+                        continue;
+
+                    int index = (x + 3) + (z + 3) * 7;
+                    mask |= (ulong)1 << index;
+
+                    if (x is > -2 and < 2 && z is > -2 and < 2)
                     {
-                        mask &= (ulong)1 << ((x + 3) + (z + 3) * 7);
-                        if (x is > -2 and < 2 && z is > -2 and < 2)
-                        {
-                            int index2 = (x + 1) + (z + 1) * 3;
-                            smallMask &= (uint)1 << index2;
-                        }
+                        int index2 = (x + 1) + (z + 1) * 3;
+                        smallMask |= (uint)1 << index2;
                     }
                 }
             }
 
             return mask;
         }
+
+        public static bool GetBit(this ulong occupiedMask, int xOffset, int zOffset) => (occupiedMask & ((ulong)1 << ((xOffset + 3) + (zOffset + 3) * 7))) != 0;
     }
 }

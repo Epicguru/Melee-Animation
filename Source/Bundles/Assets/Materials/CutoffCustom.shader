@@ -38,8 +38,6 @@
                 float4 vertex : SV_POSITION;
             };
 
-            const float PI = 3.141592653589793238462;
-
             // Main
             sampler2D _MainTex;
             float4 _MainTex_ST;

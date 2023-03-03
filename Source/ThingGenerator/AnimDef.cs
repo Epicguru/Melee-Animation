@@ -47,13 +47,15 @@ namespace AAM
             return Array.Empty<AnimDef>();
         }
 
-        public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef)
+        public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef, int? meleeLevel = null)
         {
-            int meleeSkill = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
+            int meleeSkill = meleeLevel ?? pawn.skills.GetSkill(SkillDefOf.Melee).Level;
 
-            return GetDefsOfType(AnimType.Execution)
-                .Where(d => d.Allows(new ReqInput(weaponDef)))
-                .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
+            // TODO maybe cached based on requirement?
+            return GetDefsOfType(AnimType.Execution).Where(d =>
+                d.Allows(new ReqInput(weaponDef)) &&
+                (d.minMeleeSkill ?? 0) <= meleeSkill && 
+                d.Probability > 0);
         }
 
         [DebugAction("Advanced Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
@@ -83,6 +85,7 @@ namespace AAM
             }
         }
 
+        public string LabelOrFallback => string.IsNullOrEmpty(label) ? defName : LabelCap;
         public virtual string FullDataPath
         {
             get
@@ -123,6 +126,10 @@ namespace AAM
             }
         }
         public string DataPath => data;
+        /// <summary>
+        /// A mask where a high bit means that the spot must be clear (standable)
+        /// in a 7x7 cell grid around the animation root cell.
+        /// </summary>
         public ulong ClearMask, FlipClearMask;
         public float Probability => relativeProbability * ((SData?.Enabled ?? true) ? (SData?.Probability ?? 1f) : 0f);
         [XmlIgnore] public SettingsData SData;
@@ -143,7 +150,7 @@ namespace AAM
         /// For example, if a duel animation only works for knife vs spear, you would have to use both filters.
         /// </summary>
         public Req weaponFilterSecond;
-        public List<AnimCellData> cellData = new();
+        public List<AnimCellData> cellData = new List<AnimCellData>();
         public ISweepProvider sweepProvider;
         public bool drawDisabledPawns;
         public bool shadowDrawFromData;
@@ -154,7 +161,6 @@ namespace AAM
         public bool pointAtTarget;
         public int returnToIdleStart, returnToIdleEnd;
         public int idleFrame;
-
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 
         public class HandsVisibilityData
@@ -302,16 +308,16 @@ namespace AAM
 
         public IEnumerable<IntVec3> GetMustBeClearCells(bool flipX, bool flipY, IntVec3 offset)
         {
-            foreach (var data in cellData)
+            foreach (var cells in cellData)
             {
-                foreach (var cell in data.GetCells())
+                foreach (var cell in cells.GetCells())
                 {
                     yield return Flip(cell, flipX, flipY).ToIntVec3 + offset;
                 }
             }
         }
 
-        private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new(fx ? -input.x : input.x, fy ? -input.z : input.z);
+        private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new IntVec2(fx ? -input.x : input.x, fy ? -input.z : input.z);
 
         public bool Allows(ReqInput input)
         {
