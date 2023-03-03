@@ -19,7 +19,7 @@ namespace AAM
         public delegate float DrawHandler(ModSettings settings, MemberWrapper member, Rect area);
 
         public static Func<MemberWrapper, DrawHandler> SelectDrawHandler = DefaultDrawHandlerSelector;
-        public static Dictionary<Type, DrawHandler> DrawHandlers = new()
+        public static Dictionary<Type, DrawHandler> DrawHandlers = new Dictionary<Type, DrawHandler>
         {
             //{ typeof(string), DrawStringField },
             { typeof(byte), DrawNumeric },
@@ -37,11 +37,11 @@ namespace AAM
             { typeof(Color), DrawColor }
         };
         
-        private static readonly Dictionary<Type, FieldHolder> settingsFields = new();
-        private static readonly Stack<ScribeSaver> saverStack = new();
-        private static readonly Stack<ScribeLoader> loaderStack = new();
-        private static readonly Stack<LoadSaveMode> modeStack = new();
-        private static readonly HashSet<string> allHeaders = new();
+        private static readonly Dictionary<Type, FieldHolder> settingsFields = new Dictionary<Type, FieldHolder>();
+        private static readonly Stack<ScribeSaver> saverStack = new Stack<ScribeSaver>();
+        private static readonly Stack<ScribeLoader> loaderStack = new Stack<ScribeLoader>();
+        private static readonly Stack<LoadSaveMode> modeStack = new Stack<LoadSaveMode>();
+        private static readonly HashSet<string> allHeaders = new HashSet<string>();
         private static MemberWrapper highlightedMember;
 
         internal static string TranslateOrSelf(this string str) => str.TryTranslate(out var found) ? found : str;
@@ -367,7 +367,7 @@ namespace AAM
                 }
                 else
                 {
-                    var fitted = BGRenderer.FitRect(tex, inRect, 1f, true);
+                    var fitted = tex.FitRect(inRect, UI.ScaleMode.Fit);
                     GUI.DrawTexture(fitted, tex);
                 }
             }
@@ -619,7 +619,7 @@ namespace AAM
         {
             public readonly ModSettings ForSettingsObject;
             public readonly Type ForType;
-            public readonly Dictionary<MemberInfo, MemberWrapper> Members = new();
+            public readonly Dictionary<MemberInfo, MemberWrapper> Members = new Dictionary<MemberInfo, MemberWrapper>();
             public Vector2 UI_LastSize;
             public Vector2 UI_Scroll;
             public string UI_SelectedTab;

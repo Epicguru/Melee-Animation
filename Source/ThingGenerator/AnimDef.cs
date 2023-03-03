@@ -47,13 +47,15 @@ namespace AAM
             return Array.Empty<AnimDef>();
         }
 
-        public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef)
+        public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef, int? meleeLevel = null)
         {
-            int meleeSkill = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
+            int meleeSkill = meleeLevel ?? pawn.skills.GetSkill(SkillDefOf.Melee).Level;
 
-            return GetDefsOfType(AnimType.Execution)
-                .Where(d => d.Allows(new ReqInput(weaponDef)))
-                .Where(d => (d.minMeleeSkill ?? 0) <= meleeSkill);
+            // TODO maybe cached based on requirement?
+            return GetDefsOfType(AnimType.Execution).Where(d =>
+                d.Allows(new ReqInput(weaponDef)) &&
+                (d.minMeleeSkill ?? 0) <= meleeSkill && 
+                d.Probability > 0);
         }
 
         [DebugAction("Advanced Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
@@ -148,7 +150,7 @@ namespace AAM
         /// For example, if a duel animation only works for knife vs spear, you would have to use both filters.
         /// </summary>
         public Req weaponFilterSecond;
-        public List<AnimCellData> cellData = new();
+        public List<AnimCellData> cellData = new List<AnimCellData>();
         public ISweepProvider sweepProvider;
         public bool drawDisabledPawns;
         public bool shadowDrawFromData;
@@ -159,7 +161,6 @@ namespace AAM
         public bool pointAtTarget;
         public int returnToIdleStart, returnToIdleEnd;
         public int idleFrame;
-
         public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 
         public class HandsVisibilityData

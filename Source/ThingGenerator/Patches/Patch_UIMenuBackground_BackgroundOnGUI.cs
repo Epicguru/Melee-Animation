@@ -1,4 +1,5 @@
-﻿using AAM.UI;
+﻿using System;
+using AAM.UI;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -14,9 +15,10 @@ public static class Patch_UIMenuBackground_BackgroundOnGUI
         {
             BGRenderer.DrawMainMenuBackground();
         }
-        catch
+        catch (Exception e)
         {
             // Nobody got time for all that noise.
+            Core.Error("BG Render issue:", e);
         }
     }
 }

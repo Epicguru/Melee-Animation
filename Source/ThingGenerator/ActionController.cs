@@ -1,6 +1,7 @@
 ﻿using AAM.Grappling;
 using RimWorld;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -56,7 +57,7 @@ public class ActionController
             return new GrappleAttemptReport(req, "MissingLasso");
 
         // Check skill.
-        if (Core.Settings.MinMeleeSkillToLasso > 0)
+        if (Core.Settings.MinMeleeSkillToLasso > 0 && !req.TrustLassoUsability)
         {
             int meleeSkill = req.Grappler.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
             if (meleeSkill < Core.Settings.MinMeleeSkillToLasso)
@@ -64,7 +65,7 @@ public class ActionController
         }
 
         // Check manipulation.
-        if (Core.Settings.MinManipulationToLasso > 0)
+        if (Core.Settings.MinManipulationToLasso > 0 && !req.TrustLassoUsability)
         {
             float manipulation = req.Grappler.health?.capacities?.GetLevel(PawnCapacityDefOf.Manipulation) ?? 0;
             if (manipulation < Core.Settings.MinManipulationToLasso)
@@ -100,7 +101,7 @@ public class ActionController
             return new GrappleAttemptReport(req, "InAnimation");
 
         // Check range.
-        float range = req.Grappler.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
+        float range = req.LassoRange ?? req.Grappler.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
         float dst = req.Grappler.Position.DistanceToSquared(req.Target.Position);
         if (dst > range * range)
             return new GrappleAttemptReport(req, "TooFar");
@@ -149,7 +150,6 @@ public class ActionController
             var cell = closestCells[i];
             if (GenSight.LineOfSightToThing(cell, req.Target, map))
             {
-                Core.Log("Have LOS to " + cell + " from " + req.Target);
                 // Success!
                 return GrappleAttemptReport.Success(cell);
             }
@@ -223,10 +223,14 @@ public class ActionController
             {
                 Grappler = req.Executioner,
                 OccupiedMask = req.SmallOccupiedMask,
-                NoErrorMessages = true
+                NoErrorMessages = true,
+                TrustLassoUsability = req.TrustLassoUsability,
+                LassoRange = req.LassoRange
             });
             if (!genericLassoReport.CanGrapple)
+            {
                 canUseLasso = false;
+            }
         }
 
         ExecutionAttemptReport Process(Pawn target)
@@ -252,6 +256,7 @@ public class ActionController
                 PossibleExecutions = ExecutionAttemptReport.BorrowList(),
                 CanExecute = true
             };
+            report.PossibleExecutions.Clear();
 
             // Check immediately adjacent.
             var tp = target.Position;
@@ -318,7 +323,9 @@ public class ActionController
                     GrappleSpotPickingBehaviour = GrappleSpotPickingBehaviour.OnlyAdjacent,
                     OccupiedMask = req.SmallOccupiedMask,
                     Target = target,
-                    NoErrorMessages = true
+                    NoErrorMessages = true,
+                    TrustLassoUsability = req.TrustLassoUsability,
+                    LassoRange = req.LassoRange
                 });
 
                 // The lasso can bring them into range (directly adjacent)!
@@ -334,7 +341,7 @@ public class ActionController
                             report.PossibleExecutions.Add(new PossibleExecution
                             {
                                 Animation = start,
-                                LassoToHere = null
+                                LassoToHere = lassoReport.DestinationCell
                             });
                         }
                     }
@@ -342,10 +349,16 @@ public class ActionController
                     // If any executions can be done, then this is the optimal execution route.
                     if (report.PossibleExecutions.Count > 0)
                     {
-                        report.MustLasso = true;
                         return report;
                     }
                 }
+            }
+
+            // Is the executioner allowed to walk to the target?
+            if (!req.CanWalk)
+            {
+                report.Dispose();
+                return new ExecutionAttemptReport(req, "NoWalk");
             }
 
             // The target is not adjacent and the lasso cannot be used.
@@ -445,10 +458,13 @@ public class ActionController
         }
 
         // Sort.
-        comparer.TargetPos = req.Target.Position;
-        comparer.CenterZ = center.z;
-        comparer.PreferAdjacent = req.GrappleSpotPickingBehaviour != GrappleSpotPickingBehaviour.Closest;
-        Array.Sort(closestCells, 0, count, comparer);
+        if (req.Target != null)
+        {
+            comparer.TargetPos = req.Target.Position;
+            comparer.CenterZ = center.z;
+            comparer.PreferAdjacent = req.GrappleSpotPickingBehaviour != GrappleSpotPickingBehaviour.Closest;
+            Array.Sort(closestCells, 0, count, comparer);
+        }
 
         return count;
     }
@@ -482,12 +498,14 @@ public class ActionController
             Add(center + new IntVec3(1, 0, -1));
         }
 
-        // Sort.
-        comparer.TargetPos = req.Target.Position;
-        comparer.CenterZ = center.z;
-        comparer.PreferAdjacent = req.GrappleSpotPickingBehaviour != GrappleSpotPickingBehaviour.Closest;
-        Array.Sort(closestCells, 0, count, comparer);
-
+        // Sort (if a target is specified)
+        if (req.Target != null)
+        { 
+            comparer.TargetPos = req.Target.Position;
+            comparer.CenterZ = center.z;
+            comparer.PreferAdjacent = req.GrappleSpotPickingBehaviour != GrappleSpotPickingBehaviour.Closest;
+            Array.Sort(closestCells, 0, count, comparer);
+        }
         return count;
     }
 
@@ -565,6 +583,16 @@ public struct GrappleAttemptRequest
     /// If supplied, it speeds up the operation by avoiding checking the map constantly.
     /// </summary>
     public uint? OccupiedMask;
+
+    /// <summary>
+    /// If true, most lasso checks are skipped (such as melee skill, manipulation etc.)
+    /// </summary>
+    public bool TrustLassoUsability;
+
+    /// <summary>
+    /// Allows the specification of lasso range. If null, it is extracted from the <see cref="Grappler"/>'s stats.
+    /// </summary>
+    public float? LassoRange;
 }
 
 public enum GrappleSpotPickingBehaviour
@@ -683,6 +711,20 @@ public struct ExecutionAttemptRequest
     /// Is the <see cref="Executioner"/> allowed to use their lasso (if any)?
     /// </summary>
     public bool CanUseLasso;
+    /// <summary>
+    /// Is the executioner allowed to walk to the target(s) to execute them?
+    /// </summary>
+    public bool CanWalk;
+    /// <summary>
+    /// If true, most lasso checks are skipped (such as melee skill, manipulation etc.)
+    /// Only valid if <see cref="CanUseLasso"/> is true.
+    /// </summary>
+    public bool TrustLassoUsability;
+
+    /// <summary>
+    /// Allows the specification of lasso range. If null, it is extracted from the <see cref="Executioner"/>'s stats.
+    /// </summary>
+    public float? LassoRange;
 
     /// <summary>
     /// The main target.
@@ -702,6 +744,8 @@ public struct ExecutionAttemptRequest
 
 public struct PossibleExecution
 {
+    public bool IsValid => Animation.AnimDef != null;
+
     /// <summary>
     /// Info about the animation to be started.
     /// </summary>
@@ -714,7 +758,7 @@ public struct PossibleExecution
 
     public struct AnimStartData
     {
-        public float Probability => AnimDef.Probability;
+        public float Probability => AnimDef?.Probability ?? 0;
 
         /// <summary>
         /// The animation to be played.
@@ -730,27 +774,13 @@ public struct PossibleExecution
 
 public struct ExecutionAttemptReport : IDisposable
 {
-    private static readonly Queue<List<PossibleExecution>> listPool = new Queue<List<PossibleExecution>>(32);
+    private static readonly ConcurrentQueue<List<PossibleExecution>> listPool = new ConcurrentQueue<List<PossibleExecution>>();
     private static readonly NamedArgument[] namedArgs = new NamedArgument[3];
 
-    public static List<PossibleExecution> BorrowList()
-    {
-        lock (listPool)
-        {
-            if (listPool.Count > 0)
-                return listPool.Dequeue();
-        }
-        return new List<PossibleExecution>(32);
-    }
+    public static List<PossibleExecution> BorrowList() => listPool.TryDequeue(out var found) ? found : new List<PossibleExecution>(32);
 
-    private static void ReturnList(List<PossibleExecution> list)
-    {
-        lock (listPool)
-        {
-            listPool.Enqueue(list);
-        }
-    }
-
+    private static void ReturnList(List<PossibleExecution> list) => listPool.Enqueue(list);
+    
     private static NamedArgument[] GetNamedArgs(in ExecutionAttemptRequest request, Pawn target, string intErrorMsg)
     {
         namedArgs[0] = new NamedArgument(request.Executioner, "Exec");
@@ -774,20 +804,9 @@ public struct ExecutionAttemptReport : IDisposable
     public bool IsFinal => !CanExecute && Target == null;
 
     /// <summary>
-    /// If true, indicates that this report suggests that the only way to execute is by walking to the target.
-    /// </summary>
-    public bool IsWalking => CanExecute && !MustLasso && PossibleExecutions == null;
-
-    /// <summary>
     /// Is any execution possible?
     /// </summary>
     public bool CanExecute;
-
-    /// <summary>
-    /// If <see cref="CanExecute"/> is true,
-    /// must a lasso be used to allow it?
-    /// </summary>
-    public bool MustLasso;
 
     /// <summary>
     /// An enumeration of possible executions.
@@ -800,6 +819,8 @@ public struct ExecutionAttemptReport : IDisposable
     /// </summary>
     public Pawn Target;
 
+    public bool IsWalking => CanExecute && (PossibleExecutions == null || !PossibleExecutions.Any());
+
     public string ErrorMessage;
 
     public string ErrorMessageShort;
@@ -810,7 +831,6 @@ public struct ExecutionAttemptReport : IDisposable
     public ExecutionAttemptReport(in ExecutionAttemptRequest req, Pawn target, string errorTrsKey, string intErrorMsg = null)
     {
         CanExecute = false;
-        MustLasso = false;
         PossibleExecutions = null;
         Target = target;
 

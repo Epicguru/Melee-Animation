@@ -1,9 +1,10 @@
-﻿using JetBrains.Annotations;
+﻿using AAM.Processing;
+using AAM.Tweaks;
+using JetBrains.Annotations;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 using Verse;
 using Patch = AAM.Patches.Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget;
 
@@ -12,8 +13,10 @@ namespace AAM.Idle;
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp
 {
+    public static double TotalTickTimeMS;
+    public static int TotalActive;
+
     public AnimRenderer CurrentAnimation;
-    public int TicksSinceFlavour;
 
     private float pauseAngle;
     private int pauseTicks;
@@ -22,246 +25,135 @@ public class IdleControllerComp : ThingComp
     private float lastDelta;
     private AnimDef lastAttack;
     private AnimDef lastFlavour;
-
-    public override void CompTick()
-    {
-        base.CompTick();
-
-        try
-        {
-            // Should never happen but just in case:
-            if (!Core.Settings.AnimateAtIdle || parent is not Pawn pawn || (pawn.CurJob != null && pawn.CurJob.def.neverShowWeapon))
-            {
-                ClearAnimation();
-                return;
-            }
-
-            bool vanillaShouldDraw = pawn.drawer.renderer.CarryWeaponOpenly();
-            if (!vanillaShouldDraw)
-            {
-                if (pawn.stances.curStance is Stance_Busy {neverAimWeapon: false, focusTarg.IsValid: true})
-                    vanillaShouldDraw = true;
-            }
-
-            var weapon = GetMeleeWeapon();
-            if (vanillaShouldDraw && weapon == null)
-                vanillaShouldDraw = false;
-
-            if (!vanillaShouldDraw)
-            {
-                ClearAnimation();
-                return;
-            }
-
-            bool shouldBeDrawing = Core.Settings.AnimateAtIdle && !pawn.Downed && !pawn.Dead &&
-                                   pawn.Spawned;
-            if (!shouldBeDrawing)
-            {
-                ClearAnimation();
-                return;
-            }
-
-            TickAnimation(pawn, weapon);
-        }
-        catch (Exception e)
-        {
-            Core.Error($"Exception processing idling animation for '{parent}':", e);
-        }
-    }
+    private uint ticksMoving;
 
     public void PreDraw()
     {
-        if (CurrentAnimation == null)
+        if (parent is not Pawn pawn || CurrentAnimation == null)
             return;
 
-        var pawn = parent as Pawn;
-        if (pawn == null)
-            return;
+        // If the animation is about to draw but it was just destroyed (by the animation ending)
+        // the immediately tick to get a new animation running before the frame is drawn.
+        // This prevents an annoying flicker.
+        if (CurrentAnimation.IsDestroyed)
+        {
+            if (ShouldBeActive(out var weapon))
+                TickActive(weapon);
+        }
 
         // Update animator position to match pawn.
         CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
     }
 
-    private AnimDef Random(IReadOnlyList<AnimDef> anims, AnimDef preferNotThis)
+    private bool ShouldBeActive(out Thing weapon)
     {
-        if (anims.Count == 0)
-            return null;
+        weapon = null;
 
-        if (anims.Count == 1)
-            return anims[0];
-
-        for (int i = 0; i < 20; i++)
+        // Basic checks:
+        if (!Core.Settings.AnimateAtIdle
+            || parent is not Pawn pawn
+            || (pawn.CurJob != null && pawn.CurJob.def.neverShowWeapon) 
+            || pawn.Dead
+            || pawn.Downed
+            || !pawn.Spawned)
         {
-            var picked = anims.RandomElementByWeight(d => d.Probability);
-            if (picked != preferNotThis)
-                return picked;
+            return false;
         }
 
-        return anims.RandomElementByWeight(d => d.Probability);
+        // Vanilla checks.
+        bool vanillaShouldDraw = pawn.drawer.renderer.CarryWeaponOpenly();
+        if (!vanillaShouldDraw)
+        {
+            // Sometimes the pawn will not be 'openly carrying' but will still be aiming their weapon, such as when casting psycasts.
+            if (pawn.stances.curStance is Stance_Busy { neverAimWeapon: false, focusTarg.IsValid: true })
+                vanillaShouldDraw = true;
+        }
+
+        // Has a valid melee weapon:
+        weapon = GetMeleeWeapon();
+        if (vanillaShouldDraw && weapon == null)
+            vanillaShouldDraw = false;
+
+        return vanillaShouldDraw;
     }
 
-    private Thing GetMeleeWeapon()
+    public override void CompTick()
     {
-        var weapon = (parent as Pawn)?.equipment?.Primary;
-        if (weapon != null && weapon.def.IsMeleeWeapon) // TODO Check for tweak data?
-            return weapon;
-        return null;
+        base.CompTick();
+
+        var timer = new RefTimer();
+        try
+        {
+            if (!ShouldBeActive(out var weapon))
+            {
+                ClearAnimation();
+                return;
+            }
+
+            TotalActive++;
+            TickActive(weapon);
+        }
+        catch (Exception e)
+        {
+            Core.Error($"Exception processing idling animation for '{parent}':", e);
+        }
+        TotalTickTimeMS += timer.GetElapsedMilliseconds();
     }
 
-    private Rot4 GetCurrentAnimFacing() => CurrentAnimation.Def.idleType switch
+    private void TickActive(Thing weapon)
     {
-        IdleType.MoveVertical => CurrentAnimation.MirrorHorizontal ? Rot4.North : Rot4.South,
-        IdleType.MoveHorizontal or IdleType.AttackHorizontal => CurrentAnimation.MirrorHorizontal ? Rot4.West : Rot4.East,
-        IdleType.AttackSouth => Rot4.South,
-        IdleType.AttackNorth => Rot4.North,
-        _ => Rot4.South
-    };
+        bool IsPlayingAnim() => CurrentAnimation is {IsDestroyed: false};
 
-    private void TickAnimation(Pawn pawn, Thing weapon)
-    {
-        bool isMoving = pawn.pather.MovingNow;
-        bool inMelee = pawn.IsInActiveMeleeCombat();
-        Rot4 facing = pawn.Rotation;
+        var pawn = (Pawn)parent;
 
-        AnimDef MakeNewAnim(out bool flipX)
+        // Avoids single-frame buggy movement animations:
+        bool patherMoving = pawn.pather.MovingNow;
+        bool isBusyStance = pawn.stances?.curStance is Stance_Busy { neverAimWeapon: false, focusTarg.IsValid: true };
+        if (patherMoving && !isBusyStance)
+            ticksMoving++;
+        else
+            ticksMoving = 0;
+        bool isMoving = ticksMoving >= 2;
+
+        var tweak = weapon.TryGetTweakData();
+        bool isAttacking = IsPlayingAnim() && CurrentAnimation.Def.idleType.IsAttack();
+
+        // If attacking, it takes priority over everything else.
+        if (isAttacking)
         {
-            var tweak = weapon.TryGetTweakData();
-
-            // Not moving, can either be idle or melee.
-            if (!isMoving)
-            {
-                // If facing south, use idle anim.
-                if (facing == Rot4.South && !inMelee)
-                {
-                    flipX = false;
-                    return tweak.GetIdleAnimation();
-                }
-            }
-
-            // Moving, use the directional movement anims.
-            if (facing.IsHorizontal)
-            {
-                flipX = facing == Rot4.West;
-                return tweak.GetMoveHorizontalAnimation();
-            }
-
-            flipX = facing == Rot4.North;
-            return tweak.GetMoveVerticalAnimation();
+            DoAttackPausing();
+            return;
         }
 
-        void StartNew()
-        {
-            // Clear old.
-            ClearAnimation();
+        // Reset pause ticks if not attacking.
+        isPausing = false;
+        pauseTicks = 0;
 
-            // Create entirely new animation.
-            var newAnim = MakeNewAnim(out bool fx);
-            var startParams = new AnimationStartParameters(newAnim, pawn)
-            {
-                FlipX = fx,
-                DoNotRegisterPawns = true,
-                RootTransform = MakePawnMatrix(pawn, facing == Rot4.South)
-            };
-
-            if (!startParams.TryTrigger(out CurrentAnimation))
-            {
-                Core.Warn("Failed to create idle renderer animation.");
-            }
-            else
-            {
-                CurrentAnimation.Loop = true;
-            }
-        }
-
-        if (CurrentAnimation == null || CurrentAnimation.IsDestroyed)
-        {
-            StartNew();
-        }
-        
-        // Facing in the right direction?
-        var currentFacing = GetCurrentAnimFacing();
-        if (currentFacing != facing)
-        {
-            StartNew();
-        }
-
-        // Idle -> move and mode -> idle
         if (isMoving)
         {
-            // If moving but idle animation is playing, change it out.
-            if (CurrentAnimation.Def.idleType is IdleType.Idle or IdleType.Flavour)
-                StartNew();
+            // When moving and not attacking, play the movement animation.
+            EnsuringMoving(pawn, tweak);
         }
         else
         {
-            // Not moving...
-            // If moving animation is playing, change it out.
-            bool moveIsPlaying = CurrentAnimation.Def.idleType is IdleType.MoveHorizontal or IdleType.MoveVertical;
-
-            if (moveIsPlaying)
-            {
-                if (!inMelee)
-                {
-                    StartNew();
-                }
-                else
-                {
-                    // Freeze frame the move animation.
-                    float idleTime = CurrentAnimation.Def.idleFrame / 60f;
-                    CurrentAnimation.TimeScale = 0.0f;
-                    CurrentAnimation.Seek(idleTime, null);
-                }
-            }
+            // Play facing or idle animation.
+            EnsureFacingOrIdle(pawn, tweak);
         }
 
-        // Random idle interrupt (flavour).
-        if (CurrentAnimation.Def.idleType == IdleType.Idle && facing == Rot4.South && TicksSinceFlavour > GenTicks.TicksPerRealSecond * 5)
-        {
-            float mtbSeconds = 20;
-            if (Rand.MTBEventOccurs(mtbSeconds, GenTicks.TicksPerRealSecond, 1))
-            {
-                ClearAnimation();
-                var anim = Random(weapon.TryGetTweakData().GetFlavourAnimations(), lastFlavour);
-                if (anim != null)
-                {
-                    lastFlavour = anim;
-                    var startParams = new AnimationStartParameters(anim, pawn)
-                    {
-                        FlipX = false,
-                        DoNotRegisterPawns = true,
-                        RootTransform = MakePawnMatrix(pawn, false)
-                    };
-                    startParams.TryTrigger(out CurrentAnimation);
-                    TicksSinceFlavour = 0;
-                }
-            }
-        }
-        TicksSinceFlavour++;
+        // Randomly interrupt idle with Flavour.
+        TickFlavour(tweak);
 
-        // Update walk animation speed based on pawn speed.
-        if (CurrentAnimation.Def.idleType is IdleType.MoveHorizontal or IdleType.MoveVertical && isMoving)
-        {
-            float refSpeed = 4f;
-            float minCoef = 0.4f;
-            float maxCoef = 2.5f;
-            float exp = 0.6f;
+        // Mirror and loop:
+        if (CurrentAnimation == null)
+            return;
+        bool shouldLoop = CurrentAnimation.Def.idleType.IsIdle(false) || CurrentAnimation.Def.idleType.IsMove();
+        bool shouldBeMirrored = pawn.Rotation == Rot4.West || pawn.Rotation == Rot4.North;
+        CurrentAnimation.Loop = shouldLoop;
+        CurrentAnimation.MirrorHorizontal = shouldBeMirrored;
+    }
 
-            bool isDiagonal = pawn.pather.nextCell.x != pawn.pather.lastCell.x && pawn.pather.nextCell.z != pawn.pather.lastCell.z;
-            float dst = isDiagonal ? 1.41421f : 1f;
-            float pctPerTick = pawn.pather.CostToPayThisTick() / pawn.pather.nextCellCostTotal;
-            float dstPerSecond = 60f * dst * pctPerTick;
-            float coef = Mathf.Clamp(Mathf.Pow(dstPerSecond / refSpeed, exp), minCoef, maxCoef);
-
-            if (!isPausing)
-                CurrentAnimation.TimeScale = coef;
-        }
-
-        // Update animation pausing.
-        if (CurrentAnimation == null || !CurrentAnimation.Def.idleType.IsAttack())
-        {
-            pauseTicks = 0;
-            isPausing = false;
-        }
+    private void DoAttackPausing()
+    {
         if (pauseTicks > 0)
         {
             if (isPausing)
@@ -285,17 +177,143 @@ public class IdleControllerComp : ThingComp
                     lastSpeed = CurrentAnimation.TimeScale;
                     CurrentAnimation.TimeScale = 0;
                     lastDelta = 0;
-                } 
+                }
             }
         }
-        else
+        else if (isPausing)
         {
-            if (isPausing)
-            {
-                isPausing = false;
-                CurrentAnimation.TimeScale = lastSpeed;
-            }
+            isPausing = false;
+            CurrentAnimation.TimeScale = lastSpeed;
         }
+    }
+
+    private void EnsuringMoving(Pawn pawn, ItemTweakData tweak)
+    {
+        bool horizontal = pawn.Rotation.IsHorizontal;
+
+        var anim = horizontal ? tweak.GetMoveHorizontalAnimation() : tweak.GetMoveVerticalAnimation();
+        if (anim == null)
+        {
+            Core.Warn($"Missing movement animation for {tweak.ItemDefName}, horizontal: {horizontal}");
+            return;
+        }
+
+        // Start the movement animation if required.
+        bool needsNew = CurrentAnimation == null || CurrentAnimation.IsDestroyed || CurrentAnimation.Def != anim;
+        if (needsNew)
+            StartAnim(anim);
+
+        if (CurrentAnimation == null)
+            return;
+
+        var rot = pawn.Rotation;
+        CurrentAnimation.MirrorHorizontal = rot == Rot4.North || rot == Rot4.West;
+        CurrentAnimation.TimeScale = GetMoveAnimationSpeed(pawn);
+    }
+
+    private void EnsureFacingOrIdle(Pawn pawn, ItemTweakData tweak)
+    {
+        var rot = pawn.Rotation;
+        bool facingSouth = rot == Rot4.South;
+        bool isBusyStance = pawn.stances.curStance is Stance_Busy { neverAimWeapon: false, focusTarg.IsValid: true };
+        var anim = (isBusyStance || !facingSouth) ? rot.IsHorizontal ? tweak.GetMoveHorizontalAnimation() : tweak.GetMoveVerticalAnimation() : tweak.GetIdleAnimation();
+
+        // Start anim if required.
+        bool neededIsMovement = anim.idleType.IsMove();
+        bool currentIsIdle = CurrentAnimation is {IsDestroyed: false} && CurrentAnimation.Def.idleType.IsIdle();
+        bool needsNew = CurrentAnimation == null || CurrentAnimation.IsDestroyed || (CurrentAnimation.Def != anim && (!currentIsIdle || neededIsMovement));
+        if (needsNew)
+            StartAnim(anim);
+
+        // Sanity check.
+        if (CurrentAnimation == null)
+            return;
+
+        // Set anim speed if not idle:
+        if (CurrentAnimation.Def.idleType.IsIdle())
+            return;
+
+        // Do freeze frame:
+        float idleTime = CurrentAnimation.Def.idleFrame / 60f;
+        CurrentAnimation.TimeScale = 0f;
+        CurrentAnimation.Seek(idleTime, 0f);
+    }
+
+    private void TickFlavour(ItemTweakData tweak)
+    {
+        // Check if disabled from settings:
+        if (Core.Settings.FlavourMTB <= 0f)
+            return;
+
+        // Only perform when idling:
+        if (CurrentAnimation == null || CurrentAnimation.Def.idleType != IdleType.Idle)
+            return;
+
+        // Random chance to occur each frame, using MTB from settings.
+        if (!Rand.MTBEventOccurs(Core.Settings.FlavourMTB, 60f, 1f))
+            return;
+
+        // Pick random flavour.
+        var anim = Random(tweak.GetFlavourAnimations(), lastFlavour);
+        lastFlavour = anim;
+
+        // Play said flavour.
+        if (anim != null)
+            StartAnim(anim);
+    }
+
+    private void StartAnim(AnimDef def)
+    {
+        ClearAnimation();
+
+        var args = new AnimationStartParameters(def, (Pawn) parent)
+        {
+            DoNotRegisterPawns = true,
+        };
+
+        if (!args.TryTrigger(out CurrentAnimation))
+            Core.Error($"Failed to start idle anim '{def}'!");
+    }
+
+    private static float GetMoveAnimationSpeed(Pawn pawn)
+    {
+        const float REF_SPEED = 4f;
+        const float MIN_COEF = 0.4f;
+        const float MAX_COEF = 2.5f;
+        const float EXP = 0.6f;
+
+        bool isDiagonal = pawn.pather.nextCell.x != pawn.pather.lastCell.x && pawn.pather.nextCell.z != pawn.pather.lastCell.z;
+        float dst = isDiagonal ? 1.41421f : 1f;
+        float pctPerTick = pawn.pather.CostToPayThisTick() / pawn.pather.nextCellCostTotal;
+        float dstPerSecond = 60f * dst * pctPerTick;
+        return Mathf.Clamp(Mathf.Pow(dstPerSecond / REF_SPEED, EXP), MIN_COEF, MAX_COEF) * Core.Settings.MoveAnimSpeedCoef;
+    }
+
+    private static AnimDef Random(IReadOnlyList<AnimDef> anims, AnimDef preferNotThis)
+    {
+        if (anims.Count == 0)
+            return null;
+
+        if (anims.Count == 1)
+            return anims[0];
+
+        for (int i = 0; i < 20; i++)
+        {
+            var picked = anims.RandomElementByWeight(d => d.Probability);
+            if (picked != preferNotThis)
+                return picked;
+        }
+
+        // Fallback in case there are not alternatives.
+        return anims.RandomElementByWeight(d => d.Probability);
+    }
+
+    private Thing GetMeleeWeapon()
+    {
+        var weapon = (parent as Pawn)?.equipment?.Primary;
+        if (weapon != null && weapon.def.IsMeleeWeapon && weapon.TryGetTweakData() != null)
+            return weapon;
+        return null;
     }
 
     public void NotifyPawnDidMeleeAttack(Thing target, Verb_MeleeAttack verbUsed)
@@ -313,7 +331,7 @@ public class IdleControllerComp : ThingComp
         lastAttack = anim;
         if (anim == null)
         {
-            Core.Warn($"Failed to find any attack animation to play for {weapon}!");
+            Core.Warn($"Failed to find any attack animation to play for {weapon} {tweak.GetCategory()}, rot: {rot.AsVector2} !");
             return;
         }
 
@@ -330,8 +348,8 @@ public class IdleControllerComp : ThingComp
             pauseAngle = angle;
 
             // Only if we actually hit:
-            if (Patch.lastTarget == target)
-                pauseTicks = 5;
+            if (Patch.lastTarget == target && Core.Settings.AttackPauseDuration != AttackPauseIntensity.Disabled)
+                pauseTicks = (int)Core.Settings.AttackPauseDuration;
         }
 
         Patch.lastTarget = null;
@@ -347,7 +365,7 @@ public class IdleControllerComp : ThingComp
         ClearAnimation();
         if (!args.TryTrigger(out CurrentAnimation))
         {
-            Core.Error($"Failed to trigger attack animation for {pawn} ({args})");
+            Core.Error($"Failed to trigger attack animation for {pawn} ({args}). Dead: {pawn.Dead}, Downed: {pawn.Downed}, InAnim: {pawn.TryGetAnimator() != null}");
         }
     }
 
@@ -364,8 +382,13 @@ public class IdleControllerComp : ThingComp
         float point = -pauseAngle;
         if (CurrentAnimation.MirrorHorizontal)
         {
-            point = point - 180;
+            point -= 180;
         }
+
+        if (CurrentAnimation.Def.idleType == IdleType.AttackNorth)
+            point += 90;
+        if (CurrentAnimation.Def.idleType == IdleType.AttackSouth)
+            point -= 90;
 
         float a = Mathf.LerpAngle(point, idle, lerp);
         return mat * Matrix4x4.Rotate(Quaternion.Euler(0f, a, 0f));

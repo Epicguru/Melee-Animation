@@ -28,6 +28,21 @@ namespace AAM
             FlipY = false;
         }
 
+        public AnimationStartParameters(AnimDef animation, Pawn main, Pawn second)
+        {
+            MainPawn = null; // Assigned at bottom of constructor.
+            SecondPawn = second;
+            ExtraPawns = null;
+            Animation = animation;
+            Map = null;
+            RootTransform = Matrix4x4.identity;
+            FlipX = false;
+            FlipY = false;
+
+            if (main != null)
+                SetMainPawn(main);
+        }
+
         public AnimationStartParameters(AnimDef animation, params Pawn[] pawns)
         {
             MainPawn = null; // Assigned at bottom of constructor.

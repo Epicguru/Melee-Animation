@@ -1,11 +1,11 @@
 {
-  "ExportTimeUTC": "2023-02-25T16:29:29.8059134Z",
+  "ExportTimeUTC": "2023-03-03T19:32:28.1849062Z",
   "Name": "Idle_Medium_MoveVertical",
   "Length": 1.0,
   "Events": [],
   "Parts": [
     {
-      "ID": 19338,
+      "ID": 19346,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -260,7 +260,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 18988,
+      "ID": 18996,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {},
@@ -291,10 +291,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 18868,
+      "ID": 18876,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 18988,
+      "ParentID": 18996,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -323,10 +323,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19466,
+      "ID": 19474,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": 19338,
+      "ParentID": 19346,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -355,10 +355,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19604,
+      "ID": 19612,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": 19338,
+      "ParentID": 19346,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -387,10 +387,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 18960,
+      "ID": 18968,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": 19338,
+      "ParentID": 19346,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -416,11 +416,11 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19530,
+      "SplitDrawPivotPartID": 19538,
       "SweepPaths": []
     },
     {
-      "ID": 19530,
+      "ID": 19538,
       "Path": "WeaponACutoff",
       "Curves": {},
       "DefaultValues": {

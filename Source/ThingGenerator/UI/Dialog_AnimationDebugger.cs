@@ -1,9 +1,10 @@
-﻿using AAM.Tweaks;
+﻿using AAM.Idle;
 using EpicUtils;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -187,7 +188,7 @@ namespace AAM.UI
                 Widgets.DrawBoxSolid(bar, Color.white * 0.45f);
                 float newLerp = Widgets.HorizontalSlider(bar.ExpandedBy(0, -2), lerp, 0, 1);
                 if (Math.Abs(newLerp - lerp) > 0.005f)
-                    renderer.Seek(newLerp * renderer.Data.Duration, null);
+                    renderer.Seek(newLerp * renderer.Data.Duration, 0);
 
                 rect.y += 20;
 
@@ -651,68 +652,68 @@ namespace AAM.UI
             allManagers.Clear();
             allManagers.AddRange(Find.Maps.Select(m => m.GetAnimManager()));
 
-            ui.Label("<b><color=cyan>SCAN TIMES</color></b>");
+            ui.Label($"Max threads: {JobsUtility.JobWorkerCount + 1}");
 
-            double totalScanTime = 0;
-            double totalProcessTime = 0;
+            ui.Label($"There are {IdleControllerComp.TotalActive} active idle animators that took {IdleControllerComp.TotalTickTimeMS:F2} MS to tick.");
+
+            if (AnimationManager.IsDoingMultithreadedSeek)
+            {
+                ui.Label("Multithreaded matrix calculation is active:");
+                ui.Label($" - Multithreaded seek time is {AnimationManager.MultithreadedSeekTimeMS:F2} on {AnimationManager.MultithreadedThreadsUsed} threads.");
+            }
+
             foreach (var manager in allManagers)
             {
-                var pp = manager.PawnProcessor;
-                totalScanTime += pp.LastListUpdateTimeMS;
-                totalProcessTime += pp.LastProcessTimeMS;
-                ui.Label($"<b>Map: {manager.map}</b>");
-                ui.Indent();
-                ui.Label($"Last scan time: {pp.LastListUpdateTimeMS:F2} ms");
+                var d = manager.PawnProcessor.Diagnostics;
 
-                string extra = null;
-                if (pp.LastProcessTimeMS >= Core.Settings.MaxCPUTimePerTick)
-                    extra = "<color=red>[!!!]</color>";
-                ui.Label($"Last process time: {pp.LastProcessTimeMS:F2} ms  {extra}");
-                ui.Label($"Process average interval per pawn: {pp.ProcessAverageInterval:F3} ms ({pp.ProcessAverageInterval / (100f / 6f):F0} ticks)");
-                ui.Label("Last process pass involved:");
+                double totalDraw = 0;
+                double totalSeek = 0;
+                double totalSweep = 0;
+                int animatorCount = 0;
+
+                foreach (var anim in AnimRenderer.ActiveRenderers.Where(r => r.Map == manager.map))
+                {
+                    totalDraw += anim.DrawMS;
+                    totalSeek += anim.SeekMS;
+                    totalSweep += anim.SweepMS;
+                    animatorCount++;
+                }
+
+                ui.Label($"Map {manager.map}:");
                 ui.Indent();
-                ui.Label($"Processed {pp.LastProcessedPawnCount} out of {pp.TargetProcessedPawnCount} ({(float)pp.LastProcessedPawnCount / pp.TargetProcessedPawnCount * 100f:F0}%) pawns.");
-                ui.Label($"Checked {pp.LastAnimationsConsideredCount * 2} animations against {pp.LastTargetsConsideredCount} targets.");
-                ui.Label($"This caused {pp.LastCellsConsideredCount} cells to be checked.");
+
+                ui.Label($"{animatorCount} active animators:");
+                ui.Indent();
+
+                ui.Label($"- Total {totalSeek + totalDraw + (AnimationManager.IsDoingMultithreadedSeek ? AnimationManager.MultithreadedSeekTimeMS : 0):F1} MS per frame ({totalSeek + (AnimationManager.IsDoingMultithreadedSeek ? AnimationManager.MultithreadedSeekTimeMS : 0):F2} {(AnimationManager.IsDoingMultithreadedSeek ? "multithreaded " : "")}seek, {totalDraw:F2} draw).");
+                ui.Label($"- Of which {totalSweep:F2} was sweep path calculation and rendering.");
+
+
+                ui.Outdent();
+                ui.Label("Auto Map Processing:");
+                ui.Indent();
+
+                ui.Label($"- Total time for {d.PawnCount} pawns was {d.TotalTimeMS:F2} MS on {d.ThreadsUsed} threads.");
+                ui.Label($"- Scan time was {d.CompileTimeMS:F2} MS vs {d.ProcessTimeMS:F2} MS processing.");
+
+                ui.Outdent();
+                ui.Label("Threaded times:");
+                ui.Indent();
+                for (int i = 0; i < d.ThreadsUsed; i++)
+                {
+                    ui.Label($"Startup: {d.StartupTimesMS[i]:F2}, Get Targets: {d.TargetFindTimesMS[i]:F2}, Make Reports: {d.ReportTimesMS[i]:F2}");
+                }
+
                 ui.Outdent();
                 ui.Outdent();
+
             }
 
-            ui.Gap();
-            ui.Label($"Total scan time: {totalScanTime:F3} ms");
-            ui.Label($"Total process time: {totalProcessTime:F3} ms ({totalProcessTime / Core.Settings.MaxCPUTimePerTick * 100f:F0}% of limit) {(totalProcessTime >= Core.Settings.MaxCPUTimePerTick ? "  <color=red>[!!!]</color>" : "")}");
-            ui.GapLine();
-
-            ui.Label("<b><color=cyan>RENDERING</color></b>");
-            ui.Label($"Active: {AnimRenderer.ActiveRenderers.Count} renderers.");
-            ui.Label("<b>Total times:</b>");
-            ui.Indent();
-            ui.Label($"Events: {AnimRenderer.EventsTimer.Elapsed.TotalMilliseconds:F3} ms");
-            ui.Label($"Seek: {AnimRenderer.SeekTimer.Elapsed.TotalMilliseconds:F3} ms");
-            ui.Label($"Draw: {AnimRenderer.DrawTimer.Elapsed.TotalMilliseconds:F3} ms");
-            ui.Outdent();
-
-            var curve = new SimpleCurve();
-            for (int i = 0; i < 100; i++)
-            {
-                float x = i;
-                float y = Mathf.Sin(x * Mathf.Deg2Rad);
-                curve.Add(x, y, false);
-            }
-
-            var drawInfo = new SimpleCurveDrawInfo()
-            {
-                color = Color.green,
-                curve = curve,
-                label = "My curve",
-                valueFormat = "F2"
-            };
-
-            SimpleCurveDrawer.DrawCurveLines(ui.GetRect(200), drawInfo, false, new Rect(0, 0, 100, 1), true, true);
+            //SimpleCurveDrawer.DrawCurveLines(ui.GetRect(200), drawInfo, false, new Rect(0, 0, 100, 1), true, true);
 
             // Lazy :)
-            if(Event.current.type == EventType.Repaint)
-                AnimRenderer.ResetTimers();
+            //if(Event.current.type == EventType.Repaint)
+            //    AnimRenderer.ResetTimers();
         }
 
         private struct Node

@@ -46,6 +46,9 @@ namespace AAM
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoGrapple = true;
 
+        [Description("Can enemies use lassos (if they have any) to pull your colonists into melee range?")]
+        public bool EnemiesCanGrapple = true;
+
         [Label("Minimum Melee Skill")]
         [Description("The minumum melee skill required to use a lasso.\nAffects all pawns.")]
         [Range(0, 20)]
@@ -85,6 +88,27 @@ namespace AAM
                      "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoExecute = true;
+
+        [Label("Automatic Execution Average Interval (Friendly)")]
+        [Description("This is the average time, in seconds, at which friendly pawns will attempt to start an execution animation on the enemy they are currently fighting.\n" +
+                     "For example, if this is set to 5 and your pawn is fighting in melee, an execution animation will be triggered on average after 5 seconds.\n" +
+                     "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
+        [Range(0.5f, 120)]
+        [Step(1f)]
+        public float ExecuteAttemptMTBSeconds = 8;
+
+        [Label("Enemies Can Perform Executions")]
+        [Description("Can enemies perform execution animations?")]
+        public bool EnemiesCanExecute = true;
+
+        
+        [Label("Automatic Execution Average Interval (Enemy)")]
+        [Description("This is the average time, in seconds, at which enemy pawns will attempt to start an execution animation on the target they are currently fighting.\n" +
+                     "For example, if this is set to 5 and an enemy is fighting in melee, an execution animation will be triggered on average after 5 seconds.\n" +
+                     "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
+        [Range(0.5f, 120)]
+        [Step(1f)]
+        public float ExecuteAttemptMTBSecondsEnemy = 14;
 
         [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
         public bool AnimalsCanBeExecuted = false;
@@ -134,6 +158,25 @@ namespace AAM
         [WebContent("OffsetMode", false)]
         public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
 
+        [Label("Move Animation Speed")]
+        [Description("Changes the speed of the movement animations.\nHigher values increase the speed. This is just a visual change, it obviously doesn't change the pawn's movement speed.")]
+        [Percentage]
+        [Range(0.1f, 3f)]
+        [Step(0.01f)]
+        public float MoveAnimSpeedCoef = 1f;
+
+        [Label("Idle Animation Average Interval")]
+        [Description("Pawns standing with their weapon out (such as when drafted) will sometimes play an animation where they swing their weapon about, flourish it etc.\n" +
+                     "This option controls the average time, in seconds, between the occurrence of this animation.\nSet to 0 to disable the animations entirely.")]
+        [Range(0, 60)]
+        [Step(0.5f)]
+        public float FlavourMTB = 10f;
+
+        [Description("When doing a regular melee attack, the animation will very briefly pause at the point when the weapon intersects the target.\n" +
+                     "This lets you know whether an attack connected, as well as giving the hit a bit more visual <i>oomph</i>.\n" +
+                     "This setting changes the duration of that pause, or disables it entirely. This is a purely visual change and does not affect combat.")]
+        public AttackPauseIntensity AttackPauseDuration = AttackPauseIntensity.Medium;
+
         [Label("Weapon Trail Color")]
         [Description("The base color of weapon trails. If you set the alpha to 0, trails will be disabled.")]
         [WebContent("SweepColor", false)]
@@ -153,15 +196,24 @@ namespace AAM
 
         #region Performance
         [Header("Performance")]
-        [Description("The interval, in ticks, between a complex pawn calculation that runs on each map.\nDon't touch this unless you know what you are doing.")]
-        [Range(1, 240)]
-        public int PawnProcessorTickInterval = 20;
+        [Description("The maximum number of CPU threads to use when processing pawns for automatic executions & lasso usage.\n" +
+                     "If set to 0, the thread count is automatically determined based on your CPU, and if set to 1 then multi-threaded processing is disabled.\n" +
+                     "Set to 1 if you experience error spam caused by a mod conflict, although it will decrease performance considerably.")]
+        [Range(0, 64)]
+        public int MaxProcessingThreads = 0;
 
-        [Label("Max CPU Time Per Tick")]
-        [Description("The maximum amount of time, in milliseconds, that the mod can spend processing pawns <b>per tick, per map</b>.\n" +
-                     "Higher values can increase the responsiveness of automatic grappling and executions, but can also greatly lower performance on very populated maps.")]
-        [Range(0.25f, 10f)]
-        public double MaxCPUTimePerTick = 1;
+        [Description("When enabled, multiple CPU threads are used to calculate complex matrix transformation needed for animations.\n" +
+                     "The number of threads is given by the Max Processing Threads setting.")]
+        public bool MultithreadedMatrixCalculations = true;
+
+        [Description("When enabled, offscreen animations are not drawn to save time and increase FPS.\n" +
+                     "This option is only here in case there are unexpected bugs related to this culling.")]
+        public bool OffscreenCulling = true;
+
+        [Description("The number of ticks between scanning all pawns on the map for automatic execution/duel/lasso opportunities.\n" +
+                     "Higher values can increase FPS at the cost of less responsiveness.")]
+        [Range(1, 60)]
+        public int ScanTickInterval = 5;
         #endregion
 
         #region Other
@@ -281,5 +333,13 @@ namespace AAM
         None,
         InterpolateToCorrect,
         KeepOffset
+    }
+
+    public enum AttackPauseIntensity
+    {
+        Disabled = 0,
+        Short = 4,
+        Medium = 8,
+        Long = 12
     }
 }

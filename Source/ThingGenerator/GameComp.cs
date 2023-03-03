@@ -8,6 +8,7 @@ using AAM.PawnData;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
+using AAM.Idle;
 
 namespace AAM
 {
@@ -16,12 +17,14 @@ namespace AAM
         public static GameComp Current;
 
         public readonly Game Game;
-        [TweakValue("__AAM")]
+        public static ulong FrameCounter;
+
+        [TweakValue("Advanced Melee Animation")]
         private static bool drawTextureExtractor;
 
         private string texPath;
-        private Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new();
-        private List<PawnMeleeData> allMeleeData = new();
+        private Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new Dictionary<Pawn, PawnMeleeData>();
+        private List<PawnMeleeData> allMeleeData = new List<PawnMeleeData>();
 
         public GameComp(Game game)
         {
@@ -61,8 +64,10 @@ namespace AAM
             if (pawnMeleeData.TryGetValue(pawn, out var found))
                 return found;
 
-            var created = new PawnMeleeData();
-            created.Pawn = pawn;
+            var created = new PawnMeleeData
+            {
+                Pawn = pawn
+            };
             allMeleeData.Add(created);
             pawnMeleeData.Add(pawn, created);
             return created;
@@ -70,9 +75,14 @@ namespace AAM
 
         public override void GameComponentTick()
         {
+            IdleControllerComp.TotalTickTimeMS = 0;
+            IdleControllerComp.TotalActive = 0;
+
             base.GameComponentTick();
 
+
             AnimRenderer.TickAll();
+            AnimRenderer.RemoveDestroyed(null);
             GrabUtility.Tick();
 
             Patch_Corpse_DrawAt.Tick();
@@ -85,8 +95,16 @@ namespace AAM
             }
         }
 
+        public override void GameComponentUpdate()
+        {
+            base.GameComponentUpdate();
+            FrameCounter++;
+        }
+
         public override void GameComponentOnGUI()
         {
+            //GUILayout.Label($"Mem: {System.GC.GetTotalMemory(false)/(1024f*1024f):F1} MB");
+
             if (Prefs.DevMode && Dialog_AnimationDebugger.IsInRehearsalMode)
             {
                 GUILayout.Space(100);
