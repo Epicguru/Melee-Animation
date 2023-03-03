@@ -7,10 +7,10 @@ namespace AAM.Idle;
 
 public static class IdleClassifier
 {
-    [TweakValue("Advanced Melee Animation", 0f, 8f)]
+    [TweakValue("Melee Animation", 0f, 8f)]
     public static float ColossalSizeThreshold = 1.37f;
 
-    [TweakValue("Advanced Melee Animation", 0f, 5f)]
+    [TweakValue("Melee Animation", 0f, 5f)]
     public static float TinySizeThreshold = 0.63f;
 
     public static (WeaponSize size, WeaponCat category) Classify(ItemTweakData tweakData)
@@ -39,7 +39,7 @@ public static class IdleClassifier
         public WeaponCat Category;
     }
 
-    [DebugOutput("Advanced Melee Animation")]
+    [DebugOutput("Melee Animation")]
     private static void LogTextureCategories()
     {
         var data = from def in DefDatabase<ThingDef>.AllDefsListForReading

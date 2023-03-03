@@ -204,7 +204,7 @@ public static class RetextureUtility
 
     }
 
-    [DebugOutput("Advanced Melee Animation")]
+    [DebugOutput("Melee Animation")]
     private static void LogAllTextureReports()
     {
         var meleeWeapons = DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon);

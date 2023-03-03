@@ -16,9 +16,9 @@ namespace AAM.Processing;
 
 public class MapPawnProcessor : IDisposable
 {
-    [TweakValue("Advanced Melee Animation", 0f, 5f)]
+    [TweakValue("Melee Animation", 0f, 5f)]
     public static float PawnPerThreadThreshold = 0.2f;
-    [TweakValue("Advanced Melee Animation")]
+    [TweakValue("Melee Animation")]
     public static bool LogPerformanceToDesktop;
 
     private static readonly Dictionary<int, Task[]> taskArrayPool = new Dictionary<int, Task[]>();

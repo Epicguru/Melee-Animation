@@ -19,7 +19,7 @@ namespace AAM
         public readonly Game Game;
         public static ulong FrameCounter;
 
-        [TweakValue("Advanced Melee Animation")]
+        [TweakValue("Melee Animation")]
         private static bool drawTextureExtractor;
 
         private string texPath;

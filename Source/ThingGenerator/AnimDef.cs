@@ -58,7 +58,7 @@ namespace AAM
                 d.Probability > 0);
         }
 
-        [DebugAction("Advanced Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
+        [DebugAction("Melee Animation", "Reload all animations", actionType = DebugActionType.Action)]
         public static void ReloadAllAnimations()
         {
             foreach (var def in allDefs)
