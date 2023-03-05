@@ -2,7 +2,7 @@
 using UnityEngine;
 using Verse;
 
-namespace AAM.UI;
+namespace AM.UI;
 
 public static class BGRenderer
 {
@@ -33,7 +33,7 @@ public static class BGRenderer
 
         for (int i = 0; i < LAYER_COUNT; i++)
         {
-            string name = $"AAM/UI/BG/parallax ({i + 1})";
+            string name = $"AM/UI/BG/parallax ({i + 1})";
             var tex = ContentFinder<Texture2D>.Get(name);
 
             float diff = i - 6.5f;

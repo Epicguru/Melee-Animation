@@ -2,7 +2,7 @@
 using Verse;
 using Verse.AI;
 
-namespace AAM.Jobs
+namespace AM.Jobs
 {
     public class JobDriver_DoAnimation : JobDriver
     {
@@ -75,7 +75,7 @@ namespace AAM.Jobs
 
         public override string GetReport()
         {
-            return $"{"AAM.Animation".Trs()}: {ProcessReport(Animator?.Def?.jobString)}";
+            return $"{"AM.Animation".Trs()}: {ProcessReport(Animator?.Def?.jobString)}";
         }
     }
 }

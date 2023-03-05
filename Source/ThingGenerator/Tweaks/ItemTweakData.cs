@@ -1,19 +1,16 @@
-﻿using AAM.Idle;
-using AAM.Reqs;
-using AAM.Retexture;
-using AAM.Sweep;
-using AAM.UI;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
+using AM.Retexture;
+using AM.Idle;
+using AM.Reqs;
+using AM.Sweep;
+using Newtonsoft.Json;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Tweaks
+namespace AM.Tweaks
 {
     public class ItemTweakData
     {

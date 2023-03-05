@@ -1,11 +1,11 @@
-﻿using AAM.Processing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AM.Processing;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public class AnimationManager : MapComponent
     {
@@ -22,7 +22,7 @@ namespace AAM
 
         public static void Init()
         {
-            HandTexture = ContentFinder<Texture2D>.Get("AAM/Hand");
+            HandTexture = ContentFinder<Texture2D>.Get("AM/Hand");
         }
 
         public readonly MapPawnProcessor PawnProcessor;

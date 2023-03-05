@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public struct AnimationStartParameters : IExposable
     {

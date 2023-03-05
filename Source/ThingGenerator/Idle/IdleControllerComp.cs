@@ -1,14 +1,14 @@
-﻿using AAM.Processing;
-using AAM.Tweaks;
+﻿using System;
+using System.Collections.Generic;
+using AM.Processing;
+using AM.Tweaks;
 using JetBrains.Annotations;
 using RimWorld;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Verse;
-using Patch = AAM.Patches.Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget;
+using Patch = AM.Patches.Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget;
 
-namespace AAM.Idle;
+namespace AM.Idle;
 
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp

@@ -1,4 +1,4 @@
-﻿namespace AAM.Data.Model;
+﻿namespace AM.Data.Model;
 
 public class EventModel
 {

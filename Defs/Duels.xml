@@ -1,6 +1,6 @@
 <Defs>
 
-  <AAM.AnimDef Name="AnimDuelBase" Abstract="True">
+  <AM.AnimDef Name="AnimDuelBase" Abstract="True">
     <label>Duel</label>
     <type>Duel</type>
     <jobString>Dueling [OTHER].</jobString>
@@ -18,22 +18,22 @@
       </li>
     </cellData>
     <canEditProbability>false</canEditProbability>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimDuelBase">
-    <defName>AAM_Duel_Swords</defName>
-    <weaponFilter Class="AAM.Reqs.AnyType">
+  <AM.AnimDef ParentName="AnimDuelBase">
+    <defName>AM_Duel_Swords</defName>
+    <weaponFilter Class="AM.Reqs.AnyType">
       <types>Long_Blunt, Long_Stab, Long_Sharp</types>
     </weaponFilter>
     <data>Duel_Swords.json</data>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimDuelBase">
-    <defName>AAM_Duel_WinFriendlyDuel</defName>
+  <AM.AnimDef ParentName="AnimDuelBase">
+    <defName>AM_Duel_WinFriendlyDuel</defName>
     <label>Win Friendly Duel</label>
     <data>Duel_FriendlyEnd.json</data>
     <jobString>Deafeating [OTHER] in a duel!</jobString>
-    <weaponFilter Class="AAM.Reqs.True"/> <!-- Allow anything to do this. Duel logic will handle weapon filtering -->
+    <weaponFilter Class="AM.Reqs.True"/> <!-- Allow anything to do this. Duel logic will handle weapon filtering -->
     <handsVisibility>
       <li>
         <pawnIndex>0</pawnIndex>
@@ -46,6 +46,6 @@
         <showAltHand>true</showAltHand>
       </li>
     </handsVisibility>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
 </Defs>

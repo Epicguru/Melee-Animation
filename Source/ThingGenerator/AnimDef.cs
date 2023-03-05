@@ -1,18 +1,16 @@
-﻿using AAM.Idle;
-using AAM.RendererWorkers;
-using AAM.Reqs;
-using AAM.Sweep;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Xml.Serialization;
-using UnityEngine;
+using AM.Idle;
+using AM.RendererWorkers;
+using AM.Reqs;
+using AM.Sweep;
+using RimWorld;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public class AnimDef : Def
     {

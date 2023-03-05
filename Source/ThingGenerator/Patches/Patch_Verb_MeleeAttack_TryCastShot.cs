@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using RimWorld;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 [HarmonyPatch(typeof(Verb_MeleeAttack), nameof(Verb_MeleeAttack.TryCastShot))]
 public static class Patch_Verb_MeleeAttack_TryCastShot

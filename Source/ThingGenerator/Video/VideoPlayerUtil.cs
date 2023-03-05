@@ -1,9 +1,7 @@
-﻿using RimWorld;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Video;
-using Verse;
 
-namespace AAM.Video;
+namespace AM.Video;
 
 [IgnoreHotSwap]
 public static class VideoPlayerUtil
@@ -49,7 +47,7 @@ public static class VideoPlayerUtil
                 player.renderMode = VideoRenderMode.APIOnly;
                 player.audioOutputMode = VideoAudioOutputMode.None;
                 player.clip = loaded;
-
+                 
                 if (!player.isPlaying)
                     player.Play();
             }

@@ -1,4 +1,4 @@
-﻿namespace AAM.Reqs
+﻿namespace AM.Reqs
 {
     public sealed class False : Req
     {

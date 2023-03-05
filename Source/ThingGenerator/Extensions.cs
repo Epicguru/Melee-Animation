@@ -1,19 +1,18 @@
-﻿using AAM.Events;
-using AAM.Events.Workers;
-using AAM.Idle;
-using AAM.Tweaks;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using AAM.PawnData;
+using AM.Events;
+using AM.Events.Workers;
+using AM.Idle;
+using AM.PawnData;
+using AM.Tweaks;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using Verse.AI.Group;
 
-namespace AAM;
+namespace AM;
 
 public static class Extensions
 {

@@ -1,11 +1,11 @@
 ﻿using System;
-using AAM.UI;
+using AM.UI;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 public static class Patch_VBE_Utils_DrawBG
 {

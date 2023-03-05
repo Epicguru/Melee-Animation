@@ -39,11 +39,11 @@
     },
     {
       "Time": 8.866667,
-      "Data": "Audio;AAM_TrippleSwingSlow;0,0,0;0.4;1;False"
+      "Data": "Audio;AM_TrippleSwingSlow;0,0,0;0.4;1;False"
     },
     {
       "Time": 9.983334,
-      "Data": "KillPawn;0;1;Heart;Stab;AAM_Execution_Stab;True"
+      "Data": "KillPawn;0;1;Heart;Stab;AM_Execution_Stab;True"
     }
   ],
   "Parts": [
@@ -7587,7 +7587,7 @@
       "ID": 18990,
       "Path": "DashHolder/DashLine",
       "ParentID": 18926,
-      "TexturePath": "AAM/Weapons/Weebstick_DashLine",
+      "TexturePath": "AM/Weapons/Weebstick_DashLine",
       "Curves": {
         "AnimatedPart.Tint.a": {
           "Keyframes": [

@@ -338,7 +338,7 @@ public class AnimData
         tris[4] = 2;
         tris[5] = 3;
         Mesh mesh = new Mesh();
-        mesh.name = $"AAM Mesh: {flipX}, {flipY}";
+        mesh.name = $"AM Mesh: {flipX}, {flipY}";
         mesh.vertices = verts;
         mesh.uv = (flipX && flipY) ? fxy : flipX ? fx : flipY ? fy : normal;
         mesh.SetTriangles(tris, 0);

@@ -1,6 +1,6 @@
 {
   "TextureModID": "co.uk.epicguru.advancedanimation",
-  "ItemDefName": "AAM_Weebstick",
+  "ItemDefName": "AM_Weebstick",
   "ItemType": "ThingDef",
   "ItemTypeNamespace": "Verse",
   "OffX": 0.551724136,

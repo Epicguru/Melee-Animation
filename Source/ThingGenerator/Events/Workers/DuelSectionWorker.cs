@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AM;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public class DuelSectionWorkerBase : EventWorkerBase
     {
@@ -108,7 +109,7 @@ namespace AAM.Events.Workers
                 JumpTo(input.Animator, GetEndEvent());
                 return;
             }
-            
+
             // Perform an execution animation with the outcome.
             input.Animator.OnEndAction = a =>
             {
@@ -122,7 +123,7 @@ namespace AAM.Events.Workers
             // Check if it's a friendly duel.
             if (outcome == ExecutionOutcome.Nothing)
             {
-                return AAM_DefOf.AAM_Duel_WinFriendlyDuel;
+                return AM_DefOf.AM_Duel_WinFriendlyDuel;
             }
 
             // List all possible execution animations.
@@ -205,8 +206,8 @@ namespace AAM.Events.Workers
                     continue;
 
                 seen++;
-                if (seen == 2)                
-                    return e;                
+                if (seen == 2)
+                    return e;
             }
             return null;
         }

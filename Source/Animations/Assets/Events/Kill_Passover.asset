@@ -17,6 +17,6 @@ MonoBehaviour:
   VictimIndex: 1
   TargetBodyPart: Heart
   DamageDef: Cut
-  BattleLogDef: AAM_Execution_Passover
+  BattleLogDef: AM_Execution_Passover
   OnlyIfNotInterrupted: 1
   PreventDamageMote: 1

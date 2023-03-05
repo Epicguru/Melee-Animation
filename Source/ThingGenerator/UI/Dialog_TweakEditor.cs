@@ -1,17 +1,17 @@
-﻿using AAM.Idle;
-using AAM.Reqs;
-using AAM.Retexture;
-using AAM.Tweaks;
-using ColourPicker;
-using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using AM.Retexture;
+using AM.Idle;
+using AM.Reqs;
+using AM.Tweaks;
+using ColourPicker;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.UI
+namespace AM.UI
 {
     public class Dialog_TweakEditor : Window
     {
@@ -540,7 +540,7 @@ namespace AAM.UI
             var handScale = new Vector3(0.175f, 1f, 0.175f);
             var handAPos = new Vector3(0f, 1f, 0f);
             var handBPos = new Vector3(-0.146f, -1f, -0.011f);
-            var handTex = ContentFinder<Texture2D>.Get("AAM/Hand");
+            var handTex = ContentFinder<Texture2D>.Get("AM/Hand");
             block.SetTexture("_MainTex", handTex);
 
             if (tweak.HandsMode != HandsMode.No_Hands)

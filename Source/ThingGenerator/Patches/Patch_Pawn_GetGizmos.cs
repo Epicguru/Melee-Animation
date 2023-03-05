@@ -1,10 +1,10 @@
-﻿using AAM.Gizmos;
-using HarmonyLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using AM.Gizmos;
+using HarmonyLib;
 using Verse;
 
-namespace AAM.Patches
+namespace AM.Patches
 {
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.GetGizmos))]
     public class Patch_Pawn_GetGizmos

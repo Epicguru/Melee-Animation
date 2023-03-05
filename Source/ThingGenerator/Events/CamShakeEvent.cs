@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AAM.Events;
+namespace AM.Events;
 
 [CreateAssetMenu(fileName = "CamShake", menuName = "Events/CamShake")]
 public class CamShakeEvent : EventBase

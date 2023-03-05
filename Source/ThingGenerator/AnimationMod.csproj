@@ -1,4 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
@@ -9,8 +10,8 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <Configurations>v1.4</Configurations>
-    <AssemblyName>zAdvancedAnimationMod</AssemblyName>
-    <RootNamespace>AAM</RootNamespace>
+    <AssemblyName>zAnimationMod</AssemblyName>
+    <RootNamespace>AM</RootNamespace>
     <Nullable>disable</Nullable>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	<DebugType>none</DebugType>
@@ -33,7 +34,7 @@
 	  <HintPath>0ColourPicker.dll</HintPath>
     </Reference>
 	<PackageReference Include="Portable.Meta.Numerics" Version="3.1.0.73149" />
-	<ProjectReference Include="..\AAMRetextureSupport\AAMRetextureSupport.csproj" />
+	<ProjectReference Include="..\AMRetextureSupport\AMRetextureSupport.csproj" />
 	<ProjectReference Include="..\ModRequestAPI\ModRequestAPI.csproj" />
 	  
 	<!-- Ungodly hack to access rimworld private properties & methods -->

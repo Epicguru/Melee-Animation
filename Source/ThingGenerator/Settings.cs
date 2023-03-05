@@ -1,12 +1,12 @@
-﻿using Meta.Numerics.Statistics.Distributions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AAM.Idle;
+using AM.Idle;
+using Meta.Numerics.Statistics.Distributions;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public class Settings : ModSettings
     {

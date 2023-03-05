@@ -1,11 +1,11 @@
-﻿using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
 
-namespace AAM.Grappling;
+namespace AM.Grappling;
 
 public class KnockbackFlyer : PawnFlyer
 {
@@ -41,9 +41,9 @@ public class KnockbackFlyer : PawnFlyer
         var end = targetPos.ToVector3ShiftedWithAltitude(start.y);
 
 #if V13
-        KnockbackFlyer flyer = MakeFlyer(AAM_DefOf.AAM_KnockbackFlyer, victim, targetPos) as KnockbackFlyer;
+        KnockbackFlyer flyer = MakeFlyer(AM_DefOf.AM_KnockbackFlyer, victim, targetPos) as KnockbackFlyer;
 #else
-        KnockbackFlyer flyer = MakeFlyer(AAM_DefOf.AAM_KnockbackFlyer, victim, targetPos, EffecterDefOf.ConstructDirt, SoundDefOf.Pawn_Melee_Punch_HitBuilding) as KnockbackFlyer;
+        KnockbackFlyer flyer = MakeFlyer(AM_DefOf.AM_KnockbackFlyer, victim, targetPos, EffecterDefOf.ConstructDirt, SoundDefOf.Pawn_Melee_Punch_HitBuilding) as KnockbackFlyer;
 #endif
         if (flyer?.FlyingPawn != null)
         {

@@ -1,18 +1,18 @@
-﻿using AAM.Grappling;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AM.Grappling;
+using RimWorld;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 
-namespace AAM.Processing;
+namespace AM.Processing;
 
 public class MapPawnProcessor : IDisposable
 {
@@ -415,7 +415,7 @@ public class MapPawnProcessor : IDisposable
                 Lasso = lasso,
                 CanExecute = execRandom && weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
                 CanGrapple = lassoRandom && lasso != null && mData.ResolvedAutoGrapple && mData.IsGrappleOffCooldown() && FormalGrappleCheck(pawn),
-                LassoRange = lasso != null ? pawn.GetStatValue(AAM_DefOf.AAM_GrappleRadius) : 0
+                LassoRange = lasso != null ? pawn.GetStatValue(AM_DefOf.AM_GrappleRadius) : 0
             };
 
             if (!data.CanGrapple && !data.CanExecute)

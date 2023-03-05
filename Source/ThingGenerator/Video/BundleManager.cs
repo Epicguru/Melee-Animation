@@ -4,9 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 
-namespace AAM.Video;
+namespace AM.Video;
 
 [IgnoreHotSwap]
 public static class BundleManager

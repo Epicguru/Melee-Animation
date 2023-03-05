@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc0aa0c326bf644087c9c7d98308945, type: 3}
   m_Name: Audio_Sheath
   m_EditorClassIdentifier: 
-  AudioPath: AAM_Sheath
+  AudioPath: AM_Sheath
   LocalPosition: {x: 0, y: 0, z: 0}
   VolumeFactor: 0.75
   PitchFactor: 1

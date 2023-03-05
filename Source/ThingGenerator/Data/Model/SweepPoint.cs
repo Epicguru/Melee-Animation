@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace AAM.Data.Model;
+namespace AM.Data.Model;
 
 [StructLayout(LayoutKind.Sequential)]
 public struct SweepPoint
@@ -72,7 +72,7 @@ public struct SweepPoint
 
     public void SetVelocity(float downDst, float upDst, Vector3 prevDown, Vector3 prevUp, float prevTime)
     {
-        float timeDelta = this.Time - prevTime;
+        float timeDelta = Time - prevTime;
         if (timeDelta == 0)
             throw new Exception("Bad time delta.");
 

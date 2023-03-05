@@ -1,11 +1,11 @@
 <Defs>
 
   <VBE.BackgroundImageDef MayRequire="vanillaexpanded.backgrounds">
-    <defName>AAM_NoTablesBrawl</defName>
+    <defName>AM_NoTablesBrawl</defName>
     <label>Melee Animation: Brawl</label>
     <description>Artwork created by @No_Tables for the Melee Animation mod.\nThis background is dynamic, with a parallax effect.</description>
-    <path>AAM/UI/BG/Sketch1</path>
-    <iconPath>AAM/UI/BG/Sketch1</iconPath>
+    <path>AM/UI/BG/Sketch1</path>
+    <iconPath>AM/UI/BG/Sketch1</iconPath>
   </VBE.BackgroundImageDef>
   
 </Defs>

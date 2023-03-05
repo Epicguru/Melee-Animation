@@ -1,13 +1,13 @@
-﻿using AAM.Grappling;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AM.Grappling;
 using HarmonyLib;
 using RimWorld;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 [HarmonyPatch(typeof(FloatMenuMakerMap), nameof(FloatMenuMakerMap.AddDraftedOrders))]
 public class Patch_FloatMenuMakerMap_AddDraftedOrders
@@ -120,7 +120,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         {
             pawn.GetAnimManager().AddPostDraw(() =>
             {
-                float radius = pawn.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
+                float radius = pawn.GetStatValue(AM_DefOf.AM_GrappleRadius);
                 GenDraw.DrawRadiusRing(pawn.Position, radius, Color.yellow, HasLos);
             });
         }
@@ -134,7 +134,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
 
     private static FloatMenuOption GetDisabledExecutionOption(in ExecutionAttemptReport report, Pawn grappler)
     {
-        string label = "AAM.Error.Exec.FloatMenu".Translate(report.ErrorMessageShort);
+        string label = "AM.Error.Exec.FloatMenu".Translate(report.ErrorMessageShort);
         string tooltip = report.ErrorMessage;
         var icon = Content.ExtraGuiWhy;
         var iconSize = new Rect(0, 0, icon.width, icon.height);
@@ -185,7 +185,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
             {
                 // Walk to and execute target.
                 // Make walk job and reset all verbs (stop firing, attacking).
-                var walkJob = JobMaker.MakeJob(AAM_DefOf.AAM_WalkToExecution, target);
+                var walkJob = JobMaker.MakeJob(AM_DefOf.AM_WalkToExecution, target);
 
                 if (grappler.verbTracker?.AllVerbs != null)
                     foreach (var verb in grappler.verbTracker.AllVerbs)
@@ -198,14 +198,14 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
                 // Start walking.
                 grappler.jobs.StartJob(walkJob, JobCondition.InterruptForced);
 
-                if (grappler.CurJobDef == AAM_DefOf.AAM_WalkToExecution)
+                if (grappler.CurJobDef == AM_DefOf.AM_WalkToExecution)
                     return;
 
                 Core.Error($"CRITICAL ERROR: Failed to force interrupt {grappler}'s job with execution goto job. Likely a mod conflict or invalid start parameters.");
-                string reason = "AAM.Gizmo.Error.NoLasso".Translate(
+                string reason = "AM.Gizmo.Error.NoLasso".Translate(
                     new NamedArgument(grappler.NameShortColored, "Pawn"),
                     new NamedArgument(target.NameShortColored, "Target"));
-                string error = "AAM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
+                string error = "AM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
                 Messages.Message(error, MessageTypeDefOf.RejectInput, false);
             }
             else
@@ -262,8 +262,8 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         bool isLasso = report.PossibleExecutions?.FirstOrDefault().LassoToHere != null;
         string append = isLasso ? " (lasso)" : isWalk ? " (walk to target)" : null;
 
-        string label = "AAM.Exec.FloatMenu".Translate(targetName) + append;
-        string tt = enemy ? "AAM.Exec.FloatMenu.TipEnemy" : "AAM.Exec.FloatMenu.Tip";
+        string label = "AM.Exec.FloatMenu".Translate(targetName) + append;
+        string tt = enemy ? "AM.Exec.FloatMenu.TipEnemy" : "AM.Exec.FloatMenu.Tip";
         tt = tt.Translate(grappler.Name.ToStringShort, targetName);
 
         return new FloatMenuOption(label, OnClick, MenuOptionPriority.AttackEnemy, revalidateClickTarget: target)
@@ -274,7 +274,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
 
     private static FloatMenuOption GetDisabledLassoOption(in GrappleAttemptReport report, Pawn grappler)
     {
-        string label = "AAM.Error.Grapple.FloatMenu".Translate(report.ErrorMessageShort);
+        string label = "AM.Error.Grapple.FloatMenu".Translate(report.ErrorMessageShort);
         string tooltip = report.ErrorMessage;
         var icon = Content.ExtraGuiWhy;
         var iconSize = new Rect(0, 0, icon.width, icon.height);
@@ -329,8 +329,8 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         string targetName = target.Name?.ToStringShort ?? target.LabelDefinite();
         bool enemy = target.HostileTo(Faction.OfPlayer);
 
-        string label = "AAM.Grapple.FloatMenu".Translate(targetName);
-        string tt = enemy ? "AAM.Grapple.FloatMenu.TipEnemy" : "AAM.Grapple.FloatMenu.Tip";
+        string label = "AM.Grapple.FloatMenu".Translate(targetName);
+        string tt = enemy ? "AM.Grapple.FloatMenu.TipEnemy" : "AM.Grapple.FloatMenu.Tip";
         tt = tt.Translate(grappler.Name.ToStringShort, targetName);
 
         return new FloatMenuOption(label, OnClick, MenuOptionPriority.AttackEnemy,revalidateClickTarget: target)

@@ -1,9 +1,9 @@
-﻿using AAM.Tweaks;
-using System.Linq;
+﻿using System.Linq;
+using AM.Tweaks;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Idle;
+namespace AM.Idle;
 
 public static class IdleClassifier
 {

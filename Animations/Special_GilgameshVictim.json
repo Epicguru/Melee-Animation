@@ -1187,7 +1187,7 @@
       "ID": 19282,
       "Path": "RopeL",
       "CustomName": "RopeL",
-      "TexturePath": "AAM/Rope/Rope",
+      "TexturePath": "AM/Rope/Rope",
       "Curves": {
         "AnimatedPart.Tint.a": {
           "Keyframes": [
@@ -1375,7 +1375,7 @@
       "ID": 19338,
       "Path": "RopeR",
       "CustomName": "RopeL",
-      "TexturePath": "AAM/Rope/Rope",
+      "TexturePath": "AM/Rope/Rope",
       "Curves": {
         "AnimatedPart.Tint.a": {
           "Keyframes": [
@@ -1558,7 +1558,7 @@
       "ID": 19132,
       "Path": "Turn (8)/Distance/Pivot/Portal",
       "ParentID": 18860,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -1660,7 +1660,7 @@
       "ID": 19052,
       "Path": "Turn (7)/Distance/Pivot/Portal",
       "ParentID": 19494,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -1762,7 +1762,7 @@
       "ID": 19356,
       "Path": "Turn (11)/Distance/Pivot/Portal",
       "ParentID": 19292,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -1864,7 +1864,7 @@
       "ID": 19018,
       "Path": "Turn (10)/Distance/Pivot/Portal",
       "ParentID": 19202,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -1966,7 +1966,7 @@
       "ID": 19102,
       "Path": "Turn (9)/Distance/Pivot/Portal",
       "ParentID": 19548,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -2068,7 +2068,7 @@
       "ID": 19170,
       "Path": "Turn (6)/Distance/Pivot/Portal",
       "ParentID": 18856,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -2170,7 +2170,7 @@
       "ID": 18868,
       "Path": "Turn (5)/Distance/Pivot/Portal",
       "ParentID": 19470,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -2272,7 +2272,7 @@
       "ID": 19064,
       "Path": "Turn (4)/Distance/Pivot/Portal",
       "ParentID": 19014,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -2374,7 +2374,7 @@
       "ID": 19362,
       "Path": "Turn (3)/Distance/Pivot/Portal",
       "ParentID": 19502,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -2476,7 +2476,7 @@
       "ID": 19722,
       "Path": "Turn (2)/Distance/Pivot/Portal",
       "ParentID": 18890,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -2578,7 +2578,7 @@
       "ID": 19186,
       "Path": "Turn (1)/Distance/Pivot/Portal",
       "ParentID": 19748,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -2680,7 +2680,7 @@
       "ID": 19400,
       "Path": "Turn (0)/Distance/Pivot/Portal",
       "ParentID": 19512,
-      "TexturePath": "AAM/GilgameshGlow",
+      "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -2782,7 +2782,7 @@
       "ID": 18878,
       "Path": "Turn (8)/Distance/Weapon",
       "ParentID": 19640,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -2993,7 +2993,7 @@
       "ID": 18978,
       "Path": "Turn (7)/Distance/Weapon",
       "ParentID": 19288,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -3208,7 +3208,7 @@
       "ID": 18930,
       "Path": "Turn (11)/Distance/Weapon",
       "ParentID": 19664,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -3419,7 +3419,7 @@
       "ID": 19344,
       "Path": "Turn (10)/Distance/Weapon",
       "ParentID": 19160,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -3630,7 +3630,7 @@
       "ID": 19728,
       "Path": "Turn (9)/Distance/Weapon",
       "ParentID": 19396,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -3824,7 +3824,7 @@
       "ID": 19756,
       "Path": "Turn (6)/Distance/Weapon",
       "ParentID": 19734,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -4035,7 +4035,7 @@
       "ID": 19446,
       "Path": "Turn (5)/Distance/Weapon",
       "ParentID": 19300,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -4246,7 +4246,7 @@
       "ID": 19582,
       "Path": "Turn (4)/Distance/Weapon",
       "ParentID": 18874,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -4440,7 +4440,7 @@
       "ID": 19576,
       "Path": "Turn (3)/Distance/Weapon",
       "ParentID": 19718,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -4651,7 +4651,7 @@
       "ID": 19390,
       "Path": "Turn (2)/Distance/Weapon",
       "ParentID": 19744,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -4845,7 +4845,7 @@
       "ID": 19706,
       "Path": "Turn (1)/Distance/Weapon",
       "ParentID": 19268,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5056,7 +5056,7 @@
       "ID": 18884,
       "Path": "Turn (0)/Distance/Weapon",
       "ParentID": 19660,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [

@@ -6,8 +6,8 @@
   <Operation Class="PatchOperationAdd">
     <xpath>/Defs/FacialAnimation.FaceAnimationDef[defName="AttackMelee"]/targetJobs</xpath>
     <value>
-      <li>AAM_InAnimation</li>
-      <li>AAM_GrapplePawn</li>
+      <li>AM_InAnimation</li>
+      <li>AM_GrapplePawn</li>
     </value>
   </Operation>
 </Patch>

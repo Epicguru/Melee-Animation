@@ -2,7 +2,7 @@
 using UnityEngine;
 using Verse;
 
-namespace AAM.Retexture;
+namespace AM.Retexture;
 
 public struct ActiveTextureReport
 {

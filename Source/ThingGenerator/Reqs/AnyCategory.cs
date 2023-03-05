@@ -1,6 +1,6 @@
-﻿using AAM.Idle;
+﻿using AM.Idle;
 
-namespace AAM.Reqs;
+namespace AM.Reqs;
 
 public class AnyCategory : Req
 {

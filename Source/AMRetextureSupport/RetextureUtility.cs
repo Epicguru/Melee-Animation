@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Retexture;
+namespace AM.Retexture;
 
 [HotSwapAll]
 public static class RetextureUtility

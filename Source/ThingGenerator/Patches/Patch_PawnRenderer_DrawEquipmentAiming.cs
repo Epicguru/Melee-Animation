@@ -1,8 +1,8 @@
-﻿using AAM.Idle;
+﻿using AM.Idle;
 using HarmonyLib;
 using Verse;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 /// <summary>
 /// A patch to control pawn animations.

@@ -1,11 +1,11 @@
-﻿using AAM.Patches;
-using AAM.UI;
-using RimWorld;
+﻿using RimWorld;
 using System;
+using AM;
+using AM.UI;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public class KillPawnWorker : EventWorkerBase
     {
@@ -25,7 +25,7 @@ namespace AAM.Events.Workers
             var e = i.Event as KillPawnEvent;
             if (animator.ExecutionOutcome == ExecutionOutcome.Nothing)
                 return;
-            
+
             Pawn killer = i.GetPawnFromIndex(e.KillerIndex);
             Pawn pawn = i.GetPawnFromIndex(e.VictimIndex);
 
@@ -84,7 +84,7 @@ namespace AAM.Events.Workers
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
-                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AM_DefOf.AM_Execution_Generic),
                 Weapon = killer.GetFirstMeleeWeapon(),
                 TargetDamageAmount = 20 // TODO pull from animation data, optional args or something along those lines.
             };
@@ -98,7 +98,7 @@ namespace AAM.Events.Workers
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
-                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AM_DefOf.AM_Execution_Generic),
                 Weapon = killer.GetFirstMeleeWeapon()
             };
 
@@ -111,7 +111,7 @@ namespace AAM.Events.Workers
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
-                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AM_DefOf.AM_Execution_Generic),
                 Weapon = killer.GetFirstMeleeWeapon()
             };
 

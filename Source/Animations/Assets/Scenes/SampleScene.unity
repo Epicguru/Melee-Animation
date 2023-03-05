@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -487,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Glint
+  TexturePath: AM/Weapons/Weebstick_Glint
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 54
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Glint
+  TexturePath: AM/Weapons/Weebstick_Glint
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 54
@@ -1662,7 +1662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Glint
+  TexturePath: AM/Weapons/Weebstick_Glint
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 54
@@ -1724,7 +1724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -1848,7 +1848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_DashLine
+  TexturePath: AM/Weapons/Weebstick_DashLine
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -1910,7 +1910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Glint
+  TexturePath: AM/Weapons/Weebstick_Glint
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -2252,7 +2252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Sheath
+  TexturePath: AM/Weapons/Weebstick_Sheath
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -2561,7 +2561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -2623,7 +2623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -2685,7 +2685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -3061,7 +3061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -3345,7 +3345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -3562,7 +3562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Blur
+  TexturePath: AM/Weapons/Weebstick_Blur
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -3720,7 +3720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -3878,7 +3878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -3940,7 +3940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_DashLine
+  TexturePath: AM/Weapons/Weebstick_DashLine
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -4130,7 +4130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Glint
+  TexturePath: AM/Weapons/Weebstick_Glint
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 54
@@ -4291,7 +4291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Sheath
+  TexturePath: AM/Weapons/Weebstick_Sheath
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -4910,7 +4910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: RopeL
-  TexturePath: AAM/Rope/Rope
+  TexturePath: AM/Rope/Rope
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -5260,7 +5260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Glint
+  TexturePath: AM/Weapons/Weebstick_Glint
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 54
@@ -5448,7 +5448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: RopeL
-  TexturePath: AAM/Rope/Rope
+  TexturePath: AM/Rope/Rope
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -5510,7 +5510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -5634,7 +5634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -5696,7 +5696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -5976,7 +5976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -6072,7 +6072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -6382,7 +6382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/HandGrabSparks
+  TexturePath: AM/HandGrabSparks
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -6602,7 +6602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -7827,7 +7827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_BlurFast
+  TexturePath: AM/Weapons/Weebstick_BlurFast
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -7889,7 +7889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -7951,7 +7951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -8937,7 +8937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Glint
+  TexturePath: AM/Weapons/Weebstick_Glint
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 54
@@ -9154,7 +9154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick_Glint
+  TexturePath: AM/Weapons/Weebstick_Glint
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 54
@@ -9418,7 +9418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -9576,7 +9576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/GilgameshGlow
+  TexturePath: AM/GilgameshGlow
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0, y: 0}
   IdleRotation: 0
@@ -9638,7 +9638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47
@@ -9894,7 +9894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomName: 
-  TexturePath: AAM/Weapons/Weebstick
+  TexturePath: AM/Weapons/Weebstick
   DoNotIncludeTexture: 0
   IdleOffset: {x: 0.41, y: 0}
   IdleRotation: 47

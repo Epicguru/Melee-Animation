@@ -1,18 +1,18 @@
-﻿using AAM.UI;
-using AAM.Video;
-using ColourPicker;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using AM.UI;
+using AM.Video;
+using ColourPicker;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public static class SimpleSettings
     {

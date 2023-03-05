@@ -1,6 +1,6 @@
-﻿using AAM.Tweaks;
+﻿using AM.Tweaks;
 
-namespace AAM.Reqs
+namespace AM.Reqs
 {
     public class OnlyType : Req
     {

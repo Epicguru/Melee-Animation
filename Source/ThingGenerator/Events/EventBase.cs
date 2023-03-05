@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AAM.Events;
+namespace AM.Events;
 
 public abstract class EventBase : ScriptableObject
 {
@@ -74,7 +74,7 @@ public abstract class EventBase : ScriptableObject
         {
             Vector2 vec2 => $"{vec2.x},{vec2.y}",
             Vector3 vec3 => $"{vec3.x},{vec3.y},{vec3.z}",
-            Color    col => $"{col.r},{col.g},{col.b},{col.a}",
+            Color col => $"{col.r},{col.g},{col.b},{col.a}",
 
             _ => obj.ToString()
         }).Trim();

@@ -4,7 +4,7 @@ using SWSaber;
 using UnityEngine;
 using Verse;
 
-namespace AAM.LightsaberPatch;
+namespace AM.LightsaberPatch;
 
 public static class Extensions
 {
