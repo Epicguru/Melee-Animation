@@ -1,11 +1,12 @@
 <Defs>
   <ThingDef ParentName="BaseMeleeWeapon_Sharp">
     <defName>AM_Weebstick</defName>
-    <label>Weebstick</label>
-    <description>Holding this makes you the edgiest person alive.</description>
+    <label>Scarlet Edge</label>
+    <description>A legendary weapon of origin unknown.
+The wielder of this mighty weapon feels compelled to wear a dark trenchcoat and answer questions with a grunt. Some may find this unsettling but none can deny its effectiveness in combat.
+Unlocks a unique and deadly Special Skill animation.</description>
     <graphicData>
       <texPath>AM/Weapons/Weebstick</texPath>
-      <!-- <shaderType>CutoutComplex</shaderType> -->
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.3,1.3)</drawSize>
       <drawOffsetSouth>(0.4, 0, 0.3)</drawOffsetSouth>
@@ -13,12 +14,6 @@
       <drawOffsetEast>(0.3, 0, 0.38)</drawOffsetEast>
       <drawOffsetWest>(-0.3, 0, 0.38)</drawOffsetWest>
     </graphicData>
-
-    <!-- <costList>
-      <ComponentIndustrial>12</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <RF_GildedPlasteel>50</RF_GildedPlasteel>
-    </costList> -->
 
     <techLevel>Spacer</techLevel>
     <weaponTags>
@@ -30,37 +25,36 @@
     <statBases>
       <MarketValue>3500</MarketValue>
       <MaxHitPoints>500</MaxHitPoints>
-      <WorkToMake>22000</WorkToMake>
-      <Mass>8</Mass>
+      <Mass>5</Mass>
     </statBases>
     <equippedStatOffsets>
       <MoveSpeed>0.25</MoveSpeed> <!-- Gives +0.25 cps movement boost. Because I can. -->
     </equippedStatOffsets>
+    <comps>
+      <li MayRequire="co.uk.epicguru.rimforge" Class="RimForge.Comps.CompProperties_Deflector">
+        <deflectChance>0.9</deflectChance>
+        <reflectChance>1</reflectChance>
+      </li>
+    </comps>
     <equippedAngleOffset>-45</equippedAngleOffset>
-    <recipeMaker>
-      <researchPrerequisite>LongBlades</researchPrerequisite>
-      <skillRequirements>
-        <Crafting>8</Crafting>
-      </skillRequirements>
-    </recipeMaker>
     <tools>
       <li>
         <label>point</label>
         <capacities>
           <li>Stab</li>
         </capacities>
-        <power>30</power>
+        <power>25</power>
         <armorPenetration>1.1</armorPenetration>
-        <cooldownTime>2</cooldownTime>
+        <cooldownTime>1.8</cooldownTime>
       </li>
       <li>
         <label>edge</label>
         <capacities>
           <li>Cut</li>
         </capacities>
-        <power>35</power>
+        <power>28</power>
         <armorPenetration>0.9</armorPenetration>
-        <cooldownTime>2.25</cooldownTime>
+        <cooldownTime>2</cooldownTime>
       </li>
     </tools>
   </ThingDef>

@@ -1291,7 +1291,7 @@ public class AnimRenderer : IExposable
         // not care about hand visibility, then it is dictated by the weapon.
         var vis = Def.GetHandsVisibility(index);
         bool showMain = Core.Settings.ShowHands && (vis.showMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands));
-        bool showAlt = Core.Settings.ShowHands && (vis.showAltHand ?? (weapon != null && handsMode == HandsMode.Default));
+        bool showAlt =  Core.Settings.ShowHands && (vis.showAltHand ??  (weapon != null && handsMode == HandsMode.Default));
 
         // Apply main hand.
         var mainHandPart = GetPart(mainHandName);

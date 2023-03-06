@@ -30,6 +30,8 @@ namespace AM.Tweaks
             s = s.Replace("_LocalCopy", "");
             s = s.Replace("_local", "");
             s = s.Replace("_Local", "");
+            s = s.Replace("_steam", "");
+            s = s.Replace("_Steam", "");
 
             return s;
         }

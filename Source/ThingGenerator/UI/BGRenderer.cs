@@ -11,7 +11,7 @@ public static class BGRenderer
     [TweakValue("Melee Animation", 0f, 12f)]
     private static float BGFocusPoint = 4.5f;
     [TweakValue("Melee Animation", 1, 2)]
-    private static float BGZoomLevel = 1.06f;
+    private static float BGZoomLevel = 1.075f;
     private static Texture2D[] layers;
 
     public static void DrawMainMenuBackground()

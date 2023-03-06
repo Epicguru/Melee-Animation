@@ -267,6 +267,10 @@ namespace AM
                     size.y += 12;
                 }
 
+                // Conditional visibility:
+                if (!member.ShouldDraw(settings, holder))
+                    continue;
+
                 var area = new Rect(new Vector2(pos.x + 20, pos.y), new Vector2(inRect.width - 40, inRect.height - pos.y));
                 float height = handler(settings, member, area);
 
@@ -721,6 +725,16 @@ namespace AM
 
                 member.OverrideDrawHandler = handler;
             }
+
+            public MemberWrapper TryGetNamedMember(string name)
+            {
+                foreach (var mem in Members)
+                {
+                    if (mem.Value.Name == name)
+                        return mem.Value;
+                }
+                return null;
+            }
         }
 
         private class MemberWrapperDict<K, V> : MemberWrapper
@@ -862,6 +876,7 @@ namespace AM
             public bool ShouldExpose { get; set; } = true;
             public SettingOptionsAttribute Options { get; protected set; }
             public WebContentAttribute WebContent { get; protected set; }
+            public string VisibleIf{ get; set; }
 
             protected readonly FieldInfo field;
             protected readonly PropertyInfo prop;
@@ -883,6 +898,7 @@ namespace AM
 
                 Options = member.TryGetAttribute<SettingOptionsAttribute>() ?? SettingOptionsAttribute.CreateDefault();
                 WebContent = member.TryGetAttribute<WebContentAttribute>();
+                VisibleIf = member.TryGetAttribute<VisibleIfAttribute>()?.FieldOrMethod;
                 DefaultValue = GetDefaultValue(obj);
             }
 
@@ -985,6 +1001,19 @@ namespace AM
 
                 return SmartClone(current);
             }
+
+            public virtual bool ShouldDraw(ModSettings settings, FieldHolder holder)
+            {
+                // Look for field.
+                if (VisibleIf == null)
+                    return true;
+
+                var found = holder.TryGetNamedMember(VisibleIf);
+                if (found != null && found.MemberType == typeof(bool))
+                    return found.Get<bool>(settings);
+
+                return true;
+            }
         }
     }
 
@@ -1044,9 +1073,20 @@ namespace AM
     }
 
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class VisibleIfAttribute : Attribute
+    {
+        public readonly string FieldOrMethod;
+
+        public VisibleIfAttribute(string fieldOrMethod)
+        {
+            FieldOrMethod = fieldOrMethod;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class SettingOptionsAttribute : Attribute
     {
-        public static SettingOptionsAttribute CreateDefault() => new();
+        public static SettingOptionsAttribute CreateDefault() => new SettingOptionsAttribute();
 
         public readonly bool DrawDescription = true;
         public readonly bool DrawValue = true;
