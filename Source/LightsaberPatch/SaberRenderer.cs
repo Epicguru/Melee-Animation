@@ -2,7 +2,7 @@
 using UnityEngine;
 using Verse;
 
-namespace AAM.LightsaberPatch;
+namespace AM.LightsaberPatch;
 
 public class SaberRenderer : PartRenderer
 {

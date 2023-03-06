@@ -1,8 +1,8 @@
 ﻿using System;
-using AAM.Data.Model;
+using AM.Data.Model;
 using UnityEngine;
 
-namespace AAM.Sweep;
+namespace AM.Sweep;
 
 public class PartWithSweep
 {

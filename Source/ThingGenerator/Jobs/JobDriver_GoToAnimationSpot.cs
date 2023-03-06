@@ -1,9 +1,9 @@
-﻿using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using RimWorld;
 using Verse;
 using Verse.AI;
 
-namespace AAM.Jobs
+namespace AM.Jobs
 {
     public abstract class JobDriver_GoToAnimationSpot : JobDriver
     {

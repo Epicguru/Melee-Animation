@@ -1,9 +1,10 @@
-﻿using AAM.UI;
+﻿using AM;
+using AM.UI;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public class GoreSplashWorker : EventWorkerBase
     {

@@ -1,7 +1,8 @@
 ﻿using System;
+using AM;
 using Verse;
 
-namespace AAM.AlienRacesPatch;
+namespace AM.AlienRacesPatch;
 
 [HotSwapAll]
 public class PatchCore : Mod

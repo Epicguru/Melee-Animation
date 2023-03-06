@@ -2,8 +2,8 @@
 <Defs>
 
   <JobDef>
-    <defName>AAM_InAnimation</defName>
-    <driverClass>AAM.Jobs.JobDriver_DoAnimation</driverClass>
+    <defName>AM_InAnimation</defName>
+    <driverClass>AM.Jobs.JobDriver_DoAnimation</driverClass>
     <reportString>in animation</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>false</playerInterruptible>
@@ -15,8 +15,8 @@
   </JobDef>
 
   <JobDef>
-    <defName>AAM_WalkToExecution</defName>
-    <driverClass>AAM.Jobs.JobDriver_GoToExecutionSpot</driverClass>
+    <defName>AM_WalkToExecution</defName>
+    <driverClass>AM.Jobs.JobDriver_GoToExecutionSpot</driverClass>
     <reportString>moving towards TargetA to perform execution.</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>true</playerInterruptible>
@@ -28,8 +28,8 @@
   </JobDef>
 
   <JobDef>
-    <defName>AAM_WalkToDuel</defName>
-    <driverClass>AAM.Jobs.JobDriver_GoToDuelSpot</driverClass>
+    <defName>AM_WalkToDuel</defName>
+    <driverClass>AM.Jobs.JobDriver_GoToDuelSpot</driverClass>
     <reportString>moving towards TargetA to duel them.</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>true</playerInterruptible>
@@ -41,8 +41,8 @@
   </JobDef>
 
   <JobDef>
-    <defName>AAM_GrapplePawn</defName>
-    <driverClass>AAM.Grappling.JobDriver_GrapplePawn</driverClass>
+    <defName>AM_GrapplePawn</defName>
+    <driverClass>AM.Grappling.JobDriver_GrapplePawn</driverClass>
     <reportString>lassoing pawn</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>false</playerInterruptible>

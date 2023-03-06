@@ -1,16 +1,16 @@
-﻿using AAM.Grappling;
-using AAM.Patches;
-using AAM.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using AAM.PawnData;
+using AM.Grappling;
+using AM.Idle;
+using AM.Patches;
+using AM.PawnData;
+using AM.UI;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
-using AAM.Idle;
 
-namespace AAM
+namespace AM
 {
     public class GameComp : GameComponent
     {

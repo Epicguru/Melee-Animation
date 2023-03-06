@@ -1,9 +1,9 @@
-﻿using AAM.Idle;
+﻿using System;
+using AM.Idle;
 using HarmonyLib;
-using System;
 using Verse;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 [HarmonyPatch(typeof(Pawn_DrawTracker), nameof(Pawn_DrawTracker.Notify_MeleeAttackOn))]
 public static class Patch_Pawn_DrawTracker_Notify_MeleeAttackOn

@@ -1,8 +1,7 @@
-﻿using System;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 
-namespace AAM;
+namespace AM;
 
 public static class AudioUtility
 {
@@ -56,10 +55,10 @@ public static class AudioUtility
 
         return largest switch
         {
-            WeaponMaterial.Wood => AAM_DefOf.AAM_WoodSwordClash,
-            WeaponMaterial.Stone => AAM_DefOf.AAM_StoneSwordClash,
-            WeaponMaterial.Metal => AAM_DefOf.AAM_MetalSwordClash,
-            _ => AAM_DefOf.AAM_MetalSwordClash
+            WeaponMaterial.Wood => AM_DefOf.AM_WoodSwordClash,
+            WeaponMaterial.Stone => AM_DefOf.AM_StoneSwordClash,
+            WeaponMaterial.Metal => AM_DefOf.AM_MetalSwordClash,
+            _ => AM_DefOf.AM_MetalSwordClash
         };
     }
 

@@ -1,11 +1,11 @@
 ﻿using System;
-using AAM.UI;
+using AM.UI;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 public static class Patch_VBE_Utils_DrawBG
 {
@@ -42,7 +42,7 @@ public static class Patch_VBE_Utils_DrawBG
         // Draw when the image is the target.
         // Also have to draw when bg has been overriden, this is just the way that VBE works.
         //Core.Log($"bg: {BackgroundMain?.overrideBGImage}");
-        return BackgroundMain?.overrideBGImage == Content.BGSketch1;
+        return BackgroundMain?.overrideBGImage == Content.BGCombined;
     }
 
     public static bool DoOverlayPrefix()
@@ -55,7 +55,7 @@ public static class Patch_VBE_Utils_DrawBG
 
     public static bool DrawBGPrefix(Texture texture)
     {
-        return texture != Content.BGSketch1 || !ShouldDraw();
+        return texture != Content.BGCombined || !ShouldDraw();
     }
 
     private static void DrawCustom()

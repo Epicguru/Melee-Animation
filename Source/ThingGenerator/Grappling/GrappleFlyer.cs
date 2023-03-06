@@ -1,9 +1,9 @@
-﻿using RimWorld;
-using System;
+﻿using System;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Grappling;
+namespace AM.Grappling;
 
 /// <summary>
 /// Closely based on Royalty's PawnJumper.
@@ -26,9 +26,9 @@ public class GrappleFlyer : PawnFlyer
         }
 
 #if V13
-        GrappleFlyer flyer = MakeFlyer(AAM_DefOf.AAM_GrappleFlyer, victim, targetPos) as GrappleFlyer;
+        GrappleFlyer flyer = MakeFlyer(AM_DefOf.AM_GrappleFlyer, victim, targetPos) as GrappleFlyer;
 #else
-        GrappleFlyer flyer = MakeFlyer(AAM_DefOf.AAM_GrappleFlyer, victim, targetPos, null, null) as GrappleFlyer;
+        GrappleFlyer flyer = MakeFlyer(AM_DefOf.AM_GrappleFlyer, victim, targetPos, null, null) as GrappleFlyer;
 #endif
         if (flyer?.FlyingPawn != null)
         {
@@ -100,7 +100,7 @@ public class GrappleFlyer : PawnFlyer
         }
 
         // Adjust flight time based on grapple speed.
-        float speed = Grappler.GetStatValue(AAM_DefOf.AAM_GrappleSpeed);
+        float speed = Grappler.GetStatValue(AM_DefOf.AM_GrappleSpeed);
         ticksFlightTime = Mathf.Max(2, (int)(ticksFlightTime / (speed * Core.Settings.GrappleSpeed)));
     }
 
@@ -196,7 +196,7 @@ public class GrappleFlyer : PawnFlyer
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_References.Look(ref Grappler, "AAM_grappler", true);
+        Scribe_References.Look(ref Grappler, "AM_grappler", true);
     }
 
     public override void Destroy(DestroyMode mode = DestroyMode.Vanish)

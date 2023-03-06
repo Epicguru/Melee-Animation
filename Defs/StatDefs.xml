@@ -1,7 +1,7 @@
 <Defs>
 
   <StatDef>
-    <defName>AAM_GrappleRadius</defName>
+    <defName>AM_GrappleRadius</defName>
     <label>Max Lasso Distance</label>
     <description>The maximum distance from which an enemy can be lassoed by this pawn.\nAffected by the equipped lasso type.</description>
     <category>PawnCombat</category>
@@ -13,8 +13,8 @@
   </StatDef>
 
   <StatDef>
-    <defName>AAM_Lethality</defName>
-    <workerClass>AAM.Stats.StatWorker_Lethality</workerClass>
+    <defName>AM_Lethality</defName>
+    <workerClass>AM.Stats.StatWorker_Lethality</workerClass>
     <label>Melee Lethality</label>
     <description>This pawn's lethality when performing executions. This value represents the chance to kill when performing execution animations, including when winning a duel.</description>
     <category>PawnCombat</category>
@@ -28,8 +28,8 @@
   </StatDef>
 
   <StatDef>
-    <defName>AAM_DuelAbility</defName>
-    <workerClass>AAM.Stats.StatWorker_DuelAbility</workerClass>
+    <defName>AM_DuelAbility</defName>
+    <workerClass>AM.Stats.StatWorker_DuelAbility</workerClass>
     <label>Melee Duel Ability</label>
     <description>This pawn's effectiveness in melee duels. This stat value is compared against the opponents, and influcenes the outcome of the duel.</description>
     <category>PawnCombat</category>
@@ -41,7 +41,7 @@
   </StatDef>
 
   <StatDef>
-    <defName>AAM_GrappleCooldown</defName>
+    <defName>AM_GrappleCooldown</defName>
     <label>Lasso Cooldown</label>
     <description>The cooldown, measured in seconds, between lasso uses. Affected by lasso type and pawn health status.</description>
     <category>PawnCombat</category>
@@ -53,7 +53,7 @@
   </StatDef>
 
   <StatDef>
-    <defName>AAM_ExecutionCooldown</defName>
+    <defName>AM_ExecutionCooldown</defName>
     <label>Execution Cooldown</label>
     <description>The cooldown, measured in seconds, between melee executions. Affected by pawn melee skill and other factors.</description>
     <category>PawnCombat</category>
@@ -65,7 +65,7 @@
   </StatDef>
 
   <StatDef>
-    <defName>AAM_GrappleSpeed</defName>
+    <defName>AM_GrappleSpeed</defName>
     <label>Lasso Reel Speed</label>
     <description>The speed of ensnaring and then reeling in an enemy using a lasso.\nHigher values mean that it takes less time to grab and pull the target into melee range.\nThis is NOT the lasso cooldown.</description>
     <category>PawnCombat</category>

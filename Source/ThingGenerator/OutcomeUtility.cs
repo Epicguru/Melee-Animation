@@ -1,12 +1,12 @@
-﻿using AAM.Patches;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AM.Patches;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM;
+namespace AM;
 
 /// <summary>
 /// Helper class to determine and then execute the outcome of duels and executions.
@@ -34,10 +34,10 @@ public static class OutcomeUtility
 
         Core.Log($"{selected}, {pawn}");
 
-        float a  = selected.GetStatValue(AAM_DefOf.AAM_Lethality);
-        float a2 = selected.GetStatValue(AAM_DefOf.AAM_DuelAbility);
-        float b  = pawn.GetStatValue(AAM_DefOf.AAM_Lethality);
-        float b2 = pawn.GetStatValue(AAM_DefOf.AAM_DuelAbility);
+        float a  = selected.GetStatValue(AM_DefOf.AM_Lethality);
+        float a2 = selected.GetStatValue(AM_DefOf.AM_DuelAbility);
+        float b  = pawn.GetStatValue(AM_DefOf.AM_Lethality);
+        float b2 = pawn.GetStatValue(AM_DefOf.AM_DuelAbility);
         float chanceToBeat = ChanceToBeatInMelee(selected, pawn);
 
         Messages.Message($"{selected.LabelShortCap} lethality: {a:P1}", MessageTypeDefOf.NeutralEvent, false);
@@ -86,8 +86,8 @@ public static class OutcomeUtility
     public static float ChanceToBeatInMelee(Pawn a, Pawn b)
     {
         var normal = Core.Settings.GetNormalDistribution();
-        float aL = a.GetStatValue(AAM_DefOf.AAM_DuelAbility);
-        float bL = b.GetStatValue(AAM_DefOf.AAM_DuelAbility);
+        float aL = a.GetStatValue(AM_DefOf.AM_DuelAbility);
+        float bL = b.GetStatValue(AM_DefOf.AM_DuelAbility);
         float diff = aL - bL;
 
         return Mathf.Clamp01((float)normal.LeftProbability(diff));;
@@ -101,7 +101,7 @@ public static class OutcomeUtility
         Debug.Assert(victim != null);
 
         // Get lethality, adjusted by settings.
-        float aL = attacker.GetStatValue(AAM_DefOf.AAM_Lethality);
+        float aL = attacker.GetStatValue(AM_DefOf.AM_Lethality);
 
         // Get a random outcome.
         var outcome = GenerateRandomOutcome(aL, out pct);
@@ -248,7 +248,7 @@ public static class OutcomeUtility
         {
             BodyPartDef partDef = args.BodyPartDef;
             DamageDef dmgDef = args.DamageDef ?? DamageDefOf.Cut;
-            RulePackDef logDef = args.LogGenDef ?? AAM_DefOf.AAM_Execution_Generic;
+            RulePackDef logDef = args.LogGenDef ?? AM_DefOf.AM_Execution_Generic;
             BodyPartRecord part = pawn.TryGetPartFromDef(partDef);
             Thing weapon = args.Weapon;
 

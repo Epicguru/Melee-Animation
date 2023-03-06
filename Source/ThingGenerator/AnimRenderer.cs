@@ -1,20 +1,19 @@
-﻿using AAM;
-using AAM.Events;
-using AAM.Patches;
-using AAM.Processing;
-using AAM.RendererWorkers;
-using AAM.Sweep;
-using AAM.Tweaks;
-using JetBrains.Annotations;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using AM.Events;
+using AM.Patches;
+using AM.Processing;
+using AM.RendererWorkers;
+using AM.Sweep;
+using AM.Tweaks;
+using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 using Color = UnityEngine.Color;
 using Debug = UnityEngine.Debug;
+
+namespace AM;
 
 /// <summary>
 /// An <see cref="AnimRenderer"/> is the object that represents and also draws (renders) a currently running animation.
@@ -690,7 +689,7 @@ public class AnimRenderer : IExposable
 
         foreach (var pawn in Pawns)
         {
-            if (pawn.CurJobDef != AAM_DefOf.AAM_InAnimation)
+            if (pawn.CurJobDef != AM_DefOf.AM_InAnimation)
             {
                 if (pawnsValidEvenIfDespawned.Contains(pawn))
                     continue;
@@ -935,7 +934,7 @@ public class AnimRenderer : IExposable
                     Vector3 drawPos2 = pawn.DrawPos;
                     drawPos2.z -= 0.6f;
                     Vector2 vector2 = Find.Camera.WorldToScreenPoint(drawPos2) / Prefs.UIScale;
-                    vector2.y = UI.screenHeight - vector2.y;
+                    vector2.y = Verse.UI.screenHeight - vector2.y;
                     labelDraw?.Invoke(pawn, vector2);
 
                 }
@@ -986,7 +985,7 @@ public class AnimRenderer : IExposable
             Vector3 drawPos = pos;
             drawPos.z -= 0.6f;
             Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
-            vector.y = UI.screenHeight - vector.y;
+            vector.y = Verse.UI.screenHeight - vector.y;
             labelDraw?.Invoke(pawn, vector);
         }
     }
@@ -1076,7 +1075,7 @@ public class AnimRenderer : IExposable
         // Give pawns their jobs.
         foreach (var pawn in Pawns)
         {
-            var newJob = JobMaker.MakeJob(AAM_DefOf.AAM_InAnimation);
+            var newJob = JobMaker.MakeJob(AM_DefOf.AM_InAnimation);
 
             if (pawn.verbTracker?.AllVerbs != null)
                 foreach (var verb in pawn.verbTracker.AllVerbs)
@@ -1089,7 +1088,7 @@ public class AnimRenderer : IExposable
 
             pawn.jobs.StartJob(newJob, JobCondition.InterruptForced);
 
-            if (pawn.CurJobDef != AAM_DefOf.AAM_InAnimation)
+            if (pawn.CurJobDef != AM_DefOf.AM_InAnimation)
             {
                 Core.Error($"CRITICAL ERROR: Failed to force interrupt {pawn}'s job with animation job. Likely a mod conflict.");
             }
@@ -1292,7 +1291,7 @@ public class AnimRenderer : IExposable
         // not care about hand visibility, then it is dictated by the weapon.
         var vis = Def.GetHandsVisibility(index);
         bool showMain = Core.Settings.ShowHands && (vis.showMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands));
-        bool showAlt = Core.Settings.ShowHands && (vis.showAltHand ?? (weapon != null && handsMode == HandsMode.Default));
+        bool showAlt =  Core.Settings.ShowHands && (vis.showAltHand ??  (weapon != null && handsMode == HandsMode.Default));
 
         // Apply main hand.
         var mainHandPart = GetPart(mainHandName);

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AAM.Events;
+namespace AM.Events;
 
 [CreateAssetMenu(fileName = "Clash", menuName = "Events/Clash")]
 public class ClashAudioEvent : EventBase

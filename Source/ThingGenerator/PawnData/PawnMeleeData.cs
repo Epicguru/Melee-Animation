@@ -3,7 +3,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.PawnData
+namespace AM.PawnData
 {
     public class PawnMeleeData : IExposable
     {
@@ -44,11 +44,11 @@ namespace AAM.PawnData
             Scribe_Values.Look(ref TimeSinceGrappled, "timeSinceGrappled", 100);
         }
 
-        public float GetExecuteCooldownMax() => Pawn.GetStatValue(AAM_DefOf.AAM_ExecutionCooldown);
+        public float GetExecuteCooldownMax() => Pawn.GetStatValue(AM_DefOf.AM_ExecutionCooldown);
         public float GetExecuteCooldownPct() => GetExecuteCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceExecuted / GetExecuteCooldownMax());
         public bool IsExecutionOffCooldown() => GetExecuteCooldownMax() <= TimeSinceExecuted;
 
-        public float GetGrappleCooldownMax() => Pawn.GetStatValue(AAM_DefOf.AAM_GrappleCooldown);
+        public float GetGrappleCooldownMax() => Pawn.GetStatValue(AM_DefOf.AM_GrappleCooldown);
         public float GetGrappleCooldownPct() => GetGrappleCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / GetGrappleCooldownMax());
         public bool IsGrappleOffCooldown() => GetGrappleCooldownMax() <= TimeSinceGrappled;
     }

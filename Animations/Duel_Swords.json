@@ -13142,7 +13142,7 @@
     {
       "ID": 19498,
       "Path": "HandGrabSparks",
-      "TexturePath": "AAM/HandGrabSparks",
+      "TexturePath": "AM/HandGrabSparks",
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 0.0,

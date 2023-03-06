@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace AAM.Sweep
+namespace AM.Sweep
 {
     public class SweepMesh<T> : IDisposable
     {

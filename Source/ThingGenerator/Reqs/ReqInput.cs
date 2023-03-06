@@ -1,8 +1,8 @@
-﻿using AAM.Idle;
-using AAM.Tweaks;
+﻿using AM.Idle;
+using AM.Tweaks;
 using Verse;
 
-namespace AAM.Reqs;
+namespace AM.Reqs;
 
 public struct ReqInput
 {

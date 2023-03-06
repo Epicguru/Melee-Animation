@@ -1,18 +1,18 @@
-﻿using AAM.Patches;
-using AAM.Retexture;
-using AAM.Tweaks;
-using HarmonyLib;
-using ModRequestAPI;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AM.Retexture;
+using AM.Patches;
+using AM.Tweaks;
+using HarmonyLib;
+using ModRequestAPI;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     [HotSwapAll]
     public class Core : Mod
@@ -89,9 +89,9 @@ namespace AAM
 
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
             AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(Harmony));
-            AddLateLoadAction(false, "Finding all lassos...", AAM.Content.FindAllLassos);
+            AddLateLoadAction(false, "Finding all lassos...", AM.Content.FindAllLassos);
 
-            AddLateLoadAction(true, "Loading main content...", AAM.Content.Load);
+            AddLateLoadAction(true, "Loading main content...", AM.Content.Load);
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
             AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);

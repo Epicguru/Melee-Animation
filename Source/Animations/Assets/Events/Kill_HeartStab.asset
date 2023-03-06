@@ -17,6 +17,6 @@ MonoBehaviour:
   VictimIndex: 1
   TargetBodyPart: Heart
   DamageDef: Stab
-  BattleLogDef: AAM_Execution_Stab
+  BattleLogDef: AM_Execution_Stab
   OnlyIfNotInterrupted: 1
   PreventDamageMote: 1

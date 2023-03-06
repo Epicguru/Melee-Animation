@@ -1,6 +1,7 @@
-﻿using RimWorld;
+﻿using AM;
+using RimWorld;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public class TextMoteWorker : EventWorkerBase
     {

@@ -22,12 +22,12 @@
 // SOFTWARE.
 #endregion
 
-using Newtonsoft.Json;
 using System;
 using System.Globalization;
+using Newtonsoft.Json;
 using UnityEngine;
 
-namespace AAM.Tweaks;
+namespace AM.Tweaks;
 
 public class ColorConverter : PartialConverter<Color>
 {

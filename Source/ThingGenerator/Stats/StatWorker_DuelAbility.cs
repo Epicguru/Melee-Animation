@@ -1,9 +1,9 @@
-﻿using RimWorld;
-using System.Text;
+﻿using System.Text;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Stats;
+namespace AM.Stats;
 
 public class StatWorker_DuelAbility : StatWorker
 {
@@ -42,22 +42,22 @@ public class StatWorker_DuelAbility : StatWorker
 
         // Base value.
         float baseline = GetBaseValueFor(req);
-        str?.AppendLine("AAM.Stats.BaseValue".Translate(baseline.ToStringByStyle(ToStringStyle.PercentOne, numberSense)));
+        str?.AppendLine("AM.Stats.BaseValue".Translate(baseline.ToStringByStyle(ToStringStyle.PercentOne, numberSense)));
 
         // Melee skill.
         float meleeSkillOffset = Remap(0f, 20f, -0.3f, 0.6f, meleeSkill);
         if (meleeSkillOffset != 0f)
-            str?.AppendLine("AAM.Stats.MeleeSkillOffset".Translate(meleeSkill, meleeSkillOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.MeleeSkillOffset".Translate(meleeSkill, meleeSkillOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
 
         // Consciousness.
         float consciousnessOffset = consciousness < 1f ? Remap(0f, 1f, -0.8f, 0f, consciousness) : Remap(1f, 2f, 0f, 0.2f, consciousness);
         if (consciousnessOffset != 0f)
-            str?.AppendLine("AAM.Stats.ConsciousnessOffset".Translate(consciousness.ToStringByStyle(ToStringStyle.PercentZero), consciousnessOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.ConsciousnessOffset".Translate(consciousness.ToStringByStyle(ToStringStyle.PercentZero), consciousnessOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
 
         // Manipulation
         float manipulationOffset = manipulation < 1f ? Remap(0f, 1f, -0.5f, 0f, manipulation) : Remap(1f, 2f, 0f, 0.15f, manipulation);
         if (manipulationOffset != 0f)
-            str?.AppendLine("AAM.Stats.ManipulationOffset".Translate(manipulation.ToStringByStyle(ToStringStyle.PercentZero), manipulationOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.ManipulationOffset".Translate(manipulation.ToStringByStyle(ToStringStyle.PercentZero), manipulationOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
 
         // Melee Weapon DPS
         float dpsOffset = 0f;
@@ -66,21 +66,21 @@ public class StatWorker_DuelAbility : StatWorker
             dpsOffset = Remap(8f, 50f, 0f, 0.3f, meleeDps.Value);
             if (dpsOffset != 0)
             {
-                str?.AppendLine("AAM.Stats.WeaponDPSCoef".Translate(meleeDps.Value.ToStringByStyle(ToStringStyle.FloatOne), dpsOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
+                str?.AppendLine("AM.Stats.WeaponDPSCoef".Translate(meleeDps.Value.ToStringByStyle(ToStringStyle.FloatOne), dpsOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
             }
         }
 
         // No weapon negative.
         float noWeaponOffset = weapon == null ? -0.9f : 0f;
         if (noWeaponOffset != 0)
-            str?.AppendLine("AAM.Stats.NoWeapon".Translate(noWeaponOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.NoWeapon".Translate(noWeaponOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
 
         // Friendly bonus
         float friendBonus = 0f;
         if ((pawn.IsColonist || pawn.IsSlaveOfColony) && Core.Settings.FriendlyPawnDuelBonus != 0f)
         {
             friendBonus = Core.Settings.FriendlyPawnDuelBonus;
-            str?.AppendLine("AAM.Stats.FriendlyPawnBonus".Translate(friendBonus.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.FriendlyPawnBonus".Translate(friendBonus.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
         }
 
         float final = Mathf.Max(0f, baseline + meleeSkillOffset + consciousnessOffset + manipulationOffset + dpsOffset + noWeaponOffset + friendBonus);

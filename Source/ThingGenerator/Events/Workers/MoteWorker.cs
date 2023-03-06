@@ -1,7 +1,8 @@
-﻿using RimWorld;
+﻿using AM;
+using RimWorld;
 using Verse;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public class MoteWorker : EventWorkerBase
     {

@@ -1,17 +1,12 @@
-﻿using AAM.Grappling;
-using AAM.Reqs;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using AAM.PawnData;
+using AM.PawnData;
+using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.AI;
 using Verse.Sound;
 
-namespace AAM.Gizmos;
+namespace AM.Gizmos;
 
 public class AnimationGizmo : Gizmo
 {
@@ -100,11 +95,11 @@ public class AnimationGizmo : Gizmo
         if (mixed)
         {
             // pawns.Count + 1
-            tooltip = "AAM.Gizmo.DifferingReset".Trs(pawnCount, new NamedArgument(data.AutoExecute, "Mode"));
+            tooltip = "AM.Gizmo.DifferingReset".Trs(pawnCount, new NamedArgument(data.AutoExecute, "Mode"));
         }
         else
         {
-            string autoExecFromSettings = Core.Settings.AutoExecute ? "AAM.Gizmo.Enabled".Trs() : "AAM.Gizmo.Disabled".Trs();
+            string autoExecFromSettings = Core.Settings.AutoExecute ? "AM.Gizmo.Enabled".Trs() : "AM.Gizmo.Disabled".Trs();
             string autoExecFromSettingsColor = Core.Settings.AutoExecute ? "green" : "red";
             bool resolved = selected switch
             {
@@ -115,8 +110,8 @@ public class AnimationGizmo : Gizmo
             };
             string plural = multi ? "Plural" : "";
             string explanation = resolved
-                ? $"AAM.Gizmo.Execute.ExplainResolved{plural}".Trs(pawnCount)
-                : $"AAM.Gizmo.Execute.Explain{plural}".Trs(pawnCount);
+                ? $"AM.Gizmo.Execute.ExplainResolved{plural}".Trs(pawnCount)
+                : $"AM.Gizmo.Execute.Explain{plural}".Trs(pawnCount);
 
             string mode = $"<color={autoExecFromSettingsColor}><b>{autoExecFromSettings}</b></color>";
             var modeArg = new NamedArgument(mode, "Mode");
@@ -124,7 +119,7 @@ public class AnimationGizmo : Gizmo
 
             tooltip = selected switch
             {
-                AutoOption.Default  => $"AAM.Gizmo.Execute.Mode.Default{plural}".Trs(pawnCount, explainationArg, modeArg),
+                AutoOption.Default  => $"AM.Gizmo.Execute.Mode.Default{plural}".Trs(pawnCount, explainationArg, modeArg),
                 AutoOption.Enabled  => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-execute <color=green><b>enabled</b></color>.\n\n{explanation}",
                 AutoOption.Disabled => $"{sThis.CapitalizeFirst()} {sPawns} {sHas} auto-execute <color=red><b>disabled</b></color>.\n\n{explanation}",
                 _ => throw new ArgumentOutOfRangeException()

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AAM.Events;
+namespace AM.Events;
 
 [CreateAssetMenu(fileName = "DuelEvent", menuName = "Events/DuelEvent")]
 public class DuelEvent : EventBase

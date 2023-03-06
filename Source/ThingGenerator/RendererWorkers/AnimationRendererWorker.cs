@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Verse;
 
-namespace AAM.RendererWorkers;
+namespace AM.RendererWorkers;
 
 public abstract class AnimationRendererWorker
 {

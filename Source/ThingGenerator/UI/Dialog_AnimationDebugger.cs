@@ -1,15 +1,15 @@
-﻿using AAM.Idle;
-using EpicUtils;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AM.Idle;
+using EpicUtils;
+using RimWorld;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
 
-namespace AAM.UI
+namespace AM.UI
 {
     public class Dialog_AnimationDebugger : Window
     {
@@ -198,7 +198,7 @@ namespace AAM.UI
                     if (pawn == null)
                         continue;
 
-                    bool hasJob = pawn?.CurJobDef == AAM_DefOf.AAM_InAnimation;
+                    bool hasJob = pawn?.CurJobDef == AM_DefOf.AM_InAnimation;
 
                     string label = pawn.LabelShort;
                     Color col = Color.white;

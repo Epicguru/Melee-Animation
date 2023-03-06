@@ -1,15 +1,15 @@
-﻿using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Grappling
+namespace AM.Grappling
 {
     public static class GrabUtility
     {
         // You can add a bound pawn texture here for your modded body type.
-        // Alternatively, simply add your texture to your textures folder: Textures/AAM/BoundPawns/<bodyTypeDefName>.png
+        // Alternatively, simply add your texture to your textures folder: Textures/AM/BoundPawns/<bodyTypeDefName>.png
         public static readonly Dictionary<BodyTypeDef, Texture2D> BoundPawnTextures = new Dictionary<BodyTypeDef, Texture2D>();
 
         private static readonly MaterialPropertyBlock mpb = new MaterialPropertyBlock();
@@ -155,7 +155,7 @@ namespace AAM.Grappling
             if (BoundPawnTextures.TryGetValue(bodyType, out var found))
                 return found;
 
-            var loaded = ContentFinder<Texture2D>.Get($"AAM/BoundPawns/{bodyType.defName}");
+            var loaded = ContentFinder<Texture2D>.Get($"AM/BoundPawns/{bodyType.defName}");
             if (loaded != null)
                 BoundPawnTextures.Add(bodyType, loaded);
             return loaded;

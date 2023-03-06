@@ -1,6 +1,8 @@
-﻿using AAM.Events.Workers;
+﻿using AM.Events.Workers;
+using AM;
+using AM.Events.Workers;
 
-namespace AAM.Events
+namespace AM.Events
 {
     public static class EventHelper
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AAM.Events;
+namespace AM.Events;
 
 [CreateAssetMenu(fileName = "GoreSplash", menuName = "Events/GoreSplash")]
 public class GoreSplashEvent : EventBase

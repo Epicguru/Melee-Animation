@@ -1,8 +1,8 @@
-﻿using AAM.Tweaks;
+﻿using AM.Tweaks;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public abstract class PartRenderer
     {

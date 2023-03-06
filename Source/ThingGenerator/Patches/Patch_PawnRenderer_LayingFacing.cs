@@ -1,8 +1,8 @@
-﻿using HarmonyLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using HarmonyLib;
 using Verse;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 /// <summary>
 /// Only used to override corpse direction.

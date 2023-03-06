@@ -1,23 +1,23 @@
 <Defs>
 
   <!-- Bases -->
-  <AAM.AnimDef Name="AnimMovementHorizontal" Abstract="True">
+  <AM.AnimDef Name="AnimMovementHorizontal" Abstract="True">
     <type>Idle</type>
     <pawnCount>1</pawnCount>
     <idleType>MoveHorizontal</idleType>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef Name="AnimMovementVertical" Abstract="True">
+  <AM.AnimDef Name="AnimMovementVertical" Abstract="True">
     <type>Idle</type>
     <pawnCount>1</pawnCount>
     <idleType>MoveVertical</idleType>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
   <!-- Tiny -->
-  <AAM.AnimDef ParentName="AnimMovementHorizontal">
-    <defName>AAM_Idle_TinyMoveHor</defName>
+  <AM.AnimDef ParentName="AnimMovementHorizontal">
+    <defName>AM_Idle_TinyMoveHor</defName>
     <data>Idle_Tiny_MoveHorizontal.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Tiny</size>
     </weaponFilter>
     <idleFrame>7</idleFrame>
@@ -28,11 +28,11 @@
         <showAltHand>true</showAltHand>
       </li>
     </handsVisibility>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimMovementVertical">
-    <defName>AAM_Idle_TinyMoveVert</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimMovementVertical">
+    <defName>AM_Idle_TinyMoveVert</defName>
     <data>Idle_Tiny_MoveVertical.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Tiny</size>
     </weaponFilter>
     <handsVisibility>
@@ -42,38 +42,38 @@
         <showAltHand>true</showAltHand>
       </li>
     </handsVisibility>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
   <!-- Medium -->
-  <AAM.AnimDef ParentName="AnimMovementHorizontal">
-    <defName>AAM_Idle_MediumMoveHor</defName>
+  <AM.AnimDef ParentName="AnimMovementHorizontal">
+    <defName>AM_Idle_MediumMoveHor</defName>
     <data>Idle_Medium_MoveHorizontal.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimMovementVertical">
-    <defName>AAM_Idle_MediumMoveVert</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimMovementVertical">
+    <defName>AM_Idle_MediumMoveVert</defName>
     <data>Idle_Medium_MoveVertical.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
   <!-- Colossal -->
-  <AAM.AnimDef ParentName="AnimMovementHorizontal">
-    <defName>AAM_Idle_ColossalMoveHor</defName>
+  <AM.AnimDef ParentName="AnimMovementHorizontal">
+    <defName>AM_Idle_ColossalMoveHor</defName>
     <data>Idle_Colossal_MoveHorizontal.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Colossal</size>
     </weaponFilter>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimMovementVertical">
-    <defName>AAM_Idle_ColossalMoveVert</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimMovementVertical">
+    <defName>AM_Idle_ColossalMoveVert</defName>
     <data>Idle_Colossal_MoveVertical.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Colossal</size>
     </weaponFilter>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
 </Defs>

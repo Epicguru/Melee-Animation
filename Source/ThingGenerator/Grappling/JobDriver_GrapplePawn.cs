@@ -1,10 +1,10 @@
-﻿using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 
-namespace AAM.Grappling
+namespace AM.Grappling
 {
     public class JobDriver_GrapplePawn : JobDriver
     {
@@ -13,7 +13,7 @@ namespace AAM.Grappling
             if (grappler == null || !grappler.Spawned || grappler.Dead || grappler.Downed)
                 return false;
 
-            if (grappler.CurJobDef == AAM_DefOf.AAM_GrapplePawn)
+            if (grappler.CurJobDef == AM_DefOf.AM_GrapplePawn)
                 return false;
 
             if (target == null || !target.Spawned || !ignoreDeadOrDowned && (target.Dead || target.Downed))
@@ -24,7 +24,7 @@ namespace AAM.Grappling
 
             CleanPawn(grappler);
 
-            var newJob = JobMaker.MakeJob(AAM_DefOf.AAM_GrapplePawn, targetCell, target);
+            var newJob = JobMaker.MakeJob(AM_DefOf.AM_GrapplePawn, targetCell, target);
 
             void CleanPawn(Pawn pawn)
             {
@@ -129,7 +129,7 @@ namespace AAM.Grappling
 
         private void TickPreEnsnare()
         {
-            float lassoFactor = pawn.GetStatValue(AAM_DefOf.AAM_GrappleSpeed);
+            float lassoFactor = pawn.GetStatValue(AM_DefOf.AM_GrappleSpeed);
             RopeDistance += 0.75f * Core.Settings.GrappleSpeed * lassoFactor;
 
             // TODO maybe don't check every frame?

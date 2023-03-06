@@ -1,12 +1,12 @@
-﻿using AAM.Grappling;
-using AAM.Tweaks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using AM.Grappling;
+using AM.Tweaks;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.RendererWorkers;
+namespace AM.RendererWorkers;
 
 public class GilgameshRendererWorker : AnimationRendererWorker
 {

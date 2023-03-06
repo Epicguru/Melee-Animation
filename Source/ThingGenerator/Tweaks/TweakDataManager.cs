@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using AAM.Retexture;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using AM.Retexture;
 using UnityEngine;
 using Verse;
-using System.Linq;
-using System;
 
-namespace AAM.Tweaks
+namespace AM.Tweaks
 {
     public static class TweakDataManager
     {

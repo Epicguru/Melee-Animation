@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThingGenerator\AAM.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public static class Bezier
     {

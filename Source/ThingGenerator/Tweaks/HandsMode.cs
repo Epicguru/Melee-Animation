@@ -1,4 +1,4 @@
-﻿namespace AAM.Tweaks
+﻿namespace AM.Tweaks
 {
     public enum HandsMode
     {

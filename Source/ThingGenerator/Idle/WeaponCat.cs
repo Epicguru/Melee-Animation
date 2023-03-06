@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AAM.Idle;
+namespace AM.Idle;
 
 [Flags]
 public enum WeaponCat

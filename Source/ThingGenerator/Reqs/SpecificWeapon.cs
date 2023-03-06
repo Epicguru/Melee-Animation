@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AAM.Reqs
+namespace AM.Reqs
 {
     public class SpecificWeapon : Req
     {

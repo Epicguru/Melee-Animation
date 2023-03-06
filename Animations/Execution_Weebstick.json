@@ -11,11 +11,11 @@
   "Events": [
     {
       "Time": 2.25,
-      "Data": "Audio;AAM_AnimeUnsheath;0,0,0;1;1;False"
+      "Data": "Audio;AM_AnimeUnsheath;0,0,0;1;1;False"
     },
     {
       "Time": 2.86666656,
-      "Data": "Audio;AAM_Dash;0,0,0;0.85;1;False"
+      "Data": "Audio;AM_Dash;0,0,0;0.85;1;False"
     },
     {
       "Time": 2.88333344,
@@ -23,11 +23,11 @@
     },
     {
       "Time": 3.3,
-      "Data": "Audio;AAM_TrippleSwingSlow;0,0,0;0.4;1;False"
+      "Data": "Audio;AM_TrippleSwingSlow;0,0,0;0.4;1;False"
     },
     {
       "Time": 4.16666651,
-      "Data": "Audio;AAM_Sheath;0,0,0;0.75;1;False"
+      "Data": "Audio;AM_Sheath;0,0,0;0.75;1;False"
     },
     {
       "Time": 4.65,
@@ -35,7 +35,7 @@
     },
     {
       "Time": 5.0666666,
-      "Data": "KillPawn;0;1;Torso;Cut;AAM_Execution_Weebstick;True"
+      "Data": "KillPawn;0;1;Torso;Cut;AM_Execution_Weebstick;True"
     }
   ],
   "Parts": [
@@ -1931,7 +1931,7 @@
       "ID": 19226,
       "Path": "BodyA/Sheath",
       "ParentID": 19036,
-      "TexturePath": "AAM/Weapons/Weebstick_Sheath",
+      "TexturePath": "AM/Weapons/Weebstick_Sheath",
       "Curves": {
         "GameObject.m_IsActive": {
           "Keyframes": [
@@ -2205,7 +2205,7 @@
       "ID": 19030,
       "Path": "PawnAHolding/Sword/Sheath",
       "ParentID": 18852,
-      "TexturePath": "AAM/Weapons/Weebstick_Sheath",
+      "TexturePath": "AM/Weapons/Weebstick_Sheath",
       "Curves": {
         "GameObject.m_IsActive": {
           "Keyframes": [
@@ -2255,7 +2255,7 @@
       "ID": 18996,
       "Path": "PawnAHolding/Sword/Glint",
       "ParentID": 18852,
-      "TexturePath": "AAM/Weapons/Weebstick_Glint",
+      "TexturePath": "AM/Weapons/Weebstick_Glint",
       "TransparentByDefault": true,
       "Curves": {
         "GameObject.m_IsActive": {
@@ -2465,7 +2465,7 @@
       "ID": 19058,
       "Path": "PawnAHolding/Sword/Regular",
       "ParentID": 18852,
-      "TexturePath": "AAM/Weapons/Weebstick",
+      "TexturePath": "AM/Weapons/Weebstick",
       "TransparentByDefault": true,
       "Curves": {
         "GameObject.m_IsActive": {
@@ -2543,7 +2543,7 @@
       "ID": 19154,
       "Path": "PawnAHolding/Sword/Blur",
       "ParentID": 18852,
-      "TexturePath": "AAM/Weapons/Weebstick_Blur",
+      "TexturePath": "AM/Weapons/Weebstick_Blur",
       "TransparentByDefault": true,
       "Curves": {
         "GameObject.m_IsActive": {
@@ -4062,7 +4062,7 @@
       "ID": 19570,
       "Path": "PawnAHolding/Sword/FastBlur",
       "ParentID": 18852,
-      "TexturePath": "AAM/Weapons/Weebstick_BlurFast",
+      "TexturePath": "AM/Weapons/Weebstick_BlurFast",
       "TransparentByDefault": true,
       "Curves": {
         "GameObject.m_IsActive": {
@@ -4355,7 +4355,7 @@
       "ID": 19192,
       "Path": "DashHolder/DashLine",
       "ParentID": 18910,
-      "TexturePath": "AAM/Weapons/Weebstick_DashLine",
+      "TexturePath": "AM/Weapons/Weebstick_DashLine",
       "Curves": {
         "GameObject.m_IsActive": {
           "Keyframes": [
