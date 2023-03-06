@@ -6,89 +6,66 @@ namespace AM.UI;
 
 public static class BGRenderer
 {
-    private class Layer
-    {
-        public Texture2D Texture;
-        public Vector2 BaseOffset;
-        public float Scale = 1f;
-        public Vector2 ParallaxFactor;
-        public Vector2 ParallaxLimits;
-    }
+    private static readonly int errorCode = Guid.NewGuid().GetHashCode();
 
-    private static Layer[] layers;
+    [TweakValue("Melee Animation", 0f, 12f)]
+    private static float BGFocusPoint = 4.5f;
+    [TweakValue("Melee Animation", 1, 2)]
+    private static float BGZoomLevel = 1.06f;
+    private static Texture2D[] layers;
 
     public static void DrawMainMenuBackground()
     {
-        if (layers == null)
-            InitLayers();
-
-        var screenArea = new Rect(0, 0, Verse.UI.screenWidth, Verse.UI.screenHeight);
-        DrawLayers(screenArea);
-    }
-
-    private static void InitLayers()
-    {
-        const int LAYER_COUNT = 9;
-        layers = new Layer[LAYER_COUNT];
-
-        for (int i = 0; i < LAYER_COUNT; i++)
+        try
         {
-            string name = $"AM/UI/BG/parallax ({i + 1})";
-            var tex = ContentFinder<Texture2D>.Get(name);
+            layers ??= InitLayers();
+            var screenArea = new Rect(0, 0, Verse.UI.screenWidth, Verse.UI.screenHeight);
+            var mouseOffset = Verse.UI.MousePositionOnUIInverted - screenArea.center;
+            var mouseOffsetNormalized = mouseOffset / (screenArea.size * 0.5f);
 
-            float diff = i - 6.5f;
 
+            var maxOffset = screenArea.size * (1f - BGZoomLevel) * 0.5f;
 
-            layers[i] = new Layer
+            for (int i = layers.Length - 1; i >= 0; i--)
             {
-                Texture = tex,
-                ParallaxFactor = new Vector2(diff * 0.15f, diff * 0.1f)
-            };
+                var layer = layers[i];
+
+                float diff = (i - BGFocusPoint) /
+                             Mathf.Abs(Mathf.Max(BGFocusPoint, (layers.Length - 1) - BGFocusPoint));
+                var pos = layer.FitRect(screenArea, ScaleMode.Cover, BGZoomLevel);
+                pos.position += diff * mouseOffsetNormalized * maxOffset;
+
+                GUI.color = Color.white;
+                Widgets.DrawTexturePart(pos, new Rect(0, 0, 1, 1), layer);
+            }
+        }
+        catch (Exception e)
+        {
+            Log.ErrorOnce($"Exception rendering melee animation background:\n{e}", errorCode);
         }
     }
 
-    private static void DrawLayers(Rect screen)
+    private static Texture2D[] InitLayers()
     {
-        var uv = new Rect(0, 0, 1, 1);
-        var middle = screen.center;
-        var mouseOffset = Verse.UI.MousePositionOnUIInverted - middle;
+        const int LAYER_COUNT = 13;
 
-
-        for (int i = layers.Length - 1; i >= 0; i--)
-        {
-            var layer = layers[i];
-
-            var fit = FitRect(layer.Texture, screen, ScaleMode.Cover, layer.Scale * 1.1f);
-            var offset = mouseOffset;
-            fit.position += offset * 0.05f * layer.ParallaxFactor;
-
-            Widgets.DrawTexturePart(fit, uv, layer.Texture);
-        }
-    }
-
-    private static void DrawEditor(Rect screen)
-    {
-        var ui = new Listing_Standard();
-        ui.Begin(screen);
-
-        for (int i = layers.Length - 1; i >= 0; i--)
-        {
-            var layer = layers[i];
-
-            ui.Label($"Layer {i}");
-            layer.ParallaxFactor.x = ui.SliderLabeled("FX", layer.ParallaxFactor.x, -2f, 2f);
-            layer.ParallaxFactor.y = ui.SliderLabeled("FY", layer.ParallaxFactor.y, -2f, 2f);
-        }
-
+        var loaded = new Texture2D[LAYER_COUNT];
+        for (int i = 0; i < LAYER_COUNT; i++)
+            loaded[i] = ContentFinder<Texture2D>.Get($"AM/UI/BG/{i + 1}");
         
-
-        ui.End();
+        return loaded;
     }
 
     public static Rect FitRect(this Texture tex, Rect area, ScaleMode mode, float scale = 1f)
     {
-        float w = tex.width;
-        float h = tex.height;
+        var size = new Vector2(tex.width, tex.height);
+        return FitRect(size, area, mode, scale);
+    }
+
+    public static Rect FitRect(this Vector2 texSize, Rect area, ScaleMode mode, float scale = 1f)
+    {
+        float w = texSize.x;
+        float h = texSize.y;
 
         void Shrink()
         {
@@ -154,6 +131,7 @@ public enum ScaleMode
     /// If it is already larger than the rect nothing happens.
     /// </summary>
     Expand,
+
     /// <summary>
     /// The texture is shrunk until it fits entirely within the rect.
     /// If it is already smaller than the rect nothing happens.

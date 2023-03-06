@@ -24,8 +24,6 @@ namespace AM
         // UI
         [Content("AM/UI/IconBG")]
         public static Texture2D IconBG;
-        [Content("AM/UI/IconLongBG")]
-        public static Texture2D IconLongBG;
         [Content("AM/UI/IconExecute")]
         public static Texture2D IconExecute;
         [Content("AM/UI/IconGrapple")]
@@ -40,10 +38,8 @@ namespace AM
         public static Texture2D ExtraGuiForce;
         [Content("AM/UI/ExtraGUIWhy")]
         public static Texture2D ExtraGuiWhy;
-        [Content("AM/UI/BG/Sketch1")]
-        public static Texture2D BGSketch1;
-        [Content("AM/UI/Loading")]
-        public static Texture2D Loading;
+        [Content("AM/UI/BG/Combined")]
+        public static Texture2D BGCombined;
 
         [BundleContent("Materials/CutoffCustom.mat")]   
         public static Material CustomCutoffMaterial;

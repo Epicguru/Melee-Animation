@@ -4,8 +4,8 @@
     <defName>AM_NoTablesBrawl</defName>
     <label>Melee Animation: Brawl</label>
     <description>Artwork created by @No_Tables for the Melee Animation mod.\nThis background is dynamic, with a parallax effect.</description>
-    <path>AM/UI/BG/Sketch1</path>
-    <iconPath>AM/UI/BG/Sketch1</iconPath>
+    <path>AM/UI/BG/Combined</path>
+    <iconPath>AM/UI/BG/Combined</iconPath>
   </VBE.BackgroundImageDef>
   
 </Defs>
