@@ -1,8 +1,8 @@
-﻿using System;
+﻿using AM.Idle;
+using Meta.Numerics.Statistics.Distributions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AM.Idle;
-using Meta.Numerics.Statistics.Distributions;
 using UnityEngine;
 using Verse;
 
@@ -12,10 +12,6 @@ namespace AM
     {
         #region General
         [Header("General")]
-        [Description("<i>(Gizmos are the buttons that appear when selecting a pawn)</i>\n\n" +
-                     "If enabled, the Advanced Melee gizmo will be shown even if the pawn does not have a valid (compatible) melee weapon.")]
-        public bool ShowGizmosWithoutMeleeWeapon = false;
-
         [Label("Always Animate Weapons")]
         [Description("If enabled, melee weapons are animated whenever they are held, such as when standing drafted or while moving in combat.\nIf disabled, animations are limited to duels, special skills and executions.\n\n" +
                      "<b>Leaving this enabled can have a large performance impact on densely populated maps.\nPlease reload your save after changing this setting.</b>")]
@@ -34,6 +30,7 @@ namespace AM
         [Description("A modifier on the speed of all animations.\nHigher is faster.")]
         public float GlobalAnimationSpeed = 1f;
 
+        [Label("Individual Animation Settings")]
         [DrawMethod(nameof(DrawAnimationList))]
         [SettingOptions(drawValue: false, allowReset: false, drawHoverHighlight: false)]
         private Dictionary<string, AnimDef.SettingsData> animSettings = new Dictionary<string, AnimDef.SettingsData>();
@@ -46,8 +43,29 @@ namespace AM
                      "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
         public bool AutoGrapple = true;
 
+        [Label("Automatic Lasso Average Interval (Friendly)")]
+        [Description("This is the average time, in seconds, at which friendly pawns will attempt to use their lasso to pull an enemy into melee range.\n" +
+                     "If their execution is off cooldown and Auto Execute is enabled, they will immediately execute the lassoed target too.")]
+        [Range(1, 240)]
+        [Step(1f)]
+        public float GrappleAttemptMTBSeconds = 10;
+
+        [Label("Lasso Commonality")]
+        [Description("This is the % chance for any <b>melee fighter</b> pawn to spawn with a lasso equipped.\nSet this to 0% to disable natural lasso generation on pawns.")]
+        [Percentage]
+        public float LassoSpawnChance = 0.2f;
+
+        [Label("Enemies Can Lasso")]
         [Description("Can enemies use lassos (if they have any) to pull your colonists into melee range?")]
         public bool EnemiesCanGrapple = true;
+
+        [Label("Automatic Lasso Average Interval (Enemy)")]
+        [Description("This is the average time, in seconds, at which enemy pawns will attempt to use their lasso to pull a target into melee range.\n" +
+                     "If their execution is off cooldown and 'Enemies Can Perform Executions' is enabled, they will immediately execute the lassoed target too.")]
+        [VisibleIf(nameof(EnemiesCanGrapple))]
+        [Range(1, 240)]
+        [Step(1f)]
+        public float GrappleAttemptMTBSecondsEnemy = 20;
 
         [Label("Minimum Melee Skill")]
         [Description("The minumum melee skill required to use a lasso.\nAffects all pawns.")]
@@ -95,7 +113,6 @@ namespace AM
                      "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
         [Range(0.5f, 240)]
         [Step(1f)]
-        [VisibleIf(nameof(AutoExecute))]
         public float ExecuteAttemptMTBSeconds = 10;
 
         [Label("Enemies Can Perform Executions")]

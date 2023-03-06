@@ -22,7 +22,7 @@
   <AM.AnimDef>
     <defName>AM_GilgameshVictim</defName>
     <label>Execution: Mystic Weapon Summon</label>
-    <type>Execution</type>
+    <type>Other</type>
     <pawnCount>1</pawnCount>
     <jobString>Uh oh...</jobString>
     <cellData>

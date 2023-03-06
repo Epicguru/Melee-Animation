@@ -22,16 +22,10 @@ namespace AM
         public static Texture2D Shadow;
 
         // UI
-        [Content("AM/UI/IconBG")]
-        public static Texture2D IconBG;
         [Content("AM/UI/IconExecute")]
         public static Texture2D IconExecute;
         [Content("AM/UI/IconGrapple")]
         public static Texture2D IconGrapple;
-        [Content("AM/UI/IconInfo")]
-        public static Texture2D IconInfo;
-        [Content("AM/UI/IconSkill")]
-        public static Texture2D IconSkill;
         [Content("AM/UI/ExtraGUIWalk")]
         public static Texture2D ExtraGuiWalk;
         [Content("AM/UI/ExtraGUIForce")]
