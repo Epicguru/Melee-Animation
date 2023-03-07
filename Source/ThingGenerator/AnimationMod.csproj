@@ -6,7 +6,7 @@
     <OutputType>Library</OutputType>
     <LangVersion>11</LangVersion>
     <NoStdLib>false</NoStdLib>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <Configurations>v1.4</Configurations>
@@ -18,7 +18,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BetterFloatMenu" Version="*" />
+	<AssemblyAttribute Include="AM.BuildDateAttribute">
+	  <_Parameter1>$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</_Parameter1>
+	</AssemblyAttribute>
+	<PackageReference Include="BetterFloatMenu" Version="*" />
     <PackageReference Include="Lib.Harmony" Version="2.2.2">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>

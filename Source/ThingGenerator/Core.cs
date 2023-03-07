@@ -11,6 +11,8 @@ using ModRequestAPI;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using System.Globalization;
+using System.Reflection;
 
 namespace AM
 {
@@ -71,7 +73,7 @@ namespace AM
             AddParsers();
 
             string assemblies = string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName);
-            Log($"Hello, world!\n\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
+            Log($"Hello, world!\nBuild date: {GetBuildDate(Assembly.GetExecutingAssembly()):g}\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
 
             Harmony = new Harmony(content.PackageId);
             Harmony.PatchAll();
@@ -324,8 +326,25 @@ namespace AM
         {
             IsSimpleSidearmsActive = ModLister.GetActiveModWithIdentifier("PeteTimesSix.SimpleSidearms") != null;
         }
+
+        private static DateTime GetBuildDate(Assembly assembly)
+        {
+            var attribute = assembly.GetCustomAttribute<BuildDateAttribute>();
+            return attribute?.DateTime ?? default;
+        }
     }
 
     public class HotSwapAllAttribute : Attribute { }
     public class IgnoreHotSwapAttribute : Attribute { }
+
+    [AttributeUsage(AttributeTargets.Assembly)]
+    internal class BuildDateAttribute : Attribute
+    {
+        public BuildDateAttribute(string value)
+        {
+            DateTime = DateTime.ParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
+
+        public DateTime DateTime { get; }
+    }
 }
