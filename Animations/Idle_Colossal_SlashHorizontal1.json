@@ -1,11 +1,11 @@
 {
-  "ExportTimeUTC": "2023-02-20T18:04:15.4074151Z",
+  "ExportTimeUTC": "2023-03-06T18:05:13.669329Z",
   "Name": "Idle_Colossal_SlashHorizontal1",
   "Length": 1.65,
   "Events": [],
   "Parts": [
     {
-      "ID": 19626,
+      "ID": 19706,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {
@@ -62,7 +62,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19182,
+      "ID": 19246,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -446,10 +446,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 18904,
+      "ID": 18954,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 19626,
+      "ParentID": 19706,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -478,10 +478,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19608,
+      "ID": 19688,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": 19182,
+      "ParentID": 19246,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -510,10 +510,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19262,
+      "ID": 19326,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": 19182,
+      "ParentID": 19246,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -542,10 +542,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19114,
+      "ID": 19178,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": 19182,
+      "ParentID": 19246,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -571,11 +571,11 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19384,
+      "SplitDrawPivotPartID": 19454,
       "SweepPaths": []
     },
     {
-      "ID": 19384,
+      "ID": 19454,
       "Path": "WeaponACutoff",
       "Curves": {},
       "DefaultValues": {

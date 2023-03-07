@@ -30,6 +30,8 @@ Unlocks a unique and deadly Special Skill animation.</description>
     <equippedStatOffsets>
       <MoveSpeed>0.25</MoveSpeed> <!-- Gives +0.25 cps movement boost. Because I can. -->
     </equippedStatOffsets>
+    <smeltable>false</smeltable>
+    <recipeMaker IsNull="true"/>
     <comps>
       <li MayRequire="co.uk.epicguru.rimforge" Class="RimForge.Comps.CompProperties_Deflector">
         <deflectChance>0.9</deflectChance>

@@ -275,9 +275,6 @@ namespace AM
                     yield return $"There is an item in <handsVisibility> that has duplicate <pawnIndex> of {d.pawnIndex}.";
                 }
             }
-
-            if ( type == AnimType.Idle && (idleType is IdleType.AttackHorizontal or IdleType.AttackSouth or IdleType.AttackNorth) && mainAttackDuration <= 0)
-                yield return $"Failed to specify <{nameof(mainAttackDuration)}> for attack animation!";
         }
 
         public override void PostLoad()
