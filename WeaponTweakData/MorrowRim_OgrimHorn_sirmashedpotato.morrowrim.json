@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sirmashedpotato.morrowrim",
+  "ItemDefName": "MorrowRim_OgrimHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.257082164,
+  "OffY": 0.0879494548,
+  "Rotation": -120.0,
+  "BladeStart": 0.05073996,
+  "BladeEnd": 0.8050741,
+  "MeleeWeaponType": 5
+}

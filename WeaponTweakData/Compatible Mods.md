@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 9 Mar 2023, 8:29 PM.`  
+`Updated 9 Mar 2023, 8:48 PM.`  
 
-**Melee Animation supports 780 weapons from 98 mods.**  
+**Melee Animation supports 797 weapons from 103 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -66,7 +66,12 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Melee Please (Continued)** | mlie.meleeplease | 11 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
 | **More Vanilla Textures** | tidal.morevanilla.textures | 2 | *Epicguru* |
+| **MorrowRim** | sirmashedpotato.morrowrim | 1 | *Epicguru* |
+| **MorrowRim - Bloodmoon** | sirmashedpotato.morrowrim.bloodmoon | 1 | *Epicguru* |
 | **MorrowRim - Just the Animals** | sirmashedpotato.morrowrim.justtheanimals | 1 | *Epicguru* |
+| **Moyo-From the depth** | nemonian.my | 7 | *Epicguru* |
+| **Moyo-Light in the Abyss** | aoba.redmoyo | 5 | *Epicguru* |
+| **Moyo-The cartel arrives** | nemonian.mycartel | 3 | *Epicguru* |
 | **NewRatkinPlus** | solaris.ratkinracemod | 15 | *Epicguru* |
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
 | **Pawnmorpher** | tachyonite.pawnmorpherpublic | 1 | *Epicguru* |

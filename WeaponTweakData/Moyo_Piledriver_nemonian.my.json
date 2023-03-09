@@ -1,0 +1,11 @@
+{
+  "TextureModID": "nemonian.my",
+  "ItemDefName": "Moyo_Piledriver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.240169331,
+  "OffY": 0.09133181,
+  "BladeStart": 0.09809756,
+  "BladeEnd": 0.734037936,
+  "MeleeWeaponType": 40
+}

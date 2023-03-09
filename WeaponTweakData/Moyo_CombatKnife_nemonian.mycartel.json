@@ -1,0 +1,20 @@
+{
+  "TextureModID": "nemonian.mycartel",
+  "ItemDefName": "Moyo_CombatKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.233403563,
+  "OffY": 0.0135304481,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "HandsMode": 1,
+  "BladeStart": 0.148837522,
+  "BladeEnd": 0.619027555,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.6420861,
+    "g": 0.00203714031,
+    "b": 0.764000058,
+    "a": 0.974666536
+  }
+}

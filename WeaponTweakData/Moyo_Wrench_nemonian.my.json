@@ -1,0 +1,11 @@
+{
+  "TextureModID": "nemonian.my",
+  "ItemDefName": "Moyo_Wrench",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.16236797,
+  "OffY": 0.0304437689,
+  "BladeStart": 0.05073996,
+  "BladeEnd": 0.5513743,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "aoba.redmoyo",
+  "ItemDefName": "RedMoyo_PlasmaHarpoon",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2773788,
+  "Rotation": 45.0,
+  "BladeStart": 0.233404115,
+  "BladeEnd": 0.9471459,
+  "MeleeWeaponType": 6
+}

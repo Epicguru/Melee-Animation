@@ -1,0 +1,12 @@
+{
+  "TextureModID": "nemonian.my",
+  "ItemDefName": "Moyo_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1758984,
+  "OffY": 0.0135304481,
+  "HandsMode": 1,
+  "BladeStart": 0.118393235,
+  "BladeEnd": 0.5209305,
+  "MeleeWeaponType": 48
+}
