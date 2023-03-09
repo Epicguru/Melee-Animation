@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 9 Mar 2023, 7:13 PM.`  
+`Updated 9 Mar 2023, 8:29 PM.`  
 
-**Melee Animation supports 748 weapons from 92 mods.**  
+**Melee Animation supports 780 weapons from 98 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -47,13 +47,17 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Core** | ludeon.rimworld | 17 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
+| **Gimmicks (Continued)** | mlie.gimmicks | 17 | *Epicguru* |
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
 | **Grimworld: Melee** | grimworld.melee | 6 | *Epicguru* |
 | **Heavy Melee Weapons (Continued)** | mlie.heavymeleeweapons | 11 | *Epicguru* |
 | **Industrial Melee Weaponry** | iexist.industrial.melee.weaponry | 12 | *Epicguru* |
 | **Industrialisation** | trasheddt.industrialisation | 4 | *Epicguru* |
+| **Kemetic Decorations** | sovereign.kemet | 1 | *Epicguru* |
 | **Kenshi Armory (1.4)** | biowreck.kenshiarmory | 12 | *Epicguru* |
+| **MakaiTech** | aranmaho.makai | 7 | *Epicguru* |
 | **Makeshift Melee Weapons** | detvisor.makeshiftweapons | 3 | *Epicguru* |
+| **Mechanite Plague** | chairheir.mechaniteplague | 3 | *Epicguru* |
 | **Medieval Madness: Tools of the Trade** | madman.toolsofthetrade | 44 | *Epicguru* |
 | **Medieval Overhaul** | dankpyon.medieval.overhaul | 68 | *Epicguru* |
 | **Medieval Overhaul: Arcane Archaeologists** | ogam.medievaloverhaul.arcanearchaeologists | 4 | *Epicguru* |
@@ -81,6 +85,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Rimsenal - Federation Faction Pack** | rimsenal.federation | 2 | *Epicguru* |
 | **Rimsenal - Feral Faction Pack** | rimsenal.feral | 4 | *Epicguru* |
 | **Rimwars:Vibro weapons** | sov.kotorone | 13 | *Epicguru* |
+| **Rimworld Ultratech** | conner.rimworldultratech | 2 | *Epicguru* |
 | **Royal Arsenal** | bucko.royalarsenal | 4 | *Epicguru* |
 | **Royalty** | ludeon.rimworld.royalty | 9 | *Epicguru* |
 | **Simply Melee Weapons (Continued)** | zal.simplymelee | 5 | *Epicguru* |
@@ -91,6 +96,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Swords (Continued)** | mlie.swords | 5 | *Epicguru* |
 | **Tastier Vanilla Melee** | al9000.tvmelee | 12 | *Epicguru* |
 | **The Joris Experience** | sarg.jorisexperience | 1 | *Epicguru* |
+| **Ultratech Weapons Plus** | side1iner.ultratechweaponsplusdev | 2 | *Epicguru* |
 | **Vali's Charged Arsenal** | vali.ca | 13 | *Epicguru* |
 | **Vali's Charged Arsenal - Eltex Series** | vali.caes | 7 | *Epicguru* |
 | **Vanilla Animals Expanded — Endangered** | vanillaexpanded.vaeendandext | 1 | *Epicguru* |

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Saw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.259898484,
+  "OffY": -0.00324893,
+  "Rotation": -38.63298,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "BladeStart": 0.08406121,
+  "BladeEnd": 0.759796858,
+  "MeleeWeaponType": 54
+}

@@ -64,6 +64,10 @@ namespace AM
                 var list = from r in t.Result orderby r.data.RequestCount descending select r;
                 foreach (var pair in list)
                 {
+                    int done = TweakDataManager.GetTweakDataFileCount(pair.modID);
+                    if (done >= pair.data.MissingWeaponCount)
+                        continue;
+
                     Log($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.");
                 }
             });

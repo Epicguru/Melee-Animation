@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_How_To",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.185178071,
+  "Rotation": 110.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeEnd": 0.434923768,
+  "MeleeWeaponType": 8
+}

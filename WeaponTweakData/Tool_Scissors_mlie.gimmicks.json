@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Scissors",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.227411151,
+  "OffY": -0.009746289,
+  "Rotation": -45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

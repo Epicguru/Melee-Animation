@@ -1,0 +1,15 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Whistle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.142944008,
+  "OffY": 0.0422336,
+  "Rotation": -35.0,
+  "ScaleX": 0.5,
+  "ScaleY": 0.5,
+  "HandsMode": 1,
+  "BladeStart": 0.119796954,
+  "BladeEnd": 0.4186801,
+  "MeleeWeaponType": 8
+}

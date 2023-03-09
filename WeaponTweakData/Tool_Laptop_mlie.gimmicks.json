@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Laptop",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.214415967,
+  "OffY": -0.06822355,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.08081228,
+  "BladeEnd": 0.542132,
+  "MeleeWeaponType": 8
+}

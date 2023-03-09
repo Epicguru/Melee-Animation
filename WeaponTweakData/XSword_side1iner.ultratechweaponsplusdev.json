@@ -1,0 +1,12 @@
+{
+  "TextureModID": "side1iner.ultratechweaponsplusdev",
+  "ItemDefName": "XSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.256649554,
+  "OffY": -0.009746293,
+  "Rotation": 30.0,
+  "BladeStart": 0.116548523,
+  "BladeEnd": 0.61360395,
+  "MeleeWeaponType": 54
+}

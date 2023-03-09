@@ -37,6 +37,19 @@ namespace AM.Tweaks
             return new FileInfo(fp);
         }
 
+        public static int GetTweakDataFileCount(string modID)
+        {
+            int c = 0;
+            string root = Core.ModContent.RootDir;
+            modID += ".json";
+            foreach (var fn in Directory.EnumerateFiles(Path.Combine(root, DATA_FOLDER_NAME), "*.json"))
+            {
+                if (fn.EndsWith(modID))
+                    c++;
+            }
+            return c;
+        }
+
         public static ItemTweakData TryGetTweak(ThingDef def) => TryGetTweak(def, null);
 
         public static ItemTweakData TryGetTweak(ThingDef def, ModContentPack textureSupplier)

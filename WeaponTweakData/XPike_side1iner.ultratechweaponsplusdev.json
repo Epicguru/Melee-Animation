@@ -1,0 +1,11 @@
+{
+  "TextureModID": "side1iner.ultratechweaponsplusdev",
+  "ItemDefName": "XPike",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2761427,
+  "Rotation": 20.0,
+  "BladeStart": 0.139289543,
+  "BladeEnd": 0.7143148,
+  "MeleeWeaponType": 36
+}
