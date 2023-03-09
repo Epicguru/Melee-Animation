@@ -1,0 +1,14 @@
+{
+  "TextureModID": "aranmaho.makai",
+  "ItemDefName": "Makai_Mica_Blade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.648694158,
+  "OffY": 0.02340689,
+  "Rotation": -45.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.4718914,
+  "BladeEnd": 1.83615482,
+  "MeleeWeaponType": 6
+}

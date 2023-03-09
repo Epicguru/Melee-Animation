@@ -1,0 +1,19 @@
+{
+  "TextureModID": "aranmaho.makai",
+  "ItemDefName": "Makai_Ouro_Berd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.718913257,
+  "Rotation": -45.0,
+  "ScaleX": 2.8,
+  "ScaleY": 2.8,
+  "BladeStart": 1.15402281,
+  "BladeEnd": 2.48150444,
+  "MeleeWeaponType": 7,
+  "TrailTint": {
+    "r": 0.987999856,
+    "g": 0.9157878,
+    "b": 0.3135251,
+    "a": 0.996
+  }
+}
