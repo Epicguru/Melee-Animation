@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ludeon.rimworld",
+  "ItemDefName": "WoodLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0754345953,
+  "OffY": -0.09528573,
+  "Rotation": 45.0,
+  "BladeStart": 0.0535982549,
+  "BladeEnd": 0.3831269,
+  "MeleeWeaponType": 8
+}

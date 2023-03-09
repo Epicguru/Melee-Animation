@@ -1,0 +1,11 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_Fork",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3230404,
+  "Rotation": 40.77834,
+  "BladeStart": 0.09311153,
+  "BladeEnd": 0.872208953,
+  "MeleeWeaponType": 5
+}

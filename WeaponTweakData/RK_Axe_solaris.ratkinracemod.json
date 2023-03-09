@@ -1,0 +1,12 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.224227786,
+  "OffY": -0.07220937,
+  "Rotation": 47.72757,
+  "BladeStart": 0.317339927,
+  "BladeEnd": 0.6631828,
+  "MeleeWeaponType": 2
+}

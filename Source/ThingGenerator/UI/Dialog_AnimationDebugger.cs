@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AM.Idle;
+﻿using AM.Idle;
 using EpicUtils;
 using RimWorld;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
@@ -13,25 +13,19 @@ namespace AM.UI
 {
     public class Dialog_AnimationDebugger : Window
     {
-
         public static bool IsInRehearsalMode => startRehearsal && IsStarterOpen;
-        public static float trailMinSpeed = 0f, trailMaxSpeed = 25f;
 
         private static bool IsStarterOpen => Mathf.Abs(lastOpenStarterTime - Time.realtimeSinceStartup) < 0.25f;
         private static MaterialPropertyBlock mpb;
-        private static readonly Material mat = MaterialPool.MatFrom(GenDraw.LineTexPath, ShaderDatabase.Transparent, Color.white);
+        private static Material mat;
         private static AnimRenderer selectedRenderer;
         private static AnimPartData selectedPart;
-        private static SweepPointCollection selectedSweepPath;
-        private static float currentUp, currentDown;
         private static Pawn[] startPawns = new Pawn[8];
         private static AnimDef startDef;
         private static bool startMX, startMY;
         private static bool startRehearsal = true;
         private static LocalTargetInfo startTarget = LocalTargetInfo.Invalid;
         private static float lastOpenStarterTime;
-        private static int trailSegments = 3;
-        private static float trailTime = 0.1f;
         private static ExecutionOutcome executionOutcome = ExecutionOutcome.Kill;
 
         [DebugAction("Melee Animation", "Open Debugger", actionType = DebugActionType.Action)]
@@ -84,6 +78,7 @@ namespace AM.UI
             if (mpb == null)
             {
                 mpb = new MaterialPropertyBlock();
+                mat ??= MaterialPool.MatFrom(GenDraw.LineTexPath, ShaderDatabase.Transparent, Color.white);
                 mpb.SetTexture("_MainTex", mat.mainTexture);
             }
         }
@@ -659,7 +654,7 @@ namespace AM.UI
             if (AnimationManager.IsDoingMultithreadedSeek)
             {
                 ui.Label("Multithreaded matrix calculation is active:");
-                ui.Label($" - Multithreaded seek time is {AnimationManager.MultithreadedSeekTimeMS:F2} on {AnimationManager.MultithreadedThreadsUsed} threads.");
+                ui.Label($" - Multithreaded seek time is {AnimationManager.MultithreadedSeekTimeMS:F2} MS.");
             }
 
             foreach (var manager in allManagers)

@@ -1,7 +1,6 @@
-﻿using RimWorld;
+﻿using AM.UI;
+using RimWorld;
 using System;
-using AM;
-using AM.UI;
 using UnityEngine;
 using Verse;
 
@@ -32,17 +31,18 @@ namespace AM.Events.Workers
             if (pawn == null || pawn.Destroyed || pawn.Dead || killer == null)
                 return;
 
-            (string outcome, Color color) = animator.ExecutionOutcome switch
+            if (Core.Settings.ShowExecutionMotes)
             {
-                ExecutionOutcome.Damage => ("Injured", Color.yellow),
-                ExecutionOutcome.Down => ("Downed", Color.Lerp(Color.yellow, Color.red, 0.5f)),
-                ExecutionOutcome.Kill => ("Killed", Color.red),
-                _ => (null, default)
-            };
-            if (outcome != null)
-                MoteMaker.ThrowText(pawn.DrawPos + new Vector3(0, 0, 0.6f), pawn.Map, $"Execution Outcome: {outcome}", color);
-
-            //Core.Log($"Execution outcome is {animator.ExecutionOutcome}");
+                (string outcome, Color color) = animator.ExecutionOutcome switch
+                {
+                    ExecutionOutcome.Damage => ("Injured", Color.yellow),
+                    ExecutionOutcome.Down => ("Downed", Color.Lerp(Color.yellow, Color.magenta, 0.35f)),
+                    ExecutionOutcome.Kill => ("Killed", Color.Lerp(Color.white, Color.red, 0.7f)),
+                    _ => (null, default)
+                };
+                if (outcome != null)
+                    MoteMaker.ThrowText(pawn.DrawPos + new Vector3(0, 0, 0.6f), pawn.Map, $"Execution Outcome: {outcome}", color);
+            }
 
             switch (animator.ExecutionOutcome)
             {
@@ -59,13 +59,13 @@ namespace AM.Events.Workers
                     break;
 
                 case ExecutionOutcome.Down:
-                    Down(i, pawn, killer, e);
                     animator.Destroy();
+                    Down(i, pawn, killer, e);
                     break;
 
                 case ExecutionOutcome.Kill:
-                    Kill(i, pawn, killer, e);
                     animator.Destroy();
+                    Kill(i, pawn, killer, e);
                     return;
 
                 default:

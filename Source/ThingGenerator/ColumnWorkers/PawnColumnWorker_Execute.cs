@@ -13,7 +13,7 @@ public class PawnColumnWorker_Execute : PawnColumnWorker_Base
     {
         var tip = data.AutoExecute switch
         {
-            AutoOption.Default => $"Auto-Execute is default, which means {(Core.Settings.AutoExecute ? "Enabled" : "Disabled")} due to mod settings",
+            AutoOption.Default => $"Auto-Execute is set to default, which means {(Core.Settings.AutoExecute ? "Enabled" : "Disabled")} due to mod settings",
             AutoOption.Enabled => "Auto-Execute is Enabled.",
             AutoOption.Disabled => "Auto-Execute is Disabled.",
             _ => throw new ArgumentOutOfRangeException()

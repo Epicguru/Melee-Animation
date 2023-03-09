@@ -1,0 +1,14 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_LightLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5016621,
+  "OffY": -0.0152016683,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.07790986,
+  "BladeEnd": 1.37767231,
+  "MeleeWeaponType": 5
+}

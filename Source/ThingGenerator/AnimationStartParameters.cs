@@ -87,7 +87,7 @@ namespace AM
                 RootTransform = RootTransform,
                 MirrorHorizontal = FlipX,
                 MirrorVertical = FlipY,
-                ExecutionOutcome = ExecutionOutcome,
+                ExecutionOutcome = ExecutionOutcome
             };
 
             foreach (var pawn in EnumeratePawns())

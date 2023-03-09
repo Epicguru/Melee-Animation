@@ -6,6 +6,7 @@ using AM.Idle;
 using AM.Patches;
 using AM.PawnData;
 using AM.UI;
+using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
@@ -20,6 +21,7 @@ namespace AM
         public static ulong FrameCounter;
 
         [TweakValue("Melee Animation")]
+        [UsedImplicitly]
         private static bool drawTextureExtractor;
 
         private string texPath;
@@ -47,7 +49,6 @@ namespace AM
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 pawnMeleeData.Clear();
-                Core.Log($"Loading {allMeleeData.Count} pawn melee data.");
                 foreach (var data in allMeleeData)
                 {
                     if (data.ShouldSave())
@@ -79,7 +80,6 @@ namespace AM
             IdleControllerComp.TotalActive = 0;
 
             base.GameComponentTick();
-
 
             AnimRenderer.TickAll();
             AnimRenderer.RemoveDestroyed(null);

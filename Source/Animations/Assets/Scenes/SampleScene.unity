@@ -977,7 +977,7 @@ MonoBehaviour:
   FlipX: 0
   FlipY: 0
   FrameIndex: 0
-  SplitDrawPivot: {fileID: 0}
+  SplitDrawPivot: {fileID: 204324823}
   SplitDrawMode: 0
 --- !u!1 &180641384
 GameObject:
@@ -1168,6 +1168,68 @@ Transform:
   m_Father: {fileID: 890458934}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &204324821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 204324822}
+  - component: {fileID: 204324823}
+  m_Layer: 0
+  m_Name: Cutoff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &204324822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204324821}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.054, y: 0, z: -0.104}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1638439744}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &204324823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204324821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac72458fde51c546a95b850d16b9030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomName: 
+  TexturePath: 
+  DoNotIncludeTexture: 1
+  IdleOffset: {x: 0, y: 0}
+  IdleRotation: 0
+  IdleScale: {x: 1, y: 1}
+  IdleFlipX: 0
+  IdleFlipY: 0
+  TransparentByDefault: 0
+  Tint: {r: 1, g: 1, b: 1, a: 1}
+  DataA: 0
+  DataB: 0
+  DataC: 0
+  FlipX: 0
+  FlipY: 0
+  FrameIndex: 0
+  SplitDrawPivot: {fileID: 0}
+  SplitDrawMode: 0
 --- !u!1 &245629384
 GameObject:
   m_ObjectHideFlags: 0
@@ -4164,7 +4226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &890458932
 Animator:
   serializedVersion: 4
@@ -4767,7 +4829,7 @@ MonoBehaviour:
   FlipX: 0
   FlipY: 0
   FrameIndex: 0
-  SplitDrawPivot: {fileID: 0}
+  SplitDrawPivot: {fileID: 204324823}
   SplitDrawMode: 0
 --- !u!1 &980280774
 GameObject:
@@ -7999,6 +8061,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2140985132}
+  - {fileID: 204324822}
   m_Father: {fileID: 890458934}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9087,7 +9150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: 1a6f7569afbdf5b43b03fb1af0afbb30, type: 2}
+  Clip: {fileID: 7400000, guid: f218eae606a8dc54d9071bb894e18021, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
