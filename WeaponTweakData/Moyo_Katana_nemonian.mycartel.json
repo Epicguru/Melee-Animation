@@ -1,0 +1,18 @@
+{
+  "TextureModID": "nemonian.mycartel",
+  "ItemDefName": "Moyo_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3653278,
+  "OffY": 0.05750519,
+  "Rotation": 45.0,
+  "BladeStart": 0.1961946,
+  "BladeEnd": 1.03847766,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.6420861,
+    "g": 0.00203714031,
+    "b": 0.764000058,
+    "a": 0.974666536
+  }
+}

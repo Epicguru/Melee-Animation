@@ -61,7 +61,7 @@ namespace AM
                     return;
                 }
 
-                var list = from r in t.Result orderby r.data.RequestCount descending select r;
+                var list = (from r in t.Result orderby r.data.RequestCount descending select r).ToList();
                 foreach (var pair in list)
                 {
                     int done = TweakDataManager.GetTweakDataFileCount(pair.modID);

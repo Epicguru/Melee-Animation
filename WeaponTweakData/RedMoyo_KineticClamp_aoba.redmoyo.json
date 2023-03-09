@@ -1,0 +1,14 @@
+{
+  "TextureModID": "aoba.redmoyo",
+  "ItemDefName": "RedMoyo_KineticClamp",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.162367433,
+  "OffY": -0.0202956609,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.108245142,
+  "BladeEnd": 0.6156447,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sirmashedpotato.morrowrim.bloodmoon",
+  "ItemDefName": "MorrowRim_MeleeWeapon_HuntersSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2807612,
+  "Rotation": 45.0,
+  "BladeStart": 0.172516063,
+  "BladeEnd": 0.9336154,
+  "MeleeWeaponType": 12
+}

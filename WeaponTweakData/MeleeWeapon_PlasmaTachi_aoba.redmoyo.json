@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aoba.redmoyo",
+  "ItemDefName": "MeleeWeapon_PlasmaTachi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.453276753,
+  "OffY": -0.06088754,
+  "Rotation": 50.0,
+  "BladeStart": 0.175898418,
+  "BladeEnd": 1.01479912,
+  "MeleeWeaponType": 6
+}
