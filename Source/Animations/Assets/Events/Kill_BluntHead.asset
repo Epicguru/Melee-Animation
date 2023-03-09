@@ -17,6 +17,6 @@ MonoBehaviour:
   VictimIndex: 1
   TargetBodyPart: Head
   DamageDef: Blunt
-  BattleLogDef: AAM_Execution_Blunt
+  BattleLogDef: AM_Execution_Blunt
   OnlyIfNotInterrupted: 1
   PreventDamageMote: 1

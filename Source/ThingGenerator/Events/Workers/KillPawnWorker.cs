@@ -1,11 +1,10 @@
-﻿using AAM.Patches;
-using AAM.UI;
+﻿using AM.UI;
 using RimWorld;
 using System;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public class KillPawnWorker : EventWorkerBase
     {
@@ -25,24 +24,25 @@ namespace AAM.Events.Workers
             var e = i.Event as KillPawnEvent;
             if (animator.ExecutionOutcome == ExecutionOutcome.Nothing)
                 return;
-            
+
             Pawn killer = i.GetPawnFromIndex(e.KillerIndex);
             Pawn pawn = i.GetPawnFromIndex(e.VictimIndex);
 
             if (pawn == null || pawn.Destroyed || pawn.Dead || killer == null)
                 return;
 
-            (string outcome, Color color) = animator.ExecutionOutcome switch
+            if (Core.Settings.ShowExecutionMotes)
             {
-                ExecutionOutcome.Damage => ("Injured", Color.yellow),
-                ExecutionOutcome.Down => ("Downed", Color.Lerp(Color.yellow, Color.red, 0.5f)),
-                ExecutionOutcome.Kill => ("Killed", Color.red),
-                _ => (null, default)
-            };
-            if (outcome != null)
-                MoteMaker.ThrowText(pawn.DrawPos + new Vector3(0, 0, 0.6f), pawn.Map, $"Execution Outcome: {outcome}", color);
-
-            //Core.Log($"Execution outcome is {animator.ExecutionOutcome}");
+                (string outcome, Color color) = animator.ExecutionOutcome switch
+                {
+                    ExecutionOutcome.Damage => ("Injured", Color.yellow),
+                    ExecutionOutcome.Down => ("Downed", Color.Lerp(Color.yellow, Color.magenta, 0.35f)),
+                    ExecutionOutcome.Kill => ("Killed", Color.Lerp(Color.white, Color.red, 0.7f)),
+                    _ => (null, default)
+                };
+                if (outcome != null)
+                    MoteMaker.ThrowText(pawn.DrawPos + new Vector3(0, 0, 0.6f), pawn.Map, $"Execution Outcome: {outcome}", color);
+            }
 
             switch (animator.ExecutionOutcome)
             {
@@ -59,13 +59,13 @@ namespace AAM.Events.Workers
                     break;
 
                 case ExecutionOutcome.Down:
-                    Down(i, pawn, killer, e);
                     animator.Destroy();
+                    Down(i, pawn, killer, e);
                     break;
 
                 case ExecutionOutcome.Kill:
-                    Kill(i, pawn, killer, e);
                     animator.Destroy();
+                    Kill(i, pawn, killer, e);
                     return;
 
                 default:
@@ -84,7 +84,7 @@ namespace AAM.Events.Workers
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
-                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AM_DefOf.AM_Execution_Generic),
                 Weapon = killer.GetFirstMeleeWeapon(),
                 TargetDamageAmount = 20 // TODO pull from animation data, optional args or something along those lines.
             };
@@ -98,7 +98,7 @@ namespace AAM.Events.Workers
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
-                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AM_DefOf.AM_Execution_Generic),
                 Weapon = killer.GetFirstMeleeWeapon()
             };
 
@@ -111,7 +111,7 @@ namespace AAM.Events.Workers
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
-                LogGenDef = @event.BattleLogDef.AsDefOfType(AAM_DefOf.AAM_Execution_Generic),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AM_DefOf.AM_Execution_Generic),
                 Weapon = killer.GetFirstMeleeWeapon()
             };
 

@@ -3,7 +3,7 @@ using System.Linq;
 using Verse;
 using Verse.AI;
 
-namespace AAM.Jobs;
+namespace AM.Jobs;
 
 public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
 {

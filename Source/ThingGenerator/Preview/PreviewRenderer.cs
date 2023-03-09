@@ -2,7 +2,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace AAM.Preview;
+namespace AM.Preview;
 
 public class PreviewRenderer : IDisposable
 {

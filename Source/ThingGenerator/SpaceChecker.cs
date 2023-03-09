@@ -1,8 +1,8 @@
-﻿using RimWorld;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
+using RimWorld;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public static class SpaceChecker
     {

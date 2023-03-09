@@ -1,9 +1,10 @@
-﻿using HarmonyLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AM.AMSettings;
+using HarmonyLib;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Patches
+namespace AM.Patches
 {
     [HarmonyPatch(typeof(Corpse), nameof(Corpse.DrawAt))]
     public static class Patch_Corpse_DrawAt
@@ -32,7 +33,7 @@ namespace AAM.Patches
 
     public class CorpseInterpolate
     {
-        [TweakValue("AAM", 0.01f, 100f)]
+        [TweakValue("AM", 0.01f, 100f)]
         public static float CorpseLerpSpeed = 5;
 
         public Vector3 TargetPosition;

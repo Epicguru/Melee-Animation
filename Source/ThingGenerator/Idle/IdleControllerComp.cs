@@ -1,14 +1,15 @@
-﻿using AAM.Processing;
-using AAM.Tweaks;
+﻿using System;
+using System.Collections.Generic;
+using AM.AMSettings;
+using AM.Processing;
+using AM.Tweaks;
 using JetBrains.Annotations;
 using RimWorld;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Verse;
-using Patch = AAM.Patches.Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget;
+using Patch = AM.Patches.Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget;
 
-namespace AAM.Idle;
+namespace AM.Idle;
 
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp
@@ -26,23 +27,32 @@ public class IdleControllerComp : ThingComp
     private AnimDef lastAttack;
     private AnimDef lastFlavour;
     private uint ticksMoving;
+    private int drawTick;
 
     public void PreDraw()
     {
         if (parent is not Pawn pawn || CurrentAnimation == null)
             return;
 
-        // If the animation is about to draw but it was just destroyed (by the animation ending)
-        // the immediately tick to get a new animation running before the frame is drawn.
-        // This prevents an annoying flicker.
-        if (CurrentAnimation.IsDestroyed)
+        try
         {
-            if (ShouldBeActive(out var weapon))
-                TickActive(weapon);
-        }
+            // If the animation is about to draw but it was just destroyed (by the animation ending)
+            // the immediately tick to get a new animation running before the frame is drawn.
+            // This prevents an annoying flicker.
+            if (CurrentAnimation.IsDestroyed)
+            {
+                if (ShouldBeActive(out var weapon))
+                    TickActive(weapon);
+            }
 
-        // Update animator position to match pawn.
-        CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
+            // Update animator position to match pawn.
+            CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
+            drawTick = Find.TickManager.TicksAbs;
+        }
+        catch (Exception e)
+        {
+            Core.Error("PreDraw exception:", e);
+        }
     }
 
     private bool ShouldBeActive(out Thing weapon)
@@ -146,10 +156,17 @@ public class IdleControllerComp : ThingComp
         // Mirror and loop:
         if (CurrentAnimation == null)
             return;
+
         bool shouldLoop = CurrentAnimation.Def.idleType.IsIdle(false) || CurrentAnimation.Def.idleType.IsMove();
         bool shouldBeMirrored = pawn.Rotation == Rot4.West || pawn.Rotation == Rot4.North;
         CurrentAnimation.Loop = shouldLoop;
         CurrentAnimation.MirrorHorizontal = shouldBeMirrored;
+
+        // Normally animation root transform is set from the draw method.
+        // However when pawns are culled, the draw method is not called so the animation
+        // position can get out of sync. These lines ensure that the matrix is updated if the draw hasn't be called due to culling.
+        if (Find.TickManager.TicksAbs - drawTick >= 2)
+            CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
     }
 
     private void DoAttackPausing()
@@ -327,7 +344,12 @@ public class IdleControllerComp : ThingComp
 
         // Attempt to get an attack animation for current weapon and stance.
         var rot = pawn.Rotation;
-        var anim = Random(tweak.GetAttackAnimations(rot), lastAttack);
+        bool didHit = target != null && Patch.lastTarget == target;
+
+        // Get list of attack animations.
+        var anims = tweak.GetAttackAnimations(rot);
+        var anim = Random(anims, lastAttack);
+
         lastAttack = anim;
         if (anim == null)
         {
@@ -335,8 +357,8 @@ public class IdleControllerComp : ThingComp
             return;
         }
 
-        // Adjust animation speed if the attack cooldown is very low.
-        float cooldown = verbUsed?.verbProps.AdjustedCooldownTicks(verbUsed, pawn).TicksToSeconds() ?? 100f;
+        // TODO: Adjust animation speed if the attack cooldown is very low.
+        //float cooldown = verbUsed?.verbProps.AdjustedCooldownTicks(verbUsed, pawn).TicksToSeconds() ?? 100f;
         bool flipX = rot == Rot4.West;
 
         isPausing = false;
@@ -348,7 +370,7 @@ public class IdleControllerComp : ThingComp
             pauseAngle = angle;
 
             // Only if we actually hit:
-            if (Patch.lastTarget == target && Core.Settings.AttackPauseDuration != AttackPauseIntensity.Disabled)
+            if (didHit && Core.Settings.AttackPauseDuration != AttackPauseIntensity.Disabled)
                 pauseTicks = (int)Core.Settings.AttackPauseDuration;
         }
 

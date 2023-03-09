@@ -5,45 +5,35 @@ using System.Reflection;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     [StaticConstructorOnStartup]
     public static class Content
     {
-        [Content("AAM/Rope/Rope")]
+        [Content("AM/Rope/Rope")]
         public static Texture2D Rope;
-        [Content("AAM/Rope/End")]
+        [Content("AM/Rope/End")]
         public static Texture2D RopeEnd;
-        [Content("AAM/Rope/Coiled")]
+        [Content("AM/Rope/Coiled")]
         public static Texture2D RopeCoil;
-        [Content("AAM/BoundPawns/Male")]
+        [Content("AM/BoundPawns/Male")]
         public static Texture2D BoundMaleRope;
-        [Content("AAM/Shadow")]
+        [Content("AM/Shadow")]
         public static Texture2D Shadow;
 
         // UI
-        [Content("AAM/UI/IconBG")]
-        public static Texture2D IconBG;
-        [Content("AAM/UI/IconLongBG")]
-        public static Texture2D IconLongBG;
-        [Content("AAM/UI/IconExecute")]
+        [Content("AM/UI/IconExecute")]
         public static Texture2D IconExecute;
-        [Content("AAM/UI/IconGrapple")]
+        [Content("AM/UI/IconGrapple")]
         public static Texture2D IconGrapple;
-        [Content("AAM/UI/IconInfo")]
-        public static Texture2D IconInfo;
-        [Content("AAM/UI/IconSkill")]
-        public static Texture2D IconSkill;
-        [Content("AAM/UI/ExtraGUIWalk")]
+        [Content("AM/UI/ExtraGUIWalk")]
         public static Texture2D ExtraGuiWalk;
-        [Content("AAM/UI/ExtraGUIForce")]
+        [Content("AM/UI/ExtraGUIForce")]
         public static Texture2D ExtraGuiForce;
-        [Content("AAM/UI/ExtraGUIWhy")]
+        [Content("AM/UI/ExtraGUIWhy")]
         public static Texture2D ExtraGuiWhy;
-        [Content("AAM/UI/BG/Sketch1")]
-        public static Texture2D BGSketch1;
-        [Content("AAM/UI/Loading")]
-        public static Texture2D Loading;
+        [Content("AM/UI/BG/Combined")]
+        public static Texture2D BGCombined;
 
         [BundleContent("Materials/CutoffCustom.mat")]   
         public static Material CustomCutoffMaterial;
@@ -143,8 +133,6 @@ namespace AAM
                     LassoDefs.Add(ap);
                 }
             }
-
-            Core.Log($"Found {LassoDefs.Count} lassos!");
         }
     }
 

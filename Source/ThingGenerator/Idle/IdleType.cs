@@ -1,4 +1,4 @@
-﻿namespace AAM.Idle;
+﻿namespace AM.Idle;
 
 public enum IdleType
 {

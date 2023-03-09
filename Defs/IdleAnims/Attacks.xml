@@ -1,180 +1,208 @@
 <Defs>
 
   <!-- Bases -->
-  <AAM.AnimDef Name="AnimAttackHorizontal" Abstract="True">
+  <AM.AnimDef Name="AnimAttackHorizontal" Abstract="True">
     <type>Idle</type>
     <pawnCount>1</pawnCount>
     <idleType>AttackHorizontal</idleType>
-  </AAM.AnimDef>
-  <AAM.AnimDef Name="AnimAttackSouth" Abstract="True">
+  </AM.AnimDef>
+  <AM.AnimDef Name="AnimAttackSouth" Abstract="True">
     <type>Idle</type>
     <pawnCount>1</pawnCount>
     <idleType>AttackSouth</idleType>
-  </AAM.AnimDef>
-  <AAM.AnimDef Name="AnimAttackNorth" Abstract="True">
+  </AM.AnimDef>
+  <AM.AnimDef Name="AnimAttackNorth" Abstract="True">
     <type>Idle</type>
     <pawnCount>1</pawnCount>
     <idleType>AttackNorth</idleType>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
   <!-- Tiny -->
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_TinyAttackHor1</defName>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_TinyAttackHor1</defName>
     <data>Idle_Tiny_StabHorizontal.json</data>
     <!-- This is a stab animation: -->
-    <weaponFilter Class="AAM.Reqs.And">
+    <weaponFilter Class="AM.Reqs.And">
       <subs>
-        <li Class="AAM.Reqs.AnySize"><size>Tiny</size></li>
-        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+        <li Class="AM.Reqs.AnySize"><size>Tiny</size></li>
+        <li Class="AM.Reqs.AnyCategory"><category>Stab</category></li>
       </subs>
     </weaponFilter>
     <pointAtTarget>true</pointAtTarget>
     <returnToIdleStart>33</returnToIdleStart>
     <returnToIdleEnd>68</returnToIdleEnd>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_TinyAttackHor2</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_TinyAttackHor2</defName>
     <data>Idle_TinySlashHorizontal.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Tiny</size>
     </weaponFilter>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_TinyAttackHor3</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_TinyAttackHor3</defName>
     <data>Idle_Tiny_StabAltHorizontal.json</data>
     <!-- This is a stab animation: -->
-    <weaponFilter Class="AAM.Reqs.And">
+    <weaponFilter Class="AM.Reqs.And">
       <subs>
-        <li Class="AAM.Reqs.AnySize"><size>Tiny</size></li>
-        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+        <li Class="AM.Reqs.AnySize"><size>Tiny</size></li>
+        <li Class="AM.Reqs.AnyCategory"><category>Stab</category></li>
       </subs>
     </weaponFilter>
     <pointAtTarget>true</pointAtTarget>
     <returnToIdleStart>31</returnToIdleStart>
     <returnToIdleEnd>60</returnToIdleEnd>
     <relativeProbability>0.6</relativeProbability> <!-- Less common that others -->
-  </AAM.AnimDef>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackNorth">
+    <defName>AM_Idle_TinyAttackNorth1</defName>
+    <data>Idle_Tiny_SlashNorth.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackSouth">
+    <defName>AM_Idle_TinyAttackSouth1</defName>
+    <data>Idle_Tiny_SlashSouth.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackSouth">
+    <defName>AM_Idle_TinyAttackSouth2</defName>
+    <data>Idle_Tiny_StabSouth1.json</data>
+    <!-- This is a stab animation: -->
+    <weaponFilter Class="AM.Reqs.And">
+      <subs>
+        <li Class="AM.Reqs.AnySize"><size>Tiny</size></li>
+        <li Class="AM.Reqs.AnyCategory"><category>Stab</category></li>
+      </subs>
+    </weaponFilter>
+    <pointAtTarget>true</pointAtTarget>
+    <returnToIdleStart>20</returnToIdleStart>
+    <returnToIdleEnd>50</returnToIdleEnd>
+  </AM.AnimDef>
 
   <!-- Medium -->
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_MediumAttackHor1</defName>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_MediumAttackHor1</defName>
     <data>Idle_Medium_SlashHorizontal1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_MediumAttackHor2</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_MediumAttackHor2</defName>
     <data>Idle_Medium_SlashHorizontal2.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_MediumAttackHor3</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_MediumAttackHor3</defName>
     <data>Idle_Medium_StabHorizontal1.json</data>
     <!-- This is a stab animation: -->
-    <weaponFilter Class="AAM.Reqs.And">
+    <weaponFilter Class="AM.Reqs.And">
       <subs>
-        <li Class="AAM.Reqs.AnySize"><size>Medium</size></li>
-        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+        <li Class="AM.Reqs.AnySize"><size>Medium</size></li>
+        <li Class="AM.Reqs.AnyCategory"><category>Stab</category></li>
       </subs>
     </weaponFilter>
     <pointAtTarget>true</pointAtTarget>
     <returnToIdleStart>32</returnToIdleStart>
     <returnToIdleEnd>98</returnToIdleEnd>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimAttackNorth">
-    <defName>AAM_Idle_MediumAttackNorth1</defName>
+  <AM.AnimDef ParentName="AnimAttackNorth">
+    <defName>AM_Idle_MediumAttackNorth1</defName>
     <data>Idle_Medium_SlashNorth1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimAttackNorth">
-    <defName>AAM_Idle_MediumAttackNorth2</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackNorth">
+    <defName>AM_Idle_MediumAttackNorth2</defName>
     <data>Idle_Medium_StabNorth.json</data>
     <!-- This is a stab animation: -->
-    <weaponFilter Class="AAM.Reqs.And">
+    <weaponFilter Class="AM.Reqs.And">
       <subs>
-        <li Class="AAM.Reqs.AnySize"><size>Medium</size></li>
-        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+        <li Class="AM.Reqs.AnySize"><size>Medium</size></li>
+        <li Class="AM.Reqs.AnyCategory"><category>Stab</category></li>
       </subs>
     </weaponFilter>
     <pointAtTarget>true</pointAtTarget>
     <returnToIdleStart>27</returnToIdleStart>
     <returnToIdleEnd>54</returnToIdleEnd>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimAttackSouth">
-    <defName>AAM_Idle_MediumAttackSouth1</defName>
+  <AM.AnimDef ParentName="AnimAttackSouth">
+    <defName>AM_Idle_MediumAttackSouth1</defName>
     <data>Idle_Medium_SlashSouth1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
-  </AAM.AnimDef>
-  <AAM.AnimDef ParentName="AnimAttackSouth">
-    <defName>AAM_Idle_MediumAttackSouth2</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimAttackSouth">
+    <defName>AM_Idle_MediumAttackSouth2</defName>
     <data>Idle_Medium_StabSouth.json</data>
     <!-- This is a stab animation: -->
-    <weaponFilter Class="AAM.Reqs.And">
+    <weaponFilter Class="AM.Reqs.And">
       <subs>
-        <li Class="AAM.Reqs.AnySize"><size>Medium</size></li>
-        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+        <li Class="AM.Reqs.AnySize"><size>Medium</size></li>
+        <li Class="AM.Reqs.AnyCategory"><category>Stab</category></li>
       </subs>
     </weaponFilter>
     <pointAtTarget>true</pointAtTarget>
     <returnToIdleStart>28</returnToIdleStart>
     <returnToIdleEnd>62</returnToIdleEnd>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
   <!-- Colossal -->
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_ColossalAttackHor1</defName>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_ColossalAttackHor1</defName>
     <data>Idle_Colossal_SlashHorizontal1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Colossal</size>
     </weaponFilter>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_ColossalAttackHor2</defName>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_ColossalAttackHor2</defName>
     <data>Idle_Colossal_SlashHorizontal2.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Colossal</size>
     </weaponFilter>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimAttackHorizontal">
-    <defName>AAM_Idle_ColossalAttackHor3</defName>
+  <AM.AnimDef ParentName="AnimAttackHorizontal">
+    <defName>AM_Idle_ColossalAttackHor3</defName>
     <data>Idle_Colossal_StabHorizontal1.json</data>
     <!-- This is a stab animation: -->
-    <weaponFilter Class="AAM.Reqs.And">
+    <weaponFilter Class="AM.Reqs.And">
       <subs>
-        <li Class="AAM.Reqs.AnySize"><size>Colossal</size></li>
-        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+        <li Class="AM.Reqs.AnySize"><size>Colossal</size></li>
+        <li Class="AM.Reqs.AnyCategory"><category>Stab</category></li>
       </subs>
     </weaponFilter>
     <pointAtTarget>true</pointAtTarget>
     <returnToIdleStart>25</returnToIdleStart>
     <returnToIdleEnd>63</returnToIdleEnd>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimAttackNorth">
-    <defName>AAM_Idle_ColossalAttackNorth1</defName>
+  <AM.AnimDef ParentName="AnimAttackNorth">
+    <defName>AM_Idle_ColossalAttackNorth1</defName>
     <data>Idle_Colossal_SlashNorth1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Colossal</size>
     </weaponFilter>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
-  <AAM.AnimDef ParentName="AnimAttackSouth">
-    <defName>AAM_Idle_ColossalAttackSouth1</defName>
+  <AM.AnimDef ParentName="AnimAttackSouth">
+    <defName>AM_Idle_ColossalAttackSouth1</defName>
     <data>Idle_Colossal_SlashSouth1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Colossal</size>
     </weaponFilter>
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
 </Defs>

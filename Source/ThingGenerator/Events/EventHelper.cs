@@ -1,19 +1,18 @@
-﻿using AAM.Events.Workers;
+﻿using AM.Events.Workers;
 
-namespace AAM.Events
+namespace AM.Events;
+
+public static class EventHelper
 {
-    public static class EventHelper
+    public static void Handle(EventBase e, AnimRenderer animator)
     {
-        public static void Handle(EventBase e, AnimRenderer animator)
+        var worker = e.GetWorker<EventWorkerBase>();
+        if (worker == null)
         {
-            var worker = e.GetWorker<EventWorkerBase>();
-            if (worker == null)
-            {
-                Core.Warn($"There is no worker to handle event '{e.EventID}'");
-                return;
-            }
-
-            worker.Run(new AnimEventInput(e, animator));
+            Core.Warn($"There is no worker to handle event '{e.EventID}'");
+            return;
         }
+
+        worker.Run(new AnimEventInput(e, animator));
     }
 }

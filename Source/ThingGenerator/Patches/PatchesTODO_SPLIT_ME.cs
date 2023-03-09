@@ -1,9 +1,9 @@
-﻿using AAM.Grappling;
+﻿using AM.Grappling;
 using HarmonyLib;
 using RimWorld;
 using Verse;
 
-namespace AAM.Patches
+namespace AM.Patches
 {
     public static class PatchMaster
     {
@@ -79,7 +79,7 @@ namespace AAM.Patches
                 }
 
                 var job = ___pawn.CurJob;
-                if (job?.def == AAM_DefOf.AAM_GrapplePawn)
+                if (job?.def == AM_DefOf.AM_GrapplePawn)
                 {
                     JobDriver_GrapplePawn.DrawEnsnaringRope(___pawn, job);
                 }

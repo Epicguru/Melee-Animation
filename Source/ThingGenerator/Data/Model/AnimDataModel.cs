@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AAM.Data.Model;
+namespace AM.Data.Model;
 
 /// <summary>
 /// Represents the intermediate (json) data of an animation,

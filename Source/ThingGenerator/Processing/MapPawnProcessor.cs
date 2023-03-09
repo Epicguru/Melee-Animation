@@ -1,18 +1,18 @@
-﻿using AAM.Grappling;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AM.Grappling;
+using RimWorld;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 
-namespace AAM.Processing;
+namespace AM.Processing;
 
 public class MapPawnProcessor : IDisposable
 {
@@ -147,8 +147,9 @@ public class MapPawnProcessor : IDisposable
                 if (worked)
                     args.MainPawn.GetMeleeData().TimeSinceExecuted = 0;
             }
-            else
+            else if (pair.args.Animation != null)
             {
+                // Lasso + execution:
                 var finalArgs = args with
                 {
                     ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
@@ -164,7 +165,19 @@ public class MapPawnProcessor : IDisposable
                 // Set lasso cooldown. Execution cooldown is set buy the job driver.
                 args.MainPawn.GetMeleeData().TimeSinceGrappled = 0;
             }
-            
+            else
+            {
+                // Just lasso:
+                // Lasso.
+                if (!JobDriver_GrapplePawn.GiveJob(args.MainPawn, args.SecondPawn, pair.lassoToHere.Value, false, default))
+                {
+                    Core.Error($"Failed to give grapple job to {args.MainPawn}.");
+                    return;
+                }
+
+                // Set lasso cooldown. Execution cooldown is set buy the job driver.
+                args.MainPawn.GetMeleeData().TimeSinceGrappled = 0;
+            }
         }
 
         Diagnostics.ThreadsUsed = slices.Count;
@@ -241,8 +254,8 @@ public class MapPawnProcessor : IDisposable
         if (target.Thing is not Pawn targetPawn)
             return false;
 
-        // Target cannot be dead or downed.
-        if (targetPawn.Dead || targetPawn.Downed || targetPawn.IsInAnimation())
+        // Target cannot be dead or downed, or being targeted by a lasso.
+        if (targetPawn.Dead || targetPawn.Downed || targetPawn.IsInAnimation() || GrabUtility.IsBeingTargetedForGrapple(targetPawn))
             return false;
 
         return true;
@@ -264,6 +277,7 @@ public class MapPawnProcessor : IDisposable
                 // Make a list of enemies.
                 var targetsTimer = new RefTimer();
                 GetPotentialTargets(taskData.Targets, pawn, map.attackTargetsCache, map);
+                taskData.Targets.RemoveAll(t => !TargetFilter(t));
                 diag.TargetFindTimesMS[taskData.Index] += targetsTimer.GetElapsedMilliseconds();
 
                 if (taskData.Targets.Count == 0)
@@ -291,7 +305,7 @@ public class MapPawnProcessor : IDisposable
                         SmallOccupiedMask = smallMask,
                         TrustLassoUsability = true,
                         LassoRange = data.LassoRange,
-                        Targets = taskData.Targets.Where(TargetFilter).Select(t => (Pawn)t)
+                        Targets = taskData.Targets.Select(t => (Pawn)t)
                     });
 
                     foreach (var report in reports)
@@ -328,9 +342,42 @@ public class MapPawnProcessor : IDisposable
                 }
                 diag.ReportTimesMS[taskData.Index] += reportTimer.GetElapsedMilliseconds();
 
+                // Lasso only without execute:
+                if (!toPerform.IsValid && data.CanGrapple)
+                {
+                    foreach (var target in taskData.Targets.Select(t => (Pawn) t))
+                    {
+                        var report = taskData.Controller.GetGrappleReport(new GrappleAttemptRequest
+                        {
+                            Grappler = pawn,
+                            DoNotCheckCooldown = true,
+                            DoNotCheckLasso = true,
+                            GrappleSpotPickingBehaviour = GrappleSpotPickingBehaviour.PreferAdjacent,
+                            LassoRange = data.LassoRange,
+                            NoErrorMessages = true,
+                            OccupiedMask = smallMask,
+                            TrustLassoUsability = true,
+                            Target = target
+                        });
+
+                        if (!report.CanGrapple)
+                            continue;
+
+                        toPerform = new PotentialAnimation
+                        {
+                            Anim = null,
+                            FlipX = false,
+                            LassoToHere = report.DestinationCell,
+                            Target = target
+                        };
+                        break;
+                    }
+                    
+                }
+
                 if (toPerform.IsValid)
                 {
-                    // Start instant execution animation.
+                    // Start instant execution animation or lasso:
                     startArgs.Enqueue((new AnimationStartParameters(toPerform.Anim, pawn, toPerform.Target)
                     {
                         FlipX = toPerform.FlipX
@@ -349,12 +396,12 @@ public class MapPawnProcessor : IDisposable
         if (pawn.IsColonist || pawn.IsSlaveOfColony)
         {
             execute = Core.Settings.ExecuteAttemptMTBSeconds;
-            lasso = 10;
+            lasso = Core.Settings.GrappleAttemptMTBSeconds;
         }
         else
         {
             execute = Core.Settings.ExecuteAttemptMTBSecondsEnemy;
-            lasso = 10; // TODO implement lasso MTB
+            lasso = Core.Settings.GrappleAttemptMTBSecondsEnemy;
         }
     }
 
@@ -413,9 +460,9 @@ public class MapPawnProcessor : IDisposable
                 PawnMeleeLevel = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0,
                 MeleeWeapon = weapon,
                 Lasso = lasso,
-                CanExecute = execRandom && weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
-                CanGrapple = lassoRandom && lasso != null && mData.ResolvedAutoGrapple && mData.IsGrappleOffCooldown() && FormalGrappleCheck(pawn),
-                LassoRange = lasso != null ? pawn.GetStatValue(AAM_DefOf.AAM_GrappleRadius) : 0
+                CanExecute = weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
+                CanGrapple = lasso != null  && mData.ResolvedAutoGrapple && mData.IsGrappleOffCooldown() && FormalGrappleCheck(pawn),
+                LassoRange = lasso != null ? pawn.GetStatValue(AM_DefOf.AM_GrappleRadius) : 0
             };
 
             if (!data.CanGrapple && !data.CanExecute)
@@ -484,7 +531,7 @@ public class MapPawnProcessor : IDisposable
 
     private readonly struct PotentialAnimation
     {
-        public readonly bool IsValid => Anim != null;
+        public readonly bool IsValid => Anim != null || LassoToHere != null;
 
         public required AnimDef Anim { get; init; }
         public required bool FlipX { get; init; }

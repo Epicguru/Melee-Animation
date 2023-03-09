@@ -2,7 +2,7 @@
 using RimWorld;
 using Verse;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 [HarmonyPatch(typeof(Verb_MeleeAttackDamage), nameof(Verb_MeleeAttackDamage.ApplyMeleeDamageToTarget))]
 public static class Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget

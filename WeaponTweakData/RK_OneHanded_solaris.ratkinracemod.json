@@ -1,0 +1,11 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_OneHanded",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.307838738,
+  "HandsMode": 1,
+  "BladeStart": 0.1615202,
+  "BladeEnd": 0.750593841,
+  "MeleeWeaponType": 54
+}

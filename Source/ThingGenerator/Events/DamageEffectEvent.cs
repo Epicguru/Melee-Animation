@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AAM.Events;
+namespace AM.Events;
 
 [CreateAssetMenu(fileName = "DamageEffect", menuName = "Events/DamageEffect")]
 public class DamageEffectEvent : EventBase

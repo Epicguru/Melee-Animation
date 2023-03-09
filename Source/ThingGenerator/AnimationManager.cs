@@ -1,28 +1,26 @@
-﻿using AAM.Processing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AM.Processing;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public class AnimationManager : MapComponent
     {
         [TweakValue("Melee Animation Mod", 0, 10)]
         public static int CullingPadding = 5;
         public static bool IsDoingMultithreadedSeek { get; private set; }
-        public static int MultithreadedThreadsUsed { get; private set; }
         public static double MultithreadedSeekTimeMS;
         public static Texture2D HandTexture;
 
         private static readonly List<Vector2> seekTimes = new List<Vector2>();
-        private static readonly List<Task> tasks = new List<Task>();
         private static ulong frameLastSeeked;
 
         public static void Init()
         {
-            HandTexture = ContentFinder<Texture2D>.Get("AAM/Hand");
+            HandTexture = ContentFinder<Texture2D>.Get("AM/Hand");
         }
 
         public readonly MapPawnProcessor PawnProcessor;
@@ -111,39 +109,16 @@ namespace AAM
                 return;
             }
 
-            // Spawn all tasks.
-            tasks.Clear();
-            foreach (var slice in MapPawnProcessor.MakeProcessingSlices(AnimRenderer.ActiveRenderers.Count))
+            // Processing:
+            Parallel.For(0, AnimRenderer.ActiveRenderers.Count, i =>
             {
-                tasks.Add(Task.Run(() =>
-                {
-                    for (int i = slice.min; i <= slice.max; i++)
-                    {
-                        var animator = AnimRenderer.ActiveRenderers[i];
+                var animator = AnimRenderer.ActiveRenderers[i];
 
-                        if (animator.IsDestroyed)
-                            continue;
+                if (animator.IsDestroyed)
+                    return;
 
-                        seekTimes[i] = animator.Seek(null, dt);
-                    }
-                }));
-            }
-            MultithreadedThreadsUsed = tasks.Count;
-
-            // Wait all, the lazy no-allocation way.
-            foreach (var task in tasks)
-            {
-                try
-                {
-                    task.Wait();
-                }
-                catch (Exception e)
-                {
-                    Core.Error("Multithreaded seek error:", e);
-                }
-            }
-
-            tasks.Clear();
+                seekTimes[i] = animator.Seek(null, dt, true);
+            });
 
             timer.GetElapsedMilliseconds(out MultithreadedSeekTimeMS);
         }

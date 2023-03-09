@@ -1,24 +1,17 @@
 <Defs>
 
   <!-- Base -->
-  <AAM.AnimDef Name="AnimFlavour" Abstract="True">
+  <AM.AnimDef Name="AnimFlavour" Abstract="True">
     <type>Idle</type>
     <pawnCount>1</pawnCount>
     <idleType>Flavour</idleType>
-  </AAM.AnimDef>
-
-  <!-- All -->
-  <AAM.AnimDef ParentName="AnimFlavour">
-    <defName>AAM_Idle_CheerFlavour</defName>
-    <data>Idle_CheerFlavour.json</data>
-    <weaponFilter Class="AAM.Reqs.True" />
-  </AAM.AnimDef>
+  </AM.AnimDef>
 
   <!-- Tiny -->
-  <AAM.AnimDef ParentName="AnimFlavour">
-    <defName>AAM_Idle_TinyFlavour1</defName>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_TinyFlavour1</defName>
     <data>Idle_Tiny_Flavour1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Tiny</size>
     </weaponFilter>
     <handsVisibility>
@@ -28,36 +21,56 @@
         <showAltHand>true</showAltHand>
       </li>
     </handsVisibility>
-  </AAM.AnimDef>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_TinyFlavour2</defName>
+    <data>Idle_Tiny_FlavourCheer.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+  </AM.AnimDef>
 
   <!-- Medium -->
-  <AAM.AnimDef ParentName="AnimFlavour">
-    <defName>AAM_Idle_MediumFlavour1</defName>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_MediumFlavour1</defName>
     <data>Idle_MediumSharp_Flavour1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
-  </AAM.AnimDef>
-
-  <AAM.AnimDef ParentName="AnimFlavour">
-    <defName>AAM_Idle_MediumFlavour2</defName>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_MediumFlavour2</defName>
     <data>Idle_MediumSharp_Flavour2.json</data>
     <!-- Animation stabs into ground so must support that: -->
-    <weaponFilter Class="AAM.Reqs.And">
+    <weaponFilter Class="AM.Reqs.And">
       <subs>
-        <li Class="AAM.Reqs.AnySize"><size>Medium</size></li>
-        <li Class="AAM.Reqs.AnyCategory"><category>Stab</category></li>
+        <li Class="AM.Reqs.AnySize"><size>Medium</size></li>
+        <li Class="AM.Reqs.AnyCategory"><category>Stab</category></li>
       </subs>
     </weaponFilter>
-  </AAM.AnimDef>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_MediumFlavour3</defName>
+    <data>Idle_Medium_CheerFlavour.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Medium</size>
+    </weaponFilter>
+  </AM.AnimDef>  
 
   <!-- Colossal -->
-  <AAM.AnimDef ParentName="AnimFlavour">
-    <defName>AAM_Idle_ColossalFlavour1</defName>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_ColossalFlavour1</defName>
     <data>Idle_Colossal_Flavour1.json</data>
-    <weaponFilter Class="AAM.Reqs.AnySize">
+    <weaponFilter Class="AM.Reqs.AnySize">
       <size>Colossal</size>
     </weaponFilter>
-  </AAM.AnimDef>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_ColossalFlavour2</defName>
+    <data>Idle_Colossal_FlavourCheer.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Colossal</size>
+    </weaponFilter>
+  </AM.AnimDef>  
 
 </Defs>

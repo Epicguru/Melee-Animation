@@ -1,8 +1,9 @@
-﻿using AAM.Idle;
+﻿using AM.Idle;
+using AM.Tweaks;
 using HarmonyLib;
 using Verse;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 /// <summary>
 /// A patch to control pawn animations.
@@ -24,7 +25,10 @@ public static class Patch_PawnRenderer_DrawEquipment
             return true; // Why would this ever be the case? Better safe than sorry though.
 
         // Only for melee weapons...
-        bool isMeleeWeapon = pawn.equipment?.Primary?.def.IsMeleeWeapon ?? false;
+        var wep = pawn.equipment?.Primary?.def;
+        bool isMeleeWeapon = wep?.IsMeleeWeapon ?? false;
+        if (isMeleeWeapon && TweakDataManager.TryGetTweak(wep) == null)
+            isMeleeWeapon = false;
         comp.PreDraw();
         return !isMeleeWeapon;
     }

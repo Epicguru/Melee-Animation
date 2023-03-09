@@ -1,0 +1,18 @@
+{
+  "TextureModID": "ceteam.combatextendedmelee",
+  "ItemDefName": "CE_Melee_WraithBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.331914425,
+  "OffY": -0.004255578,
+  "Rotation": 45.0,
+  "BladeStart": 0.2622343,
+  "BladeEnd": 0.9430853,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.212,
+    "g": 1.0,
+    "b": 0.047,
+    "a": 1.0
+  }
+}

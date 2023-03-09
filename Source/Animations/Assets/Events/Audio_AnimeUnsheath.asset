@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc0aa0c326bf644087c9c7d98308945, type: 3}
   m_Name: Audio_AnimeUnsheath
   m_EditorClassIdentifier: 
-  AudioPath: AAM_AnimeUnsheath
+  AudioPath: AM_AnimeUnsheath
   LocalPosition: {x: 0, y: 0, z: 0}
   VolumeScale: 0.9

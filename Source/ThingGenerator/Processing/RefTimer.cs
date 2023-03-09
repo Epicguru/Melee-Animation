@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace AAM.Processing;
+namespace AM.Processing;
 
 public readonly ref struct RefTimer
 {

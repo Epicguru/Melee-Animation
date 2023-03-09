@@ -1,0 +1,12 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.300237328,
+  "OffY": 0.007600829,
+  "Rotation": 42.99269,
+  "BladeStart": 0.366746217,
+  "BladeEnd": 0.800000131,
+  "MeleeWeaponType": 1
+}

@@ -1,7 +1,7 @@
 ﻿using Verse;
 using Verse.AI;
 
-namespace AAM.Jobs;
+namespace AM.Jobs;
 
 public class JobDriver_GoToDuelSpot : JobDriver_GoToAnimationSpot
 {

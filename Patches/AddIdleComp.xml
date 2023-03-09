@@ -6,7 +6,7 @@
     <xpath>Defs/ThingDef[@Name="BasePawn"]/comps</xpath>
     <value>
       <li>
-        <compClass>AAM.Idle.IdleControllerComp</compClass>
+        <compClass>AM.Idle.IdleControllerComp</compClass>
       </li>
     </value>
   </Operation>

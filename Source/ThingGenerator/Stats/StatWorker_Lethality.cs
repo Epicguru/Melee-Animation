@@ -1,20 +1,20 @@
-﻿using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.Stats;
+namespace AM.Stats;
 
 public class StatWorker_Lethality : StatWorker
 {
     public static readonly Dictionary<ToolCapacityDef, float> CapacityToLethalityOffset = new Dictionary<ToolCapacityDef, float>()
     {
-        { AAM_DefOf.Cut, 0.2f },
-        { AAM_DefOf.Stab, 0.3f },
-        { AAM_DefOf.Blunt, -0.75f },
+        { AM_DefOf.Cut, 0.2f },
+        { AM_DefOf.Stab, 0.3f },
+        { AM_DefOf.Blunt, -0.75f },
     };
 
     public override bool ShouldShowFor(StatRequest req)
@@ -72,22 +72,22 @@ public class StatWorker_Lethality : StatWorker
 
         // Base value.
         float baseline = GetBaseValueFor(req);
-        str?.AppendLine("AAM.Stats.BaseValue".Translate(baseline.ToStringByStyle(ToStringStyle.PercentOne, numberSense)));
+        str?.AppendLine("AM.Stats.BaseValue".Translate(baseline.ToStringByStyle(ToStringStyle.PercentOne, numberSense)));
 
         // Melee skill.
         float meleeSkillOffset = Remap(0f, 20f, -0.2f, 0.4f, meleeSkill);
         if (meleeSkillOffset != 0f)
-            str?.AppendLine("AAM.Stats.MeleeSkillOffset".Translate(meleeSkill, meleeSkillOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.MeleeSkillOffset".Translate(meleeSkill, meleeSkillOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
 
         // Consciousness.
         float consciousnessOffset = consciousness < 1f ? Remap(0f, 1f, -0.8f, 0f, consciousness) : Remap(1f, 2f, 0f, 0.25f, consciousness);
         if (consciousnessOffset != 0f)
-            str?.AppendLine("AAM.Stats.ConsciousnessOffset".Translate(consciousness.ToStringByStyle(ToStringStyle.PercentZero), consciousnessOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.ConsciousnessOffset".Translate(consciousness.ToStringByStyle(ToStringStyle.PercentZero), consciousnessOffset.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
 
         // Manipulation
         float manipulationOffset = manipulation < 1f ? Remap(0f, 1f, -0.5f, 0f, manipulation) : Remap(1f, 2f, 0f, 0.2f, manipulation);
         if (manipulationOffset != 0f)
-            str?.AppendLine("AAM.Stats.ManipulationOffset".Translate(manipulation.ToStringByStyle(ToStringStyle.PercentZero), manipulationOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.ManipulationOffset".Translate(manipulation.ToStringByStyle(ToStringStyle.PercentZero), manipulationOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
 
         // Melee Weapon DPS
         float dpsOffset = 0f;
@@ -96,28 +96,28 @@ public class StatWorker_Lethality : StatWorker
             dpsOffset = Remap(8f, 50f, 0f, 0.4f, meleeDps.Value);
             if (dpsOffset != 0)
             {
-                str?.AppendLine("AAM.Stats.WeaponDPSCoef".Translate(meleeDps.Value.ToStringByStyle(ToStringStyle.FloatOne), dpsOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
+                str?.AppendLine("AM.Stats.WeaponDPSCoef".Translate(meleeDps.Value.ToStringByStyle(ToStringStyle.FloatOne), dpsOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
             }
         }
 
         // Weapon Damage Type (capacity)
         if (capMod != null)
-            str?.AppendLine("AAM.Stats.WeaponDamageTypeOffset".Translate(capMod.LabelCap, capOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.WeaponDamageTypeOffset".Translate(capMod.LabelCap, capOffset.ToStringByStyle(ToStringStyle.PercentOne, ToStringNumberSense.Offset)));
 
         // Friendly bonus.
         float friendBonus = 0f;
         if ((pawn.IsColonist || pawn.IsSlaveOfColony) && Core.Settings.FriendlyPawnLethalityBonus != 0f)
         {
             friendBonus = Core.Settings.FriendlyPawnLethalityBonus;
-            str?.AppendLine("AAM.Stats.FriendlyPawnBonus".Translate(friendBonus.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
+            str?.AppendLine("AM.Stats.FriendlyPawnBonus".Translate(friendBonus.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Offset)));
         }
 
         // Global settings coef.
         float gCoef = Core.Settings.ExecutionLethalityModifier;
         if (Math.Abs(gCoef - 1f) > 0.001f)
         {
-            string name = "AAM.Stats.Lethality".Trs();
-            str?.AppendLine("AAM.Stats.GlobalCoef".Translate(name, gCoef.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Factor)));
+            string name = "AM.Stats.Lethality".Trs();
+            str?.AppendLine("AM.Stats.GlobalCoef".Translate(name, gCoef.ToStringByStyle(ToStringStyle.PercentZero, ToStringNumberSense.Factor)));
         }
 
         float final = Mathf.Max(0f, gCoef * (baseline + meleeSkillOffset + consciousnessOffset + manipulationOffset + dpsOffset + capOffset + friendBonus));

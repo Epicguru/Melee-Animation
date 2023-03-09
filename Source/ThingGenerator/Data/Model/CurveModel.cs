@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace AAM.Data.Model;
+namespace AM.Data.Model;
 
 public sealed class CurveModel
 {

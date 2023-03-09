@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using AM;
+using UnityEngine;
 using Verse;
 using Verse.Sound;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public class AudioWorker : EventWorkerBase
     {
@@ -25,7 +26,7 @@ namespace AAM.Events.Workers
             var info = e.OnCamera ? SoundInfo.OnCamera() : SoundInfo.InMap(target);
             info.volumeFactor = e.VolumeFactor;
             info.pitchFactor = e.PitchFactor;
-            if(e.OnCamera)
+            if (e.OnCamera)
                 info.forcedPlayOnCamera = true;
             def.PlayOneShot(info);
         }

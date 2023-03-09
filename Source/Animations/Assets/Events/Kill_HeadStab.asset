@@ -17,6 +17,6 @@ MonoBehaviour:
   VictimIndex: 1
   TargetBodyPart: Head
   DamageDef: Cut
-  BattleLogDef: AAM_Execution_Generic
+  BattleLogDef: AM_Execution_Generic
   OnlyIfNotInterrupted: 1
   PreventDamageMote: 1

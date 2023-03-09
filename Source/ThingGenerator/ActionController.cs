@@ -1,15 +1,15 @@
-﻿using AAM.Grappling;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using AM.Grappling;
+using RimWorld;
 using Verse;
 using Verse.AI;
-using static AAM.PossibleExecution;
+using static AM.PossibleExecution;
 
-namespace AAM;
+namespace AM;
 
 public class ActionController
 {
@@ -101,7 +101,7 @@ public class ActionController
             return new GrappleAttemptReport(req, "InAnimation");
 
         // Check range.
-        float range = req.LassoRange ?? req.Grappler.GetStatValue(AAM_DefOf.AAM_GrappleRadius);
+        float range = req.LassoRange ?? req.Grappler.GetStatValue(AM_DefOf.AM_GrappleRadius);
         float dst = req.Grappler.Position.DistanceToSquared(req.Target.Position);
         if (dst > range * range)
             return new GrappleAttemptReport(req, "TooFar");
@@ -678,7 +678,7 @@ public struct GrappleAttemptReport
         else
         {
             var args = GetNamedArgs(req, intErrorMsg);
-            errorTrsKey = $"AAM.Error.Grapple.{errorTrsKey}";
+            errorTrsKey = $"AM.Error.Grapple.{errorTrsKey}";
             ErrorMessage = errorTrsKey.Translate(args);
             ErrorMessageShort = intErrorMsg == null ? GetShortTrs(errorTrsKey, ErrorMessage, args) : ErrorMessage;
         }
@@ -842,7 +842,7 @@ public struct ExecutionAttemptReport : IDisposable
         else
         {
             var args = GetNamedArgs(req, target, intErrorMsg);
-            errorTrsKey = $"AAM.Error.Exec.{errorTrsKey}";
+            errorTrsKey = $"AM.Error.Exec.{errorTrsKey}";
             ErrorMessage = errorTrsKey.Translate(args);
             ErrorMessageShort = intErrorMsg == null ? GetShortTrs(errorTrsKey, ErrorMessage, args) : ErrorMessage;
         }

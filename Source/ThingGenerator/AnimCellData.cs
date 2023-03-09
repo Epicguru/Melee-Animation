@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public class AnimCellData
     {

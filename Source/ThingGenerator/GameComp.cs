@@ -1,16 +1,17 @@
-﻿using AAM.Grappling;
-using AAM.Patches;
-using AAM.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using AAM.PawnData;
+using AM.Grappling;
+using AM.Idle;
+using AM.Patches;
+using AM.PawnData;
+using AM.UI;
+using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
-using AAM.Idle;
 
-namespace AAM
+namespace AM
 {
     public class GameComp : GameComponent
     {
@@ -20,6 +21,7 @@ namespace AAM
         public static ulong FrameCounter;
 
         [TweakValue("Melee Animation")]
+        [UsedImplicitly]
         private static bool drawTextureExtractor;
 
         private string texPath;
@@ -47,7 +49,6 @@ namespace AAM
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 pawnMeleeData.Clear();
-                Core.Log($"Loading {allMeleeData.Count} pawn melee data.");
                 foreach (var data in allMeleeData)
                 {
                     if (data.ShouldSave())
@@ -79,7 +80,6 @@ namespace AAM
             IdleControllerComp.TotalActive = 0;
 
             base.GameComponentTick();
-
 
             AnimRenderer.TickAll();
             AnimRenderer.RemoveDestroyed(null);

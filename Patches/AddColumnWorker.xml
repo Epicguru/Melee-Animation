@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Adds the AM_ExecutionModePawnColumn to all pawns -->
+  <Operation Class="PatchOperationInsert">
+    <xpath>Defs/PawnTableDef[defName="Assign"]/columns/li[text()="HostilityResponse"]</xpath>
+    <order>Append</order>
+    <value>
+      <li>AM_LassoModePawnColumn</li>
+      <li>AM_ExecutionModePawnColumn</li>
+    </value>
+  </Operation>
+</Patch>

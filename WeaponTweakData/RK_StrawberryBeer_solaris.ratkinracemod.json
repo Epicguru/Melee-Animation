@@ -1,0 +1,13 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_StrawberryBeer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.224227816,
+  "OffY": 0.0988120139,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.10071294,
+  "BladeEnd": 0.4085511,
+  "MeleeWeaponType": 8
+}

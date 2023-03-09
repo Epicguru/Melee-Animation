@@ -11,7 +11,7 @@ public class KillPawnEvent : EventBase
 
     public string TargetBodyPart = "Heart";
     public string DamageDef = "Cut";
-    public string BattleLogDef = "AAM_Execution_Generic";
+    public string BattleLogDef = "AM_Execution_Generic";
 
     [Header("Misc")]
     public bool PreventDamageMote = true;

@@ -19,7 +19,7 @@
     },
     {
       "Time": 1.75,
-      "Data": "KillPawn;0;1;Heart;Stab;AAM_Execution_Stab;True"
+      "Data": "KillPawn;0;1;Heart;Stab;AM_Execution_Stab;True"
     }
   ],
   "Parts": [
@@ -2410,7 +2410,7 @@
     {
       "ID": 19498,
       "Path": "HandGrabSparks",
-      "TexturePath": "AAM/HandGrabSparks",
+      "TexturePath": "AM/HandGrabSparks",
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 0.0,

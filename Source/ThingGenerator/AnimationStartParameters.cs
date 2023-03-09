@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
-namespace AAM
+namespace AM
 {
     public struct AnimationStartParameters : IExposable
     {
@@ -87,7 +87,7 @@ namespace AAM
                 RootTransform = RootTransform,
                 MirrorHorizontal = FlipX,
                 MirrorVertical = FlipY,
-                ExecutionOutcome = ExecutionOutcome,
+                ExecutionOutcome = ExecutionOutcome
             };
 
             foreach (var pawn in EnumeratePawns())

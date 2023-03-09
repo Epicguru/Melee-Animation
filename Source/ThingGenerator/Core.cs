@@ -1,17 +1,21 @@
-﻿using AAM.Retexture;
-using AAM.Tweaks;
-using HarmonyLib;
-using ModRequestAPI;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AM.Retexture;
+using AM.Patches;
+using AM.Tweaks;
+using HarmonyLib;
+using ModRequestAPI;
+using RimWorld;
 using UnityEngine;
 using Verse;
+using System.Globalization;
+using System.Reflection;
+using AM.AMSettings;
 
-namespace AAM
+namespace AM
 {
     [HotSwapAll]
     public class Core : Mod
@@ -22,10 +26,11 @@ namespace AAM
         public static string ModTitle => ModContent?.Name;
         public static ModContentPack ModContent;
         public static Settings Settings;
+        public static Harmony Harmony;
         public static bool IsSimpleSidearmsActive;
 
-        private readonly Queue<(string title, Action action)> lateLoadActions = new();
-        private readonly Queue<(string title, Action action)> lateLoadActionsSync = new();
+        private readonly Queue<(string title, Action action)> lateLoadActions = new Queue<(string title, Action action)>();
+        private readonly Queue<(string title, Action action)> lateLoadActionsSync = new Queue<(string title, Action action)>();
 
         public static void Log(string msg)
         {
@@ -69,10 +74,10 @@ namespace AAM
             AddParsers();
 
             string assemblies = string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName);
-            Log($"Hello, world!\n\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
+            Log($"Hello, world!\nBuild date: {GetBuildDate(Assembly.GetExecutingAssembly()):g}\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
 
-            var h = new Harmony(content.PackageId);
-            h.PatchAll();
+            Harmony = new Harmony(content.PackageId);
+            Harmony.PatchAll();
             ModContent = content; 
 
             // Initialize settings.
@@ -86,17 +91,26 @@ namespace AAM
             });
 
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
-            AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(h));
-            AddLateLoadAction(false, "Finding all lassos...", AAM.Content.FindAllLassos);
+            AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(Harmony));
+            AddLateLoadAction(false, "Finding all lassos...", AM.Content.FindAllLassos);
 
-            AddLateLoadAction(true, "Loading main content...", AAM.Content.Load);
+            AddLateLoadAction(true, "Loading main content...", AM.Content.Load);
             AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
             AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
             AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
             AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
             AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
+            AddLateLoadAction(true, "Patch VBE", PatchVBE);
 
             AddLateLoadEvents();
+        }
+
+        private static void PatchVBE()
+        {
+            if (ModLister.GetActiveModWithIdentifier("vanillaexpanded.backgrounds") == null)
+                return;
+
+            Patch_VBE_Utils_DrawBG.TryApplyPatch();
         }
 
         private static void PreCacheAllRetextures()
@@ -313,8 +327,25 @@ namespace AAM
         {
             IsSimpleSidearmsActive = ModLister.GetActiveModWithIdentifier("PeteTimesSix.SimpleSidearms") != null;
         }
+
+        private static DateTime GetBuildDate(Assembly assembly)
+        {
+            var attribute = assembly.GetCustomAttribute<BuildDateAttribute>();
+            return attribute?.DateTime ?? default;
+        }
     }
 
     public class HotSwapAllAttribute : Attribute { }
     public class IgnoreHotSwapAttribute : Attribute { }
+
+    [AttributeUsage(AttributeTargets.Assembly)]
+    internal class BuildDateAttribute : Attribute
+    {
+        public BuildDateAttribute(string value)
+        {
+            DateTime = DateTime.ParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
+
+        public DateTime DateTime { get; }
+    }
 }

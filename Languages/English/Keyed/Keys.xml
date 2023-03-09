@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-  <AAM.ModTitle>Epicguru's Melee Animation</AAM.ModTitle>
+  <AM.ModTitle>Epicguru's Melee Animation</AM.ModTitle>
 
-  <AAM.Animation>Animation</AAM.Animation>
+  <AM.Animation>Animation</AM.Animation>
 
-  <AAM.Error.Grapple.FloatMenu>Cannot lasso: {0}</AAM.Error.Grapple.FloatMenu>
-  <AAM.Grapple.FloatMenu>Lasso {0}</AAM.Grapple.FloatMenu>
-  <AAM.Grapple.FloatMenu.Tip>Use a lasso to pull {1} towards {0}.\nThis does not harm {1}.</AAM.Grapple.FloatMenu.Tip>
-  <AAM.Grapple.FloatMenu.TipEnemy>Use a lasso to pull {1} towards {0}.\nThis does not harm {1}, but it does put them into melee/execution range.</AAM.Grapple.FloatMenu.TipEnemy>
+  <AM.Error.Grapple.FloatMenu>Cannot lasso: {0}</AM.Error.Grapple.FloatMenu>
+  <AM.Grapple.FloatMenu>Lasso {0}</AM.Grapple.FloatMenu>
+  <AM.Grapple.FloatMenu.Tip>Use a lasso to pull {1} towards {0}.\nThis does not harm {1}.</AM.Grapple.FloatMenu.Tip>
+  <AM.Grapple.FloatMenu.TipEnemy>Use a lasso to pull {1} towards {0}.\nThis does not harm {1}, but it does put them into melee/execution range.</AM.Grapple.FloatMenu.TipEnemy>
 
-  <AAM.Error.Exec.FloatMenu>Cannot execute: {0}</AAM.Error.Exec.FloatMenu>
-  <AAM.Exec.FloatMenu>Execute {0}</AAM.Exec.FloatMenu>
-  <AAM.Exec.FloatMenu.Tip>Perform an execution animation on {1}.\nWill attempt to use an lasso if available to pull {1} into melee range.\nPlease note, 'execution' animations are not always lethal - please read the workshop page and mod settings for more info.</AAM.Exec.FloatMenu.Tip>
+  <AM.Error.Exec.FloatMenu>Cannot execute: {0}</AM.Error.Exec.FloatMenu>
+  <AM.Exec.FloatMenu>Execute {0}</AM.Exec.FloatMenu>
+  <AM.Exec.FloatMenu.Tip>Perform an execution animation on {1}.\nWill attempt to use an lasso if available to pull {1} into melee range.\nPlease note, 'execution' animations are not always lethal - please read the workshop page and mod settings for more info.</AM.Exec.FloatMenu.Tip>
 
-  <AAM.Error.Grapple.Internal>Int.Error: {Error}</AAM.Error.Grapple.Internal>
-  <AAM.Error.Exec.Internal>Int.Error: {Error}</AAM.Error.Exec.Internal>
-  <AAM.Error.Grapple.AlreadyAtTarget>{Target} is already in melee range</AAM.Error.Grapple.AlreadyAtTarget>
+  <AM.Error.Grapple.Internal>Int.Error: {Error}</AM.Error.Grapple.Internal>
+  <AM.Error.Exec.Internal>Int.Error: {Error}</AM.Error.Exec.Internal>
+  <AM.Error.Grapple.AlreadyAtTarget>{Target} is already in melee range</AM.Error.Grapple.AlreadyAtTarget>
 
-  <AAM.Error.Grapple.Dead>{Grappler} is dead</AAM.Error.Grapple.Dead>
-  <AAM.Error.Exec.Dead>{Exec} is dead</AAM.Error.Exec.Dead>
-  <AAM.Error.Exec.NoWalk>{Target} is not adjacent to {Exec}, and cannot be lassoed or walked to.</AAM.Error.Exec.NoWalk>
-  <AAM.Error.Exec.NoWalk.Short>{Target} cannot be reached</AAM.Error.Exec.NoWalk.Short>
-  <AAM.Error.Grapple.DeadTarget>{Target} is dead</AAM.Error.Grapple.DeadTarget>
-  <AAM.Error.Exec.DeadTarget>{Target} is dead</AAM.Error.Exec.DeadTarget>
-  <AAM.Error.Grapple.Downed>{Grappler} is downed</AAM.Error.Grapple.Downed>
-  <AAM.Error.Exec.Downed>{Exec} is downed</AAM.Error.Exec.Downed>
-  <AAM.Error.Exec.DownedTarget>{Target} is downed. Downed pawns cannot be executed.</AAM.Error.Exec.DownedTarget>
-  <AAM.Error.Exec.DownedTarget.Short>{Target} is downed</AAM.Error.Exec.DownedTarget.Short>
+  <AM.Error.Grapple.Dead>{Grappler} is dead</AM.Error.Grapple.Dead>
+  <AM.Error.Exec.Dead>{Exec} is dead</AM.Error.Exec.Dead>
+  <AM.Error.Exec.NoWalk>{Target} is not adjacent to {Exec}, and cannot be lassoed or walked to.</AM.Error.Exec.NoWalk>
+  <AM.Error.Exec.NoWalk.Short>{Target} cannot be reached</AM.Error.Exec.NoWalk.Short>
+  <AM.Error.Grapple.DeadTarget>{Target} is dead</AM.Error.Grapple.DeadTarget>
+  <AM.Error.Exec.DeadTarget>{Target} is dead</AM.Error.Exec.DeadTarget>
+  <AM.Error.Grapple.Downed>{Grappler} is downed</AM.Error.Grapple.Downed>
+  <AM.Error.Exec.Downed>{Exec} is downed</AM.Error.Exec.Downed>
+  <AM.Error.Exec.DownedTarget>{Target} is downed. Downed pawns cannot be executed.</AM.Error.Exec.DownedTarget>
+  <AM.Error.Exec.DownedTarget.Short>{Target} is downed</AM.Error.Exec.DownedTarget.Short>
 
-  <AAM.Error.Grapple.AlreadyTarget>{Target} is already being lassoed</AAM.Error.Grapple.AlreadyTarget>
-  <AAM.Error.Grapple.AlreadyTarget.Short>Already being lassoed</AAM.Error.Grapple.AlreadyTarget.Short>
+  <AM.Error.Grapple.AlreadyTarget>{Target} is already being lassoed</AM.Error.Grapple.AlreadyTarget>
+  <AM.Error.Grapple.AlreadyTarget.Short>Already being lassoed</AM.Error.Grapple.AlreadyTarget.Short>
 
-  <AAM.Error.Grapple.MissingLOS>No line of sight</AAM.Error.Grapple.MissingLOS>
+  <AM.Error.Grapple.MissingLOS>No line of sight</AM.Error.Grapple.MissingLOS>
 
-  <AAM.Error.Grapple.TooFar>{Target} is out of reach of {Grappler}'s lasso</AAM.Error.Grapple.TooFar>
-  <AAM.Error.Grapple.TooFar.Short>Too far away</AAM.Error.Grapple.TooFar.Short>
+  <AM.Error.Grapple.TooFar>{Target} is out of reach of {Grappler}'s lasso</AM.Error.Grapple.TooFar>
+  <AM.Error.Grapple.TooFar.Short>Too far away</AM.Error.Grapple.TooFar.Short>
 
-  <AAM.Error.Grapple.InAnimation>{Target} cannot be lassoed right now</AAM.Error.Grapple.InAnimation>
-  <AAM.Error.Grapple.SelfInAnimation>{Grappler} cannot lasso right now</AAM.Error.Grapple.SelfInAnimation>
-  <AAM.Error.Exec.SelfInAnimation>{Grappler} cannot execute anyone right now</AAM.Error.Exec.SelfInAnimation>
-  <AAM.Error.Exec.InAnimation>{Target} cannot be executed right now</AAM.Error.Exec.InAnimation>
+  <AM.Error.Grapple.InAnimation>{Target} cannot be lassoed right now</AM.Error.Grapple.InAnimation>
+  <AM.Error.Grapple.SelfInAnimation>{Grappler} cannot lasso right now</AM.Error.Grapple.SelfInAnimation>
+  <AM.Error.Exec.SelfInAnimation>{Grappler} cannot execute anyone right now</AM.Error.Exec.SelfInAnimation>
+  <AM.Error.Exec.InAnimation>{Target} cannot be executed right now</AM.Error.Exec.InAnimation>
 
-  <AAM.Error.Grapple.Mass>{Target} is too heavy for {Grappler} to lasso</AAM.Error.Grapple.Mass>
-  <AAM.Error.Grapple.Mass.Short>{Target} is too heavy</AAM.Error.Grapple.Mass.Short>
+  <AM.Error.Grapple.Mass>{Target} is too heavy for {Grappler} to lasso</AM.Error.Grapple.Mass>
+  <AM.Error.Grapple.Mass.Short>{Target} is too heavy</AM.Error.Grapple.Mass.Short>
 
-  <AAM.Error.Grapple.Size>{Target} is too large for {Grappler} to lasso</AAM.Error.Grapple.Size>
-  <AAM.Error.Grapple.Size.Short>{Target} is too large</AAM.Error.Grapple.Size.Short>
+  <AM.Error.Grapple.Size>{Target} is too large for {Grappler} to lasso</AM.Error.Grapple.Size>
+  <AM.Error.Grapple.Size.Short>{Target} is too large</AM.Error.Grapple.Size.Short>
 
-  <AAM.Error.Grapple.Cooldown>{Grappler}'s lasso is on cooldown</AAM.Error.Grapple.Cooldown>
-  <AAM.Error.Grapple.Cooldown.Short>Lasso on cooldown</AAM.Error.Grapple.Cooldown.Short>
+  <AM.Error.Grapple.Cooldown>{Grappler}'s lasso is on cooldown</AM.Error.Grapple.Cooldown>
+  <AM.Error.Grapple.Cooldown.Short>Lasso on cooldown</AM.Error.Grapple.Cooldown.Short>
 
-  <AAM.Error.Grapple.SkillIssue>{Grappler} does not have the required melee skill ({MeleeSkill}) to use their lasso</AAM.Error.Grapple.SkillIssue>
-  <AAM.Error.Grapple.SkillIssue.Short>Not enough melee skill</AAM.Error.Grapple.SkillIssue.Short>
+  <AM.Error.Grapple.SkillIssue>{Grappler} does not have the required melee skill ({MeleeSkill}) to use their lasso</AM.Error.Grapple.SkillIssue>
+  <AM.Error.Grapple.SkillIssue.Short>Not enough melee skill</AM.Error.Grapple.SkillIssue.Short>
 
-  <AAM.Error.Grapple.Manipulation>{Grappler} does not have the required manipulation to use their lasso</AAM.Error.Grapple.Manipulation>
-  <AAM.Error.Grapple.Manipulation.Short>Not enough manipulation</AAM.Error.Grapple.Manipulation.Short>
+  <AM.Error.Grapple.Manipulation>{Grappler} does not have the required manipulation to use their lasso</AM.Error.Grapple.Manipulation>
+  <AM.Error.Grapple.Manipulation.Short>Not enough manipulation</AM.Error.Grapple.Manipulation.Short>
 
-  <AAM.Error.Grapple.NoDest>There is no free spot around {Grappler} to drag {Target} to</AAM.Error.Grapple.NoDest>
-  <AAM.Error.Grapple.NoDest.Short>No free spot around {Grappler}</AAM.Error.Grapple.NoDest.Short>
+  <AM.Error.Grapple.NoDest>There is no free spot around {Grappler} to drag {Target} to</AM.Error.Grapple.NoDest>
+  <AM.Error.Grapple.NoDest.Short>No free spot around {Grappler}</AM.Error.Grapple.NoDest.Short>
 
-  <AAM.Error.Exec.NoWeapon>{Exec} is not wielding a valid melee weapon</AAM.Error.Exec.NoWeapon>
-  <AAM.Error.Exec.NoWeapon.Short>No melee weapon</AAM.Error.Exec.NoWeapon.Short>
+  <AM.Error.Exec.NoWeapon>{Exec} is not wielding a valid melee weapon</AM.Error.Exec.NoWeapon>
+  <AM.Error.Exec.NoWeapon.Short>No melee weapon</AM.Error.Exec.NoWeapon.Short>
 
-  <AAM.Error.Exec.Cooldown>{Exec}'s execution is on cooldown</AAM.Error.Exec.Cooldown>
-  <AAM.Error.Exec.Cooldown.Short>Execution on cooldown</AAM.Error.Exec.Cooldown.Short>
+  <AM.Error.Exec.Cooldown>{Exec}'s execution is on cooldown</AM.Error.Exec.Cooldown>
+  <AM.Error.Exec.Cooldown.Short>Execution on cooldown</AM.Error.Exec.Cooldown.Short>
 
-  <AAM.Error.Exec.NoAnims>{Exec} cannot perform any execution animations using their {Weapon}.\nThis is probably due to a lack of melee skill or because all animations are disabled in the mod settings.</AAM.Error.Exec.NoAnims>
-  <AAM.Error.Exec.NoAnims.Short>No animations available</AAM.Error.Exec.NoAnims.Short>
+  <AM.Error.Exec.NoAnims>{Exec} cannot perform any execution animations using their {Weapon}.\nThis is probably due to a lack of melee skill or because all animations are disabled in the mod settings.</AM.Error.Exec.NoAnims>
+  <AM.Error.Exec.NoAnims.Short>No animations available</AM.Error.Exec.NoAnims.Short>
 
-  <AAM.Error.Exec.NoSpace>There is not enough space to perform any execution animation here</AAM.Error.Exec.NoSpace>
-  <AAM.Error.Exec.NoSpace.Short>Not enough space</AAM.Error.Exec.NoSpace.Short>
+  <AM.Error.Exec.NoSpace>There is not enough space to perform any execution animation here</AM.Error.Exec.NoSpace>
+  <AM.Error.Exec.NoSpace.Short>Not enough space</AM.Error.Exec.NoSpace.Short>
 
-  <AAM.Error.Exec.NoPath>{Exec} cannot reach {Target} by walking, and their lasso is unavailable or unusable.</AAM.Error.Exec.NoPath>
-  <AAM.Error.Exec.NoPath.Short>No path to target</AAM.Error.Exec.NoPath.Short>
+  <AM.Error.Exec.NoPath>{Exec} cannot reach {Target} by walking, and their lasso is unavailable or unusable.</AM.Error.Exec.NoPath>
+  <AM.Error.Exec.NoPath.Short>No path to target</AM.Error.Exec.NoPath.Short>
 
-  <AAM.Stats.BaseValue>Base Value: {0}</AAM.Stats.BaseValue>
-  <AAM.Stats.MeleeSkillOffset>Melee Skill ({0}) Effect: {1}</AAM.Stats.MeleeSkillOffset>
-  <AAM.Stats.ConsciousnessOffset>Consciousness ({0}) Effect: {1}</AAM.Stats.ConsciousnessOffset>
-  <AAM.Stats.ManipulationOffset>Manipulation ({0}) Effect: {1}</AAM.Stats.ManipulationOffset>
-  <AAM.Stats.WeaponDamageTypeOffset>Weapon Damage Type ({0}) Effect: {1}</AAM.Stats.WeaponDamageTypeOffset>
-  <AAM.Stats.WeaponDPSCoef>Weapon DPS ({0}) Effect: {1}</AAM.Stats.WeaponDPSCoef>
-  <AAM.Stats.NoWeapon>No Melee Weapon Equipped: {0}</AAM.Stats.NoWeapon>
-  <AAM.Stats.GlobalCoef>Global {0} Multiplier (from mod settings): {1}</AAM.Stats.GlobalCoef>
-  <AAM.Stats.Lethality>lethality</AAM.Stats.Lethality>
-  <AAM.Stats.DuelAbility>duel ability</AAM.Stats.DuelAbility>
-  <AAM.Stats.FriendlyPawnBonus>Friendly Pawn Bonus (from mod settings): {0}</AAM.Stats.FriendlyPawnBonus>
+  <AM.Stats.BaseValue>Base Value: {0}</AM.Stats.BaseValue>
+  <AM.Stats.MeleeSkillOffset>Melee Skill ({0}) Effect: {1}</AM.Stats.MeleeSkillOffset>
+  <AM.Stats.ConsciousnessOffset>Consciousness ({0}) Effect: {1}</AM.Stats.ConsciousnessOffset>
+  <AM.Stats.ManipulationOffset>Manipulation ({0}) Effect: {1}</AM.Stats.ManipulationOffset>
+  <AM.Stats.WeaponDamageTypeOffset>Weapon Damage Type ({0}) Effect: {1}</AM.Stats.WeaponDamageTypeOffset>
+  <AM.Stats.WeaponDPSCoef>Weapon DPS ({0}) Effect: {1}</AM.Stats.WeaponDPSCoef>
+  <AM.Stats.NoWeapon>No Melee Weapon Equipped: {0}</AM.Stats.NoWeapon>
+  <AM.Stats.GlobalCoef>Global {0} Multiplier (from mod settings): {1}</AM.Stats.GlobalCoef>
+  <AM.Stats.Lethality>lethality</AM.Stats.Lethality>
+  <AM.Stats.DuelAbility>duel ability</AM.Stats.DuelAbility>
+  <AM.Stats.FriendlyPawnBonus>Friendly Pawn Bonus (from mod settings): {0}</AM.Stats.FriendlyPawnBonus>
 
 </LanguageData>

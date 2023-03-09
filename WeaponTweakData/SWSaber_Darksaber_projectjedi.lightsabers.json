@@ -11,6 +11,6 @@
   "BladeStart": 0.130081773,
   "BladeEnd": 1.40411329,
   "MeleeWeaponType": 6,
-  "CustomRendererClass": "AAM.LightsaberPatch.SaberRenderer",
-  "SweepProviderClass": "AAM.LightsaberPatch.LightsaberSweepProvider"
+  "CustomRendererClass": "AM.LightsaberPatch.SaberRenderer",
+  "SweepProviderClass": "AM.LightsaberPatch.LightsaberSweepProvider"
 }

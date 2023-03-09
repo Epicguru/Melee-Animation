@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AAM.Data.Model;
+namespace AM.Data.Model;
 
 public class AnimPartModel
 {

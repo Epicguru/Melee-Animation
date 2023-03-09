@@ -1,0 +1,19 @@
+{
+  "TextureModID": "ceteam.combatextendedmelee",
+  "ItemDefName": "CE_Melee_PoweredMaul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.221275836,
+  "OffY": -0.0382982828,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.38989386,
+  "BladeEnd": 0.772872567,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

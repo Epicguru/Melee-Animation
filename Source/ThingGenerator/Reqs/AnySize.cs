@@ -1,7 +1,6 @@
-﻿using AAM.Idle;
-using System;
+﻿using AM.Idle;
 
-namespace AAM.Reqs
+namespace AM.Reqs
 {
     public class AnySize : Req
     {

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using AM;
+using UnityEngine;
 using Verse;
 using Verse.Sound;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public class ClashAudioWorker : EventWorkerBase
     {

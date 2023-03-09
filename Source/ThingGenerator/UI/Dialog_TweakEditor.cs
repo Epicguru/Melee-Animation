@@ -1,17 +1,17 @@
-﻿using AAM.Idle;
-using AAM.Reqs;
-using AAM.Retexture;
-using AAM.Tweaks;
-using ColourPicker;
-using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using AM.Retexture;
+using AM.Idle;
+using AM.Reqs;
+using AM.Tweaks;
+using ColourPicker;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace AAM.UI
+namespace AM.UI
 {
     public class Dialog_TweakEditor : Window
     {
@@ -348,8 +348,8 @@ namespace AAM.UI
                 ui.TextFieldNumericLabeled("Scale Y:  ", ref tweak.ScaleY, ref GetBuffer(tweak.ScaleY));
 
                 ui.Gap();
-                tweak.OffX = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffX, -2, 2, label: $"Offset X <b>[G]</b>: {tweak.OffX:F3}");
-                tweak.OffY = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffY, -2, 2, label: $"Offset Y <b>[Shift+G]</b>: {tweak.OffY:F3}");
+                tweak.OffX = Widgets.HorizontalSlider_NewTemp(ui.GetRect(28), tweak.OffX, -2, 2, label: $"Offset X <b>[G]</b>: {tweak.OffX:F3}");
+                tweak.OffY = Widgets.HorizontalSlider_NewTemp(ui.GetRect(28), tweak.OffY, -2, 2, label: $"Offset Y <b>[Shift+G]</b>: {tweak.OffY:F3}");
                 ui.Gap();
                 ref string tweakRotBuf = ref GetBuffer(tweak.Rotation);
                 ui.TextFieldNumericLabeled("Rotation <b>[R]</b>:  ", ref tweak.Rotation, ref tweakRotBuf, -360, 360);
@@ -410,8 +410,8 @@ namespace AAM.UI
 
                 var startSlider = ui.GetRect(20);
                 var endSlider = ui.GetRect(20);
-                tweak.BladeStart = Widgets.HorizontalSlider(startSlider, tweak.BladeStart, -2, 2, label: "Blade Start <b>[Q]</b>");
-                tweak.BladeEnd = Widgets.HorizontalSlider(endSlider, tweak.BladeEnd, -2, 2, label: "Blade End <b>[E]</b>");
+                tweak.BladeStart = Widgets.HorizontalSlider_NewTemp(startSlider, tweak.BladeStart, -2, 2, label: "Blade Start <b>[Q]</b>");
+                tweak.BladeEnd = Widgets.HorizontalSlider_NewTemp(endSlider, tweak.BladeEnd, -2, 2, label: "Blade End <b>[E]</b>");
 
                 ui.GapLine();
 
@@ -517,7 +517,7 @@ namespace AAM.UI
                 const float MIN = 0.1f;
                 const float MAX = 5f;
 
-                camera.orthographicSize = Mathf.Lerp(MIN, MAX, 1f - Widgets.HorizontalSlider(ui.GetRect(30), 1f - Mathf.InverseLerp(MIN, MAX, camera.orthographicSize), 0f, 1f, label: "Camera zoom"));
+                camera.orthographicSize = Mathf.Lerp(MIN, MAX, 1f - Widgets.HorizontalSlider_NewTemp(ui.GetRect(30), 1f - Mathf.InverseLerp(MIN, MAX, camera.orthographicSize), 0f, 1f, label: "Camera zoom"));
             }
 
             ui.End();
@@ -540,7 +540,7 @@ namespace AAM.UI
             var handScale = new Vector3(0.175f, 1f, 0.175f);
             var handAPos = new Vector3(0f, 1f, 0f);
             var handBPos = new Vector3(-0.146f, -1f, -0.011f);
-            var handTex = ContentFinder<Texture2D>.Get("AAM/Hand");
+            var handTex = ContentFinder<Texture2D>.Get("AM/Hand");
             block.SetTexture("_MainTex", handTex);
 
             if (tweak.HandsMode != HandsMode.No_Hands)

@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using AAM.Retexture;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using AM.Retexture;
 using UnityEngine;
 using Verse;
-using System.Linq;
-using System;
 
-namespace AAM.Tweaks
+namespace AM.Tweaks
 {
     public static class TweakDataManager
     {
@@ -128,9 +128,6 @@ namespace AAM.Tweaks
                       select ( pair.mod, report );
 
             static TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)> Row(string name, Func<(ModContentPack mod, ActiveTextureReport rep), string> toString) 
-                => new TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)>(name, toString);
-
-            static TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)> RowThing(string name, Func<(ModContentPack mod, ActiveTextureReport rep), ThingDef> toString)
                 => new TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)>(name, toString);
 
             static TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)> RowObj(string name, Func<(ModContentPack mod, ActiveTextureReport rep), object> toObj)

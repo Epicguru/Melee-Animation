@@ -1,6 +1,6 @@
 ﻿using System.CommandLine;
 using System.Globalization;
-using AAM.Tweaks;
+using AM.Tweaks;
 
 namespace CompatibilityReportGenerator;
 

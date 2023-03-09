@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AAM.Events;
+namespace AM.Events;
 
 [CreateAssetMenu(fileName = "Audio", menuName = "Events/Audio")]
 public class AudioEvent : EventBase

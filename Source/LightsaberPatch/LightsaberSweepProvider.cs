@@ -1,8 +1,8 @@
-﻿using AAM.Sweep;
+﻿using AM.Sweep;
 using SWSaber;
 using UnityEngine;
 
-namespace AAM.LightsaberPatch;
+namespace AM.LightsaberPatch;
 
 public class LightsaberSweepProvider : ISweepProvider
 {

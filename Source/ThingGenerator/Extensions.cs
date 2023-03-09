@@ -1,19 +1,19 @@
-﻿using AAM.Events;
-using AAM.Events.Workers;
-using AAM.Idle;
-using AAM.Tweaks;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using AAM.PawnData;
+using AM.Events;
+using AM.Events.Workers;
+using AM.Idle;
+using AM.PawnData;
+using AM.Reqs;
+using AM.Tweaks;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using Verse.AI.Group;
 
-namespace AAM;
+namespace AM;
 
 public static class Extensions
 {
@@ -201,6 +201,44 @@ public static class Extensions
 
     [DebugAction("Melee Animation", "Spawn all melee weapons", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
     private static void GimmeMeleeWeaponsAll() => GimmeMeleeWeapons(null);
+
+    [DebugAction("Melee Animation", "Give all selected melee weapons", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+    private static void GiveAllMeleeWeapons()
+    {
+        var pawns = Find.Selector.SelectedPawns.Where(p => p.equipment.Primary == null);
+
+        IEnumerable<ThingDef> GetWeaponDefs(WeaponSize? onlySize)
+        {
+            foreach (var def in DefDatabase<ThingDef>.AllDefsListForReading)
+            {
+                var tweak = TweakDataManager.TryGetTweak(def);
+                if (!def.IsMeleeWeapon || tweak == null)
+                    continue;
+
+                if (onlySize != null)
+                {
+                    var cat = IdleClassifier.Classify(tweak);
+                    if (cat.size != onlySize.Value)
+                        continue;
+                }
+
+                yield return def;
+            }
+        }
+
+        foreach (var pawn in pawns)
+        {
+            var weapon = GetWeaponDefs(null).RandomElementWithFallback();
+            if (weapon == null)
+                continue;
+
+            var spawned = ThingMaker.MakeThing(weapon) as ThingWithComps;
+            if (spawned == null)
+                continue;
+
+            pawn.equipment.Primary = spawned;
+        }
+    }
 
     private static void GimmeMeleeWeapons(WeaponSize? onlySize)
     {

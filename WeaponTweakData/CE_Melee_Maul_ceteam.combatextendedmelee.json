@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ceteam.combatextendedmelee",
+  "ItemDefName": "CE_Melee_Maul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2808513,
+  "OffY": -0.0297877789,
+  "Rotation": 45.0,
+  "BladeStart": 0.466489732,
+  "BladeEnd": 0.836702347,
+  "MeleeWeaponType": 1
+}

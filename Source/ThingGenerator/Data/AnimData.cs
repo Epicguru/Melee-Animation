@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AAM.Events;
 using UnityEngine;
-using System.Runtime.InteropServices;
-using AAM.Data.Model;
-using AAM.Tweaks;
+using AM;
+using AM.Tweaks;
 using Newtonsoft.Json;
+using AM.Data.Model;
+using AM.Events;
 #if !UNITY_EDITOR
 using Verse;
-using AAM;
 #endif
 
 public class AnimData
@@ -76,7 +75,7 @@ public class AnimData
         tris[4] = 2;
         tris[5] = 3;
         Mesh mesh = new();
-        mesh.name = $"AAM Mesh: {flipX}, {flipY}";
+        mesh.name = $"AM Mesh: {flipX}, {flipY}";
         mesh.vertices = verts;
         mesh.uv = (flipX && flipY) ? fxy : flipX ? fx : flipY ? fy : normal;
         mesh.SetTriangles(tris, 0);

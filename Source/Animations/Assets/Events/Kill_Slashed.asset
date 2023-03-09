@@ -17,6 +17,6 @@ MonoBehaviour:
   VictimIndex: 1
   TargetBodyPart: Torso
   DamageDef: Cut
-  BattleLogDef: AAM_Execution_Slashed
+  BattleLogDef: AM_Execution_Slashed
   OnlyIfNotInterrupted: 1
   PreventDamageMote: 1

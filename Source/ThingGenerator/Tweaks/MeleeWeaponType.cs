@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AAM.Tweaks
+namespace AM.Tweaks
 {
     [Flags]
     public enum MeleeWeaponType : uint

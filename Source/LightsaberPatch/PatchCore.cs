@@ -1,6 +1,6 @@
 ﻿using Verse;
 
-namespace AAM.LightsaberPatch;
+namespace AM.LightsaberPatch;
 
 [HotSwapAll]
 public class PatchCore : Mod

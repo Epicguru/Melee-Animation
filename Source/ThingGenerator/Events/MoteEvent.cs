@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AAM.Events;
+namespace AM.Events;
 
 [CreateAssetMenu(fileName = "Mote", menuName = "Events/Mote")]
 public class MoteEvent : EventBase

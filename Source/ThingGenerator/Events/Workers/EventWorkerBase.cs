@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using AM;
 using Verse;
 
-namespace AAM.Events.Workers
+namespace AM.Events.Workers
 {
     public abstract class EventWorkerBase
     {

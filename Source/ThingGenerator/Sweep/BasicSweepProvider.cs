@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AAM.Sweep;
+namespace AM.Sweep;
 
 public class BasicSweepProvider : ISweepProvider
 {

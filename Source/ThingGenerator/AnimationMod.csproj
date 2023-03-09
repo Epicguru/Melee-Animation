@@ -1,0 +1,61 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Library</OutputType>
+    <LangVersion>11</LangVersion>
+    <NoStdLib>false</NoStdLib>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Configurations>v1.4</Configurations>
+    <AssemblyName>zAnimationMod</AssemblyName>
+    <RootNamespace>AM</RootNamespace>
+    <Nullable>disable</Nullable>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<AssemblyAttribute Include="AM.BuildDateAttribute">
+	  <_Parameter1>$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</_Parameter1>
+	</AssemblyAttribute>
+	<PackageReference Include="BetterFloatMenu" Version="*" />
+    <PackageReference Include="Lib.Harmony" Version="2.2.2">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Include="Krafs.Publicizer" Version="2.1.0">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="PolySharp" Version="1.12.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <Reference Include="0ColourPicker">
+	  <HintPath>0ColourPicker.dll</HintPath>
+    </Reference>
+	<PackageReference Include="Portable.Meta.Numerics" Version="3.1.0.73149" />
+	<ProjectReference Include="..\AMRetextureSupport\AMRetextureSupport.csproj" />
+	<ProjectReference Include="..\ModRequestAPI\ModRequestAPI.csproj" />
+	  
+	<!-- Ungodly hack to access rimworld private properties & methods -->
+    <Publicize Include="Assembly-CSharp" />
+  </ItemGroup>
+
+
+	<!-- _____ 1.4 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
+	  <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3573-beta" />
+  </ItemGroup>
+
+
+  <!-- Output -->
+  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+    <OutputPath>..\..\1.4\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;V14</DefineConstants>
+  </PropertyGroup>
+
+</Project>

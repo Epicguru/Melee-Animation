@@ -1,4 +1,4 @@
-﻿namespace AAM
+﻿namespace AM
 {
     public enum AnimType
     {

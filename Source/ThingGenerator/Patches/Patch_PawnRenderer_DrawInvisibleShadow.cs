@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using Verse;
 
-namespace AAM.Patches;
+namespace AM.Patches;
 
 /// <summary>
 /// Suppresses shadow draw which was added in 1.4 in the <see cref="PawnRenderer.PawnRenderer(Pawn)"/>.

@@ -1,5 +1,5 @@
 {
-  "ExportTimeUTC": "2023-03-03T19:32:28.1937705Z",
+  "ExportTimeUTC": "2023-03-06T18:05:10.1927704Z",
   "Name": "Idle_MediumSharp_Flavour2",
   "Length": 7.85,
   "Events": [
@@ -10,7 +10,7 @@
   ],
   "Parts": [
     {
-      "ID": 19346,
+      "ID": 19354,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -475,7 +475,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19538,
+      "ID": 19546,
       "Path": "WeaponACutoff",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -556,10 +556,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 18968,
+      "ID": 18976,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": 19346,
+      "ParentID": 19354,
       "Curves": {
         "AnimatedPart.SplitDrawMode": {
           "Keyframes": [
@@ -636,14 +636,14 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19538,
+      "SplitDrawPivotPartID": 19546,
       "SweepPaths": []
     },
     {
-      "ID": 19474,
+      "ID": 19482,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": 19346,
+      "ParentID": 19354,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -969,10 +969,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19612,
+      "ID": 19620,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": 19346,
+      "ParentID": 19354,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -1224,7 +1224,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 18996,
+      "ID": 19004,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {},
@@ -1255,10 +1255,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 18876,
+      "ID": 18884,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 18996,
+      "ParentID": 19004,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
