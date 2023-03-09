@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 16 Feb 2023, 3:19 PM.`  
+`Updated 9 Mar 2023, 7:13 PM.`  
 
-**Advanced Melee Animation supports 723 weapons from 88 mods.**  
+**Melee Animation supports 748 weapons from 92 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -27,6 +27,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **[SYR] Thrumkin** | syrchalis.thrumkin | 1 | *Epicguru* |
 | **A RimWorld of Magic** | torann.arimworldofmagic | 8 | *Epicguru* |
 | **Advanced Animation** | co.uk.epicguru.advancedanimation | 1 | *Epicguru* |
+| **Advanced Melee Animation** | co.uk.epicguru.advancedmeleeanimation | 1 | *Epicguru* |
 | **AI Upscaled Textures - Core** | airetexture.core | 25 | *Epicguru* |
 | **AI Upscaled Textures - Mods** | airetexture.mods | 28 | *Epicguru* |
 | **All-Tech Melee** | ev.all.tech.melee | 16 | *Epicguru* |
@@ -41,8 +42,9 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Arsenal of Reaction** | 4ydra.arsenalofreaction | 11 | *Epicguru* |
 | **Arsenal of Revolution** | 4ydra.arsenalofrevolution | 8 | *Epicguru* |
 | **Aspirrator's Arsenal** | aspirrator.arsenal | 7 | *Epicguru* |
+| **Combat Extended Melee** | ceteam.combatextendedmelee | 7 | *Epicguru* |
 | **Contractors Arsenal** | zerophoenix.contractorsarsenalfaction | 1 | *Epicguru* |
-| **Core** | ludeon.rimworld | 16 | *Epicguru* |
+| **Core** | ludeon.rimworld | 17 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
@@ -56,10 +58,12 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Medieval Overhaul** | dankpyon.medieval.overhaul | 68 | *Epicguru* |
 | **Medieval Overhaul: Arcane Archaeologists** | ogam.medievaloverhaul.arcanearchaeologists | 4 | *Epicguru* |
 | **Megafauna** | spino.megafauna | 6 | *Epicguru* |
+| **Melee Animation** | co.uk.epicguru.meleeanimation | 1 | *Epicguru* |
 | **Melee Please (Continued)** | mlie.meleeplease | 11 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
 | **More Vanilla Textures** | tidal.morevanilla.textures | 2 | *Epicguru* |
 | **MorrowRim - Just the Animals** | sirmashedpotato.morrowrim.justtheanimals | 1 | *Epicguru* |
+| **NewRatkinPlus** | solaris.ratkinracemod | 15 | *Epicguru* |
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
 | **Pawnmorpher** | tachyonite.pawnmorpherpublic | 1 | *Epicguru* |
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |
