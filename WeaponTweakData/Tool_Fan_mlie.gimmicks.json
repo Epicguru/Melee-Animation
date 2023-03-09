@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Fan",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.233908534,
+  "Rotation": 90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.1035533,
+  "MeleeWeaponType": 24
+}

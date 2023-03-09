@@ -1,0 +1,20 @@
+{
+  "TextureModID": "aranmaho.makai",
+  "ItemDefName": "Makai_Mica_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.765726,
+  "OffY": -0.167189151,
+  "Rotation": -40.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 1.1172415,
+  "BladeEnd": 1.68568456,
+  "MeleeWeaponType": 3,
+  "TrailTint": {
+    "r": 0.987999856,
+    "g": 0.9157878,
+    "b": 0.3135251,
+    "a": 0.996
+  }
+}

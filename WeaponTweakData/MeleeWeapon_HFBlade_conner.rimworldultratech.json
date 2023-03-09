@@ -1,0 +1,17 @@
+{
+  "TextureModID": "conner.rimworldultratech",
+  "ItemDefName": "MeleeWeapon_HFBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3151268,
+  "OffY": -0.03898467,
+  "BladeStart": 0.09055857,
+  "BladeEnd": 0.7695432,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182,
+    "g": 0.989,
+    "b": 1.0,
+    "a": 0.869
+  }
+}

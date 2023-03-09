@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Power_Drill",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2306601,
+  "OffY": -0.0422333926,
+  "HandsMode": 1,
+  "BladeStart": 0.142537981,
+  "BladeEnd": 0.5551272,
+  "MeleeWeaponType": 40
+}

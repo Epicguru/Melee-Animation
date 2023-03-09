@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Chefs_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.16568549,
+  "OffY": -0.009746291,
+  "Rotation": 30.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.123045884,
+  "BladeEnd": 0.519391,
+  "MeleeWeaponType": 48
+}

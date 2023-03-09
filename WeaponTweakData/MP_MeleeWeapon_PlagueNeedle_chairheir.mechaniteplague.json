@@ -1,0 +1,18 @@
+{
+  "TextureModID": "chairheir.mechaniteplague",
+  "ItemDefName": "MP_MeleeWeapon_PlagueNeedle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1981723,
+  "OffY": -0.00324893,
+  "HandsMode": 1,
+  "BladeStart": 0.136040613,
+  "BladeEnd": 0.467411071,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.212,
+    "g": 1.0,
+    "b": 0.047,
+    "a": 1.0
+  }
+}

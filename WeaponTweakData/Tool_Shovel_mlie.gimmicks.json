@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Shovel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.305380523,
+  "Rotation": -45.0,
+  "BladeStart": 0.5616246,
+  "BladeEnd": 0.944974959,
+  "MeleeWeaponType": 9
+}

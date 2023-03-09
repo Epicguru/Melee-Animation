@@ -1,0 +1,13 @@
+{
+  "TextureModID": "aranmaho.makai",
+  "ItemDefName": "Makai_Alf_Claw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.187251538,
+  "OffY": -0.0133749247,
+  "Rotation": -45.0,
+  "HandsMode": 2,
+  "BladeStart": 0.104075335,
+  "BladeEnd": 0.742738,
+  "MeleeWeaponType": 6
+}

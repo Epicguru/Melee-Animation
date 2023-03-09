@@ -1,0 +1,14 @@
+{
+  "TextureModID": "aranmaho.makai",
+  "ItemDefName": "Makai_Anva_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7791015,
+  "OffY": -0.03009384,
+  "Rotation": -45.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.274608463,
+  "BladeEnd": 2.15047026,
+  "MeleeWeaponType": 6
+}

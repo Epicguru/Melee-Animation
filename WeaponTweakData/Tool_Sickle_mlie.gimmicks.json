@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Sickle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.146192908,
+  "OffY": -0.045482032,
+  "Rotation": 40.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": 0.132792175,
+  "BladeEnd": 0.434923768,
+  "MeleeWeaponType": 48
+}

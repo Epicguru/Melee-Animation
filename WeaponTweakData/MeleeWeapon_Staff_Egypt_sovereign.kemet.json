@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sovereign.kemet",
+  "ItemDefName": "MeleeWeapon_Staff_Egypt",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.155939192,
+  "OffY": -0.00324842334,
+  "BladeStart": 0.07431492,
+  "BladeEnd": 0.56487304,
+  "MeleeWeaponType": 8
+}

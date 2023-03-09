@@ -1,0 +1,17 @@
+{
+  "TextureModID": "chairheir.mechaniteplague",
+  "ItemDefName": "MP_MeleeWeapon_PlagueFang",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.383350372,
+  "Rotation": 45.0,
+  "BladeStart": 0.168527916,
+  "BladeEnd": 1.04568529,
+  "MeleeWeaponType": 5,
+  "TrailTint": {
+    "r": 0.212,
+    "g": 1.0,
+    "b": 0.047,
+    "a": 1.0
+  }
+}

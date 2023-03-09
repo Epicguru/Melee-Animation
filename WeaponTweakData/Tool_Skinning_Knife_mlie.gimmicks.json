@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.gimmicks",
+  "ItemDefName": "Tool_Skinning_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.168933928,
+  "OffY": -0.0162436515,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.09055857,
+  "BladeEnd": 0.6428428,
+  "MeleeWeaponType": 48
+}
