@@ -13,6 +13,7 @@ using UnityEngine;
 using Verse;
 using System.Globalization;
 using System.Reflection;
+using AM.AMSettings;
 
 namespace AM
 {
@@ -28,8 +29,8 @@ namespace AM
         public static Harmony Harmony;
         public static bool IsSimpleSidearmsActive;
 
-        private readonly Queue<(string title, Action action)> lateLoadActions = new();
-        private readonly Queue<(string title, Action action)> lateLoadActionsSync = new();
+        private readonly Queue<(string title, Action action)> lateLoadActions = new Queue<(string title, Action action)>();
+        private readonly Queue<(string title, Action action)> lateLoadActionsSync = new Queue<(string title, Action action)>();
 
         public static void Log(string msg)
         {

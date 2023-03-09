@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AM.AMSettings;
 using AM.Processing;
 using AM.Tweaks;
 using JetBrains.Annotations;

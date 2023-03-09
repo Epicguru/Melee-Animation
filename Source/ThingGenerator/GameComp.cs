@@ -6,6 +6,7 @@ using AM.Idle;
 using AM.Patches;
 using AM.PawnData;
 using AM.UI;
+using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
@@ -20,6 +21,7 @@ namespace AM
         public static ulong FrameCounter;
 
         [TweakValue("Melee Animation")]
+        [UsedImplicitly]
         private static bool drawTextureExtractor;
 
         private string texPath;

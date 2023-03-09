@@ -130,9 +130,6 @@ namespace AM.Tweaks
             static TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)> Row(string name, Func<(ModContentPack mod, ActiveTextureReport rep), string> toString) 
                 => new TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)>(name, toString);
 
-            static TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)> RowThing(string name, Func<(ModContentPack mod, ActiveTextureReport rep), ThingDef> toString)
-                => new TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)>(name, toString);
-
             static TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)> RowObj(string name, Func<(ModContentPack mod, ActiveTextureReport rep), object> toObj)
                 => new TableDataGetter<(ModContentPack mod, ActiveTextureReport rep)>(name, toObj);
 

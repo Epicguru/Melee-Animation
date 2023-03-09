@@ -348,8 +348,8 @@ namespace AM.UI
                 ui.TextFieldNumericLabeled("Scale Y:  ", ref tweak.ScaleY, ref GetBuffer(tweak.ScaleY));
 
                 ui.Gap();
-                tweak.OffX = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffX, -2, 2, label: $"Offset X <b>[G]</b>: {tweak.OffX:F3}");
-                tweak.OffY = Widgets.HorizontalSlider(ui.GetRect(28), tweak.OffY, -2, 2, label: $"Offset Y <b>[Shift+G]</b>: {tweak.OffY:F3}");
+                tweak.OffX = Widgets.HorizontalSlider_NewTemp(ui.GetRect(28), tweak.OffX, -2, 2, label: $"Offset X <b>[G]</b>: {tweak.OffX:F3}");
+                tweak.OffY = Widgets.HorizontalSlider_NewTemp(ui.GetRect(28), tweak.OffY, -2, 2, label: $"Offset Y <b>[Shift+G]</b>: {tweak.OffY:F3}");
                 ui.Gap();
                 ref string tweakRotBuf = ref GetBuffer(tweak.Rotation);
                 ui.TextFieldNumericLabeled("Rotation <b>[R]</b>:  ", ref tweak.Rotation, ref tweakRotBuf, -360, 360);
@@ -410,8 +410,8 @@ namespace AM.UI
 
                 var startSlider = ui.GetRect(20);
                 var endSlider = ui.GetRect(20);
-                tweak.BladeStart = Widgets.HorizontalSlider(startSlider, tweak.BladeStart, -2, 2, label: "Blade Start <b>[Q]</b>");
-                tweak.BladeEnd = Widgets.HorizontalSlider(endSlider, tweak.BladeEnd, -2, 2, label: "Blade End <b>[E]</b>");
+                tweak.BladeStart = Widgets.HorizontalSlider_NewTemp(startSlider, tweak.BladeStart, -2, 2, label: "Blade Start <b>[Q]</b>");
+                tweak.BladeEnd = Widgets.HorizontalSlider_NewTemp(endSlider, tweak.BladeEnd, -2, 2, label: "Blade End <b>[E]</b>");
 
                 ui.GapLine();
 
@@ -517,7 +517,7 @@ namespace AM.UI
                 const float MIN = 0.1f;
                 const float MAX = 5f;
 
-                camera.orthographicSize = Mathf.Lerp(MIN, MAX, 1f - Widgets.HorizontalSlider(ui.GetRect(30), 1f - Mathf.InverseLerp(MIN, MAX, camera.orthographicSize), 0f, 1f, label: "Camera zoom"));
+                camera.orthographicSize = Mathf.Lerp(MIN, MAX, 1f - Widgets.HorizontalSlider_NewTemp(ui.GetRect(30), 1f - Mathf.InverseLerp(MIN, MAX, camera.orthographicSize), 0f, 1f, label: "Camera zoom"));
             }
 
             ui.End();

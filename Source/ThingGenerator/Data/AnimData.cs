@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using System.Runtime.InteropServices;
 using AM;
 using AM.Tweaks;
 using Newtonsoft.Json;
@@ -11,7 +10,6 @@ using AM.Data.Model;
 using AM.Events;
 #if !UNITY_EDITOR
 using Verse;
-using AM;
 #endif
 
 public class AnimData
