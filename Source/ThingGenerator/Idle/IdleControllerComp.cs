@@ -34,18 +34,25 @@ public class IdleControllerComp : ThingComp
         if (parent is not Pawn pawn || CurrentAnimation == null)
             return;
 
-        // If the animation is about to draw but it was just destroyed (by the animation ending)
-        // the immediately tick to get a new animation running before the frame is drawn.
-        // This prevents an annoying flicker.
-        if (CurrentAnimation.IsDestroyed)
+        try
         {
-            if (ShouldBeActive(out var weapon))
-                TickActive(weapon);
-        }
+            // If the animation is about to draw but it was just destroyed (by the animation ending)
+            // the immediately tick to get a new animation running before the frame is drawn.
+            // This prevents an annoying flicker.
+            if (CurrentAnimation.IsDestroyed)
+            {
+                if (ShouldBeActive(out var weapon))
+                    TickActive(weapon);
+            }
 
-        // Update animator position to match pawn.
-        CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
-        drawTick = Find.TickManager.TicksAbs;
+            // Update animator position to match pawn.
+            CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
+            drawTick = Find.TickManager.TicksAbs;
+        }
+        catch (Exception e)
+        {
+            Core.Error("PreDraw exception:", e);
+        }
     }
 
     private bool ShouldBeActive(out Thing weapon)

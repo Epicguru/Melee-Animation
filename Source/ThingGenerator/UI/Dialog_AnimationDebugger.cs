@@ -17,7 +17,7 @@ namespace AM.UI
 
         private static bool IsStarterOpen => Mathf.Abs(lastOpenStarterTime - Time.realtimeSinceStartup) < 0.25f;
         private static MaterialPropertyBlock mpb;
-        private static readonly Material mat = MaterialPool.MatFrom(GenDraw.LineTexPath, ShaderDatabase.Transparent, Color.white);
+        private static Material mat;
         private static AnimRenderer selectedRenderer;
         private static AnimPartData selectedPart;
         private static Pawn[] startPawns = new Pawn[8];
@@ -78,6 +78,7 @@ namespace AM.UI
             if (mpb == null)
             {
                 mpb = new MaterialPropertyBlock();
+                mat ??= MaterialPool.MatFrom(GenDraw.LineTexPath, ShaderDatabase.Transparent, Color.white);
                 mpb.SetTexture("_MainTex", mat.mainTexture);
             }
         }
@@ -653,7 +654,7 @@ namespace AM.UI
             if (AnimationManager.IsDoingMultithreadedSeek)
             {
                 ui.Label("Multithreaded matrix calculation is active:");
-                ui.Label($" - Multithreaded seek time is {AnimationManager.MultithreadedSeekTimeMS:F2} on {AnimationManager.MultithreadedThreadsUsed} threads.");
+                ui.Label($" - Multithreaded seek time is {AnimationManager.MultithreadedSeekTimeMS:F2} MS.");
             }
 
             foreach (var manager in allManagers)

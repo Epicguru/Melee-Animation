@@ -1,0 +1,12 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.178622216,
+  "OffY": -0.003800705,
+  "HandsMode": 1,
+  "BladeStart": 0.134916991,
+  "BladeEnd": 0.423753321,
+  "MeleeWeaponType": 48
+}

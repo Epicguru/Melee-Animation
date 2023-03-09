@@ -18,7 +18,7 @@
     <label>Melee Lethality</label>
     <description>This pawn's lethality when performing executions. This value represents the chance to kill when performing execution animations, including when winning a duel.</description>
     <category>PawnCombat</category>
-    <defaultBaseValue>0.5</defaultBaseValue>
+    <defaultBaseValue>0.25</defaultBaseValue>
     <minValue>0</minValue>
     <maxValue>1</maxValue>
     <toStringStyle>PercentZero</toStringStyle>

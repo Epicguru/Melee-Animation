@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ceteam.combatextendedmelee",
+  "ItemDefName": "CE_Melee_Halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.285106182,
+  "OffY": -0.0382975936,
+  "Rotation": 53.4472,
+  "BladeStart": 0.517553449,
+  "BladeEnd": 0.879255533,
+  "MeleeWeaponType": 6
+}

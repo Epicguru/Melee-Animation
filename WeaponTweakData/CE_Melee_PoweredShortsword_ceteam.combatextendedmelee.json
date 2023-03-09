@@ -1,0 +1,18 @@
+{
+  "TextureModID": "ceteam.combatextendedmelee",
+  "ItemDefName": "CE_Melee_PoweredShortsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.340425551,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.0877659544,
+  "BladeEnd": 0.679255664,
+  "MeleeWeaponType": 54,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

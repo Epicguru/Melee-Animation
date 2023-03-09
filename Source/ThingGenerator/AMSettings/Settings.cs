@@ -10,7 +10,9 @@ namespace AM.AMSettings;
 
 public class Settings : SimpleSettingsBase
 {
-
+    [TweakValue("Melee Animation")]
+    [NonSerialized]
+    private static bool canModIdleAnims = false;
 
     #region General
     [Header("General")]
@@ -213,6 +215,10 @@ public class Settings : SimpleSettingsBase
     [Description("If true, the name of pawns is drawn below them, just like in the base game.\nIf false, the name is not drawn, for a more cinematic animation.")]
     [WebContent("ShowNames", false)]
     public bool DrawNamesInAnimation = true;
+
+    [Label("Show Execution Outcome Text")]
+    [Description("Enables or disables the text popup that shows the outcome of an execution (i.e. injure, down or kill) when an execution animation plays.")]
+    public bool ShowExecutionMotes = true;
     #endregion
 
     #region Performance
@@ -337,7 +343,7 @@ public class Settings : SimpleSettingsBase
         {
             if (!anim.canEditProbability)
                 continue;
-            if (anim.type == AnimType.Idle && anim.idleType is IdleType.Idle or IdleType.MoveHorizontal or IdleType.MoveVertical)
+            if (anim.type == AnimType.Idle && !canModIdleAnims)
                 continue;
 
             float h = DrawAnim(anim);
@@ -359,7 +365,7 @@ public enum CorpseOffsetMode
 public enum AttackPauseIntensity
 {
     Disabled = 0,
-    Short = 4,
-    Medium = 8,
+    Short = 3,
+    Medium = 5,
     Long = 12
 }

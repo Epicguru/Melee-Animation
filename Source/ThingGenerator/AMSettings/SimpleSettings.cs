@@ -688,7 +688,6 @@ public static class SimpleSettings
 
             if (!(pair.Value.Options?.IgnoreEqualityForPresets ?? false) && !va.Equals(vb))
             {
-                Core.Log($"{pair.Value.Name} is different.");
                 return false;
             }
         }

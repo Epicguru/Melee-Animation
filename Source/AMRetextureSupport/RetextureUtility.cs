@@ -50,7 +50,7 @@ public static class RetextureUtility
         // 0. Get active texture.
         string texPath = ResolveTexturePath(weapon);
         if (string.IsNullOrWhiteSpace(texPath))
-            return new ActiveTextureReport("Failed to find texture path i.e. graphicData.texPath");
+            return new ActiveTextureReport($"Failed to find texture path i.e. graphicData.texPath '{weapon.graphicData.texPath}' ({weapon.graphicData.graphicClass.FullName})");
 
         // Make basic report. Data still missing.
         var report = new ActiveTextureReport
@@ -256,6 +256,15 @@ public static class RetextureUtility
             {
                 return path;
             }
+        }
+
+        // If no mods have it, check vanilla resources.
+        var inFolder = Resources.LoadAll<Texture2D>($"Textures/{xmlPath}");
+        if (inFolder is { Length: > 0 })
+        {
+            string name = inFolder.OrderBy(t => t.name).FirstOrDefault().name;
+            Resources.UnloadUnusedAssets();
+            return $"{xmlPath}/{name}";
         }
 
         // Nothing was found.

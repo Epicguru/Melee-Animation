@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ceteam.combatextendedmelee",
+  "ItemDefName": "CE_Melee_Zweihander",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.425531924,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.121808633,
+  "BladeEnd": 1.15585124,
+  "MeleeWeaponType": 6
+}

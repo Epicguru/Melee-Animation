@@ -204,7 +204,8 @@ public class AnimRenderer : IExposable
             Core.Error($"Rendering exception when doing animation {renderer}", e);
         }
 
-        TryDoEventsForPeriod(renderer, tp ?? timePeriod);
+        if (!renderer.IsDestroyed)
+            TryDoEventsForPeriod(renderer, tp ?? timePeriod);
     }
 
     private static void TryDoEventsForPeriod(AnimRenderer renderer, Vector2 tp)
@@ -386,6 +387,8 @@ public class AnimRenderer : IExposable
     private Pawn[] pawnsForPostLoad;
     private bool hasStarted;
     private bool lastMirrorX, lastMirrorZ;
+    private bool hasDoneOnEnd;
+    private bool delayedDestroy;
 
     [UsedImplicitly]
     public AnimRenderer()
@@ -625,7 +628,7 @@ public class AnimRenderer : IExposable
     {
         if (IsDestroyed)
         {
-            Core.Warn("Tried to destroy renderer that is already destroyed...");
+            //Core.Warn("Tried to destroy renderer that is already destroyed...");
             return;
         }
 
@@ -757,6 +760,8 @@ public class AnimRenderer : IExposable
         if (Find.CurrentMap != Map || cullDraw)
         {
             DrawMS = 0;
+            if (delayedDestroy)
+                Destroy();
             return range; // Do not actually draw if not on the current map or culled.
         }
 
@@ -856,6 +861,8 @@ public class AnimRenderer : IExposable
         DrawPawns(labelDraw);
 
         timer.GetElapsedMilliseconds(out DrawMS);
+        if (delayedDestroy)
+            Destroy();
         return range;
     }
 
@@ -1013,8 +1020,11 @@ public class AnimRenderer : IExposable
     /// Changes the current time of this animation.
     /// Depending on the parameters specified, this may act as a 'jump' (<paramref name="atTime"/>) or a continuous movement (<paramref name="dt"/>).
     /// </summary>
-    public Vector2 Seek(float? atTime, float dt)
+    public Vector2 Seek(float? atTime, float dt, bool delayedDestroy = false)
     {
+        if (IsDestroyed || this.delayedDestroy)
+            return new Vector2(-1, -1);
+
         float t = atTime ?? (time + dt * TimeScale * Core.Settings.GlobalAnimationSpeed);
 
         bool mirrorsAreSame = lastMirrorX == MirrorHorizontal && lastMirrorZ == MirrorVertical;
@@ -1038,7 +1048,10 @@ public class AnimRenderer : IExposable
             }
             else
             {
-                Destroy();
+                if (delayedDestroy)
+                    this.delayedDestroy = true;
+                else
+                    Destroy();
             }
         }
         return range;
@@ -1128,6 +1141,10 @@ public class AnimRenderer : IExposable
 
     public void OnEnd()
     {
+        if (hasDoneOnEnd)
+            return;
+        hasDoneOnEnd = true;
+
         try
         {
             // Do not teleport to end if animation was interrupted.

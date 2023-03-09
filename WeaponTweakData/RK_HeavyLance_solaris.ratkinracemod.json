@@ -1,0 +1,13 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_HeavyLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.554869,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.123515442,
+  "BladeEnd": 1.45368183,
+  "MeleeWeaponType": 5
+}

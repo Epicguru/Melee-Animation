@@ -13,7 +13,7 @@ public class PawnColumnWorker_Lasso : PawnColumnWorker_Base
     {
         var tip = data.AutoGrapple switch
         {
-            AutoOption.Default => $"Auto-Lasso is default, which means {(Core.Settings.AutoGrapple ? "Enabled" : "Disabled")} due to mod settings",
+            AutoOption.Default => $"Auto-Lasso is set to default, which means {(Core.Settings.AutoGrapple ? "Enabled" : "Disabled")} due to mod settings",
             AutoOption.Enabled => "Auto-Lasso is Enabled.",
             AutoOption.Disabled => "Auto-Lasso is Disabled.",
             _ => throw new ArgumentOutOfRangeException()

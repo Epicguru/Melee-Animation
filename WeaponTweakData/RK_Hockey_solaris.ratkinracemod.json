@@ -1,0 +1,12 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_Hockey",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.23562932,
+  "OffY": -0.06840809,
+  "Rotation": 47.23992,
+  "BladeStart": 0.469358921,
+  "BladeEnd": 0.750593841,
+  "MeleeWeaponType": 2
+}

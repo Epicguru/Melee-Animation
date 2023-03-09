@@ -1,0 +1,14 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_Gunlance_NormalType",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.463657975,
+  "OffY": -0.045605585,
+  "Rotation": 42.50374,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.115914613,
+  "BladeEnd": 1.10023749,
+  "MeleeWeaponType": 7
+}

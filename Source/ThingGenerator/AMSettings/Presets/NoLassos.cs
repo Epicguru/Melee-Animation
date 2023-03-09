@@ -14,5 +14,6 @@ public class NoLassos : Settings
     {
         EnemiesCanGrapple = false;
         AutoGrapple = false;
+        LassoSpawnChance = 0f;
     }
 }

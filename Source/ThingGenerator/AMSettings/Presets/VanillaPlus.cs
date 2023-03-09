@@ -15,5 +15,6 @@ public class VanillaPlus : Settings
         AutoGrapple = false;
         AutoExecute = false;
         ShowHands = false;
+        LassoSpawnChance = 0f;
     }
 }
