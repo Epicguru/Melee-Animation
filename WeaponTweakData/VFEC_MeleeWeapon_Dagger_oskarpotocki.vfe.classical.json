@@ -1,0 +1,11 @@
+{
+  "TextureModID": "oskarpotocki.vfe.classical",
+  "ItemDefName": "VFEC_MeleeWeapon_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1647524,
+  "HandsMode": 1,
+  "BladeStart": 0.104554556,
+  "BladeEnd": 0.443564355,
+  "MeleeWeaponType": 48
+}

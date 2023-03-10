@@ -1,0 +1,11 @@
+{
+  "TextureModID": "miho.fortifiedoutremer",
+  "ItemDefName": "Miho_Weapon_PowerClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.232437909,
+  "HandsMode": 2,
+  "BladeStart": 0.07482607,
+  "BladeEnd": 0.5842788,
+  "MeleeWeaponType": 48
+}

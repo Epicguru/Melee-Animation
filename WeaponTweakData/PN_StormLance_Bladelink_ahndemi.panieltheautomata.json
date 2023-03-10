@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ahndemi.panieltheautomata",
+  "ItemDefName": "PN_StormLance_Bladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.43940264,
+  "Rotation": 45.0,
+  "BladeStart": 0.170348465,
+  "BladeEnd": 1.10328388,
+  "MeleeWeaponType": 5
+}

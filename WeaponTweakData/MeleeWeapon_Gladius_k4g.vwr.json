@@ -1,0 +1,14 @@
+{
+  "TextureModID": "k4g.vwr",
+  "ItemDefName": "MeleeWeapon_Gladius",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.269293129,
+  "OffY": -0.00398430228,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 1,
+  "BladeStart": 0.124795549,
+  "BladeEnd": 0.6699507,
+  "MeleeWeaponType": 48
+}

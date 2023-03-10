@@ -1,0 +1,12 @@
+{
+  "TextureModID": "miho.fortifiedoutremer",
+  "ItemDefName": "Miho_Weapon_PlasmaTachi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3916419,
+  "OffY": -0.0127366036,
+  "Rotation": 45.0,
+  "BladeStart": 0.2563185,
+  "BladeEnd": 1.05552268,
+  "MeleeWeaponType": 6
+}

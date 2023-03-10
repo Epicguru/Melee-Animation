@@ -1,0 +1,14 @@
+{
+  "TextureModID": "killathon.androidtiersreforged",
+  "ItemDefName": "ATR_MechPoleaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.8357493,
+  "OffY": -0.1525321,
+  "Rotation": 90.0,
+  "ScaleX": 3.5,
+  "ScaleY": 3.5,
+  "BladeStart": 1.23376358,
+  "BladeEnd": 2.25700116,
+  "MeleeWeaponType": 7
+}

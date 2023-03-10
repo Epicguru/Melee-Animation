@@ -1,0 +1,19 @@
+{
+  "TextureModID": "suvi.wc",
+  "ItemDefName": "S_WC_M_FISSION",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.358019441,
+  "Rotation": 45.0,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.6716831,
+  "BladeEnd": 1.08039629,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

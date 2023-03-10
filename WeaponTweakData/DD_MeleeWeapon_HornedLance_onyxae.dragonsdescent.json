@@ -1,0 +1,13 @@
+{
+  "TextureModID": "onyxae.dragonsdescent",
+  "ItemDefName": "DD_MeleeWeapon_HornedLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2961195,
+  "OffY": -0.00318402052,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.3359205,
+  "BladeEnd": 0.8676617,
+  "MeleeWeaponType": 3
+}

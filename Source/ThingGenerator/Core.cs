@@ -14,6 +14,7 @@ using Verse;
 using System.Globalization;
 using System.Reflection;
 using AM.AMSettings;
+using System.IO;
 
 namespace AM
 {
@@ -50,7 +51,7 @@ namespace AM
         }
 
         [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
-        private static void LogModRequests()
+        private static void LogModRequestsToDesktop()
         {
             var task = Task.Run(() => new ModRequestClient(GIST_ID).GetModRequests());
             task.ContinueWith(t =>
@@ -61,7 +62,9 @@ namespace AM
                     return;
                 }
 
-                var list = (from r in t.Result orderby r.data.RequestCount descending select r).ToList();
+                var str = new StringBuilder(1024 * 10);
+                var res = t.Result.ToList();
+                var list = (from r in res orderby r.data.RequestCount descending select r).ToList();
                 foreach (var pair in list)
                 {
                     int done = TweakDataManager.GetTweakDataFileCount(pair.modID);
@@ -69,7 +72,11 @@ namespace AM
                         continue;
 
                     Log($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.");
+                    str.Append($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.\n");
                 }
+
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MeleeAnimationMissingMods.txt");
+                File.WriteAllText(path, str.ToString());
             });
         }
 

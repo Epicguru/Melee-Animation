@@ -1,0 +1,13 @@
+{
+  "TextureModID": "devdesigner.blood",
+  "ItemDefName": "DevDesigner_Blood_MeleeWeapon_ExecutionerGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5639601,
+  "Rotation": 45.0,
+  "ScaleX": 1.28,
+  "ScaleY": 1.28,
+  "BladeStart": 0.171089411,
+  "BladeEnd": 1.34336662,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ahndemi.panieltheautomata",
+  "ItemDefName": "PN_RoyalHammer_Bladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.420298457,
+  "Rotation": 45.0,
+  "BladeStart": 0.638408065,
+  "BladeEnd": 0.9249753,
+  "MeleeWeaponType": 1
+}

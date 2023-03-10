@@ -1,0 +1,13 @@
+{
+  "TextureModID": "onyxae.dragonsdescent",
+  "ItemDefName": "DD_MeleeWeapon_DrachenSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2961195,
+  "OffY": -0.00318402052,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.1162192,
+  "BladeEnd": 0.8453733,
+  "MeleeWeaponType": 6
+}

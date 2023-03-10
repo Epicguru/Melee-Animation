@@ -1,0 +1,11 @@
+{
+  "TextureModID": "miho.fortifiedoutremer",
+  "ItemDefName": "Miho_Weapon_Sappertool",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.194228575,
+  "OffY": -0.003183782,
+  "BladeStart": 0.269054651,
+  "BladeEnd": 0.682985,
+  "MeleeWeaponType": 9
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "k4g.vwr",
+  "ItemDefName": "MeleeWeapon_ZeusHammerBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2670835,
+  "OffY": 0.00628488138,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.4250562,
+  "BladeEnd": 0.8411636,
+  "MeleeWeaponType": 1
+}

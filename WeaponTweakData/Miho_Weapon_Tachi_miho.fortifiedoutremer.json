@@ -1,0 +1,11 @@
+{
+  "TextureModID": "miho.fortifiedoutremer",
+  "ItemDefName": "Miho_Weapon_Tachi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3598011,
+  "Rotation": 41.95385,
+  "BladeStart": 0.227662,
+  "BladeEnd": 1.04915416,
+  "MeleeWeaponType": 6
+}

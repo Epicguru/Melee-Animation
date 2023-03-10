@@ -1,0 +1,19 @@
+{
+  "TextureModID": "suvi.wc",
+  "ItemDefName": "S_WC_M_CRUSADER",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.364356458,
+  "Rotation": 43.58445,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.7730696,
+  "BladeEnd": 1.34019816,
+  "MeleeWeaponType": 7,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

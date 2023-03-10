@@ -1,0 +1,13 @@
+{
+  "TextureModID": "onyxae.dragonsdescent",
+  "ItemDefName": "DDMeleeWeapon_ThrumboBattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3438807,
+  "OffY": -0.01592037,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.284975052,
+  "BladeEnd": 0.9791045,
+  "MeleeWeaponType": 2
+}

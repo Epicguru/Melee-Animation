@@ -1,0 +1,10 @@
+{
+  "TextureModID": "miho.fortifiedoutremer",
+  "ItemDefName": "Miho_Weapon_EltexA",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.232437909,
+  "BladeStart": 0.3359205,
+  "BladeEnd": 0.718010068,
+  "MeleeWeaponType": 9
+}

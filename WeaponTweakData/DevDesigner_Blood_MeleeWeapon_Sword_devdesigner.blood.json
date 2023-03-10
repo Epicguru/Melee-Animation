@@ -1,0 +1,11 @@
+{
+  "TextureModID": "devdesigner.blood",
+  "ItemDefName": "DevDesigner_Blood_MeleeWeapon_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.351683348,
+  "OffY": -0.034851402,
+  "BladeStart": 0.09821802,
+  "BladeEnd": 0.811089337,
+  "MeleeWeaponType": 54
+}

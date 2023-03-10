@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ahndemi.panieltheautomata",
+  "ItemDefName": "PN_WarHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.46487534,
+  "Rotation": 45.0,
+  "BladeStart": 0.733930469,
+  "BladeEnd": 0.950448,
+  "MeleeWeaponType": 1
+}

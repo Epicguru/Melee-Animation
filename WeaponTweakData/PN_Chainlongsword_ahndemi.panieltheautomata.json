@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ahndemi.panieltheautomata",
+  "ItemDefName": "PN_Chainlongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4521392,
+  "Rotation": 45.0,
+  "BladeStart": 0.122587264,
+  "BladeEnd": 1.14467657,
+  "MeleeWeaponType": 6
+}

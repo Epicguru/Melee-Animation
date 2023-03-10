@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rooboid.minotaur",
+  "ItemDefName": "RBM_Damocles",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.480796218,
+  "Rotation": 45.0,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": 0.122587264,
+  "BladeEnd": 1.16378129,
+  "MeleeWeaponType": 6
+}

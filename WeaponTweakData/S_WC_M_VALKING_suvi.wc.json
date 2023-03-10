@@ -1,0 +1,14 @@
+{
+  "TextureModID": "suvi.wc",
+  "ItemDefName": "S_WC_M_VALKING",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3009901,
+  "OffY": -0.01900962,
+  "Rotation": 45.0,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.5005942,
+  "BladeEnd": 1.00752485,
+  "MeleeWeaponType": 2
+}
