@@ -1,0 +1,13 @@
+{
+  "TextureModID": "bando.heyrathehorned",
+  "ItemDefName": "Heyra_Warhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.208102524,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.353518248,
+  "BladeEnd": 0.950533152,
+  "MeleeWeaponType": 1
+}

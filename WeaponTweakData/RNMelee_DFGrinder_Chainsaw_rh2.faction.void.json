@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rh2.faction.void",
+  "ItemDefName": "RNMelee_DFGrinder_Chainsaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.392323583,
+  "OffY": -0.0238805,
+  "Rotation": 50.0,
+  "BladeStart": 0.159062043,
+  "BladeEnd": 0.9812366,
+  "MeleeWeaponType": 7
+}

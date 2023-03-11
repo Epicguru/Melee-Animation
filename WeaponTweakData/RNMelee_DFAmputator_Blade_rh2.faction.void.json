@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rh2.faction.void",
+  "ItemDefName": "RNMelee_DFAmputator_Blade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354797184,
+  "OffY": 0.030703418,
+  "Rotation": 40.0,
+  "BladeStart": 0.240938172,
+  "BladeEnd": 0.8857146,
+  "MeleeWeaponType": 6
+}

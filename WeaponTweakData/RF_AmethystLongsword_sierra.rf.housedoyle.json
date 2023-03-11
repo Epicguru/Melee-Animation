@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_AmethystLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.327505559,
+  "Rotation": 45.0,
+  "BladeStart": 0.107889339,
+  "BladeEnd": 0.8550107,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.642,
+    "g": 0.002,
+    "b": 0.764,
+    "a": 0.644000053
+  }
+}

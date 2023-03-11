@@ -1,0 +1,12 @@
+{
+  "TextureModID": "bando.heyrathehorned",
+  "ItemDefName": "Heyra_Ronggreatblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.31044805,
+  "OffY": 0.0443492755,
+  "Rotation": 40.0,
+  "BladeStart": 0.118123986,
+  "BladeEnd": 0.9846483,
+  "MeleeWeaponType": 6
+}

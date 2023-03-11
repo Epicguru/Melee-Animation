@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_BasicKanabo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5697222,
+  "OffY": 0.00341172214,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.2247338,
+  "BladeEnd": 1.42899776,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ssulunge.kijinrace3",
+  "ItemDefName": "Kijin_Polearm",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.371855319,
+  "Rotation": 45.0,
+  "BladeStart": 0.5411515,
+  "BladeEnd": 1.04946685,
+  "MeleeWeaponType": 6
+}

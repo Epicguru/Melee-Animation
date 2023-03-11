@@ -1,0 +1,13 @@
+{
+  "TextureModID": "waffelf.moosesianrace",
+  "ItemDefName": "WFF_Signal_Saber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4878462,
+  "OffY": -0.0238805041,
+  "Rotation": 50.0,
+  "HandsMode": 1,
+  "BladeStart": 0.08059712,
+  "BladeEnd": 1.06311321,
+  "MeleeWeaponType": 6
+}

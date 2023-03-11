@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_ClanforgedYari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.484434873,
+  "OffY": -0.00341172516,
+  "Rotation": 45.0,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.777398944,
+  "BladeEnd": 1.22771871,
+  "MeleeWeaponType": 4
+}

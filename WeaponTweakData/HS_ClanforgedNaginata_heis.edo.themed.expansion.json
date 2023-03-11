@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_ClanforgedNaginata",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5014925,
+  "OffY": 0.00341171026,
+  "Rotation": 45.0,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.7262262,
+  "BladeEnd": 1.25159919,
+  "MeleeWeaponType": 6
+}

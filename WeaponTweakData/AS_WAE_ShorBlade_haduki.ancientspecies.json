@@ -1,0 +1,13 @@
+{
+  "TextureModID": "haduki.ancientspecies",
+  "ItemDefName": "AS_WAE_ShorBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.2422173,
+  "OffY": 0.00682342052,
+  "Rotation": 270.0,
+  "FlipX": true,
+  "BladeStart": 0.06098102,
+  "BladeEnd": 0.6852882,
+  "MeleeWeaponType": 48
+}

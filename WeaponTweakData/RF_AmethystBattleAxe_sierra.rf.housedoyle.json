@@ -1,0 +1,20 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_AmethystBattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2968016,
+  "OffY": -0.0579956323,
+  "Rotation": 45.0,
+  "ScaleX": 1.05,
+  "ScaleY": 1.05,
+  "BladeStart": 0.230703533,
+  "BladeEnd": 0.851599455,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.642,
+    "g": 0.002,
+    "b": 0.764,
+    "a": 0.644000053
+  }
+}

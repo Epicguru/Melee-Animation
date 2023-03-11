@@ -1,0 +1,11 @@
+{
+  "TextureModID": "bando.heyrathehorned",
+  "ItemDefName": "Heyra_Forbiddenarmyhalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.334328473,
+  "Rotation": 45.0,
+  "BladeStart": 0.319403082,
+  "BladeEnd": 1.00170588,
+  "MeleeWeaponType": 6
+}

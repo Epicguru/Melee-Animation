@@ -1,0 +1,19 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "DB_DXSM",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.54584223,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.18038401,
+  "BladeEnd": 1.34371,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.998,
+    "g": 0.213,
+    "b": 0.213,
+    "a": 1.0
+  }
+}

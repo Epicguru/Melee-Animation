@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_LegendaryKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.358208954,
+  "OffY": 0.0204693079,
+  "Rotation": 3.17158,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.115564927,
+  "BladeEnd": 0.9275054,
+  "MeleeWeaponType": 6
+}

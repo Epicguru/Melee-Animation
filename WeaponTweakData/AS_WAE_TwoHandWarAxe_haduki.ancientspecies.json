@@ -1,0 +1,15 @@
+{
+  "TextureModID": "haduki.ancientspecies",
+  "ItemDefName": "AS_WAE_TwoHandWarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2968016,
+  "OffY": 0.006822929,
+  "Rotation": 90.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "FlipY": true,
+  "BladeStart": 0.3782519,
+  "BladeEnd": 0.838806331,
+  "MeleeWeaponType": 2
+}

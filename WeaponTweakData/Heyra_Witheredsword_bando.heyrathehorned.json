@@ -1,0 +1,11 @@
+{
+  "TextureModID": "bando.heyrathehorned",
+  "ItemDefName": "Heyra_Witheredsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2115143,
+  "OffY": -0.0136461258,
+  "BladeStart": 0.101066411,
+  "BladeEnd": 0.5889125,
+  "MeleeWeaponType": 54
+}

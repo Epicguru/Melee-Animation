@@ -1,0 +1,12 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "AP_CutSaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.412793934,
+  "OffY": 0.00341171026,
+  "Rotation": 47.20971,
+  "BladeStart": 0.122388378,
+  "BladeEnd": 1.04008543,
+  "MeleeWeaponType": 6
+}

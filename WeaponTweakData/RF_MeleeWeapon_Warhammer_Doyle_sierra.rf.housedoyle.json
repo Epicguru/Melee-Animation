@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_MeleeWeapon_Warhammer_Doyle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.150106415,
+  "OffY": -0.0136458278,
+  "BladeStart": 0.3270792,
+  "BladeEnd": 0.542004168,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_BasicYari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.487846583,
+  "OffY": -0.0170575678,
+  "Rotation": 45.0,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.804691136,
+  "BladeEnd": 1.22089577,
+  "MeleeWeaponType": 4
+}

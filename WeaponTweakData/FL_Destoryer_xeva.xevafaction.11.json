@@ -1,0 +1,13 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "FL_Destoryer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.528784633,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.7637526,
+  "BladeEnd": 1.30959475,
+  "MeleeWeaponType": 4
+}

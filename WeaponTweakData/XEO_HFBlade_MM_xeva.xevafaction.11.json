@@ -1,0 +1,12 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "XEO_HFBlade_MM",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.453730941,
+  "OffY": 0.0136458464,
+  "Rotation": 45.0,
+  "BladeStart": 0.18038401,
+  "BladeEnd": 1.13219619,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,10 @@
+{
+  "TextureModID": "bando.heyrathehorned",
+  "ItemDefName": "Heyra_Forbiddenarmysword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2660982,
+  "BladeStart": 0.118123986,
+  "BladeEnd": 0.663966238,
+  "MeleeWeaponType": 6
+}

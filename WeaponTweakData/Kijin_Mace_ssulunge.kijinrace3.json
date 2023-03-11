@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ssulunge.kijinrace3",
+  "ItemDefName": "Kijin_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.358208954,
+  "OffY": -0.0170575678,
+  "Rotation": 45.0,
+  "BladeStart": 0.090831764,
+  "BladeEnd": 1.00511765,
+  "MeleeWeaponType": 1
+}

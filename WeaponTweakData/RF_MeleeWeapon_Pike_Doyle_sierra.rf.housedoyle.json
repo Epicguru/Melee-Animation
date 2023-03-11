@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_MeleeWeapon_Pike_Doyle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6925374,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.1727079,
+  "BladeEnd": 1.66353941,
+  "MeleeWeaponType": 5
+}

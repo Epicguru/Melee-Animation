@@ -1,0 +1,12 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "DB_Hammer_MM",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.286566973,
+  "OffY": 0.0170575678,
+  "Rotation": 45.0,
+  "BladeStart": 0.463539779,
+  "BladeEnd": 0.651173055,
+  "MeleeWeaponType": 9
+}

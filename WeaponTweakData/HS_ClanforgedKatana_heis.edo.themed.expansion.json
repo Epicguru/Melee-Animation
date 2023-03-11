@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_ClanforgedKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.35138604,
+  "OffY": 0.0272925049,
+  "Rotation": 3.023449,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.095096156,
+  "BladeEnd": 0.8831556,
+  "MeleeWeaponType": 6
+}

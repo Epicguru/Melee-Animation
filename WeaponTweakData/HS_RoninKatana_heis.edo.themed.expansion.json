@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_RoninKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3479743,
+  "OffY": 0.0204687677,
+  "Rotation": 2.871535,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.108742006,
+  "BladeEnd": 0.893390238,
+  "MeleeWeaponType": 6
+}

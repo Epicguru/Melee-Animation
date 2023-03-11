@@ -1,0 +1,12 @@
+{
+  "TextureModID": "psyche.kemomimihouse",
+  "ItemDefName": "MeleeWeapon_konkatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3445626,
+  "OffY": -0.0102346465,
+  "Rotation": 45.0,
+  "BladeStart": 0.128358111,
+  "BladeEnd": 0.92665267,
+  "MeleeWeaponType": 6
+}

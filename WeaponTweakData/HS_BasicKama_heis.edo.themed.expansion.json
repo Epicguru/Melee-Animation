@@ -1,0 +1,13 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_BasicKama",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.191045,
+  "OffY": -0.04776151,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.262260139,
+  "BladeEnd": 0.514712453,
+  "MeleeWeaponType": 16
+}

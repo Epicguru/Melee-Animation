@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_ClanforgedOdachi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5833686,
+  "OffY": 0.00341118872,
+  "Rotation": 43.49976,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.262260139,
+  "BladeEnd": 1.47334754,
+  "MeleeWeaponType": 6
+}

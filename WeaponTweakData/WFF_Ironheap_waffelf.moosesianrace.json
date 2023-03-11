@@ -1,0 +1,14 @@
+{
+  "TextureModID": "waffelf.moosesianrace",
+  "ItemDefName": "WFF_Ironheap",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5901915,
+  "OffY": -0.0102343857,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.165884972,
+  "BladeEnd": 1.4588486,
+  "MeleeWeaponType": 6
+}

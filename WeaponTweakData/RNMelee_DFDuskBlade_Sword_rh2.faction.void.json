@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rh2.faction.void",
+  "ItemDefName": "RNMelee_DFDuskBlade_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.446908,
+  "Rotation": 45.0,
+  "BladeStart": 0.118123986,
+  "BladeEnd": 1.06652439,
+  "MeleeWeaponType": 6
+}

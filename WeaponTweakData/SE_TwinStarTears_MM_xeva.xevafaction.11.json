@@ -1,0 +1,18 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "SE_TwinStarTears_MM",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": -1.00341117,
+  "BladeEnd": 1.009382,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182,
+    "g": 0.989,
+    "b": 1.0,
+    "a": 0.796
+  }
+}

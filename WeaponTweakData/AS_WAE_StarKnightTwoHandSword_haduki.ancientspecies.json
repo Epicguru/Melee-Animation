@@ -1,0 +1,12 @@
+{
+  "TextureModID": "haduki.ancientspecies",
+  "ItemDefName": "AS_WAE_StarKnightTwoHandSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.446908534,
+  "OffY": -0.0170575678,
+  "Rotation": 45.0,
+  "BladeStart": 0.108742006,
+  "BladeEnd": 1.128785,
+  "MeleeWeaponType": 6
+}
