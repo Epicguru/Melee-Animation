@@ -173,11 +173,12 @@ namespace AM.Tweaks
                     continue;
                 }
 
+                // Attempt to load the tweak for the actual active retexture.
                 var tweak = TryLoad(pair.weapon, pair.report.ActiveRetextureMod);
                 if (tweak == null)
                     yield return (ItemTweakData.MakeModID(pair.report.ActiveRetextureMod), pair.weapon);
 
-                if (includeRedundant)
+                if (includeRedundant || tweak == null)
                 {
                     foreach (var retex in pair.report.AllRetextures)
                     {
@@ -187,6 +188,8 @@ namespace AM.Tweaks
                         tweak = TryLoad(pair.weapon, retex.mod);
                         if (tweak == null)
                             yield return (ItemTweakData.MakeModID(pair.report.ActiveRetextureMod), pair.weapon);
+                        else if (!includeRedundant)
+                            break;
                     }
                 }
             }
