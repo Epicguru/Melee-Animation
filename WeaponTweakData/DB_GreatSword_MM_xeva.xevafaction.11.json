@@ -1,0 +1,12 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "DB_GreatSword_MM",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.365031868,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.159914717,
+  "BladeEnd": 0.7978677,
+  "MeleeWeaponType": 48
+}

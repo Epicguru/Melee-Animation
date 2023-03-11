@@ -1,0 +1,18 @@
+{
+  "TextureModID": "ssulunge.kijinrace3",
+  "ItemDefName": "Kijin_FlameSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.419615746,
+  "OffY": 0.0170575678,
+  "Rotation": 48.06741,
+  "BladeStart": 0.090831764,
+  "BladeEnd": 1.02558637,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.998,
+    "g": 0.4955999,
+    "b": 0.212999985,
+    "a": 1.0
+  }
+}

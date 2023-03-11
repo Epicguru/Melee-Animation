@@ -1,0 +1,14 @@
+{
+  "TextureModID": "psyche.kemomimihouse",
+  "ItemDefName": "MeleeWeapon_sirokatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4673778,
+  "OffY": 0.0068224147,
+  "Rotation": 46.66648,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.104477614,
+  "BladeEnd": 0.988060057,
+  "MeleeWeaponType": 6
+}

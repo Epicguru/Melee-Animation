@@ -1,0 +1,14 @@
+{
+  "TextureModID": "haduki.ancientspecies",
+  "ItemDefName": "AS_WAE_StarKnightSwordRe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5083153,
+  "OffY": -0.00341121852,
+  "Rotation": 43.94371,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.163326442,
+  "BladeEnd": 1.336887,
+  "MeleeWeaponType": 6
+}

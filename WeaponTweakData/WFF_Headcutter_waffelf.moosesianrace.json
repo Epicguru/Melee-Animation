@@ -1,0 +1,12 @@
+{
+  "TextureModID": "waffelf.moosesianrace",
+  "ItemDefName": "WFF_Headcutter",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.296802133,
+  "OffY": -0.01364585,
+  "Rotation": 45.0,
+  "BladeStart": 0.384221643,
+  "BladeEnd": 0.643496931,
+  "MeleeWeaponType": 2
+}

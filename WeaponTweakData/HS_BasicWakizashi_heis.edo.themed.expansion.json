@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_BasicWakizashi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3445626,
+  "OffY": 0.0307040028,
+  "Rotation": 1.671638,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.0882732347,
+  "BladeEnd": 0.773987234,
+  "MeleeWeaponType": 54
+}

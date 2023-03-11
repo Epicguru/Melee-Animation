@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_BasicKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.327505,
+  "OffY": 0.0238804929,
+  "Rotation": 2.456945,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.06780394,
+  "BladeEnd": 0.8865673,
+  "MeleeWeaponType": 6
+}

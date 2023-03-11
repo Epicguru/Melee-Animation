@@ -1,0 +1,13 @@
+{
+  "TextureModID": "waffelf.moosesianrace",
+  "ItemDefName": "WFF_Conductor_Wand",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4230275,
+  "OffY": -0.00341172516,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.090831764,
+  "BladeEnd": 0.988060057,
+  "MeleeWeaponType": 2
+}

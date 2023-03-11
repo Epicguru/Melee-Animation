@@ -1,0 +1,11 @@
+{
+  "TextureModID": "waffelf.moosesianrace",
+  "ItemDefName": "WFF_Pikebreaker",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4844349,
+  "Rotation": 45.0,
+  "BladeStart": 0.107889339,
+  "BladeEnd": 1.16886985,
+  "MeleeWeaponType": 6
+}

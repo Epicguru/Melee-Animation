@@ -1,0 +1,12 @@
+{
+  "TextureModID": "suvi.techcore",
+  "ItemDefName": "SU_Katalina",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.382089436,
+  "OffY": -0.03411515,
+  "Rotation": 40.0,
+  "BladeStart": 0.196588382,
+  "BladeEnd": 0.9778254,
+  "MeleeWeaponType": 6
+}

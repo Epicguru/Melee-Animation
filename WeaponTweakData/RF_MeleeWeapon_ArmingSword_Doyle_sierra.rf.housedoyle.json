@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_MeleeWeapon_ArmingSword_Doyle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.337739646,
+  "OffY": 0.003411722,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.09168444,
+  "BladeEnd": 0.8115141,
+  "MeleeWeaponType": 54,
+  "TrailTint": {
+    "r": 0.642,
+    "g": 0.002,
+    "b": 0.764,
+    "a": 0.644000053
+  }
+}

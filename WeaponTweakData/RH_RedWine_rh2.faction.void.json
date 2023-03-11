@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rh2.faction.void",
+  "ItemDefName": "RH_RedWine",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.184221566,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.0669512749,
+  "BladeEnd": 0.483155876,
+  "MeleeWeaponType": 8
+}

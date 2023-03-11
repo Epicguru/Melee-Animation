@@ -1,0 +1,12 @@
+{
+  "TextureModID": "bando.heyrathehorned",
+  "ItemDefName": "Heyra_Dismembererblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.23880595,
+  "OffY": 0.0614073575,
+  "Rotation": -42.20731,
+  "BladeStart": 0.217057675,
+  "BladeEnd": 0.87889117,
+  "MeleeWeaponType": 6
+}

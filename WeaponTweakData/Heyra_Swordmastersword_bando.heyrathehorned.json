@@ -1,0 +1,12 @@
+{
+  "TextureModID": "bando.heyrathehorned",
+  "ItemDefName": "Heyra_Swordmastersword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.228571326,
+  "OffY": -0.07164201,
+  "Rotation": 45.0,
+  "BladeStart": 0.162473246,
+  "BladeEnd": 1.02558637,
+  "MeleeWeaponType": 6
+}

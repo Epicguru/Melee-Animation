@@ -1,0 +1,13 @@
+{
+  "TextureModID": "haduki.ancientspecies",
+  "ItemDefName": "AS_WAE_KnightSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6891257,
+  "OffY": -5.364418E-07,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.241791368,
+  "BladeEnd": 1.60298526,
+  "MeleeWeaponType": 6
+}

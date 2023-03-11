@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 11 Mar 2023, 2:48 PM.`  
+`Updated 11 Mar 2023, 3:28 PM.`  
 
-**Melee Animation supports 915 weapons from 121 mods.**  
+**Melee Animation supports 1010 weapons from 131 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -23,6 +23,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | --- | --- | --- | --- |
 | **[K4G] Vanilla Weapon Retextures** | k4g.vwr | 17 | *Epicguru* |
 | **[RF]Berserk - Character Apparel Pack** | rf.berserk.armory | 1 | *Epicguru* |
+| **[RH2] Faction: V.O.I.D.** | rh2.faction.void | 5 | *Epicguru* |
 | **[RH2] Rimmu-Nation² - Weapons** | cp.rimmunation.2.weapons | 28 | *Epicguru* |
 | **[RH2] Weapons: Simple Retexture** | arektpp.simplerh2weap | 27 | *Epicguru* |
 | **[SYR] Thrumkin** | syrchalis.thrumkin | 1 | *Epicguru* |
@@ -37,6 +38,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Alpha Bees** | sarg.rimbees | 2 | *Epicguru* |
 | **Alpha Biomes** | sarg.alphabiomes | 3 | *Epicguru* |
 | **Ambition of the Cosmic: True Pinnacle of Creation** | explodoboy.snsambitioncosmic.gen4addon | 1 | *Epicguru* |
+| **Ancient Species** | haduki.ancientspecies | 6 | *Epicguru* |
 | **Android Tiers Reforged** | killathon.androidtiersreforged | 1 | *Epicguru* |
 | **Anima Gear** | xrushha.animagear | 1 | *Epicguru* |
 | **Antimatter Annihilation** | co.uk.epicguru.antimatterannihilation | 5 | *Epicguru* |
@@ -51,15 +53,20 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Core** | ludeon.rimworld | 17 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
 | **Dragons Descent** | onyxae.dragonsdescent | 5 | *Epicguru* |
+| **Edo Themed Expansion** | heis.edo.themed.expansion | 18 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
 | **Gimmicks (Continued)** | mlie.gimmicks | 17 | *Epicguru* |
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
 | **Grimworld: Melee** | grimworld.melee | 6 | *Epicguru* |
 | **Heavy Melee Weapons (Continued)** | mlie.heavymeleeweapons | 11 | *Epicguru* |
+| **Heyra the Horned** | bando.heyrathehorned | 11 | *Epicguru* |
+| **Ilya Tech - Core** | suvi.techcore | 2 | *Epicguru* |
 | **Industrial Melee Weaponry** | iexist.industrial.melee.weaponry | 12 | *Epicguru* |
 | **Industrialisation** | trasheddt.industrialisation | 4 | *Epicguru* |
 | **Kemetic Decorations** | sovereign.kemet | 1 | *Epicguru* |
+| **kemomimihouse** | psyche.kemomimihouse | 2 | *Epicguru* |
 | **Kenshi Armory (1.4)** | biowreck.kenshiarmory | 12 | *Epicguru* |
+| **Kijin Race 3.0** | ssulunge.kijinrace3 | 5 | *Epicguru* |
 | **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 3 | *Epicguru* |
 | **MakaiTech** | aranmaho.makai | 7 | *Epicguru* |
 | **Makeshift Melee Weapons** | detvisor.makeshiftweapons | 3 | *Epicguru* |
@@ -72,6 +79,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Melee Please (Continued)** | mlie.meleeplease | 11 | *Epicguru* |
 | **Metal Rim Rising** | mgr.rim | 2 | *Epicguru* |
 | **Miho, the celestial fox** | miho.fortifiedoutremer | 8 | *Epicguru* |
+| **Moosesian race** | waffelf.moosesianrace | 6 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
 | **More Vanilla Textures** | tidal.morevanilla.textures | 2 | *Epicguru* |
 | **MorrowRim** | sirmashedpotato.morrowrim | 1 | *Epicguru* |
@@ -95,6 +103,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Revia Race** | fs.reviarace | 8 | *Epicguru* |
 | **Rim of Madness - Bones** | sihv.rombones | 1 | *Epicguru* |
 | **Rim-Effect: N7** | rimeffect.n7 | 1 | *Epicguru* |
+| **RimFantasy - House Doyle** | sierra.rf.housedoyle | 16 | *Epicguru* |
 | **RimFantasy - Medieval Overhaul Edition** | sierra.rf.medievaloverhaul | 18 | *Epicguru* |
 | **RimForge** | co.uk.epicguru.rimforge | 6 | *Epicguru* |
 | **RimFortress: Dwarven Plants** | dismarzero.vgp.rimfortressdwarvenplants | 6 | *Epicguru* |
@@ -140,6 +149,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Weapons+** | kyrrisayo.weaponsplus | 18 | *Epicguru* |
 | **Weapons+ Retexture** | dandman68.weaponplusretexture | 18 | *Epicguru* |
 | **Wisteria Corporation** | suvi.wc | 10 | *Epicguru* |
+| **Xeva Faction** | xeva.xevafaction.11 | 24 | *Epicguru* |
 | **Yuran race** | rooandgloomy.yuranracemod | 4 | *Epicguru* |
 | **Zombieland** | brrainz.zombieland | 1 | *Epicguru* |
 

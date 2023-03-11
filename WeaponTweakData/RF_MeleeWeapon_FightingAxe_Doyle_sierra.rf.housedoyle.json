@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_MeleeWeapon_FightingAxe_Doyle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.204690844,
+  "OffY": -0.040938057,
+  "Rotation": 45.0,
+  "BladeStart": 0.286140621,
+  "BladeEnd": 0.6545842,
+  "MeleeWeaponType": 16
+}

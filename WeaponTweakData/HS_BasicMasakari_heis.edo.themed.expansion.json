@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_BasicMasakari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.320682079,
+  "OffY": -0.102345407,
+  "Rotation": 54.38945,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.6375267,
+  "BladeEnd": 1.04349709,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_MeleeWeapon_TwoHandedFlangedMace_Doyle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.187633216,
+  "Rotation": 45.0,
+  "BladeStart": 0.347547978,
+  "BladeEnd": 0.6409384,
+  "MeleeWeaponType": 8,
+  "TrailTint": {
+    "r": 0.642,
+    "g": 0.002,
+    "b": 0.764,
+    "a": 0.644000053
+  }
+}

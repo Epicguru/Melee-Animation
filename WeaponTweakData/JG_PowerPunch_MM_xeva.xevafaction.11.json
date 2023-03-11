@@ -1,0 +1,11 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "JG_PowerPunch_MM",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2933904,
+  "HandsMode": 2,
+  "BladeStart": 0.146268874,
+  "BladeEnd": 0.794456542,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_AmethystSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.368443638,
+  "Rotation": 45.0,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.52494663,
+  "BladeEnd": 1.04349709,
+  "MeleeWeaponType": 4,
+  "TrailTint": {
+    "r": 0.642,
+    "g": 0.002,
+    "b": 0.764,
+    "a": 0.644000053
+  }
+}

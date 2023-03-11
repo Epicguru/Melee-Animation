@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_MeleeWeapon_Longaxe_Doyle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5117271,
+  "OffY": -0.09211075,
+  "Rotation": 45.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.9650322,
+  "BladeEnd": 1.31982946,
+  "MeleeWeaponType": 5
+}

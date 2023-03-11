@@ -1,0 +1,12 @@
+{
+  "TextureModID": "xeva.xevafaction.11",
+  "ItemDefName": "XOG_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.399147034,
+  "OffY": 0.00341119617,
+  "Rotation": 45.0,
+  "BladeStart": 0.1326225,
+  "BladeEnd": 1.04008543,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "bando.heyrathehorned",
+  "ItemDefName": "Heyra_Withereddaggeraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2626865,
+  "OffY": -0.0989337,
+  "Rotation": 42.73324,
+  "BladeStart": 0.6298511,
+  "BladeEnd": 0.865245342,
+  "MeleeWeaponType": 6
+}

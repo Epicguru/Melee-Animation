@@ -1,0 +1,18 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_AmethystDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.238806009,
+  "OffY": 0.020469293,
+  "HandsMode": 1,
+  "BladeStart": 0.121535182,
+  "BladeEnd": 0.6093818,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.642,
+    "g": 0.002,
+    "b": 0.764,
+    "a": 0.644000053
+  }
+}

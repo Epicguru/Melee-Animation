@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ssulunge.kijinrace3",
+  "ItemDefName": "Kijin_100tHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.726653,
+  "OffY": -0.07505321,
+  "Rotation": 47.21737,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.749254048,
+  "BladeEnd": 1.54072523,
+  "MeleeWeaponType": 1
+}

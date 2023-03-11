@@ -1,0 +1,14 @@
+{
+  "TextureModID": "heis.edo.themed.expansion",
+  "ItemDefName": "HS_Bokken",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.334328443,
+  "OffY": 0.0238804817,
+  "Rotation": 2.210631,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.156503513,
+  "BladeEnd": 0.896801949,
+  "MeleeWeaponType": 10
+}

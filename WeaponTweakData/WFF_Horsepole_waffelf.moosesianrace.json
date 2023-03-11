@@ -1,0 +1,12 @@
+{
+  "TextureModID": "waffelf.moosesianrace",
+  "ItemDefName": "WFF_Horsepole",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3513856,
+  "OffY": -0.00341171026,
+  "Rotation": 45.0,
+  "BladeStart": 0.6298511,
+  "BladeEnd": 1.02899814,
+  "MeleeWeaponType": 4
+}

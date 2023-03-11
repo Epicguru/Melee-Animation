@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sierra.rf.housedoyle",
+  "ItemDefName": "RF_MeleeWeapon_FightingSpear_Doyle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3650319,
+  "Rotation": 45.0,
+  "ScaleX": 1.31,
+  "ScaleY": 1.31,
+  "BladeStart": 0.6298511,
+  "BladeEnd": 1.02899814,
+  "MeleeWeaponType": 4,
+  "TrailTint": {
+    "r": 0.642,
+    "g": 0.002,
+    "b": 0.764,
+    "a": 0.644000053
+  }
+}

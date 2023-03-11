@@ -1,0 +1,19 @@
+{
+  "TextureModID": "ssulunge.kijinrace3",
+  "ItemDefName": "Kijin_PoisonDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.126225889,
+  "OffY": 0.0238804966,
+  "Rotation": -65.0,
+  "HandsMode": 2,
+  "BladeStart": 0.104477614,
+  "BladeEnd": 0.5240939,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.549,
+    "g": 0.749,
+    "b": 0.098,
+    "a": 0.976
+  }
+}

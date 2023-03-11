@@ -1,0 +1,14 @@
+{
+  "TextureModID": "suvi.techcore",
+  "ItemDefName": "SU_Sevika",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1944562,
+  "OffY": -0.00682294369,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "HandsMode": 1,
+  "BladeStart": 0.121535182,
+  "BladeEnd": 0.53091687,
+  "MeleeWeaponType": 48
+}
