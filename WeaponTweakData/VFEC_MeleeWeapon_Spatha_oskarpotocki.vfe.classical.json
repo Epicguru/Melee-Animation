@@ -1,0 +1,10 @@
+{
+  "TextureModID": "oskarpotocki.vfe.classical",
+  "ItemDefName": "VFEC_MeleeWeapon_Spatha",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3231687,
+  "BladeStart": 0.110891089,
+  "BladeEnd": 0.7857427,
+  "MeleeWeaponType": 6
+}

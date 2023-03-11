@@ -1,0 +1,13 @@
+{
+  "TextureModID": "devdesigner.blood",
+  "ItemDefName": "DevDesigner_Blood_MeleeWeapon_Longsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.494257629,
+  "Rotation": 45.0,
+  "ScaleX": 1.07,
+  "ScaleY": 1.07,
+  "BladeStart": 0.155247822,
+  "BladeEnd": 1.216634,
+  "MeleeWeaponType": 6
+}

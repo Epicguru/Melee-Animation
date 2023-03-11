@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ahndemi.panieltheautomata",
+  "ItemDefName": "PN_Chainsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.305671364,
+  "BladeStart": 0.132139608,
+  "BladeEnd": 0.7816917,
+  "MeleeWeaponType": 6
+}

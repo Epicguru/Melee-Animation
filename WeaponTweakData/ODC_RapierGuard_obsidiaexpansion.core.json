@@ -1,0 +1,12 @@
+{
+  "TextureModID": "obsidiaexpansion.core",
+  "ItemDefName": "ODC_RapierGuard",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.35835,
+  "OffY": -0.06286836,
+  "HandsMode": 1,
+  "BladeStart": 0.273477316,
+  "BladeEnd": 0.8141457,
+  "MeleeWeaponType": 6
+}

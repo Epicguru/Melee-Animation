@@ -1,0 +1,12 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_TwoBladed",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": -0.898588657,
+  "BladeEnd": 0.8768731,
+  "MeleeWeaponType": 6
+}

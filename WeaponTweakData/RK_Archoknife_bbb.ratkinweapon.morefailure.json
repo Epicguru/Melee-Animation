@@ -1,0 +1,19 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_Archoknife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2640605,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.133333653,
+  "BladeEnd": 0.619761467,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.549,
+    "g": 0.749,
+    "b": 0.098,
+    "a": 0.976
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "TextureModID": "onyxae.dragonsdescent",
+  "ItemDefName": "DDMeleeWeapon_FocusingTome",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.28975147,
+  "OffY": 0.092338115,
+  "Rotation": -40.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.0620894581,
+  "BladeEnd": 0.450547576,
+  "MeleeWeaponType": 8
+}

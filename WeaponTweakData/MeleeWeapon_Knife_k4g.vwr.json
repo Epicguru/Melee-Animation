@@ -1,0 +1,13 @@
+{
+  "TextureModID": "k4g.vwr",
+  "ItemDefName": "MeleeWeapon_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2016131,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 1,
+  "BladeStart": 0.132139608,
+  "BladeEnd": 0.5365176,
+  "MeleeWeaponType": 48
+}

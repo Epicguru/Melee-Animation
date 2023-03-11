@@ -1,0 +1,12 @@
+{
+  "TextureModID": "k4g.vwr",
+  "ItemDefName": "MeleeWeapon_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.213365316,
+  "OffY": -0.0135361627,
+  "HandsMode": 1,
+  "BladeStart": 0.3040797,
+  "BladeEnd": 0.612935364,
+  "MeleeWeaponType": 8
+}

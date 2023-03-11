@@ -1,0 +1,18 @@
+{
+  "TextureModID": "oskarpotocki.vfe.empire",
+  "ItemDefName": "VFEE_MeleeWeapon_Toxblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.197412848,
+  "OffY": -0.00318428874,
+  "HandsMode": 1,
+  "BladeStart": 0.170348465,
+  "BladeEnd": 0.460099429,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.212,
+    "g": 1.0,
+    "b": 0.047,
+    "a": 1.0
+  }
+}

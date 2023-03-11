@@ -1,0 +1,13 @@
+{
+  "TextureModID": "roo.antyracemod",
+  "ItemDefName": "AT_Hammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7261671,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 1.10097718,
+  "BladeEnd": 1.38588488,
+  "MeleeWeaponType": 6
+}

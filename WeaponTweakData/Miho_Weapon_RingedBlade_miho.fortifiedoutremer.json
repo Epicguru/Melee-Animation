@@ -1,0 +1,12 @@
+{
+  "TextureModID": "miho.fortifiedoutremer",
+  "ItemDefName": "Miho_Weapon_RingedBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.232437432,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.09711453,
+  "BladeEnd": 0.6193034,
+  "MeleeWeaponType": 6
+}

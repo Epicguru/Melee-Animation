@@ -1,0 +1,15 @@
+{
+  "TextureModID": "devdesigner.blood",
+  "ItemDefName": "DevDesigner_BloodWine",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.224950209,
+  "OffY": -0.009505047,
+  "Rotation": -90.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.08871297,
+  "BladeEnd": 0.5798021,
+  "MeleeWeaponType": 8
+}

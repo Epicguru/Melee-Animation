@@ -1,0 +1,13 @@
+{
+  "TextureModID": "k4g.vwr",
+  "ItemDefName": "MeleeWeapon_BreachAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.144498765,
+  "OffY": -0.0394088663,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.26268658,
+  "BladeEnd": 0.6575128,
+  "MeleeWeaponType": 18
+}

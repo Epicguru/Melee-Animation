@@ -1,0 +1,13 @@
+{
+  "TextureModID": "onyxae.dragonsdescent",
+  "ItemDefName": "DragonHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.24517405,
+  "OffY": -0.08278602,
+  "Rotation": 140.0,
+  "FlipY": true,
+  "BladeStart": 0.03661721,
+  "BladeEnd": 0.718010068,
+  "MeleeWeaponType": 12
+}

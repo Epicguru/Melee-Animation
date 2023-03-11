@@ -1,0 +1,13 @@
+{
+  "TextureModID": "k4g.vwr",
+  "ItemDefName": "MeleeWeapon_LongSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.374383032,
+  "OffY": -0.0109521,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.1182266,
+  "BladeEnd": 0.8998362,
+  "MeleeWeaponType": 6
+}

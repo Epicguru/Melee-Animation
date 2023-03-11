@@ -1,0 +1,14 @@
+{
+  "TextureModID": "suvi.wc",
+  "ItemDefName": "S_WC_M_RENDER",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.320000231,
+  "OffY": -0.06336634,
+  "Rotation": 50.0,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.804752767,
+  "BladeEnd": 1.08673275,
+  "MeleeWeaponType": 2
+}

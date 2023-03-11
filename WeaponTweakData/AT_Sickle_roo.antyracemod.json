@@ -1,0 +1,11 @@
+{
+  "TextureModID": "roo.antyracemod",
+  "ItemDefName": "AT_Sickle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.271009862,
+  "Rotation": 90.0,
+  "BladeStart": 0.128121614,
+  "BladeEnd": 0.718784,
+  "MeleeWeaponType": 2
+}

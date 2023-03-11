@@ -1,0 +1,19 @@
+{
+  "TextureModID": "suvi.wc",
+  "ItemDefName": "S_WC_M_VESTAL",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.218613684,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.481584072,
+  "BladeEnd": 0.9726732,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

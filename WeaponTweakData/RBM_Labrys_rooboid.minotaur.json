@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rooboid.minotaur",
+  "ItemDefName": "RBM_Labrys",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.0348258,
+  "Rotation": 45.0,
+  "ScaleX": 2.3,
+  "ScaleY": 2.3,
+  "BladeStart": 1.17970169,
+  "BladeEnd": 2.112637,
+  "MeleeWeaponType": 3
+}

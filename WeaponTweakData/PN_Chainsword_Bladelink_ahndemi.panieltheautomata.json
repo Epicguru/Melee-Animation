@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ahndemi.panieltheautomata",
+  "ItemDefName": "PN_Chainsword_Bladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.308855653,
+  "BladeStart": 0.141691446,
+  "BladeEnd": 0.7880597,
+  "MeleeWeaponType": 6
+}

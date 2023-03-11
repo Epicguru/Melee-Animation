@@ -1,0 +1,13 @@
+{
+  "TextureModID": "devdesigner.blood",
+  "ItemDefName": "DevDesigner_Blood_MeleeWeapon_PikeStandard",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7033663,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.253465354,
+  "BladeEnd": 1.71089113,
+  "MeleeWeaponType": 5
+}

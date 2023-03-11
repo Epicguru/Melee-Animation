@@ -1,0 +1,18 @@
+{
+  "TextureModID": "hlx.reinforcedmechanoids2",
+  "ItemDefName": "RM_MeleeWeapon_PlasmaBane",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.28975147,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.08437841,
+  "BladeEnd": 0.7307462,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

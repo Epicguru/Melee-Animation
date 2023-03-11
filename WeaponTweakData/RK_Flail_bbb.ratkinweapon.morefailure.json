@@ -1,0 +1,14 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_Flail",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.163300678,
+  "OffY": -0.02779597,
+  "Rotation": 45.0,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "BladeStart": 0.067318134,
+  "BladeEnd": 0.66492933,
+  "MeleeWeaponType": 8
+}

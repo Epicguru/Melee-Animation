@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rooboid.minotaur",
+  "ItemDefName": "RBM_Midaspear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.675024867,
+  "Rotation": 45.0,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": 1.02686572,
+  "BladeEnd": 1.80696523,
+  "MeleeWeaponType": 5
+}

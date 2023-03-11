@@ -1,0 +1,19 @@
+{
+  "TextureModID": "suvi.wc",
+  "ItemDefName": "S_WC_M_VILL",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.304158628,
+  "Rotation": 41.16768,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.0823764354,
+  "BladeEnd": 0.757228,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

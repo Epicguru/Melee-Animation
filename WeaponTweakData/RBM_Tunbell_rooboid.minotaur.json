@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rooboid.minotaur",
+  "ItemDefName": "RBM_Tunbell",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7227864,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.724378169,
+  "BladeEnd": 1.55542314,
+  "MeleeWeaponType": 1
+}

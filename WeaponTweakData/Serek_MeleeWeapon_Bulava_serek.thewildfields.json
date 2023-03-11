@@ -1,0 +1,12 @@
+{
+  "TextureModID": "serek.thewildfields",
+  "ItemDefName": "Serek_MeleeWeapon_Bulava",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.18860513,
+  "OffY": 0.0220038369,
+  "FlipX": true,
+  "BladeStart": 0.1005893,
+  "BladeEnd": 0.6726919,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,18 @@
+{
+  "TextureModID": "k4g.vwr",
+  "ItemDefName": "MeleeWeapon_PlasmaSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.313198835,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.15659982,
+  "BladeEnd": 0.800895154,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

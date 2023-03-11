@@ -1,0 +1,13 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_Rapier",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.451682955,
+  "OffY": 0.0312701464,
+  "Rotation": 40.0,
+  "HandsMode": 1,
+  "BladeStart": 0.192399785,
+  "BladeEnd": 1.07491863,
+  "MeleeWeaponType": 4
+}

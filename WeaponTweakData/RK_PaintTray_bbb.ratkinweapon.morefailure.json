@@ -1,0 +1,14 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_PaintTray",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.111183912,
+  "OffY": -0.0590661168,
+  "Rotation": 20.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": 0.067318134,
+  "BladeEnd": 0.393919975,
+  "MeleeWeaponType": 8
+}

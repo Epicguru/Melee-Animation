@@ -1,0 +1,12 @@
+{
+  "TextureModID": "inoshishi3.kttfde",
+  "ItemDefName": "Kimiri_MeleeWeapon_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.396091551,
+  "OffY": 0.0243218169,
+  "Rotation": 45.0,
+  "BladeStart": 0.110749193,
+  "BladeEnd": 0.968946755,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_Pencil",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.132030517,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.074267,
+  "BladeEnd": 0.338328034,
+  "MeleeWeaponType": 32
+}

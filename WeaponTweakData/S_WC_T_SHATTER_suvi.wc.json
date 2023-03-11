@@ -1,0 +1,20 @@
+{
+  "TextureModID": "suvi.wc",
+  "ItemDefName": "S_WC_T_SHATTER",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.535445869,
+  "OffY": 0.129901186,
+  "Rotation": 35.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.491089135,
+  "BladeEnd": 1.07089126,
+  "MeleeWeaponType": 5,
+  "TrailTint": {
+    "r": 0.024,
+    "g": 0.555,
+    "b": 0.996,
+    "a": 1.0
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "obsidiaexpansion.core",
+  "ItemDefName": "OTC_Hammer_Cryo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.119449995,
+  "OffY": -0.059724763,
+  "HandsMode": 1,
+  "BladeStart": 0.150884181,
+  "BladeEnd": 0.37721023,
+  "MeleeWeaponType": 8
+}

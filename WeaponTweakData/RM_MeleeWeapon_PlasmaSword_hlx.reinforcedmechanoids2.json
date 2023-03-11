@@ -1,0 +1,18 @@
+{
+  "TextureModID": "hlx.reinforcedmechanoids2",
+  "ItemDefName": "RM_MeleeWeapon_PlasmaSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.308855653,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.087562196,
+  "BladeEnd": 0.9058706,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}
