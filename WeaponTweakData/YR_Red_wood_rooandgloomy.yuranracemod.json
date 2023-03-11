@@ -1,0 +1,15 @@
+{
+  "TextureModID": "rooandgloomy.yuranracemod",
+  "ItemDefName": "YR_Red_wood",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2011786,
+  "OffY": 0.025147438,
+  "Rotation": 25.0,
+  "ScaleX": 0.5,
+  "ScaleY": 0.5,
+  "HandsMode": 1,
+  "BladeStart": 0.06915511,
+  "BladeEnd": 0.430648237,
+  "MeleeWeaponType": 8
+}

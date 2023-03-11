@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rooandgloomy.yuranracemod",
+  "ItemDefName": "YR_WP_katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.418074757,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.08801582,
+  "BladeEnd": 1.01218069,
+  "MeleeWeaponType": 6
+}

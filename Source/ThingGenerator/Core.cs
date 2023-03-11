@@ -15,6 +15,8 @@ using System.Globalization;
 using System.Reflection;
 using AM.AMSettings;
 using System.IO;
+using GistAPI.Models;
+using GistAPI;
 
 namespace AM
 {
@@ -77,6 +79,34 @@ namespace AM
 
                 string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MeleeAnimationMissingMods.txt");
                 File.WriteAllText(path, str.ToString());
+            });
+        }
+
+        [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
+        private static void ClearModRequests()
+        {
+            if (SteamUtility.SteamPersonaName != "Epicguru")
+                return;
+
+            Task.Run(async () =>
+            {
+                var client = new GistClient<ModRequestContainer>();
+
+                var files = new Dictionary<string, GistFile>();
+                for (int i = 'A'; i <= 'Z'; i++)
+                {
+                    files.Add(((char)i) + ".json", new GistFile
+                    {
+                        FileName = ((char)i) + ".json",
+                        Content = "{}"
+                    });
+                }
+
+                await client.UpdateGist(GIST_ID, new UpdateGistRequest
+                {
+                    Description = "Dev clear 2",
+                    Files = files
+                });
             });
         }
 

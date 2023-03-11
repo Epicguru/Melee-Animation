@@ -236,8 +236,8 @@ public static class RetextureUtility
         if (string.IsNullOrWhiteSpace(xmlPath))
             return null;
 
-        // Graphic_Single is the most common and simplest scenario.
-        if (weapon.graphicData.graphicClass == typeof(Graphic_Single))
+        // Collections load from sub-folders, normal graphic types don't:
+        if (!weapon.graphicData.graphicClass.IsSubclassOf(typeof(Graphic_Collection)))
             return xmlPath;
 
         // Other graphic classes will pull images from a sub-folder.

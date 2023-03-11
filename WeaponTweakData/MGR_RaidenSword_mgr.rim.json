@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mgr.rim",
+  "ItemDefName": "MGR_RaidenSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.433791876,
+  "Rotation": 43.38905,
+  "BladeStart": 0.166601285,
+  "BladeEnd": 1.11591363,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "obsidiaexpansion.core",
+  "ItemDefName": "OTC_BigAxe_P_Fire",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.304911971,
+  "OffY": -0.04086406,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.3552064,
+  "BladeEnd": 0.807858467,
+  "MeleeWeaponType": 2
+}

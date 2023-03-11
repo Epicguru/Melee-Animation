@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rooandgloomy.yuranracemod",
+  "ItemDefName": "YR_WP_Naginata",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.364636779,
+  "Rotation": 45.0,
+  "BladeStart": 0.6349705,
+  "BladeEnd": 1.02161109,
+  "MeleeWeaponType": 4
+}

@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 10 Mar 2023, 4:28 PM.`  
+`Updated 10 Mar 2023, 11:14 PM.`  
 
-**Melee Animation supports 863 weapons from 114 mods.**  
+**Melee Animation supports 897 weapons from 118 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -68,6 +68,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Megafauna** | spino.megafauna | 6 | *Epicguru* |
 | **Melee Animation** | co.uk.epicguru.meleeanimation | 1 | *Epicguru* |
 | **Melee Please (Continued)** | mlie.meleeplease | 11 | *Epicguru* |
+| **Metal Rim Rising** | mgr.rim | 2 | *Epicguru* |
 | **Miho, the celestial fox** | miho.fortifiedoutremer | 8 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
 | **More Vanilla Textures** | tidal.morevanilla.textures | 2 | *Epicguru* |
@@ -79,6 +80,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Moyo-The cartel arrives** | nemonian.mycartel | 3 | *Epicguru* |
 | **NewRatkinPlus** | solaris.ratkinracemod | 15 | *Epicguru* |
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
+| **Obsidia Expansion** | obsidiaexpansion.core | 24 | *Epicguru* |
 | **Paniel the Automata** | ahndemi.panieltheautomata | 8 | *Epicguru* |
 | **Pawnmorpher** | tachyonite.pawnmorpherpublic | 1 | *Epicguru* |
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |
@@ -109,6 +111,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Swords (Continued)** | mlie.swords | 5 | *Epicguru* |
 | **Tastier Vanilla Melee** | al9000.tvmelee | 12 | *Epicguru* |
 | **The Joris Experience** | sarg.jorisexperience | 1 | *Epicguru* |
+| **The Wild Fields - apparel and weapons** | serek.thewildfields | 4 | *Epicguru* |
 | **Ultratech Weapons Plus** | side1iner.ultratechweaponsplusdev | 2 | *Epicguru* |
 | **Vali's Charged Arsenal** | vali.ca | 13 | *Epicguru* |
 | **Vali's Charged Arsenal - Eltex Series** | vali.caes | 7 | *Epicguru* |
@@ -134,5 +137,6 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Weapons+** | kyrrisayo.weaponsplus | 18 | *Epicguru* |
 | **Weapons+ Retexture** | dandman68.weaponplusretexture | 18 | *Epicguru* |
 | **Wisteria Corporation** | suvi.wc | 10 | *Epicguru* |
+| **Yuran race** | rooandgloomy.yuranracemod | 4 | *Epicguru* |
 | **Zombieland** | brrainz.zombieland | 1 | *Epicguru* |
 

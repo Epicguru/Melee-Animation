@@ -1,0 +1,14 @@
+{
+  "TextureModID": "serek.thewildfields",
+  "ItemDefName": "Serek_MeleeWeapon_WarScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.518664062,
+  "OffY": -0.0440078974,
+  "Rotation": 50.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.713555932,
+  "BladeEnd": 1.28880167,
+  "MeleeWeaponType": 6
+}
