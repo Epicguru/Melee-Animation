@@ -1,0 +1,14 @@
+{
+  "TextureModID": "inoshishi3.kttfde",
+  "ItemDefName": "Kurin_MeleeWeapon_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.409989268,
+  "OffY": 0.0104235709,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.0899026,
+  "BladeEnd": 1.069707,
+  "MeleeWeaponType": 6
+}

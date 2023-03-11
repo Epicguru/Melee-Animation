@@ -1,0 +1,11 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_WonderStick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.277958751,
+  "OffY": -0.0277959853,
+  "BladeStart": 0.3001085,
+  "BladeEnd": 0.772638559,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "inoshishi3.kttfde",
+  "ItemDefName": "Kurin_MeleeWeapon_Ceremonial_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.371769726,
+  "ScaleX": 1.35,
+  "ScaleY": 1.35,
+  "BladeStart": 0.270575672,
+  "BladeEnd": 0.9967427,
+  "MeleeWeaponType": 6
+}

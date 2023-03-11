@@ -1,0 +1,11 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_Pickaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.218892619,
+  "Rotation": 45.0,
+  "BladeStart": 0.136807829,
+  "BladeEnd": 0.5606948,
+  "MeleeWeaponType": 2
+}

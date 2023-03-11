@@ -1,0 +1,17 @@
+{
+  "TextureModID": "roo.antyracemod",
+  "ItemDefName": "AT_RedHalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3543973,
+  "Rotation": 45.0,
+  "BladeStart": 0.5276873,
+  "BladeEnd": 1.0141151,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.998,
+    "g": 0.213,
+    "b": 0.213,
+    "a": 1.0
+  }
+}

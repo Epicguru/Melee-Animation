@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 10 Mar 2023, 11:14 PM.`  
+`Updated 11 Mar 2023, 2:48 PM.`  
 
-**Melee Animation supports 897 weapons from 118 mods.**  
+**Melee Animation supports 915 weapons from 121 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -40,6 +40,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Android Tiers Reforged** | killathon.androidtiersreforged | 1 | *Epicguru* |
 | **Anima Gear** | xrushha.animagear | 1 | *Epicguru* |
 | **Antimatter Annihilation** | co.uk.epicguru.antimatterannihilation | 5 | *Epicguru* |
+| **Anty the war ant race** | roo.antyracemod | 4 | *Epicguru* |
 | **Apothecary (Continued)** | mlie.apothecary | 1 | *Epicguru* |
 | **Arasaka Corporation** | alien.arasakacorporation | 2 | *Epicguru* |
 | **Arsenal of Reaction** | 4ydra.arsenalofreaction | 11 | *Epicguru* |
@@ -59,6 +60,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Industrialisation** | trasheddt.industrialisation | 4 | *Epicguru* |
 | **Kemetic Decorations** | sovereign.kemet | 1 | *Epicguru* |
 | **Kenshi Armory (1.4)** | biowreck.kenshiarmory | 12 | *Epicguru* |
+| **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 3 | *Epicguru* |
 | **MakaiTech** | aranmaho.makai | 7 | *Epicguru* |
 | **Makeshift Melee Weapons** | detvisor.makeshiftweapons | 3 | *Epicguru* |
 | **Mechanite Plague** | chairheir.mechaniteplague | 3 | *Epicguru* |
@@ -86,6 +88,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |
 | **Psysword** | xedos.psyblade | 2 | *Epicguru* |
 | **Race to the Rim** | sargoskar.racetotherim | 2 | *Epicguru* |
+| **Ratkin Weapons+** | bbb.ratkinweapon.morefailure | 11 | *Epicguru* |
 | **ReGrowth: Core** | regrowth.botr.core | 1 | *Epicguru* |
 | **ReGrowth: Extinct Animals** | regrowth.botr.extinctanimalspack | 2 | *Epicguru* |
 | **Reinforced Mechanoid 2** | hlx.reinforcedmechanoids2 | 3 | *Epicguru* |

@@ -178,6 +178,7 @@ namespace AM.Tweaks
                 if (tweak == null)
                     yield return (ItemTweakData.MakeModID(pair.report.ActiveRetextureMod), pair.weapon);
 
+                // Fallback to other tweak data from non-active retextures.
                 if (includeRedundant || tweak == null)
                 {
                     foreach (var retex in pair.report.AllRetextures)

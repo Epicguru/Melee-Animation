@@ -1,0 +1,10 @@
+{
+  "TextureModID": "bbb.ratkinweapon.morefailure",
+  "ItemDefName": "RK_WoodenSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.225841463,
+  "BladeStart": 0.07253018,
+  "BladeEnd": 0.56243217,
+  "MeleeWeaponType": 56
+}
