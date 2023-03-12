@@ -1,0 +1,9 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_WoodElves_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.23223114,
+  "HandsMode": 1,
+  "MeleeWeaponType": 18
+}

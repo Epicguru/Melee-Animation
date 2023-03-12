@@ -16,6 +16,7 @@ namespace AM.Tweaks
 
         private static readonly Dictionary<ThingDef, ItemTweakData> defToTweak = new Dictionary<ThingDef, ItemTweakData>();
         private static readonly Dictionary<(ThingDef def, ModContentPack mod), ItemTweakData> defWithModToTweak = new Dictionary<(ThingDef def, ModContentPack mod), ItemTweakData>();
+        private static Dictionary<string, FileInfo> overrideTweakDataFile;
 
         /// <summary>
         /// Gets the <see cref="FileInfo"/> where the weapon tweak data is expected to exist
@@ -23,7 +24,7 @@ namespace AM.Tweaks
         /// <param name="weaponDef"></param>
         /// <param name="textureMod"></param>
         /// <returns></returns>
-        public static FileInfo GetFileForTweak(ThingDef weaponDef, ModContentPack textureMod = null)
+        public static FileInfo GetFileForTweak(ThingDef weaponDef, ModContentPack textureMod = null, FileInfo setOverride = null)
         {
             if (textureMod == null)
             {
@@ -32,9 +33,40 @@ namespace AM.Tweaks
             }
 
             string fileName = ItemTweakData.MakeFileName(weaponDef, textureMod);
+
+            // Allow other mods to provide tweak files.
+            overrideTweakDataFile ??= MakeOverrideTweakDataFileMap();
+            if (setOverride != null)
+                overrideTweakDataFile[fileName] = setOverride;
+
+            if (overrideTweakDataFile.TryGetValue(fileName, out var found))
+                return found;
+
             string root = Core.ModContent.RootDir;
             string fp = Path.Combine(root, DATA_FOLDER_NAME, fileName);
             return new FileInfo(fp);
+        }
+
+        private static Dictionary<string, FileInfo> MakeOverrideTweakDataFileMap()
+        {
+            var ov = new Dictionary<string, FileInfo>();
+            var mods = LoadedModManager.RunningModsListForReading;
+
+            foreach (var mod in mods)
+            {
+                var folder = Path.Combine(mod.RootDir, DATA_FOLDER_NAME);
+                if (!Directory.Exists(folder))
+                    continue;
+
+                foreach (var file in Directory.EnumerateFiles(folder, "*.json", SearchOption.TopDirectoryOnly))
+                {
+                    var fi = new FileInfo(file);
+                    ov[fi.Name] = fi;
+                    Core.Log($"Found {fi.Name} from {mod.Name}");
+                }
+            }
+
+            return ov;
         }
 
         public static int GetTweakDataFileCount(string modID)

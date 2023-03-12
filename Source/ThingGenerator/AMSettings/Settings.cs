@@ -38,12 +38,6 @@ public class Settings : SimpleSettingsBase
     [DrawMethod(nameof(DrawAnimationList))]
     [SettingOptions(drawValue: false, allowReset: false, drawHoverHighlight: false, ignoreEqualityForPresets: true)]
     private Dictionary<string, AnimDef.SettingsData> animSettings = new Dictionary<string, AnimDef.SettingsData>();
-
-    [Label("Send anonymous statistics")]
-    [Description("When a modded weapon that has not been patched to work with this mod is encountered, a entry is logged.\n" +
-        "If this setting is enabled, anonymous information about that mod (only a modId, nothing that can identify this computer)\n" +
-        "is sent to the mod developer so that he may try to add a patch to support it.")]
-    public bool SendStatistics = false;
     #endregion
 
     #region Lasso
@@ -272,8 +266,16 @@ public class Settings : SimpleSettingsBase
     [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Alt] key when targeting a friendly pawn for execution.")]
     public bool WarnOfFriendlyExecution = true;
 
+    [Label("Send Anonymous Patch Statistics")]
+    [Description("When a mod is missing a patch (that allows the melee weapons to do animations), the ID of said mod is anonymously logged to " +
+                 "let this mod's author know that a patch is needed. The <b>only</b> information logged is that ID.\n" +
+                 "You can opt out of this functionality by disabling this option.\nNote: logging does not occur the first time you run the game with this mod.")]
+    public bool SendStatistics = true;
+
     public bool TrailsAreDisabled => TrailColor.a <= 0 || TrailLengthScale <= 0;
 
+    [NonSerialized]
+    public bool IsFirstTimeRunning = true;
     #endregion
 
     private static NormalDistribution normal;
@@ -290,6 +292,7 @@ public class Settings : SimpleSettingsBase
     {
         base.ExposeData();
         SimpleSettings.AutoExpose(this);
+        Scribe_Values.Look(ref IsFirstTimeRunning, nameof(IsFirstTimeRunning), true);
     }
 
     public void PostLoadDefs()

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_HighElves_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5741269,
+  "Rotation": 45.0,
+  "ScaleX": 1.45,
+  "ScaleY": 1.45,
+  "BladeStart": 0.7870054,
+  "BladeEnd": 1.5482074,
+  "MeleeWeaponType": 7
+}

@@ -55,43 +55,43 @@ namespace AM
         [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
         private static void LogModRequestsToDesktop()
         {
-            if (Settings.SendStatistics)
+            var task = Task.Run(() => new ModRequestClient(GIST_ID).GetModRequests());
+            task.ContinueWith(t =>
             {
-                var task = Task.Run(() => new ModRequestClient(GIST_ID).GetModRequests());
-                task.ContinueWith(t =>
+                if (!t.IsCompletedSuccessfully)
                 {
-                    if (!t.IsCompletedSuccessfully)
-                    {
-                        Error("Failed to get mod requests:", t.Exception);
-                        return;
-                    }
+                    Error("Failed to get mod requests:", t.Exception);
+                    return;
+                }
 
-                    var str = new StringBuilder(1024 * 10);
-                    var res = t.Result.ToList();
-                    var list = (from r in res orderby r.data.RequestCount descending select r).ToList();
-                    foreach (var pair in list)
-                    {
-                        int done = TweakDataManager.GetTweakDataFileCount(pair.modID);
-                        if (done >= pair.data.MissingWeaponCount)
-                            continue;
+                var str = new StringBuilder(1024 * 10);
+                var res = t.Result.ToList();
+                var list = (from r in res orderby r.data.RequestCount descending select r).ToList();
+                foreach (var pair in list)
+                {
+                    int done = TweakDataManager.GetTweakDataFileCount(pair.modID);
+                    if (done >= pair.data.MissingWeaponCount)
+                        continue;
 
-                        Log($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.");
-                        str.Append($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.\n");
-                    }
+                    Log($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.");
+                    str.Append($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.\n");
+                }
 
+                // I don't want users clicking this button out of curiosity and complaining
+                // when a file appears on their desktop:
+                if (SteamUtility.SteamPersonaName == "Epicguru")
+                {
                     string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MeleeAnimationMissingMods.txt");
                     File.WriteAllText(path, str.ToString());
-                });
-            }
-            else
-            {
-                Log("Skipping LogModRequestsToDesktop because sending of statistics is disabled.");
-            }
+                }
+            });
         }
 
         [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
         private static void ClearModRequests()
         {
+            // Average user shouldn't be allowed to clear the logs,
+            // but if they do it isn't a big deal.
             if (SteamUtility.SteamPersonaName != "Epicguru")
                 return;
 
@@ -195,7 +195,7 @@ namespace AM
                 Warn($"{pair.Key} has {pair.Value} missing weapon tweak data.");
             }
 
-            if (Settings.SendStatistics)
+            if (Settings.SendStatistics && !Settings.IsFirstTimeRunning)
             {
                 Task.Run(() => UploadMissingModData(modsAndMissingWeaponCount)).ContinueWith(t =>
                 {
@@ -210,7 +210,22 @@ namespace AM
             }
             else
             {
-                Log("Skipping reporting of missing mod/weapons due to setting.");
+                Log(Settings.IsFirstTimeRunning
+                    ? "Mod is running for the first time - log sending is disabled."
+                    : "Skipping reporting of missing mod/weapons because user opted out.");
+            }
+
+            if (!Settings.IsFirstTimeRunning)
+                return;
+
+            Settings.IsFirstTimeRunning = false;
+            try
+            {
+                base.WriteSettings();
+            }
+            catch (Exception e)
+            {
+                Error("Failed to save settings to flag first run as over.", e);
             }
         }
 

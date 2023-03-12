@@ -1,0 +1,10 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_HighElves_Longsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3289941,
+  "BladeStart": 0.08386123,
+  "BladeEnd": 0.8321615,
+  "MeleeWeaponType": 6
+}

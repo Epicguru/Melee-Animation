@@ -1,0 +1,11 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_DarkElves_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.219329387,
+  "HandsMode": 1,
+  "BladeStart": 0.109664686,
+  "BladeEnd": 0.5805778,
+  "MeleeWeaponType": 48
+}
