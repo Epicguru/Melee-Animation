@@ -55,31 +55,38 @@ namespace AM
         [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
         private static void LogModRequestsToDesktop()
         {
-            var task = Task.Run(() => new ModRequestClient(GIST_ID).GetModRequests());
-            task.ContinueWith(t =>
+            if (Settings.SendStatistics)
             {
-                if (!t.IsCompletedSuccessfully)
+                var task = Task.Run(() => new ModRequestClient(GIST_ID).GetModRequests());
+                task.ContinueWith(t =>
                 {
-                    Error("Failed to get mod requests:", t.Exception);
-                    return;
-                }
+                    if (!t.IsCompletedSuccessfully)
+                    {
+                        Error("Failed to get mod requests:", t.Exception);
+                        return;
+                    }
 
-                var str = new StringBuilder(1024 * 10);
-                var res = t.Result.ToList();
-                var list = (from r in res orderby r.data.RequestCount descending select r).ToList();
-                foreach (var pair in list)
-                {
-                    int done = TweakDataManager.GetTweakDataFileCount(pair.modID);
-                    if (done >= pair.data.MissingWeaponCount)
-                        continue;
+                    var str = new StringBuilder(1024 * 10);
+                    var res = t.Result.ToList();
+                    var list = (from r in res orderby r.data.RequestCount descending select r).ToList();
+                    foreach (var pair in list)
+                    {
+                        int done = TweakDataManager.GetTweakDataFileCount(pair.modID);
+                        if (done >= pair.data.MissingWeaponCount)
+                            continue;
 
-                    Log($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.");
-                    str.Append($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.\n");
-                }
+                        Log($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.");
+                        str.Append($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.\n");
+                    }
 
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MeleeAnimationMissingMods.txt");
-                File.WriteAllText(path, str.ToString());
-            });
+                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MeleeAnimationMissingMods.txt");
+                    File.WriteAllText(path, str.ToString());
+                });
+            }
+            else
+            {
+                Log("Skipping LogModRequestsToDesktop because sending of statistics is disabled.");
+            }
         }
 
         [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
@@ -119,7 +126,7 @@ namespace AM
 
             Harmony = new Harmony(content.PackageId);
             Harmony.PatchAll();
-            ModContent = content; 
+            ModContent = content;
 
             // Initialize settings.
             Settings = GetSettings<Settings>();
@@ -188,16 +195,23 @@ namespace AM
                 Warn($"{pair.Key} has {pair.Value} missing weapon tweak data.");
             }
 
-            Task.Run(() => UploadMissingModData(modsAndMissingWeaponCount)).ContinueWith(t =>
+            if (Settings.SendStatistics)
             {
-                if (t.IsCompletedSuccessfully)
+                Task.Run(() => UploadMissingModData(modsAndMissingWeaponCount)).ContinueWith(t =>
                 {
-                    Log("Successfully reported missing mod/weapons.");
-                    return;
-                }
+                    if (t.IsCompletedSuccessfully)
+                    {
+                        Log("Successfully reported missing mod/weapons.");
+                        return;
+                    }
 
-                Error("Reporting missing mod/weapons failed with exception:", t.Exception);
-            });
+                    Error("Reporting missing mod/weapons failed with exception:", t.Exception);
+                });
+            }
+            else
+            {
+                Log("Skipping reporting of missing mod/weapons due to setting.");
+            }
         }
 
         private static async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
@@ -313,7 +327,7 @@ namespace AM
             var str2 = new StringBuilder();
             var str3 = new StringBuilder();
             int conflicts = 0;
-            foreach(var changed in h.GetPatchedMethods())
+            foreach (var changed in h.GetPatchedMethods())
             {
                 int oldConflicts = conflicts;
                 var patches = Harmony.GetPatchInfo(changed);
@@ -321,7 +335,7 @@ namespace AM
                 str.AppendLine(changed.FullDescription());
 
                 str.AppendLine("Prefixes:");
-                foreach(var pre in patches.Prefixes)
+                foreach (var pre in patches.Prefixes)
                 {
                     str.AppendLine($"  [{pre.owner}] {pre.PatchMethod.Name}");
                     if (!IsSelf(pre))
