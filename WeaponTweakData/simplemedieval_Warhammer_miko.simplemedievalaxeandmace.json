@@ -1,0 +1,12 @@
+{
+  "TextureModID": "miko.simplemedievalaxeandmace",
+  "ItemDefName": "simplemedieval_Warhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.180160731,
+  "OffY": 0.008578956,
+  "Rotation": 45.0,
+  "BladeStart": 0.326005638,
+  "BladeEnd": 0.647721469,
+  "MeleeWeaponType": 40
+}

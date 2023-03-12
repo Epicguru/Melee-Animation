@@ -1,0 +1,14 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_MLN_Schrodagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.218767017,
+  "Rotation": 45.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.107238606,
+  "BladeEnd": 0.5404829,
+  "MeleeWeaponType": 48
+}

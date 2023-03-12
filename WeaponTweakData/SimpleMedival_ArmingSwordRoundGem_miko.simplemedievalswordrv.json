@@ -1,0 +1,12 @@
+{
+  "TextureModID": "miko.simplemedievalswordrv",
+  "ItemDefName": "SimpleMedival_ArmingSwordRoundGem",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.34745273,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.08150174,
+  "BladeEnd": 0.8536197,
+  "MeleeWeaponType": 6
+}

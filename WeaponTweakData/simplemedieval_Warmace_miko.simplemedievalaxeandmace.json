@@ -1,0 +1,12 @@
+{
+  "TextureModID": "miko.simplemedievalaxeandmace",
+  "ItemDefName": "simplemedieval_Warmace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0986596644,
+  "OffY": -0.00428915024,
+  "Rotation": 45.0,
+  "BladeStart": 0.09436984,
+  "BladeEnd": 0.489008456,
+  "MeleeWeaponType": 8
+}

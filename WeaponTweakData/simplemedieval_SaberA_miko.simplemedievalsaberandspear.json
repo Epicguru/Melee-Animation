@@ -1,0 +1,13 @@
+{
+  "TextureModID": "miko.simplemedievalsaberandspear",
+  "ItemDefName": "simplemedieval_SaberA",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.35174188,
+  "OffY": -6.41681254E-07,
+  "Rotation": 43.46913,
+  "HandsMode": 1,
+  "BladeStart": 0.06434317,
+  "BladeEnd": 0.857908845,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "miko.simplemedievalaxeandmace",
+  "ItemDefName": "simplemedieval_Scepter",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1544232,
+  "Rotation": 45.0,
+  "BladeStart": 0.218767032,
+  "BladeEnd": 0.570509553,
+  "MeleeWeaponType": 8
+}

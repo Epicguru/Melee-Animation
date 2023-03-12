@@ -1,0 +1,13 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_MSC_Stakenator",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.480428874,
+  "Rotation": 60.0,
+  "ScaleX": 2.5,
+  "ScaleY": 2.5,
+  "BladeStart": 1.23109913,
+  "BladeEnd": 1.64718544,
+  "MeleeWeaponType": 3
+}

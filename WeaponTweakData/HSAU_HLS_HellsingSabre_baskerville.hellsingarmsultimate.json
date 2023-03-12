@@ -1,0 +1,14 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_HLS_HellsingSabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4418232,
+  "Rotation": 45.0,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "HandsMode": 1,
+  "BladeStart": 0.167292625,
+  "BladeEnd": 1.03378046,
+  "MeleeWeaponType": 6
+}

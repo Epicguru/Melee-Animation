@@ -1,0 +1,11 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_MLN_WarWaker",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.437533379,
+  "Rotation": 45.0,
+  "BladeStart": 0.08150174,
+  "BladeEnd": 1.080965,
+  "MeleeWeaponType": 6
+}

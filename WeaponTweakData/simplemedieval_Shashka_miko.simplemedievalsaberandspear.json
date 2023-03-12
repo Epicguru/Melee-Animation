@@ -1,0 +1,12 @@
+{
+  "TextureModID": "miko.simplemedievalsaberandspear",
+  "ItemDefName": "simplemedieval_Shashka",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3517425,
+  "OffY": -0.0171585716,
+  "Rotation": 42.31547,
+  "BladeStart": 0.111528419,
+  "BladeEnd": 0.8536197,
+  "MeleeWeaponType": 6
+}

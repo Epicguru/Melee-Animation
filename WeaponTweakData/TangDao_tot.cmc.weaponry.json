@@ -1,0 +1,19 @@
+{
+  "TextureModID": "tot.cmc.weaponry",
+  "ItemDefName": "TangDao",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.476139665,
+  "OffY": 0.0386056378,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.120107375,
+  "BladeEnd": 1.14530826,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.364000022,
+    "g": 0.00291202776,
+    "b": 0.00291202776,
+    "a": 0.915999949
+  }
+}

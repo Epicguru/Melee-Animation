@@ -448,7 +448,7 @@ namespace AM.UI
                     Widgets.DrawLine(new Vector2(view.xMin, view.center.y), new Vector2(view.xMax, view.center.y), new Color(0f, 1f, 0f, 0.333f), 1);
                     Widgets.DrawLine(new Vector2(view.center.x, view.yMin), new Vector2(view.center.x, view.yMax), new Color(0f, 1f, 0f, 0.333f), 1);
                     var idleCat = IdleClassifier.Classify(tweak);
-                    Widgets.Label(view, $"Mouse: {localMousePos}, Weapon Size: {idleCat.size}, Category: {idleCat.category}");
+                    Widgets.Label(view, $"Mouse: {localMousePos}, Weapon Size: {idleCat.size}, Category: {idleCat.category}, TexPath: {RetextureUtility.GetTextureReport(tweak.GetDef()).TexturePath}");
 
                     if (Widgets.ButtonInvisible(view, false))
                     {

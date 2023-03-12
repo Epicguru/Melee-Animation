@@ -1,0 +1,14 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_MLN_PsychoScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.583378255,
+  "OffY": -0.09865965,
+  "Rotation": 60.0,
+  "ScaleX": 2.5,
+  "ScaleY": 2.5,
+  "BladeStart": 1.26970541,
+  "BladeEnd": 1.62573767,
+  "MeleeWeaponType": 2
+}
