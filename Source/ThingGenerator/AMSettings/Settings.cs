@@ -38,6 +38,12 @@ public class Settings : SimpleSettingsBase
     [DrawMethod(nameof(DrawAnimationList))]
     [SettingOptions(drawValue: false, allowReset: false, drawHoverHighlight: false, ignoreEqualityForPresets: true)]
     private Dictionary<string, AnimDef.SettingsData> animSettings = new Dictionary<string, AnimDef.SettingsData>();
+
+    [Label("Send anonymous statistics")]
+    [Description("When a modded weapon that has not been patched to work with this mod is encountered, a entry is logged.\n" +
+        "If this setting is enabled, anonymous information about that mod (only a modId, nothing that can identify this computer)\n" +
+        "is sent to the mod developer so that he may try to add a patch to support it.")]
+    public bool SendStatistics = false;
     #endregion
 
     #region Lasso
