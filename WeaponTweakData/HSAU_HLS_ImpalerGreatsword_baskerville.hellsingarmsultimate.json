@@ -1,0 +1,13 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_HLS_ImpalerGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.506166339,
+  "Rotation": 45.0,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.158713013,
+  "BladeEnd": 1.26541555,
+  "MeleeWeaponType": 6
+}

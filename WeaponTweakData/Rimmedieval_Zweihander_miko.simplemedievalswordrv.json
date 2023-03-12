@@ -1,0 +1,13 @@
+{
+  "TextureModID": "miko.simplemedievalswordrv",
+  "ItemDefName": "Rimmedieval_Zweihander",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.523324251,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.1415551,
+  "BladeEnd": 1.31689,
+  "MeleeWeaponType": 6
+}

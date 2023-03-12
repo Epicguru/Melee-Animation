@@ -1,0 +1,11 @@
+{
+  "TextureModID": "farmradish.nyaron",
+  "ItemDefName": "Nr_Lightbringer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3302948,
+  "OffY": -0.0171585716,
+  "BladeStart": 0.1372653,
+  "BladeEnd": 0.7592492,
+  "MeleeWeaponType": 6
+}

@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 11 Mar 2023, 3:28 PM.`  
+`Updated 12 Mar 2023, 6:01 PM.`  
 
-**Melee Animation supports 1010 weapons from 131 mods.**  
+**Melee Animation supports 1075 weapons from 138 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -59,6 +59,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
 | **Grimworld: Melee** | grimworld.melee | 6 | *Epicguru* |
 | **Heavy Melee Weapons (Continued)** | mlie.heavymeleeweapons | 11 | *Epicguru* |
+| **Hellsing ARMS Ultimate** | baskerville.hellsingarmsultimate | 13 | *Epicguru* |
 | **Heyra the Horned** | bando.heyrathehorned | 11 | *Epicguru* |
 | **Ilya Tech - Core** | suvi.techcore | 2 | *Epicguru* |
 | **Industrial Melee Weaponry** | iexist.industrial.melee.weaponry | 12 | *Epicguru* |
@@ -90,6 +91,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Moyo-The cartel arrives** | nemonian.mycartel | 3 | *Epicguru* |
 | **NewRatkinPlus** | solaris.ratkinracemod | 15 | *Epicguru* |
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
+| **Nyaron race** | farmradish.nyaron | 3 | *Epicguru* |
 | **Obsidia Expansion** | obsidiaexpansion.core | 24 | *Epicguru* |
 | **Paniel the Automata** | ahndemi.panieltheautomata | 8 | *Epicguru* |
 | **Pawnmorpher** | tachyonite.pawnmorpherpublic | 1 | *Epicguru* |
@@ -114,7 +116,11 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Rimworld Ultratech** | conner.rimworldultratech | 2 | *Epicguru* |
 | **Roo's Minotaur Xenotype** | rooboid.minotaur | 5 | *Epicguru* |
 | **Royal Arsenal** | bucko.royalarsenal | 4 | *Epicguru* |
-| **Royalty** | ludeon.rimworld.royalty | 9 | *Epicguru* |
+| **Royalty** | ludeon.rimworld.royalty | 12 | *Epicguru* |
+| **Simple Medieval Axe And Mace** | miko.simplemedievalaxeandmace | 5 | *Epicguru* |
+| **Simple Medieval Saber And Spear** | miko.simplemedievalsaberandspear | 7 | *Epicguru* |
+| **Simple Medieval Sword(retexture version)** | miko.simplemedievalswordrv | 16 | *Epicguru* |
+| **Simple Medieval Weapon** | miko.simplemedievalweapon | 16 | *Epicguru* |
 | **Simply Melee Weapons (Continued)** | zal.simplymelee | 5 | *Epicguru* |
 | **Simply More Melee (Continued)** | mlie.simplymoremelee | 34 | *Epicguru* |
 | **Sparkling Worlds - Full Mod** | albion.sparklingworlds.full | 2 | *Epicguru* |
@@ -124,6 +130,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Tastier Vanilla Melee** | al9000.tvmelee | 12 | *Epicguru* |
 | **The Joris Experience** | sarg.jorisexperience | 1 | *Epicguru* |
 | **The Wild Fields - apparel and weapons** | serek.thewildfields | 4 | *Epicguru* |
+| **TOT's CMC Weaponry** | tot.cmc.weaponry | 2 | *Epicguru* |
 | **Ultratech Weapons Plus** | side1iner.ultratechweaponsplusdev | 2 | *Epicguru* |
 | **Vali's Charged Arsenal** | vali.ca | 13 | *Epicguru* |
 | **Vali's Charged Arsenal - Eltex Series** | vali.caes | 7 | *Epicguru* |

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_ISC_BlessedBayonet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3903488,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.102949455,
+  "BladeEnd": 0.866487861,
+  "MeleeWeaponType": 6
+}

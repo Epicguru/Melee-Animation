@@ -1,0 +1,11 @@
+{
+  "TextureModID": "miko.simplemedievalsaberandspear",
+  "ItemDefName": "simplemedieval_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.34316355,
+  "Rotation": 45.0,
+  "BladeStart": 0.124397181,
+  "BladeEnd": 0.832172,
+  "MeleeWeaponType": 6
+}

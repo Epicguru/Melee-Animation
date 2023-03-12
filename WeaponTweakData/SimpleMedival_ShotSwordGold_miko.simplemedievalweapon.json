@@ -1,0 +1,12 @@
+{
+  "TextureModID": "miko.simplemedievalweapon",
+  "ItemDefName": "SimpleMedival_ShotSwordGold",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2702414,
+  "OffY": -0.0214477219,
+  "Rotation": 46.46764,
+  "BladeStart": 0.09865965,
+  "BladeEnd": 0.729222536,
+  "MeleeWeaponType": 54
+}

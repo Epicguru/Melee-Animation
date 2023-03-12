@@ -1,0 +1,14 @@
+{
+  "TextureModID": "miko.simplemedievalswordrv",
+  "ItemDefName": "SimpleMedival_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5319039,
+  "OffY": 0.00428915024,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.102949455,
+  "BladeEnd": 1.32117975,
+  "MeleeWeaponType": 6
+}

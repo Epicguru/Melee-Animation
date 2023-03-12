@@ -1,0 +1,15 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_MLN_ValentineRazor",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.244503915,
+  "OffY": 0.0257368721,
+  "Rotation": 40.0,
+  "ScaleX": 0.65,
+  "ScaleY": 0.65,
+  "HandsMode": 1,
+  "BladeStart": 0.09865965,
+  "BladeEnd": 0.647721469,
+  "MeleeWeaponType": 48
+}

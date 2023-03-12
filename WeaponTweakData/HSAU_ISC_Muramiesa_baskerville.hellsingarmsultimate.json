@@ -1,0 +1,12 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_ISC_Muramiesa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4461124,
+  "OffY": 0.012868762,
+  "Rotation": 45.0,
+  "BladeStart": 0.1372653,
+  "BladeEnd": 1.0938338,
+  "MeleeWeaponType": 6
+}

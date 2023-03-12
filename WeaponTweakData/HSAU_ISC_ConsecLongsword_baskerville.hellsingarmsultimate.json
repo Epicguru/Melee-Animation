@@ -1,0 +1,11 @@
+{
+  "TextureModID": "baskerville.hellsingarmsultimate",
+  "ItemDefName": "HSAU_ISC_ConsecLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.433244258,
+  "Rotation": 45.0,
+  "BladeStart": 0.1415551,
+  "BladeEnd": 1.08525491,
+  "MeleeWeaponType": 6
+}
