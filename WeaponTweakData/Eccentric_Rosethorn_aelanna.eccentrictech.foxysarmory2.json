@@ -1,0 +1,11 @@
+{
+  "TextureModID": "aelanna.eccentrictech.foxysarmory2",
+  "ItemDefName": "Eccentric_Rosethorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.154506952,
+  "HandsMode": 1,
+  "BladeStart": 0.07226938,
+  "BladeEnd": 0.451060623,
+  "MeleeWeaponType": 48
+}

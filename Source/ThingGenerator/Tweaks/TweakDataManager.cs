@@ -16,14 +16,12 @@ namespace AM.Tweaks
 
         private static readonly Dictionary<ThingDef, ItemTweakData> defToTweak = new Dictionary<ThingDef, ItemTweakData>();
         private static readonly Dictionary<(ThingDef def, ModContentPack mod), ItemTweakData> defWithModToTweak = new Dictionary<(ThingDef def, ModContentPack mod), ItemTweakData>();
+        private static Dictionary<string, FileInfo> overrideTweakDataFile;
 
         /// <summary>
         /// Gets the <see cref="FileInfo"/> where the weapon tweak data is expected to exist
         /// </summary>
-        /// <param name="weaponDef"></param>
-        /// <param name="textureMod"></param>
-        /// <returns></returns>
-        public static FileInfo GetFileForTweak(ThingDef weaponDef, ModContentPack textureMod = null)
+        public static FileInfo GetFileForTweak(ThingDef weaponDef, ModContentPack textureMod = null, FileInfo setOverride = null)
         {
             if (textureMod == null)
             {
@@ -32,9 +30,43 @@ namespace AM.Tweaks
             }
 
             string fileName = ItemTweakData.MakeFileName(weaponDef, textureMod);
+
+            // Allow other mods to provide tweak files.
+            overrideTweakDataFile ??= MakeOverrideTweakDataFileMap();
+            if (setOverride != null)
+                overrideTweakDataFile[fileName] = setOverride;
+
+            if (overrideTweakDataFile.TryGetValue(fileName, out var found))
+                return found;
+
             string root = Core.ModContent.RootDir;
             string fp = Path.Combine(root, DATA_FOLDER_NAME, fileName);
             return new FileInfo(fp);
+        }
+
+        private static Dictionary<string, FileInfo> MakeOverrideTweakDataFileMap()
+        {
+            var ov = new Dictionary<string, FileInfo>();
+            var mods = LoadedModManager.RunningModsListForReading;
+
+            foreach (var mod in mods)
+            {
+                // Main mod does not provide overrides - every other mod takes priority over the main one.
+                if (mod == Core.ModContent)
+                    continue;
+
+                var folder = Path.Combine(mod.RootDir, DATA_FOLDER_NAME);
+                if (!Directory.Exists(folder))
+                    continue;
+
+                foreach (var file in Directory.EnumerateFiles(folder, "*.json", SearchOption.TopDirectoryOnly))
+                {
+                    var fi = new FileInfo(file);
+                    ov[fi.Name] = fi;
+                }
+            }
+
+            return ov;
         }
 
         public static int GetTweakDataFileCount(string modID)
@@ -70,7 +102,9 @@ namespace AM.Tweaks
         {
             var file = GetFileForTweak(weapon, textureMod);
             if (!file.Exists)
+            {
                 return null;
+            }
 
             ItemTweakData loaded;
             try

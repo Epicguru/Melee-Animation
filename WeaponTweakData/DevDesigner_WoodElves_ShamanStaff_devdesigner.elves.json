@@ -1,0 +1,13 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_WoodElves_ShamanStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3999536,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.0709595,
+  "BladeEnd": 1.03213823,
+  "MeleeWeaponType": 1
+}

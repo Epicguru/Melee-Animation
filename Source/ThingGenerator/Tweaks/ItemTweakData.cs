@@ -51,7 +51,7 @@ namespace AM.Tweaks
         }
 
         [JsonIgnore]
-        public string FileName => $"{TextureModID}_{ItemDefName}.json";
+        public string FileName => $"{ItemDefName}_{TextureModID}.json";
         [JsonIgnore]
         public float BladeLength => Mathf.Abs(BladeStart - BladeEnd);
         [JsonIgnore]

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_WoodElves_Greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.516069055,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.116115555,
+  "BladeEnd": 1.24501681,
+  "MeleeWeaponType": 6
+}

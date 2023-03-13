@@ -1,0 +1,14 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_HighElves_Greataxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354797542,
+  "OffY": -0.03225431,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.425757021,
+  "BladeEnd": 0.903120935,
+  "MeleeWeaponType": 2
+}

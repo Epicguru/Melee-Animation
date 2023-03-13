@@ -77,14 +77,21 @@ namespace AM
                     str.Append($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.\n");
                 }
 
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MeleeAnimationMissingMods.txt");
-                File.WriteAllText(path, str.ToString());
+                // I don't want users clicking this button out of curiosity and complaining
+                // when a file appears on their desktop:
+                if (SteamUtility.SteamPersonaName == "Epicguru")
+                {
+                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MeleeAnimationMissingMods.txt");
+                    File.WriteAllText(path, str.ToString());
+                }
             });
         }
 
         [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
         private static void ClearModRequests()
         {
+            // Average user shouldn't be allowed to clear the logs,
+            // but if they do it isn't a big deal.
             if (SteamUtility.SteamPersonaName != "Epicguru")
                 return;
 
@@ -119,7 +126,7 @@ namespace AM
 
             Harmony = new Harmony(content.PackageId);
             Harmony.PatchAll();
-            ModContent = content; 
+            ModContent = content;
 
             // Initialize settings.
             Settings = GetSettings<Settings>();
@@ -188,16 +195,38 @@ namespace AM
                 Warn($"{pair.Key} has {pair.Value} missing weapon tweak data.");
             }
 
-            Task.Run(() => UploadMissingModData(modsAndMissingWeaponCount)).ContinueWith(t =>
+            if (Settings.SendStatistics && !Settings.IsFirstTimeRunning)
             {
-                if (t.IsCompletedSuccessfully)
+                Task.Run(() => UploadMissingModData(modsAndMissingWeaponCount)).ContinueWith(t =>
                 {
-                    Log("Successfully reported missing mod/weapons.");
-                    return;
-                }
+                    if (t.IsCompletedSuccessfully)
+                    {
+                        Log("Successfully reported missing mod/weapons.");
+                        return;
+                    }
 
-                Error("Reporting missing mod/weapons failed with exception:", t.Exception);
-            });
+                    Error("Reporting missing mod/weapons failed with exception:", t.Exception);
+                });
+            }
+            else
+            {
+                Log(Settings.IsFirstTimeRunning
+                    ? "Mod is running for the first time - log sending is disabled."
+                    : "Skipping reporting of missing mod/weapons because user opted out.");
+            }
+
+            if (!Settings.IsFirstTimeRunning)
+                return;
+
+            Settings.IsFirstTimeRunning = false;
+            try
+            {
+                base.WriteSettings();
+            }
+            catch (Exception e)
+            {
+                Error("Failed to save settings to flag first run as over.", e);
+            }
         }
 
         private static async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
@@ -313,7 +342,7 @@ namespace AM
             var str2 = new StringBuilder();
             var str3 = new StringBuilder();
             int conflicts = 0;
-            foreach(var changed in h.GetPatchedMethods())
+            foreach (var changed in h.GetPatchedMethods())
             {
                 int oldConflicts = conflicts;
                 var patches = Harmony.GetPatchInfo(changed);
@@ -321,7 +350,7 @@ namespace AM
                 str.AppendLine(changed.FullDescription());
 
                 str.AppendLine("Prefixes:");
-                foreach(var pre in patches.Prefixes)
+                foreach (var pre in patches.Prefixes)
                 {
                     str.AppendLine($"  [{pre.owner}] {pre.PatchMethod.Name}");
                     if (!IsSelf(pre))

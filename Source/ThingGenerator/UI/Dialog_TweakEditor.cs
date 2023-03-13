@@ -43,6 +43,7 @@ namespace AM.UI
         private Vector3? startPos;
         private Vector2 tweakStart;
         private byte trsMode;
+        private ModContentPack saveMod;
 
         public Dialog_TweakEditor()
         {
@@ -110,6 +111,11 @@ namespace AM.UI
                 strings[i] = null;
         }
 
+        private IEnumerable<ModContentPack> EnumerateLocalMods() =>
+            from m in LoadedModManager.RunningModsListForReading
+            where m.AnyNonTranslationContentLoaded() && new DirectoryInfo(m.RootDir).Parent.Name == "Mods"
+            select m;
+
         public override void DoWindowContents(Rect inRect)
         {
             if (camera == null)
@@ -117,6 +123,8 @@ namespace AM.UI
 
             scrollIndex = 0;
             stringIndex = 0;
+
+            saveMod ??= Core.ModContent;
 
             var ui = new Listing_Standard();
             ui.Begin(inRect);
@@ -164,7 +172,16 @@ namespace AM.UI
                 return;
             }
 
-            if (ui.ButtonText("SAVE MOD CHANGES"))
+            if (ui.ButtonText($"Output Folder: {saveMod.Name}"))
+            {
+                FloatMenuUtility.MakeMenu(EnumerateLocalMods(), m => m.Name, m => () =>
+                {
+                    saveMod = m;
+                    Core.Log($"Changed save mod to {m.Name} ({m.PackageId})");
+                });
+            }
+
+            if (ui.ButtonText("SAVE CHANGES"))
             {
                 bool saveAll = Input.GetKey(KeyCode.LeftShift);
 
@@ -186,10 +203,20 @@ namespace AM.UI
                              select tweak;
                 }
 
+                bool isAltLocation = saveMod != Core.ModContent;
                 int c = 0;
                 foreach (var item in toSave)
                 {
-                    var file = TweakDataManager.GetFileForTweak(item.GetDef(), item.GetMod());
+                    FileInfo overrideFile = null;
+                    if (isAltLocation)
+                    {
+                        string fn = item.FileName;
+                        overrideFile = new FileInfo(Path.Combine(saveMod.RootDir, TweakDataManager.DATA_FOLDER_NAME, fn));
+                        if (!overrideFile.Directory.Exists)
+                            overrideFile.Directory.Create();
+                    }
+
+                    var file = TweakDataManager.GetFileForTweak(item.GetDef(), item.GetMod(), overrideFile);
                     item.SaveTo(file.FullName);
                     c++;
 
@@ -200,7 +227,7 @@ namespace AM.UI
                     }
                 }
 
-                Messages.Message($"Saved {c} tweak data.", MessageTypeDefOf.PositiveEvent, false);
+                Messages.Message($"Saved {c} tweak data to {new DirectoryInfo(saveMod.RootDir).Name}/{TweakDataManager.DATA_FOLDER_NAME}", MessageTypeDefOf.PositiveEvent, false);
             }
 
             if (ui.ButtonText($"Editing: {Def?.LabelCap ?? "nothing"}"))

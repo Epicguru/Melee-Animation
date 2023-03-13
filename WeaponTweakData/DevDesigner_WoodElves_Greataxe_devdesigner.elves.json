@@ -1,0 +1,14 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_WoodElves_Greataxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.405797124,
+  "OffY": -0.0463768244,
+  "Rotation": 40.0,
+  "ScaleX": 1.12,
+  "ScaleY": 1.12,
+  "BladeStart": 0.06956522,
+  "BladeEnd": 1.03188407,
+  "MeleeWeaponType": 6
+}

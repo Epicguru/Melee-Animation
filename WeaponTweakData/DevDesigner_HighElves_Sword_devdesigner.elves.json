@@ -1,0 +1,10 @@
+{
+  "TextureModID": "devdesigner.elves",
+  "ItemDefName": "DevDesigner_HighElves_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.290288866,
+  "BladeStart": 0.06450864,
+  "BladeEnd": 0.7547511,
+  "MeleeWeaponType": 6
+}
