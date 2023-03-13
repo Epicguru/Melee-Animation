@@ -1,0 +1,13 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_Tool_Hoe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.205736876,
+  "OffY": -0.07912952,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.4423345,
+  "BladeEnd": 0.667062163,
+  "MeleeWeaponType": 2
+}

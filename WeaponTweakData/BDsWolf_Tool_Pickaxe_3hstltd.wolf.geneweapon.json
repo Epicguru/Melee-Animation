@@ -1,0 +1,11 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_Tool_Pickaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.212067172,
+  "OffY": -0.0063302815,
+  "BladeStart": 0.407517284,
+  "BladeEnd": 0.635410368,
+  "MeleeWeaponType": 2
+}

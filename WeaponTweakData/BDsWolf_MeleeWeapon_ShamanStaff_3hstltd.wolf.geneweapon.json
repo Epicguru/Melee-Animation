@@ -1,0 +1,13 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_ShamanStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.430465072,
+  "Rotation": 90.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.236597613,
+  "BladeEnd": 1.11968338,
+  "MeleeWeaponType": 1
+}

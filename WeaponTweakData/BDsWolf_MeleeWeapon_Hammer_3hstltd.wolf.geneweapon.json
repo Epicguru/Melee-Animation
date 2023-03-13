@@ -1,0 +1,13 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_Hammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.272205949,
+  "OffY": -0.00316518545,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.35370928,
+  "BladeEnd": 0.781008959,
+  "MeleeWeaponType": 1
+}

@@ -3,8 +3,8 @@
 
 **Melee Animation supports {0} weapons from {1} mods.**  
 
-Mods listed here are fully compatible with this mod.  
-Weapons from mods that are not listed here will not be able to be used in animations.  
+Other weapons may be compatible if the mod author has made a patch:  
+[Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
 
 <details>
 <summary><b>Requesting mod patch or changes</b> (click to expand)</summary>

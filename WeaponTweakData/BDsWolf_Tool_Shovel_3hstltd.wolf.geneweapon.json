@@ -1,0 +1,11 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_Tool_Shovel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.34183985,
+  "Rotation": 45.0,
+  "BladeStart": 0.546785653,
+  "BladeEnd": 0.9044509,
+  "MeleeWeaponType": 5
+}

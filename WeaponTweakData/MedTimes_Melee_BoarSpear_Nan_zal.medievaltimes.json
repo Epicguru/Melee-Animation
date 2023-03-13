@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_BoarSpear_Nan",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.363995969,
+  "Rotation": 45.0,
+  "BladeStart": 0.6852624,
+  "BladeEnd": 1.03659737,
+  "MeleeWeaponType": 4
+}

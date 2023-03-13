@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.motzcoalition",
+  "ItemDefName": "Outland_Machaira",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.332344234,
+  "OffY": -0.00316536427,
+  "BladeStart": 0.122650832,
+  "BladeEnd": 0.7778436,
+  "MeleeWeaponType": 6
+}

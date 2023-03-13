@@ -1,0 +1,14 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_HerderStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.379821956,
+  "OffY": -0.0316518247,
+  "Rotation": 90.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.170128584,
+  "BladeEnd": 1.07853591,
+  "MeleeWeaponType": 1
+}

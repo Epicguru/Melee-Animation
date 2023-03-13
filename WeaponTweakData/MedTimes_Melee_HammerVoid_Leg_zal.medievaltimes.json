@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_HammerVoid_Leg",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.288031816,
+  "Rotation": 45.0,
+  "BladeStart": 0.5111773,
+  "BladeEnd": 0.7833828,
+  "MeleeWeaponType": 1
+}

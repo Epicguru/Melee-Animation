@@ -1,0 +1,10 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_SwordTechno_Art",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.240553617,
+  "BladeStart": 0.0933728,
+  "BladeEnd": 0.7137488,
+  "MeleeWeaponType": 54
+}

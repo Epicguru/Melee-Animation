@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.motzcoalition",
+  "ItemDefName": "Outland_LabrysAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.20573689,
+  "OffY": -0.00316536427,
+  "BladeStart": 0.287240237,
+  "BladeEnd": 0.635410368,
+  "MeleeWeaponType": 2
+}

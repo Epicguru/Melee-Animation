@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_SwordAnsweller_Leg",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.39248246,
+  "Rotation": 45.0,
+  "BladeStart": 0.147181287,
+  "BladeEnd": 1.061919,
+  "MeleeWeaponType": 6
+}

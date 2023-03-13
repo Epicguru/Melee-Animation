@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_AxeForester",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.316518247,
+  "OffY": -0.07279882,
+  "Rotation": 50.0,
+  "BladeStart": 0.619584441,
+  "BladeEnd": 0.8538083,
+  "MeleeWeaponType": 2
+}

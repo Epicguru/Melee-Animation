@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outland.core",
+  "ItemDefName": "Outland_Bones",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.177249968,
+  "OffY": -0.009495169,
+  "Rotation": 30.0,
+  "BladeStart": 0.06884282,
+  "BladeEnd": 0.52146405,
+  "MeleeWeaponType": 8
+}

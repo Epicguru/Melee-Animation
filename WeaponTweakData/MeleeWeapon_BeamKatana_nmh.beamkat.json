@@ -1,0 +1,13 @@
+{
+  "TextureModID": "nmh.beamkat",
+  "ItemDefName": "MeleeWeapon_BeamKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.535576046,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.203449637,
+  "BladeEnd": 1.10071385,
+  "MeleeWeaponType": 6
+}

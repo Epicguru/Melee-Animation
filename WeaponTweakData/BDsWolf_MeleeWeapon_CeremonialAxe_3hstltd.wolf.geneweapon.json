@@ -1,0 +1,13 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_CeremonialAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.465281785,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.6290801,
+  "BladeEnd": 1.2209692,
+  "MeleeWeaponType": 6
+}

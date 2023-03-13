@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.motzcoalition",
+  "ItemDefName": "Outland_Xiphos",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.262710273,
+  "OffY": -0.00633025169,
+  "BladeStart": 0.09416439,
+  "BladeEnd": 0.714539945,
+  "MeleeWeaponType": 54
+}

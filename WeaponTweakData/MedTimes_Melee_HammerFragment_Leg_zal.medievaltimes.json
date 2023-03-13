@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_HammerFragment_Leg",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.164589942,
+  "OffY": -0.0253210776,
+  "BladeStart": 0.381404638,
+  "BladeEnd": 0.628289,
+  "MeleeWeaponType": 9
+}

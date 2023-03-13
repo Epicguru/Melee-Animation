@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_Halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3355096,
+  "Rotation": 45.0,
+  "BladeStart": 0.555489659,
+  "BladeEnd": 1.00811088,
+  "MeleeWeaponType": 7
+}
