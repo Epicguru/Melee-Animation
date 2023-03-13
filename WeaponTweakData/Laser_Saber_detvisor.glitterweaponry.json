@@ -1,0 +1,18 @@
+{
+  "TextureModID": "detvisor.glitterweaponry",
+  "ItemDefName": "Laser_Saber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.36793226,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.074261494,
+  "BladeEnd": 0.8810128,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.709151864,
+    "g": 0.992142558,
+    "b": 0.995999932,
+    "a": 0.9693333
+  }
+}

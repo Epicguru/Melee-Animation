@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 12 Mar 2023, 6:01 PM.`  
+`Updated 13 Mar 2023, 10:57 AM.`  
 
-**Melee Animation supports 1075 weapons from 138 mods.**  
+**Melee Animation supports 1098 weapons from 142 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -27,6 +27,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **[RH2] Rimmu-Nation² - Weapons** | cp.rimmunation.2.weapons | 28 | *Epicguru* |
 | **[RH2] Weapons: Simple Retexture** | arektpp.simplerh2weap | 27 | *Epicguru* |
 | **[SYR] Thrumkin** | syrchalis.thrumkin | 1 | *Epicguru* |
+| **ↁ Elves** | devdesigner.elves | 17 | *Epicguru* |
 | **ↁ House Sanguin** | devdesigner.blood | 5 | *Epicguru* |
 | **A RimWorld of Magic** | torann.arimworldofmagic | 8 | *Epicguru* |
 | **Advanced Animation** | co.uk.epicguru.advancedanimation | 1 | *Epicguru* |
@@ -53,10 +54,13 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Core** | ludeon.rimworld | 17 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
 | **Dragons Descent** | onyxae.dragonsdescent | 5 | *Epicguru* |
+| **Eccentric Extras - Signature Weapons** | aelanna.eccentricextras.signatureweapons | 1 | *Epicguru* |
+| **Eccentric Tech - Foxy's Armory 2.0** | aelanna.eccentrictech.foxysarmory2 | 1 | *Epicguru* |
 | **Edo Themed Expansion** | heis.edo.themed.expansion | 18 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
 | **Gimmicks (Continued)** | mlie.gimmicks | 17 | *Epicguru* |
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
+| **Glitter Weaponry** | detvisor.glitterweaponry | 1 | *Epicguru* |
 | **Grimworld: Melee** | grimworld.melee | 6 | *Epicguru* |
 | **Heavy Melee Weapons (Continued)** | mlie.heavymeleeweapons | 11 | *Epicguru* |
 | **Hellsing ARMS Ultimate** | baskerville.hellsingarmsultimate | 13 | *Epicguru* |
@@ -145,7 +149,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Vanilla Factions Expanded - Vikings** | oskarpotocki.vfe.vikings | 7 | *Epicguru* |
 | **Vanilla Melee Retexture** | zodgilla.vanillameleeretexture | 9 | *Epicguru* |
 | **Vanilla Psycasts Expanded** | vanillaexpanded.vpsycastse | 3 | *Epicguru* |
-| **Vanilla Textures Expanded** | vanillaexpanded.vtexe | 18 | *Epicguru* |
+| **Vanilla Textures Expanded** | vanillaexpanded.vtexe | 21 | *Epicguru* |
 | **Vanilla Weapons Expanded** | vanillaexpanded.vwe | 7 | *Epicguru* |
 | **Vanilla Weapons Expanded - Laser** | vanillaexpanded.vwel | 1 | *Epicguru* |
 | **Vanilla Weapons Expanded - Non-Lethal** | vanillaexpanded.vwenl | 1 | *Epicguru* |
