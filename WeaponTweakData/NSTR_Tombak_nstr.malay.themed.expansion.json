@@ -1,0 +1,13 @@
+{
+  "TextureModID": "nstr.malay.themed.expansion",
+  "ItemDefName": "NSTR_Tombak",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.427299678,
+  "Rotation": 45.0,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.7525225,
+  "BladeEnd": 1.198813,
+  "MeleeWeaponType": 4
+}

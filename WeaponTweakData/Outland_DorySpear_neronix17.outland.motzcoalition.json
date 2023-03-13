@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.motzcoalition",
+  "ItemDefName": "Outland_DorySpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3450052,
+  "Rotation": 45.0,
+  "BladeStart": 0.6607319,
+  "BladeEnd": 0.993076146,
+  "MeleeWeaponType": 4
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_SwordVicious_Art",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.398813248,
+  "OffY": 0.0253210813,
+  "Rotation": 45.0,
+  "BladeStart": 0.131355375,
+  "BladeEnd": 1.05242324,
+  "MeleeWeaponType": 6
+}

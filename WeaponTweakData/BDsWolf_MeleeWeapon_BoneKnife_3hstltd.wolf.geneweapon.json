@@ -1,0 +1,13 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_BoneKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.177249938,
+  "OffY": -0.009495646,
+  "Rotation": -5.0,
+  "HandsMode": 1,
+  "BladeStart": 0.10682492,
+  "BladeEnd": 0.568941832,
+  "MeleeWeaponType": 48
+}

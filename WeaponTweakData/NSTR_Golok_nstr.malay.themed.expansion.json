@@ -1,0 +1,14 @@
+{
+  "TextureModID": "nstr.malay.themed.expansion",
+  "ItemDefName": "NSTR_Golok",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.297527015,
+  "OffY": 0.00316537917,
+  "Rotation": 40.0,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "BladeStart": 0.176458851,
+  "BladeEnd": 0.8664688,
+  "MeleeWeaponType": 6
+}

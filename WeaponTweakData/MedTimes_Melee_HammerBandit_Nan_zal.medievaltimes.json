@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_HammerBandit_Nan",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.332344234,
+  "Rotation": 45.0,
+  "BladeStart": 0.612463057,
+  "BladeEnd": 0.8783382,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "neronix17.outland.motzcoalition",
+  "ItemDefName": "Outland_Kopis",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.332344174,
+  "OffY": -1.86264515E-09,
+  "Rotation": -3.414644,
+  "HandsMode": 1,
+  "BladeStart": 0.116320565,
+  "BladeEnd": 0.803165138,
+  "MeleeWeaponType": 54
+}

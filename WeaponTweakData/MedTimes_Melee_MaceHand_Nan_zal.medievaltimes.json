@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_MaceHand_Nan",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.224728167,
+  "HandsMode": 1,
+  "BladeStart": 0.403560817,
+  "BladeEnd": 0.691592634,
+  "MeleeWeaponType": 9
+}

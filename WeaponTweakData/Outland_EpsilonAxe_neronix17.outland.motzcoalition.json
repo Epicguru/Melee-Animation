@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.motzcoalition",
+  "ItemDefName": "Outland_EpsilonAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.221562833,
+  "OffY": -0.0569733977,
+  "BladeStart": 0.309396923,
+  "BladeEnd": 0.676557839,
+  "MeleeWeaponType": 2
+}

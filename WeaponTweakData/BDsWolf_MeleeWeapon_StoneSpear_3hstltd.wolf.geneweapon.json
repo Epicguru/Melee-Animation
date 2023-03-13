@@ -1,0 +1,13 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_StoneSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.452621222,
+  "Rotation": 2.540826,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.141642123,
+  "BladeEnd": 1.16399634,
+  "MeleeWeaponType": 5
+}

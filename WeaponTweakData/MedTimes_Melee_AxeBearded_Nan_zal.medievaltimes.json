@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_AxeBearded_Nan",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3291788,
+  "Rotation": 45.0,
+  "BladeStart": 0.3877349,
+  "BladeEnd": 1.00494552,
+  "MeleeWeaponType": 6
+}

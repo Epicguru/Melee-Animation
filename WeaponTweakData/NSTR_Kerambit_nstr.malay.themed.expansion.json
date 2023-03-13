@@ -1,0 +1,16 @@
+{
+  "TextureModID": "nstr.malay.themed.expansion",
+  "ItemDefName": "NSTR_Kerambit",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1297732,
+  "OffY": -0.0569733866,
+  "Rotation": -25.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "FlipY": true,
+  "HandsMode": 1,
+  "BladeStart": 0.06884282,
+  "BladeEnd": 0.356874645,
+  "MeleeWeaponType": 48
+}

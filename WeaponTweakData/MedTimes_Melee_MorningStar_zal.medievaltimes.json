@@ -1,0 +1,13 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_MorningStar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4431256,
+  "OffY": 0.08229494,
+  "Rotation": 37.26373,
+  "HandsMode": 1,
+  "BladeStart": 0.669436455,
+  "BladeEnd": 0.9827894,
+  "MeleeWeaponType": 1
+}

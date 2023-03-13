@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_AxeVidar_Leg",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2627103,
+  "OffY": -0.03165183,
+  "Rotation": 45.0,
+  "BladeStart": 0.07121661,
+  "BladeEnd": 0.777052462,
+  "MeleeWeaponType": 2
+}

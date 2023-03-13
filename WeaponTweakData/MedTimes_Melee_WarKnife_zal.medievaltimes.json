@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_WarKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3734912,
+  "Rotation": 43.69554,
+  "BladeStart": 0.147181287,
+  "BladeEnd": 1.05558872,
+  "MeleeWeaponType": 6
+}

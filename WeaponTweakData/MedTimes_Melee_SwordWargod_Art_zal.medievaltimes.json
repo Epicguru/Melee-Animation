@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_SwordWargod_Art",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.367160946,
+  "OffY": 0.00633075554,
+  "Rotation": 42.90025,
+  "BladeStart": 0.121859729,
+  "BladeEnd": 1.05875361,
+  "MeleeWeaponType": 6
+}

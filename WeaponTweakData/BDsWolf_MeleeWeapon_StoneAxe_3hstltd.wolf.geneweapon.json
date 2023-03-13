@@ -1,0 +1,10 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_StoneAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1962412,
+  "BladeStart": 0.356874645,
+  "BladeEnd": 0.616419554,
+  "MeleeWeaponType": 3
+}

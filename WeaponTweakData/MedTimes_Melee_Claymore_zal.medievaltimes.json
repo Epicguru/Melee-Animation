@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.379821956,
+  "Rotation": 45.0,
+  "BladeStart": 0.09970355,
+  "BladeEnd": 1.04292762,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "nmh.beamkat",
+  "ItemDefName": "MeleeWeapon_TigerBeamKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.445154369,
+  "OffY": 0.006955445,
+  "Rotation": 44.29696,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.186060786,
+  "BladeEnd": 1.20852435,
+  "MeleeWeaponType": 6
+}

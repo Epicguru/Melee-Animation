@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_SwordVicious_Leg",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.398812771,
+  "OffY": 0.022156179,
+  "Rotation": 45.0,
+  "BladeStart": 0.131355375,
+  "BladeEnd": 1.04292762,
+  "MeleeWeaponType": 6
+}

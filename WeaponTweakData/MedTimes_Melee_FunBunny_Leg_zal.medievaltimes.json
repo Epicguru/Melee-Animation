@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_FunBunny_Leg",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2247287,
+  "OffY": -0.028486453,
+  "BladeStart": 0.3149356,
+  "BladeEnd": 0.672601342,
+  "MeleeWeaponType": 9
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_Battleaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.167754769,
+  "OffY": -0.0601383,
+  "Rotation": -6.785934,
+  "BladeStart": 0.268249452,
+  "BladeEnd": 0.578437448,
+  "MeleeWeaponType": 18
+}

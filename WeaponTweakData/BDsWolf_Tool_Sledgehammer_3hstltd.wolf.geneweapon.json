@@ -1,0 +1,13 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_Tool_Sledgehammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.411474228,
+  "OffY": -0.0506426468,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.74619174,
+  "BladeEnd": 0.9772502,
+  "MeleeWeaponType": 1
+}

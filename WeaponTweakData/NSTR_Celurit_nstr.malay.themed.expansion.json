@@ -1,0 +1,14 @@
+{
+  "TextureModID": "nstr.malay.themed.expansion",
+  "ItemDefName": "NSTR_Celurit",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.332343638,
+  "OffY": -0.09179011,
+  "Rotation": 50.0,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.173293948,
+  "BladeEnd": 0.803165138,
+  "MeleeWeaponType": 2
+}

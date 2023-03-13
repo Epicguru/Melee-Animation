@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_PrimativeSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.335509568,
+  "Rotation": 45.0,
+  "BladeStart": 0.138476744,
+  "BladeEnd": 0.986745834,
+  "MeleeWeaponType": 4
+}

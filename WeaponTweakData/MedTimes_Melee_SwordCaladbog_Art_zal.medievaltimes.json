@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_SwordCaladbog_Art",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.436795324,
+  "Rotation": 45.0,
+  "BladeStart": 0.118694358,
+  "BladeEnd": 1.13155282,
+  "MeleeWeaponType": 6
+}

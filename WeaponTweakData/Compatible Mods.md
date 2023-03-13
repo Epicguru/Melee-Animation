@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 13 Mar 2023, 10:57 AM.`  
+`Updated 13 Mar 2023, 11:47 AM.`  
 
-**Melee Animation supports 1098 weapons from 142 mods.**  
+**Melee Animation supports 1189 weapons from 148 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -49,6 +49,8 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Arsenal of Reaction** | 4ydra.arsenalofreaction | 11 | *Epicguru* |
 | **Arsenal of Revolution** | 4ydra.arsenalofrevolution | 8 | *Epicguru* |
 | **Aspirrator's Arsenal** | aspirrator.arsenal | 7 | *Epicguru* |
+| **Beam Katanas** | nmh.beamkat | 2 | *Epicguru* |
+| **Bill Doors' modular wolf girl weapon module** | 3hstltd.wolf.geneweapon | 17 | *Epicguru* |
 | **Combat Extended Melee** | ceteam.combatextendedmelee | 7 | *Epicguru* |
 | **Contractors Arsenal** | zerophoenix.contractorsarsenalfaction | 1 | *Epicguru* |
 | **Core** | ludeon.rimworld | 17 | *Epicguru* |
@@ -75,10 +77,12 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 3 | *Epicguru* |
 | **MakaiTech** | aranmaho.makai | 7 | *Epicguru* |
 | **Makeshift Melee Weapons** | detvisor.makeshiftweapons | 3 | *Epicguru* |
+| **Malay Themed Expansion** | nstr.malay.themed.expansion | 6 | *Epicguru* |
 | **Mechanite Plague** | chairheir.mechaniteplague | 3 | *Epicguru* |
 | **Medieval Madness: Tools of the Trade** | madman.toolsofthetrade | 44 | *Epicguru* |
 | **Medieval Overhaul** | dankpyon.medieval.overhaul | 68 | *Epicguru* |
 | **Medieval Overhaul: Arcane Archaeologists** | ogam.medievaloverhaul.arcanearchaeologists | 4 | *Epicguru* |
+| **Medieval Times (Continued)** | zal.medievaltimes | 58 | *Epicguru* |
 | **Megafauna** | spino.megafauna | 6 | *Epicguru* |
 | **Melee Animation** | co.uk.epicguru.meleeanimation | 1 | *Epicguru* |
 | **Melee Please (Continued)** | mlie.meleeplease | 11 | *Epicguru* |
@@ -97,6 +101,8 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
 | **Nyaron race** | farmradish.nyaron | 3 | *Epicguru* |
 | **Obsidia Expansion** | obsidiaexpansion.core | 24 | *Epicguru* |
+| **Outland - Core** | neronix17.outland.core | 1 | *Epicguru* |
+| **Outland - Motz Coalition** | neronix17.outland.motzcoalition | 7 | *Epicguru* |
 | **Paniel the Automata** | ahndemi.panieltheautomata | 8 | *Epicguru* |
 | **Pawnmorpher** | tachyonite.pawnmorpherpublic | 1 | *Epicguru* |
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.medievaltimes",
+  "ItemDefName": "MedTimes_Melee_BattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.32917884,
+  "Rotation": 45.0,
+  "BladeStart": 0.460534215,
+  "BladeEnd": 0.979624,
+  "MeleeWeaponType": 6
+}

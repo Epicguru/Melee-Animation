@@ -1,0 +1,14 @@
+{
+  "TextureModID": "nstr.malay.themed.expansion",
+  "ItemDefName": "NSTR_Pedang",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.477942348,
+  "OffY": -0.0379830673,
+  "Rotation": 42.51022,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.06884282,
+  "BladeEnd": 1.16716123,
+  "MeleeWeaponType": 6
+}

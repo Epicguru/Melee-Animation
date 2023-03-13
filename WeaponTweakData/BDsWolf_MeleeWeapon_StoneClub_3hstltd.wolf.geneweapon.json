@@ -1,0 +1,10 @@
+{
+  "TextureModID": "3hstltd.wolf.geneweapon",
+  "ItemDefName": "BDsWolf_MeleeWeapon_StoneClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2753708,
+  "BladeStart": 0.176458851,
+  "BladeEnd": 0.7556874,
+  "MeleeWeaponType": 9
+}
