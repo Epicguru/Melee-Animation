@@ -21,9 +21,6 @@ namespace AM.Tweaks
         /// <summary>
         /// Gets the <see cref="FileInfo"/> where the weapon tweak data is expected to exist
         /// </summary>
-        /// <param name="weaponDef"></param>
-        /// <param name="textureMod"></param>
-        /// <returns></returns>
         public static FileInfo GetFileForTweak(ThingDef weaponDef, ModContentPack textureMod = null, FileInfo setOverride = null)
         {
             if (textureMod == null)
@@ -54,6 +51,10 @@ namespace AM.Tweaks
 
             foreach (var mod in mods)
             {
+                // Main mod does not provide overrides - every other mod takes priority over the main one.
+                if (mod == Core.ModContent)
+                    continue;
+
                 var folder = Path.Combine(mod.RootDir, DATA_FOLDER_NAME);
                 if (!Directory.Exists(folder))
                     continue;
@@ -62,7 +63,6 @@ namespace AM.Tweaks
                 {
                     var fi = new FileInfo(file);
                     ov[fi.Name] = fi;
-                    Core.Log($"Found {fi.Name} from {mod.Name}");
                 }
             }
 
@@ -102,7 +102,9 @@ namespace AM.Tweaks
         {
             var file = GetFileForTweak(weapon, textureMod);
             if (!file.Exists)
+            {
                 return null;
+            }
 
             ItemTweakData loaded;
             try
