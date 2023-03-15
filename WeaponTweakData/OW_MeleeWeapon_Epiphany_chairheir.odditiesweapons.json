@@ -1,0 +1,13 @@
+{
+  "TextureModID": "chairheir.odditiesweapons",
+  "ItemDefName": "OW_MeleeWeapon_Epiphany",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.12512213,
+  "Rotation": 45.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": 0.06999032,
+  "BladeEnd": 0.376539767,
+  "MeleeWeaponType": 56
+}

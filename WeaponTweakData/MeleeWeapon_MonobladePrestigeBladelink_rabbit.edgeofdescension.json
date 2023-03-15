@@ -1,0 +1,19 @@
+{
+  "TextureModID": "rabbit.edgeofdescension",
+  "ItemDefName": "MeleeWeapon_MonobladePrestigeBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.750733137,
+  "OffY": -0.03753656,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.123167157,
+  "BladeEnd": 1.71534729,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.998,
+    "g": 0.785,
+    "b": 0.384,
+    "a": 0.8279999
+  }
+}

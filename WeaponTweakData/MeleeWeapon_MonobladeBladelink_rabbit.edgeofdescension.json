@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rabbit.edgeofdescension",
+  "ItemDefName": "MeleeWeapon_MonobladeBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.750733137,
+  "OffY": -0.03753656,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.123167157,
+  "BladeEnd": 1.71534729,
+  "MeleeWeaponType": 6
+}

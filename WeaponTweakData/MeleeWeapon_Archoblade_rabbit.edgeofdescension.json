@@ -1,0 +1,19 @@
+{
+  "TextureModID": "rabbit.edgeofdescension",
+  "ItemDefName": "MeleeWeapon_Archoblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.753861368,
+  "OffY": -0.034408316,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.1262954,
+  "BladeEnd": 1.7184751,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.116082706,
+    "g": 0.3719999,
+    "b": 0.062496,
+    "a": 0.731999934
+  }
+}

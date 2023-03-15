@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rabbit.edgeofdescension",
+  "ItemDefName": "MeleeWeapon_MonobladePrestige",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7413489,
+  "OffY": -0.0250245333,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.141935676,
+  "BladeEnd": 1.70909083,
+  "MeleeWeaponType": 6
+}

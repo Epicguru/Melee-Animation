@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "DeerAntler_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.12825048,
+  "OffY": 0.006256014,
+  "Rotation": 65.0,
+  "BladeStart": 0.0606060624,
+  "BladeEnd": 0.4078203,
+  "MeleeWeaponType": 32
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "chairheir.odditiesweapons",
+  "ItemDefName": "OW_MeleeWeapon_Wolbach",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2346046,
+  "Rotation": 45.0,
+  "BladeStart": 0.251417577,
+  "BladeEnd": 0.7143698,
+  "MeleeWeaponType": 8
+}

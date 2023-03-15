@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "GazelleHorn_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.137634277,
+  "OffY": -0.0187680423,
+  "Rotation": 138.0845,
+  "BladeStart": 0.0762463361,
+  "BladeEnd": 0.551710546,
+  "MeleeWeaponType": 36
+}

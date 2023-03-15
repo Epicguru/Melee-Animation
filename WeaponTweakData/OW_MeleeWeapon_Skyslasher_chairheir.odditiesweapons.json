@@ -1,0 +1,17 @@
+{
+  "TextureModID": "chairheir.odditiesweapons",
+  "ItemDefName": "OW_MeleeWeapon_Skyslasher",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3722383,
+  "Rotation": 45.0,
+  "BladeStart": 0.14819169,
+  "BladeEnd": 0.9583577,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182,
+    "g": 0.989,
+    "b": 1.0,
+    "a": 0.796
+  }
+}

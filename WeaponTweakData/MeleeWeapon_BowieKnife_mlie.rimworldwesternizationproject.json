@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.rimworldwesternizationproject",
+  "ItemDefName": "MeleeWeapon_BowieKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.228348076,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.101270869,
+  "BladeEnd": 0.564223051,
+  "MeleeWeaponType": 48
+}

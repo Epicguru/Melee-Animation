@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "RyeWhiskey_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2283476,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.107526883,
+  "BladeEnd": 0.5360703,
+  "MeleeWeaponType": 8
+}

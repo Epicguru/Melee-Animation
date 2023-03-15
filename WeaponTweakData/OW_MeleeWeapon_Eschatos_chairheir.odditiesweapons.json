@@ -1,0 +1,13 @@
+{
+  "TextureModID": "chairheir.odditiesweapons",
+  "ItemDefName": "OW_MeleeWeapon_Eschatos",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0218963623,
+  "OffY": 0.0375368,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.08875884,
+  "BladeEnd": 0.4578689,
+  "MeleeWeaponType": 48
+}
