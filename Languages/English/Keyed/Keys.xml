@@ -83,6 +83,8 @@
   <AM.Stats.WeaponDPSCoef>Weapon DPS ({0}) Effect: {1}</AM.Stats.WeaponDPSCoef>
   <AM.Stats.NoWeapon>No Melee Weapon Equipped: {0}</AM.Stats.NoWeapon>
   <AM.Stats.GlobalCoef>Global {0} Multiplier (from mod settings): {1}</AM.Stats.GlobalCoef>
+  <AM.Stats.FriendlyCoef>Friendly Pawn Multiplier (from mod settings): x{0}</AM.Stats.FriendlyCoef>
+  <AM.Stats.EnemyCoef>Hostile Pawn Multiplier (from mod settings): x{0}</AM.Stats.EnemyCoef>
   <AM.Stats.Lethality>lethality</AM.Stats.Lethality>
   <AM.Stats.DuelAbility>duel ability</AM.Stats.DuelAbility>
   <AM.Stats.FriendlyPawnBonus>Friendly Pawn Bonus (from mod settings): {0}</AM.Stats.FriendlyPawnBonus>

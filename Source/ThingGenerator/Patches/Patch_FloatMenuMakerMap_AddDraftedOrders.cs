@@ -74,6 +74,9 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
                 opts.Add(grappleReport.CanGrapple ? GetEnabledLassoOption(request, grappleReport, pawn, target) : GetDisabledLassoOption(grappleReport, pawn));
             }
 
+            if ((target.def.race?.Animal ?? false) && !Core.Settings.AnimalsCanBeExecuted)
+                continue;
+
             if (weapon != null && !noExecEver)
             {
                 var request = new ExecutionAttemptRequest
@@ -148,10 +151,23 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
             extraPartOnGUI = r =>
             {
                 var bounds = iconSize.CenteredOnYIn(r).CenteredOnXIn(r);
+                var w = bounds.width;
                 var c = GUI.color;
-                GUI.color = new Color(1, 1, 1, 0.7f);
+                var md = grappler.GetMeleeData();
+                float p = md.GetExecuteCooldownPct();
+
+
+                GUI.color = p < 1f ? Color.red : Color.white;
                 Widgets.DrawTexturePart(bounds, new Rect(0, 0, 1, 1), icon);
+
+                if (p < 1f)
+                {
+                    GUI.color = Color.green * 0.9f;
+                    Widgets.DrawTexturePart(bounds with { width = w * p }, new Rect(0, 0, p, 1), icon);
+                }
+
                 GUI.color = c;
+
                 if (Mouse.IsOver(r))
                     HoverAction(grappler, tooltip);
                 return false;
@@ -163,6 +179,16 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
     {
         void OnClick()
         {
+            if (Core.Settings.WarnOfFriendlyExecution)
+            {
+                bool enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
+                if (!enemy && !Input.GetKey(KeyCode.LeftShift))
+                {
+                    Messages.Message("Tried to execute friendly: hold the Shift key when selecting to confirm!", MessageTypeDefOf.RejectInput, false);
+                    return;
+                }
+            }
+
             // Update request.
             SpaceChecker.MakeOccupiedMask(grappler.Map, grappler.Position, out uint newMask);
             request.OccupiedMask = newMask;
@@ -257,7 +283,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         }
 
         string targetName = target.Name?.ToStringShort ?? target.LabelDefinite();
-        bool enemy = target.HostileTo(Faction.OfPlayer);
+        bool enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
         bool isWalk = report.IsWalking;
         bool isLasso = report.PossibleExecutions?.FirstOrDefault().LassoToHere != null;
         string append = isLasso ? " (lasso)" : isWalk ? " (walk to target)" : null;
@@ -265,8 +291,9 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         string label = "AM.Exec.FloatMenu".Translate(targetName) + append;
         string tt = enemy ? "AM.Exec.FloatMenu.TipEnemy" : "AM.Exec.FloatMenu.Tip";
         tt = tt.Translate(grappler.Name.ToStringShort, targetName);
+        var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
 
-        return new FloatMenuOption(label, OnClick, MenuOptionPriority.AttackEnemy, revalidateClickTarget: target)
+        return new FloatMenuOption(label, OnClick, priority, revalidateClickTarget: target)
         {
             mouseoverGuiAction = _ => HoverAction(grappler, tt)
         };
@@ -333,7 +360,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         string tt = enemy ? "AM.Grapple.FloatMenu.TipEnemy" : "AM.Grapple.FloatMenu.Tip";
         tt = tt.Translate(grappler.Name.ToStringShort, targetName);
 
-        return new FloatMenuOption(label, OnClick, MenuOptionPriority.AttackEnemy,revalidateClickTarget: target)
+        return new FloatMenuOption(label, OnClick, MenuOptionPriority.AttackEnemy, revalidateClickTarget: target)
         {
             mouseoverGuiAction = _ => HoverAction(grappler, tt)
         };

@@ -1,10 +1,10 @@
 # Compatible Mods List
-`Updated 15 Mar 2023, 6:01 PM.`  
+`Updated 15 Mar 2023, 9:31 PM.`  
 
 **Melee Animation supports 1221 weapons from 152 mods.**  
 
-Mods listed here are fully compatible with this mod.  
-Weapons from mods that are not listed here will not be able to be used in animations.  
+Other weapons may be compatible if the mod author has made a patch:  
+[Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
 
 <details>
 <summary><b>Requesting mod patch or changes</b> (click to expand)</summary>
