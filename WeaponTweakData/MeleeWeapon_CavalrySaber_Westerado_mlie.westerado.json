@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "MeleeWeapon_CavalrySaber_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.35972628,
+  "OffY": -0.034408778,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.104399115,
+  "BladeEnd": 0.911436856,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.rimworldwesternizationproject",
+  "ItemDefName": "MeleeWeapon_M1860Saber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.459823966,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.141935676,
+  "BladeEnd": 1.14916921,
+  "MeleeWeaponType": 6
+}

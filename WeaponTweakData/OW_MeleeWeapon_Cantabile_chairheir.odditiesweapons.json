@@ -1,0 +1,12 @@
+{
+  "TextureModID": "chairheir.odditiesweapons",
+  "ItemDefName": "OW_MeleeWeapon_Cantabile",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.375366569,
+  "OffY": -0.01876852,
+  "Rotation": 45.0,
+  "BladeStart": 0.564223051,
+  "BladeEnd": 0.9833822,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,15 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "CaribouAntler_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.2408601,
+  "OffY": 0.06256154,
+  "Rotation": -25.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "FlipX": true,
+  "BladeStart": 0.0950148553,
+  "BladeEnd": 0.7800586,
+  "MeleeWeaponType": 1
+}

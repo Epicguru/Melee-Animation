@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.rimworldwesternizationproject",
+  "ItemDefName": "MeleeWeapon_SpikeBayonet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.225219846,
+  "Rotation": 45.0,
+  "ScaleX": 0.6,
+  "ScaleY": 0.6,
+  "HandsMode": 1,
+  "BladeStart": 0.08250235,
+  "BladeEnd": 0.5736073,
+  "MeleeWeaponType": 48
+}

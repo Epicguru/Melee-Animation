@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "BisonHorn_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.134506434,
+  "Rotation": 110.0,
+  "HandsMode": 1,
+  "BladeStart": 0.0512218,
+  "BladeEnd": 0.3546435,
+  "MeleeWeaponType": 48
+}

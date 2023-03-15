@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "MeleeWeapon_BowieKnife_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.187683284,
+  "OffY": -0.0218965411,
+  "HandsMode": 1,
+  "BladeStart": 0.101270869,
+  "BladeEnd": 0.542326748,
+  "MeleeWeaponType": 48
+}

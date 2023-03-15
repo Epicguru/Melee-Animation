@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "ElkAntler_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.225219786,
+  "OffY": -0.0125119984,
+  "Rotation": -6.347582,
+  "BladeStart": 0.08250235,
+  "BladeEnd": 0.670576751,
+  "MeleeWeaponType": 4
+}

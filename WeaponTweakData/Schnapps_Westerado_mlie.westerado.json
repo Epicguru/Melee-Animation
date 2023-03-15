@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "Schnapps_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.253372252,
+  "Rotation": -90.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.107526883,
+  "BladeEnd": 0.507918,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,17 @@
+{
+  "TextureModID": "chairheir.odditiesweapons",
+  "ItemDefName": "OW_MeleeWeapon_Kronos",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.275268853,
+  "Rotation": 45.0,
+  "BladeStart": 0.420332342,
+  "BladeEnd": 0.861388266,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.503,
+    "g": 0.205,
+    "b": 0.999,
+    "a": 0.8786666
+  }
+}

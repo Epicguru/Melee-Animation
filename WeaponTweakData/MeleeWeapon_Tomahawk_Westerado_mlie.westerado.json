@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "MeleeWeapon_Tomahawk_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.197067529,
+  "OffY": -0.0344088078,
+  "BladeStart": 0.429716617,
+  "BladeEnd": 0.586119354,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "RhinoHorn_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.162658751,
+  "OffY": -0.03753703,
+  "Rotation": 75.0,
+  "HandsMode": 1,
+  "BladeStart": 0.0574782938,
+  "BladeEnd": 0.3327467,
+  "MeleeWeaponType": 32
+}

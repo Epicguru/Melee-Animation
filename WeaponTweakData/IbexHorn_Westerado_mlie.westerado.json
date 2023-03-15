@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.westerado",
+  "ItemDefName": "IbexHorn_Westerado",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.206451774,
+  "OffY": 0.115738213,
+  "Rotation": 35.0,
+  "FlipX": true,
+  "MeleeWeaponType": 3
+}

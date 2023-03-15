@@ -1,0 +1,19 @@
+{
+  "TextureModID": "rabbit.edgeofdescension",
+  "ItemDefName": "MeleeWeapon_LuciBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7225803,
+  "OffY": -0.0281525254,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.132551417,
+  "BladeEnd": 1.69032276,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.998,
+    "g": 0.213,
+    "b": 0.213,
+    "a": 1.0
+  }
+}

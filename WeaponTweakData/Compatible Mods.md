@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 13 Mar 2023, 11:47 AM.`  
+`Updated 15 Mar 2023, 6:01 PM.`  
 
-**Melee Animation supports 1189 weapons from 148 mods.**  
+**Melee Animation supports 1221 weapons from 152 mods.**  
 
 Mods listed here are fully compatible with this mod.  
 Weapons from mods that are not listed here will not be able to be used in animations.  
@@ -58,6 +58,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Dragons Descent** | onyxae.dragonsdescent | 5 | *Epicguru* |
 | **Eccentric Extras - Signature Weapons** | aelanna.eccentricextras.signatureweapons | 1 | *Epicguru* |
 | **Eccentric Tech - Foxy's Armory 2.0** | aelanna.eccentrictech.foxysarmory2 | 1 | *Epicguru* |
+| **Edge of Descension - Monoblades** | rabbit.edgeofdescension | 6 | *Epicguru* |
 | **Edo Themed Expansion** | heis.edo.themed.expansion | 18 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
 | **Gimmicks (Continued)** | mlie.gimmicks | 17 | *Epicguru* |
@@ -101,6 +102,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
 | **Nyaron race** | farmradish.nyaron | 3 | *Epicguru* |
 | **Obsidia Expansion** | obsidiaexpansion.core | 24 | *Epicguru* |
+| **Oddities: Weapons Module** | chairheir.odditiesweapons | 7 | *Epicguru* |
 | **Outland - Core** | neronix17.outland.core | 1 | *Epicguru* |
 | **Outland - Motz Coalition** | neronix17.outland.motzcoalition | 7 | *Epicguru* |
 | **Paniel the Automata** | ahndemi.panieltheautomata | 8 | *Epicguru* |
@@ -124,6 +126,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Rimsenal - Feral Faction Pack** | rimsenal.feral | 4 | *Epicguru* |
 | **Rimwars:Vibro weapons** | sov.kotorone | 13 | *Epicguru* |
 | **Rimworld Ultratech** | conner.rimworldultratech | 2 | *Epicguru* |
+| **Rimworld Westernization Project (Continued)** | mlie.rimworldwesternizationproject | 4 | *Epicguru* |
 | **Roo's Minotaur Xenotype** | rooboid.minotaur | 5 | *Epicguru* |
 | **Royal Arsenal** | bucko.royalarsenal | 4 | *Epicguru* |
 | **Royalty** | ludeon.rimworld.royalty | 12 | *Epicguru* |
@@ -165,6 +168,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **VGP Vegetable Garden** | dismarzero.vgp.vgpvegetablegarden | 2 | *Epicguru* |
 | **Weapons+** | kyrrisayo.weaponsplus | 18 | *Epicguru* |
 | **Weapons+ Retexture** | dandman68.weaponplusretexture | 18 | *Epicguru* |
+| **Westerado (Continued)** | mlie.westerado | 15 | *Epicguru* |
 | **Wisteria Corporation** | suvi.wc | 10 | *Epicguru* |
 | **Xeva Faction** | xeva.xevafaction.11 | 24 | *Epicguru* |
 | **Yuran race** | rooandgloomy.yuranracemod | 4 | *Epicguru* |
