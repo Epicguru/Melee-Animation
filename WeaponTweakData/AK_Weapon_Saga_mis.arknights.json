@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Saga",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.403944969,
+  "Rotation": 225.0,
+  "BladeStart": 0.1076925,
+  "BladeEnd": 1.08599627,
+  "MeleeWeaponType": 7
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Nightingale",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3250494,
+  "OffY": 0.104142129,
+  "Rotation": 40.0,
+  "BladeStart": 0.104536489,
+  "BladeEnd": 0.792505,
+  "MeleeWeaponType": 1
+}

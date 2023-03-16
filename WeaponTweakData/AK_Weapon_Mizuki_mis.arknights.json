@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Mizuki",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.331360966,
+  "Rotation": -90.0,
+  "BladeStart": 0.07613432,
+  "BladeEnd": 0.801972568,
+  "MeleeWeaponType": 1
+}

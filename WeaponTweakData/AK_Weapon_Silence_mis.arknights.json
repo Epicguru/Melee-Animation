@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Silence",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.179881573,
+  "OffY": -0.0157790929,
+  "Rotation": 45.0,
+  "BladeStart": 0.06666677,
+  "BladeEnd": 0.4643001,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,20 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_Muramasa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.536489248,
+  "OffY": 1.49011612E-08,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.147140235,
+  "BladeEnd": 1.34950686,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.998,
+    "g": 0.213,
+    "b": 0.213,
+    "a": 1.0
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "TextureModID": "rimofmadness.vampires",
+  "ItemDefName": "BloodWine_Special",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.110454142,
+  "OffY": 0.0852069855,
+  "Rotation": 45.0,
+  "ScaleX": 0.5,
+  "ScaleY": 0.5,
+  "HandsMode": 1,
+  "BladeStart": 0.0524656773,
+  "BladeEnd": 0.3428009,
+  "MeleeWeaponType": 8
+}

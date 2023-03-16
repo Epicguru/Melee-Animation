@@ -1,0 +1,14 @@
+{
+  "TextureModID": "neronix17.outerrim.mandalore",
+  "ItemDefName": "OuterRim_MunitkatHalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5459568,
+  "OffY": -0.07258393,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.6994085,
+  "BladeEnd": 1.36528587,
+  "MeleeWeaponType": 2
+}

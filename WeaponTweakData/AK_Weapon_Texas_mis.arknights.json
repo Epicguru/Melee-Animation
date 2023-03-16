@@ -1,0 +1,18 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Texas",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.37869823,
+  "OffY": 0.00631153956,
+  "Rotation": -45.0,
+  "BladeStart": 0.08954664,
+  "BladeEnd": 1.02998018,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

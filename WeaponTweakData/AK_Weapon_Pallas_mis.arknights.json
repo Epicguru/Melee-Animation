@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Pallas",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.211439788,
+  "OffY": 0.148323119,
+  "Rotation": -115.0,
+  "FlipY": true,
+  "MeleeWeaponType": 6
+}

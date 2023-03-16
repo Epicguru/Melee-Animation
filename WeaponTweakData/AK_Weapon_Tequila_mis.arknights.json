@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Tequila",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.331360936,
+  "OffY": 0.009467542,
+  "Rotation": 21.85235,
+  "BladeStart": 0.153451771,
+  "BladeEnd": 0.8508879,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_Odachi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.593293548,
+  "OffY": 0.00631201267,
+  "Rotation": 43.89164,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.188165978,
+  "BladeEnd": 1.39368856,
+  "MeleeWeaponType": 6
+}

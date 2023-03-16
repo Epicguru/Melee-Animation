@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Sora",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2524655,
+  "Rotation": 133.4507,
+  "BladeStart": 0.104536489,
+  "BladeEnd": 0.8366863,
+  "MeleeWeaponType": 1
+}

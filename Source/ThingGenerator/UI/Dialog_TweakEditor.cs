@@ -113,7 +113,7 @@ namespace AM.UI
 
         private IEnumerable<ModContentPack> EnumerateLocalMods() =>
             from m in LoadedModManager.RunningModsListForReading
-            where m.AnyNonTranslationContentLoaded() && new DirectoryInfo(m.RootDir).Parent.Name == "Mods"
+            where new DirectoryInfo(m.RootDir).Parent.Name == "Mods" // Dumb way to check for local mod
             select m;
 
         public override void DoWindowContents(Rect inRect)

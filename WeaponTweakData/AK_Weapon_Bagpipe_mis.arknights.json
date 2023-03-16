@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Bagpipe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.394477367,
+  "OffY": -0.0347137153,
+  "Rotation": 45.0,
+  "BladeStart": 0.123471595,
+  "BladeEnd": 1.04812658,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,16 @@
+{
+  "TextureModID": "pphhyy.toxweapons",
+  "ItemDefName": "pphhyy_Weapon_ToxSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.208284229,
+  "BladeStart": 0.128205135,
+  "BladeEnd": 0.6836294,
+  "MeleeWeaponType": 4,
+  "TrailTint": {
+    "r": 0.549,
+    "g": 0.749,
+    "b": 0.098,
+    "a": 0.976
+  }
+}

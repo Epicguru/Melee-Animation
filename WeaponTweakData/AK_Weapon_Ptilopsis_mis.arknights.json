@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Ptilopsis",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.15463537,
+  "Rotation": 45.0,
+  "BladeStart": 0.07613432,
+  "BladeEnd": 0.6536492,
+  "MeleeWeaponType": 9
+}

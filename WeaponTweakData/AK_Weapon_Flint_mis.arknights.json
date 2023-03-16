@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Flint",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.12938875,
+  "OffY": -0.02524662,
+  "Rotation": -42.12047,
+  "HandsMode": 2,
+  "BladeEnd": 0.254437864,
+  "MeleeWeaponType": 40
+}

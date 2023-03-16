@@ -1,0 +1,10 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_DorothyTypeB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 145.0,
+  "HandsMode": 1,
+  "BladeEnd": 0.350690424,
+  "MeleeWeaponType": 8
+}

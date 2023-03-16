@@ -1,0 +1,11 @@
+{
+  "TextureModID": "pphhyy.fedaykinjihadarmor",
+  "ItemDefName": "pphhyy_Dune_FremenKrisKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.280868143,
+  "HandsMode": 1,
+  "BladeStart": 0.128205135,
+  "BladeEnd": 0.70572,
+  "MeleeWeaponType": 48
+}

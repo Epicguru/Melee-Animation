@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rimofmadness.callofcthulhu.factions",
+  "ItemDefName": "ROM_PoleHook",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.372386158,
+  "OffY": -0.0599608421,
+  "Rotation": 51.03948,
+  "BladeStart": 0.143984228,
+  "BladeEnd": 0.9360949,
+  "MeleeWeaponType": 3
+}

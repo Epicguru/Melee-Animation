@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Shining",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.337672979,
+  "Rotation": -90.0,
+  "BladeStart": 0.0856018662,
+  "BladeEnd": 0.820907235,
+  "MeleeWeaponType": 6
+}

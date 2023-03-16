@@ -1,0 +1,16 @@
+{
+  "TextureModID": "pphhyy.toxweapons",
+  "ItemDefName": "pphhyy_Weapon_ToxMonoSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2745561,
+  "BladeStart": 0.09033541,
+  "BladeEnd": 0.712031543,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.549,
+    "g": 0.749,
+    "b": 0.098,
+    "a": 0.976
+  }
+}

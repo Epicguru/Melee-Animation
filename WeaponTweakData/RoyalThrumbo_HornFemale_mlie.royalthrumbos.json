@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.royalthrumbos",
+  "ItemDefName": "RoyalThrumbo_HornFemale",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.170414,
+  "OffY": 0.009467557,
+  "Rotation": 50.0,
+  "HandsMode": 1,
+  "BladeStart": 0.0429981239,
+  "BladeEnd": 0.3080867,
+  "MeleeWeaponType": 16
+}

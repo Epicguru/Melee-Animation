@@ -1,0 +1,12 @@
+{
+  "TextureModID": "biomesteam.biomesprehistoric",
+  "ItemDefName": "BMT_BladeFeather",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.435503066,
+  "OffY": 0.0631161,
+  "Rotation": 45.0,
+  "BladeStart": 0.0493096635,
+  "BladeEnd": 1.07810676,
+  "MeleeWeaponType": 2
+}

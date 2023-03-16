@@ -1,0 +1,15 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Roberta",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.170414031,
+  "OffY": 0.0220908821,
+  "Rotation": -30.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "HandsMode": 1,
+  "BladeStart": 0.06351075,
+  "BladeEnd": 0.3285998,
+  "MeleeWeaponType": 8
+}

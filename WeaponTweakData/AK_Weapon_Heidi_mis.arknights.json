@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Heidi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.198816657,
+  "OffY": 0.0031555295,
+  "Rotation": 90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.09191341,
+  "MeleeWeaponType": 8
+}

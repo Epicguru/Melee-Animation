@@ -1,0 +1,13 @@
+{
+  "TextureModID": "neronix17.outerrim.core",
+  "ItemDefName": "OuterRim_VibroGlaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.65640986,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.882446051,
+  "BladeEnd": 1.5672586,
+  "MeleeWeaponType": 7
+}

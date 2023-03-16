@@ -1,0 +1,14 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.32820493,
+  "OffY": -0.01262331,
+  "Rotation": 1.196649,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.0714003,
+  "BladeEnd": 0.8698225,
+  "MeleeWeaponType": 6
+}

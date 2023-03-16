@@ -1,0 +1,18 @@
+{
+  "TextureModID": "rimofmadness.callofcthulhu.factions",
+  "ItemDefName": "ROM_BrandingIron",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.457593679,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.150295764,
+  "BladeEnd": 1.01499033,
+  "MeleeWeaponType": 5,
+  "TrailTint": {
+    "r": 0.364,
+    "g": 0.003,
+    "b": 0.003,
+    "a": 0.916
+  }
+}

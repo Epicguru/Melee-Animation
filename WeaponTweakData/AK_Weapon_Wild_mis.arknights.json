@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Wild",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.375542819,
+  "OffY": 0.0347136781,
+  "Rotation": 226.7566,
+  "BladeStart": 0.07692308,
+  "BladeEnd": 1.0552268,
+  "MeleeWeaponType": 5
+}

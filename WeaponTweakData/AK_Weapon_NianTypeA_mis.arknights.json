@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_NianTypeA",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.514398,
+  "OffY": -0.028402172,
+  "Rotation": -42.50636,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.166074857,
+  "BladeEnd": 1.295858,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outerrim.core",
+  "ItemDefName": "OuterRim_VibroDoubleBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": -0.995266,
+  "BladeEnd": 0.9897437,
+  "MeleeWeaponType": 6
+}

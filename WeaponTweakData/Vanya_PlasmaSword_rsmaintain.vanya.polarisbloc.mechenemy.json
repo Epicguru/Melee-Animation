@@ -1,0 +1,17 @@
+{
+  "TextureModID": "rsmaintain.vanya.polarisbloc.mechenemy",
+  "ItemDefName": "Vanya_PlasmaSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3408285,
+  "OffY": -0.00315600634,
+  "BladeStart": 0.115582049,
+  "BladeEnd": 0.8035506,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182,
+    "g": 0.989,
+    "b": 1.0,
+    "a": 0.98
+  }
+}

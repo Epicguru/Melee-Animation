@@ -1,0 +1,19 @@
+{
+  "TextureModID": "ravvy.amw",
+  "ItemDefName": "MechaWeapon_SeekerKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6469423,
+  "OffY": -0.009467542,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.453254551,
+  "BladeEnd": 1.59566081,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.212,
+    "g": 1.0,
+    "b": 0.047,
+    "a": 1.0
+  }
+}

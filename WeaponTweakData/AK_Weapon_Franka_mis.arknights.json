@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Franka",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.318737358,
+  "OffY": -0.0189351067,
+  "Rotation": -132.5902,
+  "HandsMode": 1,
+  "BladeStart": 0.099802956,
+  "BladeEnd": 0.7562133,
+  "MeleeWeaponType": 4
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Cliffheart",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.315581858,
+  "OffY": 0.0441814959,
+  "Rotation": 5.0,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.467455626,
+  "BladeEnd": 0.779881954,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,19 @@
+{
+  "TextureModID": "pphhyy.toxweapons",
+  "ItemDefName": "pphhyy_Weapon_Toxhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.315582335,
+  "OffY": -0.04102578,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.677317858,
+  "BladeEnd": 0.948717952,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.549,
+    "g": 0.749,
+    "b": 0.098,
+    "a": 0.976
+  }
+}

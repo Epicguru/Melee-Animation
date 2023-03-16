@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Toddifons",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.375542253,
+  "OffY": 0.00315600634,
+  "Rotation": 90.0,
+  "BladeStart": 0.09506894,
+  "BladeEnd": 0.8303748,
+  "MeleeWeaponType": 1
+}
