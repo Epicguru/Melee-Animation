@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_ChenTypeA",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.372386754,
+  "OffY": -0.0284023881,
+  "Rotation": -40.0,
+  "BladeStart": 0.178698421,
+  "BladeEnd": 0.948717952,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Irene",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.309270263,
+  "Rotation": -41.94438,
+  "HandsMode": 1,
+  "BladeStart": 0.18185395,
+  "BladeEnd": 0.9360949,
+  "MeleeWeaponType": 4
+}

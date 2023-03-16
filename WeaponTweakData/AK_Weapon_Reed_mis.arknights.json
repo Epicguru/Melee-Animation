@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Reed",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2714001,
+  "Rotation": 35.0,
+  "BladeStart": 0.404339254,
+  "BladeEnd": 0.8587774,
+  "MeleeWeaponType": 6
+}

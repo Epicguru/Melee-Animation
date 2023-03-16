@@ -6,6 +6,7 @@ using AM.Processing;
 using AM.RendererWorkers;
 using AM.Sweep;
 using AM.Tweaks;
+using AM.UI;
 using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
@@ -96,11 +97,11 @@ public class AnimRenderer : IExposable
         }
     }
 
-    public static void DrawAll(float dt, Map map, in CellRect viewBounds, List<Vector2> seekTimes, Action<Pawn, Vector2> labelDraw = null)
+    public static void DrawAll(float dt, Map map, Action<AnimRenderer, EventBase> onEvent, in CellRect viewBounds, Action<Pawn, Vector2> labelDraw = null)
     {
         AddFromPostLoad();
 
-        bool shouldSeek = seekTimes == null;
+        bool shouldSeek = onEvent != null;
 
         for (int i = 0 ; i < activeRenderers.Count; i++)
         {
@@ -110,7 +111,7 @@ public class AnimRenderer : IExposable
 
             try
             {
-                DrawSingle(renderer, shouldSeek ? dt : null, !shouldSeek ? seekTimes[i] : null, viewBounds, labelDraw);
+                DrawSingle(renderer, shouldSeek ? dt : null, onEvent, viewBounds, labelDraw);
             }
             catch(Exception e)
             {
@@ -159,25 +160,8 @@ public class AnimRenderer : IExposable
         PostLoadPendingAnimators.Clear();
     }
 
-    public static void RemoveDestroyed(List<Vector2> seekTimes)
+    public static void RemoveDestroyed()
     {
-        // Do final seeking if seek times are provided.
-        // Needs to be done because when doing multithreaded seeking
-        // it is possible to seek, destroy because of end of animation,
-        // but the final events not be triggered because they are normally triggered from the draw method.
-        // And the draw method is not called if destroyed...
-        if (seekTimes != null)
-        {
-            for (int i = 0; i < activeRenderers.Count; i++)
-            {
-                var r = activeRenderers[i];
-                if (!r.IsDestroyed)
-                    continue;
-
-                TryDoEventsForPeriod(r, seekTimes[i]);
-            }
-        }
-
         // Remove destroyed.
         for (int i = 0; i < activeRenderers.Count; i++)
         {
@@ -190,39 +174,17 @@ public class AnimRenderer : IExposable
         }
     }
 
-    private static void DrawSingle(AnimRenderer renderer, float? dt, Vector2? tp, CellRect viewBounds, Action<Pawn, Vector2> labelDraw = null)
+    private static void DrawSingle(AnimRenderer renderer, float? dt, Action<AnimRenderer, EventBase> onEvent, CellRect viewBounds, Action<Pawn, Vector2> labelDraw = null)
     {
         // Draw and handle events.
-        Vector2 timePeriod = default;
         try
         {
             bool cull = Core.Settings.OffscreenCulling && !viewBounds.Contains(renderer.RootPosition.ToIntVec3());
-            timePeriod = renderer.Draw(null, dt ?? 0, dt != null, cull, labelDraw);
+            renderer.Draw(null, dt ?? 0, onEvent, cull, labelDraw);
         }
         catch (Exception e)
         {
             Core.Error($"Rendering exception when doing animation {renderer}", e);
-        }
-
-        if (!renderer.IsDestroyed)
-            TryDoEventsForPeriod(renderer, tp ?? timePeriod);
-    }
-
-    private static void TryDoEventsForPeriod(AnimRenderer renderer, Vector2 tp)
-    {
-        if (tp.y < 0)
-            return;
-
-        foreach (var e in renderer.GetEventsInPeriod(tp))
-        {
-            try
-            {
-                EventHelper.Handle(e, renderer);
-            }
-            catch (Exception ex)
-            {
-                Core.Error($"{ex.GetType().Name} when handling animation event '{e}':", ex);
-            }
         }
     }
 
@@ -614,7 +576,7 @@ public class AnimRenderer : IExposable
         // and Seek will not run if time is already the target (seek) time.
         float tempTime = time;
         time = -1;
-        Seek(tempTime < 0 ? 0 : tempTime, 0); // This will set time back to the correct value.
+        Seek(tempTime < 0 ? 0 : tempTime, 0, null); // This will set time back to the correct value.
 
         AnimationRendererWorker?.SetupRenderer(this);
         return true;
@@ -741,19 +703,18 @@ public class AnimRenderer : IExposable
         return (p.Spawned || ignoreNotSpawned) && ((p.ParentHolder is Map m && m == Map) || (p.ParentHolder == null && ignoreNotSpawned));
     }
 
-    public Vector2 Draw(float? atTime, float dt, bool seek, bool cullDraw, Action<Pawn, Vector2> labelDraw = null)
+    public void Draw(float? atTime, float dt, Action<AnimRenderer, EventBase> eventOutput, bool cullDraw, Action<Pawn, Vector2> labelDraw = null)
     {
         if (IsDestroyed)
-            return Vector2.zero;
+            return;
 
         InitSweepMeshes();
         foreach (var item in sweeps)
             if (item != null)
                 item.MirrorHorizontal = MirrorHorizontal;
 
-        var range = new Vector2(-1, -1);
-        if (seek)
-            range = Seek(atTime, dt);
+        if (eventOutput != null)
+            Seek(atTime, dt, e => eventOutput(this, e));
         else
             SeekMS = 0;
 
@@ -762,7 +723,7 @@ public class AnimRenderer : IExposable
             DrawMS = 0;
             if (delayedDestroy)
                 Destroy();
-            return range; // Do not actually draw if not on the current map or culled.
+            return; // Do not actually draw if not on the current map or culled.
         }
 
         var timer = new RefTimer();
@@ -863,7 +824,7 @@ public class AnimRenderer : IExposable
         timer.GetElapsedMilliseconds(out DrawMS);
         if (delayedDestroy)
             Destroy();
-        return range;
+        return;
     }
 
     private void ConfigureSplitDraw(in AnimPartSnapshot part, ref Matrix4x4 matrix, MaterialPropertyBlock pb, AnimPartOverrideData ov, int currentPass, ref int passCount)
@@ -1020,44 +981,44 @@ public class AnimRenderer : IExposable
     /// Changes the current time of this animation.
     /// Depending on the parameters specified, this may act as a 'jump' (<paramref name="atTime"/>) or a continuous movement (<paramref name="dt"/>).
     /// </summary>
-    public Vector2 Seek(float? atTime, float dt, bool delayedDestroy = false)
+    public void Seek(float? atTime, float dt, Action<EventBase> eventsOutput, bool delayedDestroy = false)
     {
         if (IsDestroyed || this.delayedDestroy)
-            return new Vector2(-1, -1);
+            return;
 
         float t = atTime ?? (time + dt * TimeScale * Core.Settings.GlobalAnimationSpeed);
 
         bool mirrorsAreSame = lastMirrorX == MirrorHorizontal && lastMirrorZ == MirrorVertical;
 
         if (Math.Abs(this.time - t) < 0.0001f && mirrorsAreSame)
-            return new Vector2(-1, -1);
+            return;
 
         var timer = new RefTimer();
 
         lastMirrorX = MirrorHorizontal;
         lastMirrorZ = MirrorVertical;
-        var range = SeekInt(t, MirrorHorizontal, MirrorVertical);
+        SeekInt(t, eventsOutput, MirrorHorizontal, MirrorVertical);
 
         timer.GetElapsedMilliseconds(out SeekMS);
 
-        if (t > Data.Duration)
+        // Check if the end of the animation has been reached.
+        if (t < Data.Duration)
+            return;
+
+        if (Loop)
         {
-            if (Loop)
-            {
-                time = 0;
-            }
-            else
-            {
-                if (delayedDestroy)
-                    this.delayedDestroy = true;
-                else
-                    Destroy();
-            }
+            time = 0;
         }
-        return range;
+        else
+        {
+            if (delayedDestroy)
+                this.delayedDestroy = true;
+            else
+                Destroy();
+        }
     }
 
-    private Vector2 SeekInt(float time, bool mirrorX = false, bool mirrorY = false)
+    private void SeekInt(float time, Action<EventBase> eventsOutput, bool mirrorX = false, bool mirrorY = false)
     {
         time = Mathf.Clamp(time, 0f, Duration);
 
@@ -1075,7 +1036,12 @@ public class AnimRenderer : IExposable
         float end = Mathf.Max(this.time, time);
         this.time = time;
 
-        return new Vector2(start, end);
+        if (eventsOutput == null)
+            return;
+
+        // Output relevant events to be handled.
+        foreach (var e in GetEventsInPeriod(new Vector2(start, end)))
+            eventsOutput(e);
     }
 
     public void OnStart()
@@ -1151,22 +1117,10 @@ public class AnimRenderer : IExposable
             if (WasInterrupted)
                 return;
 
-            IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
-            basePos.y = 0;
+            TeleportPawnsToEnd();
 
-            for (int i = 0; i < Pawns.Count; i++)
-            {
-                var pawn = Pawns[i];
-                if (pawn == null)
-                    continue;
-
-                var posData = Def.TryGetCell(AnimCellData.Type.PawnEnd, MirrorHorizontal, MirrorVertical, i);
-                if (posData == null)
-                    continue;
-
-                TeleportPawn(pawn, basePos + posData.Value.ToIntVec3);
-                pawn.jobs?.EndCurrentJob(JobCondition.InterruptForced);
-            }
+            if (Def.type != AnimType.Idle)
+                Core.Log($"{this} OnEnd()");
         }
         catch (Exception e)
         {
@@ -1180,6 +1134,30 @@ public class AnimRenderer : IExposable
             }
 
             OnEndAction?.Invoke(this);
+        }
+    }
+
+    public void TeleportPawnsToEnd()
+    {
+        IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
+        basePos.y = 0;
+
+        for (int i = 0; i < Pawns.Count; i++) {
+            var pawn = Pawns[i];
+            if (pawn == null)
+                continue;
+
+            var posData = Def.TryGetCell(AnimCellData.Type.PawnEnd, MirrorHorizontal, MirrorVertical, i);
+            if (posData == null)
+                continue;
+
+            // Teleport to end position.
+            var endPos = basePos + posData.Value.ToIntVec3;
+            TeleportPawn(pawn, endPos);
+
+            // End animation job.
+            if (pawn.CurJobDef == AM_DefOf.AM_InAnimation)
+                pawn.jobs?.EndCurrentJob(JobCondition.InterruptForced);
         }
     }
 

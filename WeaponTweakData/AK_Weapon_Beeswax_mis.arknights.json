@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Beeswax",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.280867577,
+  "Rotation": 40.0,
+  "BladeStart": 0.109270506,
+  "BladeEnd": 0.8887576,
+  "MeleeWeaponType": 6
+}

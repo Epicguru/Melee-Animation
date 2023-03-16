@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.royalthrumbos",
+  "ItemDefName": "RoyalThrumbo_HornMale",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.170414,
+  "OffY": -0.0788954645,
+  "Rotation": 135.3394,
+  "BladeStart": 0.08086785,
+  "BladeEnd": 0.696252465,
+  "MeleeWeaponType": 3
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "better.humanoid.mechanoid.cn",
+  "ItemDefName": "Mech_CNsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.650099337,
+  "OffY": 0.0220906436,
+  "Rotation": 43.42588,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.18185395,
+  "BladeEnd": 1.59881675,
+  "MeleeWeaponType": 6
+}

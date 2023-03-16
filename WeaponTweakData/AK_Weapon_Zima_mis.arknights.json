@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Zima",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.208283663,
+  "OffY": 0.02524665,
+  "FlipX": true,
+  "BladeStart": 0.3830374,
+  "BladeEnd": 0.667061031,
+  "MeleeWeaponType": 2
+}

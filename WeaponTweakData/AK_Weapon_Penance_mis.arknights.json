@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Penance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.104142129,
+  "Rotation": -95.0,
+  "HandsMode": 1,
+  "BladeStart": 0.102958485,
+  "BladeEnd": 0.304931164,
+  "MeleeWeaponType": 8
+}

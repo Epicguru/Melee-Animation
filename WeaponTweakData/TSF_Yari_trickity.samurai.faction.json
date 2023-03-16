@@ -1,0 +1,13 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_Yari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.498619437,
+  "Rotation": 43.60394,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.904536664,
+  "BladeEnd": 1.23589766,
+  "MeleeWeaponType": 5
+}

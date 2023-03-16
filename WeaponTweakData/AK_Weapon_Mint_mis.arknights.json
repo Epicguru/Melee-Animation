@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Mint",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.123077214,
+  "OffY": 0.006311536,
+  "Rotation": 105.0,
+  "BladeStart": 0.102958485,
+  "BladeEnd": 0.465877622,
+  "MeleeWeaponType": 48
+}

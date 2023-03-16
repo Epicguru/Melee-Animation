@@ -1,0 +1,10 @@
+{
+  "TextureModID": "neronix17.outerrim.mandalore",
+  "ItemDefName": "OuterRim_MandalorianSaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.340828,
+  "BladeStart": 0.115582049,
+  "BladeEnd": 0.828796744,
+  "MeleeWeaponType": 6
+}

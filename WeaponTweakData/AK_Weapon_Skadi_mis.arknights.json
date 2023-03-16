@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Skadi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.40394485,
+  "OffY": -0.0126235634,
+  "Rotation": 43.98355,
+  "BladeStart": 0.248126328,
+  "BladeEnd": 0.980276167,
+  "MeleeWeaponType": 6
+}

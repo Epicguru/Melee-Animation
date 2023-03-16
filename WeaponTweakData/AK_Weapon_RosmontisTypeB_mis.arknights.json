@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_RosmontisTypeB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.09783006,
+  "OffY": 0.0473372638,
+  "HandsMode": 1,
+  "BladeEnd": 0.180276424,
+  "MeleeWeaponType": 8
+}

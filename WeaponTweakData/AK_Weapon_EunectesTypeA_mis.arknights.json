@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_EunectesTypeA",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.183037639,
+  "OffY": -0.015779078,
+  "Rotation": -40.0,
+  "BladeStart": 0.1408287,
+  "BladeEnd": 0.579487264,
+  "MeleeWeaponType": 16
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Aurora",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.325048923,
+  "Rotation": -42.84187,
+  "BladeStart": 0.102958485,
+  "BladeEnd": 0.879290044,
+  "MeleeWeaponType": 5
+}

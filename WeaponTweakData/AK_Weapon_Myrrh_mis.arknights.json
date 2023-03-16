@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Myrrh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.107298017,
+  "OffY": 0.0220906734,
+  "Rotation": -65.0,
+  "HandsMode": 1,
+  "BladeStart": 0.06351075,
+  "BladeEnd": 0.297041625,
+  "MeleeWeaponType": 8
+}

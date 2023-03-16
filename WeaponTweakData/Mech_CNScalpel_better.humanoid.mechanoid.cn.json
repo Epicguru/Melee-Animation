@@ -1,0 +1,15 @@
+{
+  "TextureModID": "better.humanoid.mechanoid.cn",
+  "ItemDefName": "Mech_CNScalpel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.183037579,
+  "OffY": -0.006311536,
+  "Rotation": 50.0,
+  "ScaleX": 0.6,
+  "ScaleY": 0.6,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.115582049,
+  "MeleeWeaponType": 48
+}

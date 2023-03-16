@@ -82,7 +82,7 @@ namespace AM
             base.GameComponentTick();
 
             AnimRenderer.TickAll();
-            AnimRenderer.RemoveDestroyed(null);
+            AnimRenderer.RemoveDestroyed();
             GrabUtility.Tick();
 
             Patch_Corpse_DrawAt.Tick();

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_HornTypeB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.271400154,
+  "OffY": -0.05364883,
+  "Rotation": 90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.112426035,
+  "BladeEnd": 0.3932942,
+  "MeleeWeaponType": 8
+}

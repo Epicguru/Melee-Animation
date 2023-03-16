@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Gravel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2051282,
+  "OffY": -0.0031555295,
+  "Rotation": -35.0,
+  "HandsMode": 1,
+  "BladeStart": 0.114004046,
+  "BladeEnd": 0.5652862,
+  "MeleeWeaponType": 48
+}

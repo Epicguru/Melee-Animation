@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ayameduki.harsilkiera",
+  "ItemDefName": "HAR_SK_Weapon_a",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.242998421,
+  "OffY": 0.0599603541,
+  "Rotation": -15.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.5984224,
+  "BladeEnd": 0.8729785,
+  "MeleeWeaponType": 2
+}

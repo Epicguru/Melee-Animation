@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Proviso",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6816571,
+  "Rotation": 136.7249,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.104536489,
+  "BladeEnd": 1.56252456,
+  "MeleeWeaponType": 1
+}

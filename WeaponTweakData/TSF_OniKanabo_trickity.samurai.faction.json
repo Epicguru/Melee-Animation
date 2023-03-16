@@ -1,0 +1,13 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_OniKanabo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6185402,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.229191229,
+  "BladeEnd": 1.39053261,
+  "MeleeWeaponType": 1
+}

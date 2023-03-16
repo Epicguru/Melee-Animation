@@ -1,0 +1,14 @@
+{
+  "TextureModID": "neronix17.outerrim.core",
+  "ItemDefName": "OuterRim_VibroAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.473372757,
+  "OffY": -0.00631201267,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.86035496,
+  "BladeEnd": 1.32110465,
+  "MeleeWeaponType": 6
+}

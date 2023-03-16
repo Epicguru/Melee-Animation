@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Savage",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.337672532,
+  "Rotation": 45.0,
+  "BladeStart": 0.3806706,
+  "BladeEnd": 0.8445758,
+  "MeleeWeaponType": 1
+}

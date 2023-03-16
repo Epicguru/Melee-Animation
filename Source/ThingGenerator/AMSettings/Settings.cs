@@ -157,6 +157,20 @@ public class Settings : SimpleSettingsBase
     [Description("The maximum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
     [Min(1)]
     public int MaxDuelDuration = 8;
+
+    [Label("Execution Cooldown Factor (Friendly)")]
+    [Description("This adjust the execution cooldown time for friendly pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
+    [Percentage]
+    [Range(0.01f, 3f)]
+    [Step(0.01f)]
+    public float FriendlyExecCooldownFactor = 1f;
+
+    [Label("Execution Cooldown Factor (Enemy)")]
+    [Description("This adjust the execution cooldown time for hostile pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
+    [Percentage]
+    [Range(0.01f, 3f)]
+    [Step(0.01f)]
+    public float EnemyExecCooldownFactor = 1f;
     #endregion
 
     #region Visuals
@@ -263,7 +277,7 @@ public class Settings : SimpleSettingsBase
     public float NormalDist = 0.5f;
 
     [Label("Show Warning Before Executing Friendly")]
-    [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Alt] key when targeting a friendly pawn for execution.")]
+    [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Shift] key when selecting a friendly pawn for execution.")]
     public bool WarnOfFriendlyExecution = true;
 
     [Label("Send Anonymous Patch Statistics")]

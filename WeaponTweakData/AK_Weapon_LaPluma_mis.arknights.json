@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_LaPluma",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.189349115,
+  "OffY": -0.07573968,
+  "Rotation": 18.98586,
+  "BladeStart": 0.3428009,
+  "BladeEnd": 0.6489152,
+  "MeleeWeaponType": 2
+}

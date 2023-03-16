@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Kaltsit",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0852069855,
+  "OffY": -0.00315600634,
+  "HandsMode": 1,
+  "BladeEnd": 0.271794975,
+  "MeleeWeaponType": 8
+}

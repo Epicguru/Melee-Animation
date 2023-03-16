@@ -1,0 +1,14 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_Masamune",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.343984544,
+  "OffY": -0.0189351,
+  "Rotation": 1.147565,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.09664694,
+  "BladeEnd": 0.882446051,
+  "MeleeWeaponType": 6
+}

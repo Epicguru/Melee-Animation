@@ -64,6 +64,8 @@ namespace AM.Events.Workers
                     break;
 
                 case ExecutionOutcome.Kill:
+                    // Teleport to end now because killing the pawn turns it into a corpse that cannot be teleported through OnEnd().
+                    animator.TeleportPawnsToEnd();
                     animator.Destroy();
                     Kill(i, pawn, killer, e);
                     return;

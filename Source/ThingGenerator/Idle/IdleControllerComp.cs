@@ -253,7 +253,7 @@ public class IdleControllerComp : ThingComp
         // Do freeze frame:
         float idleTime = CurrentAnimation.Def.idleFrame / 60f;
         CurrentAnimation.TimeScale = 0f;
-        CurrentAnimation.Seek(idleTime, 0f);
+        CurrentAnimation.Seek(idleTime, 0f, null);
     }
 
     private void TickFlavour(ItemTweakData tweak)

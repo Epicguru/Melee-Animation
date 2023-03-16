@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Gladiia",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.347140074,
+  "Rotation": -135.0,
+  "BladeStart": 0.5495071,
+  "BladeEnd": 1.02603543,
+  "MeleeWeaponType": 7
+}

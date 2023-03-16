@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Sussurro",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2808681,
+  "OffY": -0.03786972,
+  "Rotation": 45.0,
+  "BladeStart": 0.0856018662,
+  "BladeEnd": 0.8714005,
+  "MeleeWeaponType": 1
+}

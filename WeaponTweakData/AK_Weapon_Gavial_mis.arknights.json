@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Gavial",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.375542223,
+  "Rotation": 45.0,
+  "BladeStart": 0.5652862,
+  "BladeEnd": 0.9218938,
+  "MeleeWeaponType": 1
+}

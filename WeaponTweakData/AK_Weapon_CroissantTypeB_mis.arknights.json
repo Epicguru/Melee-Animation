@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_CroissantTypeB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.359763622,
+  "OffY": 0.0189346075,
+  "Rotation": 89.15331,
+  "BladeStart": 0.07771232,
+  "BladeEnd": 0.8224852,
+  "MeleeWeaponType": 1
+}

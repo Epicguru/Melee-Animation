@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ravvy.amw",
+  "ItemDefName": "AMW_MechaWeapon_PowerClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.214595735,
+  "OffY": -0.0347137153,
+  "Rotation": 60.0,
+  "HandsMode": 2,
+  "BladeStart": 0.07455631,
+  "BladeEnd": 0.4816567,
+  "MeleeWeaponType": 56
+}

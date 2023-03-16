@@ -1,0 +1,12 @@
+{
+  "TextureModID": "seioch.kurin.har",
+  "ItemDefName": "Kurin_nanoedge",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": -1.07416141,
+  "BladeEnd": 1.09072983,
+  "MeleeWeaponType": 6
+}

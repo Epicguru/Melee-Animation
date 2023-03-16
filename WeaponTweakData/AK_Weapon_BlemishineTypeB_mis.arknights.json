@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_BlemishineTypeB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.246154457,
+  "OffY": 0.135700285,
+  "Rotation": -30.0,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.07771232,
+  "MeleeWeaponType": 8
+}

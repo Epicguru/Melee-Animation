@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AM.Events;
 using AM.Processing;
 using UnityEngine;
 using Verse;
@@ -15,7 +16,6 @@ namespace AM
         public static double MultithreadedSeekTimeMS;
         public static Texture2D HandTexture;
 
-        private static readonly List<Vector2> seekTimes = new List<Vector2>();
         private static ulong frameLastSeeked;
 
         public static void Init()
@@ -86,10 +86,15 @@ namespace AM
 
             var viewBounds = Find.CameraDriver.CurrentViewRect.ExpandedBy(CullingPadding);
 
-            AnimRenderer.DrawAll(deltaTime, map, viewBounds, IsDoingMultithreadedSeek ? seekTimes : null, Core.Settings.DrawNamesInAnimation ? DrawLabel : null);
-            AnimRenderer.RemoveDestroyed(IsDoingMultithreadedSeek ? seekTimes : null);
+            Action<AnimRenderer, EventBase> onEvent = null;
+            if (!IsDoingMultithreadedSeek)
+                onEvent = DoEvent;
+
+            AnimRenderer.DrawAll(deltaTime, map, onEvent, viewBounds, Core.Settings.DrawNamesInAnimation ? DrawLabel : null);
+            AnimRenderer.RemoveDestroyed();
         }
 
+        private static readonly List<(AnimRenderer, EventBase)> eventsToDo = new List<(AnimRenderer, EventBase)>(128);
         private static void SeekMultithreaded(float dt)
         {
             if (frameLastSeeked == GameComp.FrameCounter)
@@ -99,10 +104,6 @@ namespace AM
 
             var timer = new RefTimer();
 
-            seekTimes.Clear();
-            for (int i = 0; i < AnimRenderer.ActiveRenderers.Count; i++)
-                seekTimes.Add(new Vector2(-1, -1));
-
             if (dt <= 0)
             {
                 timer.GetElapsedMilliseconds(out MultithreadedSeekTimeMS);
@@ -110,6 +111,7 @@ namespace AM
             }
 
             // Processing:
+            eventsToDo.Clear();
             Parallel.For(0, AnimRenderer.ActiveRenderers.Count, i =>
             {
                 var animator = AnimRenderer.ActiveRenderers[i];
@@ -117,10 +119,27 @@ namespace AM
                 if (animator.IsDestroyed)
                     return;
 
-                seekTimes[i] = animator.Seek(null, dt, true);
+                animator.Seek(null, dt, e => eventsToDo.Add((animator, e)), true);
             });
 
+            // Events:
+            foreach (var pair in eventsToDo)
+                DoEvent(pair.Item1, pair.Item2);
+
             timer.GetElapsedMilliseconds(out MultithreadedSeekTimeMS);
+        }
+
+        private static void DoEvent(AnimRenderer r, EventBase ev)
+        {
+            try
+            {
+                EventHelper.Handle(ev, r);
+                Core.Log($"Did event {ev} for {r}");
+            }
+            catch (Exception e)
+            {
+                Core.Error($"Exception handling event (mt) for {r} ({ev})", e);
+            }
         }
 
         private void DrawLabel(Pawn pawn, Vector2 position)

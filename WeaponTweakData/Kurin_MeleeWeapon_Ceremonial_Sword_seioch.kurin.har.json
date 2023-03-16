@@ -1,0 +1,11 @@
+{
+  "TextureModID": "seioch.kurin.har",
+  "ItemDefName": "Kurin_MeleeWeapon_Ceremonial_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.242998421,
+  "Rotation": -90.0,
+  "BladeStart": 0.162919328,
+  "BladeEnd": 0.712031543,
+  "MeleeWeaponType": 54
+}

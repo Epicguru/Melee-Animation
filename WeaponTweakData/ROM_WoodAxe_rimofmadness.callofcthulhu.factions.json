@@ -1,0 +1,14 @@
+{
+  "TextureModID": "rimofmadness.callofcthulhu.factions",
+  "ItemDefName": "ROM_WoodAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.255621552,
+  "OffY": -0.0284023881,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.440631449,
+  "BladeEnd": 0.6362921,
+  "MeleeWeaponType": 2
+}

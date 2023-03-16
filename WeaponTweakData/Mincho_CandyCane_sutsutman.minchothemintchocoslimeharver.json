@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sutsutman.minchothemintchocoslimeharver",
+  "ItemDefName": "Mincho_CandyCane",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3692307,
+  "Rotation": 41.87106,
+  "BladeStart": 0.349112421,
+  "BladeEnd": 0.794083059,
+  "MeleeWeaponType": 1
+}

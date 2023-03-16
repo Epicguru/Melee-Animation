@@ -54,11 +54,12 @@
 
   <StatDef>
     <defName>AM_ExecutionCooldown</defName>
+    <workerClass>AM.Stats.StatWorker_ExecCooldown</workerClass>
     <label>Execution Cooldown</label>
     <description>The cooldown, measured in seconds, between melee executions. Affected by pawn melee skill and other factors.</description>
     <category>PawnCombat</category>
     <defaultBaseValue>30</defaultBaseValue>
-    <minValue>1</minValue>
+    <minValue>0.1</minValue>
     <toStringStyle>FloatOne</toStringStyle>
     <forInformationOnly>true</forInformationOnly>
     <displayPriorityInCategory>5100</displayPriorityInCategory>

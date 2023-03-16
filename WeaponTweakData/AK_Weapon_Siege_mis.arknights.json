@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Siege",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.192504644,
+  "OffY": -0.031558156,
+  "Rotation": -40.0,
+  "BladeStart": 0.193688273,
+  "BladeEnd": 0.5723865,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "biomesteam.biomesprehistoric",
+  "ItemDefName": "BMT_CeratopsidHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.208283663,
+  "OffY": -0.0315579772,
+  "Rotation": 30.0,
+  "BladeStart": 0.08717939,
+  "BladeEnd": 0.6394476,
+  "MeleeWeaponType": 40
+}

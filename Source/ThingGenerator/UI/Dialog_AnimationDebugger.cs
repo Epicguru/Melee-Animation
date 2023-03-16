@@ -181,9 +181,9 @@ namespace AM.UI
 
                 bar.y += 18;
                 Widgets.DrawBoxSolid(bar, Color.white * 0.45f);
-                float newLerp = Widgets.HorizontalSlider(bar.ExpandedBy(0, -2), lerp, 0, 1);
+                float newLerp = Widgets.HorizontalSlider_NewTemp(bar.ExpandedBy(0, -2), lerp, 0, 1);
                 if (Math.Abs(newLerp - lerp) > 0.005f)
-                    renderer.Seek(newLerp * renderer.Data.Duration, 0);
+                    renderer.Seek(newLerp * renderer.Data.Duration, 0, null);
 
                 rect.y += 20;
 

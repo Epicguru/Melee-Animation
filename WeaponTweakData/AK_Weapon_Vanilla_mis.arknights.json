@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Vanilla",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.306114316,
+  "OffY": -0.06627238,
+  "Rotation": 60.0,
+  "BladeStart": 0.275739759,
+  "BladeEnd": 0.8122289,
+  "MeleeWeaponType": 6
+}

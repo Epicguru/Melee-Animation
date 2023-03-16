@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Red",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1830371,
+  "Rotation": 42.30614,
+  "HandsMode": 1,
+  "BladeStart": 0.09822495,
+  "BladeEnd": 0.448521018,
+  "MeleeWeaponType": 48
+}

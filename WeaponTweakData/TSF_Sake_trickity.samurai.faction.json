@@ -1,0 +1,10 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_Sake",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.170414031,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "MeleeWeaponType": 8
+}

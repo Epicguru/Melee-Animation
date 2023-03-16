@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_MyrtleTypeB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.08520639,
+  "OffY": 0.0852064937,
+  "Rotation": -65.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "HandsMode": 1,
+  "BladeEnd": 0.212623373,
+  "MeleeWeaponType": 8
+}

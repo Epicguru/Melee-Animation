@@ -1,0 +1,20 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Surtr",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.318737268,
+  "Rotation": -130.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "FlipY": true,
+  "BladeStart": 0.424852371,
+  "BladeEnd": 1.22643,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

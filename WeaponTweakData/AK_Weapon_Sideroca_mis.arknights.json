@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Sideroca",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2619331,
+  "Rotation": 30.0,
+  "BladeStart": 0.14240621,
+  "BladeEnd": 0.8714005,
+  "MeleeWeaponType": 6
+}

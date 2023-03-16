@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Weedy",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.321893424,
+  "OffY": -0.0568048321,
+  "BladeStart": 0.07613432,
+  "BladeEnd": 0.8082841,
+  "MeleeWeaponType": 1
+}

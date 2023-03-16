@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_LiskarmTypeB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.173570022,
+  "OffY": 0.0568048358,
+  "HandsMode": 2,
+  "BladeEnd": 0.409073263,
+  "MeleeWeaponType": 1
+}

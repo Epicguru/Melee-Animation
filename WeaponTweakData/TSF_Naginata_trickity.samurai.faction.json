@@ -1,0 +1,14 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_Naginata",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.470217347,
+  "OffY": 0.0189351141,
+  "Rotation": 42.8676,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.5952664,
+  "BladeEnd": 1.20118344,
+  "MeleeWeaponType": 5
+}

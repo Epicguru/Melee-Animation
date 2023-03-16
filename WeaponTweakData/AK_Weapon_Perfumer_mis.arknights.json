@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Perfumer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.230374873,
+  "Rotation": 90.0,
+  "BladeStart": 0.457988083,
+  "BladeEnd": 0.691518962,
+  "MeleeWeaponType": 1
+}

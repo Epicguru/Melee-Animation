@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Specter",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3723867,
+  "Rotation": -45.0,
+  "BladeStart": 0.478501171,
+  "BladeEnd": 0.948717952,
+  "MeleeWeaponType": 6
+}

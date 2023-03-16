@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Astesia",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.27455616,
+  "OffY": 0.0410257429,
+  "Rotation": -5.0,
+  "HandsMode": 1,
+  "BladeStart": 0.104536489,
+  "BladeEnd": 0.688362956,
+  "MeleeWeaponType": 4
+}

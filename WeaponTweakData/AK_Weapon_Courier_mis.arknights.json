@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Courier",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.385009259,
+  "OffY": -0.0126235783,
+  "Rotation": -161.2953,
+  "FlipY": true,
+  "HandsMode": 1,
+  "BladeStart": 0.1147928,
+  "BladeEnd": 0.8122289,
+  "MeleeWeaponType": 6
+}

@@ -18,8 +18,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Build compatibility generator
+
+    - name: Setup Dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Build Mod 1.4
+      run: dotnet build ${{ env.SLN_PATH }} --configuration v1.4
+
     - name: Run generator.
-      run: ./Source/CompatibilityReportGenerator/bin/Debug/net472/CompatibilityReportGenerator.exe "./WeaponTweakData" "./WeaponTweakData/Compatible Mods.md"
+      run: .\Source\CompatibilityReportGenerator\bin\Debug\net472\CompatibilityReportGenerator.exe ".\WeaponTweakData" ".\WeaponTweakData\Compatible Mods.md"
     - name: Check for changes.
       run: git status
     - name: Stage changes.

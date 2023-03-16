@@ -1,0 +1,17 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Warfarin",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3187374,
+  "Rotation": 40.0,
+  "BladeStart": 0.101380959,
+  "BladeEnd": 0.757790864,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.364,
+    "g": 0.003,
+    "b": 0.003,
+    "a": 0.916
+  }
+}

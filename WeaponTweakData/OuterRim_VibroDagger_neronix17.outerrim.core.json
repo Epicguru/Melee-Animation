@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outerrim.core",
+  "ItemDefName": "OuterRim_VibroDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.157790929,
+  "HandsMode": 1,
+  "BladeStart": 0.121893592,
+  "BladeEnd": 0.617357,
+  "MeleeWeaponType": 48
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outerrim.core",
+  "ItemDefName": "OuterRim_VibroCleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.224063337,
+  "HandsMode": 1,
+  "BladeStart": 0.112426035,
+  "BladeEnd": 0.6331361,
+  "MeleeWeaponType": 54
+}

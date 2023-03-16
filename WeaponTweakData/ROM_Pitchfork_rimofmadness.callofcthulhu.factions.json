@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rimofmadness.callofcthulhu.factions",
+  "ItemDefName": "ROM_Pitchfork",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2871796,
+  "Rotation": 45.0,
+  "BladeStart": 0.437475443,
+  "BladeEnd": 0.835108757,
+  "MeleeWeaponType": 5
+}

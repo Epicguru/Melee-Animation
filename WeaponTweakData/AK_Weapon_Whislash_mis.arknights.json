@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Whislash",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.306114316,
+  "Rotation": 44.13069,
+  "BladeStart": 0.09664694,
+  "BladeEnd": 0.9329389,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,16 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Kafka",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.104142129,
+  "OffY": -0.0441812873,
+  "Rotation": 180.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "FlipY": true,
+  "HandsMode": 1,
+  "BladeStart": 0.09191341,
+  "BladeEnd": 0.385404646,
+  "MeleeWeaponType": 48
+}

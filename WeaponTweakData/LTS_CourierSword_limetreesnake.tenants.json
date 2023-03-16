@@ -1,0 +1,10 @@
+{
+  "TextureModID": "limetreesnake.tenants",
+  "ItemDefName": "LTS_CourierSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3029588,
+  "BladeStart": 0.09033541,
+  "BladeEnd": 0.781459451,
+  "MeleeWeaponType": 6
+}

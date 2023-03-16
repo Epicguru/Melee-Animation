@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Cutter",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.444970578,
+  "Rotation": -45.0,
+  "BladeStart": 0.200789049,
+  "BladeEnd": 1.03076947,
+  "MeleeWeaponType": 6
+}
