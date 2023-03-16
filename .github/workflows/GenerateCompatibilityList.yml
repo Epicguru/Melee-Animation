@@ -18,7 +18,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build compatibility generator
 
     - name: Setup Dotnet
       uses: actions/setup-dotnet@v3
@@ -30,15 +29,19 @@ jobs:
 
     - name: Run generator.
       run: .\Source\CompatibilityReportGenerator\bin\Debug\net472\CompatibilityReportGenerator.exe ".\WeaponTweakData" ".\WeaponTweakData\Compatible Mods.md"
+    
     - name: Check for changes.
       run: git status
+    
     - name: Stage changes.
       run: git add .
+    
     - name: Commit changes.
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -m "[AUTO CI] Update compatible mod list." -m "[skip ci]"
+    
     - name: Push to ${{ github.ref }}.
       uses: ad-m/github-push-action@master
       with:
