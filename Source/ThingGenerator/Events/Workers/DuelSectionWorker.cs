@@ -5,6 +5,7 @@ using System.Linq;
 using AM;
 using UnityEngine;
 using Verse;
+using AM.Jobs;
 
 namespace AM.Events.Workers
 {
@@ -47,7 +48,7 @@ namespace AM.Events.Workers
             {
                 if (input.Animator.PawnCount < 2)
                 {
-                    End(input, null, ExecutionOutcome.Nothing);
+                    End(input, null, null, ExecutionOutcome.Nothing);
                 }
                 else
                 {
@@ -58,11 +59,10 @@ namespace AM.Events.Workers
                     bool firstWins = Rand.Chance(chanceToWin);
                     Pawn winner = firstWins ? first : second;
                     Pawn loser = firstWins ? second : first;
-                    ExecutionOutcome outcome = OutcomeUtility.GenerateRandomOutcome(winner, loser);
-                    outcome = ExecutionOutcome.Nothing;
+                    var outcome = input.Animator.IsFriendlyDuel ? ExecutionOutcome.Nothing : OutcomeUtility.GenerateRandomOutcome(winner, loser);
 
                     ThrowMote(winner, loser, firstWins ? chanceToWin : 1f - chanceToWin);
-                    End(input, winner, outcome);
+                    End(input, winner, loser, outcome);
                 }
             }
             else
@@ -101,7 +101,7 @@ namespace AM.Events.Workers
             return 0;
         }
 
-        private void End(in AnimEventInput input, Pawn winner, ExecutionOutcome outcome)
+        private void End(in AnimEventInput input, Pawn winner, Pawn loser, ExecutionOutcome outcome)
         {
             if (winner == null)
             {
@@ -110,10 +110,17 @@ namespace AM.Events.Workers
                 return;
             }
 
+            // Notify jobs if they want it.
+            if (winner.jobs?.curDriver is IDuelEndNotificationReceiver r)
+                r.Notify_OnDuelEnd(true);
+            if (loser?.jobs?.curDriver is IDuelEndNotificationReceiver r2)
+                r2.Notify_OnDuelEnd(false);
+
             // Perform an execution animation with the outcome.
+            var jobDef = input.Animator.CustomJobDef;
             input.Animator.OnEndAction = a =>
             {
-                StartEndExecution(winner, a.Pawns.FirstOrDefault(p => p != null && p != winner), outcome);
+                StartEndExecution(winner, a.Pawns.FirstOrDefault(p => p != null && p != winner), outcome, jobDef);
             };
             input.Animator.Destroy();
         }
@@ -160,7 +167,7 @@ namespace AM.Events.Workers
             return anim;
         }
 
-        private static void StartEndExecution(Pawn winner, Pawn loser, ExecutionOutcome outcome)
+        private static void StartEndExecution(Pawn winner, Pawn loser, ExecutionOutcome outcome, JobDef customJobDef)
         {
             var anim = GetWinAnimation(winner, loser, outcome);
             bool flipX = winner.Position.x > loser.Position.x;
@@ -174,7 +181,8 @@ namespace AM.Events.Workers
             var startArgs = new AnimationStartParameters(anim, winner, loser)
             {
                 ExecutionOutcome = outcome,
-                FlipX = flipX
+                FlipX = flipX,
+                CustomJobDef = customJobDef
             };
 
             if (!startArgs.TryTrigger())

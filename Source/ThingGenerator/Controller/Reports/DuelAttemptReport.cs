@@ -43,10 +43,10 @@ public readonly struct DuelAttemptReport
     public AnimDef DuelAnimation { get; init; }
 
     /// <summary>
-    /// Should the <see cref="DuelAnimation"/> be started flipped?
-    /// If null, a random flip can be chosen.
+    /// If not null, the animation must be started on and centered on this pawn.
+    /// If null, the animation may be started on either pawn.
     /// </summary>
-    public bool? AnimFlipX { get; init; }
+    public Pawn CenteredOnPawn { get; init; }
 
     /// <summary>
     /// If <see cref="CanStartDuel"/> is false this is the reason why.

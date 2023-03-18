@@ -1,11 +1,12 @@
-﻿using Verse;
+﻿using System;
+using Verse;
 using Verse.AI;
 
 namespace AM.Jobs;
 
 public static class ToilUtils
 {
-    public static Toil DoAnimationToil(AnimationStartParameters args)
+    public static Toil DoAnimationToil(Func<Toil, AnimationStartParameters> argsMaker)
     {
         var toil = ToilMaker.MakeToil();
         toil.defaultCompleteMode = ToilCompleteMode.Never;
@@ -13,6 +14,12 @@ public static class ToilUtils
 
         toil.initAction = () =>
         {
+            var args = argsMaker(toil);
+            if (args.CustomJobDef == null)
+            {
+                Core.Warn($"AnimationStartParameters.CustomJobDef should have been set!");
+            }
+
             if (!args.TryTrigger(out var animator))
             {
                 // Failed to start animation, end job.

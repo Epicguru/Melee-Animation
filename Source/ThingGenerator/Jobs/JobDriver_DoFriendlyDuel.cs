@@ -1,8 +1,13 @@
-﻿using AM.Grappling;
+﻿using System;
+using AM.Grappling;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using AM.Reqs;
+using System.Linq;
+using AM.Controller;
+using AM.Controller.Requests;
 
 namespace AM.Jobs;
 
@@ -11,14 +16,17 @@ namespace AM.Jobs;
  * Target B: Target standing spot in duel.
  * Target C: Standing spot object itself.
  */
-public class JobDriver_DoFriendlyDuel : JobDriver
+public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
 {
+    private static readonly ActionController controller = new ActionController();
+
     // Wait for up to a minute for the opponent to arrive.
     public const int MAX_WAIT_TICKS = 60 * 60;
 
     private bool ShouldFaceEast => TargetThingC.Position == TargetB.Cell;
 
     private int ticksSpentWaiting;
+    private bool didWin;
 
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
@@ -39,11 +47,151 @@ public class JobDriver_DoFriendlyDuel : JobDriver
         this.FailOnCannotTouch(TargetIndex.B, PathEndMode.OnCell);
 
 
-        // Walk to destination:
+        // Walk to duel spot:
         yield return Toils_Goto.GotoCell(TargetIndex.B, PathEndMode.OnCell);
 
         // Wait for opponent to arrive.
         yield return WaitForOpponent();
+
+        // Bow to the opponent:
+        yield return ToilUtils.DoAnimationToil(MakeBowStartParams);
+
+        // Wait for the opponent to finish bowing:
+        yield return WaitUntilOtherBowFinished();
+
+        // Start the duel:
+        yield return StartMainDuelAnimation();
+
+        // Wait for the duel to end:
+        yield return WaitForDuelToEnd();
+
+        // End actions (mood, opinion etc.):
+        yield return DoEndActions();
+    }
+
+    private Toil StartMainDuelAnimation()
+    {
+        var toil = ToilMaker.MakeToil();
+        toil.defaultCompleteMode = ToilCompleteMode.Delay;
+        toil.defaultDuration = 1; // Wait a tick to be very sure that the animation has started.
+
+        // Only 1 pawn needs to start the animation.
+        // The other should simply wait a couple of frames for the animation to start and be registered.
+
+        toil.initAction = () => StartDuelInitAction(toil);
+
+        return toil;
+    }
+
+    private void StartDuelInitAction(Toil toil)
+    {
+        // Who should start the animation?
+        // It doesn't actually really matter, as long as it's only 1 of the pawns.
+        var self = toil.actor;
+        var other = toil.actor.jobs.curJob.targetA.Pawn;
+
+        bool shouldStart = string.Compare(self.ThingID, other.ThingID, StringComparison.Ordinal) > 0;
+        if (!shouldStart)
+            return;
+
+        var req = new DuelAttemptRequest
+        {
+            A = self,
+            B = other,
+            NoErrorMessages = false
+        };
+
+        // Make duel report so ensure that it can be started:
+        var report = controller.GetDuelReport(req);
+        if (!report.CanStartDuel || report.MustWalk)
+        {
+            Core.Error($"Controller says that the duel animation cannot be started right now: {report.ErrorMessage}");
+            EndJobWith(JobCondition.Incompletable);
+            return;
+        }
+
+        // Start animation using various flip options depending on the report.
+        if (report.CenteredOnPawn == null)
+        {
+            if (Rand.Chance(0.5f))
+                StartAnimationFromPerspective(report.DuelAnimation, self, other);
+            else
+                StartAnimationFromPerspective(report.DuelAnimation, other, self);
+        }
+        else
+        {
+            StartAnimationFromPerspective(report.DuelAnimation, report.CenteredOnPawn, report.CenteredOnPawn == self ? other : self);
+        }
+    }
+
+    private void StartAnimationFromPerspective(AnimDef def, Pawn main, Pawn second)
+    {
+        Core.Log($"Starting friendly duel animation from the perspective of {main}");
+        bool fx = main.Position.x > second.Position.x;
+
+        var startArgs = new AnimationStartParameters(def, main, second)
+        {
+            CustomJobDef = AM_DefOf.AM_DoFriendlyDuel,
+            FlipX = fx
+        };
+
+        if (!startArgs.TryTrigger(out var animator))
+        {
+            Core.Error("Failed to start duel animation (Trigger())");
+            EndJobWith(JobCondition.Incompletable);
+            return;
+        }
+
+        // Flag duel as friendly so the victim doesn't get executed.
+        animator.IsFriendlyDuel = true;
+    }
+
+    private Toil WaitForDuelToEnd()
+    {
+        var toil = ToilMaker.MakeToil();
+        toil.defaultCompleteMode = ToilCompleteMode.Never;
+
+        toil.initAction = () =>
+        {
+            ticksSpentWaiting = 0;
+        };
+
+        toil.tickAction = () =>
+        {
+            if (toil.actor.TryGetAnimator() == null)
+            {
+                toil.actor.jobs.curDriver.ReadyForNextToil();
+                return;
+            }
+
+            // Duels shouldn't last over 2 minutes. Sanity check...
+            if (ticksSpentWaiting > (120f * 60f) / Core.Settings.GlobalAnimationSpeed)
+            {
+                Core.Error("Ran out of time waiting for opponent to finish bowing! Max wait time is 4 seconds.");
+                EndJobWith(JobCondition.Incompletable);
+            }
+        };
+
+        return toil;
+    }
+
+    private Toil DoEndActions()
+    {
+        var toil = ToilMaker.MakeToil();
+        toil.defaultCompleteMode = ToilCompleteMode.Instant;
+
+        toil.initAction = () =>
+        {
+            // TODO end actions here.
+            Core.Log($"Duel ended, was I [{toil.actor}] the winner?: {didWin}");
+        };
+
+        return toil;
+    }
+
+    public void Notify_OnDuelEnd(bool isWinner)
+    {
+        didWin = isWinner;
     }
 
     private Toil WaitForOpponent()
@@ -62,7 +210,7 @@ public class JobDriver_DoFriendlyDuel : JobDriver
             ticksSpentWaiting++;
             if (ticksSpentWaiting > MAX_WAIT_TICKS)
             {
-                toil.actor.jobs.curDriver.EndJobWith(JobCondition.Incompletable);
+                EndJobWith(JobCondition.Incompletable);
                 string txt = "AM.Error.Duel.WaitedTooLong".Translate(toil.actor, job.targetA.Pawn);
                 Messages.Message(txt, MessageTypeDefOf.NegativeEvent);
                 return;
@@ -73,6 +221,75 @@ public class JobDriver_DoFriendlyDuel : JobDriver
         toil.defaultCompleteMode = ToilCompleteMode.Never;
 
         return toil;
+    }
+
+    private Toil WaitUntilOtherBowFinished()
+    {
+        var toil = ToilMaker.MakeToil();
+        toil.defaultCompleteMode = ToilCompleteMode.Never;
+
+        toil.initAction = () =>
+        {
+            ticksSpentWaiting = 0;
+        };
+
+        toil.tickAction = () =>
+        {
+            var opponent = toil.actor.jobs.curJob.targetA.Pawn;
+            if (opponent is not { Spawned: true, Dead: false, Downed: false })
+            {
+                Core.Error("Opponent went missing when waiting for them to finish bowing!");
+                EndJobWith(JobCondition.Incompletable);
+                return;
+            }
+
+            // If the enemy is not in an animation, we are good to go.
+            var animator = opponent.TryGetAnimator();
+            if (animator == null)
+            {
+                ReadyForNextToil();
+                return;
+            }
+
+            ticksSpentWaiting++;
+            if (ticksSpentWaiting > 240f / Core.Settings.GlobalAnimationSpeed)
+            {
+                Core.Error("Ran out of time waiting for opponent to finish bowing! Max wait time is 4 seconds.");
+                EndJobWith(JobCondition.Incompletable);
+                return;
+            }
+        };
+
+        return toil;
+    }
+
+    private AnimationStartParameters MakeBowStartParams(Toil toil)
+    {
+        // Get bow animation.
+        var anim = GetBowAnimationDef(toil.actor.GetFirstMeleeWeapon());
+        if (anim == null)
+        {
+            Core.Error("Failed to find bow animation.");
+            return default;
+        }
+
+        // Make args.
+        bool flipX = !ShouldFaceEast;
+        return new AnimationStartParameters(anim, toil.actor)
+        {
+            CustomJobDef = AM_DefOf.AM_DoFriendlyDuel,
+            FlipX = flipX,
+        };
+    }
+
+    private static AnimDef GetBowAnimationDef(Thing weapon)
+    {
+        if (weapon == null)
+            return null;
+
+        var req = new ReqInput(weapon.def);
+        var options = AnimDef.GetDefsOfType(AnimType.DuelBow).Where(d => d.Probability > 0 && d.Allows(req));
+        return options.RandomElementByWeightWithFallback(d => d.Probability);
     }
 
     private bool ShouldJobFail()
@@ -116,5 +333,6 @@ public class JobDriver_DoFriendlyDuel : JobDriver
         base.ExposeData();
 
         Scribe_Values.Look(ref ticksSpentWaiting, "ticksSpentWaiting");
+        Scribe_Values.Look(ref didWin, "didWin");
     }
 }

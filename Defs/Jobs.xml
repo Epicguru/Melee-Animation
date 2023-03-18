@@ -28,9 +28,9 @@
   </JobDef>
 
   <JobDef>
-    <defName>AM_WalkToDuel</defName>
-    <driverClass>AM.Jobs.JobDriver_GoToDuelSpot</driverClass>
-    <reportString>moving towards TargetA to duel them.</reportString>
+    <defName>AM_DoFriendlyDuel</defName>
+    <driverClass>AM.Jobs.JobDriver_DoFriendlyDuel</driverClass>
+    <reportString>engaging in friendly duel with TargetA</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>true</playerInterruptible>
     <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
@@ -38,6 +38,7 @@
     <suspendable>false</suspendable>
     <neverShowWeapon>false</neverShowWeapon>
     <isIdle>false</isIdle>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
   </JobDef>
 
   <JobDef>

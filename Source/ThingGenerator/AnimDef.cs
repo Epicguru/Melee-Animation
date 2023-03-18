@@ -341,7 +341,7 @@ public class AnimDef : Def
 
     private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new IntVec2(fx ? -input.x : input.x, fy ? -input.z : input.z);
 
-    public bool Allows(ReqInput input)
+    public bool Allows(in ReqInput input)
     {
         return weaponFilter != null && weaponFilter.Evaluate(input);
     }

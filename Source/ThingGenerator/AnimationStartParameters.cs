@@ -15,6 +15,7 @@ namespace AM
         public bool FlipX, FlipY;
         public bool DoNotRegisterPawns;
         public ExecutionOutcome ExecutionOutcome = ExecutionOutcome.Down;
+        public JobDef CustomJobDef;
 
         public AnimationStartParameters(AnimDef animation, Map map, Matrix4x4 rootTransform)
         {
@@ -87,7 +88,8 @@ namespace AM
                 RootTransform = RootTransform,
                 MirrorHorizontal = FlipX,
                 MirrorVertical = FlipY,
-                ExecutionOutcome = ExecutionOutcome
+                ExecutionOutcome = ExecutionOutcome,
+                CustomJobDef = CustomJobDef
             };
 
             foreach (var pawn in EnumeratePawns())

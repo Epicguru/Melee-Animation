@@ -1,11 +1,11 @@
 {
-  "ExportTimeUTC": "2023-03-06T18:05:13.6924421Z",
+  "ExportTimeUTC": "2023-03-18T16:59:39.9508014Z",
   "Name": "Idle_Colossal_SlashHorizontal2",
   "Length": 1.33333337,
   "Events": [],
   "Parts": [
     {
-      "ID": 19706,
+      "ID": 19722,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {
@@ -56,7 +56,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19246,
+      "ID": 19262,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -395,10 +395,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19178,
+      "ID": 19194,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": 19246,
+      "ParentID": 19262,
       "Curves": {
         "AnimatedPart.FlipY": {
           "Keyframes": [
@@ -442,14 +442,14 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19454,
+      "SplitDrawPivotPartID": 19470,
       "SweepPaths": []
     },
     {
-      "ID": 18954,
+      "ID": 18964,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 19706,
+      "ParentID": 19722,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -478,10 +478,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19688,
+      "ID": 19704,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": 19246,
+      "ParentID": 19262,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -510,10 +510,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19326,
+      "ID": 19342,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": 19246,
+      "ParentID": 19262,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -542,7 +542,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19454,
+      "ID": 19470,
       "Path": "WeaponACutoff",
       "Curves": {},
       "DefaultValues": {
