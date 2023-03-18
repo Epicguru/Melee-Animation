@@ -54,7 +54,11 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         foreach (var t in targets)
         {
             var target = t.Pawn ?? t.Thing as Pawn;
-            if (target.Dead)
+            if (target == null || target.Dead)
+                continue;
+
+            // Cannot target self.
+            if (target == pawn)
                 continue;
 
             bool isEnemy = target.HostileTo(Faction.OfPlayer);
@@ -94,7 +98,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
                 var reports = controller.GetExecutionReport(request);
                 foreach (var report in reports)
                 {
-                    if (report.IsFinal && !report.CanExecute)
+                    if (report is {IsFinal: true, CanExecute: false})
                     {
                         noExecEver = true;
                         opts.Add(GetDisabledExecutionOption(report, pawn));

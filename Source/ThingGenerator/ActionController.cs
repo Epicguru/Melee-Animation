@@ -84,6 +84,10 @@ public class ActionController
             return sc == 0 ? new GrappleAttemptReport(req, "NoDest") : GrappleAttemptReport.Success(default);
         }
 
+        // Grappler is not target.
+        if (req.Target == req.Grappler)
+            return new GrappleAttemptReport(req, "Internal", "Grappler cannot be same as target!");
+
         // Check maps.
         if (map == null || map != req.Target.Map)
             return new GrappleAttemptReport(req, "Internal", "Maps null or mismatched");
