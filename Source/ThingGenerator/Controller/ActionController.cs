@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using AM.Controller.Reports;
+using AM.Controller.Requests;
+using AM.Grappling;
+using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using AM.Grappling;
-using RimWorld;
 using Verse;
 using Verse.AI;
-using static AM.PossibleExecution;
 
-namespace AM;
+namespace AM.Controller;
 
 public class ActionController
 {
     private readonly IntVec3[] closestCells = new IntVec3[8];
     private readonly Comparer comparer = new Comparer();
-    private readonly List<AnimStartData> tempStartDataList = new List<AnimStartData>(64);
+    private readonly List<PossibleExecution.AnimStartData> tempStartDataList = new List<PossibleExecution.AnimStartData>(64);
 
     /// <summary>
     /// Checks that a grapple can be performed by a pawn.
@@ -413,7 +413,7 @@ public class ActionController
                 ulong animMask = anim.FlipClearMask;
                 if ((animMask & args.OccupiedMask) == 0)
                 {
-                    tempStartDataList.Add(new AnimStartData
+                    tempStartDataList.Add(new PossibleExecution.AnimStartData
                     {
                         AnimDef = anim,
                         FlipX = true
@@ -425,7 +425,7 @@ public class ActionController
                 ulong animMask = anim.ClearMask;
                 if ((animMask & args.OccupiedMask) == 0)
                 {
-                    tempStartDataList.Add(new AnimStartData
+                    tempStartDataList.Add(new PossibleExecution.AnimStartData
                     {
                         AnimDef = anim,
                         FlipX = false
@@ -543,62 +543,6 @@ public class ActionController
     }
 }
 
-public struct GrappleAttemptRequest
-{
-    /// <summary>
-    /// The pawn to do the grappling.
-    /// </summary>
-    public Pawn Grappler;
-
-    /// <summary>
-    /// The target pawn to be grappled.
-    /// </summary>
-    public Pawn Target;
-
-    /// <summary>
-    /// The optional target cell for the grapple.
-    /// It is assumed to be adjacent to the pawn.
-    /// </summary>
-    public IntVec3? DestinationCell;
-
-    /// <summary>
-    /// If <see cref="DestinationCell"/> is null,
-    /// this defines the destination cell selection algorithm.
-    /// </summary>
-    public GrappleSpotPickingBehaviour GrappleSpotPickingBehaviour;
-
-    /// <summary>
-    /// If true, the <see cref="Grappler"/> is not checked for a lasso.
-    /// </summary>
-    public bool DoNotCheckLasso;
-
-    /// <summary>
-    /// If true, the <see cref="Grappler"/> is not checked for lasso cooldown.
-    /// </summary>
-    public bool DoNotCheckCooldown;
-
-    /// <summary>
-    /// If true, the <see cref="GrappleAttemptReport.ErrorMessage"/> is not populated, to save time.
-    /// </summary>
-    public bool NoErrorMessages;
-
-    /// <summary>
-    /// The optional occupied mask around the <see cref="Grappler"/>.
-    /// If supplied, it speeds up the operation by avoiding checking the map constantly.
-    /// </summary>
-    public uint? OccupiedMask;
-
-    /// <summary>
-    /// If true, most lasso checks are skipped (such as melee skill, manipulation etc.)
-    /// </summary>
-    public bool TrustLassoUsability;
-
-    /// <summary>
-    /// Allows the specification of lasso range. If null, it is extracted from the <see cref="Grappler"/>'s stats.
-    /// </summary>
-    public float? LassoRange;
-}
-
 public enum GrappleSpotPickingBehaviour
 {
     /// <summary>
@@ -616,249 +560,4 @@ public enum GrappleSpotPickingBehaviour
     /// Directly adjacent cells (west and east) are requested and if they are not viable the request fails.
     /// </summary>
     OnlyAdjacent
-}
-
-public struct GrappleAttemptReport
-{
-    private static readonly NamedArgument[] namedArgs = new NamedArgument[4];
-
-    public static GrappleAttemptReport Success(IntVec3 destinationCell) => new GrappleAttemptReport
-    {
-        CanGrapple = true,
-        DestinationCell = destinationCell
-    };
-
-    private static NamedArgument[] GetNamedArgs(in GrappleAttemptRequest request, string intErrorMsg)
-    {
-        namedArgs[0] = new NamedArgument(request.Grappler, "Grappler");
-        namedArgs[1] = new NamedArgument(request.Target, "Target");
-        namedArgs[2] = new NamedArgument(intErrorMsg, "Error");
-        namedArgs[3] = new NamedArgument(Core.Settings.MinMeleeSkillToLasso, "MeleeSkill");
-        return namedArgs;
-    }
-
-    private static string GetShortTrs(string trsKey, string trs, NamedArgument[] args)
-    {
-        string shortKey = $"{trsKey}.Short";
-        if (shortKey.CanTranslate())
-            return shortKey.Translate(args);
-        return trs;
-    }
-
-    /// <summary>
-    /// Can the grapple be started?
-    /// </summary>
-    public bool CanGrapple;
-
-    /// <summary>
-    /// The cell that the target must be grappled to.
-    /// If <see cref="CanGrapple"/> is false, this value holds no meaning.
-    /// </summary>
-    public IntVec3 DestinationCell;
-
-    /// <summary>
-    /// If <see cref="CanGrapple"/> is false this is the reason why.
-    /// </summary>
-    public string ErrorMessage;
-
-    /// <summary>
-    /// If <see cref="CanGrapple"/> is false this is the reason why (short version).
-    /// </summary>
-    public string ErrorMessageShort;
-
-    public GrappleAttemptReport(in GrappleAttemptRequest req, string errorTrsKey, string intErrorMsg = null)
-    {
-        if (errorTrsKey == null)
-            throw new ArgumentNullException(nameof(errorTrsKey));
-
-        CanGrapple = false;
-        DestinationCell = default;
-
-        if (req.NoErrorMessages)
-        {
-            ErrorMessage = null;
-            ErrorMessageShort = null;
-        }
-        else
-        {
-            var args = GetNamedArgs(req, intErrorMsg);
-            errorTrsKey = $"AM.Error.Grapple.{errorTrsKey}";
-            ErrorMessage = errorTrsKey.Translate(args);
-            ErrorMessageShort = intErrorMsg == null ? GetShortTrs(errorTrsKey, ErrorMessage, args) : ErrorMessage;
-        }
-    }
-}
-
-public struct ExecutionAttemptRequest
-{
-    /// <summary>
-    /// The executioner pawn.
-    /// </summary>
-    public Pawn Executioner;
-    /// <summary>
-    /// The occupied mask for the <see cref="Executioner"/>.
-    /// </summary>
-    public ulong OccupiedMask;
-    /// <summary>
-    /// The small occupied mask for the executioner.
-    /// </summary>
-    public uint SmallOccupiedMask;
-    /// <summary>
-    /// Should the west cell be checked?
-    /// </summary>
-    public bool WestCell;
-    /// <summary>
-    /// Should the east cell be checked?
-    /// </summary>
-    public bool EastCell;
-    /// <summary>
-    /// Is the <see cref="Executioner"/> allowed to use their lasso (if any)?
-    /// </summary>
-    public bool CanUseLasso;
-    /// <summary>
-    /// Is the executioner allowed to walk to the target(s) to execute them?
-    /// </summary>
-    public bool CanWalk;
-    /// <summary>
-    /// If true, most lasso checks are skipped (such as melee skill, manipulation etc.)
-    /// Only valid if <see cref="CanUseLasso"/> is true.
-    /// </summary>
-    public bool TrustLassoUsability;
-
-    /// <summary>
-    /// Allows the specification of lasso range. If null, it is extracted from the <see cref="Executioner"/>'s stats.
-    /// </summary>
-    public float? LassoRange;
-
-    /// <summary>
-    /// The main target.
-    /// </summary>
-    public Pawn Target;
-
-    /// <summary>
-    /// Optional additional targets.
-    /// </summary>
-    public IEnumerable<Pawn> Targets;
-
-    /// <summary>
-    /// If true no error messages will be translated to save time.
-    /// </summary>
-    public bool NoErrorMessages;
-}
-
-public struct PossibleExecution
-{
-    public bool IsValid => Animation.AnimDef != null;
-
-    /// <summary>
-    /// Info about the animation to be started.
-    /// </summary>
-    public AnimStartData Animation;
-
-    /// <summary>
-    /// If not null, the pawn must be lassoed to this position in order for the execution to happen.
-    /// </summary>
-    public IntVec3? LassoToHere;
-
-    public struct AnimStartData
-    {
-        public float Probability => AnimDef?.Probability ?? 0;
-
-        /// <summary>
-        /// The animation to be played.
-        /// </summary>
-        public AnimDef AnimDef;
-
-        /// <summary>
-        /// Whether the animation needs to be mirrored horizontally.
-        /// </summary>
-        public bool FlipX;
-    }
-}
-
-public struct ExecutionAttemptReport : IDisposable
-{
-    private static readonly ConcurrentQueue<List<PossibleExecution>> listPool = new ConcurrentQueue<List<PossibleExecution>>();
-    private static readonly NamedArgument[] namedArgs = new NamedArgument[3];
-
-    public static List<PossibleExecution> BorrowList() => listPool.TryDequeue(out var found) ? found : new List<PossibleExecution>(32);
-
-    private static void ReturnList(List<PossibleExecution> list) => listPool.Enqueue(list);
-    
-    private static NamedArgument[] GetNamedArgs(in ExecutionAttemptRequest request, Pawn target, string intErrorMsg)
-    {
-        namedArgs[0] = new NamedArgument(request.Executioner, "Exec");
-        namedArgs[1] = new NamedArgument(target, "Target");
-        namedArgs[2] = new NamedArgument(intErrorMsg, "Error");
-        return namedArgs;
-    }
-
-    private static string GetShortTrs(string trsKey, string trs, NamedArgument[] args)
-    {
-        string shortKey = $"{trsKey}.Short";
-        if (shortKey.CanTranslate())
-            return shortKey.Translate(args);
-        return trs;
-    }
-
-    /// <summary>
-    /// If true, indicates that this report means that the executioner cannot perform any execution,
-    /// such as because they are not holding a weapon or their execution is on cooldown.
-    /// </summary>
-    public bool IsFinal => !CanExecute && Target == null;
-
-    /// <summary>
-    /// Is any execution possible?
-    /// </summary>
-    public bool CanExecute;
-
-    /// <summary>
-    /// An enumeration of possible executions.
-    /// Will be null if <see cref="CanExecute"/> is false.
-    /// </summary>
-    public List<PossibleExecution> PossibleExecutions;
-
-    /// <summary>
-    /// The pawn that could be executed.
-    /// </summary>
-    public Pawn Target;
-
-    public bool IsWalking => CanExecute && (PossibleExecutions == null || !PossibleExecutions.Any());
-
-    public string ErrorMessage;
-
-    public string ErrorMessageShort;
-
-    public ExecutionAttemptReport(in ExecutionAttemptRequest req, string errorTrsKey, string intErrorMsg = null)
-        : this(req, null, errorTrsKey, intErrorMsg) { }
-    
-    public ExecutionAttemptReport(in ExecutionAttemptRequest req, Pawn target, string errorTrsKey, string intErrorMsg = null)
-    {
-        CanExecute = false;
-        PossibleExecutions = null;
-        Target = target;
-
-        if (req.NoErrorMessages)
-        {
-            ErrorMessage = null;
-            ErrorMessageShort = null;
-        }
-        else
-        {
-            var args = GetNamedArgs(req, target, intErrorMsg);
-            errorTrsKey = $"AM.Error.Exec.{errorTrsKey}";
-            ErrorMessage = errorTrsKey.Translate(args);
-            ErrorMessageShort = intErrorMsg == null ? GetShortTrs(errorTrsKey, ErrorMessage, args) : ErrorMessage;
-        }
-    }
-
-    public void Dispose()
-    {
-        if (PossibleExecutions == null)
-            return;
-
-        var temp = PossibleExecutions;
-        PossibleExecutions = null;
-        ReturnList(temp);
-    }
 }

@@ -14,9 +14,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Lib.Harmony" Version="2.2.2">
-			<ExcludeAssets>runtime</ExcludeAssets>
-		</PackageReference>
+	  <None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
 			<CopyLocal>False</CopyLocal>
 			<Private>False</Private>
@@ -26,7 +27,6 @@
 
 	<!-- _____ 1.4 _____ -->
 	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3573-beta" />
 		<Reference Include="AlienRace">
 			<HintPath>refs/1.4/AlienRace14.dll</HintPath>
 			<CopyLocal>False</CopyLocal>

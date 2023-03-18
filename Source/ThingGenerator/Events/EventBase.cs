@@ -1,12 +1,14 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace AM.Events;
 
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public abstract class EventBase : ScriptableObject
 {
-    public static Dictionary<Type, Func<string, object>> Parsers = new()
+    public static readonly Dictionary<Type, Func<string, object>> Parsers = new Dictionary<Type, Func<string, object>>
     {
         { typeof(string), s => s },
         { typeof(float), s => float.Parse(s) },
@@ -17,7 +19,7 @@ public abstract class EventBase : ScriptableObject
         { typeof(Color), s => new Color(FloatParse(s.Split(',')[0]), FloatParse(s.Split(',')[1]), FloatParse(s.Split(',')[2]),  FloatParse(s.Split(',')[3])) },
     };
 
-    private static Dictionary<string, Func<EventBase>> allBases;
+    private static readonly Dictionary<string, Func<EventBase>> allBases;
 
     public static EventBase CreateFromSaveData(string data)
     {
@@ -53,7 +55,7 @@ public abstract class EventBase : ScriptableObject
     public abstract string EventID { get; }
     public float Time;
 
-    public abstract void Expose();
+    protected abstract void Expose();
 
     private string[] split;
     private int splitIndex;

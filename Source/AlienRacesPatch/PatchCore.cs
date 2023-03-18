@@ -1,4 +1,5 @@
 ﻿using System;
+using AlienRace;
 using AM;
 using Verse;
 
@@ -23,8 +24,7 @@ public class PatchCore : Mod
     {
         try
         {
-            var race = pawn?.def as AlienRace.ThingDef_AlienRace;
-            if (race == null)
+            if (pawn?.def is not ThingDef_AlienRace race)
                 return 1f;
 
             return race.alienRace.generalSettings.alienPartGenerator.customDrawSize.x;

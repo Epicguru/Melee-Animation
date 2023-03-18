@@ -7,7 +7,7 @@ public class ClashAudioEvent : EventBase
 {
     public override string EventID => "WeaponClash";
 
-    public override void Expose()
+    protected override void Expose()
     {
 
     }

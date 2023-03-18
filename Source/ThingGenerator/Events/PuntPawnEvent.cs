@@ -10,7 +10,7 @@ public class PuntPawnEvent : EventBase
     public int PawnIndex;
     public bool Right = true;
 
-    public override void Expose()
+    protected override void Expose()
     {
         Look(ref PawnIndex);
         Look(ref Right);

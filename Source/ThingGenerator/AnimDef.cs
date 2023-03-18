@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -7,11 +8,14 @@ using AM.Idle;
 using AM.RendererWorkers;
 using AM.Reqs;
 using AM.Sweep;
+using JetBrains.Annotations;
 using RimWorld;
 using Verse;
 
 namespace AM;
 
+[UsedImplicitly(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.WithMembers)]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class AnimDef : Def
 {
     #region Static stuff
