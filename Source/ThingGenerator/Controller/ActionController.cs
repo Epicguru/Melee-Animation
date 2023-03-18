@@ -1,11 +1,13 @@
 ﻿using AM.Controller.Reports;
 using AM.Controller.Requests;
 using AM.Grappling;
+using AM.Reqs;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -518,6 +520,171 @@ public class ActionController
     {
         // TODO make much faster version.
         return cell.Standable(map);
+    }
+
+    private static DuelAttemptReport GetDuelReport(in DuelAttemptRequest req)
+    {
+        bool CheckPawn(Pawn pawn, out string cat, out string msg)
+        {
+            msg = null;
+
+            // Null.
+            if (pawn == null)
+            {
+                cat = "Internal";
+                msg = "Pawn is null.";
+                return false;
+            }
+
+            // Not spawned.
+            if (!pawn.Spawned)
+            {
+                cat = "NotSpawned";
+                return false;
+            }
+
+            // Dead or downed.
+            if (pawn.Dead)
+            {
+                cat = "Dead";
+                return false;
+            }
+            if (pawn.Downed)
+            {
+                cat = "Downed";
+                return false;
+            }
+
+            // In an animation.
+            if (pawn.TryGetAnimator() != null)
+            {
+                cat = "NotSpawned"; // The message is quite generic.
+                return false;
+            }
+
+            // Being lassoed.
+            if (GrabUtility.IsBeingTargetedForGrapple(pawn))
+            {
+                cat = "NotSpawned";
+                return false;
+            }
+
+            cat = null;
+            return true;
+        }
+
+        // Check both pawns for basic stuff:
+        if (!CheckPawn(req.A, out var cat, out var msg))
+            return new DuelAttemptReport(req, cat, msg, true);
+        if (!CheckPawn(req.B, out cat, out msg))
+            return new DuelAttemptReport(req, cat, msg, false);
+        
+        // Check adjacent:
+        var posA = req.A.Position;
+        var posB = req.B.Position;
+        bool areAdjacent = posA.z == posB.z && Mathf.Abs(posA.x - posB.x) == 1;
+        bool aIsOnLeft = posA.x < posB.x;
+
+        // Check melee weapons:
+        var weaponA = req.A.GetFirstMeleeWeapon();
+        var weaponB = req.B.GetFirstMeleeWeapon();
+
+        if (weaponA == null)
+            return new DuelAttemptReport(req, "MissingWeapon", pawnA: true);
+        if (weaponB == null)
+            return new DuelAttemptReport(req, "MissingWeapon", pawnA: false);
+
+        // Try to find an animation that those weapons could do:
+        var duelDef = TryGetDuelAnimationFor(weaponA, weaponB, out bool? mustPivotOnA);
+        if (duelDef == null)
+            return new DuelAttemptReport(req, "NoAnim");
+
+        // Now that we have an animation, if the pawns are adjacent the this is a success!
+        if (areAdjacent)
+        {
+            // Do some flippy shit. Trust.
+            bool? flipX = mustPivotOnA;
+            if (flipX != null && !aIsOnLeft)
+                flipX = !flipX.Value;
+
+            // Success, immediate duel start.
+            return new DuelAttemptReport
+            {
+                CanStartDuel = true,
+                MustWalk = false,
+                DuelAnimation = duelDef,
+                AnimFlipX = flipX,
+            };
+        }
+
+        // There is an animation and everything else is ready to go, but the pawn must walk.
+        // Check the pathfinding.
+        bool canReach = req.A.CanReach(req.B, PathEndMode.Touch, Danger.Deadly);
+        if (!canReach)
+            return new DuelAttemptReport(req, "NoPath");
+
+        // Success, but must walk and make another request once the target has been reached.
+        return new DuelAttemptReport
+        {
+            CanStartDuel = true,
+            DuelAnimation = duelDef,
+            AnimFlipX = null, // No point in specifying, another request will need to be made upon arrival
+            MustWalk = true
+        };
+    }
+
+    private static AnimDef TryGetDuelAnimationFor(Thing a, Thing b, out bool? focusOnA)
+    {
+        var inA = new ReqInput(a.def);
+        var inB = new ReqInput(b.def);
+
+        foreach (var anim in AnimDef.GetDefsOfType(AnimType.Duel))
+        {
+            if (anim.weaponFilter == null)
+                continue;
+
+            bool isSingleFilter = anim.weaponFilterSecond == null;
+
+            // Single filter for both weapons:
+            if (isSingleFilter)
+            {
+                // Both weapons must match the filter:
+                if (anim.weaponFilter.Evaluate(inA) && anim.weaponFilter.Evaluate(inB))
+                {
+                    focusOnA = null;
+                    return anim;
+                }
+                continue;
+            }
+
+            // Dual filter:
+            // Both filters need to be checked, and flipped.
+            bool Eval(in ReqInput ra, in ReqInput rb) => anim.weaponFilter.Evaluate(ra) && anim.weaponFilterSecond.Evaluate(rb);
+
+            if (Eval(inA, inB))
+            {
+                if (Eval(inB, inA))
+                {
+                    // Can be flipped.
+                    focusOnA = null;
+                    return anim;
+                }
+
+                // Cannot be flipped.
+                focusOnA = true;
+                return anim;
+            }
+
+            if (Eval(inB, inA))
+            {
+                // Cannot be flipped.
+                focusOnA = false;
+                return anim;
+            }
+        }
+
+        focusOnA = null;
+        return null;
     }
 
     private class Comparer : IComparer<IntVec3>

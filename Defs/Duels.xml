@@ -22,9 +22,12 @@
 
   <AM.AnimDef ParentName="AnimDuelBase">
     <defName>AM_Duel_Swords</defName>
+
+    <!-- Two long weapons: -->
     <weaponFilter Class="AM.Reqs.AnyType">
       <types>Long_Blunt, Long_Stab, Long_Sharp</types>
     </weaponFilter>
+
     <data>Duel_Swords.json</data>
   </AM.AnimDef>
 

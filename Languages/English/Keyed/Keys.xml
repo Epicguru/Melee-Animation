@@ -18,6 +18,18 @@
   <AM.Error.Exec.Internal>Int.Error: {Error}</AM.Error.Exec.Internal>
   <AM.Error.Grapple.AlreadyAtTarget>{Target} is already in melee range</AM.Error.Grapple.AlreadyAtTarget>
 
+  <!-- Duel command messages -->
+  <AM.Error.Duel.Internal>Int.Error: {Error}</AM.Error.Duel.Internal>
+  <AM.Error.Duel.Dead>{Pawn} is dead</AM.Error.Duel.Dead>
+  <AM.Error.Duel.Down>{Pawn} is downed</AM.Error.Duel.Down>
+  <AM.Error.Duel.NotSpawned>{Pawn} cannot be dueled right now</AM.Error.Duel.NotSpawned>
+  <AM.Error.Duel.NotSpawned.Short>{Pawn} is not available</AM.Error.Duel.NotSpawned.Short>
+  <AM.Error.Duel.MissingWeapon>{Pawn} does not have a valid melee weapon</AM.Error.Duel.MissingWeapon>
+  <AM.Error.Duel.NoAnim>The weapon(s) these pawns are carrying cannot be used to duel with.</AM.Error.Duel.NoAnim>
+  <AM.Error.Duel.NoAnim.Short>These melee weapons cannot be used to duel</AM.Error.Duel.NoAnim.Short>
+  <AM.Error.Duel.NoPath>{A} cannot reach {B} to start a duel</AM.Error.Duel.NoPath>
+  <AM.Error.Duel.WaitedTooLong>{0} got tired of waiting for {1} to arrive to their duel, and called it off.</AM.Error.Duel.WaitedTooLong>
+
   <AM.Error.Grapple.Dead>{Grappler} is dead</AM.Error.Grapple.Dead>
   <AM.Error.Exec.Dead>{Exec} is dead</AM.Error.Exec.Dead>
   <AM.Error.Exec.NoWalk>{Target} is not adjacent to {Exec}, and cannot be lassoed or walked to.</AM.Error.Exec.NoWalk>

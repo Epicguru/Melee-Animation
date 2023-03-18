@@ -64,7 +64,7 @@ namespace AM
                 SetMainPawn(pawns[0]);
         }
 
-        public bool IsValid()
+        public readonly bool IsValid()
         {
             if (Animation == null || Map == null)
                 return false;
@@ -72,11 +72,11 @@ namespace AM
             return Animation.pawnCount == PawnCount();
         }
 
-        public int PawnCount() => (MainPawn != null ? 1 : 0) + (SecondPawn != null ? 1 : 0) + (ExtraPawns?.Count ?? 0);
+        public readonly int PawnCount() => (MainPawn != null ? 1 : 0) + (SecondPawn != null ? 1 : 0) + (ExtraPawns?.Count ?? 0);
 
-        public bool TryTrigger() => TryTrigger(out _);
+        public readonly bool TryTrigger() => TryTrigger(out _);
 
-        public bool TryTrigger(out AnimRenderer animation)
+        public readonly bool TryTrigger(out AnimRenderer animation)
         {
             animation = null;
             if (!IsValid())
@@ -97,7 +97,7 @@ namespace AM
             return renderer.Register();
         }
 
-        public IEnumerable<Pawn> EnumeratePawns()
+        public readonly IEnumerable<Pawn> EnumeratePawns()
         {
             if(MainPawn != null)
                 yield return MainPawn;
@@ -132,7 +132,7 @@ namespace AM
             Scribe_Values.Look(ref RootTransform, "trs");
         }
 
-        public override string ToString()
+        public readonly override string ToString()
         {
             return $"{Animation?.defName} with {PawnCount()} pawns, flipX: {FlipX}.";
         }

@@ -11,11 +11,8 @@ public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
 
     protected override Toil MakeEndToil()
     {
-#if V13
-        var toil = new Toil();
-#else
         var toil = ToilMaker.MakeToil();
-#endif
+
         // Try do an execution animation.
         toil.initAction = () =>
         {
