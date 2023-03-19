@@ -30,6 +30,17 @@
   <AM.Error.Duel.NoPath>{A} cannot reach {B} to start a duel</AM.Error.Duel.NoPath>
   <AM.Error.Duel.WaitedTooLong>{0} got tired of waiting for {1} to arrive to their duel, and called it off.</AM.Error.Duel.WaitedTooLong>
 
+  <!-- Duel spot gizmo -->
+  <AM.Gizmos.DuelSpot.StartDuel.Label>Start duel</AM.Gizmos.DuelSpot.StartDuel.Label>
+  <AM.Gizmos.DuelSpot.StartDuel.Desc>Manually start a duel between two friendly pawns with valid weapons. Prisoners cannot participate.</AM.Gizmos.DuelSpot.StartDuel.Desc>
+  <AM.Gizmos.DuelSpot.StartDuel.InUse>The duel spot is currently blocked by {0}</AM.Gizmos.DuelSpot.StartDuel.InUse>
+  <AM.Gizmos.DuelSpot.StartDuel.MissingWeapon>{0} does not have a valid melee weapon</AM.Gizmos.DuelSpot.StartDuel.MissingWeapon>
+  <AM.Gizmos.DuelSpot.StartDuel.IncompatWeapon>{0}'s weapon cannot be used to duel {1}, their weapons are incompatible</AM.Gizmos.DuelSpot.StartDuel.IncompatWeapon>
+  <AM.Gizmos.DuelSpot.StartDuel.CannotInterrupt>{0}'s current job cannot be interrupted</AM.Gizmos.DuelSpot.StartDuel.CannotInterrupt>
+  <AM.Gizmos.DuelSpot.StartDuel.NoPath>{0} cannot reach the duel spot</AM.Gizmos.DuelSpot.StartDuel.NoPath>
+  <AM.Gizmos.DuelSpot.StartDuel.FloatMenuTitle>Select a pawn to duel</AM.Gizmos.DuelSpot.StartDuel.FloatMenuTitle>
+  <AM.Gizmos.DuelSpot.StartDuel.FailedToStart>An unexpected error caused the duel to not be able to be started. Please send logs to the mod author.</AM.Gizmos.DuelSpot.StartDuel.FailedToStart>
+
   <AM.Error.Grapple.Dead>{Grappler} is dead</AM.Error.Grapple.Dead>
   <AM.Error.Exec.Dead>{Exec} is dead</AM.Error.Exec.Dead>
   <AM.Error.Exec.NoWalk>{Target} is not adjacent to {Exec}, and cannot be lassoed or walked to.</AM.Error.Exec.NoWalk>

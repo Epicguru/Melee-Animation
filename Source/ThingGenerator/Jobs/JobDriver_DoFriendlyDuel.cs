@@ -36,22 +36,29 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
 
     public override IEnumerable<Toil> MakeNewToils()
     {
+        // Run! No time to waste!
+        job.locomotionUrgency = LocomotionUrgency.Sprint;
+
+
         // Several important checks including melee weapons, spawn status etc.
         AddFailCondition(ShouldJobFail);
-
         // Opponent mental state check.
         this.FailOnAggroMentalState(TargetIndex.A);
         // Duel spot cannot be forbidden.
-        this.FailOnDespawnedNullOrForbidden(TargetIndex.B);
-        // Fail if pathing cannot reach target.
-        this.FailOnCannotTouch(TargetIndex.B, PathEndMode.OnCell);
+        this.FailOnDespawnedNullOrForbidden(TargetIndex.C);
 
+
+        // Reserve duel spot:
+        yield return Toils_Reserve.ReserveDestination(TargetIndex.B);
 
         // Walk to duel spot:
         yield return Toils_Goto.GotoCell(TargetIndex.B, PathEndMode.OnCell);
 
         // Wait for opponent to arrive.
         yield return WaitForOpponent();
+
+        // Small pause.
+        yield return Toils_General.Wait(30, TargetIndex.A);
 
         // Bow to the opponent:
         yield return ToilUtils.DoAnimationToil(MakeBowStartParams);
@@ -215,6 +222,14 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
                 Messages.Message(txt, MessageTypeDefOf.NegativeEvent);
                 return;
             }
+
+            // Check if opponent is at cell.
+            var op = TargetA.Pawn;
+            var dest = TargetC.Cell == toil.actor.Position ? TargetC.Cell + new IntVec3(1, 0, 0) : TargetC.Cell;
+            if (op.Position == dest && !op.pather.Moving)
+            {
+                ReadyForNextToil();
+            }
         };
 
         // Just wait until I say so!
@@ -227,7 +242,6 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
     {
         var toil = ToilMaker.MakeToil();
         toil.defaultCompleteMode = ToilCompleteMode.Never;
-
         toil.initAction = () =>
         {
             ticksSpentWaiting = 0;
@@ -245,7 +259,7 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
 
             // If the enemy is not in an animation, we are good to go.
             var animator = opponent.TryGetAnimator();
-            if (animator == null)
+            if (animator == null || animator.IsDestroyed || animator.Def.type != AnimType.DuelBow)
             {
                 ReadyForNextToil();
                 return;
@@ -256,7 +270,6 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
             {
                 Core.Error("Ran out of time waiting for opponent to finish bowing! Max wait time is 4 seconds.");
                 EndJobWith(JobCondition.Incompletable);
-                return;
             }
         };
 
@@ -299,7 +312,8 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
             if (p == null || p.Dead || p.Downed || !p.Spawned)
                 return false;
 
-            if (p.TryGetAnimator() != null)
+            var animator = p.TryGetAnimator();
+            if (animator != null && animator.Def.type is not (AnimType.DuelBow or AnimType.Duel) && animator.Def != AM_DefOf.AM_Duel_WinFriendlyDuel)
                 return false;
 
             if (GrabUtility.IsBeingTargetedForGrapple(p))
@@ -307,13 +321,13 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
 
             if (p.GetFirstMeleeWeapon() == null)
                 return false;
-
-            if (p != pawn)
+            
+            if (p != pawn && Find.TickManager.TicksGame - startTick > 3)
             {
                 if (p.jobs?.curDriver is not JobDriver_DoFriendlyDuel otherDriver)
                     return false;
 
-                if (otherDriver.TargetThingA as Pawn != pawn)
+                if (otherDriver.TargetA.Pawn != pawn)
                     return false;
             }
 

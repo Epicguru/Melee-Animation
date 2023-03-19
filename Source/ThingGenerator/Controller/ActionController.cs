@@ -627,7 +627,7 @@ public class ActionController
         return cell.Standable(map);
     }
 
-    private static AnimDef TryGetDuelAnimationFor(Thing a, Thing b, out bool? focusOnA)
+    public static AnimDef TryGetDuelAnimationFor(Thing a, Thing b, out bool? focusOnA)
     {
         var inA = new ReqInput(a.def);
         var inB = new ReqInput(b.def);

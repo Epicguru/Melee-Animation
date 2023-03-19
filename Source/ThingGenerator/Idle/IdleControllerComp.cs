@@ -84,6 +84,10 @@ public class IdleControllerComp : ThingComp
         if (vanillaShouldDraw && weapon == null)
             vanillaShouldDraw = false;
 
+        // Not in animation:
+        if (pawn.IsInAnimation())
+            return false;
+
         return vanillaShouldDraw;
     }
 

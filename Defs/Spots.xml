@@ -1,0 +1,43 @@
+
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>AM_DuelSpot</defName>
+    <label>duel spot</label>
+    <description>Designates a spot where friendly duels can take place. Two colonists with valid melee weapons may spar here for fun and practice.</description>
+    <thingClass>AM.Buildings.Building_DuelSpot</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/MarriageSpot</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToBuild>0</WorkToBuild>
+    </statBases>
+    <useHitPoints>false</useHitPoints>
+    <scatterableOnMapGen>false</scatterableOnMapGen>
+    <size>(2,1)</size>
+    <designationCategory>Misc</designationCategory>
+    <uiOrder>2000</uiOrder>
+    <passability>Standable</passability>
+    <building>
+      <sowTag>SupportPlantsOnly</sowTag>
+      <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+      <ai_chillDestination>false</ai_chillDestination>
+      <wakeDormantPawnsOnConstruction>false</wakeDormantPawnsOnConstruction>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+    <designationHotKey>Misc11</designationHotKey>
+    <ritualFocus>
+      <spectateDistance>2</spectateDistance>
+      <allowedSpectateSides>Vertical</allowedSpectateSides>
+    </ritualFocus>
+    <placeWorkers>
+      <li>PlaceWorker_SpectatorPreview</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>True</drawPlaceWorkersWhileSelected>
+  </ThingDef>
+
+</Defs>

@@ -1,11 +1,11 @@
 {
-  "ExportTimeUTC": "2023-03-18T16:59:39.9441363Z",
+  "ExportTimeUTC": "2023-03-19T00:07:16.3694382Z",
   "Name": "Idle_Colossal_SlashNorth1",
   "Length": 1.2,
   "Events": [],
   "Parts": [
     {
-      "ID": 19262,
+      "ID": 19266,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -277,10 +277,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19194,
+      "ID": 19198,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": 19262,
+      "ParentID": 19266,
       "Curves": {
         "AnimatedPart.FlipY": {
           "Keyframes": [
@@ -331,11 +331,11 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19470,
+      "SplitDrawPivotPartID": 19474,
       "SweepPaths": []
     },
     {
-      "ID": 19722,
+      "ID": 19726,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {},
@@ -366,10 +366,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 18964,
+      "ID": 18968,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 19722,
+      "ParentID": 19726,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -398,10 +398,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19704,
+      "ID": 19708,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": 19262,
+      "ParentID": 19266,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -430,10 +430,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19342,
+      "ID": 19346,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": 19262,
+      "ParentID": 19266,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -462,7 +462,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19470,
+      "ID": 19474,
       "Path": "WeaponACutoff",
       "Curves": {},
       "DefaultValues": {
