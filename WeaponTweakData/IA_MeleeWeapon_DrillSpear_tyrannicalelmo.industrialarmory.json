@@ -1,0 +1,13 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_DrillSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6329671,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.798002243,
+  "BladeEnd": 1.47892094,
+  "MeleeWeaponType": 5
+}

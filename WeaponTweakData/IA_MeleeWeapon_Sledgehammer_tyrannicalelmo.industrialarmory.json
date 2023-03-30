@@ -1,0 +1,10 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_Sledgehammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3164838,
+  "BladeStart": 0.6093906,
+  "BladeEnd": 0.8043958,
+  "MeleeWeaponType": 1
+}

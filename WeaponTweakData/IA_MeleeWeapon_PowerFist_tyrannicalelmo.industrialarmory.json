@@ -1,0 +1,10 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_PowerFist",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.163036674,
+  "HandsMode": 2,
+  "BladeEnd": 0.369630367,
+  "MeleeWeaponType": 40
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_TacticalRam",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.297302783,
+  "OffY": 0.08311707,
+  "BladeStart": 0.126673609,
+  "BladeEnd": 0.77882123,
+  "MeleeWeaponType": 8
+}

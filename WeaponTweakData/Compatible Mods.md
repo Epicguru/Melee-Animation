@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 16 Mar 2023, 8:14 PM.`  
+`Updated 30 Mar 2023, 2:52 PM.`  
 
-**Melee Animation supports 1379 weapons from 170 mods.**  
+**Melee Animation supports 1393 weapons from 172 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -22,6 +22,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
   | Mod Name | Mod ID | Weapon Count | Patch Author |
 | --- | --- | --- | --- |
 | **[1.4]Silkiera Race** | ayameduki.harsilkiera | 3 | *Epicguru* |
+| **[1.4]Xenoorca Race** | ayameduki.harxenoorca | 1 | *Epicguru* |
 | **[K4G] Vanilla Weapon Retextures** | k4g.vwr | 17 | *Epicguru* |
 | **[LTS]Tenants** | limetreesnake.tenants | 3 | *Epicguru* |
 | **[RF]Berserk - Character Apparel Pack** | rf.berserk.armory | 1 | *Epicguru* |
@@ -76,6 +77,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Hellsing ARMS Ultimate** | baskerville.hellsingarmsultimate | 13 | *Epicguru* |
 | **Heyra the Horned** | bando.heyrathehorned | 11 | *Epicguru* |
 | **Ilya Tech - Core** | suvi.techcore | 2 | *Epicguru* |
+| **Industrial Armory** | tyrannicalelmo.industrialarmory | 13 | *Epicguru* |
 | **Industrial Melee Weaponry** | iexist.industrial.melee.weaponry | 12 | *Epicguru* |
 | **Industrialisation** | trasheddt.industrialisation | 4 | *Epicguru* |
 | **Kemetic Decorations** | sovereign.kemet | 1 | *Epicguru* |
