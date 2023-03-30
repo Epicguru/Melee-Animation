@@ -3,6 +3,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -12,6 +13,8 @@ public class Building_DuelSpot : Building
 {
     public IntVec3 CellMain => Position;
     public IntVec3 CellOther => Position + new IntVec3(1, 0, 0);
+
+    private CompForbiddable forbidComp;
 
     public bool IsCurrentlyOccupied(out Thing blocking)
     {
@@ -42,16 +45,29 @@ public class Building_DuelSpot : Building
         foreach (var t in base.GetGizmos())
             yield return t;
 
-        bool occ = IsCurrentlyOccupied(out var blocker);
-
-        yield return new Command_Action
+        var cmd = new Command_Action
         {
             action = ClickedStartDuel,
             defaultLabel = "AM.Gizmos.DuelSpot.StartDuel.Label".Trs(),
             defaultDesc = "AM.Gizmos.DuelSpot.StartDuel.Desc".Trs(),
-            disabled = occ,
-            disabledReason = occ ? "AM.Gizmos.DuelSpot.StartDuel.InUse".Trs(blocker) : null,
+            icon = Content.DuelIcon,
+            defaultIconColor = Color.green
         };
+
+        forbidComp ??= GetComp<CompForbiddable>();
+
+        if (IsCurrentlyOccupied(out var blocker))
+        {
+            cmd.disabled = true;
+            cmd.disabledReason = "AM.Gizmos.DuelSpot.StartDuel.InUse".Trs(blocker);
+        }
+        else if (forbidComp?.Forbidden ?? false)
+        {
+            cmd.disabled = true;
+            cmd.disabledReason = "AM.Gizmos.DuelSpot.StartDuel.Forbidden".Trs();
+        }
+
+        yield return cmd;
     }
 
     private void ClickedStartDuel()
@@ -76,12 +92,12 @@ public class Building_DuelSpot : Building
 
         var items = new List<FloatMenuOption>();
 
-        void MakeDisabled(Pawn p, string reasonTrs)
+        void MakeDisabled(Pawn p, string reasonTrs, NamedArgument arg = default)
         {
             items.Add(new FloatMenuOption(p.Name?.ToStringShort ?? p.LabelCap, () => { }, MenuOptionPriority.Low)
             {
                 iconThing = p,
-                tooltip = reasonTrs.Translate(p, except),
+                tooltip = reasonTrs.Translate(p, except, arg),
                 Disabled = true
             });
         }
@@ -117,7 +133,7 @@ public class Building_DuelSpot : Building
                 }
             }
 
-            // Just must be interrupted:
+            // Job must be interrupted:
             if (p.CurJob != null && !p.CurJob.def.playerInterruptible)
             {
                 MakeDisabled(p, "AM.Gizmos.DuelSpot.StartDuel.CannotInterrupt");
@@ -128,6 +144,15 @@ public class Building_DuelSpot : Building
             if (!p.CanReserveAndReach(new LocalTargetInfo(CellMain), PathEndMode.OnCell, Danger.Some))
             {
                 MakeDisabled(p, "AM.Gizmos.DuelSpot.StartDuel.NoPath");
+                continue;
+            }
+
+            var md = p.GetMeleeData();
+
+            // Duel is not on cooldown.
+            if (!md.IsFriendlyDuelOffCooldown())
+            {
+                MakeDisabled(p, "AM.Gizmos.DuelSpot.StartDuel.OnCooldown", md.GetFriendlyDuelRemainingCooldownSeconds().ToString("F1"));
                 continue;
             }
 

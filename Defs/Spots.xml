@@ -7,7 +7,8 @@
     <description>Designates a spot where friendly duels can take place. Two colonists with valid melee weapons may spar here for fun and practice.</description>
     <thingClass>AM.Buildings.Building_DuelSpot</thingClass>
     <graphicData>
-      <texPath>Things/Building/Misc/MarriageSpot</texPath>
+      <texPath>AM/DuelSpot</texPath>
+      <color>(1, 1, 1, 0.6)</color>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(2,1)</drawSize>
     </graphicData>
@@ -38,6 +39,9 @@
       <li>PlaceWorker_SpectatorPreview</li>
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>True</drawPlaceWorkersWhileSelected>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+    </comps>
   </ThingDef>
 
 </Defs>

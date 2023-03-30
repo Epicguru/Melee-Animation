@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using AM.Grappling;
+﻿using AM.Grappling;
 using AM.Idle;
 using AM.Patches;
 using AM.PawnData;
 using AM.UI;
 using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
@@ -17,13 +17,13 @@ namespace AM;
 public class GameComp : GameComponent
 {
     public static GameComp Current;
-
-    public readonly Game Game;
+    public static event Action LazyTick;
     public static ulong FrameCounter;
-
     [TweakValue("Melee Animation")]
     [UsedImplicitly]
     private static bool drawTextureExtractor;
+
+    public readonly Game Game;
 
     private string texPath;
     private readonly Dictionary<Pawn, PawnMeleeData> pawnMeleeData = new Dictionary<Pawn, PawnMeleeData>();
@@ -77,6 +77,18 @@ public class GameComp : GameComponent
 
     public override void GameComponentTick()
     {
+        if (Find.TickManager.TicksGame % 600 == 0 && LazyTick != null)
+        {
+            try
+            {
+                LazyTick();
+            }
+            catch (Exception e)
+            {
+                Core.Error("Exception during lazy tick:", e);
+            }
+        }
+
         IdleControllerComp.TotalTickTimeMS = 0;
         IdleControllerComp.TotalActive = 0;
 
@@ -89,10 +101,13 @@ public class GameComp : GameComponent
         Patch_Corpse_DrawAt.Tick();
         Patch_PawnRenderer_LayingFacing.Tick();
 
+        const float DT = 1 / 60f;
+
         foreach (var data in allMeleeData)
         {
-            data.TimeSinceExecuted += 1 / 60f;
-            data.TimeSinceGrappled += 1 / 60f;
+            data.TimeSinceExecuted += DT;
+            data.TimeSinceGrappled += DT;
+            data.TimeSinceFriendlyDueled += DT;
         }
     }
 
@@ -144,7 +159,7 @@ public class GameComp : GameComponent
                 RenderTexture.ReleaseTemporary(renderTex);
 
                 var pngBytes = readableText.EncodeToPNG();
-                ;
+                
                 Log.Message($"Writing {pngBytes.Length} bytes of {texPath} to Desktop ...");
                 File.WriteAllBytes(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"{tex.name ?? "grab"}.png"), pngBytes);
 

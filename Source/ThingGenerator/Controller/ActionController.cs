@@ -15,6 +15,22 @@ namespace AM.Controller;
 
 public class ActionController
 {
+    public static void TryGiveDuelThoughts(Pawn winner, Pawn loser, bool isFriendlyDuel)
+    {
+        if (winner == null || loser == null)
+            return;
+
+        var winThought  = isFriendlyDuel ? AM_DefOf.AM_FriendlyDuel_Win  : throw new NotImplementedException();
+        var loseThought = isFriendlyDuel ? AM_DefOf.AM_FriendlyDuel_Lose : throw new NotImplementedException();
+
+        winner.needs.mood.thoughts.memories.TryGainMemory(winThought, loser);
+        loser.needs.mood.thoughts.memories.TryGainMemory(loseThought, winner);
+
+        // Give skills.
+        winner.skills?.Learn(SkillDefOf.Melee, 1000);
+        loser.skills?.Learn(SkillDefOf.Melee, 1000);
+    }
+
     private readonly IntVec3[] closestCells = new IntVec3[8];
     private readonly Comparer comparer = new Comparer();
     private readonly List<PossibleExecution.AnimStartData> tempStartDataList = new List<PossibleExecution.AnimStartData>(64);
@@ -399,7 +415,7 @@ public class ActionController
 
     public DuelAttemptReport GetDuelReport(in DuelAttemptRequest req)
     {
-        bool CheckPawn(Pawn pawn, out string cat, out string msg)
+        bool CheckPawn(Pawn pawn, out string cat, out string msg, in DuelAttemptRequest req)
         {
             msg = null;
 
@@ -430,6 +446,20 @@ public class ActionController
                 return false;
             }
 
+            // On Cooldown
+            if (req.IsFriendly)
+            {
+                if (!pawn.GetMeleeData().IsFriendlyDuelOffCooldown())
+                {
+                    cat = "OnCooldown";
+                    return false;
+                }
+            }
+            else
+            {
+                // TODO non-friendly duel cooldown here.
+            }
+
             // In an animation.
             if (pawn.TryGetAnimator() != null)
             {
@@ -449,9 +479,9 @@ public class ActionController
         }
 
         // Check both pawns for basic stuff:
-        if (!CheckPawn(req.A, out var cat, out var msg))
+        if (!CheckPawn(req.A, out var cat, out var msg, req))
             return new DuelAttemptReport(req, cat, msg, true);
-        if (!CheckPawn(req.B, out cat, out msg))
+        if (!CheckPawn(req.B, out cat, out msg, req))
             return new DuelAttemptReport(req, cat, msg, false);
 
         // Check adjacent:

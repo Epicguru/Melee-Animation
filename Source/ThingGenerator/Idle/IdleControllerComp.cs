@@ -14,6 +14,7 @@ namespace AM.Idle;
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp
 {
+    public static Func<IdleControllerComp, bool> ShouldDrawAdditional = _ => true;
     public static double TotalTickTimeMS;
     public static int TotalActive;
 
@@ -78,6 +79,10 @@ public class IdleControllerComp : ThingComp
             if (pawn.stances.curStance is Stance_Busy { neverAimWeapon: false, focusTarg.IsValid: true })
                 vanillaShouldDraw = true;
         }
+
+        // Additional draw check:
+        if (!ShouldDrawAdditional(this))
+            return false;
 
         // Has a valid melee weapon:
         weapon = GetMeleeWeapon();

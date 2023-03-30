@@ -20,7 +20,7 @@
     <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
+      <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
   </ItemGroup>
 

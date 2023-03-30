@@ -34,6 +34,8 @@ namespace AM
         public static Texture2D ExtraGuiWhy;
         [Content("AM/UI/BG/Combined")]
         public static Texture2D BGCombined;
+        [Content("AM/UI/DuelIcon")]
+        public static Texture2D DuelIcon;
 
         [BundleContent("Materials/CutoffCustom.mat")]   
         public static Material CustomCutoffMaterial;

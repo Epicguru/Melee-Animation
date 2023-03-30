@@ -37,5 +37,8 @@ namespace AM
         public static ToolCapacityDef Blunt;
         public static ToolCapacityDef Cut;
         public static ToolCapacityDef Stab;
+
+        public static ThoughtDef AM_FriendlyDuel_Win;
+        public static ThoughtDef AM_FriendlyDuel_Lose;
     }
 }

@@ -27,17 +27,20 @@
   <AM.Error.Duel.MissingWeapon>{Pawn} does not have a valid melee weapon</AM.Error.Duel.MissingWeapon>
   <AM.Error.Duel.NoAnim>The weapon(s) these pawns are carrying cannot be used to duel with.</AM.Error.Duel.NoAnim>
   <AM.Error.Duel.NoAnim.Short>These melee weapons cannot be used to duel</AM.Error.Duel.NoAnim.Short>
-  <AM.Error.Duel.NoPath>{A} cannot reach {B} to start a duel</AM.Error.Duel.NoPath>
+  <AM.Error.Duel.NoPath>{0} cannot reach {1} to start a duel</AM.Error.Duel.NoPath>
+  <AM.Error.Duel.OnCooldown>{0}'s duel is on cooldown</AM.Error.Duel.OnCooldown>
   <AM.Error.Duel.WaitedTooLong>{0} got tired of waiting for {1} to arrive to their duel, and called it off.</AM.Error.Duel.WaitedTooLong>
 
   <!-- Duel spot gizmo -->
   <AM.Gizmos.DuelSpot.StartDuel.Label>Start duel</AM.Gizmos.DuelSpot.StartDuel.Label>
-  <AM.Gizmos.DuelSpot.StartDuel.Desc>Manually start a duel between two friendly pawns with valid weapons. Prisoners cannot participate.</AM.Gizmos.DuelSpot.StartDuel.Desc>
+  <AM.Gizmos.DuelSpot.StartDuel.Desc>Manually start a duel between two friendly pawns with valid weapons. Prisoners cannot participate.\n\nThis is a friendly duel, nobody will be hurt.</AM.Gizmos.DuelSpot.StartDuel.Desc>
   <AM.Gizmos.DuelSpot.StartDuel.InUse>The duel spot is currently blocked by {0}</AM.Gizmos.DuelSpot.StartDuel.InUse>
+  <AM.Gizmos.DuelSpot.StartDuel.Forbidden>The duel spot is forbidden</AM.Gizmos.DuelSpot.StartDuel.Forbidden>
   <AM.Gizmos.DuelSpot.StartDuel.MissingWeapon>{0} does not have a valid melee weapon</AM.Gizmos.DuelSpot.StartDuel.MissingWeapon>
   <AM.Gizmos.DuelSpot.StartDuel.IncompatWeapon>{0}'s weapon cannot be used to duel {1}, their weapons are incompatible</AM.Gizmos.DuelSpot.StartDuel.IncompatWeapon>
   <AM.Gizmos.DuelSpot.StartDuel.CannotInterrupt>{0}'s current job cannot be interrupted</AM.Gizmos.DuelSpot.StartDuel.CannotInterrupt>
   <AM.Gizmos.DuelSpot.StartDuel.NoPath>{0} cannot reach the duel spot</AM.Gizmos.DuelSpot.StartDuel.NoPath>
+  <AM.Gizmos.DuelSpot.StartDuel.OnCooldown>{0} cannot do a friendly duel for another {2} seconds</AM.Gizmos.DuelSpot.StartDuel.OnCooldown>
   <AM.Gizmos.DuelSpot.StartDuel.FloatMenuTitle>Select a pawn to duel</AM.Gizmos.DuelSpot.StartDuel.FloatMenuTitle>
   <AM.Gizmos.DuelSpot.StartDuel.FailedToStart>An unexpected error caused the duel to not be able to be started. Please send logs to the mod author.</AM.Gizmos.DuelSpot.StartDuel.FailedToStart>
 

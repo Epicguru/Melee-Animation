@@ -1,11 +1,13 @@
 ﻿using System;
 using AlienRace;
 using AM;
+using JetBrains.Annotations;
 using Verse;
 
 namespace AM.AlienRacesPatch;
 
 [HotSwapAll]
+[UsedImplicitly]
 public class PatchCore : Mod
 {
     public static void Log(string msg)

@@ -151,6 +151,10 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
 
         // Flag duel as friendly so the victim doesn't get executed.
         animator.IsFriendlyDuel = true;
+
+        // Set duel cooldowns.
+        main.GetMeleeData().TimeSinceFriendlyDueled = 0;
+        second.GetMeleeData().TimeSinceFriendlyDueled = 0;
     }
 
     private Toil WaitForDuelToEnd()
@@ -189,8 +193,12 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
 
         toil.initAction = () =>
         {
-            // TODO end actions here.
-            Core.Log($"Duel ended, was I [{toil.actor}] the winner?: {didWin}");
+            Core.Log("Duel ended, applying moods.");
+
+            // Give mood offsets to both pawns (use didWin to only apply once).
+            var winner = didWin ? pawn : TargetA.Pawn;
+            var loser = !didWin ? pawn : TargetA.Pawn;
+            ActionController.TryGiveDuelThoughts(winner, loser, true);
         };
 
         return toil;
