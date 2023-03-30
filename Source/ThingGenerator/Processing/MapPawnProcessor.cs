@@ -5,7 +5,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AM.Controller;
+using AM.Controller.Reports;
+using AM.Controller.Requests;
 using AM.Grappling;
+using JetBrains.Annotations;
 using RimWorld;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
@@ -17,8 +21,10 @@ namespace AM.Processing;
 public class MapPawnProcessor : IDisposable
 {
     [TweakValue("Melee Animation", 0f, 5f)]
+    [UsedImplicitly]
     public static float PawnPerThreadThreshold = 0.2f;
     [TweakValue("Melee Animation")]
+    [UsedImplicitly]
     public static bool LogPerformanceToDesktop;
 
     private static readonly Dictionary<int, Task[]> taskArrayPool = new Dictionary<int, Task[]>();
@@ -517,7 +523,7 @@ public class MapPawnProcessor : IDisposable
             throw new Exception("Failed to slice correctly.");
     }
 
-    #region structs
+    #region Data structs
     private readonly struct AttackerData
     {
         public required Pawn Pawn { get; init; }

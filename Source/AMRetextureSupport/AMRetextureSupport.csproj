@@ -16,17 +16,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Krafs.Publicizer" Version="2.1.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+	  <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
 		<!-- Ungodly hack to access rimworld private properties & methods -->
 		<Publicize Include="Assembly-CSharp" />
 	</ItemGroup>
 
 	<!-- _____ 1.4 _____ -->
 	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3573-beta" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3641" />
 	</ItemGroup>
 
 </Project>

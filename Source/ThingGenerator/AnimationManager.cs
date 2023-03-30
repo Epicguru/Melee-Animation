@@ -50,7 +50,10 @@ namespace AM
         {
             base.MapComponentUpdate();
 
-            float dt = Time.deltaTime * Find.TickManager.TickRateMultiplier * (Input.GetKey(KeyCode.LeftShift) ? 0.1f : 1f);
+            float dt = Time.deltaTime * Find.TickManager.TickRateMultiplier;
+            if (Find.TickManager.Paused)
+                dt = 0f;
+
             Draw(dt);
 
             foreach (var action in toDraw)
@@ -95,6 +98,7 @@ namespace AM
         }
 
         private static readonly List<(AnimRenderer, EventBase)> eventsToDo = new List<(AnimRenderer, EventBase)>(128);
+        
         private static void SeekMultithreaded(float dt)
         {
             if (frameLastSeeked == GameComp.FrameCounter)

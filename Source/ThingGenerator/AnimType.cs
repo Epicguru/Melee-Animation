@@ -5,6 +5,7 @@
         Other,
         Idle,
         Execution,
-        Duel
+        Duel,
+        DuelBow
     }
 }

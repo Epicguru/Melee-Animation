@@ -30,6 +30,8 @@ namespace AM.PawnData
         public AutoOption AutoGrapple;
         public float TimeSinceGrappled = 100;
 
+        public float TimeSinceFriendlyDueled = 1000;
+
         public bool ShouldSave()
         {
             return Pawn is { Destroyed: false };
@@ -42,6 +44,7 @@ namespace AM.PawnData
             Scribe_Values.Look(ref AutoGrapple, "autoGrapple");
             Scribe_Values.Look(ref TimeSinceExecuted, "timeSinceExecuted", 100);
             Scribe_Values.Look(ref TimeSinceGrappled, "timeSinceGrappled", 100);
+            Scribe_Values.Look(ref TimeSinceFriendlyDueled, "timeSinceFriendlyDueled", 1000);
         }
 
         public float GetExecuteCooldownMax() => Pawn.GetStatValue(AM_DefOf.AM_ExecutionCooldown);
@@ -51,5 +54,8 @@ namespace AM.PawnData
         public float GetGrappleCooldownMax() => Pawn.GetStatValue(AM_DefOf.AM_GrappleCooldown);
         public float GetGrappleCooldownPct() => GetGrappleCooldownMax() <= 0 ? 1 : Mathf.Clamp01(TimeSinceGrappled / GetGrappleCooldownMax());
         public bool IsGrappleOffCooldown() => GetGrappleCooldownMax() <= TimeSinceGrappled;
+
+        public bool IsFriendlyDuelOffCooldown() => Core.Settings.FriendlyDuelCooldown <= TimeSinceFriendlyDueled;
+        public float GetFriendlyDuelRemainingCooldownSeconds() => Mathf.Max(0, Core.Settings.FriendlyDuelCooldown - TimeSinceFriendlyDueled);
     }
 }

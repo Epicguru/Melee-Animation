@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AM.Controller;
+using AM.Controller.Reports;
+using AM.Controller.Requests;
 using AM.Grappling;
 using HarmonyLib;
+using JetBrains.Annotations;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -10,6 +14,7 @@ using Verse.AI;
 namespace AM.Patches;
 
 [HarmonyPatch(typeof(FloatMenuMakerMap), nameof(FloatMenuMakerMap.AddDraftedOrders))]
+[UsedImplicitly]
 public class Patch_FloatMenuMakerMap_AddDraftedOrders
 {
     private static readonly ActionController controller = new ActionController();
@@ -26,13 +31,12 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         canTargetBuildings = false,
         canTargetSelf = false,
         canTargetFires = false,
-#if !V13
         canTargetCorpses = false,
         canTargetBloodfeeders = true,
-#endif
     };
 
-    static void Postfix(Vector3 clickPos, Pawn pawn, List<FloatMenuOption> opts)
+    [UsedImplicitly]
+    private static void Postfix(Vector3 clickPos, Pawn pawn, List<FloatMenuOption> opts)
     {
         if (!pawn.IsColonistPlayerControlled)
             return;

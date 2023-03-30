@@ -14,6 +14,7 @@ namespace AM.Idle;
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp
 {
+    public static Func<IdleControllerComp, bool> ShouldDrawAdditional = _ => true;
     public static double TotalTickTimeMS;
     public static int TotalActive;
 
@@ -79,10 +80,18 @@ public class IdleControllerComp : ThingComp
                 vanillaShouldDraw = true;
         }
 
+        // Additional draw check:
+        if (!ShouldDrawAdditional(this))
+            return false;
+
         // Has a valid melee weapon:
         weapon = GetMeleeWeapon();
         if (vanillaShouldDraw && weapon == null)
             vanillaShouldDraw = false;
+
+        // Not in animation:
+        if (pawn.IsInAnimation())
+            return false;
 
         return vanillaShouldDraw;
     }

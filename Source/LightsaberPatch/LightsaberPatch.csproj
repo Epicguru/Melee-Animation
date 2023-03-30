@@ -20,14 +20,14 @@
     <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
+      <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
   </ItemGroup>
 
 	<!-- _____ 1.4 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.4'">
 	  <PackageReference Include="Krafs.Rimworld.Ref">
-		  <Version>1.4.3573-beta</Version>
+		  <Version>1.4.3641</Version>
 	  </PackageReference>
 	  <Reference Include="SWSaber">
 		  <HintPath>refs/1.4/SWSaber.dll</HintPath>

@@ -7,7 +7,7 @@ public class DuelEvent : EventBase
 {
     public override string EventID => "DuelEvent";
 
-    public override void Expose()
+    protected override void Expose()
     {
     }
 }

@@ -13,7 +13,7 @@ public class TextMoteEvent : EventBase
     public Color Color = Color.white;
     public float TimeBeforeFadeStart = -1;
 
-    public override void Expose()
+    protected override void Expose()
     {
         Look(ref Text);
         Look(ref PartName);

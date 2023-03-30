@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -7,11 +8,14 @@ using AM.Idle;
 using AM.RendererWorkers;
 using AM.Reqs;
 using AM.Sweep;
+using JetBrains.Annotations;
 using RimWorld;
 using Verse;
 
 namespace AM;
 
+[UsedImplicitly(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.WithMembers)]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class AnimDef : Def
 {
     #region Static stuff
@@ -337,7 +341,7 @@ public class AnimDef : Def
 
     private IntVec2 Flip(in IntVec2 input, bool fx, bool fy) => new IntVec2(fx ? -input.x : input.x, fy ? -input.z : input.z);
 
-    public bool Allows(ReqInput input)
+    public bool Allows(in ReqInput input)
     {
         return weaponFilter != null && weaponFilter.Evaluate(input);
     }

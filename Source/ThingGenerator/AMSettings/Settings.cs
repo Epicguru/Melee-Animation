@@ -158,6 +158,11 @@ public class Settings : SimpleSettingsBase
     [Min(1)]
     public int MaxDuelDuration = 8;
 
+    [Description("The cooldown time, in seconds, after a friendly duel where a friendly duel cannot be started again.")]
+    [Min(0)]
+    public float FriendlyDuelCooldown = 60 * 5;
+
+
     [Label("Execution Cooldown Factor (Friendly)")]
     [Description("This adjust the execution cooldown time for friendly pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
     [Percentage]
