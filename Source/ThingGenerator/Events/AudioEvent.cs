@@ -13,7 +13,7 @@ public class AudioEvent : EventBase
     public float PitchFactor = 1f;
     public bool OnCamera = false;
 
-    public override void Expose()
+    protected override void Expose()
     {
         Look(ref AudioDefName);
         Look(ref LocalPosition);

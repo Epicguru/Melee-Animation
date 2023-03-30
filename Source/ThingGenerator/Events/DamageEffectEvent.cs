@@ -10,7 +10,7 @@ public class DamageEffectEvent : EventBase
     public int PawnIndex;
     public Vector3 Offset;
 
-    public override void Expose()
+    protected override void Expose()
     {
         Look(ref PawnIndex);
         Look(ref Offset);

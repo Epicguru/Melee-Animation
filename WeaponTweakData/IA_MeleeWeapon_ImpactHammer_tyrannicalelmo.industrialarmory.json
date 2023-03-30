@@ -1,0 +1,14 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_ImpactHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.498700976,
+  "OffY": -0.09590408,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.503896,
+  "BladeEnd": 1.14965057,
+  "MeleeWeaponType": 1
+}

@@ -20,11 +20,30 @@
     <canEditProbability>false</canEditProbability>
   </AM.AnimDef>
 
+  <AM.AnimDef Name="AnimDuelBowBase" Abstract="True">
+    <label>Duel Bow</label>
+    <type>DuelBow</type>
+    <jobString>Bowing before a duel.</jobString>
+    <pawnCount>1</pawnCount>
+    <cellData>
+      <li>
+        <type>PawnStart</type>
+        <position>(0, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
+    <canEditProbability>false</canEditProbability>
+  </AM.AnimDef>
+
+
   <AM.AnimDef ParentName="AnimDuelBase">
     <defName>AM_Duel_Swords</defName>
+
+    <!-- Two long weapons: -->
     <weaponFilter Class="AM.Reqs.AnyType">
       <types>Long_Blunt, Long_Stab, Long_Sharp</types>
     </weaponFilter>
+
     <data>Duel_Swords.json</data>
   </AM.AnimDef>
 
@@ -33,6 +52,7 @@
     <label>Win Friendly Duel</label>
     <data>Duel_FriendlyEnd.json</data>
     <jobString>Deafeating [OTHER] in a duel!</jobString>
+    <type>Other</type>
     <weaponFilter Class="AM.Reqs.True"/> <!-- Allow anything to do this. Duel logic will handle weapon filtering -->
     <handsVisibility>
       <li>
@@ -46,6 +66,24 @@
         <showAltHand>true</showAltHand>
       </li>
     </handsVisibility>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimDuelBowBase">
+    <defName>AM_DuelBow_Medium</defName>
+    <!-- Medium or tiny weapons (although tiny weapons cannot currently duel) -->
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Tiny, Medium</size>
+    </weaponFilter>
+    <data>Duel_BowMedium.json</data>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimDuelBowBase">
+    <defName>AM_DuelBow_Colossal</defName>
+    <!-- Colossal weapons -->
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Colossal</size>
+    </weaponFilter>
+    <data>Duel_BowColossal.json</data>
   </AM.AnimDef>
 
 </Defs>

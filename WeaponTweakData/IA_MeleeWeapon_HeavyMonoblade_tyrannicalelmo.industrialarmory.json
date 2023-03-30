@@ -1,0 +1,12 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_HeavyMonoblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.39000988,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.139460638,
+  "BladeEnd": 1.00259745,
+  "MeleeWeaponType": 6
+}

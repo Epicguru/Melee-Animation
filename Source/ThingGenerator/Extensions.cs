@@ -104,26 +104,46 @@ public static class Extensions
     /// That includes sidearms if SimpleSidearms is installed.
     /// This will only return the melee weapon if said melee weapon is compatible with the animation mod (i.e. it has valid tweak data).
     /// </summary>
-    public static ThingWithComps GetFirstMeleeWeapon(this Pawn pawn)
+    public static ThingWithComps GetFirstMeleeWeapon(this Pawn pawn) => GetFirstMeleeWeapon(pawn, out _);
+
+    /// <summary>
+    /// Attempts to get the equipped melee weapon of this pawn.
+    /// That includes sidearms if SimpleSidearms is installed.
+    /// This will only return the melee weapon if said melee weapon is compatible with the animation mod (i.e. it has valid tweak data).
+    /// </summary>
+    public static ThingWithComps GetFirstMeleeWeapon(this Pawn pawn, out ItemTweakData tweakData)
     {
+        tweakData = null;
         if (pawn?.equipment == null)
             return null;
 
-        if ((pawn.equipment.Primary?.def.IsMeleeWeapon ?? false) && TweakDataManager.TryGetTweak(pawn.equipment.Primary.def) != null)
-            return pawn.equipment.Primary;
+        if (pawn.equipment.Primary?.def.IsMeleeWeapon ?? false)
+        {
+            tweakData = TweakDataManager.TryGetTweak(pawn.equipment.Primary.def);
+            if (tweakData != null)
+                return pawn.equipment.Primary;
+        }
 
         foreach(var item in pawn.equipment.AllEquipmentListForReading)
         {
-            if (item.def.IsMeleeWeapon && TweakDataManager.TryGetTweak(item.def) != null)
-                return item;
+            if (item.def.IsMeleeWeapon)
+            {
+                tweakData = TweakDataManager.TryGetTweak(item.def);
+                if (tweakData != null)
+                    return item;
+            }
         }
 
         if (Core.IsSimpleSidearmsActive && pawn.inventory?.innerContainer != null)
         {
             foreach (var item in pawn.inventory.innerContainer)
             {
-                if (item is ThingWithComps twc && item.def.IsMeleeWeapon && TweakDataManager.TryGetTweak(item.def) != null)
-                    return twc;
+                if (item is ThingWithComps twc && item.def.IsMeleeWeapon)
+                {
+                    tweakData = TweakDataManager.TryGetTweak(item.def);
+                    if (tweakData != null)
+                        return twc;
+                }
             }
         }
 

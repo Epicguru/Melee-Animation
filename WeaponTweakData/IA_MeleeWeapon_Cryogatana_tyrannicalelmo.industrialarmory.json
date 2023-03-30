@@ -1,0 +1,18 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_Cryogatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.412387878,
+  "OffY": 0.009590507,
+  "Rotation": 45.0,
+  "BladeStart": 0.4111889,
+  "BladeEnd": 1.03776252,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.182,
+    "g": 0.989,
+    "b": 1.0,
+    "a": 0.98
+  }
+}

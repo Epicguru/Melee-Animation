@@ -1,0 +1,11 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_PowerClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.07992008,
+  "HandsMode": 2,
+  "BladeStart": 0.101099096,
+  "BladeEnd": 0.526274,
+  "MeleeWeaponType": 56
+}

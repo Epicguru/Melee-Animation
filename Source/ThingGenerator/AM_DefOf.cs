@@ -14,7 +14,7 @@ namespace AM
         public static JobDef AM_InAnimation;
         public static JobDef AM_GrapplePawn;
         public static JobDef AM_WalkToExecution;
-        public static JobDef AM_WalkToDuel;
+        public static JobDef AM_DoFriendlyDuel;
 
         public static RulePackDef AM_Execution_Generic;
 
@@ -37,5 +37,8 @@ namespace AM
         public static ToolCapacityDef Blunt;
         public static ToolCapacityDef Cut;
         public static ToolCapacityDef Stab;
+
+        public static ThoughtDef AM_FriendlyDuel_Win;
+        public static ThoughtDef AM_FriendlyDuel_Lose;
     }
 }

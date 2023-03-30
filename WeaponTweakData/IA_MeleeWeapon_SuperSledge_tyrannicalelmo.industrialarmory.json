@@ -1,0 +1,12 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_SuperSledge",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.374025851,
+  "OffY": -0.0191805363,
+  "Rotation": 45.0,
+  "BladeStart": 0.465534449,
+  "BladeEnd": 0.842757344,
+  "MeleeWeaponType": 1
+}

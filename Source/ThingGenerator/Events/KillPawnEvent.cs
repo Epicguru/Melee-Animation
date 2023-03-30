@@ -18,7 +18,7 @@ public class KillPawnEvent : EventBase
     [Header("Misc")]
     public bool PreventDamageMote = true;
 
-    public override void Expose()
+    protected override void Expose()
     {
         Look(ref KillerIndex);
         Look(ref VictimIndex);

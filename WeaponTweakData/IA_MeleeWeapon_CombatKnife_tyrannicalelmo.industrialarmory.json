@@ -1,0 +1,9 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_CombatKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.169430181,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

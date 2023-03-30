@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ayameduki.harxenoorca",
+  "ItemDefName": "MeleeWeapon_Trident_XO",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.284515262,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.254545748,
+  "BladeEnd": 0.900299847,
+  "MeleeWeaponType": 5
+}

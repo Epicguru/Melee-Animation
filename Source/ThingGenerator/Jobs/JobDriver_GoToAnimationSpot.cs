@@ -15,20 +15,12 @@ namespace AM.Jobs
         {
             job.playerForced = true;
 
-#if V13
-            var toil = new Toil();
-#else
             var toil = ToilMaker.MakeToil();
-#endif
 
             // Stop if target is despawned (includes flying/grappled)
             this.FailOnDespawnedOrNull(TargetIndex.A);
             // Stop if invalid or destroyed (includes killed, moved to different map).
-#if V13
-            this.FailOnDestroyedOrNull(TargetIndex.A);
-#else
             this.FailOnInvalidOrDestroyed(TargetIndex.A);
-#endif
             // Fail if target is down.
             this.FailOnDowned(TargetIndex.A);
 

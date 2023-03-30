@@ -1,10 +1,13 @@
 ﻿using System;
+using AlienRace;
 using AM;
+using JetBrains.Annotations;
 using Verse;
 
 namespace AM.AlienRacesPatch;
 
 [HotSwapAll]
+[UsedImplicitly]
 public class PatchCore : Mod
 {
     public static void Log(string msg)
@@ -23,8 +26,7 @@ public class PatchCore : Mod
     {
         try
         {
-            var race = pawn?.def as AlienRace.ThingDef_AlienRace;
-            if (race == null)
+            if (pawn?.def is not ThingDef_AlienRace race)
                 return 1f;
 
             return race.alienRace.generalSettings.alienPartGenerator.customDrawSize.x;

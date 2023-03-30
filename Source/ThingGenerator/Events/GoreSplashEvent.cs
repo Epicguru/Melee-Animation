@@ -11,7 +11,7 @@ public class GoreSplashEvent : EventBase
     public int Count = 5;
     public float Radius = 0.5f;
 
-    public override void Expose()
+    protected override void Expose()
     {
         Look(ref AroundPawnIndex);
         Look(ref Count);

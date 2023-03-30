@@ -17,7 +17,8 @@
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
-    <li>Mlie.StarWarsFullyFunctionalLightsabers</li>
+    <li>projectjedi.lightsabers</li>
     <li>erdelf.humanoidalienraces</li>
+    <li>Krkr.rule56</li>
   </loadAfter>
 </ModMetaData>

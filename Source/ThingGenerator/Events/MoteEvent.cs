@@ -22,7 +22,7 @@ public class MoteEvent : EventBase
     public Vector2 StartVelocityAngle;
     public Vector2 StartScale = Vector2.one;
 
-    public override void Expose()
+    protected override void Expose()
     {
         Look(ref MoteDef);
         Look(ref PartName);

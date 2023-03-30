@@ -1,0 +1,10 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.265334725,
+  "BladeStart": 0.11388611,
+  "BladeEnd": 0.679720163,
+  "MeleeWeaponType": 6
+}

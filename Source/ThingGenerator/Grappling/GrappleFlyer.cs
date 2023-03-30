@@ -41,15 +41,15 @@ public class GrappleFlyer : PawnFlyer
         return null;
     }
 
-    private static readonly Func<float, float> FlightSpeed;
-    private static readonly Func<float, float> FlightCurveHeight = GenMath.InverseParabola;
-    private static readonly MaterialPropertyBlock mpb = new();
+    private static readonly Func<float, float> flightSpeed;
+    private static readonly Func<float, float> flightCurveHeight = GenMath.InverseParabola;
+    private static readonly MaterialPropertyBlock mpb = new MaterialPropertyBlock();
 
     public int TotalDurationTicks => ticksFlightTime;
     public Pawn Grappler;
 
     private Material cachedShadowMaterial;
-    private Effecter flightEffecter;
+    private Effecter flightEffecter = null;
     private int positionLastComputedTick = -1;
     private Vector3 groundPos;
     private Vector3 effectivePos;
@@ -75,7 +75,7 @@ public class GrappleFlyer : PawnFlyer
         animationCurve.AddKey(0f, 0f);
         animationCurve.AddKey(0.1f, 0.15f);
         animationCurve.AddKey(1f, 1f);
-        FlightSpeed = animationCurve.Evaluate;
+        flightSpeed = animationCurve.Evaluate;
     }
 
     public override Vector3 DrawPos
@@ -113,8 +113,8 @@ public class GrappleFlyer : PawnFlyer
 
         this.positionLastComputedTick = this.ticksFlying;
         float arg = (float)this.ticksFlying / (float)this.ticksFlightTime;
-        float num = FlightSpeed(arg);
-        this.effectiveHeight = FlightCurveHeight(num) * Mathf.Clamp(ticksFlightTime / 60f * 0.5f, 0.3f, 2f);
+        float num = flightSpeed(arg);
+        this.effectiveHeight = flightCurveHeight(num) * Mathf.Clamp(ticksFlightTime / 60f * 0.5f, 0.3f, 2f);
         this.groundPos = Vector3.Lerp(this.startVec, base.DestinationPos, num);
         Vector3 a = new(0f, 0f, 2f);
         Vector3 b = Altitudes.AltIncVect * this.effectiveHeight;
@@ -142,8 +142,8 @@ public class GrappleFlyer : PawnFlyer
         Vector3 to = effectivePos;
         to.y = from.y;
 
-        float bumpMag = Mathf.Clamp(FlightCurveHeight(ticksFlying / 15f) * 1.25f, 0f, 1.25f);
-        float bumpMag2 = Mathf.Clamp(FlightCurveHeight(ticksFlying / 10f) * 0.25f, 0f, 0.25f);
+        float bumpMag = Mathf.Clamp(flightCurveHeight(ticksFlying / 15f) * 1.25f, 0f, 1.25f);
+        float bumpMag2 = Mathf.Clamp(flightCurveHeight(ticksFlying / 10f) * 0.25f, 0f, 0.25f);
         Vector3 bump = (Grappler.DrawPos - from).normalized;
         Vector3 bump2 = Vector2.Perpendicular(to.ToFlat() - Grappler.DrawPos.ToFlat()).normalized.ToWorld();
         bump.y = 0;

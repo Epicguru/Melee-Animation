@@ -334,6 +334,15 @@ public class AnimRenderer : IExposable
     /// A scale on the speed of this animation.
     /// </summary>
     public float TimeScale = 1f;
+    /// <summary>
+    /// If not null, pawns are allowed to have other jobs as long as they are of this def.
+    /// Upon animation start, the pawn's current job and verbs are not modified if this is specified.
+    /// </summary>
+    public JobDef CustomJobDef;
+    /// <summary>
+    /// Is this animation a friendly duel?
+    /// </summary>
+    public bool IsFriendlyDuel;
 
     public double DrawMS;
     public double SeekMS;
@@ -420,6 +429,8 @@ public class AnimRenderer : IExposable
         Scribe_References.Look(ref Map, "map");
         Scribe_Values.Look(ref TimeScale, "timeScale", 1f);
         Scribe_Values.Look(ref ExecutionOutcome, "execOutcome");
+        Scribe_Values.Look(ref IsFriendlyDuel, "isFriendlyDuel");
+        Scribe_Defs.Look(ref CustomJobDef, "customJobDef");
         Scribe_Deep.Look(ref SD, "saveData");
         SD ??= new SaveData();
 
@@ -654,7 +665,7 @@ public class AnimRenderer : IExposable
 
         foreach (var pawn in Pawns)
         {
-            if (pawn.CurJobDef != AM_DefOf.AM_InAnimation)
+            if (pawn.CurJobDef != (CustomJobDef ?? AM_DefOf.AM_InAnimation))
             {
                 if (pawnsValidEvenIfDespawned.Contains(pawn))
                     continue;
@@ -1054,8 +1065,6 @@ public class AnimRenderer : IExposable
         // Give pawns their jobs.
         foreach (var pawn in Pawns)
         {
-            var newJob = JobMaker.MakeJob(AM_DefOf.AM_InAnimation);
-
             if (pawn.verbTracker?.AllVerbs != null)
                 foreach (var verb in pawn.verbTracker.AllVerbs)
                     verb.Reset();
@@ -1064,6 +1073,12 @@ public class AnimRenderer : IExposable
             if (pawn.equipment?.AllEquipmentVerbs != null)
                 foreach (var verb in pawn.equipment.AllEquipmentVerbs)
                     verb.Reset();
+
+            // Do not give animation job if a custom job def is specified:
+            if (CustomJobDef != null)
+                continue;
+
+            var newJob = JobMaker.MakeJob(AM_DefOf.AM_InAnimation);
 
             pawn.jobs.StartJob(newJob, JobCondition.InterruptForced);
 
@@ -1118,9 +1133,6 @@ public class AnimRenderer : IExposable
                 return;
 
             TeleportPawnsToEnd();
-
-            if (Def.type != AnimType.Idle)
-                Core.Log($"{this} OnEnd()");
         }
         catch (Exception e)
         {
