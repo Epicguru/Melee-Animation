@@ -39,7 +39,6 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
         // Run! No time to waste!
         job.locomotionUrgency = LocomotionUrgency.Sprint;
 
-
         // Several important checks including melee weapons, spawn status etc.
         AddFailCondition(ShouldJobFail);
         // Opponent mental state check.

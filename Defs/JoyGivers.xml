@@ -1,0 +1,21 @@
+<Defs>
+
+  <JoyGiverDef>
+    <defName>AM_DoFriendlyDuelJoyGiver</defName>
+    <giverClass>AM.AutoDuel.JoyGiver_FriendlyDuel</giverClass>
+    <baseChance>3</baseChance>
+    <jobDef>SocialRelax</jobDef>
+    <joyKind>AM_FriendlyDuelJoyKind</joyKind>
+    <requiredCapacities>
+      <li>Manipulation</li>
+      <li>Moving</li>
+    </requiredCapacities>
+  </JoyGiverDef>
+
+  <JoyKindDef>
+    <defName>AM_FriendlyDuelJoyKind</defName>
+    <label>duel training</label>
+    <needsThing>false</needsThing>
+  </JoyKindDef>
+
+</Defs>
