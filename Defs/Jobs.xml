@@ -39,6 +39,26 @@
     <neverShowWeapon>false</neverShowWeapon>
     <isIdle>false</isIdle>
     <alwaysShowWeapon>true</alwaysShowWeapon>
+    <joySkill>Melee</joySkill>
+    <joyXpPerTick>0.003</joyXpPerTick>
+    <joyKind>AM_FriendlyDuelJoyKind</joyKind>
+  </JobDef>
+
+  <JobDef>
+    <defName>AM_SpectateFriendlyDuel</defName>
+    <driverClass>AM.Jobs.JobDriver_SpectateDuel</driverClass>
+    <reportString>spectating duel: cheering for TargetC</reportString>
+    <casualInterruptible>true</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>false</neverShowWeapon>
+    <isIdle>false</isIdle>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
+    <joySkill>Melee</joySkill>
+    <joyXpPerTick>0.003</joyXpPerTick>
+    <joyKind>AM_FriendlyDuelJoyKind</joyKind>
   </JobDef>
 
   <JobDef>

@@ -8,7 +8,6 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using Verse.Noise;
 
 namespace AM.Buildings;
 
@@ -28,20 +27,20 @@ public class Building_DuelSpot : Building
         }
     }
 
+    private readonly List<IntVec3> availableSpectateSpots = new List<IntVec3>();
     private CompForbiddable forbidComp;
 
-    public bool IsInUse()
-    {
-        bool IsReserved(in IntVec3 cell)
-        {
-            tempReservers.Clear();
-            Map.reservationManager.ReserversOf(cell, tempReservers);
-            bool any = tempReservers.Count > 0;
-            tempReservers.Clear();
-            return any;
-        }
+    public bool IsInUse(out Pawn a, out Pawn b)
+        => IsReserved(CellMain, out a) & IsReserved(CellOther, out b);
 
-        return IsReserved(CellMain) || IsReserved(CellOther);
+    private bool IsReserved(in IntVec3 cell, out Pawn pawn)
+    {
+        tempReservers.Clear();
+        Map.reservationManager.ReserversOf(cell, tempReservers);
+        bool any = tempReservers.Count > 0;
+        pawn = any ? tempReservers.First() : null;
+        tempReservers.Clear();
+        return any;
     }
 
     public override IEnumerable<Gizmo> GetGizmos()
@@ -58,7 +57,7 @@ public class Building_DuelSpot : Building
             defaultIconColor = Color.green
         };
 
-        if (IsInUse())
+        if (IsInUse(out _, out _))
         {
             cmd.disabled = true;
             cmd.disabledReason = "AM.Gizmos.DuelSpot.StartDuel.InUse".Trs();
@@ -191,6 +190,31 @@ public class Building_DuelSpot : Building
         }
 
         Core.Log($"Player started duel between {a} and {b}");
+    }
+
+    private void UpdateSpectateSpots()
+    {
+        availableSpectateSpots.Clear();
+
+        var map = Map;
+        int y = Position.y;
+        for (int x = Position.x - 1; x < Position.x + 3; x++)
+        {
+            if (new IntVec3(x, y, Position.z + 2).Standable(map))
+                availableSpectateSpots.Add(new IntVec3(x, y, Position.z + 2));
+
+            if (new IntVec3(x, y, Position.z - 2).Standable(map))
+                availableSpectateSpots.Add(new IntVec3(x, y, Position.z - 2));
+        }
+    }
+
+    public IEnumerable<IntVec3> GetFreeSpectateSpots()
+        => availableSpectateSpots.Where(spot => !IsReserved(spot, out _));
+
+    public override void TickRare()
+    {
+        base.TickRare();
+        UpdateSpectateSpots();
     }
 
     public Job MakeDuelJob(Pawn opponent, bool main)

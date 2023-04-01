@@ -1,11 +1,10 @@
-﻿using RimWorld;
+﻿using AM.Jobs;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AM;
 using UnityEngine;
 using Verse;
-using AM.Jobs;
 
 namespace AM.Events.Workers
 {
@@ -33,6 +32,14 @@ namespace AM.Events.Workers
             {
                 int min = Core.Settings.MinDuelDuration;
                 int max = Core.Settings.MaxDuelDuration;
+                
+                // Friendly duels are twice as long because it gives other pawns time to spectate.
+                if (input.Animator.IsFriendlyDuel)
+                {
+                    min *= 2;
+                    max *= 2;
+                }
+
                 if (max < min)
                     max = min;
                 saveData.TargetDuelSegmentCount = Rand.RangeInclusive(min, max);

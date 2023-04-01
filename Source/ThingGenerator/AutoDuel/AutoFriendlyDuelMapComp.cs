@@ -23,6 +23,7 @@ public class AutoFriendlyDuelMapComp : MapComponent
 
         var comp = map.GetComponent<AutoFriendlyDuelMapComp>();
         Core.Log($"There are {comp.DuelSpots.Count} duel spots on the map.");
+        Core.Log($"Spots with active duels: {comp.GetActiveDuelSpots()}");
 
         Core.Log("All possible pawns (not filtered):");
         foreach (var p in comp.EnumeratePossiblePawns())
@@ -56,12 +57,28 @@ public class AutoFriendlyDuelMapComp : MapComponent
     public Building_DuelSpot TryGetBestDuelSpotFor(Pawn a, Pawn b)
     {
         var spots = from s in DuelSpots
-                    where !s.IsForbidden && !s.IsForbidden(a) && !s.IsForbidden(b) && !s.IsInUse()
+                    where !s.IsForbidden && !s.IsForbidden(a) && !s.IsForbidden(b) && !s.IsInUse(out _, out _)
                     let dst = s.Position.DistanceToSquared(a.Position) + s.Position.DistanceToSquared(b.Position)
                     orderby dst
                     select s;
 
         return spots.FirstOrDefault();
+    }
+
+    public IEnumerable<ActiveDuelSpot> GetActiveDuelSpots()
+    {
+        foreach (var spot in DuelSpots)
+        {
+            if (spot.IsInUse(out var a, out var b))
+            {
+                yield return new ActiveDuelSpot
+                {
+                    Spot = spot,
+                    PawnA = a,
+                    PawnB = b
+                };
+            }
+        }
     }
 
     public override void MapComponentTick()
@@ -142,4 +159,11 @@ public class AutoFriendlyDuelMapComp : MapComponent
 
         return true;
     }
+}
+
+public readonly struct ActiveDuelSpot
+{
+    public Building_DuelSpot Spot { get; init; }
+    public Pawn PawnA { get; init; }
+    public Pawn PawnB { get; init; }
 }
