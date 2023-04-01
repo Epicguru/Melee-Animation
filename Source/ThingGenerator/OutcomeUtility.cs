@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using AM.Patches;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using static UnityEngine.GraphicsBuffer;
 
 namespace AM;
 
@@ -15,8 +17,6 @@ public static class OutcomeUtility
 {
     public ref struct AdditionalArgs
     {
-        public DamageDef DamageDef;
-        public BodyPartDef BodyPartDef;
         public RulePackDef LogGenDef;
         public Thing Weapon;
         public float TargetDamageAmount;
@@ -116,107 +116,128 @@ public static class OutcomeUtility
     /// <summary>
     /// Generates a random execution outcome based on an lethality value.
     /// </summary>
-    public static ExecutionOutcome GenerateRandomOutcome(float lethality, out float pct)
+    public static ExecutionOutcome GenerateRandomOutcome(DamageDef dmgDef, Pawn victim, BodyPartRecord bodyPart, float weaponPen, float lethality, out float pct)
     {
-        if (lethality <= 0f)
+        //if (lethality <= 0f)
+        //{
+        //    pct = 1f;
+        //    return ExecutionOutcome.Damage;
+        //}
+
+        //if (Rand.Chance(lethality))
+        //{
+        //    pct = lethality;
+        //    return ExecutionOutcome.Kill;
+        //}
+
+        //pct = (1f - lethality) * 0.5f;
+        //return Rand.Chance(0.5f) ? ExecutionOutcome.Down : ExecutionOutcome.Damage;
+
+        /*
+         * Flow:
+         * If rand(lethality), kill is attempted:
+         *  - Check victim armor pct. against weapon pen. If weapon outclasses armor, continue with kill.
+         *  - If armor outclasses weapon, down instead of kill.
+         * 50% chance to attempt to down:
+         *  - If weapon pen is above 50% chance to pen armor, continue to down.
+         *  - Otherwise fall back to injure.
+         */
+
+        var armorStat = dmgDef?.armorCategory?.armorRatingStat ?? StatDefOf.ArmorRating_Sharp;
+        float totalArmor = GetChanceToPenAprox(victim, bodyPart, armorStat, weaponPen);
+
+
+    }
+
+    public static float GetChanceToPenAprox(Pawn pawn, BodyPartRecord bodyPart, StatDef armorType, float armorPen)
+    {
+        float chanceToPen = 1f;
+
+        // Get skin & hediff chance-to-pen.
+        chanceToPen *= Mathf.Clamp01(1f - (pawn.GetStatValue(armorType) - armorPen));
+
+        if (pawn?.apparel == null)
+            return Mathf.Clamp01(chanceToPen + 0.25f);
+
+        // Get apparel chance-to-pen.
+        foreach (var a in pawn.apparel.WornApparel)
         {
-            pct = 1f;
-            return ExecutionOutcome.Damage;
+            if (!a.def.apparel.CoversBodyPart(bodyPart))
+                continue;
+
+            var armor = a.GetStatValue(armorType);
+            if (armor <= 0)
+                continue;
+
+            chanceToPen *= Mathf.Clamp01(1f - (armor - armorPen));
         }
 
-        if (Rand.Chance(lethality))
-        {
-            pct = lethality;
-            return ExecutionOutcome.Kill;
-        }
-
-        pct = (1f - lethality) * 0.5f;
-        return Rand.Chance(0.5f) ? ExecutionOutcome.Down : ExecutionOutcome.Damage;
+        return Mathf.Clamp01(chanceToPen + 0.25f);
     }
 
     private static bool Damage(Pawn attacker, Pawn pawn, in AdditionalArgs args)
     {
         // Damage but do not kill or down the target.
-        // Adapted from HealthUtility.GiveRandomSurgeryInjuries
 
-        const float MIN_HP = 2;
-        const float MAX_SINGLE_DAMAGE = 10;
-        const float PART_PCT_MIN = 0.6f;
-        const float PART_PCT_MAX = 0.6f;
+        float dmgToDo = args.TargetDamageAmount;
+        float totalDmgDone = 0;
 
-        if (args.TargetDamageAmount <= 0f)
+        bool WouldBeInvalidResult(HediffDef hediff, float dmg, BodyPartRecord bp)
         {
-            Core.Error("When calling Damage there should be TargetDamageAmount specified in the args.");
-            return false;
+            return pawn.health.WouldLosePartAfterAddingHediff(hediff, bp, dmg) ||
+                   pawn.health.WouldBeDownedAfterAddingHediff(hediff, bp, dmg) ||
+                   pawn.health.WouldDieAfterAddingHediff(hediff, bp, dmg);
         }
 
-        // Hit external parts.
-        IEnumerable<BodyPartRecord> partsToHit = 
-            from x in pawn.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Outside, null, null)
-            where !x.def.conceptual
-            select x;
-
-        // Don't hit parts that are too squishy.
-        partsToHit =
-            from x in partsToHit
-            where HealthUtility.GetMinHealthOfPartsWeWantToAvoidDestroying(x, pawn) >= MIN_HP
-            select x;
-
-        float damageToDo = args.TargetDamageAmount;
-        int missCount = 0;
-        int i = 0;
-
-        while (damageToDo > 0 && partsToHit.Any())
+        for (int i = 0; i < 50; i++)
         {
-            i++;
-            if (i > 500)
+            var verbProps = args.Weapon.def.Verbs.First();
+            var tool = args.Weapon.def.tools.RandomElementByWeight(t => t.chanceFactor);
+
+            float dmg = verbProps.AdjustedMeleeDamageAmount(tool, attacker, args.Weapon, null);
+            if (dmg > dmgToDo)
+                dmg = dmgToDo;
+            dmgToDo -= dmg;
+            float armorPenetration = verbProps.AdjustedArmorPenetration(tool, attacker, args.Weapon, null);
+
+            DamageDef def = verbProps.meleeDamageDef ?? DamageDefOf.Blunt;
+            var bodyPartGroupDef = verbProps.AdjustedLinkedBodyPartsGroup(tool);
+
+            for (int j = 0; j < 5; j++)
             {
-                Core.Error("Stopped infinite loop. Investigate bug.");
+                var part = pawn.health.hediffSet.GetRandomNotMissingPart(def, BodyPartHeight.Middle, BodyPartDepth.Outside);
+
+                if (dmg < 1f) {
+                    dmg = 1f;
+                    def = DamageDefOf.Blunt;
+                }
+
+                if (WouldBeInvalidResult(def.hediff, dmg, part))
+                    continue;
+
+                ThingDef source = args.Weapon.def;
+                Vector3 direction = (pawn.Position - attacker.Position).ToVector3();
+                DamageInfo damageInfo = new DamageInfo(def, dmg, armorPenetration, -1f, attacker, null, source);
+                damageInfo.SetWeaponBodyPartGroup(bodyPartGroupDef);
+                damageInfo.SetAngle(direction);
+                damageInfo.SetIgnoreInstantKillProtection(false);
+                damageInfo.SetAllowDamagePropagation(false);
+
+                var info = pawn.TakeDamage(damageInfo);
+                totalDmgDone += info.totalDamageDealt;
+                if (pawn.Dead || pawn.Downed) {
+                    Core.Error($"Accidentally killed or downed {pawn} when attempting to just injure: tried to deal {dmg:F1} {def} dmg to {part}. Storyteller, difficulty, hediffs, or mods could have modified the damage to cause this.");
+                    return false;
+                }
                 break;
             }
 
-            BodyPartRecord partToHit = partsToHit.RandomElementByWeight(x => x.coverageAbs);
-            float partHealth = pawn.health.hediffSet.GetPartHealth(partToHit);
-
-            float damage = Mathf.Max(MAX_SINGLE_DAMAGE, GenMath.RoundRandom(partHealth * Rand.Range(PART_PCT_MIN, PART_PCT_MAX)));
-            float minHealthOfPartsWeWantToAvoidDestroying = HealthUtility.GetMinHealthOfPartsWeWantToAvoidDestroying(partToHit, pawn);
-
-            // Do not leave part at less than 1 hp.
-            if (minHealthOfPartsWeWantToAvoidDestroying - damage < MIN_HP)
-                damage = Mathf.RoundToInt(minHealthOfPartsWeWantToAvoidDestroying - MIN_HP);
-
-            // Pick damage type - use blunt or crush to avoid bleeding if necessary.
-            DamageDef damageDef = args.DamageDef;
-            if (args.DamageDef == null || partToHit.def.bleedRate > 0)
-                damageDef = Rand.Element(DamageDefOf.Crush, DamageDefOf.Blunt);
-
-            while (damage > 0)
-            {
-                // Reduce damage by 1 until it will no longer cause any serious damage.
-                if (WouldBeDownDeadOrAmputated(damageDef, pawn, partToHit, damage))
-                    damage -= 1;
-                else
-                    break;
-            }
-
-            if (damage <= 0)
-            {
-                // A miss is when damage could not be applied without causing serious damage.
-                // After a couple of attempts, give up.
-                missCount++;
-                if (missCount > 2)
-                    break;
-            }
-
-            DamageInfo dInfo = new DamageInfo(damageDef, damage, 0f, -1f, attacker, partToHit, args.Weapon?.def);
-            dInfo.SetIgnoreArmor(true);
-            dInfo.SetIgnoreInstantKillProtection(false);
-
-            pawn.TakeDamage(dInfo);
-            damageToDo -= damage;
+            if (dmgToDo <= 0)
+                break;
         }
 
-        return damageToDo <= 0;
+        Core.Log($"Dealt {totalDmgDone:F2} pts of dmg as part of injury.");
+        return true;
     }
 
     private static bool WouldBeDownDeadOrAmputated(DamageDef damageDef, Pawn pawn, BodyPartRecord bodyPart, float damage)
@@ -235,6 +256,7 @@ public static class OutcomeUtility
 
         if (h == null)
             Core.Error($"Failed to give {pawn} the knocked out hediff!");
+        
         return h != null;
     }
 
