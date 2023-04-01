@@ -22,7 +22,8 @@
     <size>(2,1)</size>
     <designationCategory>Misc</designationCategory>
     <uiOrder>2000</uiOrder>
-    <passability>Standable</passability>
+    <tickerType>Rare</tickerType>
+    <pathCost>50</pathCost> <!-- Pawns should really avoid stepping on the duel spot unless they have to. Prevents spectators from walking through the duelers. -->
     <building>
       <sowTag>SupportPlantsOnly</sowTag>
       <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>

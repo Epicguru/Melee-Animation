@@ -1,4 +1,6 @@
-﻿using AM.Controller;
+﻿using AM.AutoDuel;
+using AM.Controller;
+using JetBrains.Annotations;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -9,35 +11,36 @@ using Verse.AI;
 
 namespace AM.Buildings;
 
+[UsedImplicitly]
 public class Building_DuelSpot : Building
 {
+    private static readonly HashSet<Pawn> tempReservers = new HashSet<Pawn>();
+
     public IntVec3 CellMain => Position;
     public IntVec3 CellOther => Position + new IntVec3(1, 0, 0);
+    public bool IsForbidden
+    {
+        get
+        {
+            forbidComp ??= GetComp<CompForbiddable>();
+            return forbidComp?.Forbidden ?? false;
+        }
+    }
 
+    private readonly List<IntVec3> availableSpectateSpots = new List<IntVec3>();
     private CompForbiddable forbidComp;
 
-    public bool IsCurrentlyOccupied(out Thing blocking)
+    public bool IsInUse(out Pawn a, out Pawn b)
+        => IsReserved(CellMain, out a) & IsReserved(CellOther, out b);
+
+    private bool IsReserved(in IntVec3 cell, out Pawn pawn)
     {
-        var m = Map;
-
-        bool Check(in IntVec3 cell, out Thing blocker)
-        {
-            var things = m.thingGrid.ThingsListAtFast(cell);
-            foreach (var thing in things)
-            {
-                blocker = thing;
-
-                if (thing is Pawn p && (p.IsInAnimation() || p.CurJobDef == AM_DefOf.AM_DoFriendlyDuel))
-                    return true;
-                if (thing.def.passability == Traversability.Impassable)
-                    return true;
-            }
-
-            blocker = null;
-            return false;
-        }
-
-        return Check(CellMain, out blocking) || Check(CellOther, out blocking);
+        tempReservers.Clear();
+        Map.reservationManager.ReserversOf(cell, tempReservers);
+        bool any = tempReservers.Count > 0;
+        pawn = any ? tempReservers.First() : null;
+        tempReservers.Clear();
+        return any;
     }
 
     public override IEnumerable<Gizmo> GetGizmos()
@@ -54,14 +57,12 @@ public class Building_DuelSpot : Building
             defaultIconColor = Color.green
         };
 
-        forbidComp ??= GetComp<CompForbiddable>();
-
-        if (IsCurrentlyOccupied(out var blocker))
+        if (IsInUse(out _, out _))
         {
             cmd.disabled = true;
-            cmd.disabledReason = "AM.Gizmos.DuelSpot.StartDuel.InUse".Trs(blocker);
+            cmd.disabledReason = "AM.Gizmos.DuelSpot.StartDuel.InUse".Trs();
         }
-        else if (forbidComp?.Forbidden ?? false)
+        else if (IsForbidden)
         {
             cmd.disabled = true;
             cmd.disabledReason = "AM.Gizmos.DuelSpot.StartDuel.Forbidden".Trs();
@@ -166,7 +167,7 @@ public class Building_DuelSpot : Building
 
     private void TryStartDuel(Pawn a, Pawn b)
     {
-        var job = JobMaker.MakeJob(AM_DefOf.AM_DoFriendlyDuel, new LocalTargetInfo(b), new LocalTargetInfo(CellMain), new LocalTargetInfo(this));
+        var job = MakeDuelJob(b, true);
         job.playerForced = true;
 
         a.jobs.StartJob(job, JobCondition.InterruptForced);
@@ -177,7 +178,7 @@ public class Building_DuelSpot : Building
             return;
         }
 
-        job = JobMaker.MakeJob(AM_DefOf.AM_DoFriendlyDuel, new LocalTargetInfo(a), new LocalTargetInfo(CellOther), new LocalTargetInfo(this));
+        job = MakeDuelJob(a, false);
         job.playerForced = true;
 
         b.jobs.StartJob(job, JobCondition.InterruptForced);
@@ -189,5 +190,65 @@ public class Building_DuelSpot : Building
         }
 
         Core.Log($"Player started duel between {a} and {b}");
+    }
+
+    private void UpdateSpectateSpots()
+    {
+        availableSpectateSpots.Clear();
+
+        var map = Map;
+        int y = Position.y;
+        for (int x = Position.x - 1; x < Position.x + 3; x++)
+        {
+            if (new IntVec3(x, y, Position.z + 2).Standable(map))
+                availableSpectateSpots.Add(new IntVec3(x, y, Position.z + 2));
+
+            if (new IntVec3(x, y, Position.z - 2).Standable(map))
+                availableSpectateSpots.Add(new IntVec3(x, y, Position.z - 2));
+        }
+    }
+
+    public IEnumerable<IntVec3> GetFreeSpectateSpots()
+        => availableSpectateSpots.Where(spot => !IsReserved(spot, out _));
+
+    public override void TickRare()
+    {
+        base.TickRare();
+        UpdateSpectateSpots();
+    }
+
+    public Job MakeDuelJob(Pawn opponent, bool main)
+    {
+        return JobMaker.MakeJob(AM_DefOf.AM_DoFriendlyDuel, new LocalTargetInfo(opponent), new LocalTargetInfo(main ? CellMain : CellOther), new LocalTargetInfo(this));
+    }
+
+    public override void SpawnSetup(Map map, bool respawningAfterLoad)
+    {
+        base.SpawnSetup(map, respawningAfterLoad);
+
+        var comp = map.GetComponent<AutoFriendlyDuelMapComp>();
+        if (comp == null)
+        {
+            Core.Error($"Missing {nameof(AutoFriendlyDuelMapComp)} map component.");
+            return;
+        }
+
+        if (!comp.DuelSpots.Add(this))
+            Core.Error("Attempted to duplicate-add duel spot to map component - why and how?");
+    }
+
+    public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+    {
+        var comp = Map.GetComponent<AutoFriendlyDuelMapComp>();
+        if (comp == null)
+        {
+            Core.Error($"Missing {nameof(AutoFriendlyDuelMapComp)} map component.");
+            return;
+        }
+
+        if (!comp.DuelSpots.Remove(this))
+            Core.Error("Attempted to duplicate-remove duel spot to map component - why and how?");
+
+        base.Destroy(mode);
     }
 }

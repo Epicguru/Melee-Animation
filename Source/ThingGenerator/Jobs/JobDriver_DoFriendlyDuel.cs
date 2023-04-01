@@ -39,7 +39,6 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
         // Run! No time to waste!
         job.locomotionUrgency = LocomotionUrgency.Sprint;
 
-
         // Several important checks including melee weapons, spawn status etc.
         AddFailCondition(ShouldJobFail);
         // Opponent mental state check.
@@ -174,6 +173,10 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
                 toil.actor.jobs.curDriver.ReadyForNextToil();
                 return;
             }
+
+            // Gain joy and recreation.
+            if (pawn.needs.joy != null)
+                JoyUtility.JoyTickCheckEnd(pawn, JoyTickFullJoyAction.None);
 
             // Duels shouldn't last over 2 minutes. Sanity check...
             if (ticksSpentWaiting > (120f * 60f) / Core.Settings.GlobalAnimationSpeed)
@@ -318,6 +321,9 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
         bool IsPawnValid(Pawn p)
         {
             if (p == null || p.Dead || p.Downed || !p.Spawned)
+                return false;
+
+            if (p.InMentalState)
                 return false;
 
             var animator = p.TryGetAnimator();
