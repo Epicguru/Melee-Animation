@@ -15,6 +15,7 @@ namespace AM
         public static JobDef AM_GrapplePawn;
         public static JobDef AM_WalkToExecution;
         public static JobDef AM_DoFriendlyDuel;
+        public static JobDef AM_SpectateFriendlyDuel;
 
         public static RulePackDef AM_Execution_Generic;
 

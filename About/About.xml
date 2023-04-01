@@ -6,7 +6,14 @@
   <supportedVersions>
     <li>1.4</li>
   </supportedVersions>
-  <description>WIP mod that adds detailed melee combat animations. Load as low down as possible.</description>
+  <description>Adds detailed melee combat animations, including duels, executions, and unique skills. Also (optionally) adds lassos to pull enemies into melee range.
+
+ * Equip colonists with melee weapons (or melee sidearms) and they will be animated!
+ * Draft a melee colonist and you can right-click on targets to execute or lasso them.
+ * Place down a Duel Spot (under the Misc tab) to have your colonists engage in friendly duels.
+ * Craft Lassos at a tailor bench and equip them to pawns for an edge against gunfighters.
+
+Load as low down as possible.</description>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
