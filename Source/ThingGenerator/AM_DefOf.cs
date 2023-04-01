@@ -41,5 +41,7 @@ namespace AM
 
         public static ThoughtDef AM_FriendlyDuel_Win;
         public static ThoughtDef AM_FriendlyDuel_Lose;
+
+        public static HediffDef AM_KnockedOut;
     }
 }

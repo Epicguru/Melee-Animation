@@ -230,16 +230,12 @@ public static class OutcomeUtility
 
     private static bool Down(Pawn attacker, Pawn pawn, in AdditionalArgs args)
     {
-        // Smack them around until they go down.
-        // Avoid bleeding.
+        // Give the downed hediff.
+        var h = pawn.health.AddHediff(AM_DefOf.AM_KnockedOut);
 
-        // Check if already downed...
-        if (pawn.Downed)
-            return true;
-
-        // TODO this ignores args.DamageDef.
-        HealthUtility.DamageUntilDowned(pawn, false);
-        return true;
+        if (h == null)
+            Core.Error($"Failed to give {pawn} the knocked out hediff!");
+        return h != null;
     }
 
     private static bool Kill(Pawn killer, Pawn pawn, in AdditionalArgs args)
