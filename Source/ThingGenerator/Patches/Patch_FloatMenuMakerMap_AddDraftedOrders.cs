@@ -298,7 +298,9 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
 
         string label = "AM.Exec.FloatMenu".Translate(targetName) + append;
         string tt = "AM.Exec.FloatMenu.Tip";
-        tt = tt.Translate(grappler.Name.ToStringShort, targetName);
+        var probs = new OutcomeUtility.ProbabilityReport();
+        OutcomeUtility.GenerateRandomOutcome(grappler, target, probs);
+        tt = tt.Translate(grappler.Name.ToStringShort, targetName, probs.ToString());
         var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
 
         return new FloatMenuOption(label, OnClick, priority, revalidateClickTarget: target)

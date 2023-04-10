@@ -12,13 +12,17 @@
 
   <AM.Error.Exec.FloatMenu>Cannot execute: {0}</AM.Error.Exec.FloatMenu>
   <AM.Exec.FloatMenu>Execute {0}</AM.Exec.FloatMenu>
-  <AM.Exec.FloatMenu.Tip>Perform an execution animation on {1}.\nPlease note, 'execution' animations are not always lethal - please read the workshop page and mod settings for more info.</AM.Exec.FloatMenu.Tip>
+  <AM.Exec.FloatMenu.Tip>Perform an execution animation on {1}.\nPossible outcomes based on weapon, melee skill, armor, mod settings etc:\n{2}</AM.Exec.FloatMenu.Tip>
   <AM.Exec.FloatMenu.Walk> (walk to target)</AM.Exec.FloatMenu.Walk>
   <AM.Exec.FloatMenu.Lasso> (lasso)</AM.Exec.FloatMenu.Lasso>
 
   <AM.Error.Grapple.Internal>Int.Error: {Error}</AM.Error.Grapple.Internal>
   <AM.Error.Exec.Internal>Int.Error: {Error}</AM.Error.Exec.Internal>
   <AM.Error.Grapple.AlreadyAtTarget>{Target} is already in melee range</AM.Error.Grapple.AlreadyAtTarget>
+
+  <AM.ProbReport.Kill>Kill</AM.ProbReport.Kill>
+  <AM.ProbReport.Down>Down</AM.ProbReport.Down>
+  <AM.ProbReport.Injure>Injure</AM.ProbReport.Injure>
 
   <!-- Duel command messages -->
   <AM.Error.Duel.Internal>Int.Error: {Error}</AM.Error.Duel.Internal>

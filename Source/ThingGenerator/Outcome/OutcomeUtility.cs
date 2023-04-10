@@ -4,6 +4,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AM.Outcome;
 using UnityEngine;
 using Verse;
 
@@ -14,6 +15,8 @@ namespace AM;
 /// </summary>
 public static class OutcomeUtility
 {
+    public static IOutcomeWorker OutcomeWorker = new VanillaOutcomeWorker();
+
     public static readonly Func<float, float, bool> GreaterThan = (x, y) => x > y;
     public static readonly Func<float, float, bool> LessThan = (x, y) => x < y;
 
@@ -22,7 +25,7 @@ public static class OutcomeUtility
     public static readonly Func<PossibleMeleeAttack, float> PenXDmg = a => a.Damage * a.ArmorPen;
 
     [UsedImplicitly]
-    [TweakValue("Melee Animations")]
+    [TweakValue("Melee Animation")]
     private static bool debugLogExecutionOutcome;
 
     public ref struct AdditionalArgs
@@ -102,28 +105,26 @@ public static class OutcomeUtility
         float bL = b.GetStatValue(AM_DefOf.AM_DuelAbility);
         float diff = aL - bL;
 
-        return Mathf.Clamp01((float)normal.LeftProbability(diff));;
+        return Mathf.Clamp01((float)normal.LeftProbability(diff));
     }
 
-    public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim) => GenerateRandomOutcome(attacker, victim, out _);
-
-    public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim, out float pct)
+    public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim, ProbabilityReport report = null)
     {
         // Get lethality, adjusted by settings.
         float aL = attacker.GetStatValue(AM_DefOf.AM_Lethality);
         int meleeSkill = attacker.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
         var weapon = attacker.GetFirstMeleeWeapon();
-        var mainAttack = SelectMainAttack(GetMeleeAttacksFor(weapon, attacker));
+        var mainAttack = SelectMainAttack(OutcomeWorker.GetMeleeAttacksFor(weapon, attacker));
         var damageDef = mainAttack.DamageDef;
         var corePart = GetCoreBodyPart(victim);
 
-        return GenerateRandomOutcome(damageDef, victim, corePart, mainAttack.ArmorPen, meleeSkill, aL, out pct);
+        return GenerateRandomOutcome(damageDef, victim, corePart, mainAttack.ArmorPen, meleeSkill, aL, report);
     }
 
     /// <summary>
     /// Generates a random execution outcome based on an lethality value.
     /// </summary>
-    public static ExecutionOutcome GenerateRandomOutcome(DamageDef dmgDef, Pawn victim, BodyPartRecord bodyPart, float weaponPen, float attackerMeleeSkill, float lethality, out float pct)
+    public static ExecutionOutcome GenerateRandomOutcome(DamageDef dmgDef, Pawn victim, BodyPartRecord bodyPart, float weaponPen, float attackerMeleeSkill, float lethality, ProbabilityReport report = null)
     {
         static void Log(string msg)
         {
@@ -135,10 +136,14 @@ public static class OutcomeUtility
         var armorStat = dmgDef?.armorCategory?.armorRatingStat ?? StatDefOf.ArmorRating_Sharp;
         Log($"Armor stat: {armorStat}, weapon pen: {weaponPen:F1}, lethality: {lethality:F2}");
         float armorMulti = Core.Settings.ExecutionArmorCoefficient;
-        float chanceToPen = GetChanceToPenAprox(victim, bodyPart, armorStat, weaponPen);
+        float chanceToPen = OutcomeWorker.GetChanceToPenAprox(victim, bodyPart, armorStat, weaponPen);
         Log($"Chance to pen (base): {chanceToPen:P1}");
-        Log($"Chance to pen (post-process): {(armorMulti <= 0f ? 1f : chanceToPen / armorMulti):P1}");
-        bool canPen = armorMulti <= 0 || Rand.Chance(chanceToPen / armorMulti);
+        if (armorMulti > 0f)
+            chanceToPen /= armorMulti;
+        else
+            chanceToPen = 1f;
+        Log($"Chance to pen (post-process): {chanceToPen:P1}");
+        bool canPen = Rand.Chance(chanceToPen);
         Log($"Random will pen outcome: {canPen}");
 
         // Calculate kill chance based on lethality and settings.
@@ -146,27 +151,48 @@ public static class OutcomeUtility
         bool attemptKill = Rand.Chance(lethality);
         Log($"Prevent kill: {preventKill}");
         Log($"Attempt kill: {attemptKill}");
+
+        if (report != null)
+            report.KillChance = preventKill ? 0f : chanceToPen * lethality;
+
+        var outcome = ExecutionOutcome.Nothing;
         if (canPen && !preventKill && attemptKill)
         {
             Log("Killed!");
-            pct = lethality;
-            return ExecutionOutcome.Kill;
+            outcome = ExecutionOutcome.Kill;
+            if (report == null)
+                return outcome;
         }
 
         Log("Moving on to down or injure...");
 
         float downChance = RemapClamped(4, 20, 0.2f, 0.9f, attackerMeleeSkill);
         Log(canPen ? $"Chance to down, based on melee skill of {attackerMeleeSkill:N1}: {downChance:P1}" : "Cannot down, pen chance failed. Will damage.");
-        pct = 1f - lethality;
-        if (canPen && Rand.Chance(downChance))
+        if (report != null)
+        {
+            report.DownChance = (1f - lethality) * downChance * chanceToPen;
+            report.InjureChance = (1f - lethality) * (1f - downChance);
+        }
+
+        if (outcome == ExecutionOutcome.Nothing && canPen && Rand.Chance(downChance))
         {
             Log("Downed");
-            return ExecutionOutcome.Down;
+            outcome = ExecutionOutcome.Down;
+            if (report == null)
+                return outcome;
         }
 
         // Damage!
-        Log("Damaged");
-        return ExecutionOutcome.Damage;
+        if (outcome == ExecutionOutcome.Nothing)
+        {
+            Log("Damaged");
+            outcome = ExecutionOutcome.Damage;
+            if (report == null)
+                return outcome;
+        }
+
+        report?.Normalize();
+        return outcome;
     }
 
     private static float RemapClamped(float baseA, float baseB, float newA, float newB, float value)
@@ -205,40 +231,13 @@ public static class OutcomeUtility
         TableDataGetter<ThingWithComps>[] table = new TableDataGetter<ThingWithComps>[4];
         table[0] = new TableDataGetter<ThingWithComps>("Def Name", d => d.def.defName);
         table[1] = new TableDataGetter<ThingWithComps>("Name", d => d.LabelCap);
-        table[2] = new TableDataGetter<ThingWithComps>("Main Attack", d => VerbToString(SelectMainAttack(GetMeleeAttacksFor(d, null)).Verb));
+        table[2] = new TableDataGetter<ThingWithComps>("Main Attack", d => VerbToString(SelectMainAttack(OutcomeWorker.GetMeleeAttacksFor(d, null)).Verb));
         table[3] = new TableDataGetter<ThingWithComps>("All Verbs", AllVerbs);
 
         DebugTables.MakeTablesDialog(created, table);
 
         foreach (var t in created)
             t.Destroy();
-    }
-
-    public static IEnumerable<PossibleMeleeAttack> GetMeleeAttacksFor(ThingWithComps weapon, Pawn pawn)
-    {
-        var comp = weapon?.GetComp<CompEquippable>();
-        if (comp == null)
-            yield break;
-
-
-        foreach (var verb in comp.AllVerbs)
-        {
-            if (!verb.IsMeleeAttack)
-                continue;
-
-            float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, pawn, weapon, verb.HediffCompSource);
-            float ap = verb.verbProps.AdjustedArmorPenetration(verb.tool, pawn, weapon, verb.HediffCompSource);
-
-            yield return new PossibleMeleeAttack
-            {
-                Damage = dmg,
-                ArmorPen = ap,
-                Pawn = pawn,
-                DamageDef = verb.GetDamageDef(),
-                Verb = verb,
-                Weapon = weapon
-            };
-        }
     }
 
     public static PossibleMeleeAttack SelectMainAttack(IEnumerable<PossibleMeleeAttack> attacks) => SelectMainAttack(attacks, Dmg, GreaterThan);
@@ -271,31 +270,6 @@ public static class OutcomeUtility
         }
 
         return selected;
-    }
-
-    public static float GetChanceToPenAprox(Pawn pawn, BodyPartRecord bodyPart, StatDef armorType, float armorPen)
-    {
-        // Get skin & hediff chance-to-pen.
-        float pawnArmor = pawn.GetStatValue(armorType) - armorPen;
-        float chance = Mathf.Clamp01(1f - pawnArmor);
-
-        if (pawn?.apparel == null)
-            return chance;
-
-        // Get apparel chance-to-pen.
-        foreach (var a in pawn.apparel.WornApparel)
-        {
-            if (!a.def.apparel.CoversBodyPart(bodyPart))
-                continue;
-
-            var armor = a.GetStatValue(armorType);
-            if (armor <= 0)
-                continue;
-
-            chance *= Mathf.Clamp01(1f - (armor - armorPen));
-        }
-
-        return chance;
     }
 
     private static bool Damage(Pawn attacker, Pawn pawn, in AdditionalArgs args)
@@ -479,15 +453,30 @@ public static class OutcomeUtility
         return log;
     }
 
-    public readonly struct PossibleMeleeAttack
+    public class ProbabilityReport
     {
-        public Pawn Pawn { get; init; }
-        public float Damage { get; init; }
-        public float ArmorPen{ get; init; }
-        public DamageDef DamageDef { get; init; }
-        public Verb Verb { get; init; }
-        public ThingWithComps Weapon { get; init; }
+        public float DownChance { get; set; }
+        public float InjureChance { get; set; }
+        public float KillChance { get; set; }
 
-        public override string ToString() => Verb.ToString();
+        public void Normalize()
+        {
+            float sum = DownChance + InjureChance + KillChance;
+            if (sum == 0f)
+                return;
+
+            DownChance /= sum;
+            InjureChance /= sum;
+            KillChance /= sum;
+        }
+
+        private static string InColor(float pct)
+        {
+            Color c = Color.Lerp(Color.red, Color.green, pct);
+            string hex = ColorUtility.ToHtmlStringRGB(c);
+            return $"<color={hex}>{pct*100:F0}%</color>";
+        }
+
+        public override string ToString() => $"{"AM.ProbReport.Kill".Trs()}: {InColor(KillChance)}\n{"AM.ProbReport.Down".Trs()}: {InColor(DownChance)}\n{"AM.ProbReport.Injure".Trs()}: {InColor(InjureChance)}";
     }
 }

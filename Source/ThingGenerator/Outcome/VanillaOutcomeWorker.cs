@@ -1,0 +1,59 @@
+﻿using RimWorld;
+using System.Collections.Generic;
+using UnityEngine;
+using Verse;
+
+namespace AM.Outcome;
+
+public sealed class VanillaOutcomeWorker : IOutcomeWorker
+{
+    public IEnumerable<PossibleMeleeAttack> GetMeleeAttacksFor(ThingWithComps weapon, Pawn pawn)
+    {
+        var comp = weapon?.GetComp<CompEquippable>();
+        if (comp == null)
+            yield break;
+
+        foreach (var verb in comp.AllVerbs)
+        {
+            if (!verb.IsMeleeAttack)
+                continue;
+
+            float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, pawn, weapon, verb.HediffCompSource);
+            float ap = verb.verbProps.AdjustedArmorPenetration(verb.tool, pawn, weapon, verb.HediffCompSource);
+            yield return new PossibleMeleeAttack
+            {
+                Damage = dmg,
+                ArmorPen = ap,
+                Pawn = pawn,
+                DamageDef = verb.GetDamageDef(),
+                Verb = verb,
+                Weapon = weapon
+            };
+        }
+    }
+
+    public float GetChanceToPenAprox(Pawn pawn, BodyPartRecord bodyPart, StatDef armorType, float armorPen)
+    {
+        // Get skin & hediff chance-to-pen.
+        float pawnArmor = pawn.GetStatValue(armorType) - armorPen;
+        float chance = Mathf.Clamp01(1f - pawnArmor);
+
+        if (pawn?.apparel == null)
+            return chance;
+
+        // Get apparel chance-to-pen.
+        foreach (var a in pawn.apparel.WornApparel)
+        {
+            if (!a.def.apparel.CoversBodyPart(bodyPart))
+                continue;
+
+            var armor = a.GetStatValue(armorType);
+            if (armor <= 0)
+                continue;
+
+            chance *= Mathf.Clamp01(1f - (armor - armorPen));
+        }
+
+        return chance;
+    }
+}
