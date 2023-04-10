@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_PowerMaul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.190871447,
+  "BladeStart": 0.2836562,
+  "BladeEnd": 0.543453455,
+  "MeleeWeaponType": 9
+}

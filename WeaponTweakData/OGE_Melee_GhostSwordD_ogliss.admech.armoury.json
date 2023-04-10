@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_GhostSwordD",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3181191,
+  "ScaleX": 0.95,
+  "ScaleY": 0.95,
+  "BladeStart": 0.119294658,
+  "BladeEnd": 0.7661368,
+  "MeleeWeaponType": 6
+}

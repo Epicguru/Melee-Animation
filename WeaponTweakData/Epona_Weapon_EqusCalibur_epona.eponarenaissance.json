@@ -1,0 +1,10 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_EqusCalibur",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2931244,
+  "BladeStart": 0.088548,
+  "BladeEnd": 0.7725049,
+  "MeleeWeaponType": 6
+}

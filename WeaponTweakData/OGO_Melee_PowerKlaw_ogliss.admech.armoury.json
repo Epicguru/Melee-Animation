@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGO_Melee_PowerKlaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.29691115,
+  "OffY": -0.06362381,
+  "HandsMode": 2,
+  "BladeStart": 0.2518443,
+  "BladeEnd": 0.691909,
+  "MeleeWeaponType": 7
+}

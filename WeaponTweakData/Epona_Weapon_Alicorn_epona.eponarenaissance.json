@@ -1,0 +1,11 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_Alicorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.183202744,
+  "OffY": -0.0183202755,
+  "BladeStart": 0.04580069,
+  "BladeEnd": 0.5709819,
+  "MeleeWeaponType": 12
+}

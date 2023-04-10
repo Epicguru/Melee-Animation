@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sz.ancient.celestiall",
+  "ItemDefName": "SZ_Melee_Halberd_Large",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7938787,
+  "OffY": -0.08549464,
+  "ScaleX": 2.4,
+  "ScaleY": 2.4,
+  "BladeStart": 1.09005642,
+  "BladeEnd": 1.96332288,
+  "MeleeWeaponType": 7,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.08333331,
+    "b": 0.8533335,
+    "a": 0.9766667
+  }
+}

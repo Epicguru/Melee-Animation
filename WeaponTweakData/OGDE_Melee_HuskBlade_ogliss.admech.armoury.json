@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_HuskBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.355233,
+  "BladeStart": 0.07687878,
+  "BladeEnd": 0.819156647,
+  "MeleeWeaponType": 6
+}

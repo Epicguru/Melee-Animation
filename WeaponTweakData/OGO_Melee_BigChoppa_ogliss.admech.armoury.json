@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGO_Melee_BigChoppa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2544953,
+  "BladeStart": 0.2783542,
+  "BladeEnd": 0.7396269,
+  "MeleeWeaponType": 2
+}

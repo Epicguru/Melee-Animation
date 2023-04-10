@@ -1,0 +1,10 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.250377119,
+  "BladeStart": 0.25953725,
+  "BladeEnd": 0.6931171,
+  "MeleeWeaponType": 6
+}

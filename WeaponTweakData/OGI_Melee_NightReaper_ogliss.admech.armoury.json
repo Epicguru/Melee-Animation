@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_NightReaper",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.217381388,
+  "HandsMode": 1,
+  "BladeStart": 0.07687878,
+  "BladeEnd": 0.575265348,
+  "MeleeWeaponType": 48
+}

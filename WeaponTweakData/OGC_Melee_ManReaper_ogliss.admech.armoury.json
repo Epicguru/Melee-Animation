@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGC_Melee_ManReaper",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.37113893,
+  "OffY": -0.0583218336,
+  "Rotation": 45.0,
+  "BladeStart": 0.4904336,
+  "BladeEnd": 0.713117,
+  "MeleeWeaponType": 2
+}

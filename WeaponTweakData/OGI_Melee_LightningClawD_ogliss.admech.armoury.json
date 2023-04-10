@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_LightningClawD",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.121945649,
+  "ScaleX": 0.95,
+  "ScaleY": 0.95,
+  "HandsMode": 2,
+  "BladeStart": 0.0344629027,
+  "BladeEnd": 0.5010376,
+  "MeleeWeaponType": 48
+}

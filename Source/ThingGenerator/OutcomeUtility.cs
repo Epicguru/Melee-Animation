@@ -1,12 +1,11 @@
-﻿using System;
+﻿using AM.Patches;
+using JetBrains.Annotations;
+using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using AM.Patches;
-using RimWorld;
 using UnityEngine;
 using Verse;
-using static UnityEngine.GraphicsBuffer;
 
 namespace AM;
 
@@ -15,8 +14,21 @@ namespace AM;
 /// </summary>
 public static class OutcomeUtility
 {
+    public static readonly Func<float, float, bool> GreaterThan = (x, y) => x > y;
+    public static readonly Func<float, float, bool> LessThan = (x, y) => x < y;
+
+    public static readonly Func<PossibleMeleeAttack, float> Pen = a => a.ArmorPen;
+    public static readonly Func<PossibleMeleeAttack, float> Dmg = a => a.Damage;
+    public static readonly Func<PossibleMeleeAttack, float> PenXDmg = a => a.Damage * a.ArmorPen;
+
+    [UsedImplicitly]
+    [TweakValue("Melee Animations")]
+    private static bool debugLogExecutionOutcome;
+
     public ref struct AdditionalArgs
     {
+        public DamageDef DamageDef;
+        public BodyPartDef BodyPartDef;
         public RulePackDef LogGenDef;
         public Thing Weapon;
         public float TargetDamageAmount;
@@ -97,67 +109,178 @@ public static class OutcomeUtility
 
     public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim, out float pct)
     {
-        Debug.Assert(attacker != null);
-        Debug.Assert(victim != null);
-
         // Get lethality, adjusted by settings.
         float aL = attacker.GetStatValue(AM_DefOf.AM_Lethality);
+        int meleeSkill = attacker.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
+        var weapon = attacker.GetFirstMeleeWeapon();
+        var mainAttack = SelectMainAttack(GetMeleeAttacksFor(weapon, attacker));
+        var damageDef = mainAttack.DamageDef;
+        var corePart = GetCoreBodyPart(victim);
 
-        // Get a random outcome.
-        var outcome = GenerateRandomOutcome(aL, out pct);
-
-        // If the victim is friendly, do not allow them to be killed.
-        if (Core.Settings.ExecutionsOnFriendliesAreNotLethal && outcome == ExecutionOutcome.Kill && (victim.IsColonist || victim.IsPrisonerOfColony))
-            outcome = ExecutionOutcome.Down;
-
-        return outcome;
+        return GenerateRandomOutcome(damageDef, victim, corePart, mainAttack.ArmorPen, meleeSkill, aL, out pct);
     }
 
     /// <summary>
     /// Generates a random execution outcome based on an lethality value.
     /// </summary>
-    public static ExecutionOutcome GenerateRandomOutcome(DamageDef dmgDef, Pawn victim, BodyPartRecord bodyPart, float weaponPen, float lethality, out float pct)
+    public static ExecutionOutcome GenerateRandomOutcome(DamageDef dmgDef, Pawn victim, BodyPartRecord bodyPart, float weaponPen, float attackerMeleeSkill, float lethality, out float pct)
     {
-        //if (lethality <= 0f)
-        //{
-        //    pct = 1f;
-        //    return ExecutionOutcome.Damage;
-        //}
+        static void Log(string msg)
+        {
+            if (debugLogExecutionOutcome)
+                Core.Log(msg);
+        }
 
-        //if (Rand.Chance(lethality))
-        //{
-        //    pct = lethality;
-        //    return ExecutionOutcome.Kill;
-        //}
-
-        //pct = (1f - lethality) * 0.5f;
-        //return Rand.Chance(0.5f) ? ExecutionOutcome.Down : ExecutionOutcome.Damage;
-
-        /*
-         * Flow:
-         * If rand(lethality), kill is attempted:
-         *  - Check victim armor pct. against weapon pen. If weapon outclasses armor, continue with kill.
-         *  - If armor outclasses weapon, down instead of kill.
-         * 50% chance to attempt to down:
-         *  - If weapon pen is above 50% chance to pen armor, continue to down.
-         *  - Otherwise fall back to injure.
-         */
-
+        // Armor calculations for down or kill.
         var armorStat = dmgDef?.armorCategory?.armorRatingStat ?? StatDefOf.ArmorRating_Sharp;
-        float totalArmor = GetChanceToPenAprox(victim, bodyPart, armorStat, weaponPen);
+        Log($"Armor stat: {armorStat}, weapon pen: {weaponPen:F1}, lethality: {lethality:F2}");
+        float armorMulti = Core.Settings.ExecutionArmorCoefficient;
+        float chanceToPen = GetChanceToPenAprox(victim, bodyPart, armorStat, weaponPen);
+        Log($"Chance to pen (base): {chanceToPen:P1}");
+        Log($"Chance to pen (post-process): {(armorMulti <= 0f ? 1f : chanceToPen / armorMulti):P1}");
+        bool canPen = armorMulti <= 0 || Rand.Chance(chanceToPen / armorMulti);
+        Log($"Random will pen outcome: {canPen}");
+
+        // Calculate kill chance based on lethality and settings.
+        bool preventKill = Core.Settings.ExecutionsOnFriendliesAreNotLethal && (victim.IsColonist || victim.IsSlaveOfColony || victim.IsPrisonerOfColony || victim.Faction == Faction.OfPlayerSilentFail);
+        bool attemptKill = Rand.Chance(lethality);
+        Log($"Prevent kill: {preventKill}");
+        Log($"Attempt kill: {attemptKill}");
+        if (canPen && !preventKill && attemptKill)
+        {
+            Log("Killed!");
+            pct = lethality;
+            return ExecutionOutcome.Kill;
+        }
+
+        Log("Moving on to down or injure...");
+
+        float downChance = RemapClamped(4, 20, 0.2f, 0.9f, attackerMeleeSkill);
+        Log(canPen ? $"Chance to down, based on melee skill of {attackerMeleeSkill:N1}: {downChance:P1}" : "Cannot down, pen chance failed. Will damage.");
+        pct = 1f - lethality;
+        if (canPen && Rand.Chance(downChance))
+        {
+            Log("Downed");
+            return ExecutionOutcome.Down;
+        }
+
+        // Damage!
+        Log("Damaged");
+        return ExecutionOutcome.Damage;
+    }
+
+    private static float RemapClamped(float baseA, float baseB, float newA, float newB, float value)
+    {
+        float t = Mathf.InverseLerp(baseA, baseB, value);
+        return Mathf.Lerp(newA, newB, t);
+    }
+
+    private static BodyPartRecord GetCoreBodyPart(Pawn pawn) => pawn.def.race.body.corePart;
+
+    [UsedImplicitly]
+    [DebugOutput("Melee Animation")]
+    private static void LogAllMeleeWeaponVerbs()
+    {
+        var meleeWeapons = DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon);
+        var created = new HashSet<ThingWithComps>();
+        foreach (var def in meleeWeapons)
+        {
+            created.Add(ThingMaker.MakeThing(def) as ThingWithComps);
+        }
+
+        static string VerbToString(Verb verb, Thing weapon = null)
+        {
+            float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, null, weapon, verb.HediffCompSource);
+            float ap = verb.verbProps.AdjustedArmorPenetration(verb.tool, null, weapon, verb.HediffCompSource);
+            return $"{verb}: {verb.GetDamageDef()} (dmg: {dmg:F1}, ap: {ap:F1})";
+        }
+
+        static string AllVerbs(ThingWithComps t)
+        {
+            return string.Join("\n", GetEq(t).AllVerbs.Select(v => VerbToString(v)));
+        }
+
+        static CompEquippable GetEq(ThingWithComps td) => td.GetComp<CompEquippable>();
+
+        TableDataGetter<ThingWithComps>[] table = new TableDataGetter<ThingWithComps>[4];
+        table[0] = new TableDataGetter<ThingWithComps>("Def Name", d => d.def.defName);
+        table[1] = new TableDataGetter<ThingWithComps>("Name", d => d.LabelCap);
+        table[2] = new TableDataGetter<ThingWithComps>("Main Attack", d => VerbToString(SelectMainAttack(GetMeleeAttacksFor(d, null)).Verb));
+        table[3] = new TableDataGetter<ThingWithComps>("All Verbs", AllVerbs);
+
+        DebugTables.MakeTablesDialog(created, table);
+
+        foreach (var t in created)
+            t.Destroy();
+    }
+
+    public static IEnumerable<PossibleMeleeAttack> GetMeleeAttacksFor(ThingWithComps weapon, Pawn pawn)
+    {
+        var comp = weapon?.GetComp<CompEquippable>();
+        if (comp == null)
+            yield break;
 
 
+        foreach (var verb in comp.AllVerbs)
+        {
+            if (!verb.IsMeleeAttack)
+                continue;
+
+            float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, pawn, weapon, verb.HediffCompSource);
+            float ap = verb.verbProps.AdjustedArmorPenetration(verb.tool, pawn, weapon, verb.HediffCompSource);
+
+            yield return new PossibleMeleeAttack
+            {
+                Damage = dmg,
+                ArmorPen = ap,
+                Pawn = pawn,
+                DamageDef = verb.GetDamageDef(),
+                Verb = verb,
+                Weapon = weapon
+            };
+        }
+    }
+
+    public static PossibleMeleeAttack SelectMainAttack(IEnumerable<PossibleMeleeAttack> attacks) => SelectMainAttack(attacks, Dmg, GreaterThan);
+
+    public static PossibleMeleeAttack SelectMainAttack(IEnumerable<PossibleMeleeAttack> attacks, Func<PossibleMeleeAttack, float> valueSelector, Func<float, float, bool> compareFunc)
+    {
+        // Highest pen?
+        // highest damage?
+        // Pen x damage?
+
+        PossibleMeleeAttack selected = default;
+        float? record = null;
+
+        foreach (var a in attacks)
+        {
+            float value = valueSelector(a);
+
+            if (record == null)
+            {
+                selected = a;
+                record = value;
+                continue;
+            }
+
+            if (!compareFunc(value, record.Value))
+                continue;
+
+            selected = a;
+            record = value;
+        }
+
+        return selected;
     }
 
     public static float GetChanceToPenAprox(Pawn pawn, BodyPartRecord bodyPart, StatDef armorType, float armorPen)
     {
-        float chanceToPen = 1f;
-
         // Get skin & hediff chance-to-pen.
-        chanceToPen *= Mathf.Clamp01(1f - (pawn.GetStatValue(armorType) - armorPen));
+        float pawnArmor = pawn.GetStatValue(armorType) - armorPen;
+        float chance = Mathf.Clamp01(1f - pawnArmor);
 
         if (pawn?.apparel == null)
-            return Mathf.Clamp01(chanceToPen + 0.25f);
+            return chance;
 
         // Get apparel chance-to-pen.
         foreach (var a in pawn.apparel.WornApparel)
@@ -169,10 +292,10 @@ public static class OutcomeUtility
             if (armor <= 0)
                 continue;
 
-            chanceToPen *= Mathf.Clamp01(1f - (armor - armorPen));
+            chance *= Mathf.Clamp01(1f - (armor - armorPen));
         }
 
-        return Mathf.Clamp01(chanceToPen + 0.25f);
+        return chance;
     }
 
     private static bool Damage(Pawn attacker, Pawn pawn, in AdditionalArgs args)
@@ -191,17 +314,20 @@ public static class OutcomeUtility
 
         for (int i = 0; i < 50; i++)
         {
-            var verbProps = args.Weapon.def.Verbs.First();
-            var tool = args.Weapon.def.tools.RandomElementByWeight(t => t.chanceFactor);
+            // TODO check does this correctly get the right verbs even if the melee weapon is a sidearm?
+            var verb = attacker.meleeVerbs.TryGetMeleeVerb(pawn);
 
-            float dmg = verbProps.AdjustedMeleeDamageAmount(tool, attacker, args.Weapon, null);
+            float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, attacker, args.Weapon, verb.HediffCompSource);
             if (dmg > dmgToDo)
                 dmg = dmgToDo;
             dmgToDo -= dmg;
-            float armorPenetration = verbProps.AdjustedArmorPenetration(tool, attacker, args.Weapon, null);
+            float armorPenetration = verb.verbProps.AdjustedArmorPenetration(verb.tool, attacker, args.Weapon, verb.HediffCompSource);
 
-            DamageDef def = verbProps.meleeDamageDef ?? DamageDefOf.Blunt;
-            var bodyPartGroupDef = verbProps.AdjustedLinkedBodyPartsGroup(tool);
+            if (debugLogExecutionOutcome)
+                Core.Log($"Using verb {verb} to hit for {dmg:F1} dmg with {armorPenetration:F2} pen. Rem: {dmgToDo}");
+
+            DamageDef def = verb.GetDamageDef();
+            var bodyPartGroupDef = verb.verbProps.AdjustedLinkedBodyPartsGroup(verb.tool);
 
             for (int j = 0; j < 5; j++)
             {
@@ -213,7 +339,11 @@ public static class OutcomeUtility
                 }
 
                 if (WouldBeInvalidResult(def.hediff, dmg, part))
+                {
+                    if (j == 4)
+                        Core.Warn($"Failed to find any hit for {dmg:F2} dmg that would not kill, down or amputate part on {pawn}. Will keep trying for the remaining {dmgToDo:F2} dmg.");
                     continue;
+                }
 
                 ThingDef source = args.Weapon.def;
                 Vector3 direction = (pawn.Position - attacker.Position).ToVector3();
@@ -224,6 +354,8 @@ public static class OutcomeUtility
                 damageInfo.SetAllowDamagePropagation(false);
 
                 var info = pawn.TakeDamage(damageInfo);
+                if (debugLogExecutionOutcome)
+                    Core.Log($"Hit {part} for {info.totalDamageDealt:F2}/{dmg:F2} dmg, mitigated");
                 totalDmgDone += info.totalDamageDealt;
                 if (pawn.Dead || pawn.Downed) {
                     Core.Error($"Accidentally killed or downed {pawn} when attempting to just injure: tried to deal {dmg:F1} {def} dmg to {part}. Storyteller, difficulty, hediffs, or mods could have modified the damage to cause this.");
@@ -236,17 +368,8 @@ public static class OutcomeUtility
                 break;
         }
 
-        Core.Log($"Dealt {totalDmgDone:F2} pts of dmg as part of injury.");
+        Core.Log($"Dealt {totalDmgDone:F2} pts of dmg as part of injury to {pawn} (aimed to deal {args.TargetDamageAmount:F2}).");
         return true;
-    }
-
-    private static bool WouldBeDownDeadOrAmputated(DamageDef damageDef, Pawn pawn, BodyPartRecord bodyPart, float damage)
-    {
-        HediffDef hediff = HealthUtility.GetHediffDefFromDamage(damageDef, pawn, bodyPart);
-
-        return pawn.health.WouldBeDownedAfterAddingHediff(hediff, bodyPart, damage) ||
-               pawn.health.WouldDieAfterAddingHediff(hediff, bodyPart, damage) ||
-               pawn.health.WouldLosePartAfterAddingHediff(hediff, bodyPart, damage);
     }
 
     private static bool Down(Pawn attacker, Pawn pawn, in AdditionalArgs args)
@@ -354,5 +477,17 @@ public static class OutcomeUtility
         var log = new BattleLogEntry_MeleeCombat(def, true, inst, vict, ImplementOwnerTypeDefOf.Weapon, weapon?.Label, def: LogEntryDefOf.MeleeAttack);
         Find.BattleLog.Add(log);
         return log;
+    }
+
+    public readonly struct PossibleMeleeAttack
+    {
+        public Pawn Pawn { get; init; }
+        public float Damage { get; init; }
+        public float ArmorPen{ get; init; }
+        public DamageDef DamageDef { get; init; }
+        public Verb Verb { get; init; }
+        public ThingWithComps Weapon { get; init; }
+
+        public override string ToString() => Verb.ToString();
     }
 }

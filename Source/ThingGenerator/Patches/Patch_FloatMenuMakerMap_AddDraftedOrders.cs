@@ -294,10 +294,10 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         bool enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
         bool isWalk = report.IsWalking;
         bool isLasso = report.PossibleExecutions?.FirstOrDefault().LassoToHere != null;
-        string append = isLasso ? " (lasso)" : isWalk ? " (walk to target)" : null;
+        string append = isLasso ? "AM.Exec.FloatMenu.Lasso".Trs() : isWalk ? "AM.Exec.FloatMenu.Walk".Trs() : null;
 
         string label = "AM.Exec.FloatMenu".Translate(targetName) + append;
-        string tt = enemy ? "AM.Exec.FloatMenu.TipEnemy" : "AM.Exec.FloatMenu.Tip";
+        string tt = "AM.Exec.FloatMenu.Tip";
         tt = tt.Translate(grappler.Name.ToStringShort, targetName);
         var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
 

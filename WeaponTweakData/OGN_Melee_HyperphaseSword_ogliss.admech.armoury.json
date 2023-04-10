@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGN_Melee_HyperphaseSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0636238158,
+  "OffY": -0.0318119079,
+  "HandsMode": 1,
+  "BladeStart": 0.08748275,
+  "BladeEnd": 0.50633955,
+  "MeleeWeaponType": 48
+}

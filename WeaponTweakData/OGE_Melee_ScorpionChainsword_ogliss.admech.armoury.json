@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_ScorpionChainsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.323421061,
+  "HandsMode": 1,
+  "BladeStart": 0.129898638,
+  "BladeEnd": 0.792646766,
+  "MeleeWeaponType": 6
+}

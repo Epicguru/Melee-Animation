@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGAM_Melee_TaserGoad",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.185569465,
+  "OffY": 0.0371138938,
+  "BladeStart": 0.0715768,
+  "BladeEnd": 0.617681265,
+  "MeleeWeaponType": 8
+}

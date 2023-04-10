@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_Eviscerator",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.434762716,
+  "Rotation": 45.0,
+  "BladeStart": 0.363185972,
+  "BladeEnd": 1.08425593,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_Hellglaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.0901337862,
+  "OffY": -0.005301997,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": -1.08425593,
+  "BladeEnd": 0.898686469,
+  "MeleeWeaponType": 6
+}
