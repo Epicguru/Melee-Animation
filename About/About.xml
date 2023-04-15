@@ -27,5 +27,6 @@ Load as low down as possible.</description>
     <li>projectjedi.lightsabers</li>
     <li>erdelf.humanoidalienraces</li>
     <li>Krkr.rule56</li>
+    <li>ceteam.combatextended</li>
   </loadAfter>
 </ModMetaData>
