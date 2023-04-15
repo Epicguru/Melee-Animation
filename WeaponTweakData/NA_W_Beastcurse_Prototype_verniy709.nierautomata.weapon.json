@@ -1,0 +1,11 @@
+{
+  "TextureModID": "verniy709.nierautomata.weapon",
+  "ItemDefName": "NA_W_Beastcurse_Prototype",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.378398478,
+  "Rotation": 45.0,
+  "BladeStart": 0.513202846,
+  "BladeEnd": 1.06661057,
+  "MeleeWeaponType": 6
+}

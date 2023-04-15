@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGO_Melee_ChainChoppa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.185569465,
+  "OffY": 0.0424158834,
+  "BladeStart": 0.188220471,
+  "BladeEnd": 0.6017753,
+  "MeleeWeaponType": 6
+}

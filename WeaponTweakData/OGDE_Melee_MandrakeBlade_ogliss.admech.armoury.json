@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_MandrakeBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.206777424,
+  "OffY": -0.04241588,
+  "Rotation": 45.0,
+  "BladeStart": 0.129898638,
+  "BladeEnd": 0.707815,
+  "MeleeWeaponType": 6
+}

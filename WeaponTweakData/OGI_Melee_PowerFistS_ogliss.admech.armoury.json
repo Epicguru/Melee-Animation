@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_PowerFistS",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2863072,
+  "HandsMode": 2,
+  "BladeEnd": 0.304864138,
+  "MeleeWeaponType": 40
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGK_Melee_ShamanStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.397648752,
+  "Rotation": 45.0,
+  "BladeStart": 0.156408563,
+  "BladeEnd": 0.930498362,
+  "MeleeWeaponType": 1
+}

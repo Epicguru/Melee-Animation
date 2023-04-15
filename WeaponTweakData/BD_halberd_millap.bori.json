@@ -1,0 +1,11 @@
+{
+  "TextureModID": "millap.bori",
+  "ItemDefName": "BD_halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.350018561,
+  "Rotation": 45.0,
+  "BladeStart": 0.607802451,
+  "BladeEnd": 1.03350067,
+  "MeleeWeaponType": 6
+}

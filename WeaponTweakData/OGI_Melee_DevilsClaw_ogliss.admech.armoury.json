@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_DevilsClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.344629019,
+  "OffY": -0.0477178656,
+  "BladeStart": 0.09808672,
+  "BladeEnd": 0.819156647,
+  "MeleeWeaponType": 6
+}

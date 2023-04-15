@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_Witchblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.286307216,
+  "BladeStart": 0.2465423,
+  "BladeEnd": 0.723720968,
+  "MeleeWeaponType": 6
+}

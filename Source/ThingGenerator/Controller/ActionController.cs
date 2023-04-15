@@ -15,6 +15,22 @@ namespace AM.Controller;
 
 public class ActionController
 {
+    public static Func<IntVec3, Map, bool> LOSValidator => Core.Settings.MaxFillPctForLasso >= 0.99f ? AlwaysTrue : MaxFillPct;
+
+    private static bool AlwaysTrue(IntVec3 a, Map b) => true;
+
+    private static bool MaxFillPct(IntVec3 cell, Map map)
+    {
+        var building = cell.GetEdifice(map);
+        if (building == null)
+            return true;
+
+        if (building.def.fillPercent <= Core.Settings.MaxFillPctForLasso)
+            return true;
+
+        return building is Building_Door { Open: true };
+    }
+
     public static void TryGiveDuelThoughts(Pawn winner, Pawn loser, bool isFriendlyDuel)
     {
         if (winner == null || loser == null)
@@ -151,7 +167,7 @@ public class ActionController
                 return new GrappleAttemptReport(req, "Internal", $"Specified target cell {req.DestinationCell.Value} invalid");
 
             // Check fixed destination LOS.
-            if (!GenSight.LineOfSightToThing(req.DestinationCell.Value, req.Target, map))
+            if (!GenSight.LineOfSightToThing(req.DestinationCell.Value, req.Target, map, false, c => LOSValidator(c, map)))
                 return new GrappleAttemptReport(req, "MissingLOS");
 
             // Success!
@@ -170,7 +186,7 @@ public class ActionController
         for (int i = 0; i < spotCount; i++)
         {
             var cell = closestCells[i];
-            if (GenSight.LineOfSightToThing(cell, req.Target, map))
+            if (GenSight.LineOfSightToThing(cell, req.Target, map, false, c => LOSValidator(c, map)))
             {
                 // Success!
                 return GrappleAttemptReport.Success(cell);

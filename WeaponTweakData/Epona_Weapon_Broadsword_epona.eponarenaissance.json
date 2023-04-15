@@ -1,0 +1,11 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_Broadsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.256483853,
+  "FlipY": true,
+  "BladeStart": 0.112975031,
+  "BladeEnd": 0.711437345,
+  "MeleeWeaponType": 6
+}

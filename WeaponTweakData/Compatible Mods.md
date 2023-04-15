@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 30 Mar 2023, 2:52 PM.`  
+`Updated 15 Apr 2023, 10:50 PM.`  
 
-**Melee Animation supports 1393 weapons from 172 mods.**  
+**Melee Animation supports 1560 weapons from 190 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -21,6 +21,8 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 
   | Mod Name | Mod ID | Weapon Count | Patch Author |
 | --- | --- | --- | --- |
+| **[1.4]Chaoura Race** | ayameduki.harchaoura | 1 | *Epicguru* |
+| **[1.4]Idearn Race** | ayameduki.haridearn | 1 | *Epicguru* |
 | **[1.4]Silkiera Race** | ayameduki.harsilkiera | 3 | *Epicguru* |
 | **[1.4]Xenoorca Race** | ayameduki.harxenoorca | 1 | *Epicguru* |
 | **[K4G] Vanilla Weapon Retextures** | k4g.vwr | 17 | *Epicguru* |
@@ -31,9 +33,11 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **[RH2] Weapons: Simple Retexture** | arektpp.simplerh2weap | 27 | *Epicguru* |
 | **[RWY]Advanced Mechanoid Warfare** | ravvy.amw | 3 | *Epicguru* |
 | **[SYR] Thrumkin** | syrchalis.thrumkin | 1 | *Epicguru* |
+| **[SZ]The Ancient Celestiall-Mechanical Enemy and Space Weapon Expansion** | sz.ancient.celestiall | 12 | *Epicguru* |
 | **ↁ Elves** | devdesigner.elves | 17 | *Epicguru* |
 | **ↁ House Sanguin** | devdesigner.blood | 5 | *Epicguru* |
 | **A RimWorld of Magic** | torann.arimworldofmagic | 8 | *Epicguru* |
+| **Adeptus Mechanicus: Armoury** | ogliss.admech.armoury | 79 | *Epicguru* |
 | **Advanced Animation** | co.uk.epicguru.advancedanimation | 1 | *Epicguru* |
 | **Advanced Melee Animation** | co.uk.epicguru.advancedmeleeanimation | 1 | *Epicguru* |
 | **AI Upscaled Textures - Core** | airetexture.core | 25 | *Epicguru* |
@@ -43,6 +47,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Alpha Bees** | sarg.rimbees | 2 | *Epicguru* |
 | **Alpha Biomes** | sarg.alphabiomes | 3 | *Epicguru* |
 | **Ambition of the Cosmic: True Pinnacle of Creation** | explodoboy.snsambitioncosmic.gen4addon | 1 | *Epicguru* |
+| **Amplified Mobility Platform** | aoba.amp | 1 | *Epicguru* |
 | **Ancient Species** | haduki.ancientspecies | 6 | *Epicguru* |
 | **Android Tiers Reforged** | killathon.androidtiersreforged | 1 | *Epicguru* |
 | **Anima Gear** | xrushha.animagear | 1 | *Epicguru* |
@@ -57,11 +62,14 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Better Humanoid Mechanoid** | better.humanoid.mechanoid.cn | 2 | *Epicguru* |
 | **Bill Doors' modular wolf girl weapon module** | 3hstltd.wolf.geneweapon | 17 | *Epicguru* |
 | **Biomes! Prehistoric** | biomesteam.biomesprehistoric | 3 | *Epicguru* |
+| **BondageBed Torture (Continued)** | mlie.bondagebedtorture | 1 | *Epicguru* |
+| **Bori race** | millap.bori | 5 | *Epicguru* |
 | **Call of Cthulhu - Factions** | rimofmadness.callofcthulhu.factions | 4 | *Epicguru* |
 | **Combat Extended Melee** | ceteam.combatextendedmelee | 7 | *Epicguru* |
 | **Contractors Arsenal** | zerophoenix.contractorsarsenalfaction | 1 | *Epicguru* |
 | **Core** | ludeon.rimworld | 17 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
+| **Dinosauria** | spincrus.dinosauria | 1 | *Epicguru* |
 | **Dragons Descent** | onyxae.dragonsdescent | 5 | *Epicguru* |
 | **Dune FedaykinArmor** | pphhyy.fedaykinjihadarmor | 1 | *Epicguru* |
 | **Eccentric Extras - Signature Weapons** | aelanna.eccentricextras.signatureweapons | 1 | *Epicguru* |
@@ -69,6 +77,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Edge of Descension - Monoblades** | rabbit.edgeofdescension | 6 | *Epicguru* |
 | **Edo Themed Expansion** | heis.edo.themed.expansion | 18 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
+| **Epona race Renaissance** | epona.eponarenaissance | 10 | *Epicguru* |
 | **Gimmicks (Continued)** | mlie.gimmicks | 17 | *Epicguru* |
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
 | **Glitter Weaponry** | detvisor.glitterweaponry | 1 | *Epicguru* |
@@ -80,6 +89,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Industrial Armory** | tyrannicalelmo.industrialarmory | 13 | *Epicguru* |
 | **Industrial Melee Weaponry** | iexist.industrial.melee.weaponry | 12 | *Epicguru* |
 | **Industrialisation** | trasheddt.industrialisation | 4 | *Epicguru* |
+| **Kalia Race** | foxbots.kalia.race | 9 | *Epicguru* |
 | **Kemetic Decorations** | sovereign.kemet | 1 | *Epicguru* |
 | **kemomimihouse** | psyche.kemomimihouse | 2 | *Epicguru* |
 | **Kenshi Armory (1.4)** | biowreck.kenshiarmory | 12 | *Epicguru* |
@@ -88,6 +98,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 3 | *Epicguru* |
 | **M.I.S. - Arknights** | mis.arknights | 98 | *Epicguru* |
 | **MakaiTech** | aranmaho.makai | 7 | *Epicguru* |
+| **MakaiTech - Psycast** | aranmaho.makai.psycast | 1 | *Epicguru* |
 | **Makeshift Melee Weapons** | detvisor.makeshiftweapons | 3 | *Epicguru* |
 | **Malay Themed Expansion** | nstr.malay.themed.expansion | 6 | *Epicguru* |
 | **Maru Race** | vamv.maruracemod | 7 | *Epicguru* |
@@ -102,7 +113,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Metal Rim Rising** | mgr.rim | 2 | *Epicguru* |
 | **Miho, the celestial fox** | miho.fortifiedoutremer | 8 | *Epicguru* |
 | **Mincho, The Mint Choco Slime ~ HAR ver.** | sutsutman.minchothemintchocoslimeharver | 3 | *Epicguru* |
-| **Moosesian race** | waffelf.moosesianrace | 6 | *Epicguru* |
+| **Moosesian race** | waffelf.moosesianrace | 7 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
 | **More Vanilla Textures** | tidal.morevanilla.textures | 2 | *Epicguru* |
 | **MorrowRim** | sirmashedpotato.morrowrim | 1 | *Epicguru* |
@@ -111,8 +122,10 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Moyo-From the depth** | nemonian.my | 7 | *Epicguru* |
 | **Moyo-Light in the Abyss** | aoba.redmoyo | 5 | *Epicguru* |
 | **Moyo-The cartel arrives** | nemonian.mycartel | 3 | *Epicguru* |
+| **Naki Race HAR Edition** | seioch.naki.har | 2 | *Epicguru* |
 | **NewRatkinPlus** | solaris.ratkinracemod | 15 | *Epicguru* |
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
+| **NierAutomata Weapon Pack** | verniy709.nierautomata.weapon | 32 | *Epicguru* |
 | **Nyaron race** | farmradish.nyaron | 3 | *Epicguru* |
 | **Obsidia Expansion** | obsidiaexpansion.core | 24 | *Epicguru* |
 | **Oddities: Weapons Module** | chairheir.odditiesweapons | 7 | *Epicguru* |
@@ -122,10 +135,12 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Outland - Motz Coalition** | neronix17.outland.motzcoalition | 7 | *Epicguru* |
 | **Paniel the Automata** | ahndemi.panieltheautomata | 8 | *Epicguru* |
 | **Pawnmorpher** | tachyonite.pawnmorpherpublic | 1 | *Epicguru* |
+| **PLA-Armory** | issaczhuang.pla.armory | 3 | *Epicguru* |
 | **Polarisbloc - Mechenemy** | rsmaintain.vanya.polarisbloc.mechenemy | 2 | *Epicguru* |
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |
 | **pphhyy's Tox Weapons** | pphhyy.toxweapons | 4 | *Epicguru* |
 | **Psysword** | xedos.psyblade | 2 | *Epicguru* |
+| **Pyramid Heads Helmet** | kropolis.pyramidhead | 1 | *Epicguru* |
 | **Race to the Rim** | sargoskar.racetotherim | 2 | *Epicguru* |
 | **Ratkin Weapons+** | bbb.ratkinweapon.morefailure | 11 | *Epicguru* |
 | **ReGrowth: Core** | regrowth.botr.core | 1 | *Epicguru* |
@@ -156,8 +171,10 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Simply Melee Weapons (Continued)** | zal.simplymelee | 5 | *Epicguru* |
 | **Simply More Melee (Continued)** | mlie.simplymoremelee | 34 | *Epicguru* |
 | **Sparkling Worlds - Full Mod** | albion.sparklingworlds.full | 2 | *Epicguru* |
+| **Sparkling Worlds Addon - Weapons - Standalone Addon** | albion.sparklingworlds.addon.weapons | 2 | *Epicguru* |
 | **Star Crafters Armory** | akri.starcraftersarmory | 1 | *Epicguru* |
 | **Star Wars - Fully Functional Lightsabers** | projectjedi.lightsabers | 14 | *Epicguru* |
+| **Strain Tactics - Weapons** | amaoto.straintacticsweapons | 3 | *Epicguru* |
 | **Swords (Continued)** | mlie.swords | 5 | *Epicguru* |
 | **Tastier Vanilla Melee** | al9000.tvmelee | 12 | *Epicguru* |
 | **The Joris Experience** | sarg.jorisexperience | 1 | *Epicguru* |
@@ -193,4 +210,5 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Xeva Faction** | xeva.xevafaction.11 | 24 | *Epicguru* |
 | **Yuran race** | rooandgloomy.yuranracemod | 4 | *Epicguru* |
 | **Zombieland** | brrainz.zombieland | 1 | *Epicguru* |
+| **虫娘 Insect Girls** | pupa.insectgirls | 2 | *Epicguru* |
 

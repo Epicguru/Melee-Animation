@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_SingingSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5036886,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.713117,
+  "BladeEnd": 1.29103339,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_WychKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.196173459,
+  "HandsMode": 1,
+  "BladeStart": 0.09808672,
+  "MeleeWeaponType": 48
+}

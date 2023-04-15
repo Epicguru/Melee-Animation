@@ -1,0 +1,13 @@
+{
+  "TextureModID": "verniy709.nierautomata.weapon",
+  "ItemDefName": "NA_W_VirtuousContract_Replica",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.269608855,
+  "Rotation": 45.33276,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.111154534,
+  "BladeEnd": 0.8868713,
+  "MeleeWeaponType": 6
+}

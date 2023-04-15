@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGC_Melee_Bileblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.334025055,
+  "BladeStart": 0.07687878,
+  "BladeEnd": 0.792646766,
+  "MeleeWeaponType": 6
+}

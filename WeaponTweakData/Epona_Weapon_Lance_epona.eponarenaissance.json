@@ -1,0 +1,14 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_Lance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.525181234,
+  "OffY": -0.0183202773,
+  "Rotation": 46.22045,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.088548,
+  "BladeEnd": 1.401501,
+  "MeleeWeaponType": 5
+}

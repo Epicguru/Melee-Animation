@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Meta.Numerics.Statistics.Distributions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AM.Idle;
-using Meta.Numerics.Statistics.Distributions;
 using UnityEngine;
 using Verse;
 
@@ -69,7 +68,7 @@ public class Settings : SimpleSettingsBase
     [VisibleIf(nameof(EnemiesCanGrapple))]
     [Range(1, 240)]
     [Step(1f)]
-    public float GrappleAttemptMTBSecondsEnemy = 20;
+    public float GrappleAttemptMTBSecondsEnemy = 40;
 
     [Label("Minimum Melee Skill")]
     [Description("The minumum melee skill required to use a lasso.\nAffects all pawns.")]
@@ -102,6 +101,11 @@ public class Settings : SimpleSettingsBase
     [Range(0.1f, 5f)]
     [Percentage]
     public float GrappleSpeed = 1f;
+
+    [Label("Max Building Fill For Lasso Drag")]
+    [Description("The maximum 'fill' percentage of a building that a pawn can be dragged through by a lasso.\nLower values mean that pawns can <b>not<b> be dragged through/over partial cover such as sand bags or embrasures. A value of 100% means that the lasso can pull pawns though/over anything except completely solid walls and buildings.")]
+    [Percentage]
+    public float MaxFillPctForLasso = 0.4f;
     #endregion
 
     #region Executions & Duels
@@ -111,6 +115,10 @@ public class Settings : SimpleSettingsBase
                  "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
     public bool AutoExecute = true;
 
+    [Label("Enemies Can Perform Executions")]
+    [Description("Can enemies perform execution animations?")]
+    public bool EnemiesCanExecute = true;
+
     [Label("Automatic Execution Average Interval (Friendly)")]
     [Description("This is the average time, in seconds, at which friendly pawns will attempt to start an execution animation on the enemy they are currently fighting.\n" +
                  "For example, if this is set to 5 and your pawn is fighting in melee, an execution animation will be triggered on average after 5 seconds.\n" +
@@ -119,11 +127,6 @@ public class Settings : SimpleSettingsBase
     [Step(1f)]
     public float ExecuteAttemptMTBSeconds = 10;
 
-    [Label("Enemies Can Perform Executions")]
-    [Description("Can enemies perform execution animations?")]
-    public bool EnemiesCanExecute = true;
-
-        
     [Label("Automatic Execution Average Interval (Enemy)")]
     [Description("This is the average time, in seconds, at which enemy pawns will attempt to start an execution animation on the target they are currently fighting.\n" +
                  "For example, if this is set to 5 and an enemy is fighting in melee, an execution animation will be triggered on average after 5 seconds.\n" +
@@ -141,9 +144,15 @@ public class Settings : SimpleSettingsBase
     [Description("A general modifier on the lethality of execution animations. Higher values make executions more lethal. Affects all pawns.")]
     public float ExecutionLethalityModifier = 1f;
 
-    [Label("Execution Are Non Lethal On Friendlies")]
-    [Description("If enabled, execution animations on friendly pawns are always non-lethal regardless of other settings.\nPrisoners are considered friendly.\n\nUseful when trying to stop a mental break or prisoner uprising without causing a bloodbath.")]
+    [Label("Executions Are Non Lethal On Friendlies")]
+    [Description("If enabled, execution animations on friendly pawns are always non-lethal regardless of other settings.\nPrisoners and slaves are considered friendly.\n\nUseful when trying to stop a mental break or prisoner uprising without causing a bloodbath.")]
     public bool ExecutionsOnFriendliesAreNotLethal = true;
+
+    [Label("Execution Armor Strength")]
+    [Description("A multiplier on the effectiveness of armor when calculating execution animation outcome.\nLower values decrease the effect of armor on the outcome, higher values increase the effect of armor.\nSet to 0% to make armor be ignored.")]
+    [Percentage]
+    [Range(0, 3)]
+    public float ExecutionArmorCoefficient = 1f;
 
     [Description("If true, executions can destroy specific vital body parts, such as the heart or head.\n" +
                  "If false, the pawn is simply killed by 'magic' (no specific part takes damage)\n" +
@@ -268,6 +277,7 @@ public class Settings : SimpleSettingsBase
     [Label("Friendly Pawn Lethality Bonus")]
     [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
     [Percentage]
+    [Range(-1, 1)]
     public float FriendlyPawnLethalityBonus = 0f;
 
     [Label("Friendly Pawn Duel Ability Bonus")]

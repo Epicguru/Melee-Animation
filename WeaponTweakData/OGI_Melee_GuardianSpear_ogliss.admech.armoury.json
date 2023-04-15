@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_GuardianSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.450668722,
+  "OffY": -0.0265099257,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.856270552,
+  "BladeEnd": 1.19029558,
+  "MeleeWeaponType": 5
+}

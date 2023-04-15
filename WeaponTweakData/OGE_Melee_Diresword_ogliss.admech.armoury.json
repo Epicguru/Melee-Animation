@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_Diresword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4241588,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.17231451,
+  "BladeEnd": 1.01002812,
+  "MeleeWeaponType": 6
+}

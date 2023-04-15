@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGN_Melee_FabricatorClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.355233,
+  "OffY": 0.137851611,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "HandsMode": 2,
+  "BladeStart": 0.230636343,
+  "BladeEnd": 0.7979487,
+  "MeleeWeaponType": 5
+}

@@ -25,11 +25,7 @@ public class GrappleFlyer : PawnFlyer
             return null;
         }
 
-#if V13
-        GrappleFlyer flyer = MakeFlyer(AM_DefOf.AM_GrappleFlyer, victim, targetPos) as GrappleFlyer;
-#else
         GrappleFlyer flyer = MakeFlyer(AM_DefOf.AM_GrappleFlyer, victim, targetPos, null, null) as GrappleFlyer;
-#endif
         if (flyer?.FlyingPawn != null)
         {
             victim.Rotation = Rot4.South;

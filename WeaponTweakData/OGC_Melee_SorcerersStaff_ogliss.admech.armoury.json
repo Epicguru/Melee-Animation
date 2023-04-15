@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGC_Melee_SorcerersStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.291609168,
+  "Rotation": 45.0,
+  "BladeStart": 0.273052216,
+  "BladeEnd": 0.824458659,
+  "MeleeWeaponType": 5
+}

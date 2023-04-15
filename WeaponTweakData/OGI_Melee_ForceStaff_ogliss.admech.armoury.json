@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_ForceStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.376440942,
+  "Rotation": 45.0,
+  "BladeStart": 0.2147304,
+  "BladeEnd": 0.930498362,
+  "MeleeWeaponType": 1
+}

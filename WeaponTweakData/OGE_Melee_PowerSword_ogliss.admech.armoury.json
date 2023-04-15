@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_PowerSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.339327037,
+  "BladeStart": 0.103388704,
+  "BladeEnd": 0.80325073,
+  "MeleeWeaponType": 6
+}

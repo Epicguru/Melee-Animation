@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_ChainFistS",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.291609168,
+  "HandsMode": 2,
+  "BladeStart": 0.0556708425,
+  "BladeEnd": 0.4957356,
+  "MeleeWeaponType": 56
+}

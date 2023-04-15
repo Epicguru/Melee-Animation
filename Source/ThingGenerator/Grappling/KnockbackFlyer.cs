@@ -40,11 +40,8 @@ public class KnockbackFlyer : PawnFlyer
         var start = victim.DrawPos;
         var end = targetPos.ToVector3ShiftedWithAltitude(start.y);
 
-#if V13
-        KnockbackFlyer flyer = MakeFlyer(AM_DefOf.AM_KnockbackFlyer, victim, targetPos) as KnockbackFlyer;
-#else
         KnockbackFlyer flyer = MakeFlyer(AM_DefOf.AM_KnockbackFlyer, victim, targetPos, EffecterDefOf.ConstructDirt, SoundDefOf.Pawn_Melee_Punch_HitBuilding) as KnockbackFlyer;
-#endif
+
         if (flyer?.FlyingPawn != null)
         {
             flyer.StartPos = start;

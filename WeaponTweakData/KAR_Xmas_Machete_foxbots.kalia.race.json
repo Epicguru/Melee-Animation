@@ -1,0 +1,14 @@
+{
+  "TextureModID": "foxbots.kalia.race",
+  "ItemDefName": "KAR_Xmas_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.255228043,
+  "Rotation": 45.0,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "HandsMode": 1,
+  "BladeStart": 0.118498743,
+  "BladeEnd": 0.7164616,
+  "MeleeWeaponType": 22
+}

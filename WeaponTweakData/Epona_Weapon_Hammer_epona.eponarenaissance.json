@@ -1,0 +1,11 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_Hammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.293124437,
+  "Rotation": 50.0,
+  "BladeStart": 0.46716702,
+  "BladeEnd": 0.7786117,
+  "MeleeWeaponType": 2
+}

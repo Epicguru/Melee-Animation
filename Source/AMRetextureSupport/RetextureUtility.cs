@@ -16,6 +16,27 @@ public static class RetextureUtility
 
     private static readonly Dictionary<ThingDef, ActiveTextureReport> reportCache = new Dictionary<ThingDef, ActiveTextureReport>(128);
     private static readonly Dictionary<ThingDef, bool> reportCacheIsFull = new Dictionary<ThingDef, bool>(128);
+    private static readonly Dictionary<string, Func<string, int, (bool isCollection, string newPath)>> graphicClassCustomHandlers = new Dictionary<string, Func<string, int, (bool isCollection, string newPath)>>()
+    {
+        // AdvancedGraphics Single Randomized, is a collection despite being marked as Graphic_Single.
+        {"AdvancedGraphics.Graphic_SingleRandomized", (path, pass) => pass switch
+            {
+                0 => (true, path),
+                _ => (false, null)
+            }
+        },
+
+        // AdvancedGraphics SingleQuality. The tex name has a _Quality suffix.
+        // If the _Normal graphic cannot be found, the fallback is the raw xml path.
+        {"AdvancedGraphics.Graphic_SingleQuality", (path, pass) => pass switch
+            {
+                0 => (false, path + "_Normal"),
+                1 => (false, path),
+                _ => (false, null)
+            }
+        },
+
+    };
     private static HashSet<ModContentPack> OfficialMods;
     private static ModContentPack CoreMCP;
 
@@ -30,7 +51,7 @@ public static class RetextureUtility
         var sw = Stopwatch.StartNew();
         foreach (var weapon in DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon))
         {
-            onReport(GetTextureReport(weapon, full));
+            onReport(GetTextureReport(weapon, 0, full));
         }
         sw.Stop();
         return sw.Elapsed;
@@ -39,7 +60,7 @@ public static class RetextureUtility
     /// <summary>
     /// Generates information about a weapon's textures, such as what mod(s) are supplying textures.
     /// </summary>
-    public static ActiveTextureReport GetTextureReport(ThingDef weapon, bool full = true, bool loadFromCache = true, bool saveToCache = true)
+    public static ActiveTextureReport GetTextureReport(ThingDef weapon, int pass = 0, bool full = true, bool loadFromCache = true, bool saveToCache = true)
     {
         if (weapon == null)
             return default;
@@ -48,9 +69,9 @@ public static class RetextureUtility
             return found;
 
         // 0. Get active texture.
-        string texPath = ResolveTexturePath(weapon);
+        string texPath = ResolveTexturePath(weapon, pass, out bool canDoAnotherPass);
         if (string.IsNullOrWhiteSpace(texPath))
-            return new ActiveTextureReport($"Failed to find texture path i.e. graphicData.texPath '{weapon.graphicData.texPath}' ({weapon.graphicData.graphicClass.FullName})");
+            return new ActiveTextureReport($"Failed to find texture path i.e. graphicData.texPath '{weapon.graphicData.texPath}' ({weapon.graphicData.graphicClass.FullName}) pass {pass}");
 
         // Make basic report. Data still missing.
         var report = new ActiveTextureReport
@@ -141,7 +162,13 @@ public static class RetextureUtility
         }
 
         if (report.AllRetextures.Count == 0)
-            report.ErrorMessage = $"No textures found for path '{report.TexturePath}'";
+        {
+            report.ErrorMessage = $"No textures found for path '{report.TexturePath}' ({weapon.graphicData.graphicClass.FullName})";
+            if (canDoAnotherPass)
+            {
+                return GetTextureReport(weapon, pass + 1, full, loadFromCache, saveToCache);
+            }
+        }
 
         if (!saveToCache)
             return report;
@@ -230,14 +257,26 @@ public static class RetextureUtility
         DebugTables.MakeTablesDialog(meleeWeapons, table);
     }
 
-    private static string ResolveTexturePath(ThingDef weapon)
+    private static string ResolveTexturePath(ThingDef weapon, int pass, out bool canDoAnotherPass)
     {
+        canDoAnotherPass = false;
         string xmlPath = weapon.graphicData?.texPath.Replace('\\', '/');
         if (string.IsNullOrWhiteSpace(xmlPath))
             return null;
 
+        var gc = weapon.graphicData.graphicClass;
+        bool isCollection = gc.IsSubclassOf(typeof(Graphic_Collection));
+
+        // Attempt to get custom handler for this graphic class (required for some modded classes)
+        // and override the xmlpath and/or collection status.
+        if (graphicClassCustomHandlers.TryGetValue(gc.FullName, out var func))
+        {
+            (isCollection, xmlPath) = func(xmlPath, pass);
+            canDoAnotherPass = xmlPath != null;
+        }
+
         // Collections load from sub-folders, normal graphic types don't:
-        if (!weapon.graphicData.graphicClass.IsSubclassOf(typeof(Graphic_Collection)))
+        if (!isCollection)
             return xmlPath;
 
         // Other graphic classes will pull images from a sub-folder.

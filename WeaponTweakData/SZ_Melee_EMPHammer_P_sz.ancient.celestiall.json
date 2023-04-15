@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sz.ancient.celestiall",
+  "ItemDefName": "SZ_Melee_EMPHammer_P",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354192019,
+  "OffY": -0.0549608171,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.448846757,
+  "BladeEnd": 0.925173938,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.06666666,
+    "g": 1.0,
+    "b": 0.831999958,
+    "a": 0.98
+  }
+}

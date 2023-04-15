@@ -1,0 +1,12 @@
+{
+  "TextureModID": "amaoto.straintacticsweapons",
+  "ItemDefName": "Strain_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.236498982,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.158454329,
+  "BladeEnd": 0.603072464,
+  "MeleeWeaponType": 54
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "albion.sparklingworlds.addon.weapons",
+  "ItemDefName": "BurnStickSW",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3074487,
+  "Rotation": -5.0,
+  "HandsMode": 2,
+  "BladeStart": 0.101694576,
+  "BladeEnd": 0.7733517,
+  "MeleeWeaponType": 5
+}

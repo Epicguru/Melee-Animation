@@ -1,0 +1,11 @@
+{
+  "TextureModID": "waffelf.moosesianrace",
+  "ItemDefName": "WFF_Manchaser",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.482458,
+  "Rotation": 45.0,
+  "BladeStart": 0.1679143,
+  "BladeEnd": 1.10918033,
+  "MeleeWeaponType": 1
+}

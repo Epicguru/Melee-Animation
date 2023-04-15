@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGN_Melee_FlayingTalon",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.031811893,
+  "OffY": -0.275703251,
+  "Rotation": -90.0,
+  "HandsMode": 2,
+  "BladeStart": 0.0503688566,
+  "BladeEnd": 0.357884,
+  "MeleeWeaponType": 48
+}

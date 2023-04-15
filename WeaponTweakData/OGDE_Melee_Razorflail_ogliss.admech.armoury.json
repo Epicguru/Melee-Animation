@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_Razorflail",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2438913,
+  "BladeStart": 0.119294658,
+  "BladeEnd": 0.702513,
+  "MeleeWeaponType": 6
+}

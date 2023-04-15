@@ -1,0 +1,19 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_LanceToranos",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.531287968,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.29007104,
+  "BladeEnd": 1.37096727,
+  "MeleeWeaponType": 3,
+  "TrailTint": {
+    "r": 0.117,
+    "g": 0.933,
+    "b": 0.95,
+    "a": 0.867
+  }
+}
