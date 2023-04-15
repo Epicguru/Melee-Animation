@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_Agoniser",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.12194562,
+  "OffY": -0.116643667,
+  "Rotation": 45.0,
+  "BladeStart": 0.06097283,
+  "BladeEnd": 0.5169435,
+  "MeleeWeaponType": 1
+}

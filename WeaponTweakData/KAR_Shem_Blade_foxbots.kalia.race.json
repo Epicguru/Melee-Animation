@@ -1,0 +1,13 @@
+{
+  "TextureModID": "foxbots.kalia.race",
+  "ItemDefName": "KAR_Shem_Blade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.069276154,
+  "Rotation": 45.0,
+  "ScaleX": 1.75,
+  "ScaleY": 1.75,
+  "BladeStart": -1.08836532,
+  "BladeEnd": 0.9607513,
+  "MeleeWeaponType": 6
+}

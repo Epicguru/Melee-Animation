@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_DjinBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.360535026,
+  "BladeStart": 0.119294658,
+  "BladeEnd": 0.8350626,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_Impaler",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.349930942,
+  "Rotation": 45.0,
+  "BladeStart": 0.4268098,
+  "BladeEnd": 1.02063215,
+  "MeleeWeaponType": 6
+}

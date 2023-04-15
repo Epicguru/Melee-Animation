@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_Klaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.736975968,
+  "OffY": -0.0318119079,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.119294658,
+  "BladeEnd": 1.61975646,
+  "MeleeWeaponType": 6
+}

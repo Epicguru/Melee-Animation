@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_GhostAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2810052,
+  "OffY": -0.0424158871,
+  "Rotation": 45.0,
+  "BladeStart": 0.347280025,
+  "BladeEnd": 0.713117,
+  "MeleeWeaponType": 2
+}

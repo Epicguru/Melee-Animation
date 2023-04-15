@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGAM_Melee_TransonicRazor",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.06892583,
+  "OffY": -0.0159059558,
+  "HandsMode": 1,
+  "BladeStart": 0.177616492,
+  "BladeEnd": 0.4957356,
+  "MeleeWeaponType": 48
+}

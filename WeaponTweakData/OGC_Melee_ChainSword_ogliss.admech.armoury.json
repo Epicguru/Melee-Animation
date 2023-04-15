@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGC_Melee_ChainSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.158775747,
+  "Rotation": 45.0,
+  "BladeStart": 0.167935863,
+  "BladeEnd": 0.8091455,
+  "MeleeWeaponType": 6
+}

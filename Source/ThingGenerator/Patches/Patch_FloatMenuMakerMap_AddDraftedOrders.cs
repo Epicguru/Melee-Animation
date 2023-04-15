@@ -124,7 +124,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         {
             // TODO this should technically be LOS from any free spot around grappler.
             // More expensive to calculate though.
-            return GenSight.LineOfSight(pawn.Position, c, pawn.Map);
+            return GenSight.LineOfSight(pawn.Position, c, pawn.Map, false, c2 => ActionController.LOSValidator(c2, pawn.Map));
         }
 
         if (Event.current.type == EventType.Repaint && pawn.TryGetLasso() != null)
@@ -294,11 +294,13 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         bool enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
         bool isWalk = report.IsWalking;
         bool isLasso = report.PossibleExecutions?.FirstOrDefault().LassoToHere != null;
-        string append = isLasso ? " (lasso)" : isWalk ? " (walk to target)" : null;
+        string append = isLasso ? "AM.Exec.FloatMenu.Lasso".Trs() : isWalk ? "AM.Exec.FloatMenu.Walk".Trs() : null;
 
         string label = "AM.Exec.FloatMenu".Translate(targetName) + append;
-        string tt = enemy ? "AM.Exec.FloatMenu.TipEnemy" : "AM.Exec.FloatMenu.Tip";
-        tt = tt.Translate(grappler.Name.ToStringShort, targetName);
+        string tt = "AM.Exec.FloatMenu.Tip";
+        var probs = new OutcomeUtility.ProbabilityReport();
+        OutcomeUtility.GenerateRandomOutcome(grappler, target, probs);
+        tt = tt.Translate(grappler.Name.ToStringShort, targetName, probs.ToString());
         var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
 
         return new FloatMenuOption(label, OnClick, priority, revalidateClickTarget: target)

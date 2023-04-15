@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_VambraceBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.09013374,
+  "OffY": -0.132549629,
+  "Rotation": -35.0,
+  "HandsMode": 1,
+  "BladeStart": -0.379091918,
+  "BladeEnd": 0.2518443,
+  "MeleeWeaponType": 48
+}

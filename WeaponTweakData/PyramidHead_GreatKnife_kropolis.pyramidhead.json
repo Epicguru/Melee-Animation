@@ -1,0 +1,13 @@
+{
+  "TextureModID": "kropolis.pyramidhead",
+  "ItemDefName": "PyramidHead_GreatKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7450245,
+  "OffY": -0.0183202922,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.167935863,
+  "BladeEnd": 1.706839,
+  "MeleeWeaponType": 6
+}

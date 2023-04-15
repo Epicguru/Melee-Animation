@@ -1,0 +1,15 @@
+{
+  "TextureModID": "foxbots.kalia.race",
+  "ItemDefName": "KAR_Trench_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.03281504,
+  "OffY": 0.0364611521,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "HandsMode": 1,
+  "BladeStart": 0.103914283,
+  "BladeEnd": 0.5961398,
+  "MeleeWeaponType": 6
+}

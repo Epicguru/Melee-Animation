@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGAM_Melee_ArcMaul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.174965486,
+  "OffY": 0.04241588,
+  "BladeStart": 0.119294658,
+  "BladeEnd": 0.617681265,
+  "MeleeWeaponType": 8
+}

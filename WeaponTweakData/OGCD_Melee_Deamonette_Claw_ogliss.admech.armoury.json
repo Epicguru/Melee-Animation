@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGCD_Melee_Deamonette_Claw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.270401239,
+  "OffY": -0.0159059539,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "HandsMode": 2,
+  "BladeStart": 0.0503688566,
+  "BladeEnd": 0.893384457,
+  "MeleeWeaponType": 1
+}

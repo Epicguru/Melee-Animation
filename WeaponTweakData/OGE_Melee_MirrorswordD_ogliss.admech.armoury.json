@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_MirrorswordD",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.328723043,
+  "ScaleX": 0.95,
+  "ScaleY": 0.95,
+  "BladeStart": 0.13520062,
+  "BladeEnd": 0.7290229,
+  "MeleeWeaponType": 6
+}

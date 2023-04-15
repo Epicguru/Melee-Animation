@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGAM_Melee_TransonicBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.355233043,
+  "OffY": -0.0265099257,
+  "BladeStart": 0.108690694,
+  "BladeEnd": 0.792646766,
+  "MeleeWeaponType": 6
+}

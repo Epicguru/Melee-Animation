@@ -1,0 +1,17 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGC_Melee_Hellblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.344629,
+  "Rotation": 45.0,
+  "BladeStart": 0.161710545,
+  "BladeEnd": 0.978216231,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.973333359,
+    "g": 0.06488889,
+    "b": 0.101226628,
+    "a": 0.96
+  }
+}

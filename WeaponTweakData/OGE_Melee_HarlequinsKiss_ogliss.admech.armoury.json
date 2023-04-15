@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGE_Melee_HarlequinsKiss",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0636238456,
+  "OffY": -0.04771786,
+  "HandsMode": 1,
+  "BladeStart": 0.188220471,
+  "BladeEnd": 0.548755467,
+  "MeleeWeaponType": 48
+}

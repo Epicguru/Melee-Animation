@@ -1,0 +1,14 @@
+{
+  "TextureModID": "foxbots.kalia.race",
+  "ItemDefName": "KAR_Taross_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.03281501,
+  "OffY": 0.0255228058,
+  "Rotation": 45.0,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.08932982,
+  "BladeEnd": 0.774799466,
+  "MeleeWeaponType": 6
+}

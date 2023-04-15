@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGAM_Melee_OmnisianAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.344629049,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.4586217,
+  "BladeEnd": 0.819156647,
+  "MeleeWeaponType": 6
+}

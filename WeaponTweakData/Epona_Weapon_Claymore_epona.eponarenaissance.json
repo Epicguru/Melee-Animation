@@ -1,0 +1,14 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.201523,
+  "OffY": -0.1038149,
+  "Rotation": 34.4287,
+  "ScaleX": 1.08,
+  "ScaleY": 1.08,
+  "BladeStart": 0.387779176,
+  "BladeEnd": 0.7358644,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Weapon_BigLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.531288,
+  "Rotation": 45.91557,
+  "ScaleX": 2.08,
+  "ScaleY": 2.08,
+  "BladeStart": 0.210683167,
+  "BladeEnd": 1.91446877,
+  "MeleeWeaponType": 5
+}

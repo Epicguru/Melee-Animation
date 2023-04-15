@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGDE_Melee_VenomBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.339327037,
+  "BladeStart": 0.09808672,
+  "BladeEnd": 0.7820428,
+  "MeleeWeaponType": 6
+}

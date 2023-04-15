@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 30 Mar 2023, 2:52 PM.`  
+`Updated 15 Apr 2023, 10:07 PM.`  
 
-**Melee Animation supports 1393 weapons from 172 mods.**  
+**Melee Animation supports 1504 weapons from 177 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -31,9 +31,11 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **[RH2] Weapons: Simple Retexture** | arektpp.simplerh2weap | 27 | *Epicguru* |
 | **[RWY]Advanced Mechanoid Warfare** | ravvy.amw | 3 | *Epicguru* |
 | **[SYR] Thrumkin** | syrchalis.thrumkin | 1 | *Epicguru* |
+| **[SZ]The Ancient Celestiall-Mechanical Enemy and Space Weapon Expansion** | sz.ancient.celestiall | 12 | *Epicguru* |
 | **ↁ Elves** | devdesigner.elves | 17 | *Epicguru* |
 | **ↁ House Sanguin** | devdesigner.blood | 5 | *Epicguru* |
 | **A RimWorld of Magic** | torann.arimworldofmagic | 8 | *Epicguru* |
+| **Adeptus Mechanicus: Armoury** | ogliss.admech.armoury | 79 | *Epicguru* |
 | **Advanced Animation** | co.uk.epicguru.advancedanimation | 1 | *Epicguru* |
 | **Advanced Melee Animation** | co.uk.epicguru.advancedmeleeanimation | 1 | *Epicguru* |
 | **AI Upscaled Textures - Core** | airetexture.core | 25 | *Epicguru* |
@@ -69,6 +71,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Edge of Descension - Monoblades** | rabbit.edgeofdescension | 6 | *Epicguru* |
 | **Edo Themed Expansion** | heis.edo.themed.expansion | 18 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
+| **Epona race Renaissance** | epona.eponarenaissance | 10 | *Epicguru* |
 | **Gimmicks (Continued)** | mlie.gimmicks | 17 | *Epicguru* |
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
 | **Glitter Weaponry** | detvisor.glitterweaponry | 1 | *Epicguru* |
@@ -80,6 +83,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Industrial Armory** | tyrannicalelmo.industrialarmory | 13 | *Epicguru* |
 | **Industrial Melee Weaponry** | iexist.industrial.melee.weaponry | 12 | *Epicguru* |
 | **Industrialisation** | trasheddt.industrialisation | 4 | *Epicguru* |
+| **Kalia Race** | foxbots.kalia.race | 9 | *Epicguru* |
 | **Kemetic Decorations** | sovereign.kemet | 1 | *Epicguru* |
 | **kemomimihouse** | psyche.kemomimihouse | 2 | *Epicguru* |
 | **Kenshi Armory (1.4)** | biowreck.kenshiarmory | 12 | *Epicguru* |
@@ -126,6 +130,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |
 | **pphhyy's Tox Weapons** | pphhyy.toxweapons | 4 | *Epicguru* |
 | **Psysword** | xedos.psyblade | 2 | *Epicguru* |
+| **Pyramid Heads Helmet** | kropolis.pyramidhead | 1 | *Epicguru* |
 | **Race to the Rim** | sargoskar.racetotherim | 2 | *Epicguru* |
 | **Ratkin Weapons+** | bbb.ratkinweapon.morefailure | 11 | *Epicguru* |
 | **ReGrowth: Core** | regrowth.botr.core | 1 | *Epicguru* |

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGC_Melee_ThunderHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.349931031,
+  "Rotation": 45.0,
+  "BladeStart": 0.548755467,
+  "BladeEnd": 0.792646766,
+  "MeleeWeaponType": 1
+}

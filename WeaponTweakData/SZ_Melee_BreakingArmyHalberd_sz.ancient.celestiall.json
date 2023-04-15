@@ -1,0 +1,20 @@
+{
+  "TextureModID": "sz.ancient.celestiall",
+  "ItemDefName": "SZ_Melee_BreakingArmyHalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.14807057,
+  "OffY": -0.03664054,
+  "Rotation": 45.0,
+  "ScaleX": 3.2,
+  "ScaleY": 3.2,
+  "BladeStart": 1.5847038,
+  "BladeEnd": 3.11139345,
+  "MeleeWeaponType": 7,
+  "TrailTint": {
+    "r": 0.06666666,
+    "g": 1.0,
+    "b": 0.831999958,
+    "a": 0.98
+  }
+}

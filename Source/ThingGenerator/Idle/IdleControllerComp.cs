@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using AM.AMSettings;
+using AM.Patches;
 using AM.Processing;
 using AM.Tweaks;
 using JetBrains.Annotations;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Patch = AM.Patches.Patch_Verb_MeleeAttackDamage_ApplyMeleeDamageToTarget;
 
 namespace AM.Idle;
 
@@ -353,7 +353,7 @@ public class IdleControllerComp : ThingComp
 
         // Attempt to get an attack animation for current weapon and stance.
         var rot = pawn.Rotation;
-        bool didHit = target != null && Patch.lastTarget == target;
+        bool didHit = target != null && Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.lastTarget == target;
 
         // Get list of attack animations.
         var anims = tweak.GetAttackAnimations(rot);
@@ -383,7 +383,7 @@ public class IdleControllerComp : ThingComp
                 pauseTicks = (int)Core.Settings.AttackPauseDuration;
         }
 
-        Patch.lastTarget = null;
+        Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.lastTarget = null;
 
         // Play animation.
         var args = new AnimationStartParameters(anim, pawn)

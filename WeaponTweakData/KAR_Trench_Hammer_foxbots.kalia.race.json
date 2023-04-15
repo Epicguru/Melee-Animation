@@ -1,0 +1,13 @@
+{
+  "TextureModID": "foxbots.kalia.race",
+  "ItemDefName": "KAR_Trench_Hammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.0802145,
+  "Rotation": 45.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.129437089,
+  "BladeEnd": 0.69093883,
+  "MeleeWeaponType": 1
+}

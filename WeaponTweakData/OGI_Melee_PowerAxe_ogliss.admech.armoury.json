@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGI_Melee_PowerAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.164361537,
+  "OffY": 0.037113905,
+  "ScaleX": 0.95,
+  "ScaleY": 0.95,
+  "BladeStart": 0.304864138,
+  "BladeEnd": 0.5540574,
+  "MeleeWeaponType": 2
+}

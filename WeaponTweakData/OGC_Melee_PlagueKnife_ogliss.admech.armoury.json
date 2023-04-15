@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGC_Melee_PlagueKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "HandsMode": 1,
+  "BladeStart": 0.08748275,
+  "BladeEnd": 0.43211177,
+  "MeleeWeaponType": 48
+}

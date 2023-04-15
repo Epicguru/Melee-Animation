@@ -1,0 +1,14 @@
+{
+  "TextureModID": "epona.eponarenaissance",
+  "ItemDefName": "Epona_Kumis",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.213736534,
+  "OffY": -0.0977081358,
+  "Rotation": -105.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.100761518,
+  "MeleeWeaponType": 8
+}

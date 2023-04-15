@@ -88,7 +88,7 @@ namespace AM.Events.Workers
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
                 LogGenDef = @event.BattleLogDef.AsDefOfType(AM_DefOf.AM_Execution_Generic),
                 Weapon = killer.GetFirstMeleeWeapon(),
-                TargetDamageAmount = 20 // TODO pull from animation data, optional args or something along those lines.
+                TargetDamageAmount = 30 // TODO pull from animation data, optional args or something along those lines.
             };
 
             OutcomeUtility.PerformOutcome(ExecutionOutcome.Damage, killer, pawn, args);

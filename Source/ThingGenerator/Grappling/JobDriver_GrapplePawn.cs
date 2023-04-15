@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using AM.Controller;
 using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Noise;
 
 namespace AM.Grappling
 {
@@ -134,7 +136,8 @@ namespace AM.Grappling
 
             // TODO maybe don't check every frame?
             var target = GrappledPawn;
-            if (!GenSight.LineOfSightToThing(TargetDestination, target, Map) || target.Dead || !target.Spawned || target.IsInAnimation())
+            var map = target.Map;
+            if (!GenSight.LineOfSightToThing(TargetDestination, target, Map, false, c => ActionController.LOSValidator(c, map)) || target.Dead || !target.Spawned || target.IsInAnimation())
             {
                 EndJobWith(JobCondition.Errored);
                 Core.Warn("Failed: pawn moved out of line of sight before being ensnared.");

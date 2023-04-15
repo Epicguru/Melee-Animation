@@ -1,0 +1,10 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "OGAM_Melee_SingleChordClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "HandsMode": 2,
+  "BladeStart": 0.145804584,
+  "BladeEnd": 0.405601859,
+  "MeleeWeaponType": 48
+}
