@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompatibilityReportGenerato
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAI5000Patch", "CAI5000Patch\CAI5000Patch.csproj", "{0B91E675-3505-4587-94BB-6FEFC5ADB24D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombatExtendedPatch", "CombatExtendedPatch\CombatExtendedPatch.csproj", "{BBB0D084-8A32-458E-8A7F-48E7D90F0489}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		v1.4|Any CPU = v1.4|Any CPU
@@ -39,6 +41,8 @@ Global
 		{67701E3B-9094-4CA2-9DD8-42EBAFCB9F4A}.v1.4|Any CPU.Build.0 = Debug|Any CPU
 		{0B91E675-3505-4587-94BB-6FEFC5ADB24D}.v1.4|Any CPU.ActiveCfg = v1.4|Any CPU
 		{0B91E675-3505-4587-94BB-6FEFC5ADB24D}.v1.4|Any CPU.Build.0 = v1.4|Any CPU
+		{BBB0D084-8A32-458E-8A7F-48E7D90F0489}.v1.4|Any CPU.ActiveCfg = v1.4|Any CPU
+		{BBB0D084-8A32-458E-8A7F-48E7D90F0489}.v1.4|Any CPU.Build.0 = v1.4|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

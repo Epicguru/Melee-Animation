@@ -56,4 +56,10 @@ public sealed class VanillaOutcomeWorker : IOutcomeWorker
 
         return chance;
     }
+
+    public float GetPen(ThingWithComps weapon, Verb verb, Pawn attacker) =>
+        verb.verbProps.AdjustedArmorPenetration(verb.tool, attacker, weapon, verb.HediffCompSource);
+
+    public float GetDamage(ThingWithComps weapon, Verb verb, Pawn attacker) => 
+        verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, attacker, weapon, verb.HediffCompSource);
 }

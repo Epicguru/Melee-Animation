@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Library</OutputType>
+    <LangVersion>preview</LangVersion>
+    <NoStdLib>false</NoStdLib>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Configurations>v1.4</Configurations>
+    <RootNamespace>AM.CombatExtendedPatch</RootNamespace>
+    <AssemblyName>zz.AM.CombatExtendedPatch</AssemblyName>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>all</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <!-- _____ 1.4 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
+    <PackageReference Include="Krafs.Rimworld.Ref">
+      <Version>1.4.3641</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CombatExtended">
+      <HintPath>CombatExtended_14.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Output -->
+  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+    <DebugType>none</DebugType>
+    <OutputPath>..\..\Patch_CombatExtended\1.4\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;V14</DefineConstants>
+  </PropertyGroup>
+
+</Project>

@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AM.Retexture;
+﻿using AM.AMSettings;
 using AM.Patches;
+using AM.Retexture;
 using AM.Tweaks;
+using GistAPI;
+using GistAPI.Models;
 using HarmonyLib;
 using ModRequestAPI;
 using RimWorld;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
-using System.Globalization;
-using System.Reflection;
-using AM.AMSettings;
-using System.IO;
-using GistAPI.Models;
-using GistAPI;
 
 namespace AM
 {
@@ -135,7 +135,6 @@ namespace AM
             {
                 AnimRenderer.DefaultCutout ??= new Material(ThingDefOf.AIPersonaCore.graphic.Shader);
                 AnimRenderer.DefaultTransparent ??= new Material(ShaderTypeDefOf.Transparent.Shader);
-                //AnimRenderer.DefaultTransparent ??= new Material(DefDatabase<ShaderTypeDef>.GetNamed("Mote").Shader);
             });
 
             AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
@@ -149,6 +148,7 @@ namespace AM
             AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
             AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
             AddLateLoadAction(true, "Patch VBE", PatchVBE);
+            AddLateLoadAction(true, "Apply final patches", Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.PatchAll);
 
             AddLateLoadEvents();
         }

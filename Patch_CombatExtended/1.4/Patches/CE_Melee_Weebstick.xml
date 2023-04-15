@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <Operation Class="PatchOperationSequence">
+    <operations>
+
+      <!-- === AM_Weebstick === -->
+
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="AM_Weebstick"]/tools</xpath>
+        <value>
+          <tools>
+            <li Class="CombatExtended.ToolCE">
+              <label>point</label>
+              <capacities>
+                <li>Stab</li>
+              </capacities>
+              <power>25</power>
+              <cooldownTime>1.8</cooldownTime>
+              <chanceFactor>0.9</chanceFactor>
+              <armorPenetrationBlunt>22</armorPenetrationBlunt>
+              <armorPenetrationSharp>29</armorPenetrationSharp>
+              <linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
+            </li>
+            <li Class="CombatExtended.ToolCE">
+              <label>edge</label>
+              <capacities>
+                <li>Cut</li>
+              </capacities>
+              <power>28</power>
+              <cooldownTime>2</cooldownTime>
+              <chanceFactor>0.50</chanceFactor>
+              <armorPenetrationBlunt>20</armorPenetrationBlunt>
+              <armorPenetrationSharp>27</armorPenetrationSharp>
+              <linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
+            </li>
+          </tools>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="AM_Weebstick"]/statBases</xpath>
+        <value>
+          <Bulk>15</Bulk>
+          <MeleeCounterParryBonus>1.1</MeleeCounterParryBonus>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="AM_Weebstick"]/equippedStatOffsets</xpath>
+        <value>
+          <MeleeCritChance>0.8</MeleeCritChance>
+          <MeleeParryChance>0.9</MeleeParryChance>
+          <MeleeDodgeChance>0.55</MeleeDodgeChance>
+        </value>
+      </li>
+
+    </operations>
+  </Operation>
+
+</Patch>

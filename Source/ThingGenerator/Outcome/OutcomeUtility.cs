@@ -1,10 +1,10 @@
-﻿using AM.Patches;
+﻿using AM.Outcome;
+using AM.Patches;
 using JetBrains.Annotations;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AM.Outcome;
 using UnityEngine;
 using Verse;
 
@@ -33,7 +33,7 @@ public static class OutcomeUtility
         public DamageDef DamageDef;
         public BodyPartDef BodyPartDef;
         public RulePackDef LogGenDef;
-        public Thing Weapon;
+        public ThingWithComps Weapon;
         public float TargetDamageAmount;
     }
 
@@ -195,7 +195,7 @@ public static class OutcomeUtility
         return outcome;
     }
 
-    private static float RemapClamped(float baseA, float baseB, float newA, float newB, float value)
+    public static float RemapClamped(float baseA, float baseB, float newA, float newB, float value)
     {
         float t = Mathf.InverseLerp(baseA, baseB, value);
         return Mathf.Lerp(newA, newB, t);
@@ -214,11 +214,12 @@ public static class OutcomeUtility
             created.Add(ThingMaker.MakeThing(def) as ThingWithComps);
         }
 
-        static string VerbToString(Verb verb, Thing weapon = null)
+        static string VerbToString(Verb verb, ThingWithComps weapon = null)
         {
-            float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, null, weapon, verb.HediffCompSource);
-            float ap = verb.verbProps.AdjustedArmorPenetration(verb.tool, null, weapon, verb.HediffCompSource);
-            return $"{verb}: {verb.GetDamageDef()} (dmg: {dmg:F1}, ap: {ap:F1})";
+            float dmg = OutcomeWorker.GetDamage(weapon, verb, null);
+            float ap = OutcomeWorker.GetPen(weapon, verb, null);
+            var armorSt = verb.GetDamageDef()?.armorCategory?.armorRatingStat ?? StatDefOf.ArmorRating_Sharp;
+            return $"{verb}: {verb.GetDamageDef()} (dmg: {dmg:F2}, ap: {ap:F2}, armor: {armorSt})";
         }
 
         static string AllVerbs(ThingWithComps t)
@@ -289,13 +290,24 @@ public static class OutcomeUtility
         for (int i = 0; i < 50; i++)
         {
             // TODO check does this correctly get the right verbs even if the melee weapon is a sidearm?
-            var verb = attacker.meleeVerbs.TryGetMeleeVerb(pawn);
+            Verb verb;
+            int limit = 100;
+            do
+            {
+                verb = attacker.meleeVerbs.TryGetMeleeVerb(pawn);
+                if (limit-- == 0)
+                {
+                    Core.Error("Failed to find random verb for weapon.");
+                    break;
+                }
 
-            float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, attacker, args.Weapon, verb.HediffCompSource);
+            } while (verb.EquipmentSource != args.Weapon);
+
+            float dmg = OutcomeWorker.GetPen(args.Weapon, verb, attacker);
             if (dmg > dmgToDo)
                 dmg = dmgToDo;
             dmgToDo -= dmg;
-            float armorPenetration = verb.verbProps.AdjustedArmorPenetration(verb.tool, attacker, args.Weapon, verb.HediffCompSource);
+            float armorPenetration = OutcomeWorker.GetDamage(args.Weapon, verb, attacker);
 
             if (debugLogExecutionOutcome)
                 Core.Log($"Using verb {verb} to hit for {dmg:F1} dmg with {armorPenetration:F2} pen. Rem: {dmgToDo}");
@@ -307,7 +319,9 @@ public static class OutcomeUtility
             {
                 var part = pawn.health.hediffSet.GetRandomNotMissingPart(def, BodyPartHeight.Middle, BodyPartDepth.Outside);
 
-                if (dmg < 1f) {
+                if (dmg < 1f)
+                {
+                    Core.Warn($"Very low damage of {dmg:F3} with verb {verb}");
                     dmg = 1f;
                     def = DamageDefOf.Blunt;
                 }
@@ -329,10 +343,10 @@ public static class OutcomeUtility
 
                 var info = pawn.TakeDamage(damageInfo);
                 if (debugLogExecutionOutcome)
-                    Core.Log($"Hit {part} for {info.totalDamageDealt:F2}/{dmg:F2} dmg, mitigated");
+                    Core.Log($"Hit {part.LabelCap} for {info.totalDamageDealt:F2}/{dmg:F2} dmg, mitigated");
                 totalDmgDone += info.totalDamageDealt;
                 if (pawn.Dead || pawn.Downed) {
-                    Core.Error($"Accidentally killed or downed {pawn} when attempting to just injure: tried to deal {dmg:F1} {def} dmg to {part}. Storyteller, difficulty, hediffs, or mods could have modified the damage to cause this.");
+                    Core.Error($"Accidentally killed or downed {pawn} when attempting to just injure: tried to deal {dmg:F1} {def} dmg to {part.LabelCap}. Storyteller, difficulty, hediffs, or mods could have modified the damage to cause this.");
                     return false;
                 }
                 break;
