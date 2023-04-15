@@ -2,6 +2,11 @@
 
 name: Generate Compatibility List
 
+env:
+  # Change this to point to your solution, or the folder in which your solution 
+  # can be found.
+  SLN_PATH: Source/
+
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
