@@ -68,7 +68,7 @@ public class Settings : SimpleSettingsBase
     [VisibleIf(nameof(EnemiesCanGrapple))]
     [Range(1, 240)]
     [Step(1f)]
-    public float GrappleAttemptMTBSecondsEnemy = 20;
+    public float GrappleAttemptMTBSecondsEnemy = 40;
 
     [Label("Minimum Melee Skill")]
     [Description("The minumum melee skill required to use a lasso.\nAffects all pawns.")]
@@ -101,6 +101,11 @@ public class Settings : SimpleSettingsBase
     [Range(0.1f, 5f)]
     [Percentage]
     public float GrappleSpeed = 1f;
+
+    [Label("Max Building Fill For Lasso Drag")]
+    [Description("The maximum 'fill' percentage of a building that a pawn can be dragged through by a lasso.\nLower values mean that pawns can <b>not<b> be dragged through/over partial cover such as sand bags or embrasures. A value of 100% means that the lasso can pull pawns though/over anything except completely solid walls and buildings.")]
+    [Percentage]
+    public float MaxFillPctForLasso = 0.4f;
     #endregion
 
     #region Executions & Duels

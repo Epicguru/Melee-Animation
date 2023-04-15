@@ -124,7 +124,7 @@ public class Patch_FloatMenuMakerMap_AddDraftedOrders
         {
             // TODO this should technically be LOS from any free spot around grappler.
             // More expensive to calculate though.
-            return GenSight.LineOfSight(pawn.Position, c, pawn.Map);
+            return GenSight.LineOfSight(pawn.Position, c, pawn.Map, false, c2 => ActionController.LOSValidator(c2, pawn.Map));
         }
 
         if (Event.current.type == EventType.Repaint && pawn.TryGetLasso() != null)

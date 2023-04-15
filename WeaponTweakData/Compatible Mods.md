@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 10 Apr 2023, 1:30 PM.`  
+`Updated 15 Apr 2023, 10:07 PM.`  
 
-**Melee Animation supports 1495 weapons from 176 mods.**  
+**Melee Animation supports 1504 weapons from 177 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -83,6 +83,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Industrial Armory** | tyrannicalelmo.industrialarmory | 13 | *Epicguru* |
 | **Industrial Melee Weaponry** | iexist.industrial.melee.weaponry | 12 | *Epicguru* |
 | **Industrialisation** | trasheddt.industrialisation | 4 | *Epicguru* |
+| **Kalia Race** | foxbots.kalia.race | 9 | *Epicguru* |
 | **Kemetic Decorations** | sovereign.kemet | 1 | *Epicguru* |
 | **kemomimihouse** | psyche.kemomimihouse | 2 | *Epicguru* |
 | **Kenshi Armory (1.4)** | biowreck.kenshiarmory | 12 | *Epicguru* |

@@ -18,9 +18,10 @@
 
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
@@ -33,14 +34,10 @@
     <PackageReference Include="Krafs.Rimworld.Ref">
       <Version>1.4.3641</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="CombatExtended">
       <HintPath>CombatExtended_14.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-      <Private>False</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
+    <Publicize Include="CombatExtended_14" />
   </ItemGroup>
 
   <!-- Output -->

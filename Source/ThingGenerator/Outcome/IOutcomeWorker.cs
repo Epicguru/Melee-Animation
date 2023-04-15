@@ -13,4 +13,6 @@ public interface IOutcomeWorker
     float GetPen(ThingWithComps weapon, Verb verb, Pawn attacker);
 
     float GetDamage(ThingWithComps weapon, Verb verb, Pawn attacker);
+
+    void PreDamage(Verb verb);
 }

@@ -49,6 +49,11 @@ public sealed class CombatExtendedOutcomeWorker : IOutcomeWorker
     public float GetDamage(ThingWithComps weapon, Verb verb, Pawn attacker)
         => verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, attacker, weapon, verb.HediffCompSource);
 
+    public void PreDamage(Verb verb)
+    {
+        Verb_MeleeAttackCE.LastAttackVerb = verb as Verb_MeleeAttackCE;
+    }
+
     private float GetPenetrationFactor(Thing weapon)
         => weapon?.GetStatValue(CE_StatDefOf.MeleePenetrationFactor) ?? 1f;
 

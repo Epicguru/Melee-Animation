@@ -1,0 +1,14 @@
+{
+  "TextureModID": "foxbots.kalia.race",
+  "ItemDefName": "KAR_Grant_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.0218766928,
+  "OffY": 0.0182305723,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.08932982,
+  "BladeEnd": 0.771153331,
+  "MeleeWeaponType": 6
+}

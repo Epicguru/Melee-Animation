@@ -62,4 +62,7 @@ public sealed class VanillaOutcomeWorker : IOutcomeWorker
 
     public float GetDamage(ThingWithComps weapon, Verb verb, Pawn attacker) => 
         verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, attacker, weapon, verb.HediffCompSource);
+
+    // Does not need to do anything in vanilla.
+    public void PreDamage(Verb verb) { }
 }

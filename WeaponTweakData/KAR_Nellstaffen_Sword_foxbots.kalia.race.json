@@ -1,0 +1,19 @@
+{
+  "TextureModID": "foxbots.kalia.race",
+  "ItemDefName": "KAR_Nellstaffen_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.0802145,
+  "Rotation": 45.0,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": 0.1330832,
+  "BladeEnd": 0.80396837,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.117,
+    "g": 0.933,
+    "b": 0.95,
+    "a": 0.867
+  }
+}

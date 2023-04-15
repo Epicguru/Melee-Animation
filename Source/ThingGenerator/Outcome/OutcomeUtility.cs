@@ -134,7 +134,7 @@ public static class OutcomeUtility
 
         // Armor calculations for down or kill.
         var armorStat = dmgDef?.armorCategory?.armorRatingStat ?? StatDefOf.ArmorRating_Sharp;
-        Log($"Armor stat: {armorStat}, weapon pen: {weaponPen:F1}, lethality: {lethality:F2}");
+        Log($"Armor stat: {armorStat}, weapon pen: {weaponPen:F2}, lethality: {lethality:F2}");
         float armorMulti = Core.Settings.ExecutionArmorCoefficient;
         float chanceToPen = OutcomeWorker.GetChanceToPenAprox(victim, bodyPart, armorStat, weaponPen);
         Log($"Chance to pen (base): {chanceToPen:P1}");
@@ -303,11 +303,11 @@ public static class OutcomeUtility
 
             } while (verb.EquipmentSource != args.Weapon);
 
-            float dmg = OutcomeWorker.GetPen(args.Weapon, verb, attacker);
+            float dmg = OutcomeWorker.GetDamage(args.Weapon, verb, attacker);
             if (dmg > dmgToDo)
                 dmg = dmgToDo;
             dmgToDo -= dmg;
-            float armorPenetration = OutcomeWorker.GetDamage(args.Weapon, verb, attacker);
+            float armorPenetration = OutcomeWorker.GetPen(args.Weapon, verb, attacker);
 
             if (debugLogExecutionOutcome)
                 Core.Log($"Using verb {verb} to hit for {dmg:F1} dmg with {armorPenetration:F2} pen. Rem: {dmgToDo}");
@@ -321,7 +321,7 @@ public static class OutcomeUtility
 
                 if (dmg < 1f)
                 {
-                    Core.Warn($"Very low damage of {dmg:F3} with verb {verb}");
+                    Core.Warn($"Very low damage of {dmg:F3} with verb {verb}. Changing to 1 blunt damage.");
                     dmg = 1f;
                     def = DamageDefOf.Blunt;
                 }
@@ -332,6 +332,8 @@ public static class OutcomeUtility
                         Core.Warn($"Failed to find any hit for {dmg:F2} dmg that would not kill, down or amputate part on {pawn}. Will keep trying for the remaining {dmgToDo:F2} dmg.");
                     continue;
                 }
+
+                OutcomeWorker.PreDamage(verb);
 
                 ThingDef source = args.Weapon.def;
                 Vector3 direction = (pawn.Position - attacker.Position).ToVector3();

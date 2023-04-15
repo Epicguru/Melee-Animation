@@ -152,6 +152,10 @@
     <defName>AM_Execution_Punt</defName>
     <label>Execution: Punt</label>
     <data>Execution_BluntPunt.json</data>
+
+    <!-- Temporarily disabled until bugs are fixed: -->
+    <relativeProbability>0</relativeProbability>
+
     <weaponFilter Class="AM.Reqs.AnyType">
       <types>Long_Stab, Long_Blunt, Long_Sharp</types>
     </weaponFilter>
