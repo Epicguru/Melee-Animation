@@ -1,0 +1,13 @@
+{
+  "TextureModID": "verniy709.nierautomata.weapon",
+  "ItemDefName": "NA_W_Beastbane_Replica",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.406778276,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.210484117,
+  "BladeEnd": 0.948361039,
+  "MeleeWeaponType": 6
+}

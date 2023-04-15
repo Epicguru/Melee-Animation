@@ -1,0 +1,10 @@
+{
+  "TextureModID": "albion.sparklingworlds.addon.weapons",
+  "ItemDefName": "PainStickSW",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.274338841,
+  "BladeStart": 0.09696459,
+  "BladeEnd": 0.768621743,
+  "MeleeWeaponType": 9
+}

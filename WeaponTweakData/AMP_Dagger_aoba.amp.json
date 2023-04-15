@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aoba.amp",
+  "ItemDefName": "AMP_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354748547,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.23886399,
+  "BladeEnd": 0.901061237,
+  "MeleeWeaponType": 6
+}

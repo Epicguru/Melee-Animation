@@ -1,0 +1,13 @@
+{
+  "TextureModID": "issaczhuang.pla.armory",
+  "ItemDefName": "PLA_TypeEightyFourDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1702793,
+  "Rotation": 90.0,
+  "FlipY": true,
+  "HandsMode": 1,
+  "BladeStart": 0.111154534,
+  "BladeEnd": 0.50847286,
+  "MeleeWeaponType": 48
+}

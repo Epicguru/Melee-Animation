@@ -1,0 +1,17 @@
+{
+  "TextureModID": "seioch.naki.har",
+  "ItemDefName": "Naki_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.368938476,
+  "Rotation": 41.82159,
+  "BladeStart": 0.163184315,
+  "BladeEnd": 1.02877069,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.250986665,
+    "g": 0.13866666,
+    "b": 0.346666664,
+    "a": 0.956666648
+  }
+}

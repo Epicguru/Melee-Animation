@@ -1,0 +1,11 @@
+{
+  "TextureModID": "millap.bori",
+  "ItemDefName": "BD_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3594785,
+  "Rotation": 45.0,
+  "BladeStart": 0.120614491,
+  "BladeEnd": 1.0240407,
+  "MeleeWeaponType": 6
+}
