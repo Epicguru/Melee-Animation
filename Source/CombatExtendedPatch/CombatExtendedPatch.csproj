@@ -17,7 +17,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <PackageReference Include="Lib.Harmony" Version="2.2.2">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
     <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -36,6 +38,9 @@
     </PackageReference>
     <Reference Include="CombatExtended">
       <HintPath>CombatExtended_14.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
     <Publicize Include="CombatExtended_14" />
   </ItemGroup>
