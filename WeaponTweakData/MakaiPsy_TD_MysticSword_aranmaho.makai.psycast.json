@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aranmaho.makai.psycast",
+  "ItemDefName": "MakaiPsy_TD_MysticSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.236498982,
+  "OffY": -0.0189199187,
+  "Rotation": -46.02125,
+  "BladeStart": 0.111154534,
+  "BladeEnd": 0.7449719,
+  "MeleeWeaponType": 6
+}

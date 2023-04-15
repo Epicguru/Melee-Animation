@@ -1,0 +1,17 @@
+{
+  "TextureModID": "mlie.bondagebedtorture",
+  "ItemDefName": "SR_MeleeWeapon_ShuihuHuangmenSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.40204832,
+  "Rotation": 45.0,
+  "BladeStart": 0.177374259,
+  "BladeEnd": 1.03823066,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.6,
+    "g": 1.0,
+    "b": 0.623999953,
+    "a": 0.97
+  }
+}

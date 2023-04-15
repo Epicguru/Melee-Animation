@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.nierautomata.weapon",
+  "ItemDefName": "NA_W_Type4OFists_Prototype",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.156089351,
+  "OffY": -0.0141899437,
+  "HandsMode": 2,
+  "BladeStart": 0.04020483,
+  "BladeEnd": 0.442253143,
+  "MeleeWeaponType": 40
+}

@@ -1,0 +1,17 @@
+{
+  "TextureModID": "seioch.naki.har",
+  "ItemDefName": "Naki_DarkTanto",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.420968264,
+  "Rotation": 45.0,
+  "BladeStart": 0.23886399,
+  "BladeEnd": 1.07607043,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.250986665,
+    "g": 0.13866666,
+    "b": 0.346666664,
+    "a": 0.956666648
+  }
+}

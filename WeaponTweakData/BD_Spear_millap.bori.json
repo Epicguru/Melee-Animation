@@ -1,0 +1,11 @@
+{
+  "TextureModID": "millap.bori",
+  "ItemDefName": "BD_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.312178731,
+  "Rotation": 45.0,
+  "BladeStart": 0.5321228,
+  "BladeEnd": 0.986200869,
+  "MeleeWeaponType": 5
+}

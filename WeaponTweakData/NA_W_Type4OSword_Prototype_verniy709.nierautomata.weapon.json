@@ -1,0 +1,14 @@
+{
+  "TextureModID": "verniy709.nierautomata.weapon",
+  "ItemDefName": "NA_W_Type4OSword_Prototype",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3547485,
+  "OffY": 0.01418994,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.219944075,
+  "BladeEnd": 1.00512075,
+  "MeleeWeaponType": 6
+}

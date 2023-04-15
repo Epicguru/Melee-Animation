@@ -1,0 +1,13 @@
+{
+  "TextureModID": "millap.bori",
+  "ItemDefName": "SP_Staff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.416238248,
+  "OffY": 0.0945996046,
+  "Rotation": 223.3707,
+  "HandsMode": 1,
+  "BladeStart": 0.153724357,
+  "BladeEnd": 0.9814709,
+  "MeleeWeaponType": 1
+}

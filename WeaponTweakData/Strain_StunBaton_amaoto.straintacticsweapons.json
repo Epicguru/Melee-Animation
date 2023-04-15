@@ -1,0 +1,12 @@
+{
+  "TextureModID": "amaoto.straintacticsweapons",
+  "ItemDefName": "Strain_StunBaton",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.241229,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.106424555,
+  "BladeEnd": 0.6692922,
+  "MeleeWeaponType": 8
+}

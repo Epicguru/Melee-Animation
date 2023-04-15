@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ayameduki.haridearn",
+  "ItemDefName": "HAR_IA_Item_ArcheCartridge",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3547485,
+  "Rotation": -90.0,
+  "BladeStart": 0.04966479,
+  "BladeEnd": 0.815921545,
+  "MeleeWeaponType": 1
+}

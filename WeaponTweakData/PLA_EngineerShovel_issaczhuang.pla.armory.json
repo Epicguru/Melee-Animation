@@ -1,0 +1,10 @@
+{
+  "TextureModID": "issaczhuang.pla.armory",
+  "ItemDefName": "PLA_EngineerShovel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.165549308,
+  "BladeStart": 0.09696459,
+  "BladeEnd": 0.5794226,
+  "MeleeWeaponType": 8
+}

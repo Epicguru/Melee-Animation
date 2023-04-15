@@ -1,0 +1,14 @@
+{
+  "TextureModID": "pupa.insectgirls",
+  "ItemDefName": "IG_Meal_g",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.23176904,
+  "Rotation": -90.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.101694576,
+  "BladeEnd": 0.5699626,
+  "MeleeWeaponType": 8
+}
