@@ -72,6 +72,7 @@ jobs:
           Patch_FacialAnimation/
           Patch_Lightsabers/
           Patch_CAI5000/
+          Patch_CombatExtended/
           Sounds/
           Textures/
           loadfolders.xml
@@ -115,6 +116,7 @@ jobs:
         mkdir -p ${{ env.MOD_PATH }}/Patch_FacialAnimation/
         mkdir -p ${{ env.MOD_PATH }}/Patch_Lightsabers/
         mkdir -p ${{ env.MOD_PATH }}/Patch_CAI5000/
+        mkdir -p ${{ env.MOD_PATH }}/Patch_CombatExtended/
         mkdir -p ${{ env.MOD_PATH }}/Sounds/
         mkdir -p ${{ env.MOD_PATH }}/Textures/
         
