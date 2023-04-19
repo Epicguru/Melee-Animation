@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 19 Apr 2023, 2:40 PM.`  
+`Updated 19 Apr 2023, 11:18 PM.`  
 
-**Melee Animation supports 1624 weapons from 194 mods.**  
+**Melee Animation supports 1626 weapons from 195 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -55,6 +55,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Anty the war ant race** | roo.antyracemod | 4 | *Epicguru* |
 | **Apothecary (Continued)** | mlie.apothecary | 1 | *Epicguru* |
 | **Arasaka Corporation** | alien.arasakacorporation | 2 | *Epicguru* |
+| **Archotech Weaponry** | edern.archotechweaponry | 2 | *Epicguru* |
 | **Arsenal of Reaction** | 4ydra.arsenalofreaction | 11 | *Epicguru* |
 | **Arsenal of Revolution** | 4ydra.arsenalofrevolution | 8 | *Epicguru* |
 | **Aspirrator's Arsenal** | aspirrator.arsenal | 7 | *Epicguru* |
