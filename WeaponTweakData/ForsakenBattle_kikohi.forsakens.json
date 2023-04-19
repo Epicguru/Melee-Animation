@@ -1,0 +1,20 @@
+{
+  "TextureModID": "kikohi.forsakens",
+  "ItemDefName": "ForsakenBattle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5983202,
+  "OffY": -0.0373950154,
+  "Rotation": 65.0,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.563596249,
+  "BladeEnd": 1.37560225,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.9766667,
+    "g": 0.906607,
+    "b": 0.10092219,
+    "a": 0.966666639
+  }
+}

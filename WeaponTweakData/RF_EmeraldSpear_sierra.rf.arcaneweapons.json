@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.arcaneweapons",
+  "ItemDefName": "RF_EmeraldSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.250422835,
+  "Rotation": 45.0,
+  "BladeStart": 0.396160752,
+  "BladeEnd": 0.7492159,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.09463331,
+    "g": 0.5566667,
+    "b": 0.122310124,
+    "a": 0.97
+  }
+}

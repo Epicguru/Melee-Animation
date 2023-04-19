@@ -1,0 +1,18 @@
+{
+  "TextureModID": "kikohi.forsakens",
+  "ItemDefName": "ForsakenLongBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.379292279,
+  "OffY": -0.0320528671,
+  "Rotation": 40.0,
+  "BladeStart": 0.07211895,
+  "BladeEnd": 1.033705,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9766667,
+    "g": 0.906607,
+    "b": 0.10092219,
+    "a": 0.966666639
+  }
+}

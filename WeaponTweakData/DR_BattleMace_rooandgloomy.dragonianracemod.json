@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rooandgloomy.dragonianracemod",
+  "ItemDefName": "DR_BattleMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.208343655,
+  "Rotation": 90.0,
+  "BladeStart": 0.328541875,
+  "BladeEnd": 0.6757813,
+  "MeleeWeaponType": 1
+}

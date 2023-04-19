@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sierra.rf.arcaneweapons",
+  "ItemDefName": "RF_DiamondLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3448446,
+  "OffY": 0.0205264539,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.3,
+  "BladeStart": 0.112895548,
+  "BladeEnd": 0.9380594,
+  "MeleeWeaponType": 6
+}

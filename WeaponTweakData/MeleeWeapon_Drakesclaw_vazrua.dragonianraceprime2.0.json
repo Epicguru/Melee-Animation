@@ -1,0 +1,13 @@
+{
+  "TextureModID": "vazrua.dragonianraceprime2.0",
+  "ItemDefName": "MeleeWeapon_Drakesclaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.154922247,
+  "OffY": -0.0534214452,
+  "Rotation": 94.99544,
+  "HandsMode": 1,
+  "BladeStart": 0.07211895,
+  "BladeEnd": 0.4033319,
+  "MeleeWeaponType": 48
+}
