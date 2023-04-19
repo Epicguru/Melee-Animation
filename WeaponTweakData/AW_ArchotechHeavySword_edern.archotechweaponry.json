@@ -1,0 +1,20 @@
+{
+  "TextureModID": "edern.archotechweaponry",
+  "ItemDefName": "AW_ArchotechHeavySword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5397645,
+  "OffY": -0.0503170267,
+  "Rotation": 46.74776,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.306476474,
+  "BladeEnd": 1.15271747,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.6978001,
+    "g": 0.933,
+    "b": 0.344999969,
+    "a": 0.8433333
+  }
+}

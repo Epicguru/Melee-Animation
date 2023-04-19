@@ -27,7 +27,7 @@
 	<!-- _____ 1.4 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.4'">
 	  <PackageReference Include="Krafs.Rimworld.Ref">
-		  <Version>1.4.3641</Version>
+		  <Version>1.4.3682</Version>
 	  </PackageReference>
 	  <Reference Include="SWSaber">
 		  <HintPath>refs/1.4/SWSaber.dll</HintPath>
