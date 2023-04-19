@@ -1,0 +1,18 @@
+{
+  "TextureModID": "edern.archotechweaponry",
+  "ItemDefName": "AW_ArchotechSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.425407648,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.173822477,
+  "BladeEnd": 0.7822011,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.6978001,
+    "g": 0.933,
+    "b": 0.344999969,
+    "a": 0.8433333
+  }
+}
