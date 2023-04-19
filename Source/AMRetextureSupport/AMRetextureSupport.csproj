@@ -29,7 +29,7 @@
 
 	<!-- _____ 1.4 _____ -->
 	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3641" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3682" />
 	</ItemGroup>
 
 </Project>

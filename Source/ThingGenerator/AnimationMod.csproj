@@ -29,7 +29,7 @@
     <PackageReference Include="Lib.Harmony" Version="2.2.2">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
-    <PackageReference Include="PolySharp" Version="1.12.1">
+    <PackageReference Include="PolySharp" Version="1.13.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -47,7 +47,7 @@
 
 	<!-- _____ 1.4 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-	  <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3641" />
+	  <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3682" />
   </ItemGroup>
 
 
