@@ -1,0 +1,12 @@
+{
+  "TextureModID": "vazrua.dragonianraceprime2.0",
+  "ItemDefName": "MeleeWeapon_DR_Rageblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.293818,
+  "OffY": -0.0160264373,
+  "Rotation": 45.0,
+  "BladeStart": 0.130882546,
+  "BladeEnd": 0.9054935,
+  "MeleeWeaponType": 6
+}

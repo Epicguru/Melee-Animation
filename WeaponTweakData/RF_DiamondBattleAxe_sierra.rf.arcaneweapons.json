@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sierra.rf.arcaneweapons",
+  "ItemDefName": "RF_DiamondBattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.246317565,
+  "Rotation": 45.0,
+  "BladeStart": 0.223738447,
+  "BladeEnd": 0.6301624,
+  "MeleeWeaponType": 2
+}

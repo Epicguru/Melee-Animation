@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.arcaneweapons",
+  "ItemDefName": "RF_PeridotBattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.246317565,
+  "Rotation": 45.0,
+  "BladeStart": 0.223738447,
+  "BladeEnd": 0.6301624,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.345333338,
+    "g": 0.933333337,
+    "b": 0.3806133,
+    "a": 0.97
+  }
+}

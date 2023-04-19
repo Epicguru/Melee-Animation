@@ -1,0 +1,11 @@
+{
+  "TextureModID": "vazrua.dragonianraceprime2.0",
+  "ItemDefName": "DR_BattleHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.331213,
+  "Rotation": 47.61509,
+  "BladeStart": 0.5368855,
+  "BladeEnd": 0.803992748,
+  "MeleeWeaponType": 1
+}

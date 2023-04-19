@@ -1,0 +1,11 @@
+{
+  "TextureModID": "kikohi.forsakens",
+  "ItemDefName": "FSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3579237,
+  "Rotation": 45.0,
+  "BladeStart": 0.6330441,
+  "BladeEnd": 1.02836287,
+  "MeleeWeaponType": 5
+}

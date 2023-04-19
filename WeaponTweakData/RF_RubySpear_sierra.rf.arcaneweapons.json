@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.arcaneweapons",
+  "ItemDefName": "RF_RubySpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.250422835,
+  "Rotation": 45.0,
+  "BladeStart": 0.396160752,
+  "BladeEnd": 0.7492159,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.973,
+    "g": 0.065,
+    "b": 0.101,
+    "a": 0.96
+  }
+}

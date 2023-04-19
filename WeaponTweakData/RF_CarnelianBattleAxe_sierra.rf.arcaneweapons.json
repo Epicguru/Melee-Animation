@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.arcaneweapons",
+  "ItemDefName": "RF_CarnelianBattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.246317565,
+  "Rotation": 45.0,
+  "BladeStart": 0.223738447,
+  "BladeEnd": 0.6301624,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.896666646,
+    "g": 0.6860694,
+    "b": 0.086677745,
+    "a": 0.9633333
+  }
+}

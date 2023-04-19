@@ -1,0 +1,17 @@
+{
+  "TextureModID": "sierra.rf.arcaneweapons",
+  "ItemDefName": "RF_OnyxSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.250422835,
+  "Rotation": 45.0,
+  "BladeStart": 0.396160752,
+  "BladeEnd": 0.7492159,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.13333331,
+    "g": 0.129333317,
+    "b": 0.129333317,
+    "a": 0.7366667
+  }
+}

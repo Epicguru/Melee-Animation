@@ -1,0 +1,20 @@
+{
+  "TextureModID": "sierra.rf.arcaneweapons",
+  "ItemDefName": "RF_PeridotWarHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.459792852,
+  "OffY": -0.0164211616,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.5767936,
+  "BladeEnd": 0.9093223,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.345333338,
+    "g": 0.933333337,
+    "b": 0.3806133,
+    "a": 0.97
+  }
+}
