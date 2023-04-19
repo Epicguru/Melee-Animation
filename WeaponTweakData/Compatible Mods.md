@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 15 Apr 2023, 10:50 PM.`  
+`Updated 19 Apr 2023, 2:40 PM.`  
 
-**Melee Animation supports 1560 weapons from 190 mods.**  
+**Melee Animation supports 1624 weapons from 194 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -70,6 +70,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Core** | ludeon.rimworld | 17 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
 | **Dinosauria** | spincrus.dinosauria | 1 | *Epicguru* |
+| **Dragonian Prime Race2.0** | vazrua.dragonianraceprime2.0 | 4 | *Epicguru* |
 | **Dragons Descent** | onyxae.dragonsdescent | 5 | *Epicguru* |
 | **Dune FedaykinArmor** | pphhyy.fedaykinjihadarmor | 1 | *Epicguru* |
 | **Eccentric Extras - Signature Weapons** | aelanna.eccentricextras.signatureweapons | 1 | *Epicguru* |
@@ -78,9 +79,11 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Edo Themed Expansion** | heis.edo.themed.expansion | 18 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
 | **Epona race Renaissance** | epona.eponarenaissance | 10 | *Epicguru* |
+| **Forsakens** | kikohi.forsakens | 4 | *Epicguru* |
 | **Gimmicks (Continued)** | mlie.gimmicks | 17 | *Epicguru* |
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
 | **Glitter Weaponry** | detvisor.glitterweaponry | 1 | *Epicguru* |
+| **Gloomy Dragonian race** | rooandgloomy.dragonianracemod | 1 | *Epicguru* |
 | **Grimworld: Melee** | grimworld.melee | 6 | *Epicguru* |
 | **Heavy Melee Weapons (Continued)** | mlie.heavymeleeweapons | 11 | *Epicguru* |
 | **Hellsing ARMS Ultimate** | baskerville.hellsingarmsultimate | 13 | *Epicguru* |
@@ -150,6 +153,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Rim of Madness - Bones** | sihv.rombones | 1 | *Epicguru* |
 | **Rim of Madness - Vampires** | rimofmadness.vampires | 4 | *Epicguru* |
 | **Rim-Effect: N7** | rimeffect.n7 | 1 | *Epicguru* |
+| **RimFantasy - Arcane Weapons** | sierra.rf.arcaneweapons | 55 | *Epicguru* |
 | **RimFantasy - House Doyle** | sierra.rf.housedoyle | 16 | *Epicguru* |
 | **RimFantasy - Medieval Overhaul Edition** | sierra.rf.medievaloverhaul | 18 | *Epicguru* |
 | **RimForge** | co.uk.epicguru.rimforge | 6 | *Epicguru* |
