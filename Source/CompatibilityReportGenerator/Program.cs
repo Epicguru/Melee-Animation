@@ -1,6 +1,7 @@
 ﻿using System.CommandLine;
 using System.Globalization;
 using AM.Tweaks;
+using CompatibilityReportGenerator.Properties;
 
 namespace CompatibilityReportGenerator;
 
@@ -83,8 +84,7 @@ public static class Program
             totalWeaponCount++;
         }
 
-        const string TEMPLATE_PATH = "./Template.md";
-        string template = File.ReadAllText(TEMPLATE_PATH);
+        string template = Resources.Template;
 
         string time = DateTime.UtcNow.ToString("d MMM yyyy, h:mm tt");
         int modCount = table.Count;
