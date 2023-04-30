@@ -1,0 +1,13 @@
+{
+  "TextureModID": "albion.sparklingworlds.core",
+  "ItemDefName": "BurnStickSW",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.303573251,
+  "OffY": -0.0474333167,
+  "Rotation": -5.0,
+  "HandsMode": 2,
+  "BladeStart": 0.0498049855,
+  "BladeEnd": 0.766048133,
+  "MeleeWeaponType": 5
+}

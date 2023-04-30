@@ -1,0 +1,20 @@
+{
+  "TextureModID": "metalocif.warcasketpersonaweapons",
+  "ItemDefName": "WP_Kyokatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7779065,
+  "OffY": -0.0379466563,
+  "Rotation": 50.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.353378236,
+  "BladeEnd": 1.61510456,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.897,
+    "g": 0.686,
+    "b": 0.087,
+    "a": 0.963
+  }
+}

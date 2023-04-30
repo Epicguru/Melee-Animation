@@ -1,0 +1,13 @@
+{
+  "TextureModID": "metalocif.warcasketpersonaweapons",
+  "ItemDefName": "WP_Voltrender",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7209864,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.3913249,
+  "BladeEnd": 1.70522785,
+  "MeleeWeaponType": 6
+}

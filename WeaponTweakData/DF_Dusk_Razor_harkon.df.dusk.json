@@ -1,0 +1,11 @@
+{
+  "TextureModID": "harkon.df.dusk",
+  "ItemDefName": "DF_Dusk_Razor",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3225466,
+  "OffY": -0.0142299961,
+  "BladeStart": 0.09723831,
+  "BladeEnd": 0.8182248,
+  "MeleeWeaponType": 6
+}
