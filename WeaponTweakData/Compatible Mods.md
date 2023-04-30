@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 19 Apr 2023, 11:18 PM.`  
+`Updated 30 Apr 2023, 11:46 PM.`  
 
-**Melee Animation supports 1626 weapons from 195 mods.**  
+**Melee Animation supports 1639 weapons from 199 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -74,6 +74,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Dragonian Prime Race2.0** | vazrua.dragonianraceprime2.0 | 4 | *Epicguru* |
 | **Dragons Descent** | onyxae.dragonsdescent | 5 | *Epicguru* |
 | **Dune FedaykinArmor** | pphhyy.fedaykinjihadarmor | 1 | *Epicguru* |
+| **Dusk Armory** | harkon.df.dusk | 3 | *Epicguru* |
 | **Eccentric Extras - Signature Weapons** | aelanna.eccentricextras.signatureweapons | 1 | *Epicguru* |
 | **Eccentric Tech - Foxy's Armory 2.0** | aelanna.eccentrictech.foxysarmory2 | 1 | *Epicguru* |
 | **Edge of Descension - Monoblades** | rabbit.edgeofdescension | 6 | *Epicguru* |
@@ -100,6 +101,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Kijin Race 3.0** | ssulunge.kijinrace3 | 5 | *Epicguru* |
 | **Kurin HAR Edition** | seioch.kurin.har | 3 | *Epicguru* |
 | **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 3 | *Epicguru* |
+| **Logistics_Mechanoid** | pal5k.logisticsmechanoid | 1 | *Epicguru* |
 | **M.I.S. - Arknights** | mis.arknights | 98 | *Epicguru* |
 | **MakaiTech** | aranmaho.makai | 7 | *Epicguru* |
 | **MakaiTech - Psycast** | aranmaho.makai.psycast | 1 | *Epicguru* |
@@ -159,7 +161,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **RimFantasy - Medieval Overhaul Edition** | sierra.rf.medievaloverhaul | 18 | *Epicguru* |
 | **RimForge** | co.uk.epicguru.rimforge | 6 | *Epicguru* |
 | **RimFortress: Dwarven Plants** | dismarzero.vgp.rimfortressdwarvenplants | 6 | *Epicguru* |
-| **Rimsenal - Core** | rimsenal.core | 5 | *Epicguru* |
+| **Rimsenal - Core** | rimsenal.core | 7 | *Epicguru* |
 | **Rimsenal - Federation Faction Pack** | rimsenal.federation | 2 | *Epicguru* |
 | **Rimsenal - Feral Faction Pack** | rimsenal.feral | 4 | *Epicguru* |
 | **Rimwars:Vibro weapons** | sov.kotorone | 13 | *Epicguru* |
@@ -168,7 +170,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Roo's Minotaur Xenotype** | rooboid.minotaur | 5 | *Epicguru* |
 | **Royal Arsenal** | bucko.royalarsenal | 4 | *Epicguru* |
 | **Royal Thrumbos (Continued)** | mlie.royalthrumbos | 2 | *Epicguru* |
-| **Royalty** | ludeon.rimworld.royalty | 12 | *Epicguru* |
+| **Royalty** | ludeon.rimworld.royalty | 13 | *Epicguru* |
 | **Simple Medieval Axe And Mace** | miko.simplemedievalaxeandmace | 5 | *Epicguru* |
 | **Simple Medieval Saber And Spear** | miko.simplemedievalsaberandspear | 7 | *Epicguru* |
 | **Simple Medieval Sword(retexture version)** | miko.simplemedievalswordrv | 16 | *Epicguru* |
@@ -176,6 +178,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Simply Melee Weapons (Continued)** | zal.simplymelee | 5 | *Epicguru* |
 | **Simply More Melee (Continued)** | mlie.simplymoremelee | 34 | *Epicguru* |
 | **Sparkling Worlds - Full Mod** | albion.sparklingworlds.full | 2 | *Epicguru* |
+| **Sparkling Worlds - Modular Core - Reduced features** | albion.sparklingworlds.core | 1 | *Epicguru* |
 | **Sparkling Worlds Addon - Weapons - Standalone Addon** | albion.sparklingworlds.addon.weapons | 2 | *Epicguru* |
 | **Star Crafters Armory** | akri.starcraftersarmory | 1 | *Epicguru* |
 | **Star Wars - Fully Functional Lightsabers** | projectjedi.lightsabers | 14 | *Epicguru* |
@@ -196,7 +199,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Vanilla Factions Expanded - Empire** | oskarpotocki.vfe.empire | 2 | *Epicguru* |
 | **Vanilla Factions Expanded - Insectoids** | oskarpotocki.vfe.insectoid | 1 | *Epicguru* |
 | **Vanilla Factions Expanded - Medieval** | oskarpotocki.vanillafactionsexpanded.medievalmodule | 2 | *Epicguru* |
-| **Vanilla Factions Expanded - Pirates** | oskarpotocki.vfe.pirates | 5 | *Epicguru* |
+| **Vanilla Factions Expanded - Pirates** | oskarpotocki.vfe.pirates | 6 | *Epicguru* |
 | **Vanilla Factions Expanded - Vikings** | oskarpotocki.vfe.vikings | 7 | *Epicguru* |
 | **Vanilla Melee Retexture** | zodgilla.vanillameleeretexture | 9 | *Epicguru* |
 | **Vanilla Psycasts Expanded** | vanillaexpanded.vpsycastse | 3 | *Epicguru* |
@@ -208,6 +211,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Van's Retexture : Melee Weapons** | sirvan.mwretextured | 18 | *Epicguru* |
 | **VGP Garden Drinks** | dismarzero.vgp.vgpgardendrinks | 10 | *Epicguru* |
 | **VGP Vegetable Garden** | dismarzero.vgp.vgpvegetablegarden | 2 | *Epicguru* |
+| **Warcasket Persona Weapons** | metalocif.warcasketpersonaweapons | 4 | *Epicguru* |
 | **Weapons+** | kyrrisayo.weaponsplus | 18 | *Epicguru* |
 | **Weapons+ Retexture** | dandman68.weaponplusretexture | 18 | *Epicguru* |
 | **Westerado (Continued)** | mlie.westerado | 15 | *Epicguru* |
