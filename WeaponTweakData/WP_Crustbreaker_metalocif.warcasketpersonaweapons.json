@@ -1,0 +1,13 @@
+{
+  "TextureModID": "metalocif.warcasketpersonaweapons",
+  "ItemDefName": "WP_Crustbreaker",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6688098,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.6569515,
+  "BladeEnd": 1.335248,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,19 @@
+{
+  "TextureModID": "oskarpotocki.vfe.pirates",
+  "ItemDefName": "VFEP_WarcasketMeleeWeapon_PlasmaSword_Bond",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5691999,
+  "OffY": -0.028459996,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": 0.367608219,
+  "BladeEnd": 1.4016546,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.897,
+    "g": 0.686,
+    "b": 0.087,
+    "a": 0.963
+  }
+}

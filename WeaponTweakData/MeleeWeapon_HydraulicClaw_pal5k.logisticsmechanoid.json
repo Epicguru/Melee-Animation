@@ -1,0 +1,10 @@
+{
+  "TextureModID": "pal5k.logisticsmechanoid",
+  "ItemDefName": "MeleeWeapon_HydraulicClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.208706617,
+  "BladeStart": 0.2442816,
+  "BladeEnd": 0.6332348,
+  "MeleeWeaponType": 40
+}

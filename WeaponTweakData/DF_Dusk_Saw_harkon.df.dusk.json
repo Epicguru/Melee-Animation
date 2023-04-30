@@ -1,0 +1,11 @@
+{
+  "TextureModID": "harkon.df.dusk",
+  "ItemDefName": "DF_Dusk_Saw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2134499,
+  "OffY": -0.0616633147,
+  "BladeStart": 0.1114683,
+  "BladeEnd": 0.5810582,
+  "MeleeWeaponType": 6
+}
