@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 30 Apr 2023, 11:46 PM.`  
+`Updated 2 May 2023, 10:25 PM.`  
 
-**Melee Animation supports 1639 weapons from 199 mods.**  
+**Melee Animation supports 1643 weapons from 201 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -168,6 +168,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Rimworld Ultratech** | conner.rimworldultratech | 2 | *Epicguru* |
 | **Rimworld Westernization Project (Continued)** | mlie.rimworldwesternizationproject | 4 | *Epicguru* |
 | **Roo's Minotaur Xenotype** | rooboid.minotaur | 5 | *Epicguru* |
+| **Roo's Minotaur Xenotype Expanded** | rooboid.minotaur.expanded | 1 | *Epicguru* |
 | **Royal Arsenal** | bucko.royalarsenal | 4 | *Epicguru* |
 | **Royal Thrumbos (Continued)** | mlie.royalthrumbos | 2 | *Epicguru* |
 | **Royalty** | ludeon.rimworld.royalty | 13 | *Epicguru* |
@@ -212,6 +213,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **VGP Garden Drinks** | dismarzero.vgp.vgpgardendrinks | 10 | *Epicguru* |
 | **VGP Vegetable Garden** | dismarzero.vgp.vgpvegetablegarden | 2 | *Epicguru* |
 | **Warcasket Persona Weapons** | metalocif.warcasketpersonaweapons | 4 | *Epicguru* |
+| **Warcaskets: Adeptus Astartes** | buffsboy474.smwarcaskets.ideology.testing | 3 | *Epicguru* |
 | **Weapons+** | kyrrisayo.weaponsplus | 18 | *Epicguru* |
 | **Weapons+ Retexture** | dandman68.weaponplusretexture | 18 | *Epicguru* |
 | **Westerado (Continued)** | mlie.westerado | 15 | *Epicguru* |
