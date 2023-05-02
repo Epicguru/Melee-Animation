@@ -1,0 +1,13 @@
+{
+  "TextureModID": "buffsboy474.smwarcaskets.ideology.testing",
+  "ItemDefName": "HP_WarcasketMeleeWeapon_ThunderHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5172086,
+  "OffY": -0.06693286,
+  "ScaleX": 1.8,
+  "ScaleY": 1.8,
+  "BladeStart": 0.9735691,
+  "BladeEnd": 1.3751663,
+  "MeleeWeaponType": 1
+}

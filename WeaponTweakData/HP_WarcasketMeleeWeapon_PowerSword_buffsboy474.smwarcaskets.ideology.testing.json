@@ -1,0 +1,12 @@
+{
+  "TextureModID": "buffsboy474.smwarcaskets.ideology.testing",
+  "ItemDefName": "HP_WarcasketMeleeWeapon_PowerSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.407682061,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.164289787,
+  "BladeEnd": 1.03441715,
+  "MeleeWeaponType": 6
+}

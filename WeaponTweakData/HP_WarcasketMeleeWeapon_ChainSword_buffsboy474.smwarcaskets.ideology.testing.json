@@ -1,0 +1,13 @@
+{
+  "TextureModID": "buffsboy474.smwarcaskets.ideology.testing",
+  "ItemDefName": "HP_WarcasketMeleeWeapon_ChainSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.44419086,
+  "OffY": -0.042593658,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.20688343,
+  "BladeEnd": 1.02833235,
+  "MeleeWeaponType": 6
+}
