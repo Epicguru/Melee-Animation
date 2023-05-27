@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mekon.earlymetals",
+  "ItemDefName": "mkHandaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1811903,
+  "OffY": -0.01535508,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "HandsMode": 1,
+  "BladeStart": 0.273320824,
+  "BladeEnd": 0.5036471,
+  "MeleeWeaponType": 22
+}

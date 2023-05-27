@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_BattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.359308958,
+  "Rotation": 45.0,
+  "BladeStart": 0.601919532,
+  "BladeEnd": 1.047217,
+  "MeleeWeaponType": 6
+}

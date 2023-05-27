@@ -1,0 +1,11 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_TacticalTomahawk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.211899966,
+  "OffY": -0.00921315,
+  "BladeStart": 0.405374169,
+  "BladeEnd": 0.657197952,
+  "MeleeWeaponType": 2
+}

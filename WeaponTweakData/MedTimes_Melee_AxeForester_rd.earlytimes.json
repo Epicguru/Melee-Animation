@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_AxeForester",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.313243657,
+  "OffY": -0.08291757,
+  "Rotation": 50.0,
+  "BladeStart": 0.6111327,
+  "BladeEnd": 0.862956047,
+  "MeleeWeaponType": 2
+}

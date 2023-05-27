@@ -1,0 +1,13 @@
+{
+  "TextureModID": "detvisor.impactweaponry",
+  "ItemDefName": "DV_ChainswordBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.356237739,
+  "OffY": -0.009212911,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.150480121,
+  "BladeEnd": 0.91209203,
+  "MeleeWeaponType": 6
+}

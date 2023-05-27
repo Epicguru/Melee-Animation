@@ -1,0 +1,11 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_FlintScraper",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0737047046,
+  "OffY": -0.0184262842,
+  "Rotation": 72.07152,
+  "BladeEnd": 0.2579657,
+  "MeleeWeaponType": 48
+}

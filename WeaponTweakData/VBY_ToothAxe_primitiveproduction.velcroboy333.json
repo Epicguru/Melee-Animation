@@ -1,0 +1,12 @@
+{
+  "TextureModID": "primitiveproduction.velcroboy333",
+  "ItemDefName": "VBY_ToothAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.297888577,
+  "OffY": -0.0552784055,
+  "Rotation": 45.89922,
+  "BladeStart": 0.227255553,
+  "BladeEnd": 0.9305183,
+  "MeleeWeaponType": 6
+}

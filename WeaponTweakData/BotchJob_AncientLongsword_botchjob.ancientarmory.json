@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.ancientarmory",
+  "ItemDefName": "BotchJob_AncientLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.371593773,
+  "OffY": -0.021497041,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.135125041,
+  "BladeEnd": 0.909021258,
+  "MeleeWeaponType": 6
+}

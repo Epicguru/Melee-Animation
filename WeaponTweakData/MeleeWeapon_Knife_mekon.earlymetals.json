@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mekon.earlymetals",
+  "ItemDefName": "MeleeWeapon_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.135125041,
+  "OffY": -0.0214970112,
+  "HandsMode": 1,
+  "BladeStart": 0.08905978,
+  "BladeEnd": 0.47600767,
+  "MeleeWeaponType": 48
+}

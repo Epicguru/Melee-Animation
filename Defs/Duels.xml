@@ -47,7 +47,7 @@
     <data>Duel_Swords.json</data>
   </AM.AnimDef>
 
-  <AM.AnimDef ParentName="AnimDuelBase">
+  <AM.AnimDef ParentName="AnimDuelBase" Name="AnimDuelFriendlyWin">
     <defName>AM_Duel_WinFriendlyDuel</defName>
     <label>Win Friendly Duel</label>
     <data>Duel_FriendlyEnd.json</data>
@@ -66,6 +66,11 @@
         <showAltHand>true</showAltHand>
       </li>
     </handsVisibility>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimDuelFriendlyWin">
+    <defName>AM_Duel_WinFriendlyDuel_Reject</defName>
+    <data>Duel_FriendlyRejectedEnd.json</data>
   </AM.AnimDef>
 
   <AM.AnimDef ParentName="AnimDuelBowBase">

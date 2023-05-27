@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4115161,
+  "Rotation": 45.0,
+  "BladeStart": 0.119769953,
+  "BladeEnd": 1.080998,
+  "MeleeWeaponType": 6
+}

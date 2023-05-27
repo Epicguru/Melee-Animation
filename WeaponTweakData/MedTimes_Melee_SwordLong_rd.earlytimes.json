@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_SwordLong",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.433013618,
+  "Rotation": 45.0,
+  "BladeStart": 0.113627546,
+  "BladeEnd": 1.11477935,
+  "MeleeWeaponType": 6
+}

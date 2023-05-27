@@ -1,0 +1,12 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_HammerStone",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.06756228,
+  "OffY": -0.06449155,
+  "Rotation": -100.0,
+  "BladeStart": 0.05834961,
+  "BladeEnd": 0.374664,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mekon.earlymetals",
+  "ItemDefName": "MeleeWeapon_Ikwa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.343954325,
+  "Rotation": 45.0,
+  "BladeStart": 0.125911891,
+  "BladeEnd": 1.0011518,
+  "MeleeWeaponType": 5
+}

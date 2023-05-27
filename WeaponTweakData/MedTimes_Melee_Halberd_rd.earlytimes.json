@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_Halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.399232239,
+  "Rotation": 45.0,
+  "BladeStart": 0.6694818,
+  "BladeEnd": 1.08406913,
+  "MeleeWeaponType": 6
+}

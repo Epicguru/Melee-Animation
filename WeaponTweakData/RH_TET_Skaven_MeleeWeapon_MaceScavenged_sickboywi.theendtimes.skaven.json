@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.skaven",
+  "ItemDefName": "RH_TET_Skaven_MeleeWeapon_MaceScavenged",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.113627523,
+  "OffY": -0.0122843385,
+  "Rotation": 40.29007,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.09827246,
+  "BladeEnd": 0.5804225,
+  "MeleeWeaponType": 8
+}

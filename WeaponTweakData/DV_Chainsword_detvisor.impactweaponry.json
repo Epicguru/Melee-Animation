@@ -1,0 +1,13 @@
+{
+  "TextureModID": "detvisor.impactweaponry",
+  "ItemDefName": "DV_Chainsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3562377,
+  "OffY": -0.00921315,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.1596928,
+  "BladeEnd": 0.9182344,
+  "MeleeWeaponType": 6
+}

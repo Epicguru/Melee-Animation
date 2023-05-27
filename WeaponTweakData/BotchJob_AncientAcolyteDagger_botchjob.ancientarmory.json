@@ -1,0 +1,10 @@
+{
+  "TextureModID": "botchjob.ancientarmory",
+  "ItemDefName": "BotchJob_AncientAcolyteDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.138195783,
+  "HandsMode": 1,
+  "BladeStart": 0.113627546,
+  "MeleeWeaponType": 48
+}

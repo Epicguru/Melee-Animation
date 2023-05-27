@@ -1,0 +1,9 @@
+{
+  "TextureModID": "sickboywi.theendtimes.skaven",
+  "ItemDefName": "RH_TET_Skaven_ShieldMid",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.202686846,
+  "OffY": -0.07984662,
+  "MeleeWeaponType": 6
+}

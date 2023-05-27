@@ -1,0 +1,12 @@
+{
+  "TextureModID": "botchjob.ancientarmory",
+  "ItemDefName": "BotchJob_AncientWarhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.261036426,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.512859762,
+  "BladeEnd": 0.7861806,
+  "MeleeWeaponType": 1
+}

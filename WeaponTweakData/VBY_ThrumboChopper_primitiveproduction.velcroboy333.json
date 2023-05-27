@@ -1,0 +1,13 @@
+{
+  "TextureModID": "primitiveproduction.velcroboy333",
+  "ItemDefName": "VBY_ThrumboChopper",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7431861,
+  "Rotation": 42.3141,
+  "ScaleX": 1.65,
+  "ScaleY": 1.65,
+  "BladeStart": 0.5927064,
+  "BladeEnd": 1.83032644,
+  "MeleeWeaponType": 7
+}

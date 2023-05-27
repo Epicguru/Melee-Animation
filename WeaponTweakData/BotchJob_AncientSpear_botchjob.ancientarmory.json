@@ -1,0 +1,11 @@
+{
+  "TextureModID": "botchjob.ancientarmory",
+  "ItemDefName": "BotchJob_AncientSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3500958,
+  "Rotation": 45.0,
+  "BladeStart": 0.42072925,
+  "BladeEnd": 1.01957762,
+  "MeleeWeaponType": 6
+}

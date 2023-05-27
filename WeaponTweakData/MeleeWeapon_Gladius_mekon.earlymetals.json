@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mekon.earlymetals",
+  "ItemDefName": "MeleeWeapon_Gladius",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.316314369,
+  "OffY": -0.03685212,
+  "BladeStart": 0.135125041,
+  "BladeEnd": 0.780038655,
+  "MeleeWeaponType": 6
+}

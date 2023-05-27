@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mekon.earlymetals",
+  "ItemDefName": "MeleeWeapon_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6049903,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.847600937,
+  "BladeEnd": 1.56621873,
+  "MeleeWeaponType": 7
+}

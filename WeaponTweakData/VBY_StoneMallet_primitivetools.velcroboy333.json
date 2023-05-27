@@ -1,0 +1,12 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_StoneMallet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.236468256,
+  "OffY": -0.04606527,
+  "Rotation": 40.0,
+  "BladeStart": 0.347025037,
+  "BladeEnd": 0.7032632,
+  "MeleeWeaponType": 1
+}

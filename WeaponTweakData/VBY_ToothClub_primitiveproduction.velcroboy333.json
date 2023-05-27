@@ -1,0 +1,11 @@
+{
+  "TextureModID": "primitiveproduction.velcroboy333",
+  "ItemDefName": "VBY_ToothClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.119769484,
+  "OffY": -0.04913622,
+  "BladeStart": 0.09827246,
+  "BladeEnd": 0.5466412,
+  "MeleeWeaponType": 24
+}

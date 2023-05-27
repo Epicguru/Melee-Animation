@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_PrimitiveSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.347025037,
+  "Rotation": 45.0,
+  "BladeStart": 0.6080615,
+  "BladeEnd": 0.991938651,
+  "MeleeWeaponType": 4
+}

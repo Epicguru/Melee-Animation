@@ -1,0 +1,15 @@
+{
+  "TextureModID": "mekon.earlymetals",
+  "ItemDefName": "mkSickle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.171976686,
+  "OffY": -0.0276389718,
+  "Rotation": 60.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.116698749,
+  "BladeEnd": 0.457581848,
+  "MeleeWeaponType": 16
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sickboywi.theendtimes.skaven",
+  "ItemDefName": "RH_TET_Skaven_MeleeWeapon_WarpKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.227255553,
+  "OffY": -0.0245682225,
+  "BladeStart": 0.09827246,
+  "BladeEnd": 0.7124759,
+  "MeleeWeaponType": 54
+}

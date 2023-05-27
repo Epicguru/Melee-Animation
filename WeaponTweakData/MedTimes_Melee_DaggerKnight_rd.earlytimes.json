@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_DaggerKnight",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.199616119,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.0859885737,
+  "BladeEnd": 0.5220729,
+  "MeleeWeaponType": 48
+}

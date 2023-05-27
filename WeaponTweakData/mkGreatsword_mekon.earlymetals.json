@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mekon.earlymetals",
+  "ItemDefName": "mkGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5927064,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.187332243,
+  "BladeEnd": 1.43416488,
+  "MeleeWeaponType": 6
+}

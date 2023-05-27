@@ -327,7 +327,7 @@ public class JobDriver_DoFriendlyDuel : JobDriver, IDuelEndNotificationReceiver
                 return false;
 
             var animator = p.TryGetAnimator();
-            if (animator != null && animator.Def.type is not (AnimType.DuelBow or AnimType.Duel) && animator.Def != AM_DefOf.AM_Duel_WinFriendlyDuel)
+            if (animator != null && animator.Def.type is not (AnimType.DuelBow or AnimType.Duel) && animator.Def != AM_DefOf.AM_Duel_WinFriendlyDuel && animator.Def != AM_DefOf.AM_Duel_WinFriendlyDuel_Reject)
                 return false;
 
             if (GrabUtility.IsBeingTargetedForGrapple(p))
