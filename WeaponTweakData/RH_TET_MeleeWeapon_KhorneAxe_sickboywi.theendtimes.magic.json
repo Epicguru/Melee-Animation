@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.magic",
+  "ItemDefName": "RH_TET_MeleeWeapon_KhorneAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3869483,
+  "OffY": -0.113627546,
+  "Rotation": 51.71749,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.439155549,
+  "BladeEnd": 0.97658354,
+  "MeleeWeaponType": 2
+}

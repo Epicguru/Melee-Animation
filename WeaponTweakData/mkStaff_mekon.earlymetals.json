@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mekon.earlymetals",
+  "ItemDefName": "mkStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": -0.9612285,
+  "BladeEnd": 0.95201534,
+  "MeleeWeaponType": 1
+}

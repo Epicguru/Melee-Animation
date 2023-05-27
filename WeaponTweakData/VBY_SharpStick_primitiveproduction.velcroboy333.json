@@ -1,0 +1,11 @@
+{
+  "TextureModID": "primitiveproduction.velcroboy333",
+  "ItemDefName": "VBY_SharpStick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.190402955,
+  "OffY": -0.03378141,
+  "BladeStart": 0.138195768,
+  "BladeEnd": 0.6664106,
+  "MeleeWeaponType": 32
+}

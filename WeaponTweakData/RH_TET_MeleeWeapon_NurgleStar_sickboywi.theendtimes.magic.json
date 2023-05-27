@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.magic",
+  "ItemDefName": "RH_TET_MeleeWeapon_NurgleStar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.448368222,
+  "OffY": -0.187331766,
+  "Rotation": 57.82293,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.193474174,
+  "BladeEnd": 0.764683545,
+  "MeleeWeaponType": 1
+}

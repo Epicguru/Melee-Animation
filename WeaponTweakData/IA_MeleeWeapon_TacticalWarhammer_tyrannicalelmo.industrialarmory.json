@@ -1,0 +1,11 @@
+{
+  "TextureModID": "tyrannicalelmo.industrialarmory",
+  "ItemDefName": "IA_MeleeWeapon_TacticalWarhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1996161,
+  "OffY": -0.00614196062,
+  "BladeStart": 0.4821496,
+  "BladeEnd": 0.6479848,
+  "MeleeWeaponType": 2
+}

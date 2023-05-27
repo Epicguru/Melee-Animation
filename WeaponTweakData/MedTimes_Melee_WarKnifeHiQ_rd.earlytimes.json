@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_WarKnifeHiQ",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.362380147,
+  "Rotation": 45.0,
+  "BladeStart": 0.141266972,
+  "BladeEnd": 1.0072937,
+  "MeleeWeaponType": 6
+}

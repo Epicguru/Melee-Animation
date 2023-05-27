@@ -1,0 +1,11 @@
+{
+  "TextureModID": "primitiveproduction.velcroboy333",
+  "ItemDefName": "VBY_FlintSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.38080588,
+  "Rotation": 45.0,
+  "BladeStart": 0.5834933,
+  "BladeEnd": 1.05950093,
+  "MeleeWeaponType": 4
+}

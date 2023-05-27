@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_MorningStar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.43608433,
+  "OffY": 0.03378135,
+  "Rotation": 40.0,
+  "BladeStart": 0.6848369,
+  "BladeEnd": 1.01343572,
+  "MeleeWeaponType": 1
+}

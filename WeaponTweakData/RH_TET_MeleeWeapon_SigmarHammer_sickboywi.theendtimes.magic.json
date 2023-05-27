@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.magic",
+  "ItemDefName": "RH_TET_MeleeWeapon_SigmarHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.454510659,
+  "OffY": -0.02149703,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.6664106,
+  "BladeEnd": 1.03493273,
+  "MeleeWeaponType": 1
+}

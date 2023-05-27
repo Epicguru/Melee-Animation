@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sickboywi.theendtimes.magic",
+  "ItemDefName": "RH_TET_MeleeWeapon_UlricHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.442226231,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.5927064,
+  "BladeEnd": 0.99500984,
+  "MeleeWeaponType": 1
+}

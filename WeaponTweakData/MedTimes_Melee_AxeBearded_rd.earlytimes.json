@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_AxeBearded",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.383877218,
+  "Rotation": 45.0,
+  "BladeStart": 0.4299424,
+  "BladeEnd": 1.053359,
+  "MeleeWeaponType": 6
+}

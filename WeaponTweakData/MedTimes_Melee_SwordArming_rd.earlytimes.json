@@ -1,0 +1,9 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_SwordArming",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3593089,
+  "HandsMode": 1,
+  "MeleeWeaponType": 54
+}

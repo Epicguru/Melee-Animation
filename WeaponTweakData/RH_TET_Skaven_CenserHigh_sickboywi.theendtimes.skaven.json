@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.skaven",
+  "ItemDefName": "RH_TET_Skaven_CenserHigh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3562382,
+  "OffY": -0.110556811,
+  "Rotation": 73.12289,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.2579657,
+  "BladeEnd": 0.99500984,
+  "MeleeWeaponType": 1
+}

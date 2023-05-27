@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sickboywi.theendtimes.skaven",
+  "ItemDefName": "RH_TET_Skaven_WizardStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7247598,
+  "Rotation": 46.05239,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.7861806,
+  "BladeEnd": 1.596929,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_WarHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.328599334,
+  "Rotation": 47.94098,
+  "BladeStart": 0.5527831,
+  "BladeEnd": 0.8568141,
+  "MeleeWeaponType": 1
+}

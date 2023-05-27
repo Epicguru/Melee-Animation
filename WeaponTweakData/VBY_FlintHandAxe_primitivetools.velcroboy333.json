@@ -1,0 +1,12 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_FlintHandAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0583491027,
+  "OffY": -0.039922595,
+  "Rotation": 48.85437,
+  "BladeStart": 0.0491364636,
+  "BladeEnd": 0.291746646,
+  "MeleeWeaponType": 48
+}

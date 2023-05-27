@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sickboywi.theendtimes.magic",
+  "ItemDefName": "RH_TET_MeleeWeapon_GoldSigilSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.454510629,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.125911891,
+  "BladeEnd": 1.20383859,
+  "MeleeWeaponType": 6
+}

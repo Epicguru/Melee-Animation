@@ -1,0 +1,14 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_FlintAdze",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.12898308,
+  "OffY": -0.05834963,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.261036456,
+  "BladeEnd": 0.479078859,
+  "MeleeWeaponType": 16
+}

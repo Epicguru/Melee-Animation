@@ -1,0 +1,10 @@
+{
+  "TextureModID": "botchjob.ancientarmory",
+  "ItemDefName": "BotchJob_AncientMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.248752564,
+  "BladeStart": 0.135125041,
+  "BladeEnd": 0.6848369,
+  "MeleeWeaponType": 9
+}

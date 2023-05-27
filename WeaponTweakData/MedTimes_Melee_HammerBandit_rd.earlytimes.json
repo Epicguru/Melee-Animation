@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_HammerBandit",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.371593267,
+  "Rotation": 45.0,
+  "BladeStart": 0.6264878,
+  "BladeEnd": 0.9274471,
+  "MeleeWeaponType": 1
+}

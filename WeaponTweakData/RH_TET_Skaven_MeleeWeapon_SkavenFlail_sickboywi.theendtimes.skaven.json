@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.skaven",
+  "ItemDefName": "RH_TET_Skaven_MeleeWeapon_SkavenFlail",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.178119078,
+  "OffY": -0.03071022,
+  "Rotation": 48.85602,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": 0.171977147,
+  "BladeEnd": 0.5865645,
+  "MeleeWeaponType": 1
+}

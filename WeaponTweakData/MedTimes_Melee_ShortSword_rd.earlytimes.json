@@ -1,0 +1,10 @@
+{
+  "TextureModID": "rd.earlytimes",
+  "ItemDefName": "MedTimes_Melee_ShortSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2948174,
+  "BladeStart": 0.1074856,
+  "BladeEnd": 0.7677543,
+  "MeleeWeaponType": 54
+}
