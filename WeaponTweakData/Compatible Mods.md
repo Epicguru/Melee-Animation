@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 2 May 2023, 10:25 PM.`  
+`Updated 27 May 2023, 6:53 PM.`  
 
-**Melee Animation supports 1643 weapons from 201 mods.**  
+**Melee Animation supports 1716 weapons from 209 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -48,6 +48,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Alpha Biomes** | sarg.alphabiomes | 3 | *Epicguru* |
 | **Ambition of the Cosmic: True Pinnacle of Creation** | explodoboy.snsambitioncosmic.gen4addon | 1 | *Epicguru* |
 | **Amplified Mobility Platform** | aoba.amp | 1 | *Epicguru* |
+| **Ancient Armory** | botchjob.ancientarmory | 6 | *Epicguru* |
 | **Ancient Species** | haduki.ancientspecies | 6 | *Epicguru* |
 | **Android Tiers Reforged** | killathon.androidtiersreforged | 1 | *Epicguru* |
 | **Anima Gear** | xrushha.animagear | 1 | *Epicguru* |
@@ -75,6 +76,8 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Dragons Descent** | onyxae.dragonsdescent | 5 | *Epicguru* |
 | **Dune FedaykinArmor** | pphhyy.fedaykinjihadarmor | 1 | *Epicguru* |
 | **Dusk Armory** | harkon.df.dusk | 3 | *Epicguru* |
+| **Early Metalworking** | mekon.earlymetals | 8 | *Epicguru* |
+| **Early Times** | rd.earlytimes | 19 | *Epicguru* |
 | **Eccentric Extras - Signature Weapons** | aelanna.eccentricextras.signatureweapons | 1 | *Epicguru* |
 | **Eccentric Tech - Foxy's Armory 2.0** | aelanna.eccentrictech.foxysarmory2 | 1 | *Epicguru* |
 | **Edge of Descension - Monoblades** | rabbit.edgeofdescension | 6 | *Epicguru* |
@@ -91,7 +94,8 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Hellsing ARMS Ultimate** | baskerville.hellsingarmsultimate | 13 | *Epicguru* |
 | **Heyra the Horned** | bando.heyrathehorned | 11 | *Epicguru* |
 | **Ilya Tech - Core** | suvi.techcore | 2 | *Epicguru* |
-| **Industrial Armory** | tyrannicalelmo.industrialarmory | 13 | *Epicguru* |
+| **Impact Weaponry** | detvisor.impactweaponry | 2 | *Epicguru* |
+| **Industrial Armory** | tyrannicalelmo.industrialarmory | 15 | *Epicguru* |
 | **Industrial Melee Weaponry** | iexist.industrial.melee.weaponry | 12 | *Epicguru* |
 | **Industrialisation** | trasheddt.industrialisation | 4 | *Epicguru* |
 | **Kalia Race** | foxbots.kalia.race | 9 | *Epicguru* |
@@ -145,6 +149,8 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Polarisbloc - Mechenemy** | rsmaintain.vanya.polarisbloc.mechenemy | 2 | *Epicguru* |
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |
 | **pphhyy's Tox Weapons** | pphhyy.toxweapons | 4 | *Epicguru* |
+| **Primitive Tools** | primitivetools.velcroboy333 | 11 | *Epicguru* |
+| **Primitive Workbenches** | primitiveproduction.velcroboy333 | 8 | *Epicguru* |
 | **Psysword** | xedos.psyblade | 2 | *Epicguru* |
 | **Pyramid Heads Helmet** | kropolis.pyramidhead | 1 | *Epicguru* |
 | **Race to the Rim** | sargoskar.racetotherim | 2 | *Epicguru* |
@@ -161,6 +167,8 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **RimFantasy - Medieval Overhaul Edition** | sierra.rf.medievaloverhaul | 18 | *Epicguru* |
 | **RimForge** | co.uk.epicguru.rimforge | 6 | *Epicguru* |
 | **RimFortress: Dwarven Plants** | dismarzero.vgp.rimfortressdwarvenplants | 6 | *Epicguru* |
+| **Rimhammer - The End Times - Magic** | sickboywi.theendtimes.magic | 6 | *Epicguru* |
+| **Rimhammer - The End Times - Skaven** | sickboywi.theendtimes.skaven | 11 | *Epicguru* |
 | **Rimsenal - Core** | rimsenal.core | 7 | *Epicguru* |
 | **Rimsenal - Federation Faction Pack** | rimsenal.federation | 2 | *Epicguru* |
 | **Rimsenal - Feral Faction Pack** | rimsenal.feral | 4 | *Epicguru* |
