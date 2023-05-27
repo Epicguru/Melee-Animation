@@ -30,6 +30,7 @@ namespace AM
         public static StatDef AM_DuelAbility;
 
         public static AnimDef AM_Duel_WinFriendlyDuel;
+        public static AnimDef AM_Duel_WinFriendlyDuel_Reject;
 
         public static SoundDef AM_MetalSwordClash;
         public static SoundDef AM_StoneSwordClash;

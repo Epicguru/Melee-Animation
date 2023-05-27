@@ -137,7 +137,9 @@ namespace AM.Events.Workers
             // Check if it's a friendly duel.
             if (outcome == ExecutionOutcome.Nothing)
             {
-                return AM_DefOf.AM_Duel_WinFriendlyDuel;
+                // Check the relationship between the pawns to determine if they're going to reject the hand.
+                bool soreLoser = loser.relations.OpinionOf(winner) <= -10;
+                return soreLoser ? AM_DefOf.AM_Duel_WinFriendlyDuel_Reject : AM_DefOf.AM_Duel_WinFriendlyDuel;
             }
 
             // List all possible execution animations.
