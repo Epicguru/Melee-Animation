@@ -29,6 +29,7 @@ namespace AM.Events.Workers
             var map = i.Animator.Map;
             var partSS = part.GetSnapshot(i.Animator);
             var loc = partSS.GetWorldPosition();
+            bool shouldMirror = i.Animator.MirrorHorizontal;
 
             for (int j = 0; j < 20; j++)
             {
@@ -37,9 +38,13 @@ namespace AM.Events.Workers
                     return;
                 }
 
+                float angle = 90 - e.StartVelocityAngle.RandomInRange();
+                if (shouldMirror)
+                    angle = 90 - angle;
+
                 FleckCreationData dataStatic = FleckMaker.GetDataStatic(loc + e.WithOffset, map, fleck, e.StartScale.RandomInRange());
                 dataStatic.rotationRate = e.StartRotationSpeed.RandomInRange();
-                dataStatic.velocityAngle = 90 - e.StartVelocityAngle.RandomInRange();
+                dataStatic.velocityAngle = angle;
                 dataStatic.velocitySpeed = e.StartVelocityMagnitude.RandomInRange();
                 dataStatic.solidTimeOverride = 0.1f;
                 map.flecks.CreateFleck(dataStatic);

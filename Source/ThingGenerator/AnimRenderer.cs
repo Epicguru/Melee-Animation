@@ -835,7 +835,6 @@ public class AnimRenderer : IExposable
         timer.GetElapsedMilliseconds(out DrawMS);
         if (delayedDestroy)
             Destroy();
-        return;
     }
 
     private void ConfigureSplitDraw(in AnimPartSnapshot part, ref Matrix4x4 matrix, MaterialPropertyBlock pb, AnimPartOverrideData ov, int currentPass, ref int passCount)
