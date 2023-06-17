@@ -1,0 +1,12 @@
+{
+  "TextureModID": "botchjob.medievalfantasyquestrewards",
+  "ItemDefName": "MeleeWeapon_PsyfocusStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.218803287,
+  "OffY": -0.00303864479,
+  "Rotation": 45.0,
+  "BladeStart": 0.3145301,
+  "BladeEnd": 0.8098768,
+  "MeleeWeaponType": 9
+}

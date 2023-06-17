@@ -1,0 +1,19 @@
+{
+  "TextureModID": "karukus.godsofelona",
+  "ItemDefName": "eKumiromiScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2096864,
+  "OffY": -0.03342825,
+  "Rotation": 45.0,
+  "FlipY": true,
+  "BladeStart": 0.162583277,
+  "BladeEnd": 0.5971513,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.212,
+    "g": 1.0,
+    "b": 0.047,
+    "a": 1.0
+  }
+}

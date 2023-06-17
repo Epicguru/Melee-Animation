@@ -1,0 +1,12 @@
+{
+  "TextureModID": "redmattis.bigsmall.core",
+  "ItemDefName": "BS_SkrymirHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.9359924,
+  "ScaleX": 3.0,
+  "ScaleY": 3.0,
+  "BladeStart": 1.660779,
+  "BladeEnd": 2.34757829,
+  "MeleeWeaponType": 1
+}

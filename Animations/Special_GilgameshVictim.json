@@ -1,72 +1,76 @@
 {
-  "ExportTimeUTC": "2023-02-18T18:32:16.0958736Z",
+  "ExportTimeUTC": "2023-06-17T22:52:35.930077Z",
   "Name": "Special_GilgameshVictim",
-  "Length": 6.58333349,
+  "Length": 5.75,
   "Events": [
     {
       "Time": 2.98333335,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 3.15,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 3.16666675,
-      "Data": "GoreSplash;1;5;0.5"
+      "Data": "GoreSplash;0;5;0.5"
     },
     {
       "Time": 3.33333325,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 3.38333344,
-      "Data": "GoreSplash;1;5;0.5"
+      "Data": "GoreSplash;0;5;0.5"
     },
     {
       "Time": 3.38333344,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 3.6,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 3.61666656,
-      "Data": "GoreSplash;1;15;1"
+      "Data": "GoreSplash;0;15;1"
     },
     {
       "Time": 3.76666665,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 3.95,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 3.95,
-      "Data": "GoreSplash;1;5;0.5"
+      "Data": "GoreSplash;0;5;0.5"
     },
     {
       "Time": 4.1833334,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 4.35,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
     },
     {
       "Time": 4.35,
-      "Data": "GoreSplash;1;5;0.5"
+      "Data": "GoreSplash;0;5;0.5"
     },
     {
       "Time": 4.4666667,
-      "Data": "DamageEffect;1;0,0,0"
+      "Data": "DamageEffect;0;0,0,0"
+    },
+    {
+      "Time": 5.75,
+      "Data": "KillPawn;-1;0;Heart;Cut;AM_Execution_Gilgamesh;True"
     }
   ],
   "Parts": [
     {
-      "ID": 19044,
+      "ID": 19136,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {
@@ -1184,7 +1188,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19282,
+      "ID": 19380,
       "Path": "RopeL",
       "CustomName": "RopeL",
       "TexturePath": "AM/Rope/Rope",
@@ -1372,7 +1376,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19338,
+      "ID": 19436,
       "Path": "RopeR",
       "CustomName": "RopeL",
       "TexturePath": "AM/Rope/Rope",
@@ -1555,9 +1559,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19132,
+      "ID": 19224,
       "Path": "Turn (8)/Distance/Pivot/Portal",
-      "ParentID": 18860,
+      "ParentID": 18920,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -1569,7 +1573,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1581,15 +1585,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": -227.8481,
+              "outTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": -1500.0,
-              "inTangent": -227.8481,
+              "inTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1606,7 +1610,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1625,6 +1629,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.0666666,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.5666666,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -1657,9 +1674,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19052,
+      "ID": 19144,
       "Path": "Turn (7)/Distance/Pivot/Portal",
-      "ParentID": 19494,
+      "ParentID": 19598,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -1671,7 +1688,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1683,15 +1700,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": 243.037964,
+              "outTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": 1600.0,
-              "inTangent": 243.037964,
+              "inTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1708,7 +1725,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1727,6 +1744,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 4.6833334,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.4,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -1759,9 +1789,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19356,
+      "ID": 19454,
       "Path": "Turn (11)/Distance/Pivot/Portal",
-      "ParentID": 19292,
+      "ParentID": 19390,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -1773,7 +1803,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1785,15 +1815,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": 243.037964,
+              "outTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": 1600.0,
-              "inTangent": 243.037964,
+              "inTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1810,7 +1840,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1832,105 +1862,16 @@
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
-            }
-          ],
-          "PreWrapMode": 8,
-          "PostWrapMode": 8
-        }
-      },
-      "DefaultValues": {
-        "GameObject.m_IsActive": 1.0,
-        "Transform.m_LocalPosition.x": 0.0,
-        "Transform.m_LocalPosition.y": 0.0,
-        "Transform.m_LocalPosition.z": 0.0,
-        "Transform.m_LocalScale.x": 1.0,
-        "Transform.m_LocalScale.y": 1.0,
-        "Transform.m_LocalScale.z": 1.0,
-        "AnimatedPart.DataA": 0.0,
-        "AnimatedPart.DataB": 0.0,
-        "AnimatedPart.DataC": 0.0,
-        "AnimatedPart.Tint.r": 1.0,
-        "AnimatedPart.Tint.g": 0.9094448,
-        "AnimatedPart.Tint.b": 0.0,
-        "AnimatedPart.FlipX": 0.0,
-        "AnimatedPart.FlipY": 0.0,
-        "AnimatedPart.SplitDrawMode": 0.0,
-        "AnimatedPart.FrameIndex": 0.0,
-        "PawnBody.Direction": 0.0
-      },
-      "SweepPaths": []
-    },
-    {
-      "ID": 19018,
-      "Path": "Turn (10)/Distance/Pivot/Portal",
-      "ParentID": 19202,
-      "TexturePath": "AM/GilgameshGlow",
-      "TransparentByDefault": true,
-      "Curves": {
-        "Transform.localEulerAnglesRaw.x": {
-          "Keyframes": [
-            {
-              "inWeight": 0.333333343,
-              "outWeight": 0.333333343,
-              "tangentMode": 65
             },
             {
-              "time": 6.58333349,
-              "inWeight": 0.333333343,
-              "outWeight": 0.333333343,
-              "tangentMode": 5
-            }
-          ],
-          "PreWrapMode": 8,
-          "PostWrapMode": 8
-        },
-        "Transform.localEulerAnglesRaw.y": {
-          "Keyframes": [
-            {
-              "outTangent": -227.8481,
-              "inWeight": 0.333333343,
-              "outWeight": 0.333333343,
-              "tangentMode": 65
-            },
-            {
-              "time": 6.58333349,
-              "value": -1500.0,
-              "inTangent": -227.8481,
-              "inWeight": 0.333333343,
-              "outWeight": 0.333333343,
-              "tangentMode": 5
-            }
-          ],
-          "PreWrapMode": 8,
-          "PostWrapMode": 8
-        },
-        "Transform.localEulerAnglesRaw.z": {
-          "Keyframes": [
-            {
-              "inWeight": 0.333333343,
-              "outWeight": 0.333333343,
-              "tangentMode": 65
-            },
-            {
-              "time": 6.58333349,
-              "inWeight": 0.333333343,
-              "outWeight": 0.333333343,
-              "tangentMode": 5
-            }
-          ],
-          "PreWrapMode": 8,
-          "PostWrapMode": 8
-        },
-        "AnimatedPart.Tint.a": {
-          "Keyframes": [
-            {
+              "time": 5.0,
+              "value": 1.0,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
             },
             {
-              "time": 0.5,
-              "value": 1.0,
+              "time": 5.5666666,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -1964,8 +1905,123 @@
     },
     {
       "ID": 19102,
+      "Path": "Turn (10)/Distance/Pivot/Portal",
+      "ParentID": 19294,
+      "TexturePath": "AM/GilgameshGlow",
+      "TransparentByDefault": true,
+      "Curves": {
+        "Transform.localEulerAnglesRaw.x": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 65
+            },
+            {
+              "time": 5.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 5
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.y": {
+          "Keyframes": [
+            {
+              "outTangent": -260.869568,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 65
+            },
+            {
+              "time": 5.75,
+              "value": -1500.0,
+              "inTangent": -260.869568,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 5
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "Transform.localEulerAnglesRaw.z": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 65
+            },
+            {
+              "time": 5.75,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 5
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        },
+        "AnimatedPart.Tint.a": {
+          "Keyframes": [
+            {
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 0.5,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 4.766667,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.5666666,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            }
+          ],
+          "PreWrapMode": 8,
+          "PostWrapMode": 8
+        }
+      },
+      "DefaultValues": {
+        "GameObject.m_IsActive": 1.0,
+        "Transform.m_LocalPosition.x": 0.0,
+        "Transform.m_LocalPosition.y": 0.0,
+        "Transform.m_LocalPosition.z": 0.0,
+        "Transform.m_LocalScale.x": 1.0,
+        "Transform.m_LocalScale.y": 1.0,
+        "Transform.m_LocalScale.z": 1.0,
+        "AnimatedPart.DataA": 0.0,
+        "AnimatedPart.DataB": 0.0,
+        "AnimatedPart.DataC": 0.0,
+        "AnimatedPart.Tint.r": 1.0,
+        "AnimatedPart.Tint.g": 0.9094448,
+        "AnimatedPart.Tint.b": 0.0,
+        "AnimatedPart.FlipX": 0.0,
+        "AnimatedPart.FlipY": 0.0,
+        "AnimatedPart.SplitDrawMode": 0.0,
+        "AnimatedPart.FrameIndex": 0.0,
+        "PawnBody.Direction": 0.0
+      },
+      "SweepPaths": []
+    },
+    {
+      "ID": 19194,
       "Path": "Turn (9)/Distance/Pivot/Portal",
-      "ParentID": 19548,
+      "ParentID": 19656,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -1977,7 +2033,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -1989,15 +2045,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": 243.037964,
+              "outTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": 1600.0,
-              "inTangent": 243.037964,
+              "inTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2014,7 +2070,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2033,6 +2089,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 4.6833334,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.35,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -2065,9 +2134,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19170,
+      "ID": 19262,
       "Path": "Turn (6)/Distance/Pivot/Portal",
-      "ParentID": 18856,
+      "ParentID": 18916,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -2079,7 +2148,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2091,15 +2160,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": -227.8481,
+              "outTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": -1500.0,
-              "inTangent": -227.8481,
+              "inTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2116,7 +2185,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2135,6 +2204,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.1833334,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.616667,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -2167,9 +2249,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 18868,
+      "ID": 18928,
       "Path": "Turn (5)/Distance/Pivot/Portal",
-      "ParentID": 19470,
+      "ParentID": 19574,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -2181,7 +2263,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2193,15 +2275,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": 243.037964,
+              "outTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": 1600.0,
-              "inTangent": 243.037964,
+              "inTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2218,7 +2300,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2237,6 +2319,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 4.616667,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.5666666,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -2269,9 +2364,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19064,
+      "ID": 19156,
       "Path": "Turn (4)/Distance/Pivot/Portal",
-      "ParentID": 19014,
+      "ParentID": 19098,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -2283,7 +2378,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2295,15 +2390,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": -227.8481,
+              "outTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": -1500.0,
-              "inTangent": -227.8481,
+              "inTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2320,7 +2415,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2339,6 +2434,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 4.83333349,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.5666666,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -2371,9 +2479,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19362,
+      "ID": 19460,
       "Path": "Turn (3)/Distance/Pivot/Portal",
-      "ParentID": 19502,
+      "ParentID": 19606,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -2385,7 +2493,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2397,15 +2505,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": 243.037964,
+              "outTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": 1600.0,
-              "inTangent": 243.037964,
+              "inTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2422,7 +2530,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2441,6 +2549,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.15,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.5666666,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -2473,9 +2594,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19722,
+      "ID": 19838,
       "Path": "Turn (2)/Distance/Pivot/Portal",
-      "ParentID": 18890,
+      "ParentID": 18962,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -2487,7 +2608,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2499,15 +2620,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": -227.8481,
+              "outTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": -1500.0,
-              "inTangent": -227.8481,
+              "inTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2524,7 +2645,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2543,6 +2664,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 4.75,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.5666666,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -2575,9 +2709,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19186,
+      "ID": 19278,
       "Path": "Turn (1)/Distance/Pivot/Portal",
-      "ParentID": 19748,
+      "ParentID": 19864,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -2589,7 +2723,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2601,15 +2735,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": 243.037964,
+              "outTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": 1600.0,
-              "inTangent": 243.037964,
+              "inTangent": 278.260864,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2626,7 +2760,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2645,6 +2779,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.2166667,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.65,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -2677,9 +2824,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19400,
+      "ID": 19498,
       "Path": "Turn (0)/Distance/Pivot/Portal",
-      "ParentID": 19512,
+      "ParentID": 19616,
       "TexturePath": "AM/GilgameshGlow",
       "TransparentByDefault": true,
       "Curves": {
@@ -2691,7 +2838,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2703,15 +2850,15 @@
         "Transform.localEulerAnglesRaw.y": {
           "Keyframes": [
             {
-              "outTangent": -227.8481,
+              "outTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "value": -1500.0,
-              "inTangent": -227.8481,
+              "inTangent": -260.869568,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2728,7 +2875,7 @@
               "tangentMode": 65
             },
             {
-              "time": 6.58333349,
+              "time": 5.75,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 5
@@ -2747,6 +2894,19 @@
             {
               "time": 0.5,
               "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 4.766667,
+              "value": 1.0,
+              "inWeight": 0.333333343,
+              "outWeight": 0.333333343,
+              "tangentMode": 136
+            },
+            {
+              "time": 5.5,
               "inWeight": 0.333333343,
               "outWeight": 0.333333343,
               "tangentMode": 136
@@ -2779,9 +2939,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 18878,
+      "ID": 18950,
       "Path": "Turn (8)/Distance/Weapon",
-      "ParentID": 19640,
+      "ParentID": 19748,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -2986,13 +3146,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19084,
+      "SplitDrawPivotPartID": 19176,
       "SweepPaths": []
     },
     {
-      "ID": 18978,
+      "ID": 19062,
       "Path": "Turn (7)/Distance/Weapon",
-      "ParentID": 19288,
+      "ParentID": 19386,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -3201,13 +3361,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19304,
+      "SplitDrawPivotPartID": 19402,
       "SweepPaths": []
     },
     {
-      "ID": 18930,
+      "ID": 19014,
       "Path": "Turn (11)/Distance/Weapon",
-      "ParentID": 19664,
+      "ParentID": 19772,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -3412,13 +3572,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19384,
+      "SplitDrawPivotPartID": 19482,
       "SweepPaths": []
     },
     {
-      "ID": 19344,
+      "ID": 19442,
       "Path": "Turn (10)/Distance/Weapon",
-      "ParentID": 19160,
+      "ParentID": 19252,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -3623,13 +3783,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19126,
+      "SplitDrawPivotPartID": 19218,
       "SweepPaths": []
     },
     {
-      "ID": 19728,
+      "ID": 19844,
       "Path": "Turn (9)/Distance/Weapon",
-      "ParentID": 19396,
+      "ParentID": 19494,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -3817,13 +3977,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19350,
+      "SplitDrawPivotPartID": 19448,
       "SweepPaths": []
     },
     {
-      "ID": 19756,
+      "ID": 19872,
       "Path": "Turn (6)/Distance/Weapon",
-      "ParentID": 19734,
+      "ParentID": 19850,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -4028,13 +4188,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19206,
+      "SplitDrawPivotPartID": 19298,
       "SweepPaths": []
     },
     {
-      "ID": 19446,
+      "ID": 19550,
       "Path": "Turn (5)/Distance/Weapon",
-      "ParentID": 19300,
+      "ParentID": 19398,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -4239,13 +4399,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19418,
+      "SplitDrawPivotPartID": 19522,
       "SweepPaths": []
     },
     {
-      "ID": 19582,
+      "ID": 19690,
       "Path": "Turn (4)/Distance/Weapon",
-      "ParentID": 18874,
+      "ParentID": 18946,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -4433,13 +4593,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19700,
+      "SplitDrawPivotPartID": 19816,
       "SweepPaths": []
     },
     {
-      "ID": 19576,
+      "ID": 19684,
       "Path": "Turn (3)/Distance/Weapon",
-      "ParentID": 19718,
+      "ParentID": 19834,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -4644,13 +4804,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19654,
+      "SplitDrawPivotPartID": 19762,
       "SweepPaths": []
     },
     {
-      "ID": 19390,
+      "ID": 19488,
       "Path": "Turn (2)/Distance/Weapon",
-      "ParentID": 19744,
+      "ParentID": 19860,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -4838,13 +4998,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19024,
+      "SplitDrawPivotPartID": 19108,
       "SweepPaths": []
     },
     {
-      "ID": 19706,
+      "ID": 19822,
       "Path": "Turn (1)/Distance/Weapon",
-      "ParentID": 19268,
+      "ParentID": 19360,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -5049,13 +5209,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19738,
+      "SplitDrawPivotPartID": 19854,
       "SweepPaths": []
     },
     {
-      "ID": 18884,
+      "ID": 18956,
       "Path": "Turn (0)/Distance/Weapon",
-      "ParentID": 19660,
+      "ParentID": 19768,
       "TexturePath": "AM/Weapons/Weebstick",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -5260,13 +5420,13 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 19614,
+      "SplitDrawPivotPartID": 19722,
       "SweepPaths": []
     },
     {
-      "ID": 19614,
+      "ID": 19722,
       "Path": "Turn (0)/Distance/Split",
-      "ParentID": 19660,
+      "ParentID": 19768,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5354,9 +5514,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19738,
+      "ID": 19854,
       "Path": "Turn (1)/Distance/Split",
-      "ParentID": 19268,
+      "ParentID": 19360,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5438,9 +5598,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19024,
+      "ID": 19108,
       "Path": "Turn (2)/Distance/Split",
-      "ParentID": 19744,
+      "ParentID": 19860,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5522,9 +5682,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19654,
+      "ID": 19762,
       "Path": "Turn (3)/Distance/Split",
-      "ParentID": 19718,
+      "ParentID": 19834,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5606,9 +5766,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19700,
+      "ID": 19816,
       "Path": "Turn (4)/Distance/Split",
-      "ParentID": 18874,
+      "ParentID": 18946,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5690,9 +5850,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19418,
+      "ID": 19522,
       "Path": "Turn (5)/Distance/Split",
-      "ParentID": 19300,
+      "ParentID": 19398,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5774,9 +5934,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19206,
+      "ID": 19298,
       "Path": "Turn (6)/Distance/Split",
-      "ParentID": 19734,
+      "ParentID": 19850,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5858,9 +6018,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19304,
+      "ID": 19402,
       "Path": "Turn (7)/Distance/Split",
-      "ParentID": 19288,
+      "ParentID": 19386,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -5943,9 +6103,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19084,
+      "ID": 19176,
       "Path": "Turn (8)/Distance/Split",
-      "ParentID": 19640,
+      "ParentID": 19748,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -6027,9 +6187,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19350,
+      "ID": 19448,
       "Path": "Turn (9)/Distance/Split",
-      "ParentID": 19396,
+      "ParentID": 19494,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -6111,9 +6271,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19126,
+      "ID": 19218,
       "Path": "Turn (10)/Distance/Split",
-      "ParentID": 19160,
+      "ParentID": 19252,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -6195,9 +6355,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19384,
+      "ID": 19482,
       "Path": "Turn (11)/Distance/Split",
-      "ParentID": 19664,
+      "ParentID": 19772,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -6279,10 +6439,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 19674,
+      "ID": 19782,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 19044,
+      "ParentID": 19136,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6311,7 +6471,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19118,
+      "ID": 19210,
       "Path": "Turn (0)",
       "Curves": {},
       "DefaultValues": {
@@ -6341,9 +6501,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19660,
+      "ID": 19768,
       "Path": "Turn (0)/Distance",
-      "ParentID": 19118,
+      "ParentID": 19210,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6372,9 +6532,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19512,
+      "ID": 19616,
       "Path": "Turn (0)/Distance/Pivot",
-      "ParentID": 19660,
+      "ParentID": 19768,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6403,7 +6563,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19122,
+      "ID": 19214,
       "Path": "Turn (1)",
       "Curves": {},
       "DefaultValues": {
@@ -6433,9 +6593,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19268,
+      "ID": 19360,
       "Path": "Turn (1)/Distance",
-      "ParentID": 19122,
+      "ParentID": 19214,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6464,9 +6624,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19748,
+      "ID": 19864,
       "Path": "Turn (1)/Distance/Pivot",
-      "ParentID": 19268,
+      "ParentID": 19360,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6495,7 +6655,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19498,
+      "ID": 19602,
       "Path": "Turn (2)",
       "Curves": {},
       "DefaultValues": {
@@ -6525,9 +6685,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19744,
+      "ID": 19860,
       "Path": "Turn (2)/Distance",
-      "ParentID": 19498,
+      "ParentID": 19602,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6556,9 +6716,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 18890,
+      "ID": 18962,
       "Path": "Turn (2)/Distance/Pivot",
-      "ParentID": 19744,
+      "ParentID": 19860,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6587,7 +6747,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19490,
+      "ID": 19594,
       "Path": "Turn (3)",
       "Curves": {},
       "DefaultValues": {
@@ -6617,9 +6777,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19718,
+      "ID": 19834,
       "Path": "Turn (3)/Distance",
-      "ParentID": 19490,
+      "ParentID": 19594,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6648,9 +6808,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19502,
+      "ID": 19606,
       "Path": "Turn (3)/Distance/Pivot",
-      "ParentID": 19718,
+      "ParentID": 19834,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6679,7 +6839,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19316,
+      "ID": 19414,
       "Path": "Turn (4)",
       "Curves": {},
       "DefaultValues": {
@@ -6709,9 +6869,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 18874,
+      "ID": 18946,
       "Path": "Turn (4)/Distance",
-      "ParentID": 19316,
+      "ParentID": 19414,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6740,9 +6900,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19014,
+      "ID": 19098,
       "Path": "Turn (4)/Distance/Pivot",
-      "ParentID": 18874,
+      "ParentID": 18946,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6771,7 +6931,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19296,
+      "ID": 19394,
       "Path": "Turn (5)",
       "Curves": {},
       "DefaultValues": {
@@ -6801,9 +6961,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19300,
+      "ID": 19398,
       "Path": "Turn (5)/Distance",
-      "ParentID": 19296,
+      "ParentID": 19394,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6832,9 +6992,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19470,
+      "ID": 19574,
       "Path": "Turn (5)/Distance/Pivot",
-      "ParentID": 19300,
+      "ParentID": 19398,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6863,7 +7023,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19762,
+      "ID": 19878,
       "Path": "Turn (6)",
       "Curves": {},
       "DefaultValues": {
@@ -6893,9 +7053,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19734,
+      "ID": 19850,
       "Path": "Turn (6)/Distance",
-      "ParentID": 19762,
+      "ParentID": 19878,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6924,9 +7084,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 18856,
+      "ID": 18916,
       "Path": "Turn (6)/Distance/Pivot",
-      "ParentID": 19734,
+      "ParentID": 19850,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -6955,7 +7115,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19460,
+      "ID": 19564,
       "Path": "Turn (7)",
       "Curves": {},
       "DefaultValues": {
@@ -6985,9 +7145,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19288,
+      "ID": 19386,
       "Path": "Turn (7)/Distance",
-      "ParentID": 19460,
+      "ParentID": 19564,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7016,9 +7176,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19494,
+      "ID": 19598,
       "Path": "Turn (7)/Distance/Pivot",
-      "ParentID": 19288,
+      "ParentID": 19386,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7047,7 +7207,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19070,
+      "ID": 19162,
       "Path": "Turn (8)",
       "Curves": {},
       "DefaultValues": {
@@ -7077,9 +7237,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19640,
+      "ID": 19748,
       "Path": "Turn (8)/Distance",
-      "ParentID": 19070,
+      "ParentID": 19162,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7108,9 +7268,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 18860,
+      "ID": 18920,
       "Path": "Turn (8)/Distance/Pivot",
-      "ParentID": 19640,
+      "ParentID": 19748,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7139,7 +7299,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 18864,
+      "ID": 18924,
       "Path": "Turn (9)",
       "Curves": {},
       "DefaultValues": {
@@ -7169,9 +7329,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19396,
+      "ID": 19494,
       "Path": "Turn (9)/Distance",
-      "ParentID": 18864,
+      "ParentID": 18924,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7200,9 +7360,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19548,
+      "ID": 19656,
       "Path": "Turn (9)/Distance/Pivot",
-      "ParentID": 19396,
+      "ParentID": 19494,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7231,7 +7391,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19374,
+      "ID": 19472,
       "Path": "Turn (10)",
       "Curves": {},
       "DefaultValues": {
@@ -7261,9 +7421,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19160,
+      "ID": 19252,
       "Path": "Turn (10)/Distance",
-      "ParentID": 19374,
+      "ParentID": 19472,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7292,9 +7452,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19202,
+      "ID": 19294,
       "Path": "Turn (10)/Distance/Pivot",
-      "ParentID": 19160,
+      "ParentID": 19252,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7323,7 +7483,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 19752,
+      "ID": 19868,
       "Path": "Turn (11)",
       "Curves": {},
       "DefaultValues": {
@@ -7353,9 +7513,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19664,
+      "ID": 19772,
       "Path": "Turn (11)/Distance",
-      "ParentID": 19752,
+      "ParentID": 19868,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -7384,9 +7544,9 @@
       "SweepPaths": []
     },
     {
-      "ID": 19292,
+      "ID": 19390,
       "Path": "Turn (11)/Distance/Pivot",
-      "ParentID": 19664,
+      "ParentID": 19772,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,

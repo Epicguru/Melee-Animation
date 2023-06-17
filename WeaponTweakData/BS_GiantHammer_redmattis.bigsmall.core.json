@@ -1,0 +1,12 @@
+{
+  "TextureModID": "redmattis.bigsmall.core",
+  "ItemDefName": "BS_GiantHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.471035123,
+  "ScaleX": 1.62,
+  "ScaleY": 1.62,
+  "BladeStart": 0.7217474,
+  "BladeEnd": 1.24748349,
+  "MeleeWeaponType": 1
+}

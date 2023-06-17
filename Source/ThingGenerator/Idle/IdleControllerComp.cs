@@ -4,6 +4,7 @@ using AM.AMSettings;
 using AM.Patches;
 using AM.Processing;
 using AM.Tweaks;
+using AM.UniqueSkills;
 using JetBrains.Annotations;
 using RimWorld;
 using UnityEngine;
@@ -18,6 +19,31 @@ public class IdleControllerComp : ThingComp
     public static double TotalTickTimeMS;
     public static int TotalActive;
 
+    [UsedImplicitly]
+    [DebugAction("Melee Animation", "Log Skills", allowedGameStates = AllowedGameStates.PlayingOnMap, actionType = DebugActionType.ToolMapForPawns)]
+    private static void LogSkills(Pawn pawn)
+    {
+        var comp = pawn.GetComp<IdleControllerComp>();
+        if (comp == null)
+        {
+            Log.Error("Missing IdleControllerComp, probably not humanlike...");
+            return;
+        }
+
+        var skills = comp.GetSkills();
+        if (skills.Count == 0)
+        {
+            Log.Warning($"{pawn} has no skills available. Probably not colonist.");
+            return;
+        }
+
+        foreach (var skill in skills)
+        {
+            Log.Message($" - {skill.GetType().FullName}:");
+            Log.Message(skill.ToString());
+        }
+    }
+
     public AnimRenderer CurrentAnimation;
 
     private float pauseAngle;
@@ -29,6 +55,7 @@ public class IdleControllerComp : ThingComp
     private AnimDef lastFlavour;
     private uint ticksMoving;
     private int drawTick;
+    private UniqueSkillInstance[] skills;
 
     public void PreDraw()
     {
@@ -81,6 +108,7 @@ public class IdleControllerComp : ThingComp
         }
 
         // Additional draw check:
+        // Used for mod compatibility such as Fog of War etc.
         if (!ShouldDrawAdditional(this))
             return false;
 
@@ -111,12 +139,25 @@ public class IdleControllerComp : ThingComp
 
             TotalActive++;
             TickActive(weapon);
+
+            TickSkills();
         }
         catch (Exception e)
         {
-            Core.Error($"Exception processing idling animation for '{parent}':", e);
+            Core.Error($"Exception processing idling animation or skills for '{parent}':", e);
         }
         TotalTickTimeMS += timer.GetElapsedMilliseconds();
+    }
+
+    private void TickSkills()
+    {
+        if (skills == null)
+            return;
+
+        foreach (var s in skills)
+        {
+            s?.Tick();
+        }
     }
 
     private void TickActive(Thing weapon)
@@ -366,8 +407,17 @@ public class IdleControllerComp : ThingComp
             return;
         }
 
-        // TODO: Adjust animation speed if the attack cooldown is very low.
-        //float cooldown = verbUsed?.verbProps.AdjustedCooldownTicks(verbUsed, pawn).TicksToSeconds() ?? 100f;
+        // Adjust animation speed if the attack cooldown is very low.
+        float speedFactor = 1f;
+        if (Core.Settings.SpeedUpAttackAnims)
+        {
+            float cooldown = verbUsed?.verbProps.AdjustedCooldownTicks(verbUsed, pawn).TicksToSeconds() ?? 100f;
+            if (cooldown < anim.Data.Duration && cooldown > 0)
+            {
+                speedFactor = anim.Data.Duration / cooldown;
+            }
+        }
+
         bool flipX = rot == Rot4.West;
 
         isPausing = false;
@@ -397,6 +447,10 @@ public class IdleControllerComp : ThingComp
         if (!args.TryTrigger(out CurrentAnimation))
         {
             Core.Error($"Failed to trigger attack animation for {pawn} ({args}). Dead: {pawn.Dead}, Downed: {pawn.Downed}, InAnim: {pawn.TryGetAnimator() != null}");
+        }
+        else
+        {
+            CurrentAnimation.TimeScale = speedFactor;
         }
     }
 
@@ -448,5 +502,67 @@ public class IdleControllerComp : ThingComp
             CurrentAnimation.Destroy();
 
         CurrentAnimation = null;
+    }
+
+    public override void PostExposeData()
+    {
+        base.PostExposeData();
+
+        if (!ShouldHaveSkills())
+            return;
+
+        if (skills == null)
+            PopulateSkills();
+
+        for (int i = 0; i < skills.Length; i++)
+        {
+            try
+            {
+                Scribe_Deep.Look(ref skills[i], skills[i].GetType().FullName);
+            }
+            catch (Exception e)
+            {
+                Core.Error($"Exception exposing skill {skills[i]}:", e);
+            }
+        }
+    }
+
+    private bool ShouldHaveSkills() => parent is Pawn p && (p.IsColonist || p.IsSlaveOfColony);
+
+    private void PopulateSkills()
+    {
+        var pawn = parent as Pawn;
+        var list = DefDatabase<UniqueSkillDef>.AllDefsListForReading;
+        skills = new UniqueSkillInstance[list.Count];
+        for (int i = 0; i < list.Count; i++)
+        {
+            var instance = Activator.CreateInstance(list[i].instanceClass) as UniqueSkillInstance;
+            if (instance == null)
+            {
+                Log.Error($"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
+                continue;
+            }
+            instance.Pawn = pawn;
+            instance.Def = list[i];
+
+            skills[i] = instance;
+        }
+    }
+
+    public IReadOnlyList<UniqueSkillInstance> GetSkills()
+    {
+        if (skills == null)
+        {
+            if (ShouldHaveSkills())
+            {
+                // Populate skills list.
+                PopulateSkills();
+            }
+            else
+            {
+                return Array.Empty<UniqueSkillInstance>();
+            }
+        }
+        return skills;
     }
 }

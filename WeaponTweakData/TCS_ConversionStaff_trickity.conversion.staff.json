@@ -1,0 +1,13 @@
+{
+  "TextureModID": "trickity.conversion.staff",
+  "ItemDefName": "TCS_ConversionStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.233997986,
+  "Rotation": 90.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.150427252,
+  "BladeEnd": 0.815954566,
+  "MeleeWeaponType": 1
+}

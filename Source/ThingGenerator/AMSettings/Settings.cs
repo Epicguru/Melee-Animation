@@ -216,6 +216,12 @@ public class Settings : SimpleSettingsBase
     [Step(0.01f)]
     public float MoveAnimSpeedCoef = 1f;
 
+    [Label("Increase Animation Speed When Attacks Are Fast")]
+    [Description("If enabled, the speed of melee attack animations will be automatically increased to match the pawn's melee speed.\n" +
+                 "If false, the attack animation speed will never change however the animation may be interrupted by the next attack animation starting before the last one ended.\n" +
+                 "This is a purely visual change and does not affect combat.")]
+    public bool SpeedUpAttackAnims = true;
+
     [Label("Idle Animation Average Interval")]
     [Description("Pawns standing with their weapon out (such as when drafted) will sometimes play an animation where they swing their weapon about, flourish it etc.\n" +
                  "This option controls the average time, in seconds, between the occurrence of this animation.\nSet to 0 to disable the animations entirely.")]

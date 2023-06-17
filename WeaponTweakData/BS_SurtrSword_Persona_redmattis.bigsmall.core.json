@@ -1,0 +1,19 @@
+{
+  "TextureModID": "redmattis.bigsmall.core",
+  "ItemDefName": "BS_SurtrSword_Persona",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.71111095,
+  "OffY": -0.00607776642,
+  "ScaleX": 2.2,
+  "ScaleY": 2.2,
+  "BladeStart": 0.192972645,
+  "BladeEnd": 1.79145288,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

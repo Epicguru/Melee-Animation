@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_Pickaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0780592,
+  "OffY": 0.047308445,
+  "Rotation": 50.0,
+  "FlipY": true,
+  "BladeStart": 0.204609871,
+  "BladeEnd": 0.481365055,
+  "MeleeWeaponType": 2
+}

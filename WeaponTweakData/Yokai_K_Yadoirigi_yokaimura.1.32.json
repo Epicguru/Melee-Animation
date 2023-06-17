@@ -1,0 +1,12 @@
+{
+  "TextureModID": "yokaimura.1.32",
+  "ItemDefName": "Yokai_K_Yadoirigi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.170180261,
+  "OffY": -0.08205187,
+  "Rotation": 75.13869,
+  "BladeStart": 0.0714151859,
+  "BladeEnd": 0.524216533,
+  "MeleeWeaponType": 8
+}

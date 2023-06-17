@@ -13,5 +13,15 @@ public abstract class UniqueSkillInstance : IExposable
         Scribe_References.Look(ref Pawn, "pawn");
     }
 
-    public abstract bool IsEnabledForPawn();
+    public virtual void Tick() { }
+
+    public abstract bool IsEnabledForPawn(out string reasonWhyNot);
+
+    public abstract bool TryTrigger(in LocalTargetInfo target);
+
+    public abstract string CanTriggerOn(in LocalTargetInfo target);
+
+    public override string ToString() => $"{Def}\n" +
+                                         $"{Pawn}\n" +
+                                         $"Enabled: {IsEnabledForPawn(out var reason)} ({reason})";
 }

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "yokaimura.1.32",
+  "ItemDefName": "Yokai_K_Tubaki",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.35859406,
+  "OffY": -0.0607787222,
+  "Rotation": 53.45887,
+  "BladeStart": 0.107882328,
+  "BladeEnd": 0.8493826,
+  "MeleeWeaponType": 6
+}
