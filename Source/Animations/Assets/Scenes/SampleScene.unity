@@ -2381,7 +2381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: 1ca11d581c2c0b34c9cb1cf2fdd17ad4, type: 2}
+  Clip: {fileID: 7400000, guid: dfed3fb91ddbcf241950b5516684c437, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -9096,7 +9096,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1914720448
 Transform:
   m_ObjectHideFlags: 0
@@ -9150,7 +9150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: 165ce31cea0e70741aeec7df27fb9648, type: 2}
+  Clip: {fileID: 7400000, guid: 3de3f92600df51a4d8aa7299096e3654, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3

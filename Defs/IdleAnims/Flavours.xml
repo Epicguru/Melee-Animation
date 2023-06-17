@@ -29,6 +29,13 @@
       <size>Tiny</size>
     </weaponFilter>
   </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_TinyFlavour3</defName>
+    <data>Idle_Tiny_Flavour2.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+  </AM.AnimDef>
 
   <!-- Medium -->
   <AM.AnimDef ParentName="AnimFlavour">

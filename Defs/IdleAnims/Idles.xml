@@ -9,7 +9,7 @@
     <idleType>Idle</idleType>
   </AM.AnimDef>
 
-  <!-- Medium -->
+  <!-- Tiny -->
   <AM.AnimDef ParentName="AnimIdle">
     <defName>AM_Idle_TinyIdle</defName>
     <data>Idle_Tiny_Idle.json</data>
