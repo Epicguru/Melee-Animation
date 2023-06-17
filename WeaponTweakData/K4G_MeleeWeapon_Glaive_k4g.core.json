@@ -1,0 +1,11 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_Glaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.359245121,
+  "Rotation": 45.0,
+  "BladeStart": 0.562264144,
+  "BladeEnd": 0.930565953,
+  "MeleeWeaponType": 7
+}

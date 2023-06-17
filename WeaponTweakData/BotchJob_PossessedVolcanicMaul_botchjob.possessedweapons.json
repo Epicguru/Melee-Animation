@@ -1,0 +1,18 @@
+{
+  "TextureModID": "botchjob.possessedweapons",
+  "ItemDefName": "BotchJob_PossessedVolcanicMaul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.259622365,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.4988682,
+  "BladeEnd": 0.8581133,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

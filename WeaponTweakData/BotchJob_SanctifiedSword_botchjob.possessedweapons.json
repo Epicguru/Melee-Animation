@@ -1,0 +1,12 @@
+{
+  "TextureModID": "botchjob.possessedweapons",
+  "ItemDefName": "BotchJob_SanctifiedSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.259622872,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.1909433,
+  "BladeEnd": 0.8762267,
+  "MeleeWeaponType": 6
+}

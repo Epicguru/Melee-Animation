@@ -1,0 +1,20 @@
+{
+  "TextureModID": "sharpie.eldenrima",
+  "ItemDefName": "ER_GodskinPeeler",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.009056695,
+  "OffY": -0.0362263173,
+  "Rotation": 45.0,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": -1.02566016,
+  "BladeEnd": 1.00301909,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.0119998949,
+    "g": 0.00300797168,
+    "b": 0.00300797168,
+    "a": 0.9693333
+  }
+}

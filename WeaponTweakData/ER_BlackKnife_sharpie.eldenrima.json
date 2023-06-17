@@ -1,0 +1,21 @@
+{
+  "TextureModID": "sharpie.eldenrima",
+  "ItemDefName": "ER_BlackKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.247548074,
+  "OffY": -0.0543397069,
+  "Rotation": 10.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.118490659,
+  "BladeEnd": 0.6618869,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.0119998949,
+    "g": 0.00300797168,
+    "b": 0.00300797168,
+    "a": 0.9693333
+  }
+}

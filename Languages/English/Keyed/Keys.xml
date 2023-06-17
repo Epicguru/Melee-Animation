@@ -49,6 +49,8 @@
   <AM.Gizmos.DuelSpot.StartDuel.OnCooldown>{0} cannot do a friendly duel for another {2} seconds</AM.Gizmos.DuelSpot.StartDuel.OnCooldown>
   <AM.Gizmos.DuelSpot.StartDuel.FloatMenuTitle>Select a pawn to duel</AM.Gizmos.DuelSpot.StartDuel.FloatMenuTitle>
   <AM.Gizmos.DuelSpot.StartDuel.FailedToStart>An unexpected error caused the duel to not be able to be started. Please send logs to the mod author.</AM.Gizmos.DuelSpot.StartDuel.FailedToStart>
+  <AM.Gizmos.DuelSpot.ToggleVisibility>Toggle visibility</AM.Gizmos.DuelSpot.ToggleVisibility>
+  <AM.Gizmos.DuelSpot.ToggleVisibility.Desc>Makes this duel spot invisible, or shows it again.\nWarning: it really is invisible! Don't forget where you put it down or you may struggle to find it again...</AM.Gizmos.DuelSpot.ToggleVisibility.Desc>
 
   <AM.Error.Grapple.Dead>{Grappler} is dead</AM.Error.Grapple.Dead>
   <AM.Error.Exec.Dead>{Exec} is dead</AM.Error.Exec.Dead>

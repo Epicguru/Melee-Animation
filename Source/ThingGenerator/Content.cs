@@ -36,6 +36,8 @@ namespace AM
         public static Texture2D BGCombined;
         [Content("AM/UI/DuelIcon")]
         public static Texture2D DuelIcon;
+        [Content("AM/UI/HIDE")]
+        public static Texture2D ToggleVisibilityIcon;
 
         [BundleContent("Materials/CutoffCustom.mat")]   
         public static Material CustomCutoffMaterial;

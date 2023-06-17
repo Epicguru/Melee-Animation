@@ -1,0 +1,12 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_Scimitar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.295849055,
+  "OffY": -0.0332074761,
+  "Rotation": 5.864345,
+  "BladeStart": 0.08528293,
+  "BladeEnd": 0.770566344,
+  "MeleeWeaponType": 6
+}
