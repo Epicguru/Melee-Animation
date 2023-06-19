@@ -131,6 +131,8 @@ public class IdleControllerComp : ThingComp
         var timer = new RefTimer();
         try
         {
+            TickSkills();
+
             if (!ShouldBeActive(out var weapon))
             {
                 ClearAnimation();
@@ -139,8 +141,6 @@ public class IdleControllerComp : ThingComp
 
             TotalActive++;
             TickActive(weapon);
-
-            TickSkills();
         }
         catch (Exception e)
         {
@@ -508,26 +508,33 @@ public class IdleControllerComp : ThingComp
     {
         base.PostExposeData();
 
-        if (!ShouldHaveSkills())
-            return;
-
-        if (skills == null)
-            PopulateSkills();
-
-        for (int i = 0; i < skills.Length; i++)
+        try
         {
-            try
+            if (!ShouldHaveSkills())
+                return;
+
+            if (skills == null)
+                PopulateSkills();
+
+            for (int i = 0; i < skills.Length; i++)
             {
-                Scribe_Deep.Look(ref skills[i], skills[i].GetType().FullName);
+                try
+                {
+                    Scribe_Deep.Look(ref skills[i], skills[i].GetType().FullName);
+                }
+                catch (Exception e)
+                {
+                    Core.Error($"Exception exposing skill {skills[i]}:", e);
+                }
             }
-            catch (Exception e)
-            {
-                Core.Error($"Exception exposing skill {skills[i]}:", e);
-            }
+        }
+        catch (Exception e2)
+        {
+            Core.Error("Big ouch:", e2);
         }
     }
 
-    private bool ShouldHaveSkills() => parent is Pawn p && (p.IsColonist || p.IsSlaveOfColony);
+    private bool ShouldHaveSkills() => Core.Settings.EnableUniqueSkills && parent is Pawn p && (p.IsColonist || p.IsSlaveOfColony);
 
     private void PopulateSkills()
     {

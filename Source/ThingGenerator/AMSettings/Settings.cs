@@ -21,6 +21,13 @@ public class Settings : SimpleSettingsBase
     [WebContent("AlwaysAnimate", true)]
     public bool AnimateAtIdle = true;
 
+    [Label("Enable Unique Skills")]
+    [Description("Enables or disables the Unique Skill system.\n" +
+                 "Unique Skills are powerful attacks or abilities that are unlocked under certain conditions.\n" +
+                 "Only your colonists can use these skills and they must be activated manually. See the Steam workshop page for more info.")]
+    [WebContent("Skills", false)]
+    public bool EnableUniqueSkills = true;
+
     [Label("Animated Pawns Considered Invisible")]
     [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
                  "they will not be actively targeted or shot at. This makes executions less risky.\n" +
