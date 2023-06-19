@@ -139,4 +139,49 @@
     </subSounds>
   </SoundDef>
 
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_SummonWhoosh</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>false</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/SummonWhoosh</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_SummonWow</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>false</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/SummonWow</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_FleshHit</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/FleshHit</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
 </Defs>

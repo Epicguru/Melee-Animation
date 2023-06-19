@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sharpie.eldenrima",
+  "ItemDefName": "ER_MiquellanKnightsSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.458867848,
+  "Rotation": 45.0,
+  "BladeStart": 0.112453014,
+  "BladeEnd": 1.08452845,
+  "MeleeWeaponType": 6
+}

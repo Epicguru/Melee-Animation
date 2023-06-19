@@ -1,0 +1,12 @@
+{
+  "TextureModID": "karukus.godsofelona",
+  "ItemDefName": "eHolyLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.227920234,
+  "OffY": -0.03342849,
+  "Rotation": 45.0,
+  "BladeStart": 0.326685637,
+  "BladeEnd": 0.7673314,
+  "MeleeWeaponType": 48
+}

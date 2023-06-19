@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.08752117,
+  "Rotation": 50.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.147839338,
+  "BladeEnd": 0.363093585,
+  "MeleeWeaponType": 16
+}

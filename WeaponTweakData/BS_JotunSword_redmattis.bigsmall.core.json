@@ -1,0 +1,12 @@
+{
+  "TextureModID": "redmattis.bigsmall.core",
+  "ItemDefName": "BS_JotunSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5834757,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.08964853,
+  "BladeEnd": 1.50275385,
+  "MeleeWeaponType": 6
+}

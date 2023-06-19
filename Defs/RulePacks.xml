@@ -129,4 +129,17 @@
       </rulesStrings>
     </rulePack>
   </RulePackDef>
+
+  <!-- Execution: Gilgamesh -->
+  <RulePackDef>
+    <defName>AM_Execution_Gilgamesh</defName>
+    <include>
+      <li>AM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->In an impressive feat of psycast mastery [INITIATOR_definite] summoned dozens of weapons to impale [RECIPIENT_definite].</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
 </Defs>

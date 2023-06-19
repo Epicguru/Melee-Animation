@@ -1,0 +1,12 @@
+{
+  "TextureModID": "redmattis.bigsmall.core",
+  "ItemDefName": "BS_JotunHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7840457,
+  "ScaleX": 2.4,
+  "ScaleY": 2.4,
+  "BladeStart": 1.39639115,
+  "BladeEnd": 1.88566,
+  "MeleeWeaponType": 1
+}

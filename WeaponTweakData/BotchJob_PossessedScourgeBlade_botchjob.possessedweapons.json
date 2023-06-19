@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.possessedweapons",
+  "ItemDefName": "BotchJob_PossessedScourgeBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2807548,
+  "OffY": -0.02113223,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.172830373,
+  "BladeEnd": 0.9154716,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,18 @@
+{
+  "TextureModID": "botchjob.possessedweapons",
+  "ItemDefName": "BotchJob_PossessedGlacialCleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.19320783,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.148679346,
+  "BladeEnd": 0.6981132,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.182,
+    "g": 0.989,
+    "b": 1.0,
+    "a": 0.98
+  }
+}

@@ -384,7 +384,7 @@ public static class OutcomeUtility
             Thing weapon = args.Weapon;
 
             var dInfo = new DamageInfo(dmgDef, 99999, 99999, hitPart: part, instigator: killer, weapon: weapon?.def);
-            var log = CreateLog(logDef, killer.equipment?.Primary, killer, pawn);
+            var log = CreateLog(logDef, weapon, killer, pawn);
             dInfo.SetAllowDamagePropagation(false);
             dInfo.SetIgnoreArmor(true);
             dInfo.SetIgnoreInstantKillProtection(true);

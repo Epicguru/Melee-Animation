@@ -1,0 +1,13 @@
+{
+  "TextureModID": "serek.fantasyquestrewardsretexture",
+  "ItemDefName": "MeleeWeapon_MonoSwordBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.270465136,
+  "OffY": -0.0121555626,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.11092145,
+  "BladeEnd": 0.7642928,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,10 @@
+{
+  "TextureModID": "millap.aoc",
+  "ItemDefName": "AOC_Swatter",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.252231836,
+  "BladeStart": 0.126875684,
+  "BladeEnd": 0.6890789,
+  "MeleeWeaponType": 8
+}

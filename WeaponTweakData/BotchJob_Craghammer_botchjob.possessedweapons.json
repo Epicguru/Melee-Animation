@@ -1,0 +1,17 @@
+{
+  "TextureModID": "botchjob.possessedweapons",
+  "ItemDefName": "BotchJob_Craghammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.172075391,
+  "OffY": 0.0392453671,
+  "BladeStart": 0.3509434,
+  "BladeEnd": 0.5954719,
+  "MeleeWeaponType": 3,
+  "TrailTint": {
+    "r": 0.709,
+    "g": 0.992,
+    "b": 0.996,
+    "a": 0.969
+  }
+}

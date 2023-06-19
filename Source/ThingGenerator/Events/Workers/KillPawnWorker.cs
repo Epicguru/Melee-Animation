@@ -26,18 +26,21 @@ namespace AM.Events.Workers
                 return;
 
             Pawn killer = i.GetPawnFromIndex(e.KillerIndex);
-            Pawn pawn = i.GetPawnFromIndex(e.VictimIndex);
+            Pawn pawn   = i.GetPawnFromIndex(e.VictimIndex);
 
             if (pawn == null || pawn.Destroyed || pawn.Dead || killer == null)
+            {
+                Core.Warn($"Invalid KillPawnWorker inputs: {pawn}, {killer}");
                 return;
+            }
 
             if (Core.Settings.ShowExecutionMotes)
             {
                 (string outcome, Color color) = animator.ExecutionOutcome switch
                 {
                     ExecutionOutcome.Damage => ("Injured", Color.yellow),
-                    ExecutionOutcome.Down => ("Downed", Color.Lerp(Color.yellow, Color.magenta, 0.35f)),
-                    ExecutionOutcome.Kill => ("Killed", Color.Lerp(Color.white, Color.red, 0.7f)),
+                    ExecutionOutcome.Down   => ("Downed", Color.Lerp(Color.yellow, Color.magenta, 0.35f)),
+                    ExecutionOutcome.Kill   => ("Killed", Color.Lerp(Color.white, Color.red, 0.7f)),
                     _ => (null, default)
                 };
                 if (outcome != null)

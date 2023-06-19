@@ -1,0 +1,18 @@
+{
+  "TextureModID": "yokaimura.1.32",
+  "ItemDefName": "Yokai_A_Ryu",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.300854981,
+  "OffY": -0.07597341,
+  "Rotation": 55.0,
+  "BladeStart": 0.132193908,
+  "BladeEnd": 0.779487431,
+  "MeleeWeaponType": 18,
+  "TrailTint": {
+    "r": 0.182,
+    "g": 0.989,
+    "b": 1.0,
+    "a": 0.98
+  }
+}

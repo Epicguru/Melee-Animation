@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sharpie.eldenrima",
+  "ItemDefName": "ER_SacredRelicSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6309432,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.1426417,
+  "BladeEnd": 1.45584929,
+  "MeleeWeaponType": 6
+}

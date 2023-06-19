@@ -1,0 +1,18 @@
+{
+  "TextureModID": "serek.fantasyquestrewardsretexture",
+  "ItemDefName": "MeleeWeapon_PlasmaSwordBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.264387429,
+  "OffY": -0.0243115854,
+  "Rotation": 15.0,
+  "BladeStart": 0.147388592,
+  "BladeEnd": 0.779487431,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

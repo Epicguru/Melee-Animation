@@ -1,6 +1,4 @@
-﻿using AM;
-using AM.Events;
-using Verse;
+﻿using Verse;
 
 namespace AM.Events.Workers
 {
@@ -22,9 +20,18 @@ namespace AM.Events.Workers
 
         public Pawn GetPawnFromIndex(int index)
         {
-            if (index >= 0 && index < Animator.PawnCount)
-                return Animator.Pawns[index];
-            return null;
+            switch (index)
+            {
+                case < 0:
+                    index = -index - 1;
+                    return index < Animator.NonAnimatedPawns.Count ? Animator.NonAnimatedPawns[index] : null;
+
+                case >= 0 when index < Animator.PawnCount:
+                    return Animator.Pawns[index];
+
+                default:
+                    return null;
+            }
         }
 
         public AnimPartData GetPart(string name) => Animator.GetPart(name);

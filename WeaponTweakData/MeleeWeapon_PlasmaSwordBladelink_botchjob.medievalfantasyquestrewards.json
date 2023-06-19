@@ -1,0 +1,16 @@
+{
+  "TextureModID": "botchjob.medievalfantasyquestrewards",
+  "ItemDefName": "MeleeWeapon_PlasmaSwordBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.306932747,
+  "BladeStart": 0.147388592,
+  "BladeEnd": 0.779487431,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

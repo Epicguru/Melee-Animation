@@ -1,0 +1,10 @@
+{
+  "TextureModID": "botchjob.medievalfantasyquestrewards",
+  "ItemDefName": "MeleeWeapon_ZeusHammerBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.24919267,
+  "BladeStart": 0.411775947,
+  "BladeEnd": 0.7521367,
+  "MeleeWeaponType": 1
+}

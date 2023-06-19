@@ -1,0 +1,10 @@
+{
+  "TextureModID": "warshipgirlr.alienraces",
+  "ItemDefName": "WSGR_Speke_anchor",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.227920234,
+  "BladeStart": 0.161823258,
+  "BladeEnd": 0.6267806,
+  "MeleeWeaponType": 1
+}

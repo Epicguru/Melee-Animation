@@ -1,0 +1,13 @@
+{
+  "TextureModID": "redmattis.bigsmall.core",
+  "ItemDefName": "BS_OgreClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7931626,
+  "OffY": 0.0273504853,
+  "ScaleX": 2.3,
+  "ScaleY": 2.3,
+  "BladeStart": 0.445204437,
+  "BladeEnd": 1.78233647,
+  "MeleeWeaponType": 1
+}

@@ -15,6 +15,19 @@
   </JobDef>
 
   <JobDef>
+    <defName>AM_ChannelAnimation</defName>
+    <driverClass>AM.Jobs.JobDriver_ChannelAnimation</driverClass>
+    <reportString>casting animation</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <suspendable>false</suspendable>
+    <neverShowWeapon>true</neverShowWeapon>
+    <isIdle>false</isIdle>
+  </JobDef>
+
+  <JobDef>
     <defName>AM_WalkToExecution</defName>
     <driverClass>AM.Jobs.JobDriver_GoToExecutionSpot</driverClass>
     <reportString>moving towards TargetA to perform execution.</reportString>
@@ -36,9 +49,9 @@
     <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
     <dropThingBeforeJob>false</dropThingBeforeJob>
     <suspendable>false</suspendable>
-    <neverShowWeapon>false</neverShowWeapon>
+    <neverShowWeapon>true</neverShowWeapon>
     <isIdle>false</isIdle>
-    <alwaysShowWeapon>true</alwaysShowWeapon>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
     <joySkill>Melee</joySkill>
     <joyXpPerTick>0.003</joyXpPerTick>
     <joyKind>AM_FriendlyDuelJoyKind</joyKind>

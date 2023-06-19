@@ -16,6 +16,7 @@ namespace AM
         public static JobDef AM_WalkToExecution;
         public static JobDef AM_DoFriendlyDuel;
         public static JobDef AM_SpectateFriendlyDuel;
+        public static JobDef AM_ChannelAnimation;
 
         public static RulePackDef AM_Execution_Generic;
 

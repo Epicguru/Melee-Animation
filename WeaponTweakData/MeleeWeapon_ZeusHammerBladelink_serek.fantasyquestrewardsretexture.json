@@ -1,0 +1,11 @@
+{
+  "TextureModID": "serek.fantasyquestrewardsretexture",
+  "ItemDefName": "MeleeWeapon_ZeusHammerBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.273504257,
+  "OffY": 0.009116888,
+  "BladeStart": 0.445204437,
+  "BladeEnd": 0.7217474,
+  "MeleeWeaponType": 1
+}

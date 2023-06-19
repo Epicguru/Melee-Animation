@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sharpie.eldenrima",
+  "ItemDefName": "ER_LordswornSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.398490429,
+  "OffY": -0.009056702,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.08830198,
+  "BladeEnd": 0.963773668,
+  "MeleeWeaponType": 6
+}

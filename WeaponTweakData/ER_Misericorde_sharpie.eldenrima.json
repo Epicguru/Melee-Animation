@@ -1,0 +1,10 @@
+{
+  "TextureModID": "sharpie.eldenrima",
+  "ItemDefName": "ER_Misericorde",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.280754358,
+  "BladeStart": 0.187924713,
+  "BladeEnd": 0.7494339,
+  "MeleeWeaponType": 6
+}

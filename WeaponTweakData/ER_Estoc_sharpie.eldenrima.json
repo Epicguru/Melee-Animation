@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sharpie.eldenrima",
+  "ItemDefName": "ER_Estoc",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.492075562,
+  "Rotation": 45.0,
+  "BladeStart": 0.130565941,
+  "BladeEnd": 1.1328305,
+  "MeleeWeaponType": 6
+}

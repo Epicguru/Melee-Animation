@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sharpie.eldenrima",
+  "ItemDefName": "ER_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.329056442,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.447547078,
+  "BladeEnd": 0.891321063,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "serek.fantasyquestrewardsretexture",
+  "ItemDefName": "MeleeWeapon_PsyfocusStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.176258445,
+  "OffY": 0.0425454,
+  "Rotation": 30.0,
+  "BladeStart": 0.238556683,
+  "BladeEnd": 0.712630451,
+  "MeleeWeaponType": 9
+}

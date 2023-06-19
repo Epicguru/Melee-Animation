@@ -15,6 +15,9 @@ namespace AM.Buildings;
 public class Building_DuelSpot : Building
 {
     private static readonly HashSet<Pawn> tempReservers = new HashSet<Pawn>();
+    private static Graphic invisible;
+
+    public override Graphic Graphic => !IsHidden ? base.Graphic : invisible ??= base.Graphic.GetCopy(Vector2.zero, base.Graphic.Shader);
 
     public IntVec3 CellMain => Position;
     public IntVec3 CellOther => Position + new IntVec3(1, 0, 0);
@@ -26,9 +29,17 @@ public class Building_DuelSpot : Building
             return forbidComp?.Forbidden ?? false;
         }
     }
+    public bool IsHidden;
 
     private readonly List<IntVec3> availableSpectateSpots = new List<IntVec3>();
     private CompForbiddable forbidComp;
+
+    public override void ExposeData()
+    {
+        base.ExposeData();
+
+        Scribe_Values.Look(ref IsHidden, "isHidden");
+    }
 
     public bool IsInUse(out Pawn a, out Pawn b)
         => IsReserved(CellMain, out a) & IsReserved(CellOther, out b);
@@ -69,6 +80,17 @@ public class Building_DuelSpot : Building
         }
 
         yield return cmd;
+
+        var toggle = new Command_Toggle
+        {
+            isActive = () => !IsHidden,
+            defaultLabel = "AM.Gizmos.DuelSpot.ToggleVisibility".Trs(),
+            defaultDesc = "AM.Gizmos.DuelSpot.ToggleVisibility.Desc".Trs(),
+            icon = Content.ToggleVisibilityIcon,
+            defaultIconColor = Color.cyan,
+            toggleAction = () => IsHidden = !IsHidden
+        };
+        yield return toggle;
     }
 
     private void ClickedStartDuel()

@@ -16,6 +16,17 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>all</ExcludeAssets>
+    </ProjectReference>
+    <PackageReference Include="Lib.Harmony" Version="2.2.2">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
   <!-- _____ 1.4 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.4'">
     <PackageReference Include="Krafs.Rimworld.Ref">
@@ -28,13 +39,7 @@
       <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
-      <CopyLocal>False</CopyLocal>
-      <Private>False</Private>
-      <ExcludeAssets>all</ExcludeAssets>
-    </ProjectReference>
-  </ItemGroup>
+
 
   <!-- Output -->
   <PropertyGroup Condition="'$(Configuration)'=='v1.4'">

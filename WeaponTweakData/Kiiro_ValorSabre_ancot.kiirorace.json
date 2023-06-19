@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_ValorSabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3784687,
+  "OffY": 0.0402122736,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 1,
+  "BladeStart": 0.140742987,
+  "BladeEnd": 0.8763917,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,18 @@
+{
+  "TextureModID": "redmattis.bigsmall.core",
+  "ItemDefName": "BS_SurtrSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7202278,
+  "ScaleX": 2.2,
+  "ScaleY": 2.2,
+  "BladeStart": 0.183855742,
+  "BladeEnd": 1.80056977,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.717,
+    "b": 0.182,
+    "a": 0.996
+  }
+}

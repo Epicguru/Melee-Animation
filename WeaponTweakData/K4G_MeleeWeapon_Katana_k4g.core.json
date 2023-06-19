@@ -1,0 +1,12 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.277736247,
+  "OffY": -0.0271696225,
+  "Rotation": 4.842419,
+  "BladeStart": 0.094339624,
+  "BladeEnd": 0.7283019,
+  "MeleeWeaponType": 6
+}
