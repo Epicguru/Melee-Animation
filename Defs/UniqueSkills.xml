@@ -12,6 +12,7 @@ However, such a feat of psychic ability will put the summoner in a psychic coma 
     <instanceClass>AM.UniqueSkills.Instances.GilgameshSkill</instanceClass>
     <data>
       <PsyLevelRequired>5</PsyLevelRequired>
+      <MeleeLevelRequired>10</MeleeLevelRequired>
       <MinPsyComaDays>2</MinPsyComaDays>
       <MaxPsyComaDays>3</MaxPsyComaDays>
     </data>

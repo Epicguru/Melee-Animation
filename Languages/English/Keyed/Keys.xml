@@ -129,6 +129,8 @@
   <AM.Skill.BadTargetState>Target invalid state.</AM.Skill.BadTargetState>
   <AM.Skill.AlreadyActive>The skill is already active.</AM.Skill.AlreadyActive>
   <AM.Skill.OnCooldown>On cooldown for {0} seconds.</AM.Skill.OnCooldown>
-  <AM.Skill.Gilgamesh.ReasonWhyNot>Psylink level {0} is below required level {1}.</AM.Skill.Gilgamesh.ReasonWhyNot>
+
+  <AM.Skill.Gilgamesh.LowPsy>Psylink level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowPsy>
+  <AM.Skill.Gilgamesh.LowMelee>Melee level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowMelee>
 
 </LanguageData>

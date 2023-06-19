@@ -7,23 +7,38 @@ namespace AM.UniqueSkills.Instances;
 public class GilgameshSkill : ChanneledUniqueSkillInstance
 {
     private int? psyLevelRequired;
+    private int? meleeLevelRequired;
 
     private int GetRequiredPsyLevel()
     {
-        if (psyLevelRequired != null)
-            return psyLevelRequired.Value;
+        return psyLevelRequired ??= Def.GetData("PsyLevelRequired", int.Parse);
+    }
 
-        psyLevelRequired = Def.GetData("PsyLevelRequired", int.Parse);
-        return psyLevelRequired.Value;
+    private int GetRequiredMeleeLevel()
+    {
+        return meleeLevelRequired ??= Def.GetData("MeleeLevelRequired", int.Parse);
     }
 
     public override bool IsEnabledForPawn(out string reasonWhyNot)
     {
         int psyLevel = Pawn.GetPsylinkLevel();
         int required = GetRequiredPsyLevel();
+        if (psyLevel < required)
+        {
+            reasonWhyNot = "AM.Skill.Gilgamesh.LowPsy".Translate(psyLevel, required);
+            return false;
+        }
 
-        reasonWhyNot = "AM.Skill.Gilgamesh.ReasonWhyNot".Translate(psyLevel, required);
-        return psyLevel >= required;
+        int meleeLevel = Pawn.skills.GetSkill(SkillDefOf.Melee).Level;
+        required = GetRequiredMeleeLevel();
+        if (meleeLevel < required)
+        {
+            reasonWhyNot = "AM.Skill.Gilgamesh.LowMelee".Translate(meleeLevel, required);
+            return false;
+        }
+
+        reasonWhyNot = null;
+        return true;
     }
 
     public override void OnAnimationStart(AnimRenderer animator)

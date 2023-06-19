@@ -87,12 +87,25 @@ namespace Assets.Editor
             {
                 case AudioEvent audio:
 
-                    if (!TryGetComponent<AudioSource>(out var audioSrc))
-                        audioSrc = gameObject.AddComponent<AudioSource>();
+                    var clip = ResolveClip(audio.AudioPath);
+                    if (clip == null)
+                    {
+                        Debug.LogError($"Failed to resolve {audio.AudioPath}");
+                        break;
+                    }
 
-                    audioSrc.spatialBlend = 0;
-                    audioSrc.pitch = audio.PitchFactor;
-                    audioSrc.PlayOneShot(ResolveClip(audio.AudioPath), audio.VolumeFactor);
+                    var go = new GameObject($"Audio: {audio.AudioPath}");
+                    var src = go.AddComponent<AudioSource>();
+
+                    src.spatialBlend = 0;
+                    src.pitch = audio.PitchFactor;
+                    src.panStereo = audio.LocalPosition.x * 0.25f;
+                    src.loop = false;
+                    src.clip = clip;
+                    src.volume = audio.VolumeFactor;
+                    src.Play();
+
+                    Destroy(go, clip.length + 1);
                     break;
             }
         }
