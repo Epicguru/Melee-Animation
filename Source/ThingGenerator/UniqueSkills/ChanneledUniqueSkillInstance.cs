@@ -18,11 +18,9 @@ public abstract class ChanneledUniqueSkillInstance : UniqueSkillInstance
 
     public override string CanTriggerOn(in LocalTargetInfo target)
     {
-        return null;
-
         // Already channeling.
         if (CurrentTarget != null)
-            return "AM.Skill.OnCooldown".Translate();
+            return "AM.Skill.AlreadyActive".Translate();
 
         // Skill cooldown.
         float cooldownRemaining = GetCooldownSecondsLeft();
