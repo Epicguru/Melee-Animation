@@ -1,0 +1,11 @@
+{
+  "TextureModID": "serek.fantasyquestrewardsretexture",
+  "ItemDefName": "MeleeWeapon_MonoSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2145176,
+  "OffY": -0.0121557936,
+  "BladeStart": 0.0894857347,
+  "BladeEnd": 0.594112158,
+  "MeleeWeaponType": 6
+}

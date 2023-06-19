@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_Slice",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.108067721,
+  "HandsMode": 1,
+  "BladeStart": 0.100563034,
+  "BladeEnd": 0.424765766,
+  "MeleeWeaponType": 8
+}

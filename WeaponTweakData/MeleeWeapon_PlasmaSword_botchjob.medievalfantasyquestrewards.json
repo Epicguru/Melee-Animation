@@ -1,0 +1,11 @@
+{
+  "TextureModID": "botchjob.medievalfantasyquestrewards",
+  "ItemDefName": "MeleeWeapon_PlasmaSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3008545,
+  "OffY": 0.009116888,
+  "BladeStart": 0.165621936,
+  "BladeEnd": 0.7734092,
+  "MeleeWeaponType": 6
+}

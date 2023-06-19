@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_Hoe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.198695928,
+  "OffY": -0.0402125865,
+  "Rotation": 50.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": 0.247187316,
+  "BladeEnd": 0.4411528,
+  "MeleeWeaponType": 24
+}

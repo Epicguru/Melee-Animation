@@ -32,7 +32,7 @@ namespace AM.Jobs
             job.collideWithPawns = true;
             job.playerForced = true;
 
-            var toil = new Toil();
+            var toil = ToilMaker.MakeToil();
             toil.handlingFacing = true;
             toil.defaultCompleteMode = ToilCompleteMode.Never;
             toil.tickAction = () =>

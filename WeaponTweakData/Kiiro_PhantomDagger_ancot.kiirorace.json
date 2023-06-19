@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_PhantomDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.113541037,
+  "ScaleX": 0.6,
+  "ScaleY": 0.6,
+  "FlipY": true,
+  "HandsMode": 1,
+  "BladeStart": 0.100530751,
+  "BladeEnd": 0.379651517,
+  "MeleeWeaponType": 48
+}

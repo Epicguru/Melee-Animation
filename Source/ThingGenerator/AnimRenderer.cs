@@ -263,6 +263,11 @@ public class AnimRenderer : IExposable
     /// </summary>
     public List<Pawn> Pawns = new List<Pawn>();
     /// <summary>
+    /// A list of pawns that are not part of this animation but are used
+    /// in things like log generation.
+    /// </summary>
+    public List<Pawn> NonAnimatedPawns = new List<Pawn>();
+    /// <summary>
     /// The base transform that the animation is centered on.
     /// Useful functions to modify this are <see cref="Matrix4x4.TRS(Vector3, Quaternion, Vector3)"/>
     /// and <see cref="Extensions.MakeAnimationMatrix(Pawn)"/>.
@@ -425,6 +430,7 @@ public class AnimRenderer : IExposable
         Scribe_Values.Look(ref Loop, "loop");
         Scribe_Values.Look(ref hasStarted, "hasStarted");
         Scribe_Collections.Look(ref Pawns, "pawns", LookMode.Reference);
+        Scribe_Collections.Look(ref NonAnimatedPawns, "pawnsNonAnimated", LookMode.Reference);
         Scribe_Collections.Look(ref pawnsValidEvenIfDespawned, "pawnsValidEvenIfDespawned", LookMode.Reference);
         Scribe_References.Look(ref Map, "map");
         Scribe_Values.Look(ref TimeScale, "timeScale", 1f);
@@ -835,7 +841,6 @@ public class AnimRenderer : IExposable
         timer.GetElapsedMilliseconds(out DrawMS);
         if (delayedDestroy)
             Destroy();
-        return;
     }
 
     private void ConfigureSplitDraw(in AnimPartSnapshot part, ref Matrix4x4 matrix, MaterialPropertyBlock pb, AnimPartOverrideData ov, int currentPass, ref int passCount)
@@ -1058,7 +1063,10 @@ public class AnimRenderer : IExposable
     public void OnStart()
     {
         if (hasStarted)
+        {
             Core.Error("Started twice!");
+            return;
+        }
         
         hasStarted = true;
 
@@ -1079,7 +1087,6 @@ public class AnimRenderer : IExposable
                 continue;
 
             var newJob = JobMaker.MakeJob(AM_DefOf.AM_InAnimation);
-
             pawn.jobs.StartJob(newJob, JobCondition.InterruptForced);
 
             if (pawn.CurJobDef != AM_DefOf.AM_InAnimation)

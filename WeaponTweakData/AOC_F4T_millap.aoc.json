@@ -1,0 +1,12 @@
+{
+  "TextureModID": "millap.aoc",
+  "ItemDefName": "AOC_F4T",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.203608632,
+  "OffY": -0.06381738,
+  "Rotation": 50.0,
+  "BladeStart": 0.476353347,
+  "BladeEnd": 0.7164291,
+  "MeleeWeaponType": 2
+}

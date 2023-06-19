@@ -1,9 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿using HarmonyLib;
+using JetBrains.Annotations;
 using System;
 using Verse;
 
 namespace AM.CAI5000Patch;
 
+[HotSwapAll]
 [UsedImplicitly]
 public class PatchCore : Mod
 {
@@ -12,6 +14,7 @@ public class PatchCore : Mod
         try
         {
             CAI5000AnimationPatch.Init();
+            new Harmony(content.Name).PatchAll();
             Core.Log("Initialized CAI-5000 patch");
         }
         catch (Exception e)

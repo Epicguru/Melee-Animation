@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_KitchenKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2152546,
+  "OffY": -0.0378468335,
+  "HandsMode": 1,
+  "BladeStart": 0.0910691842,
+  "BladeEnd": 0.443518043,
+  "MeleeWeaponType": 48
+}

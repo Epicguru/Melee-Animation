@@ -1,0 +1,13 @@
+{
+  "TextureModID": "millap.aoc",
+  "ItemDefName": "AOC_MonoSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.230959326,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": -0.6951567,
+  "BladeEnd": 0.7118709,
+  "MeleeWeaponType": 6
+}

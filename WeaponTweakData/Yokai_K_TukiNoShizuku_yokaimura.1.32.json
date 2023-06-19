@@ -1,0 +1,17 @@
+{
+  "TextureModID": "yokaimura.1.32",
+  "ItemDefName": "Yokai_K_TukiNoShizuku",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.246153533,
+  "Rotation": 61.31959,
+  "BladeStart": 0.07749297,
+  "BladeEnd": 0.770370543,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.3749333,
+    "g": 0.937333345,
+    "b": 0.712373257,
+    "a": 1.0
+  }
+}

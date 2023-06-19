@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_TwoHandSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4115846,
+  "OffY": 0.0520395637,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.150204912,
+  "BladeEnd": 1.065626,
+  "MeleeWeaponType": 6
+}

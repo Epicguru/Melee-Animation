@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.medievalfantasyquestrewards",
+  "ItemDefName": "MeleeWeapon_MonoSwordBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.288698941,
+  "OffY": -0.03342849,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.135232568,
+  "BladeEnd": 0.879771948,
+  "MeleeWeaponType": 6
+}

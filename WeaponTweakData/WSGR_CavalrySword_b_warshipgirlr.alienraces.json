@@ -1,0 +1,13 @@
+{
+  "TextureModID": "warshipgirlr.alienraces",
+  "ItemDefName": "WSGR_CavalrySword_b",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.407217741,
+  "OffY": -0.0486229658,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.09648632,
+  "BladeEnd": 0.989933431,
+  "MeleeWeaponType": 6
+}

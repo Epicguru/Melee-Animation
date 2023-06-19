@@ -1,0 +1,11 @@
+{
+  "TextureModID": "alexprotopopov.vaultsofvagar",
+  "ItemDefName": "VOV_Chimera_CSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.355555445,
+  "OffY": -0.0212724656,
+  "BladeStart": 0.107882328,
+  "BladeEnd": 0.8341879,
+  "MeleeWeaponType": 6
+}

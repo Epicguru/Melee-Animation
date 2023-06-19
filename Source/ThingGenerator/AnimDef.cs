@@ -182,7 +182,6 @@ public class AnimDef : Def
     public int? minMeleeSkill = null;
     public bool canEditProbability = true;
     public IdleType idleType;
-    public int mainAttackDuration;
     public bool pointAtTarget;
     public int returnToIdleStart, returnToIdleEnd;
     public int idleFrame;
