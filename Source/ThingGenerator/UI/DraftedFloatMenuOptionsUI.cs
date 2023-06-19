@@ -122,7 +122,6 @@ public static class DraftedFloatMenuOptionsUI
 
     private static IEnumerable<FloatMenuOption> GenerateSkillOptions(Pawn attacker, Pawn target, IReadOnlyList<UniqueSkillInstance> skills)
     {
-        Core.Log($"There are {skills.Count} skills");
         if (skills.Count == 0)
             yield break;
 
@@ -146,8 +145,21 @@ public static class DraftedFloatMenuOptionsUI
                 continue;
             }
 
+            bool enemy = target.HostileTo(Faction.OfPlayer);
+            var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
+
             yield return new FloatMenuOption("AM.Skill.Cast".Translate(skillName, target), () =>
             {
+                if (Core.Settings.WarnOfFriendlyExecution)
+                {
+                    enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
+                    if (!enemy && !Input.GetKey(KeyCode.LeftShift))
+                    {
+                        Messages.Message("Tried to cast skill on friendly: hold the Shift key when selecting to confirm!", MessageTypeDefOf.RejectInput, false);
+                        return;
+                    }
+                }
+
                 string msg;
                 if (!skill.IsEnabledForPawn(out _) || skill.CanTriggerOn(target) != null)
                 {
@@ -163,7 +175,7 @@ public static class DraftedFloatMenuOptionsUI
                 msg = "AM.Skill.CantCastGeneric".Translate(skillName, target);
                 Messages.Message(msg, MessageTypeDefOf.RejectInput, false);
                 
-            }, MenuOptionPriority.AttackEnemy);
+            }, priority, revalidateClickTarget: target);
         }
     }
 

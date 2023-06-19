@@ -5,6 +5,7 @@ using Verse;
 
 namespace AM.CAI5000Patch;
 
+[HotSwapAll]
 [UsedImplicitly]
 public class PatchCore : Mod
 {

@@ -1,5 +1,4 @@
-﻿using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Verse;
 using Verse.AI;
 
@@ -42,12 +41,7 @@ namespace AM.Jobs
             var toil = ToilMaker.MakeToil();
             toil.handlingFacing = true;
             toil.defaultCompleteMode = ToilCompleteMode.Never;
-            toil.AddEndCondition(() =>
-            {
-                if (ShouldContinue)
-                    return JobCondition.Ongoing;
-                return JobCondition.Succeeded;
-            });
+            toil.AddEndCondition(() => ShouldContinue ? JobCondition.Ongoing : JobCondition.Succeeded);
             return toil;
         }
 

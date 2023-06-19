@@ -13,7 +13,7 @@ public static class AntiRetreatPatch
 {
     public static bool Prefix(Pawn pawn, ref Job __result)
     {
-        if (pawn.TryGetAnimator() == null)
+        if (pawn != null && pawn.TryGetAnimator() == null)
             return true;
 
         __result = null;
