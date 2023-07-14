@@ -77,12 +77,4 @@ public class GilgameshSkill : ChanneledUniqueSkillInstance
 
         Pawn.health.AddHediff(instance);
     }
-
-    public override void ExposeData()
-    {
-        base.ExposeData();
-
-        string example = "Some dummy data";
-        Scribe_Values.Look(ref example, "exampleData");
-    }
 }

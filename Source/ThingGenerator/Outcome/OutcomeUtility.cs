@@ -297,8 +297,8 @@ public static class OutcomeUtility
                 verb = attacker.meleeVerbs.TryGetMeleeVerb(pawn);
                 if (limit-- == 0)
                 {
-                    Core.Error("Failed to find random verb for weapon.");
-                    break;
+                    Core.Error($"Failed to find random verb for weapon '{args.Weapon}' on pawn {pawn}. May be a result of an optimization mod or bug.");
+                    return false;
                 }
 
             } while (verb.EquipmentSource != args.Weapon);

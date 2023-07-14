@@ -798,18 +798,15 @@ public class AnimRenderer : IExposable
                     pb.Clear();
 
                     // Basic texture and color, always used. Color might be replaced, see below.
-                    pb.SetTexture("_MainTex", tex);
                     pb.SetColor("_Color", color);
 
                     if (ov.Material != null)
                     {
                         // Check for a mask...
                         bool doesUseMask = ov.Material.HasProperty(ShaderPropertyIDs.MaskTex);
-                        if (doesUseMask)
+                        Texture mask;
+                        if (doesUseMask && (mask = ov.Material.GetTexture(ShaderPropertyIDs.MaskTex)) != null)
                         {
-                            // Get the mask and mask color.
-                            var mask = ov.Material.GetTexture(ShaderPropertyIDs.MaskTex);
-
                             // Tint is applied to the mask.
                             pb.SetColor("_Color", color); // Color comes from animation.
                             pb.SetColor("_ColorTwo", ov.Weapon.DrawColor); // Mask tint
@@ -825,8 +822,10 @@ public class AnimRenderer : IExposable
 
                     if (snap.SplitDrawMode != AnimData.SplitDrawMode.None && snap.SplitDrawPivot != null)
                     {
-                        ConfigureSplitDraw(snap, ref matrix, pb, ov, i, ref passes);
+                        ConfigureSplitDraw(snap, ref matrix, pb, ov, i, mat, ref passes, ref tex);
                     }
+
+                    pb.SetTexture("_MainTex", tex);
                 }
 
                 var finalMpb = useMPB ? pb : null;
@@ -843,7 +842,7 @@ public class AnimRenderer : IExposable
             Destroy();
     }
 
-    private void ConfigureSplitDraw(in AnimPartSnapshot part, ref Matrix4x4 matrix, MaterialPropertyBlock pb, AnimPartOverrideData ov, int currentPass, ref int passCount)
+    private void ConfigureSplitDraw(in AnimPartSnapshot part, ref Matrix4x4 matrix, MaterialPropertyBlock pb, AnimPartOverrideData ov, int currentPass, Material mat, ref int passCount, ref Texture2D texture)
     {
         bool preFx = ov.FlipX ? !part.FlipX : part.FlipX;
         bool preFy = ov.FlipY ? !part.FlipY : part.FlipY;
@@ -881,6 +880,10 @@ public class AnimRenderer : IExposable
             lerp = 1 - lerp;
 
         pb.SetFloat("Distance", distanceScale * (-1f + lerp * 2f));
+
+        // Experimental, aims to fix issue where split drawing does not use the weapon ideology style.
+        if (mat != null && mat.mainTexture is Texture2D tex2D)
+            texture = tex2D;
     }
 
     public void DrawGUI()

@@ -518,6 +518,12 @@ public class IdleControllerComp : ThingComp
 
             for (int i = 0; i < skills.Length; i++)
             {
+                if (skills[i] == null)
+                {
+                    Core.Warn($"Missing (null) skill at index {i}");
+                    continue;
+                }
+
                 try
                 {
                     Scribe_Deep.Look(ref skills[i], skills[i].GetType().FullName);
@@ -538,21 +544,30 @@ public class IdleControllerComp : ThingComp
 
     private void PopulateSkills()
     {
-        var pawn = parent as Pawn;
-        var list = DefDatabase<UniqueSkillDef>.AllDefsListForReading;
-        skills = new UniqueSkillInstance[list.Count];
-        for (int i = 0; i < list.Count; i++)
+        try
         {
-            var instance = Activator.CreateInstance(list[i].instanceClass) as UniqueSkillInstance;
-            if (instance == null)
+            var pawn = parent as Pawn;
+            var list = DefDatabase<UniqueSkillDef>.AllDefsListForReading;
+            skills = new UniqueSkillInstance[list.Count];
+            for (int i = 0; i < list.Count; i++)
             {
-                Log.Error($"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
-                continue;
-            }
-            instance.Pawn = pawn;
-            instance.Def = list[i];
+                var instance = Activator.CreateInstance(list[i].instanceClass) as UniqueSkillInstance;
+                if (instance == null)
+                {
+                    Log.Error(
+                        $"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
+                    continue;
+                }
 
-            skills[i] = instance;
+                instance.Pawn = pawn;
+                instance.Def = list[i];
+
+                skills[i] = instance;
+            }
+        }
+        catch (Exception e)
+        {
+            Core.Error($"Exception populating skills:", e);
         }
     }
 
