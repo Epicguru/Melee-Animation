@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 19 Jun 2023, 8:54 PM.`  
+`Updated 15 Jul 2023, 12:38 AM.`  
 
-**Melee Animation supports 1800 weapons from 222 mods.**  
+**Melee Animation supports 1802 weapons from 222 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -73,7 +73,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Call of Cthulhu - Factions** | rimofmadness.callofcthulhu.factions | 4 | *Epicguru* |
 | **Combat Extended Melee** | ceteam.combatextendedmelee | 7 | *Epicguru* |
 | **Contractors Arsenal** | zerophoenix.contractorsarsenalfaction | 1 | *Epicguru* |
-| **Core** | ludeon.rimworld | 17 | *Epicguru* |
+| **Core** | ludeon.rimworld | 18 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
 | **Dinosauria** | spincrus.dinosauria | 1 | *Epicguru* |
 | **Dragonian Prime Race2.0** | vazrua.dragonianraceprime2.0 | 4 | *Epicguru* |
@@ -223,7 +223,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Vanilla Factions Expanded - Vikings** | oskarpotocki.vfe.vikings | 7 | *Epicguru* |
 | **Vanilla Melee Retexture** | zodgilla.vanillameleeretexture | 9 | *Epicguru* |
 | **Vanilla Psycasts Expanded** | vanillaexpanded.vpsycastse | 3 | *Epicguru* |
-| **Vanilla Textures Expanded** | vanillaexpanded.vtexe | 21 | *Epicguru* |
+| **Vanilla Textures Expanded** | vanillaexpanded.vtexe | 22 | *Epicguru* |
 | **Vanilla Weapons Expanded** | vanillaexpanded.vwe | 7 | *Epicguru* |
 | **Vanilla Weapons Expanded - Laser** | vanillaexpanded.vwel | 1 | *Epicguru* |
 | **Vanilla Weapons Expanded - Non-Lethal** | vanillaexpanded.vwenl | 1 | *Epicguru* |
