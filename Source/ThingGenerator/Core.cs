@@ -2,16 +2,13 @@
 using AM.Patches;
 using AM.Retexture;
 using AM.Tweaks;
-using GistAPI;
-using GistAPI.Models;
 using HarmonyLib;
-using JetBrains.Annotations;
 using ModRequestAPI;
+using ModRequestAPI.Models;
 using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -24,8 +21,6 @@ namespace AM;
 [HotSwapAll]
 public class Core : Mod
 {
-    private const string GIST_ID = "d1c22be7a26feb273008c4cea948be53";
-
     public static Func<Pawn, float> GetBodyDrawSizeFactor = _ => 1f;
     public static string ModTitle => ModContent?.Name;
     public static ModContentPack ModContent;
@@ -51,73 +46,6 @@ public class Core : Mod
         Verse.Log.Error($"<color=#66ffb5>[MeleeAnim]</color> {msg}");
         if (e != null)
             Verse.Log.Error(e.ToString());
-    }
-
-    [UsedImplicitly]
-    [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
-    private static void LogModRequestsToDesktop()
-    {
-        var task = Task.Run(() => new ModRequestClient(GIST_ID).GetModRequests());
-        task.ContinueWith(t =>
-        {
-            if (!t.IsCompletedSuccessfully)
-            {
-                Error("Failed to get mod requests:", t.Exception);
-                return;
-            }
-
-            var str = new StringBuilder(1024 * 10);
-            var res = t.Result.ToList();
-            var list = (from r in res orderby r.data.RequestCount descending select r).ToList();
-            foreach (var pair in list)
-            {
-                int done = TweakDataManager.GetTweakDataFileCount(pair.modID);
-                if (done >= pair.data.MissingWeaponCount)
-                    continue;
-
-                Log($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.");
-                str.Append($"[{pair.modID}] {pair.data.RequestCount} requests with {pair.data.MissingWeaponCount} missing weapons.\n");
-            }
-
-            // I don't want users clicking this button out of curiosity and complaining
-            // when a file appears on their desktop:
-            if (SteamUtility.SteamPersonaName == "Epicguru")
-            {
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MeleeAnimationMissingMods.txt");
-                File.WriteAllText(path, str.ToString());
-            }
-        });
-    }
-
-    [UsedImplicitly]
-    [DebugAction("Melee Animation", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Entry)]
-    private static void ClearModRequests()
-    {
-        // Average user shouldn't be allowed to clear the logs,
-        // but if they do it isn't a big deal.
-        if (SteamUtility.SteamPersonaName != "Epicguru")
-            return;
-
-        Task.Run(async () =>
-        {
-            var client = new GistClient<ModRequestContainer>();
-
-            var files = new Dictionary<string, GistFile>();
-            for (int i = 'A'; i <= 'Z'; i++)
-            {
-                files.Add(((char)i) + ".json", new GistFile
-                {
-                    FileName = ((char)i) + ".json",
-                    Content = "{}"
-                });
-            }
-
-            await client.UpdateGist(GIST_ID, new UpdateGistRequest
-            {
-                Description = "Dev clear 2",
-                Files = files
-            });
-        });
     }
 
     public Core(ModContentPack content) : base(content)
@@ -178,14 +106,14 @@ public class Core : Mod
 
     private void LoadAllTweakData()
     {
-        var modsAndMissingWeaponCount = new Dictionary<string, int>();
+        var modsAndMissingWeaponCount = new Dictionary<string, (string name, int wc)>();
 
         foreach (var pair in TweakDataManager.LoadAllForActiveMods(false))
         {
-            if (!modsAndMissingWeaponCount.ContainsKey(pair.modPackageID))
-                modsAndMissingWeaponCount.Add(pair.modPackageID, 0);
+            if (!modsAndMissingWeaponCount.TryGetValue(pair.modPackageID, out var found))
+                modsAndMissingWeaponCount.Add(pair.modPackageID, (pair.modName, 0));
 
-            modsAndMissingWeaponCount[pair.modPackageID]++;
+            modsAndMissingWeaponCount[pair.modPackageID] = (pair.modName, found.wc + 1);
         }
 
         Log($"Loaded tweak data for {TweakDataManager.TweakDataLoadedCount} weapons.");
@@ -195,12 +123,20 @@ public class Core : Mod
 
         foreach (var pair in modsAndMissingWeaponCount)
         {
-            Warn($"{pair.Key} has {pair.Value} missing weapon tweak data.");
+            Warn($"{pair.Key} '{pair.Value.name}' has {pair.Value.wc} missing weapon tweak data.");
         }
+
+        var toUpload = new List<MissingModRequest>();
+        toUpload.AddRange(modsAndMissingWeaponCount.Select(p => new MissingModRequest
+        {
+            ModID = p.Key,
+            ModName = p.Value.name,
+            WeaponCount = p.Value.wc
+        }));
 
         if (Settings.SendStatistics && !Settings.IsFirstTimeRunning)
         {
-            Task.Run(() => UploadMissingModData(modsAndMissingWeaponCount)).ContinueWith(t =>
+            Task.Run(() => UploadMissingModData(toUpload)).ContinueWith(t =>
             {
                 if (t.IsCompletedSuccessfully)
                 {
@@ -208,7 +144,7 @@ public class Core : Mod
                     return;
                 }
 
-                Error("Reporting missing mod/weapons failed with exception:", t.Exception);
+                Warn($"Reporting missing mod/weapons failed with exception:\n{t.Exception}");
             });
         }
         else
@@ -232,23 +168,10 @@ public class Core : Mod
         }
     }
 
-    private static async Task UploadMissingModData(Dictionary<string, int> modAndWeaponCounts)
+    private static async Task UploadMissingModData(IList<MissingModRequest> list)
     {
-        var client = new ModRequestClient(GIST_ID);
-
-        bool UpdateAction(string modID, ModData data)
-        {
-            int missingWeaponCount = modAndWeaponCounts[modID];
-
-            data.RequestCount++;
-            if (data.MissingWeaponCount < missingWeaponCount)
-                data.MissingWeaponCount = missingWeaponCount;
-
-            return true;
-        }
-
-        string desc = $"APIUpdate at {DateTime.UtcNow}. Game Version: {VersionControl.CurrentVersionStringWithRev}. Using steam: {SteamUtility.SteamPersonaName != null && SteamUtility.SteamPersonaName != "???"}";
-        await client.UpdateModRequests(modAndWeaponCounts.Keys, desc, UpdateAction);
+        var client = new ModRequestClient();
+        await client.TryPostModRequests(list);
     }
 
     private void AddLateLoadEvents()

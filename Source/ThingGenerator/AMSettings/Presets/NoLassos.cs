@@ -8,7 +8,8 @@ public class NoLassos : Settings
  * Adds melee attack animations.
  * Adds melee weapon idle animations
  * Adds duels
- * Adds execution animations";
+ * Adds execution animations
+ * Adds Unique Skills";
 
     public NoLassos()
     {

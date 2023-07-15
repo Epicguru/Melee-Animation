@@ -131,6 +131,8 @@ public class IdleControllerComp : ThingComp
         var timer = new RefTimer();
         try
         {
+            TickSkills();
+
             if (!ShouldBeActive(out var weapon))
             {
                 ClearAnimation();
@@ -139,8 +141,6 @@ public class IdleControllerComp : ThingComp
 
             TotalActive++;
             TickActive(weapon);
-
-            TickSkills();
         }
         catch (Exception e)
         {
@@ -508,44 +508,66 @@ public class IdleControllerComp : ThingComp
     {
         base.PostExposeData();
 
-        if (!ShouldHaveSkills())
-            return;
-
-        if (skills == null)
-            PopulateSkills();
-
-        for (int i = 0; i < skills.Length; i++)
+        try
         {
-            try
+            if (!ShouldHaveSkills())
+                return;
+
+            if (skills == null)
+                PopulateSkills();
+
+            for (int i = 0; i < skills.Length; i++)
             {
-                Scribe_Deep.Look(ref skills[i], skills[i].GetType().FullName);
+                if (skills[i] == null)
+                {
+                    Core.Warn($"Missing (null) skill at index {i}");
+                    continue;
+                }
+
+                try
+                {
+                    Scribe_Deep.Look(ref skills[i], skills[i].GetType().FullName);
+                }
+                catch (Exception e)
+                {
+                    Core.Error($"Exception exposing skill {skills[i]}:", e);
+                }
             }
-            catch (Exception e)
-            {
-                Core.Error($"Exception exposing skill {skills[i]}:", e);
-            }
+        }
+        catch (Exception e2)
+        {
+            Core.Error("Big ouch:", e2);
         }
     }
 
-    private bool ShouldHaveSkills() => parent is Pawn p && (p.IsColonist || p.IsSlaveOfColony);
+    private bool ShouldHaveSkills() => Core.Settings.EnableUniqueSkills && parent is Pawn p && (p.IsColonist || p.IsSlaveOfColony);
 
     private void PopulateSkills()
     {
-        var pawn = parent as Pawn;
-        var list = DefDatabase<UniqueSkillDef>.AllDefsListForReading;
-        skills = new UniqueSkillInstance[list.Count];
-        for (int i = 0; i < list.Count; i++)
+        try
         {
-            var instance = Activator.CreateInstance(list[i].instanceClass) as UniqueSkillInstance;
-            if (instance == null)
+            var pawn = parent as Pawn;
+            var list = DefDatabase<UniqueSkillDef>.AllDefsListForReading;
+            skills = new UniqueSkillInstance[list.Count];
+            for (int i = 0; i < list.Count; i++)
             {
-                Log.Error($"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
-                continue;
-            }
-            instance.Pawn = pawn;
-            instance.Def = list[i];
+                var instance = Activator.CreateInstance(list[i].instanceClass) as UniqueSkillInstance;
+                if (instance == null)
+                {
+                    Log.Error(
+                        $"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
+                    continue;
+                }
 
-            skills[i] = instance;
+                instance.Pawn = pawn;
+                instance.Def = list[i];
+
+                skills[i] = instance;
+            }
+        }
+        catch (Exception e)
+        {
+            Core.Error($"Exception populating skills:", e);
         }
     }
 

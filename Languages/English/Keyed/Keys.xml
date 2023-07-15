@@ -42,8 +42,8 @@
   <AM.Gizmos.DuelSpot.StartDuel.Desc>Manually start a duel between two friendly pawns with valid weapons. Prisoners cannot participate.\n\nThis is a friendly duel, nobody will be hurt.</AM.Gizmos.DuelSpot.StartDuel.Desc>
   <AM.Gizmos.DuelSpot.StartDuel.InUse>The duel spot is currently in use</AM.Gizmos.DuelSpot.StartDuel.InUse>
   <AM.Gizmos.DuelSpot.StartDuel.Forbidden>The duel spot is forbidden</AM.Gizmos.DuelSpot.StartDuel.Forbidden>
-  <AM.Gizmos.DuelSpot.StartDuel.MissingWeapon>{0} does not have a valid melee weapon</AM.Gizmos.DuelSpot.StartDuel.MissingWeapon>
-  <AM.Gizmos.DuelSpot.StartDuel.IncompatWeapon>{0}'s weapon cannot be used to duel {1}, their weapons are incompatible</AM.Gizmos.DuelSpot.StartDuel.IncompatWeapon>
+  <AM.Gizmos.DuelSpot.StartDuel.MissingWeapon>{0} does not have a valid melee weapon (must be long weapon, not short)</AM.Gizmos.DuelSpot.StartDuel.MissingWeapon>
+  <AM.Gizmos.DuelSpot.StartDuel.IncompatWeapon>{0}'s weapon cannot be used to duel {1}, their weapons are incompatible (must be long weapons, not short)</AM.Gizmos.DuelSpot.StartDuel.IncompatWeapon>
   <AM.Gizmos.DuelSpot.StartDuel.CannotInterrupt>{0}'s current job cannot be interrupted</AM.Gizmos.DuelSpot.StartDuel.CannotInterrupt>
   <AM.Gizmos.DuelSpot.StartDuel.NoPath>{0} cannot reach the duel spot</AM.Gizmos.DuelSpot.StartDuel.NoPath>
   <AM.Gizmos.DuelSpot.StartDuel.OnCooldown>{0} cannot do a friendly duel for another {2} seconds</AM.Gizmos.DuelSpot.StartDuel.OnCooldown>

@@ -45,6 +45,7 @@ public class GameComp : GameComponent
         }
 
         Scribe_Collections.Look(ref allMeleeData, "pawnMeleeData", LookMode.Deep);
+
         allMeleeData ??= new List<PawnMeleeData>();
 
         if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -53,7 +54,17 @@ public class GameComp : GameComponent
             foreach (var data in allMeleeData)
             {
                 if (data.ShouldSave())
+                {
+                    if (pawnMeleeData.ContainsKey(data.Pawn))
+                    {
+                        // Adding this check because a user reported this exact error.
+                        // No idea how they managed that. Save editing?
+                        Core.Error("Duplicate pawn data (or data with same pawn!) found when loading!");
+                        continue;
+                    }
+                    
                     pawnMeleeData.Add(data.Pawn, data);
+                }
             }
         }
     }

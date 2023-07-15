@@ -1,4 +1,5 @@
-﻿using AM.Controller.Requests;
+﻿using System;
+using AM.Controller.Requests;
 using AM.Controller;
 using RimWorld;
 using System.Collections.Generic;
@@ -36,8 +37,32 @@ public static class DraftedFloatMenuOptionsUI
         canTargetCorpses = false,
         canTargetBloodfeeders = true,
     };
+    private static readonly List<FloatMenuOption> tempOptions = new List<FloatMenuOption>();
 
     public static IEnumerable<FloatMenuOption> GenerateMenuOptions(Vector3 clickPos, Pawn pawn)
+    {
+        lock (tempOptions)
+        {
+            tempOptions.Clear();
+
+            try
+            {
+                tempOptions.AddRange(GenAllOptions(clickPos, pawn));
+            }
+            catch (Exception e)
+            {
+                Core.Error($"Float menu UI gen error [{e.Message}]:", e);
+            }
+
+            foreach (var op in tempOptions)
+                if (op != null)
+                    yield return op;
+
+            tempOptions.Clear();
+        }
+    }
+
+    private static IEnumerable<FloatMenuOption> GenAllOptions(Vector3 clickPos, Pawn pawn)
     {
         if (!pawn.IsColonistPlayerControlled)
             yield break;
@@ -122,7 +147,7 @@ public static class DraftedFloatMenuOptionsUI
 
     private static IEnumerable<FloatMenuOption> GenerateSkillOptions(Pawn attacker, Pawn target, IReadOnlyList<UniqueSkillInstance> skills)
     {
-        if (skills.Count == 0)
+        if (skills == null || skills.Count == 0)
             yield break;
 
         foreach (var skill in skills)
@@ -130,7 +155,7 @@ public static class DraftedFloatMenuOptionsUI
             if (skill == null)
                 continue;
 
-            if (!skill.IsEnabledForPawn(out var _))
+            if (!skill.IsEnabledForPawn(out _))
                 continue;
 
             string skillName = skill.Def.label;
