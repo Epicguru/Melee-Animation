@@ -2,16 +2,21 @@
 
   <PropertyGroup>
 	<TargetFramework>net472</TargetFramework>
-	  <OutputType>Library</OutputType>
-	  <ImplicitUsings>disable</ImplicitUsings>
+	<OutputType>Library</OutputType>
+	<ImplicitUsings>disable</ImplicitUsings>
 	<Nullable>disable</Nullable>
 	<NoStdLib>false</NoStdLib>
 	<LangVersion>11</LangVersion>
-		<DebugType>none</DebugType>
+	<DebugType>none</DebugType>
   </PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\GistAPI\GistAPI.csproj" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3704" />
+		<PackageReference Include="Unity.Newtonsoft.Json" Version="7.0.0" />
 	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModRequestAPI.Models\ModRequestAPI.Models.csproj" />
+  </ItemGroup>
 
 </Project>

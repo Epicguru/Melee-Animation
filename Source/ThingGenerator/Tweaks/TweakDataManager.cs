@@ -192,7 +192,7 @@ namespace AM.Tweaks
             DebugTables.MakeTablesDialog(all, table);
         }
 
-        public static IEnumerable<(string modPackageID, ThingDef weapon)> LoadAllForActiveMods(bool includeRedundant)
+        public static IEnumerable<(string modPackageID, string modName, ThingDef weapon)> LoadAllForActiveMods(bool includeRedundant)
         {
             var data = from weapon in DefDatabase<ThingDef>.AllDefsListForReading
                 where weapon.IsMeleeWeapon
@@ -210,7 +210,7 @@ namespace AM.Tweaks
                 // Attempt to load the tweak for the actual active retexture.
                 var tweak = TryLoad(pair.weapon, pair.report.ActiveRetextureMod);
                 if (tweak == null)
-                    yield return (ItemTweakData.MakeModID(pair.report.ActiveRetextureMod), pair.weapon);
+                    yield return (ItemTweakData.MakeModID(pair.report.ActiveRetextureMod), pair.report.ActiveRetextureMod.Name, pair.weapon);
 
                 // Fallback to other tweak data from non-active retextures.
                 if (includeRedundant || tweak == null)
@@ -222,7 +222,7 @@ namespace AM.Tweaks
 
                         tweak = TryLoad(pair.weapon, retex.mod);
                         if (tweak == null)
-                            yield return (ItemTweakData.MakeModID(pair.report.ActiveRetextureMod), pair.weapon);
+                            yield return (ItemTweakData.MakeModID(pair.report.ActiveRetextureMod), pair.report.ActiveRetextureMod.Name, pair.weapon);
                         else if (!includeRedundant)
                             break;
                     }
