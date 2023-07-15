@@ -12,6 +12,7 @@ public class ModReportingDAL
         {"#MN",  "ModName"},
         {"#WC",  "WeaponCount"},
         {"#RC",  "RequestCount"},
+        {"#WM",  "WriteMonth"},
     };
 
     private readonly IAmazonDynamoDB db;
@@ -29,8 +30,12 @@ public class ModReportingDAL
             SET
                 #MID = :mid,
                 #MN  = :mn,
-                #WC  = :wc
+                #WC  = :wc,
+                #WM  = :wm
         ";
+
+        var dt = DateTime.UtcNow;
+        string writeMonth = (dt.Year - 2000) + dt.Month.ToString().PadLeft(2, '0');
 
         foreach (var request in requests)
         {
@@ -58,7 +63,10 @@ public class ModReportingDAL
                     { ":wc", new AttributeValue { N = request.WeaponCount.ToString() }},
 
                     // Updated mod name.
-                    { ":mn", new AttributeValue { S = request.ModName }}
+                    { ":mn", new AttributeValue { S = request.ModName }},
+
+                    // Write month used as pk on index for sorting with request count.
+                    { ":wm", new AttributeValue { N =  writeMonth }}
                 },
 
                 UpdateExpression = EXPRESSION
