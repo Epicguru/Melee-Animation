@@ -1,0 +1,14 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "Melee_MechBattleAxeCraft",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.324679971,
+  "OffY": -0.08882748,
+  "Rotation": 60.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.19917281,
+  "BladeEnd": 0.833218455,
+  "MeleeWeaponType": 2
+}

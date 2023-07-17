@@ -4,9 +4,9 @@
   <AM.UniqueSkillDef>
     <defName>AM_Skill_Gilgamesh</defName>
     <label>Mystic Weapon Summon</label>
-    <description>summons a myriad of weapons, of unknown origin, to impale the target.
+    <description>Summons a myriad of weapons, of unknown origin, to impale the target.
 Does not require line of sight, and the onslaught of weapons is sure to kill the victim.
-However, such a feat of psychic ability will put the summoner in a psychic coma for no less than 2 days.</description>
+However, such a feat of psychic ability will put the summoner in a psychic coma for no less than 2 days.\nAlways kills the target.</description>
     <type>ChanneledAnimation</type>
     <animation>AM_GilgameshVictim</animation>
     <instanceClass>AM.UniqueSkills.Instances.GilgameshSkill</instanceClass>
@@ -36,8 +36,25 @@ However, such a feat of psychic ability will put the summoner in a psychic coma 
     </cellData>
     <data>Special_GilgameshVictim.json</data>
     <rendererWorker>AM.RendererWorkers.GilgameshRendererWorker</rendererWorker>
+    <canEditProbability>false</canEditProbability>
+    <!-- Always lethal -->
+    <fixedOutcome>Kill</fixedOutcome>
   </AM.AnimDef>
 
+
+
+  <!-- Weebstick -->
+  <AM.UniqueSkillDef>
+    <defName>AM_Skill_Weebstick</defName>
+    <label>Scarlet Edge</label>
+    <description>Slash through a single enemy using Scarlet Edge, killing them instantly.</description>
+    <type>Execution</type>
+    <animation>AM_Execution_Weebstick</animation>
+    <instanceClass>AM.UniqueSkills.Instances.WeebstickSkill</instanceClass>
+    <data>
+      <MeleeLevelRequired>16</MeleeLevelRequired>
+    </data>
+  </AM.UniqueSkillDef>
 
   <!-- Weebstick execution -->
   <AM.AnimDef ParentName="AnimExecutionBase">
@@ -48,6 +65,8 @@ However, such a feat of psychic ability will put the summoner in a psychic coma 
     <!-- Do not allow it to occur normally, do not allow user to change probability -->
     <relativeProbability>0</relativeProbability>
     <canEditProbability>false</canEditProbability>
+    <!-- Always lethal -->
+    <fixedOutcome>Kill</fixedOutcome>
 
     <weaponFilter Class="AM.Reqs.SpecificWeapon">
       <weapon>AM_Weebstick</weapon>
@@ -69,6 +88,44 @@ However, such a feat of psychic ability will put the summoner in a psychic coma 
         <position>(-1, 0)</position>
       </li>
     </cellData>
+  </AM.AnimDef>
+
+
+  <!-- Gae Bulg -->
+  <AM.UniqueSkillDef>
+    <defName>AM_Skill_GaeBulg</defName>
+    <label>Lance Ultrakill</label>
+    <description>Kill a single target in a complex and stylish animation that launches them into the air.\nAlways kills the target.</description>
+    <type>Execution</type>
+    <animation>AM_Execution_GaeBulg</animation>
+    <instanceClass>AM.UniqueSkills.Instances.GaeBulgSkill</instanceClass>
+    <data>
+      <MeleeLevelRequired>18</MeleeLevelRequired>
+    </data>
+  </AM.UniqueSkillDef>
+
+  <!-- Gae Bulg execution anim -->
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_GaeBulg</defName>
+    <label>Execution: Gáe Bulg</label>
+    <data>Execution_GaeBulgAir.json</data>
+    <weaponFilter Class="AM.Reqs.SpecificWeapon">
+      <weapon>RF_GaeBulg</weapon>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
+    <shadowDrawFromData>true</shadowDrawFromData>
+    <!-- Do not allow it to occur normally, do not allow user to change probability -->
+    <relativeProbability>0</relativeProbability>
+    <canEditProbability>false</canEditProbability>
+    <!-- Always lethal -->
+    <fixedOutcome>Kill</fixedOutcome>
+
   </AM.AnimDef>
 
 </Defs>

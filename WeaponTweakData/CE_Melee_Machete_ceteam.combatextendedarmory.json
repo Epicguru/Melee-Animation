@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ceteam.combatextendedarmory",
+  "ItemDefName": "CE_Melee_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.294049948,
+  "OffY": 0.0551342964,
+  "BladeStart": 0.09809304,
+  "BladeEnd": 0.775020957,
+  "MeleeWeaponType": 6
+}

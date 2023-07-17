@@ -1,0 +1,13 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "Ghost_Singing_Window",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.480894327,
+  "Rotation": 45.0,
+  "ScaleX": 1.35,
+  "ScaleY": 1.35,
+  "BladeStart": 0.698445261,
+  "BladeEnd": 1.42744434,
+  "MeleeWeaponType": 7
+}

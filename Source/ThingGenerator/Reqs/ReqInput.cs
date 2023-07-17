@@ -19,11 +19,11 @@ public struct ReqInput
 
     public ReqInput(ItemTweakData td)
     {
-        WeaponDef = td.GetDef();
+        WeaponDef = td?.GetDef();
         TweakData = td;
-        TypeFlags = td.MeleeWeaponType;
+        TypeFlags = td?.MeleeWeaponType ?? 0;
 
-        var pair = td.GetCategory();
+        var pair = td?.GetCategory() ?? (default, default);
         SizeFlags = pair.size;
         CategoryFlags = pair.category;
     }

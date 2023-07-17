@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ceteam.combatextendedarmory",
+  "ItemDefName": "CE_Melee_QuarterStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0122517794,
+  "ScaleX": 1.7,
+  "ScaleY": 1.4,
+  "BladeStart": -0.7963092,
+  "BladeEnd": 0.8515961,
+  "MeleeWeaponType": 1
+}

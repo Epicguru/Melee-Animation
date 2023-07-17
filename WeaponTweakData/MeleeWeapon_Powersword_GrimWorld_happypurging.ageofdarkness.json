@@ -1,0 +1,17 @@
+{
+  "TextureModID": "happypurging.ageofdarkness",
+  "ItemDefName": "MeleeWeapon_Powersword_GrimWorld",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.318554521,
+  "OffY": 0.0428822637,
+  "BladeStart": 0.1357681,
+  "BladeEnd": 0.7912549,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.375,
+    "g": 0.937,
+    "b": 0.712,
+    "a": 1.0
+  }
+}

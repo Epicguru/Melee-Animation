@@ -1,0 +1,12 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "Melee_AllPurposeShovel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.205223083,
+  "OffY": -0.0153147355,
+  "Rotation": 45.04723,
+  "BladeStart": 0.2757485,
+  "BladeEnd": 0.6494371,
+  "MeleeWeaponType": 6
+}

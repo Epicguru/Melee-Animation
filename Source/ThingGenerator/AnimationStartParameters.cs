@@ -88,7 +88,7 @@ namespace AM
                 RootTransform = RootTransform,
                 MirrorHorizontal = FlipX,
                 MirrorVertical = FlipY,
-                ExecutionOutcome = ExecutionOutcome,
+                ExecutionOutcome = Animation.fixedOutcome ?? ExecutionOutcome,
                 CustomJobDef = CustomJobDef
             };
 

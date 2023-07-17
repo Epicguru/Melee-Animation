@@ -1,0 +1,12 @@
+{
+  "TextureModID": "xmb.exgturbancombat",
+  "ItemDefName": "ST_MechanicalArm",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0183781758,
+  "OffY": -0.009189099,
+  "HandsMode": 1,
+  "BladeStart": 0.126579255,
+  "BladeEnd": 0.420629233,
+  "MeleeWeaponType": 8
+}

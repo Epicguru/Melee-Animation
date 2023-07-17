@@ -58,4 +58,14 @@ public struct ExecutionAttemptRequest
     /// If true no error messages will be translated to save time.
     /// </summary>
     public bool NoErrorMessages;
+
+    /// <summary>
+    /// If true, skips the execution cooldown check.
+    /// </summary>
+    public bool IgnoreCooldown;
+
+    /// <summary>
+    /// If not null, only these animations are checked.
+    /// </summary>
+    public IEnumerable<AnimDef> OnlyTheseAnimations;
 }

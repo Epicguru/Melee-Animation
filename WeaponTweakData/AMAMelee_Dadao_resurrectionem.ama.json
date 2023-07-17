@@ -1,0 +1,14 @@
+{
+  "TextureModID": "resurrectionem.ama",
+  "ItemDefName": "AMAMelee_Dadao",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.113331556,
+  "OffY": 0.0336937,
+  "Rotation": 40.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.09594878,
+  "BladeEnd": 0.898460567,
+  "MeleeWeaponType": 6
+}

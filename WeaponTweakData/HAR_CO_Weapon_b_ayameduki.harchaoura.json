@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ayameduki.harchaoura",
+  "ItemDefName": "HAR_CO_Weapon_b",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.664675653,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.05612946,
+  "BladeEnd": 1.63358593,
+  "MeleeWeaponType": 6
+}

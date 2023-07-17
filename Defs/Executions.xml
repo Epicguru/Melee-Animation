@@ -83,23 +83,6 @@
   </AM.AnimDef>
 
   <AM.AnimDef ParentName="AnimExecutionBase">
-    <defName>AM_Execution_GaeBulg</defName>
-    <label>Execution: Gáe Bulg</label>
-    <data>Execution_GaeBulgAir.json</data>
-    <weaponFilter Class="AM.Reqs.SpecificWeapon">
-      <weapon>RF_GaeBulg</weapon>
-    </weaponFilter>
-    <cellData>
-      <li>
-        <type>PawnEnd</type>
-        <position>(2, 0)</position>
-        <pawnIndex>0</pawnIndex>
-      </li>
-    </cellData>
-    <shadowDrawFromData>true</shadowDrawFromData>
-  </AM.AnimDef>
-
-  <AM.AnimDef ParentName="AnimExecutionBase">
     <defName>AM_Execution_SekiroBS</defName>
     <label>Execution: Acrobatic Backstab</label>
     <data>Execution_SekiroBS.json</data>

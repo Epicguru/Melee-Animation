@@ -1,0 +1,17 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "Blood_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.401255667,
+  "Rotation": 45.0,
+  "BladeStart": 0.425836444,
+  "BladeEnd": 0.940424144,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.976543367,
+    "g": 0.473322332,
+    "b": 0.473322332,
+    "a": 1.0
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "Melee_MechLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.784133554,
+  "OffY": -0.0214411318,
+  "Rotation": 45.0,
+  "ScaleX": 1.7,
+  "ScaleY": 1.7,
+  "BladeStart": 0.5636726,
+  "BladeEnd": 1.95122135,
+  "MeleeWeaponType": 7
+}

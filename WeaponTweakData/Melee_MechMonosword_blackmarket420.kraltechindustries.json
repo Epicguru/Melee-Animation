@@ -1,0 +1,13 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "Melee_MechMonosword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5727852,
+  "Rotation": 60.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.180794626,
+  "BladeEnd": 1.41212952,
+  "MeleeWeaponType": 6
+}

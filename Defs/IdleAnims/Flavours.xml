@@ -41,6 +41,8 @@
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_MediumFlavour1</defName>
     <data>Idle_MediumSharp_Flavour1.json</data>
+    <!-- Swing -->
+    <relativeProbability>0.5</relativeProbability>
     <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>
@@ -48,6 +50,7 @@
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_MediumFlavour2</defName>
     <data>Idle_MediumSharp_Flavour2.json</data>
+    <relativeProbability>0.5</relativeProbability>
     <!-- Animation stabs into ground so must support that: -->
     <weaponFilter Class="AM.Reqs.And">
       <subs>
@@ -59,6 +62,13 @@
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_MediumFlavour3</defName>
     <data>Idle_Medium_CheerFlavour.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Medium</size>
+    </weaponFilter>
+  </AM.AnimDef>
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_MediumFlavour4</defName>
+    <data>Idle_Medium_PolishFlavour.json</data>
     <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
     </weaponFilter>

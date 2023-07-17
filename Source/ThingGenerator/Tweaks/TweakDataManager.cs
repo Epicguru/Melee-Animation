@@ -86,6 +86,9 @@ namespace AM.Tweaks
 
         public static ItemTweakData TryGetTweak(ThingDef def, ModContentPack textureSupplier)
         {
+            if (def == null)
+                return null;
+
             if (textureSupplier == null)
                 return defToTweak.TryGetValue(def, out var found) ? found : null;
             

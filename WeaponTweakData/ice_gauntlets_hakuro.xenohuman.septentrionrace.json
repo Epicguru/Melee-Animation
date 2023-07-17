@@ -1,0 +1,12 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "ice_gauntlets",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.290987,
+  "OffY": 0.0857645,
+  "Rotation": -110.0,
+  "HandsMode": 2,
+  "BladeStart": 0.0307066981,
+  "MeleeWeaponType": 40
+}
