@@ -1,0 +1,11 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "Wolf_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.441075474,
+  "Rotation": 45.0,
+  "BladeStart": 0.19917281,
+  "BladeEnd": 1.12726843,
+  "MeleeWeaponType": 6
+}

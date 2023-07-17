@@ -1,0 +1,15 @@
+{
+  "TextureModID": "tidal.grainsandbrewing",
+  "ItemDefName": "GAB_Raksi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.174592048,
+  "OffY": 0.00306275487,
+  "Rotation": -90.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.0438776724,
+  "BladeEnd": 0.4635115,
+  "MeleeWeaponType": 8
+}

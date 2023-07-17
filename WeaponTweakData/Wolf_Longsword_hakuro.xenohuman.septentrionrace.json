@@ -1,0 +1,10 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "Wolf_Longsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.336932242,
+  "BladeStart": 0.156290546,
+  "BladeEnd": 0.830155,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "biomesteam.biomescaverns",
+  "ItemDefName": "BMT_CaveSpiderHead",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.131709725,
+  "OffY": -0.0153149962,
+  "Rotation": -15.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": 0.08982289,
+  "BladeEnd": 0.4512597,
+  "MeleeWeaponType": 8
+}

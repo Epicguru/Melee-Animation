@@ -1,0 +1,14 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "Melee_MechOodachi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5881004,
+  "OffY": 0.0122520626,
+  "Rotation": 21.39597,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.174668729,
+  "BladeEnd": 1.63266683,
+  "MeleeWeaponType": 6
+}

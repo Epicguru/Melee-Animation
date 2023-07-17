@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ceteam.combatextendedarmory",
+  "ItemDefName": "CE_Melee_BecDeCorbin",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.254231155,
+  "Rotation": 45.0,
+  "BladeStart": 0.30331552,
+  "BladeEnd": 0.8546596,
+  "MeleeWeaponType": 6
+}

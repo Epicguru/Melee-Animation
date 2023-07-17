@@ -1,0 +1,13 @@
+{
+  "TextureModID": "biomesteam.biomescaverns",
+  "ItemDefName": "BMT_MushroomLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.134772718,
+  "OffY": -0.0643233955,
+  "Rotation": 50.0,
+  "ScaleX": 0.88,
+  "BladeStart": 0.02243654,
+  "BladeEnd": 0.42675513,
+  "MeleeWeaponType": 8
+}

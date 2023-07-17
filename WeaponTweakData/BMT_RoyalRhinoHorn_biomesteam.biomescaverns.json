@@ -1,0 +1,14 @@
+{
+  "TextureModID": "biomesteam.biomescaverns",
+  "ItemDefName": "BMT_RoyalRhinoHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.229726553,
+  "OffY": -0.07963863,
+  "Rotation": 115.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.09288583,
+  "BladeEnd": 0.6748599,
+  "MeleeWeaponType": 12
+}
