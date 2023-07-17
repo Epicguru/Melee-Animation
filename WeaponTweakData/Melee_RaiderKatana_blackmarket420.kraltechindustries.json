@@ -1,0 +1,14 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "Melee_RaiderKatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.548280656,
+  "OffY": 0.009189099,
+  "Rotation": 20.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.116471231,
+  "BladeEnd": 1.350869,
+  "MeleeWeaponType": 6
+}

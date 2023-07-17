@@ -7,7 +7,29 @@ namespace AM.Jobs;
 
 public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
 {
+    public static IEnumerable<AnimDef> UseTheseAnimations;
+
+    public List<AnimDef> OnlyTheseAnimations = new List<AnimDef>();
+
     private readonly HashSet<AnimDef> except = new HashSet<AnimDef>();
+
+    public override void ExposeData()
+    {
+        base.ExposeData();
+
+        Scribe_Collections.Look(ref OnlyTheseAnimations, "onlyTheseAnimations", LookMode.Def);
+    }
+
+    public override IEnumerable<Toil> MakeNewToils()
+    {
+        if (UseTheseAnimations != null)
+        {
+            OnlyTheseAnimations ??= new List<AnimDef>();
+            OnlyTheseAnimations.AddRange(UseTheseAnimations);
+        }
+
+        return base.MakeNewToils();
+    }
 
     protected override Toil MakeEndToil()
     {
@@ -25,7 +47,8 @@ public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
 
             // Get weapon, possible animations, and space mask.
             var weaponDef = pawn.GetFirstMeleeWeapon().def;
-            var possibilities = AnimDef.GetExecutionAnimationsForPawnAndWeapon(pawn, weaponDef);
+            bool fixedAnimationList = OnlyTheseAnimations is { Count: > 0 };
+            var possibilities = fixedAnimationList ? OnlyTheseAnimations : AnimDef.GetExecutionAnimationsForPawnAndWeapon(pawn, weaponDef);
             ulong occupiedMask = SpaceChecker.MakeOccupiedMask(pawn.Map, pawn.Position, out _);
 
             if (!possibilities.Any())
@@ -40,7 +63,7 @@ public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
             while (true)
             {
                 // Pick random anim, weighted.
-                var anim = possibilities.RandomElementByWeightExcept(d => d.Probability, except);
+                var anim = possibilities.RandomElementByWeightExcept(d => (fixedAnimationList ? 0.1f : 0f) + d.Probability, except);
                 if (anim == null)
                 {
                     Core.Warn("No possible execution animations after reaching target (no space)!");

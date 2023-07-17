@@ -1,0 +1,12 @@
+{
+  "TextureModID": "erin.valheim.creatures",
+  "ItemDefName": "ERN_ValboarTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.269545943,
+  "OffY": -0.0918904245,
+  "Rotation": 12.89573,
+  "BladeStart": 0.108201072,
+  "BladeEnd": 0.7514356,
+  "MeleeWeaponType": 45
+}

@@ -20,9 +20,9 @@ namespace ModRequestAPI.Backend.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         public async Task<IActionResult> ReportMissingMod([FromBody] IEnumerable<MissingModRequest?> mods)
         {
-            bool success = await facade.ReportMissingModAsync(mods);
-            if (!success)
-                return BadRequest("Error recording data");
+            string? errorMsg = await facade.ReportMissingModAsync(mods);
+            if (errorMsg != null)
+                return BadRequest($"Error: {errorMsg}");
 
             return Ok();
         }

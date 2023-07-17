@@ -10,7 +10,9 @@ using AM.Grappling;
 using System.Linq;
 using Verse.AI;
 using AM.Idle;
+using AM.Jobs;
 using AM.UniqueSkills;
+using static UnityEngine.GraphicsBuffer;
 
 namespace AM.UI;
 
@@ -74,13 +76,41 @@ public static class DraftedFloatMenuOptionsUI
         var weapon = pawn.GetFirstMeleeWeapon();
         var lasso = pawn.TryGetLasso();
         var skills = pawn.GetComp<IdleControllerComp>()?.GetSkills();
-        if (weapon == null && lasso == null && !(skills?.Any(s => s.IsEnabledForPawn(out _)) ?? false))
+        if (weapon == null && lasso == null && !(skills?.Any(s => s?.IsEnabledForPawn(out _) ?? false) ?? false))
             yield break;
 
         ulong occupiedMask = SpaceChecker.MakeOccupiedMask(pawn.Map, pawn.Position, out uint smallMask);
 
         var targets = GenUI.TargetsAt(clickPos, targetingArgs, true);
         bool noExecEver = false;
+
+        IEnumerable<FloatMenuOption> GetExecutionAttemptOption(Pawn target)
+        {
+            var request = new ExecutionAttemptRequest
+            {
+                CanUseLasso = lasso != null,
+                CanWalk = true,
+                EastCell = !occupiedMask.GetBit(1, 0),
+                WestCell = !occupiedMask.GetBit(-1, 0),
+                Executioner = pawn,
+                OccupiedMask = occupiedMask,
+                SmallOccupiedMask = smallMask,
+                Target = target
+            };
+
+            var reports = controller.GetExecutionReport(request);
+            foreach (var report in reports)
+            {
+                if (report is { IsFinal: true, CanExecute: false })
+                {
+                    noExecEver = true;
+                    yield return GetDisabledExecutionOption(report, pawn);
+                    break;
+                }
+
+                yield return report.CanExecute ? GetEnabledExecuteOption(request, report, pawn, target) : GetDisabledExecutionOption(report, pawn);
+            }
+        }
 
         foreach (var t in targets)
         {
@@ -117,29 +147,84 @@ public static class DraftedFloatMenuOptionsUI
 
             if (weapon != null && !noExecEver)
             {
-                var request = new ExecutionAttemptRequest
-                {
-                    CanUseLasso = lasso != null,
-                    CanWalk = true,
-                    EastCell = !occupiedMask.GetBit(1, 0),
-                    WestCell = !occupiedMask.GetBit(-1, 0),
-                    Executioner = pawn,
-                    OccupiedMask = occupiedMask,
-                    SmallOccupiedMask = smallMask,
-                    Target = target
-                };
+                foreach (var op in GetExecutionAttemptOption(target))
+                    if (op != null)
+                        yield return op;
 
-                var reports = controller.GetExecutionReport(request);
-                foreach (var report in reports)
+                // Skill executions?
+                if (skills != null)
                 {
-                    if (report is { IsFinal: true, CanExecute: false })
+                    foreach (var skill in skills)
                     {
-                        noExecEver = true;
-                        yield return GetDisabledExecutionOption(report, pawn);
-                        break;
-                    }
+                        if (skill == null || skill.Def?.type != SkillType.Execution ||!skill.IsEnabledForPawn(out _))
+                            continue;
 
-                    yield return report.CanExecute ? GetEnabledExecuteOption(request, report, pawn, target) : GetDisabledExecutionOption(report, pawn);
+                        string skillName = skill.Def.label;
+                        string reasonCantCast = skill.CanTriggerOn(target);
+                        if (reasonCantCast != null)
+                        {
+                            yield return new FloatMenuOption("AM.Skill.CantCast".Translate(skillName, reasonCantCast), () => { })
+                            {
+                                Disabled = true
+                            };
+                            continue;
+                        }
+
+                        bool enemy = target.HostileTo(Faction.OfPlayer);
+                        var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
+
+                        yield return new FloatMenuOption("AM.Skill.Cast".Translate(skillName, target), () =>
+                        {
+                            if (Core.Settings.WarnOfFriendlyExecution)
+                            {
+                                enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
+                                if (!enemy && !Input.GetKey(KeyCode.LeftShift))
+                                {
+                                    Messages.Message("Tried to cast skill on friendly: hold the Shift key when selecting to confirm!", MessageTypeDefOf.RejectInput, false);
+                                    return;
+                                }
+                            }
+
+                            string msg;
+                            if (!skill.IsEnabledForPawn(out _) || skill.CanTriggerOn(target) != null)
+                            {
+                                msg = "AM.Skill.CantCastGeneric".Translate(skillName, target);
+                                Messages.Message(msg, MessageTypeDefOf.RejectInput, false);
+                                return;
+                            }
+
+                            Core.Log($"Attempting cast of {skillName} on {target} by {pawn}");
+                            if (skill.TryTrigger(target))
+                            {
+                                IEnumerable<AnimDef> OnlyAnimsMethod(UniqueSkillInstance s)
+                                {
+                                    yield return s.Def.animation;
+                                }
+
+                                var request = new ExecutionAttemptRequest
+                                {
+                                    CanUseLasso = lasso != null,
+                                    CanWalk = true,
+                                    EastCell = !occupiedMask.GetBit(1, 0),
+                                    WestCell = !occupiedMask.GetBit(-1, 0),
+                                    Executioner = pawn,
+                                    OccupiedMask = occupiedMask,
+                                    SmallOccupiedMask = smallMask,
+                                    Target = target,
+                                    OnlyTheseAnimations = OnlyAnimsMethod(skill)
+                                };
+
+                                var reports = controller.GetExecutionReport(request);
+
+                                ExecutionEnabledOnClick(target, pawn, reports.First(), request);
+                                return;
+                            }
+
+                            msg = "AM.Skill.CantCastGeneric".Translate(skillName, target);
+                            Messages.Message(msg, MessageTypeDefOf.RejectInput, false);
+
+                        }, priority, revalidateClickTarget: target);
+                    }
                 }
             }
         }
@@ -156,6 +241,10 @@ public static class DraftedFloatMenuOptionsUI
                 continue;
 
             if (!skill.IsEnabledForPawn(out _))
+                continue;
+
+            // Execution skills are handled elsewhere:
+            if (skill.Def.type == SkillType.Execution)
                 continue;
 
             string skillName = skill.Def.label;
@@ -272,113 +361,118 @@ public static class DraftedFloatMenuOptionsUI
         };
     }
 
-    private static FloatMenuOption GetEnabledExecuteOption(ExecutionAttemptRequest request, ExecutionAttemptReport report, Pawn grappler, Pawn target)
+    private static void ExecutionEnabledOnClick(Pawn target, Pawn grappler, ExecutionAttemptReport report, ExecutionAttemptRequest request)
     {
-        void OnClick()
+        if (Core.Settings.WarnOfFriendlyExecution)
         {
-            if (Core.Settings.WarnOfFriendlyExecution)
+            bool enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
+            if (!enemy && !Input.GetKey(KeyCode.LeftShift))
             {
-                bool enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
-                if (!enemy && !Input.GetKey(KeyCode.LeftShift))
-                {
-                    Messages.Message("Tried to execute friendly: hold the Shift key when selecting to confirm!", MessageTypeDefOf.RejectInput, false);
-                    return;
-                }
-            }
-
-            // Update request.
-            SpaceChecker.MakeOccupiedMask(grappler.Map, grappler.Position, out uint newMask);
-            request.OccupiedMask = newMask;
-
-            // Get new report
-            report.Dispose();
-            report = controller.GetExecutionReport(request).FirstOrDefault();
-            if (!report.CanExecute)
-            {
-                Messages.Message(report.ErrorMessage, MessageTypeDefOf.RejectInput, false);
-                report.Dispose();
+                Messages.Message("Tried to execute friendly: hold the Shift key when selecting to confirm!", MessageTypeDefOf.RejectInput, false);
                 return;
-            }
-
-            // Sanity check:
-            if (report.Target != target)
-                throw new System.Exception("Target is not expected target!");
-
-            if (report.IsWalking)
-            {
-                // Walk to and execute target.
-                // Make walk job and reset all verbs (stop firing, attacking).
-                var walkJob = JobMaker.MakeJob(AM_DefOf.AM_WalkToExecution, target);
-
-                if (grappler.verbTracker?.AllVerbs != null)
-                    foreach (var verb in grappler.verbTracker.AllVerbs)
-                        verb.Reset();
-
-                if (grappler.equipment?.AllEquipmentVerbs != null)
-                    foreach (var verb in grappler.equipment.AllEquipmentVerbs)
-                        verb.Reset();
-
-                // Start walking.
-                grappler.jobs.StartJob(walkJob, JobCondition.InterruptForced);
-
-                if (grappler.CurJobDef == AM_DefOf.AM_WalkToExecution)
-                    return;
-
-                Core.Error($"CRITICAL ERROR: Failed to force interrupt {grappler}'s job with execution goto job. Likely a mod conflict or invalid start parameters.");
-                string reason = "AM.Gizmo.Error.NoLasso".Translate(
-                    new NamedArgument(grappler.NameShortColored, "Pawn"),
-                    new NamedArgument(target.NameShortColored, "Target"));
-                string error = "AM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
-                Messages.Message(error, MessageTypeDefOf.RejectInput, false);
-            }
-            else
-            {
-                // Check for adjacent:
-                var selectedAdjacent = report.PossibleExecutions.Where(p => p.LassoToHere == null).RandomElementByWeightWithFallback(p => p.Animation.Probability);
-                if (selectedAdjacent.IsValid)
-                {
-                    var startArgs = new AnimationStartParameters(selectedAdjacent.Animation.AnimDef, grappler, report.Target)
-                    {
-                        FlipX = selectedAdjacent.Animation.FlipX,
-                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
-                    };
-
-                    if (!startArgs.TryTrigger())
-                    {
-                        Core.Error("Instant adjacent execution (from float menu) failed to trigger!");
-                        return;
-                    }
-
-                    // Set cooldown.
-                    grappler.GetMeleeData().TimeSinceExecuted = 0;
-                    return;
-                }
-
-                // Lasso executions:
-                var selectedLasso = report.PossibleExecutions.Where(p => p.LassoToHere != null).RandomElementByWeightWithFallback(p => p.Animation.Probability);
-                if (selectedLasso.IsValid)
-                {
-                    var startArgs2 = new AnimationStartParameters(selectedLasso.Animation.AnimDef, grappler, report.Target)
-                    {
-                        FlipX = selectedLasso.Animation.FlipX,
-                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
-                    };
-
-                    if (!JobDriver_GrapplePawn.GiveJob(grappler, target, selectedLasso.LassoToHere.Value, false, startArgs2))
-                    {
-                        Core.Error($"Failed to give grapple job to {grappler}.");
-                        return;
-                    }
-
-                    // Set grapple cooldown.
-                    grappler.GetMeleeData().TimeSinceGrappled = 0;
-                    return;
-                }
-
-                Core.Warn("Failed to start any execution via adjacent or grapple, maybe they are disabled in the settings.");
             }
         }
 
+        // Update request.
+        SpaceChecker.MakeOccupiedMask(grappler.Map, grappler.Position, out uint newMask);
+        request.OccupiedMask = newMask;
+
+        // Get new report
+        report.Dispose();
+        report = controller.GetExecutionReport(request).FirstOrDefault();
+        if (!report.CanExecute)
+        {
+            Messages.Message(report.ErrorMessage, MessageTypeDefOf.RejectInput, false);
+            report.Dispose();
+            return;
+        }
+
+        // Sanity check:
+        if (report.Target != target)
+            throw new Exception("Target is not expected target!");
+
+        if (report.IsWalking)
+        {
+            // TODO allow fixed animation here.
+            // Walk to and execute target.
+            // Make walk job and reset all verbs (stop firing, attacking).
+            var walkJob = JobMaker.MakeJob(AM_DefOf.AM_WalkToExecution, target);
+
+            if (grappler.verbTracker?.AllVerbs != null)
+                foreach (var verb in grappler.verbTracker.AllVerbs)
+                    verb.Reset();
+
+            if (grappler.equipment?.AllEquipmentVerbs != null)
+                foreach (var verb in grappler.equipment.AllEquipmentVerbs)
+                    verb.Reset();
+
+            // Start walking.
+            JobDriver_GoToExecutionSpot.UseTheseAnimations = request.OnlyTheseAnimations;
+            grappler.jobs.StartJob(walkJob, JobCondition.InterruptForced);
+            JobDriver_GoToExecutionSpot.UseTheseAnimations = null;
+
+            if (grappler.CurJobDef == AM_DefOf.AM_WalkToExecution)
+            {
+                return;
+            }
+
+            Core.Error($"CRITICAL ERROR: Failed to force interrupt {grappler}'s job with execution goto job. Likely a mod conflict or invalid start parameters.");
+            string reason = "AM.Gizmo.Error.NoLasso".Translate(
+                new NamedArgument(grappler.NameShortColored, "Pawn"),
+                new NamedArgument(target.NameShortColored, "Target"));
+            string error = "AM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
+            Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+        }
+        else
+        {
+            // Check for adjacent:
+            var selectedAdjacent = report.PossibleExecutions.Where(p => p.LassoToHere == null).RandomElementByWeightWithFallback(p => (request.OnlyTheseAnimations != null ? 0.1f : 0f) + p.Animation.Probability);
+            if (selectedAdjacent.IsValid)
+            {
+                var startArgs = new AnimationStartParameters(selectedAdjacent.Animation.AnimDef, grappler, report.Target)
+                {
+                    FlipX = selectedAdjacent.Animation.FlipX,
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
+                };
+
+                if (!startArgs.TryTrigger())
+                {
+                    Core.Error("Instant adjacent execution (from float menu) failed to trigger!");
+                    return;
+                }
+
+                // Set cooldown.
+                grappler.GetMeleeData().TimeSinceExecuted = 0;
+                return;
+            }
+
+            // Lasso executions:
+            var selectedLasso = report.PossibleExecutions.Where(p => p.LassoToHere != null).RandomElementByWeightWithFallback(p => (request.OnlyTheseAnimations != null ? 0.1f : 0f) + p.Animation.Probability);
+            if (selectedLasso.IsValid)
+            {
+                var startArgs2 = new AnimationStartParameters(selectedLasso.Animation.AnimDef, grappler, report.Target)
+                {
+                    FlipX = selectedLasso.Animation.FlipX,
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
+                };
+
+                if (!JobDriver_GrapplePawn.GiveJob(grappler, target, selectedLasso.LassoToHere.Value, false, startArgs2))
+                {
+                    Core.Error($"Failed to give grapple job to {grappler}.");
+                    return;
+                }
+
+                // Set grapple cooldown.
+                grappler.GetMeleeData().TimeSinceGrappled = 0;
+                return;
+            }
+
+            Core.Warn("Failed to start any execution via adjacent or grapple, maybe they are disabled in the settings.");
+        }
+    }
+
+    private static FloatMenuOption GetEnabledExecuteOption(ExecutionAttemptRequest request, ExecutionAttemptReport report, Pawn grappler, Pawn target)
+    {
         string targetName = target.Name?.ToStringShort ?? target.LabelDefinite();
         bool enemy = target.HostileTo(Faction.OfPlayer) || (target.def.race?.Animal ?? false);
         bool isWalk = report.IsWalking;
@@ -392,7 +486,7 @@ public static class DraftedFloatMenuOptionsUI
         tt = tt.Translate(grappler.Name.ToStringShort, targetName, probs.ToString());
         var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
 
-        return new FloatMenuOption(label, OnClick, priority, revalidateClickTarget: target)
+        return new FloatMenuOption(label, () => ExecutionEnabledOnClick(target, grappler, report, request), priority, revalidateClickTarget: target)
         {
             mouseoverGuiAction = _ => HoverAction(grappler, tt)
         };

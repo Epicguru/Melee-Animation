@@ -1,0 +1,16 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "wolf_dagger_blade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.125583857,
+  "OffY": 0.0306304768,
+  "Rotation": 50.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.140975311,
+  "BladeEnd": 0.600428462,
+  "MeleeWeaponType": 48
+}

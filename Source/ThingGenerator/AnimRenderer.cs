@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AM.Events;
+using AM.Idle;
 using AM.Patches;
 using AM.Processing;
 using AM.RendererWorkers;
@@ -1080,10 +1081,29 @@ public class AnimRenderer : IExposable
                 foreach (var verb in pawn.verbTracker.AllVerbs)
                     verb.Reset();
 
-
             if (pawn.equipment?.AllEquipmentVerbs != null)
                 foreach (var verb in pawn.equipment.AllEquipmentVerbs)
                     verb.Reset();
+
+            // Raise skills event.
+            var skills = pawn.GetComp<IdleControllerComp>()?.GetSkills();
+            if (skills != null)
+            {
+                foreach (var skill in skills)
+                {
+                    if (skill == null)
+                        continue;
+
+                    try
+                    {
+                        skill.OnAnimationStarted(this);
+                    }
+                    catch (Exception e)
+                    {
+                        Core.Error($"Exception when raising the Skill.OnAnimationStarted event for {pawn} on skill {skill}", e);
+                    }
+                }
+            }
 
             // Do not give animation job if a custom job def is specified:
             if (CustomJobDef != null)

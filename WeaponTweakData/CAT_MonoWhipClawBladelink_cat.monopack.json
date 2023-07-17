@@ -1,0 +1,12 @@
+{
+  "TextureModID": "cat.monopack",
+  "ItemDefName": "CAT_MonoWhipClawBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.226663634,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.212343782,
+  "BladeEnd": 0.668733954,
+  "MeleeWeaponType": 54
+}

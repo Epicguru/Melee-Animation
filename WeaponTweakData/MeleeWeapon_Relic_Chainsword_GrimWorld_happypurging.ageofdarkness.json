@@ -1,0 +1,11 @@
+{
+  "TextureModID": "happypurging.ageofdarkness",
+  "ItemDefName": "MeleeWeapon_Relic_Chainsword_GrimWorld",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.318554074,
+  "OffY": -0.00612586737,
+  "BladeStart": 0.154146284,
+  "BladeEnd": 0.8065701,
+  "MeleeWeaponType": 6
+}

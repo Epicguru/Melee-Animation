@@ -1,0 +1,13 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "Melee_MechStormLanceOne",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.51313257,
+  "Rotation": 45.0,
+  "ScaleX": 4.0,
+  "ScaleY": 4.0,
+  "BladeStart": 0.922045946,
+  "BladeEnd": 4.20560455,
+  "MeleeWeaponType": 1
+}

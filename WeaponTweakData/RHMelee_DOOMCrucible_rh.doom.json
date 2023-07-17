@@ -1,0 +1,19 @@
+{
+  "TextureModID": "rh.doom",
+  "ItemDefName": "RHMelee_DOOMCrucible",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.499272943,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.249100164,
+  "BladeEnd": 1.14656532,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.998,
+    "g": 0.213,
+    "b": 0.213,
+    "a": 1.0
+  }
+}

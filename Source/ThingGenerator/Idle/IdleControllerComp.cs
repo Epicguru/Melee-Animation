@@ -554,8 +554,7 @@ public class IdleControllerComp : ThingComp
                 var instance = Activator.CreateInstance(list[i].instanceClass) as UniqueSkillInstance;
                 if (instance == null)
                 {
-                    Log.Error(
-                        $"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
+                    Log.Error($"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
                     continue;
                 }
 
@@ -567,7 +566,7 @@ public class IdleControllerComp : ThingComp
         }
         catch (Exception e)
         {
-            Core.Error($"Exception populating skills:", e);
+            Core.Error("Exception populating skills:", e);
         }
     }
 

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "resurrectionem.ama",
+  "ItemDefName": "AMAMelee_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.104142725,
+  "OffY": 0.00612613559,
+  "Rotation": 50.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.08982289,
+  "BladeEnd": 0.8586412,
+  "MeleeWeaponType": 6
+}

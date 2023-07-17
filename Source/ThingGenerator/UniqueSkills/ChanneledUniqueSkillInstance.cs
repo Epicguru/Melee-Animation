@@ -6,15 +6,7 @@ namespace AM.UniqueSkills;
 
 public abstract class ChanneledUniqueSkillInstance : UniqueSkillInstance
 {
-    public int TickLastTriggered = -1000000;
-
     protected Pawn CurrentTarget;
-
-    public float GetCooldownSecondsLeft()
-    {
-        int ticksSinceLast = GenTicks.TicksGame - TickLastTriggered;
-        return (Def.baseCooldownTicks - ticksSinceLast) / 60f;
-    }
 
     public override string CanTriggerOn(in LocalTargetInfo target)
     {
@@ -129,7 +121,6 @@ public abstract class ChanneledUniqueSkillInstance : UniqueSkillInstance
     {
         base.ExposeData();
 
-        Scribe_Values.Look(ref TickLastTriggered, "tickLastTriggered", -1000000);
         Scribe_References.Look(ref CurrentTarget, "currentTarget");
     }
 }

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "Melee_MechPaladinCross",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6554863,
+  "OffY": -0.0367563367,
+  "Rotation": 60.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.26349622,
+  "BladeEnd": 1.65410793,
+  "MeleeWeaponType": 6
+}

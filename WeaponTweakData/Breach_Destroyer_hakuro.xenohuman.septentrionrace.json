@@ -1,0 +1,9 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "Breach_Destroyer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "MeleeWeaponType": 6
+}

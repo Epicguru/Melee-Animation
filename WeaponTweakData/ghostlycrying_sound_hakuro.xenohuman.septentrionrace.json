@@ -1,0 +1,11 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "ghostlycrying_sound",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.339995623,
+  "Rotation": 45.0,
+  "BladeStart": 0.4687187,
+  "BladeEnd": 0.998621643,
+  "MeleeWeaponType": 4
+}

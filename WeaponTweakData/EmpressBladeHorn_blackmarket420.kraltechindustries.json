@@ -1,0 +1,12 @@
+{
+  "TextureModID": "blackmarket420.kraltechindustries",
+  "ItemDefName": "EmpressBladeHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.192970186,
+  "OffY": -0.0827013254,
+  "Rotation": -12.71932,
+  "BladeStart": 0.07052602,
+  "BladeEnd": 0.5636726,
+  "MeleeWeaponType": 54
+}

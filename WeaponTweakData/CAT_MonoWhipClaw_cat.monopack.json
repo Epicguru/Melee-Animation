@@ -1,0 +1,12 @@
+{
+  "TextureModID": "cat.monopack",
+  "ItemDefName": "CAT_MonoWhipClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.248104751,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.2000915,
+  "BladeEnd": 0.6901751,
+  "MeleeWeaponType": 54
+}

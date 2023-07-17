@@ -1,0 +1,11 @@
+{
+  "TextureModID": "hakuro.xenohuman.septentrionrace",
+  "ItemDefName": "Wolf_knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.211348891,
+  "HandsMode": 1,
+  "BladeStart": 0.101155989,
+  "BladeEnd": 0.5973655,
+  "MeleeWeaponType": 48
+}
