@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 15 Jul 2023, 12:38 AM.`  
+`Updated 17 Jul 2023, 4:10 PM.`  
 
-**Melee Animation supports 1802 weapons from 222 mods.**  
+**Melee Animation supports 1870 weapons from 234 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -21,15 +21,17 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 
   | Mod Name | Mod ID | Weapon Count | Patch Author |
 | --- | --- | --- | --- |
-| **[1.4]Chaoura Race** | ayameduki.harchaoura | 1 | *Epicguru* |
+| **[1.4]Chaoura Race** | ayameduki.harchaoura | 3 | *Epicguru* |
 | **[1.4]Idearn Race** | ayameduki.haridearn | 1 | *Epicguru* |
 | **[1.4]Silkiera Race** | ayameduki.harsilkiera | 3 | *Epicguru* |
-| **[1.4]Xenoorca Race** | ayameduki.harxenoorca | 1 | *Epicguru* |
+| **[1.4]Xenoorca Race** | ayameduki.harxenoorca | 2 | *Epicguru* |
 | **[K4G] Empires of Old - Core** | k4g.core | 6 | *Epicguru* |
 | **[K4G] Vanilla Weapon Retextures** | k4g.vwr | 17 | *Epicguru* |
 | **[LTS]Tenants** | limetreesnake.tenants | 3 | *Epicguru* |
 | **[Race]WarShipGirl R|战舰少女R** | warshipgirlr.alienraces | 3 | *Epicguru* |
 | **[RF]Berserk - Character Apparel Pack** | rf.berserk.armory | 1 | *Epicguru* |
+| **[RH2] DOOM** | rh.doom | 1 | *Epicguru* |
+| **[RH2] Faction: The Rangers** | rh2.faction.rangers | 1 | *Epicguru* |
 | **[RH2] Faction: V.O.I.D.** | rh2.faction.void | 5 | *Epicguru* |
 | **[RH2] Rimmu-Nation² - Weapons** | cp.rimmunation.2.weapons | 28 | *Epicguru* |
 | **[RH2] Weapons: Simple Retexture** | arektpp.simplerh2weap | 27 | *Epicguru* |
@@ -48,6 +50,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Alpha Animals** | sarg.alphaanimals | 2 | *Epicguru* |
 | **Alpha Bees** | sarg.rimbees | 2 | *Epicguru* |
 | **Alpha Biomes** | sarg.alphabiomes | 3 | *Epicguru* |
+| **Ama the Raiju Race and Faction** | resurrectionem.ama | 2 | *Epicguru* |
 | **Ambition of the Cosmic: True Pinnacle of Creation** | explodoboy.snsambitioncosmic.gen4addon | 1 | *Epicguru* |
 | **Amplified Mobility Platform** | aoba.amp | 1 | *Epicguru* |
 | **Ancient Armory** | botchjob.ancientarmory | 6 | *Epicguru* |
@@ -67,10 +70,12 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Better Humanoid Mechanoid** | better.humanoid.mechanoid.cn | 2 | *Epicguru* |
 | **Big and Small Genes** | redmattis.bigsmall.core | 8 | *Epicguru* |
 | **Bill Doors' modular wolf girl weapon module** | 3hstltd.wolf.geneweapon | 17 | *Epicguru* |
+| **Biomes! Caverns** | biomesteam.biomescaverns | 4 | *Epicguru* |
 | **Biomes! Prehistoric** | biomesteam.biomesprehistoric | 3 | *Epicguru* |
 | **BondageBed Torture (Continued)** | mlie.bondagebedtorture | 1 | *Epicguru* |
 | **Bori race** | millap.bori | 5 | *Epicguru* |
 | **Call of Cthulhu - Factions** | rimofmadness.callofcthulhu.factions | 4 | *Epicguru* |
+| **Combat Extended Armory** | ceteam.combatextendedarmory | 5 | *Epicguru* |
 | **Combat Extended Melee** | ceteam.combatextendedmelee | 7 | *Epicguru* |
 | **Contractors Arsenal** | zerophoenix.contractorsarsenalfaction | 1 | *Epicguru* |
 | **Core** | ludeon.rimworld | 18 | *Epicguru* |
@@ -89,13 +94,18 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Elden Rim: Armory** | sharpie.eldenrima | 12 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
 | **Epona race Renaissance** | epona.eponarenaissance | 10 | *Epicguru* |
+| **Erin's Valheim Creatures** | erin.valheim.creatures | 1 | *Epicguru* |
+| **ExGT UrbanCombat** | xmb.exgturbancombat | 1 | *Epicguru* |
 | **Forsakens** | kikohi.forsakens | 4 | *Epicguru* |
 | **Gimmicks (Continued)** | mlie.gimmicks | 17 | *Epicguru* |
 | **Girl's Frontline: Sangvis Ferri Weapons** | brassy.sfguns.vanilla | 2 | *Epicguru* |
 | **Glitter Weaponry** | detvisor.glitterweaponry | 1 | *Epicguru* |
 | **Gloomy Dragonian race** | rooandgloomy.dragonianracemod | 1 | *Epicguru* |
 | **Gods of Elona [1.4]** | karukus.godsofelona | 4 | *Epicguru* |
+| **Grains and Brewing (1.4+)** | tidal.grainsandbrewing | 4 | *Epicguru* |
+| **GrimWorld 40,000** | happypurging.ageofdarkness | 4 | *Epicguru* |
 | **Grimworld: Melee** | grimworld.melee | 6 | *Epicguru* |
+| **Hakuro Xenohuman** | hakuro.xenohuman.septentrionrace | 13 | *Epicguru* |
 | **Heavy Melee Weapons (Continued)** | mlie.heavymeleeweapons | 11 | *Epicguru* |
 | **Hellsing ARMS Ultimate** | baskerville.hellsingarmsultimate | 13 | *Epicguru* |
 | **Heyra the Horned** | bando.heyrathehorned | 11 | *Epicguru* |
@@ -110,6 +120,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Kenshi Armory (1.4)** | biowreck.kenshiarmory | 12 | *Epicguru* |
 | **Kiiro Race** | ancot.kiirorace | 10 | *Epicguru* |
 | **Kijin Race 3.0** | ssulunge.kijinrace3 | 5 | *Epicguru* |
+| **Kraltech Industries** | blackmarket420.kraltechindustries | 14 | *Epicguru* |
 | **Kurin HAR Edition** | seioch.kurin.har | 3 | *Epicguru* |
 | **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 3 | *Epicguru* |
 | **Logistics_Mechanoid** | pal5k.logisticsmechanoid | 1 | *Epicguru* |
@@ -132,6 +143,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Metal Rim Rising** | mgr.rim | 2 | *Epicguru* |
 | **Miho, the celestial fox** | miho.fortifiedoutremer | 8 | *Epicguru* |
 | **Mincho, The Mint Choco Slime ~ HAR ver.** | sutsutman.minchothemintchocoslimeharver | 3 | *Epicguru* |
+| **Mono Weapons Pack** | cat.monopack | 15 | *Epicguru* |
 | **Moosesian race** | waffelf.moosesianrace | 7 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
 | **More Vanilla Textures** | tidal.morevanilla.textures | 2 | *Epicguru* |
