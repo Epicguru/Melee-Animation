@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ayameduki.harxenoorca",
+  "ItemDefName": "HAR_XO_Weapon_a",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.835530758,
+  "ScaleX": 3.0,
+  "ScaleY": 3.0,
+  "BladeStart": 0.991365135,
+  "BladeEnd": 2.294297,
+  "MeleeWeaponType": 5
+}

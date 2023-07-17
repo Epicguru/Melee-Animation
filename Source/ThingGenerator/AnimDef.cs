@@ -185,6 +185,7 @@ public class AnimDef : Def
     public bool pointAtTarget;
     public int returnToIdleStart, returnToIdleEnd;
     public int idleFrame;
+    public ExecutionOutcome? fixedOutcome;
     public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
 
     public class HandsVisibilityData
