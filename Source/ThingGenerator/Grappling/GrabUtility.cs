@@ -156,8 +156,7 @@ namespace AM.Grappling
                 return found;
 
             var loaded = ContentFinder<Texture2D>.Get($"AM/BoundPawns/{bodyType.defName}");
-            if (loaded != null)
-                BoundPawnTextures.Add(bodyType, loaded);
+            BoundPawnTextures.Add(bodyType, loaded);
             return loaded;
         }
     }

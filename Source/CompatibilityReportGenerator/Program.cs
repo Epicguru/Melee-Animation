@@ -1,7 +1,6 @@
-﻿using System.CommandLine;
-using System.Globalization;
-using AM.Tweaks;
+﻿using AM.Tweaks;
 using CompatibilityReportGenerator.Properties;
+using System.CommandLine;
 
 namespace CompatibilityReportGenerator;
 
@@ -63,6 +62,11 @@ public static class Program
                 continue;
             }
 
+            string Escape(string i)
+            {
+                return i.Replace("|", "&#124;");
+            }
+
             string modID = tweak.TextureModID;
             if (!table.TryGetValue(modID, out var row))
             {
@@ -74,8 +78,8 @@ public static class Program
                 row = new OutputRow
                 {
                     WeaponCount = 0,
-                    ModName = name,
-                    ModID = modID
+                    ModName = Escape(name),
+                    ModID = Escape(modID)
                 };
                 table.Add(modID, row);
             }
