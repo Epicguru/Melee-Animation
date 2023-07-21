@@ -2,7 +2,6 @@
 using RimWorld;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Text;
 using Verse;
 
@@ -11,12 +10,10 @@ namespace AM.Patches;
 // Patched manually below, see PatchAll
 public static class Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget
 {
-    public static DamageWorker.DamageResult lastResult;
     public static Thing lastTarget;
 
-    private static readonly Type[] methodParams = new[] { typeof(LocalTargetInfo) };
+    private static readonly Type[] methodParams = { typeof(LocalTargetInfo) };
     private static readonly HarmonyMethod postfix = new HarmonyMethod(typeof(Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget), nameof(Postfix));
-    private const BindingFlags METHOD_FLAGS = BindingFlags.Public | BindingFlags.Instance;
 
     public static void PatchAll()
     {
@@ -56,9 +53,8 @@ public static class Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget
         Core.Log($"Patched {count} classes that directly inherit from {nameof(Verb_MeleeAttack)} in {timer.Elapsed.TotalMilliseconds:F1} ms to detect hits:\n{log}");
     }
 
-    public static void Postfix(LocalTargetInfo target, DamageWorker.DamageResult __result)
+    public static void Postfix(LocalTargetInfo target)
     {
         lastTarget = target.Thing;
-        lastResult = __result;
     }
 }
