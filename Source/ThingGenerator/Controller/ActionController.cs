@@ -243,7 +243,7 @@ public class ActionController
         }
 
         // Get all animations.
-        var allAnims = req.OnlyTheseAnimations ?? AnimDef.GetExecutionAnimationsForPawnAndWeapon(req.Executioner, weapon.def).Where(d => d.Probability > 0);
+        var allAnims = req.OnlyTheseAnimations ?? AnimDef.GetExecutionAnimationsForPawnAndWeapon(req.Executioner, weapon.def, req.AttackerMeleeLevel).Where(d => d.Probability > 0);
         if (!allAnims.Any())
         {
             yield return new ExecutionAttemptReport(req, "NoAnims");

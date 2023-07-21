@@ -7,5 +7,6 @@
     <li IfModActive="erdelf.humanoidalienraces">Patch_AlienRaces/1.4</li>
     <li IfModActive="Krkr.rule56">Patch_CAI5000/1.4</li>
     <li IfModActive="ceteam.combatextended">Patch_CombatExtended/1.4</li>
+    <li IfModActive="Taranchuk.PerformanceOptimizer">Patch_PerformanceOptimizer/1.4</li>
   </v1.4>
 </loadFolders>

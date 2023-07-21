@@ -68,4 +68,10 @@ public struct ExecutionAttemptRequest
     /// If not null, only these animations are checked.
     /// </summary>
     public IEnumerable<AnimDef> OnlyTheseAnimations;
+
+    /// <summary>
+    /// The attacker's melee level.
+    /// If not specified, it is extracted from the <see cref="Executioner"/> field.
+    /// </summary>
+    public int? AttackerMeleeLevel;
 }
