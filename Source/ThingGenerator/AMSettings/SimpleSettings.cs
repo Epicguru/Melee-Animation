@@ -275,7 +275,6 @@ public static class SimpleSettings
         {
             bool isCurrentTab = currentHeader == selectedHeader;
 
-            // TODO draw header.
             var header = member.TryGetCustomAttribute<HeaderAttribute>();
             bool didHeader = false;
             if (header != null)
@@ -686,10 +685,16 @@ public static class SimpleSettings
             if (va == null)
                 continue;
 
-            if (!(pair.Value.Options?.IgnoreEqualityForPresets ?? false) && !va.Equals(vb))
-            {
+            if (pair.Value.Options?.IgnoreEqualityForPresets ?? false)
+                continue;
+
+            // Special check:
+            if (va is ISettingsEqualityChecker checker && !checker.IsEqualForSettings(vb))
                 return false;
-            }
+
+            // Regular equality check:
+            if (!va.Equals(vb))
+                return false;
         }
 
         return true;
@@ -997,7 +1002,7 @@ public static class SimpleSettings
             var current = Get<object>(settings);
             bool bothNull = current == null && DefaultValue == null;
 
-            return bothNull || (current != null && current.Equals(DefaultValue));
+            return bothNull || (current != null && (current is ISettingsEqualityChecker c ? c.IsEqualForSettings(DefaultValue) : current.Equals(DefaultValue)));
         }
 
         protected virtual string MakeDisplayName()
@@ -1195,4 +1200,9 @@ public class SettingOptionsAttribute : Attribute
     }
 
     private SettingOptionsAttribute() { }
+}
+
+public interface ISettingsEqualityChecker
+{
+    bool IsEqualForSettings(object other);
 }

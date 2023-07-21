@@ -110,9 +110,11 @@ public class Settings : SimpleSettingsBase
     public float GrappleSpeed = 1f;
 
     [Label("Max Building Fill For Lasso Drag")]
-    [Description("The maximum 'fill' percentage of a building that a pawn can be dragged through by a lasso.\nLower values mean that pawns can <b>not<b> be dragged through/over partial cover such as sand bags or embrasures. A value of 100% means that the lasso can pull pawns though/over anything except completely solid walls and buildings.")]
+    [Description("The maximum 'fill' percentage of a building that a pawn can be dragged through by a lasso.\n" +
+                 "Lower values mean that pawns can <b>not</b> be dragged through/over partial cover such as sand bags or embrasures. " +
+                 "A value of 100% means that the lasso can pull pawns though/over anything except completely solid walls and buildings.")]
     [Percentage]
-    public float MaxFillPctForLasso = 0.4f;
+    public float MaxFillPctForLasso = 0.2f;
     #endregion
 
     #region Executions & Duels
@@ -166,6 +168,15 @@ public class Settings : SimpleSettingsBase
                  "Note: if disabled, combat log generation does not work properly for the execution, and will give a default message: \"<i>name was killed.</i>\"")]
     public bool ExecutionsCanDestroyBodyParts = true;
 
+    [Label("Amount Skill Affects Execution Cooldown")]
+    [Description("The amount that melee skill affects execution cooldown time.\n" +
+                 "Higher melee skill means lower cooldown, changing this value increases or decreases the effect of melee skill.\n" +
+                 "Set to 0% to disable melee skill as a factor.\n\n" +
+                 "Note: only affects friendly pawns.")]
+    [Range(0, 2)]
+    [Percentage]
+    public float MeleeSkillExecCooldownFactor = 1f;
+
     [Description("The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
     [Min(1)]
     public int MinDuelDuration = 4;
@@ -177,7 +188,6 @@ public class Settings : SimpleSettingsBase
     [Description("The cooldown time, in seconds, after a friendly duel where a friendly duel cannot be started again.")]
     [Min(0)]
     public float FriendlyDuelCooldown = 60 * 5;
-
 
     [Label("Execution Cooldown Factor (Friendly)")]
     [Description("This adjust the execution cooldown time for friendly pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]

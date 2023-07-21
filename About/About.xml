@@ -13,7 +13,7 @@
  * Place down a Duel Spot (under the Misc tab) to have your colonists engage in friendly duels.
  * Craft Lassos at a tailor bench and equip them to pawns for an edge against gunfighters.
  * Cast powerful Unique Skills when certain requirements are met (see steam page).
-Load as low down as possible.</description>
+Load as far down as possible.</description>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>

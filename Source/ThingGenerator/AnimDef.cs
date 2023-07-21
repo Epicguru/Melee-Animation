@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using AM.AMSettings;
 using AM.Idle;
 using AM.RendererWorkers;
 using AM.Reqs;
@@ -51,7 +52,7 @@ public class AnimDef : Def
 
     public static IEnumerable<AnimDef> GetExecutionAnimationsForPawnAndWeapon(Pawn pawn, ThingDef weaponDef, int? meleeLevel = null)
     {
-        int meleeSkill = meleeLevel ?? pawn.skills.GetSkill(SkillDefOf.Melee).Level;
+        int meleeSkill = meleeLevel ?? pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
 
         // TODO maybe cached based on requirement?
         return GetDefsOfType(AnimType.Execution).Where(d =>
@@ -75,7 +76,7 @@ public class AnimDef : Def
 
     #endregion
 
-    public class SettingsData : IExposable, IEquatable<SettingsData>
+    public class SettingsData : IExposable, ISettingsEqualityChecker
     {
         public bool Enabled = true;
         public float Probability = 1;
@@ -86,27 +87,9 @@ public class AnimDef : Def
             Scribe_Values.Look(ref Probability, "Probability", 1f);
         }
 
-        public bool Equals(SettingsData other)
+        public bool IsEqualForSettings(object other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Enabled == other.Enabled && Probability.Equals(other.Probability);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((SettingsData) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Enabled.GetHashCode() * 397) ^ Probability.GetHashCode();
-            }
+            return other is SettingsData osd && osd.Enabled == this.Enabled && osd.Probability == this.Probability;
         }
     }
 
