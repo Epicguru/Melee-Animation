@@ -6,6 +6,10 @@ using Verse;
 
 namespace AM.Events.Workers
 {
+    /// <summary>
+    /// Despite the name this actually handles killing, downing and injuring as well.
+    /// Any outcome really.
+    /// </summary>
     public class KillPawnWorker : EventWorkerBase
     {
         public override string EventID => "KillPawn";

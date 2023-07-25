@@ -12,7 +12,6 @@ namespace AM.PerformanceOptimizerPatch;
 [HarmonyPatch(typeof(Optimization_RefreshRate), nameof(Optimization_RefreshRate.DrawSettings))]
 public static class Patch_Optimization_RefreshRate_DrawSettings
 {
-    [HarmonyPriority(Priority.First)]
     public static bool Prefix(Optimization __instance, Listing_Standard section)
     {
         if (__instance is not Optimization_PawnUtility_IsInvisible)

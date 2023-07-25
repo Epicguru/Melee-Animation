@@ -1181,6 +1181,8 @@ public class AnimRenderer : IExposable
 
     public void TeleportPawnsToEnd()
     {
+        // TODO certain animations should have different end positions if the pawn was 
+        // not killed.
         IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
         basePos.y = 0;
 

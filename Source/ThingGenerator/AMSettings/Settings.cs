@@ -226,6 +226,10 @@ public class Settings : SimpleSettingsBase
     [WebContent("OffsetMode", false)]
     public CorpseOffsetMode CorpseOffsetMode = CorpseOffsetMode.KeepOffset;
 
+    // TODO finish body size scaling support:
+    //public bool BodyScaleUp = true;
+    //public bool BodyScaleDown = true;
+
     [Label("Move Animation Speed")]
     [Description("Changes the speed of the movement animations.\nHigher values increase the speed. This is just a visual change, it obviously doesn't change the pawn's movement speed.")]
     [Percentage]
