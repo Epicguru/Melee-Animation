@@ -1,0 +1,12 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_CleaverRestored",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1763297,
+  "OffY": 0.02833873,
+  "HandsMode": 1,
+  "BladeStart": 0.111543983,
+  "BladeEnd": 0.505136,
+  "MeleeWeaponType": 48
+}

@@ -145,6 +145,7 @@ public class MapPawnProcessor : IDisposable
                 // Instant trigger.
                 var finalArgs = args with
                 {
+                    // Generate outcome here to avoid threading errors:
                     ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
                 };
                 bool worked = finalArgs.TryTrigger();
@@ -158,6 +159,7 @@ public class MapPawnProcessor : IDisposable
                 // Lasso + execution:
                 var finalArgs = args with
                 {
+                    // Generate outcome here to avoid threading errors:
                     ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
                 };
 

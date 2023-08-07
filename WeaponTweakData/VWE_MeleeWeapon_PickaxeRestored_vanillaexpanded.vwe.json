@@ -1,0 +1,10 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_PickaxeRestored",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.163734019,
+  "BladeStart": 0.281575859,
+  "BladeEnd": 0.495690048,
+  "MeleeWeaponType": 2
+}

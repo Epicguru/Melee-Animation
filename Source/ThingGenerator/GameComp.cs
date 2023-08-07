@@ -48,24 +48,24 @@ public class GameComp : GameComponent
 
         allMeleeData ??= new List<PawnMeleeData>();
 
-        if (Scribe.mode == LoadSaveMode.PostLoadInit)
+        if (Scribe.mode != LoadSaveMode.PostLoadInit)
+            return;
+
+        pawnMeleeData.Clear();
+        foreach (var data in allMeleeData)
         {
-            pawnMeleeData.Clear();
-            foreach (var data in allMeleeData)
+            if (!data.ShouldSave())
+                continue;
+
+            if (pawnMeleeData.ContainsKey(data.Pawn))
             {
-                if (data.ShouldSave())
-                {
-                    if (pawnMeleeData.ContainsKey(data.Pawn))
-                    {
-                        // Adding this check because a user reported this exact error.
-                        // No idea how they managed that. Save editing?
-                        Core.Error("Duplicate pawn data (or data with same pawn!) found when loading!");
-                        continue;
-                    }
-                    
-                    pawnMeleeData.Add(data.Pawn, data);
-                }
+                // Adding this check because a user reported this exact error.
+                // No idea how they managed that. Save editing?
+                Core.Error("Duplicate pawn data (or data with same pawn!) found when loading!");
+                continue;
             }
+                    
+            pawnMeleeData.Add(data.Pawn, data);
         }
     }
 
@@ -147,36 +147,36 @@ public class GameComp : GameComponent
         texPath = GUILayout.TextField(texPath);
         var tex = ContentFinder<Texture2D>.Get(texPath, false);
 
-        if (tex != null)
-        {
-            GUILayout.Box(tex);
+        if (tex == null)
+            return;
 
-            if (GUILayout.Button("Save"))
-            {
-                RenderTexture renderTex = RenderTexture.GetTemporary(
-                    tex.width,
-                    tex.height,
-                    0,
-                    RenderTextureFormat.Default,
-                    RenderTextureReadWrite.Linear);
+        GUILayout.Box(tex);
 
-                Graphics.Blit(tex, renderTex);
-                RenderTexture previous = RenderTexture.active;
-                RenderTexture.active = renderTex;
-                Texture2D readableText = new(tex.width, tex.height);
-                readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
-                readableText.Apply();
-                RenderTexture.active = previous;
-                RenderTexture.ReleaseTemporary(renderTex);
+        if (!GUILayout.Button("Save"))
+            return;
 
-                var pngBytes = readableText.EncodeToPNG();
+        RenderTexture renderTex = RenderTexture.GetTemporary(
+            tex.width,
+            tex.height,
+            0,
+            RenderTextureFormat.Default,
+            RenderTextureReadWrite.Linear);
+
+        Graphics.Blit(tex, renderTex);
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = renderTex;
+        Texture2D readableText = new(tex.width, tex.height);
+        readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
+        readableText.Apply();
+        RenderTexture.active = previous;
+        RenderTexture.ReleaseTemporary(renderTex);
+
+        var pngBytes = readableText.EncodeToPNG();
                 
-                Log.Message($"Writing {pngBytes.Length} bytes of {texPath} to Desktop ...");
-                File.WriteAllBytes(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"{tex.name ?? "grab"}.png"), pngBytes);
+        Log.Message($"Writing {pngBytes.Length} bytes of {texPath} to Desktop ...");
+        File.WriteAllBytes(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"{tex.name ?? "grab"}.png"), pngBytes);
 
-                Object.Destroy(readableText);
-                Object.Destroy(renderTex);
-            }
-        }
+        Object.Destroy(readableText);
+        Object.Destroy(renderTex);
     }
 }

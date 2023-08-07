@@ -1,0 +1,11 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_ScalpelRestored",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1322469,
+  "HandsMode": 1,
+  "BladeStart": 0.174518779,
+  "BladeEnd": 0.40752545,
+  "MeleeWeaponType": 48
+}
