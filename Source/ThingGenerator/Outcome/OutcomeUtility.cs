@@ -142,7 +142,7 @@ public static class OutcomeUtility
             chanceToPen /= armorMulti;
         else
             chanceToPen = 1f;
-        Log($"Chance to pen (post-process): {chanceToPen:P1}");
+        Log($"Chance to pen (post-settings): {chanceToPen:P1}");
         bool canPen = Rand.Chance(chanceToPen);
         Log($"Random will pen outcome: {canPen}");
 

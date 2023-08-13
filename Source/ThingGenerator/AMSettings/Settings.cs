@@ -158,9 +158,9 @@ public class Settings : SimpleSettingsBase
     public bool ExecutionsOnFriendliesAreNotLethal = true;
 
     [Label("Execution Armor Strength")]
-    [Description("A multiplier on the effectiveness of armor when calculating execution animation outcome.\nLower values decrease the effect of armor on the outcome, higher values increase the effect of armor.\nSet to 0% to make armor be ignored.")]
+    [Description("A multiplier on the effectiveness of armor when calculating execution animation outcome.\nLower values decrease the effect of armor on the outcome, higher values increase the strength of armor.\nSet to 0% to make armor be ignored.")]
     [Percentage]
-    [Range(0, 3)]
+    [Range(0, 5)]
     public float ExecutionArmorCoefficient = 1f;
 
     [Description("If true, executions can destroy specific vital body parts, such as the heart or head.\n" +
@@ -192,14 +192,14 @@ public class Settings : SimpleSettingsBase
     [Label("Execution Cooldown Factor (Friendly)")]
     [Description("This adjust the execution cooldown time for friendly pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
     [Percentage]
-    [Range(0.01f, 3f)]
+    [Range(0.01f, 5f)]
     [Step(0.01f)]
     public float FriendlyExecCooldownFactor = 1f;
 
     [Label("Execution Cooldown Factor (Enemy)")]
     [Description("This adjust the execution cooldown time for hostile pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
     [Percentage]
-    [Range(0.01f, 3f)]
+    [Range(0.01f, 5f)]
     [Step(0.01f)]
     public float EnemyExecCooldownFactor = 1f;
     #endregion
