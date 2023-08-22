@@ -1,0 +1,14 @@
+{
+  "TextureModID": "doublec.skyrimsteelweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Steel_WarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.19427526,
+  "OffY": -0.07006636,
+  "Rotation": -5.0,
+  "ScaleX": 1.1,
+  "ScaleY": 0.7,
+  "BladeStart": 0.310282856,
+  "BladeEnd": 0.743421,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "farxmai2.vanillaitemsexpandedpack",
+  "ItemDefName": "FWE_ChainSaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.353517532,
+  "OffY": 0.0127395727,
+  "Rotation": 40.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.3262072,
+  "BladeEnd": 0.8294117,
+  "MeleeWeaponType": 6
+}

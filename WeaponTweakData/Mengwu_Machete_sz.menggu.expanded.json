@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sz.menggu.expanded",
+  "ItemDefName": "Mengwu_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.378995627,
+  "Rotation": -10.0,
+  "BladeStart": 0.08415897,
+  "BladeEnd": 0.8708147,
+  "MeleeWeaponType": 6
+}

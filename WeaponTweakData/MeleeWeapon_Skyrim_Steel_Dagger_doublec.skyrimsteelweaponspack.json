@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimsteelweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Steel_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.216569066,
+  "ScaleX": 0.65,
+  "ScaleY": 0.65,
+  "HandsMode": 1,
+  "BladeStart": 0.116007641,
+  "BladeEnd": 0.5300367,
+  "MeleeWeaponType": 48
+}

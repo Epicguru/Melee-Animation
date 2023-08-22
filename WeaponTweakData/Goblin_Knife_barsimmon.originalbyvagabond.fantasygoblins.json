@@ -1,0 +1,12 @@
+{
+  "TextureModID": "barsimmon.originalbyvagabond.fantasygoblins",
+  "ItemDefName": "Goblin_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.108284533,
+  "OffY": 0.0127393305,
+  "Rotation": 10.0,
+  "BladeStart": 0.10645283,
+  "BladeEnd": 0.561885357,
+  "MeleeWeaponType": 48
+}

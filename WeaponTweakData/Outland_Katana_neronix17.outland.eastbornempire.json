@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3089293,
+  "OffY": -0.0159243345,
+  "BladeStart": 0.07460468,
+  "BladeEnd": 0.7943783,
+  "MeleeWeaponType": 6
+}

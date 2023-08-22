@@ -1,0 +1,14 @@
+{
+  "TextureModID": "doublec.skyrimorcishweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Orcish_Warhammeraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.401290029,
+  "OffY": -0.0509575,
+  "Rotation": -2.238958,
+  "ScaleX": 1.5,
+  "ScaleY": 1.1,
+  "BladeStart": 0.6128426,
+  "BladeEnd": 1.12878668,
+  "MeleeWeaponType": 1
+}

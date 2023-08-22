@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimsteelweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Steel_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.238863438,
+  "ScaleX": 1.1,
+  "ScaleY": 0.9,
+  "BladeStart": 0.116007641,
+  "BladeEnd": 0.686093748,
+  "MeleeWeaponType": 9
+}

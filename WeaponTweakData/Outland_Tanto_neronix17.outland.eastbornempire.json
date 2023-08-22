@@ -1,0 +1,10 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Tanto",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.197460487,
+  "BladeStart": 0.09052902,
+  "BladeEnd": 0.6606151,
+  "MeleeWeaponType": 54
+}

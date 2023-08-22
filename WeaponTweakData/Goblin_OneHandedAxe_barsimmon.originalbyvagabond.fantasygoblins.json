@@ -1,0 +1,12 @@
+{
+  "TextureModID": "barsimmon.originalbyvagabond.fantasygoblins",
+  "ItemDefName": "Goblin_OneHandedAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.181535661,
+  "OffY": 0.0191091,
+  "Rotation": 40.0,
+  "BladeStart": 0.151041076,
+  "BladeEnd": 0.590548754,
+  "MeleeWeaponType": 18
+}

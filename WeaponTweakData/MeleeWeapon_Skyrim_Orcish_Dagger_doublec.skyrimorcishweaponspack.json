@@ -1,0 +1,14 @@
+{
+  "TextureModID": "doublec.skyrimorcishweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Orcish_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.203830034,
+  "OffY": -0.0286636353,
+  "ScaleX": 0.7,
+  "ScaleY": 0.65,
+  "HandsMode": 1,
+  "BladeStart": 0.116007641,
+  "BladeEnd": 0.5682549,
+  "MeleeWeaponType": 48
+}

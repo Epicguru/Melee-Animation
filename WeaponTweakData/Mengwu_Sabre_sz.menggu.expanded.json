@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sz.menggu.expanded",
+  "ItemDefName": "Mengwu_Sabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.554162264,
+  "Rotation": -5.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.103268065,
+  "BladeEnd": 1.25299561,
+  "MeleeWeaponType": 6
+}

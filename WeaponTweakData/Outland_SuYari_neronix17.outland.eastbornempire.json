@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_SuYari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.305744529,
+  "Rotation": 45.0,
+  "BladeStart": 0.5332215,
+  "BladeEnd": 0.969544947,
+  "MeleeWeaponType": 7
+}

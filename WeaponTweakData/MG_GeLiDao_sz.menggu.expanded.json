@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sz.menggu.expanded",
+  "ItemDefName": "MG_GeLiDao",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3248536,
+  "OffY": 0.0318481475,
+  "Rotation": -25.0,
+  "BladeStart": 0.12874721,
+  "BladeEnd": 0.854890347,
+  "MeleeWeaponType": 6
+}

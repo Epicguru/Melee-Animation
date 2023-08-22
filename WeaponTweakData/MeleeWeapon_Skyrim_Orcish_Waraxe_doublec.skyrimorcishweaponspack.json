@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimorcishweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Orcish_WarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.273896366,
+  "OffY": -0.04458773,
+  "ScaleX": 1.1,
+  "ScaleY": 0.8,
+  "BladeStart": 0.303913325,
+  "BladeEnd": 0.7816392,
+  "MeleeWeaponType": 2
+}

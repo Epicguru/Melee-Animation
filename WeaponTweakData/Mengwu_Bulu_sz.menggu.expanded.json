@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sz.menggu.expanded",
+  "ItemDefName": "Mengwu_Bulu",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.17516613,
+  "OffY": -0.0127395689,
+  "Rotation": 4.306364,
+  "BladeStart": 0.06823516,
+  "BladeEnd": 0.488633752,
+  "MeleeWeaponType": 8
+}

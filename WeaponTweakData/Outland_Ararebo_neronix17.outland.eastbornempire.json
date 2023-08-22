@@ -1,0 +1,10 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Ararebo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.216569081,
+  "BladeStart": 0.275249422,
+  "BladeEnd": 0.6606151,
+  "MeleeWeaponType": 9
+}

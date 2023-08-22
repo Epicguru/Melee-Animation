@@ -1,0 +1,14 @@
+{
+  "TextureModID": "farxmai2.vanillaitemsexpandedpack",
+  "ItemDefName": "FWE_CircularSaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.140133262,
+  "OffY": -0.00318475813,
+  "Rotation": 40.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.2497708,
+  "BladeEnd": 0.545961,
+  "MeleeWeaponType": 2
+}

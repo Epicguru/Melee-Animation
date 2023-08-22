@@ -1,0 +1,13 @@
+{
+  "TextureModID": "farxmai2.vanillaitemsexpandedpack",
+  "ItemDefName": "FWE_StoneBoer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.238862932,
+  "Rotation": 40.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.217922658,
+  "BladeEnd": 0.7179424,
+  "MeleeWeaponType": 5
+}

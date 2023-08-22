@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ogliss.admech.armoury",
+  "ItemDefName": "GF40K_PowerSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.318484128,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.09689854,
+  "BladeEnd": 0.7752697,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Masakari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.248417243,
+  "OffY": -0.0286636651,
+  "BladeStart": 0.38671872,
+  "BladeEnd": 0.67016995,
+  "MeleeWeaponType": 2
+}
