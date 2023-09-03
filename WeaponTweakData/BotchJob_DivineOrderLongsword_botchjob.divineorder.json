@@ -1,0 +1,12 @@
+{
+  "TextureModID": "botchjob.divineorder",
+  "ItemDefName": "BotchJob_DivineOrderLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.277081132,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.116007641,
+  "BladeEnd": 0.8835542,
+  "MeleeWeaponType": 6
+}

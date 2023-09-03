@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Nagamaki",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3439622,
+  "OffY": 0.0318484,
+  "Rotation": 40.0,
+  "BladeStart": 0.383533984,
+  "BladeEnd": 0.991838753,
+  "MeleeWeaponType": 6
+}

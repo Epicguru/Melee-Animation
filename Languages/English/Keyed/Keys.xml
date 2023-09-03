@@ -118,6 +118,7 @@
   <AM.Stats.NoWeapon>No Melee Weapon Equipped: {0}</AM.Stats.NoWeapon>
   <AM.Stats.GlobalCoef>Global {0} Multiplier (from mod settings): {1}</AM.Stats.GlobalCoef>
   <AM.Stats.FriendlyCoef>Friendly Pawn Multiplier (from mod settings): x{0}</AM.Stats.FriendlyCoef>
+  <AM.Stats.SkillCoef>Melee Skill Multiplier: x{0}</AM.Stats.SkillCoef>
   <AM.Stats.EnemyCoef>Hostile Pawn Multiplier (from mod settings): x{0}</AM.Stats.EnemyCoef>
   <AM.Stats.Lethality>lethality</AM.Stats.Lethality>
   <AM.Stats.DuelAbility>duel ability</AM.Stats.DuelAbility>
@@ -139,5 +140,7 @@
   <!-- Gilgamesh skill -->
   <AM.Skill.Gilgamesh.LowPsy>Psylink level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowPsy>
   <AM.Skill.Gilgamesh.LowMelee>Melee level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowMelee>
+
+  <AM.Patch.OptDisabled>The invisibilty optimization has been disabled by the Melee Animation mod due to visual bugs.</AM.Patch.OptDisabled>
 
 </LanguageData>

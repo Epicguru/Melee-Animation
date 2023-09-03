@@ -823,7 +823,7 @@ public class AnimRenderer : IExposable
 
                     if (snap.SplitDrawMode != AnimData.SplitDrawMode.None && snap.SplitDrawPivot != null)
                     {
-                        ConfigureSplitDraw(snap, ref matrix, pb, ov, i, mat, ref passes, ref tex);
+                        ConfigureSplitDraw(snap, ref matrix, pb, ov, i, ref passes, ref tex);
                     }
 
                     pb.SetTexture("_MainTex", tex);
@@ -843,7 +843,7 @@ public class AnimRenderer : IExposable
             Destroy();
     }
 
-    private void ConfigureSplitDraw(in AnimPartSnapshot part, ref Matrix4x4 matrix, MaterialPropertyBlock pb, AnimPartOverrideData ov, int currentPass, Material mat, ref int passCount, ref Texture2D texture)
+    private void ConfigureSplitDraw(in AnimPartSnapshot part, ref Matrix4x4 matrix, MaterialPropertyBlock pb, AnimPartOverrideData ov, int currentPass, ref int passCount, ref Texture2D texture)
     {
         bool preFx = ov.FlipX ? !part.FlipX : part.FlipX;
         bool preFy = ov.FlipY ? !part.FlipY : part.FlipY;
@@ -883,8 +883,8 @@ public class AnimRenderer : IExposable
         pb.SetFloat("Distance", distanceScale * (-1f + lerp * 2f));
 
         // Experimental, aims to fix issue where split drawing does not use the weapon ideology style.
-        if (mat != null && mat.mainTexture is Texture2D tex2D)
-            texture = tex2D;
+        if (ov.Material?.mainTexture is Texture2D tex)
+            texture = tex;
     }
 
     public void DrawGUI()
@@ -1181,6 +1181,8 @@ public class AnimRenderer : IExposable
 
     public void TeleportPawnsToEnd()
     {
+        // TODO certain animations should have different end positions if the pawn was 
+        // not killed.
         IntVec3 basePos = RootTransform.MultiplyPoint3x4(Vector3.zero).ToIntVec3();
         basePos.y = 0;
 
@@ -1327,8 +1329,16 @@ public class AnimRenderer : IExposable
         // Hand visibility uses the animation data first and foremost, and if the animation does
         // not care about hand visibility, then it is dictated by the weapon.
         var vis = Def.GetHandsVisibility(index);
-        bool showMain = Core.Settings.ShowHands && (vis.showMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands));
-        bool showAlt =  Core.Settings.ShowHands && (vis.showAltHand ??  (weapon != null && handsMode == HandsMode.Default));
+
+        bool? animMainHand = vis.showMainHand;
+        if (animMainHand != null && !pawn.RaceProps.Humanlike)
+            animMainHand = null;
+        bool? animAltHand = vis.showAltHand;
+        if (animAltHand != null && !pawn.RaceProps.Humanlike)
+            animAltHand = null;
+
+        bool showMain = Core.Settings.ShowHands && (animMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands));
+        bool showAlt =  Core.Settings.ShowHands && (animAltHand  ?? (weapon != null && handsMode == HandsMode.Default));
 
         // Apply main hand.
         var mainHandPart = GetPart(mainHandName);

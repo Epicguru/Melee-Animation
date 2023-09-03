@@ -1,0 +1,14 @@
+{
+  "TextureModID": "doublec.skyrimorcishweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Orcish_Greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.480910659,
+  "OffY": -0.07325134,
+  "Rotation": -2.241928,
+  "ScaleX": 1.5,
+  "ScaleY": 1.1,
+  "BladeStart": 0.141486272,
+  "BladeEnd": 1.22433162,
+  "MeleeWeaponType": 6
+}

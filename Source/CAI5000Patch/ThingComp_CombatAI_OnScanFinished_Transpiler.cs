@@ -17,7 +17,7 @@ public static class ThingComp_CombatAI_OnScanFinished_Transpiler
     {
         var isDeadOrDownedGetter = AccessTools.PropertyGetter(typeof(ThingComp_CombatAI), nameof(ThingComp_CombatAI.IsDeadOrDowned));
         if (isDeadOrDownedGetter == null)
-            throw new System.Exception("CombatAI_Utility.IsBurning_Fast method not found.");
+            throw new System.Exception("ThingComp_CombatAI.IsDeadOrDowned method not found.");
 
         var list = instructions.ToList();
         bool found = false;

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "barsimmon.originalbyvagabond.fantasygoblins",
+  "ItemDefName": "Goblin_Falchion",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.308929265,
+  "OffY": -0.038217932,
+  "Rotation": 35.0,
+  "BladeStart": 0.195628792,
+  "BladeEnd": 0.9472511,
+  "MeleeWeaponType": 6
+}

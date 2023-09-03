@@ -1,0 +1,14 @@
+{
+  "TextureModID": "doublec.skyrimsteelweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Steel_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.385366321,
+  "OffY": -0.0286636427,
+  "Rotation": 2.365211,
+  "ScaleX": 1.2,
+  "ScaleY": 0.9,
+  "BladeStart": 0.09689854,
+  "BladeEnd": 0.9759144,
+  "MeleeWeaponType": 6
+}

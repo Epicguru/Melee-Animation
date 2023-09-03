@@ -1,0 +1,12 @@
+{
+  "TextureModID": "barsimmon.originalbyvagabond.fantasygoblins",
+  "ItemDefName": "Goblin_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.267526835,
+  "OffY": 0.0191091,
+  "Rotation": 40.0,
+  "BladeStart": 0.383533984,
+  "BladeEnd": 0.8325965,
+  "MeleeWeaponType": 7
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Odachi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.334407926,
+  "OffY": 0.0477727354,
+  "Rotation": 40.0,
+  "BladeStart": 0.186073989,
+  "BladeEnd": 0.9376963,
+  "MeleeWeaponType": 6
+}

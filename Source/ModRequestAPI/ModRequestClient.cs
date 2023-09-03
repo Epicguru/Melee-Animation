@@ -32,7 +32,6 @@ public class ModRequestClient
         var content = JsonConvert.SerializeObject(requests);
 
         using var req = new UnityWebRequest(url, "POST");
-        ///SetHeaders(req);
         req.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(content)) { contentType = "application/json" };
         req.downloadHandler = new DownloadHandlerBuffer();
         await SendRequest(req);

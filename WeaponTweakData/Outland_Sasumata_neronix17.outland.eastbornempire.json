@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Sasumata",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.331223667,
+  "Rotation": 45.0,
+  "BladeStart": 0.119192407,
+  "BladeEnd": 0.797563553,
+  "MeleeWeaponType": 1
+}

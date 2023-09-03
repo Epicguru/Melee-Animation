@@ -145,6 +145,7 @@ public class MapPawnProcessor : IDisposable
                 // Instant trigger.
                 var finalArgs = args with
                 {
+                    // Generate outcome here to avoid threading errors:
                     ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
                 };
                 bool worked = finalArgs.TryTrigger();
@@ -158,6 +159,7 @@ public class MapPawnProcessor : IDisposable
                 // Lasso + execution:
                 var finalArgs = args with
                 {
+                    // Generate outcome here to avoid threading errors:
                     ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
                 };
 
@@ -311,7 +313,8 @@ public class MapPawnProcessor : IDisposable
                         SmallOccupiedMask = smallMask,
                         TrustLassoUsability = true,
                         LassoRange = data.LassoRange,
-                        Targets = taskData.Targets.Select(t => (Pawn)t)
+                        Targets = taskData.Targets.Select(t => (Pawn)t),
+                        AttackerMeleeLevel = data.PawnMeleeLevel
                     });
 
                     foreach (var report in reports)
@@ -471,7 +474,7 @@ public class MapPawnProcessor : IDisposable
                 LassoRange = lasso != null ? pawn.GetStatValue(AM_DefOf.AM_GrappleRadius) : 0
             };
 
-            if (!data.CanGrapple && !data.CanExecute)
+            if (data is { CanGrapple: false, CanExecute: false })
                 continue;
 
             attackers.Add(data);
@@ -537,7 +540,7 @@ public class MapPawnProcessor : IDisposable
 
     private readonly struct PotentialAnimation
     {
-        public readonly bool IsValid => Anim != null || LassoToHere != null;
+        public bool IsValid => Anim != null || LassoToHere != null;
 
         public required AnimDef Anim { get; init; }
         public required bool FlipX { get; init; }
@@ -548,8 +551,6 @@ public class MapPawnProcessor : IDisposable
     private class TaskData
     {
         public readonly List<IAttackTarget> Targets = new List<IAttackTarget>(64);
-        public readonly List<PotentialAnimation> EastAnimations = new List<PotentialAnimation>();
-        public readonly List<PotentialAnimation> WestAnimations = new List<PotentialAnimation>();
         public readonly ActionController Controller = new ActionController();
         public readonly int Index;
         public long ScheduleTick;

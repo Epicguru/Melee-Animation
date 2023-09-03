@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimorcishweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Orcish_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.254787266,
+  "OffY": -0.0350334644,
+  "ScaleX": 1.1,
+  "ScaleY": 0.9,
+  "BladeStart": 0.300728053,
+  "BladeEnd": 0.7752697,
+  "MeleeWeaponType": 9
+}

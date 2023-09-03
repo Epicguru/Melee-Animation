@@ -1,0 +1,10 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Jitte",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0732516348,
+  "BladeStart": 0.125561923,
+  "BladeEnd": 0.5491458,
+  "MeleeWeaponType": 8
+}

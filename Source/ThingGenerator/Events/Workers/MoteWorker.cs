@@ -38,9 +38,8 @@ namespace AM.Events.Workers
                     return;
                 }
 
-                float angle = 90 - e.StartVelocityAngle.RandomInRange();
-                if (shouldMirror)
-                    angle = 90 - angle;
+                float baseAngle = e.StartVelocityAngle.RandomInRange();
+                float angle = shouldMirror ? baseAngle - 90 : 90 - baseAngle;
 
                 FleckCreationData dataStatic = FleckMaker.GetDataStatic(loc + e.WithOffset, map, fleck, e.StartScale.RandomInRange());
                 dataStatic.rotationRate = e.StartRotationSpeed.RandomInRange();

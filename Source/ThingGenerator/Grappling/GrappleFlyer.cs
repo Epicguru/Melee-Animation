@@ -161,7 +161,7 @@ public class GrappleFlyer : PawnFlyer
         }
 
         var mat = AnimRenderer.DefaultCutout;
-        var trs = Matrix4x4.TRS(drawLoc, Quaternion.identity, Vector3.one * 1.5f * Core.GetBodyDrawSizeFactor(pawn)); // TODO use actual pawn size such as from alien races.
+        var trs = Matrix4x4.TRS(drawLoc, Quaternion.identity, Vector3.one * 1.5f * Core.GetBodyDrawSizeFactor(pawn));
 
         mpb.SetTexture("_MainTex", tex); // TODO cache id.
         mpb.SetColor("_Color", ropeColor);

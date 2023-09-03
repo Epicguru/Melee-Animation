@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Ono",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.235678166,
+  "OffY": -0.0350334644,
+  "BladeStart": 0.4121979,
+  "BladeEnd": 0.7083876,
+  "MeleeWeaponType": 3
+}

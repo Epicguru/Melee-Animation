@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimsteelweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Steel_Greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5700863,
+  "OffY": -0.0286631212,
+  "Rotation": -0.6954879,
+  "ScaleX": 1.8,
+  "BladeStart": 0.144671023,
+  "BladeEnd": 1.45682514,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,9 @@
+{
+  "TextureModID": "botchjob.divineorder",
+  "ItemDefName": "BotchJob_DivineOrderShortsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.25478676,
+  "HandsMode": 1,
+  "MeleeWeaponType": 54
+}

@@ -14,9 +14,4 @@ public class PatchCore : Mod
     {
         Log("Loaded lightsaber patch!");
     }
-
-    private void PatchSabers()
-    {
-
-    }
 }

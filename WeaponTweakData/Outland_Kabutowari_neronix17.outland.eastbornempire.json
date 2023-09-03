@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Kabutowari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.136948451,
+  "HandsMode": 1,
+  "BladeStart": 0.100083306,
+  "BladeEnd": 0.6223969,
+  "MeleeWeaponType": 48
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "barsimmon.originalbyvagabond.fantasygoblins",
+  "ItemDefName": "Goblin_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2484172,
+  "OffY": 0.0191085711,
+  "Rotation": 40.0,
+  "BladeStart": 0.1383015,
+  "BladeEnd": 0.7179424,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimsteelweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Steel_Warhammeraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.277081162,
+  "OffY": 0.0286636353,
+  "ScaleX": 1.2,
+  "BladeStart": 0.141486272,
+  "BladeEnd": 0.8739994,
+  "MeleeWeaponType": 1
+}

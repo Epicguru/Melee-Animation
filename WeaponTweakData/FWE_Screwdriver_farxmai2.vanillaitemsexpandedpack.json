@@ -1,0 +1,13 @@
+{
+  "TextureModID": "farxmai2.vanillaitemsexpandedpack",
+  "ItemDefName": "FWE_Screwdriver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.06051153,
+  "ScaleX": 0.6,
+  "ScaleY": 0.6,
+  "HandsMode": 1,
+  "BladeStart": 0.045941297,
+  "BladeEnd": 0.2688799,
+  "MeleeWeaponType": 32
+}

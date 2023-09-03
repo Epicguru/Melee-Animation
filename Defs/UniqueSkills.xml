@@ -6,15 +6,15 @@
     <label>Mystic Weapon Summon</label>
     <description>Summons a myriad of weapons, of unknown origin, to impale the target.
 Does not require line of sight, and the onslaught of weapons is sure to kill the victim.
-However, such a feat of psychic ability will put the summoner in a psychic coma for no less than 2 days.\nAlways kills the target.</description>
+However, such a feat of psychic ability will put the summoner in a psychic coma for around 2 days.</description>
     <type>ChanneledAnimation</type>
     <animation>AM_GilgameshVictim</animation>
     <instanceClass>AM.UniqueSkills.Instances.GilgameshSkill</instanceClass>
     <data>
       <PsyLevelRequired>5</PsyLevelRequired>
       <MeleeLevelRequired>10</MeleeLevelRequired>
-      <MinPsyComaDays>2</MinPsyComaDays>
-      <MaxPsyComaDays>3</MaxPsyComaDays>
+      <MinPsyComaDays>1</MinPsyComaDays>
+      <MaxPsyComaDays>2</MaxPsyComaDays>
     </data>
   </AM.UniqueSkillDef>
 

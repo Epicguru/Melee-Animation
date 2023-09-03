@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_Sai",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1050998,
+  "HandsMode": 1,
+  "BladeStart": 0.10645283,
+  "BladeEnd": 0.5778092,
+  "MeleeWeaponType": 48
+}

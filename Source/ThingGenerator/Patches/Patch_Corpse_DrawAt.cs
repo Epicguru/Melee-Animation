@@ -9,7 +9,7 @@ namespace AM.Patches
     [HarmonyPatch(typeof(Corpse), nameof(Corpse.DrawAt))]
     public static class Patch_Corpse_DrawAt
     {
-        public static Dictionary<Corpse, CorpseInterpolate> Interpolators = new();
+        public static readonly Dictionary<Corpse, CorpseInterpolate> Interpolators = new Dictionary<Corpse, CorpseInterpolate>();
 
         public static void Tick()
         {

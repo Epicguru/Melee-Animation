@@ -1,0 +1,10 @@
+{
+  "TextureModID": "vanillaexpanded.vwe",
+  "ItemDefName": "VWE_MeleeWeapon_WrenchRestored",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.192073032,
+  "BladeStart": 0.102097481,
+  "BladeEnd": 0.6468294,
+  "MeleeWeaponType": 8
+}

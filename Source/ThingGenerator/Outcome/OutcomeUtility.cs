@@ -142,7 +142,7 @@ public static class OutcomeUtility
             chanceToPen /= armorMulti;
         else
             chanceToPen = 1f;
-        Log($"Chance to pen (post-process): {chanceToPen:P1}");
+        Log($"Chance to pen (post-settings): {chanceToPen:P1}");
         bool canPen = Rand.Chance(chanceToPen);
         Log($"Random will pen outcome: {canPen}");
 
@@ -373,16 +373,30 @@ public static class OutcomeUtility
         return h != null;
     }
 
+    private static bool IsDeathless(Pawn pawn)
+    {
+        return pawn.genes?.HasGene(GeneDefOf.Deathless) ?? false;
+    }
+
     private static bool Kill(Pawn killer, Pawn pawn, in AdditionalArgs args)
     {
-        if (Core.Settings.ExecutionsCanDestroyBodyParts)
+        bool isDeathless = IsDeathless(pawn);
+
+        if (Core.Settings.ExecutionsCanDestroyBodyParts || isDeathless)
         {
             BodyPartDef partDef = args.BodyPartDef;
             DamageDef dmgDef = args.DamageDef ?? DamageDefOf.Cut;
             RulePackDef logDef = args.LogGenDef ?? AM_DefOf.AM_Execution_Generic;
-            BodyPartRecord part = pawn.TryGetPartFromDef(partDef);
             Thing weapon = args.Weapon;
 
+            // Don't allow destroying the head because this would really kill the 
+            if (isDeathless && partDef == BodyPartDefOf.Head)
+            {
+                partDef = GetCoreBodyPart(pawn).def;
+                Core.Log($"Since {pawn} is deathless, the killing damage has been changed from targeting the Head to instead hit the {partDef}.");
+            }
+
+            BodyPartRecord part = pawn.TryGetPartFromDef(partDef);
             var dInfo = new DamageInfo(dmgDef, 99999, 99999, hitPart: part, instigator: killer, weapon: weapon?.def);
             var log = CreateLog(logDef, weapon, killer, pawn);
             dInfo.SetAllowDamagePropagation(false);
@@ -406,7 +420,7 @@ public static class OutcomeUtility
             }
 
             // If for some reason they did not die from 9999 damage (magic shield?), just double-kill them the hard way.
-            if (!pawn.Dead)
+            if (!pawn.Dead && !isDeathless)
             {
                 Find.BattleLog.RemoveEntry(log);
                 pawn.Kill(dInfo, result?.hediffs?.FirstOrFallback());
@@ -447,14 +461,12 @@ public static class OutcomeUtility
 
             Patch_PawnRenderer_LayingFacing.OverrideRotations[pawn] = ss.GetWorldDirection();
         }
-        else
+        else if (!isDeathless)
         {
             Core.Warn($"{pawn} did not spawn a corpse after death, or the corpse was destroyed...");
         }
 
         // Update the pawn wiggler so that the pawn corpse matches the final animation state.
-        // This does not change the body position, so when the animation ends and the corpse appears, the corpse often snaps to the center of the cell.
-        // I don't know if there is any easy fix for this.
         var bodyRot = ss.GetWorldRotation();
         pawn.Drawer.renderer.wiggler.downedAngle = bodyRot;
 

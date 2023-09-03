@@ -1,0 +1,10 @@
+{
+  "TextureModID": "botchjob.divineorder",
+  "ItemDefName": "BotchJob_DivineOrderMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.277081132,
+  "BladeStart": 0.415382653,
+  "BladeEnd": 0.6765394,
+  "MeleeWeaponType": 9
+}

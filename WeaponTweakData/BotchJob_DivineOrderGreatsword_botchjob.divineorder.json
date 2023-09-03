@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.divineorder",
+  "ItemDefName": "BotchJob_DivineOrderGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.582826257,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.1383015,
+  "BladeEnd": 1.45682514,
+  "MeleeWeaponType": 6
+}

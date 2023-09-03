@@ -17,7 +17,7 @@ public static class ThingComp_CombatAI_CompTickRare_Transpiler
     {
         var spawnedGetter = AccessTools.PropertyGetter(typeof(Thing), nameof(Thing.Spawned));
         if (spawnedGetter == null)
-            throw new System.Exception("ThingComp_CombatAI.IsDeadOrDowned method not found.");
+            throw new System.Exception("Thing.Spawned method not found.");
 
         var list = instructions.ToList();
         bool found = false;

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "barsimmon.originalbyvagabond.fantasygoblins",
+  "ItemDefName": "Goblin_Axe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3439628,
+  "OffY": -0.07006687,
+  "Rotation": 40.0,
+  "BladeStart": 0.0140926251,
+  "BladeEnd": 0.8198574,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "barsimmon.originalbyvagabond.fantasygoblins",
+  "ItemDefName": "Goblin_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.15605706,
+  "OffY": 0.0382182,
+  "Rotation": 35.0,
+  "BladeStart": 0.1765197,
+  "BladeEnd": 0.641506,
+  "MeleeWeaponType": 48
+}

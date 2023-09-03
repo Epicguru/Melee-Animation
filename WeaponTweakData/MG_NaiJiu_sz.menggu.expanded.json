@@ -1,0 +1,15 @@
+{
+  "TextureModID": "sz.menggu.expanded",
+  "ItemDefName": "MG_NaiJiu",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.17198135,
+  "OffY": -0.00636952743,
+  "Rotation": -85.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.08097421,
+  "BladeEnd": 0.469524652,
+  "MeleeWeaponType": 14
+}

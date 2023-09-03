@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.eastbornempire",
+  "ItemDefName": "Outland_JumonjiYari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.334408462,
+  "Rotation": 45.0,
+  "BladeStart": 0.587364,
+  "BladeEnd": 0.969544947,
+  "MeleeWeaponType": 7
+}
