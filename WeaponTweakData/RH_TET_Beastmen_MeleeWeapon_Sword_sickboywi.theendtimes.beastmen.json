@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.beastmen",
+  "ItemDefName": "RH_TET_Beastmen_MeleeWeapon_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4288646,
+  "OffY": -0.0301546231,
+  "Rotation": 46.68098,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.1100637,
+  "BladeEnd": 1.1152153,
+  "MeleeWeaponType": 6
+}

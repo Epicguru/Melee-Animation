@@ -1,0 +1,14 @@
+{
+  "TextureModID": "vanillaexpanded.vtexe",
+  "ItemDefName": "EM_ChunkBasalt",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1627267,
+  "OffY": -0.0475664437,
+  "Rotation": 145.0,
+  "ScaleX": 0.6,
+  "ScaleY": 0.6,
+  "BladeStart": 0.07078587,
+  "BladeEnd": 0.446309984,
+  "MeleeWeaponType": 8
+}

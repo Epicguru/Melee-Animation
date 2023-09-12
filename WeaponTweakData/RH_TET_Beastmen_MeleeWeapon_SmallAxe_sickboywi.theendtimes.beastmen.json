@@ -1,0 +1,15 @@
+{
+  "TextureModID": "sickboywi.theendtimes.beastmen",
+  "ItemDefName": "RH_TET_Beastmen_MeleeWeapon_SmallAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.130669236,
+  "OffY": -0.00335042179,
+  "Rotation": 45.0,
+  "ScaleX": 0.75,
+  "ScaleY": 0.75,
+  "HandsMode": 1,
+  "BladeStart": 0.217279986,
+  "BladeEnd": 0.465217322,
+  "MeleeWeaponType": 16
+}

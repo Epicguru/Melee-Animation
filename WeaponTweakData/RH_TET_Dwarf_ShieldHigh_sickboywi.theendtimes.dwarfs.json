@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarf_ShieldHigh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.140721053,
+  "OffY": -0.0871132,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": -0.0477446243,
+  "BladeEnd": 0.417975157,
+  "MeleeWeaponType": 8
+}

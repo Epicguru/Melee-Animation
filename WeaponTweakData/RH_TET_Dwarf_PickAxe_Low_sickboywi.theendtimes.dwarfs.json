@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarf_PickAxe_Low",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2546382,
+  "OffY": -0.016752664,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.464882165,
+  "BladeEnd": 0.8166854,
+  "MeleeWeaponType": 2
+}

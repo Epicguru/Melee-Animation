@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarf_HandAxe_High",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.134020209,
+  "OffY": -0.06365968,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.193491325,
+  "BladeEnd": 0.528541863,
+  "MeleeWeaponType": 18
+}

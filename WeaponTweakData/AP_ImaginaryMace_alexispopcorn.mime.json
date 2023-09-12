@@ -1,0 +1,7 @@
+{
+  "TextureModID": "alexispopcorn.mime",
+  "ItemDefName": "AP_ImaginaryMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "MeleeWeaponType": 9
+}

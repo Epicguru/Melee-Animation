@@ -1,0 +1,13 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_BoneKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.147706151,
+  "OffY": -0.007510706,
+  "Rotation": 50.0,
+  "HandsMode": 1,
+  "BladeStart": 0.0933175758,
+  "BladeEnd": 0.39373672,
+  "MeleeWeaponType": 48
+}

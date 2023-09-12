@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarfs_MagicWeapon_GrimnirAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.479122043,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.5754489,
+  "BladeEnd": 1.11823058,
+  "MeleeWeaponType": 2
+}

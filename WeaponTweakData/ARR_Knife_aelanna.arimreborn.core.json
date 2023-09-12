@@ -1,0 +1,11 @@
+{
+  "TextureModID": "aelanna.arimreborn.core",
+  "ItemDefName": "ARR_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.194328964,
+  "HandsMode": 1,
+  "BladeStart": 0.1167651,
+  "BladeEnd": 0.532227457,
+  "MeleeWeaponType": 48
+}

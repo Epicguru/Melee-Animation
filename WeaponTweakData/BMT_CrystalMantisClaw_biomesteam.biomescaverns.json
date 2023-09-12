@@ -1,0 +1,18 @@
+{
+  "TextureModID": "biomesteam.biomescaverns",
+  "ItemDefName": "BMT_CrystalMantisClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.22531414,
+  "OffY": -0.117664136,
+  "Rotation": 60.0,
+  "BladeStart": 0.128366426,
+  "BladeEnd": 0.463834435,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.372108966,
+    "g": 0.8105257,
+    "b": 0.9641976,
+    "a": 1.0
+  }
+}

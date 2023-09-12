@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aelanna.arimreborn.classesandjobs",
+  "ItemDefName": "ARR_RelicWeapon_GaeBolg",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3484522,
+  "ScaleX": 2.1,
+  "ScaleY": 2.1,
+  "BladeStart": 0.347949773,
+  "BladeEnd": 1.3296473,
+  "MeleeWeaponType": 4
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.beastmen",
+  "ItemDefName": "RH_TET_Beastmen_MeleeWeapon_BigAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2747413,
+  "OffY": -0.113917127,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.3077436,
+  "BladeEnd": 0.8840301,
+  "MeleeWeaponType": 2
+}

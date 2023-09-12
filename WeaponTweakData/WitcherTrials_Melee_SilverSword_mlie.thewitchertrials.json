@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.thewitchertrials",
+  "ItemDefName": "WitcherTrials_Melee_SilverSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.408069134,
+  "Rotation": 45.0,
+  "BladeStart": 0.145890862,
+  "BladeEnd": 1.10222459,
+  "MeleeWeaponType": 6
+}

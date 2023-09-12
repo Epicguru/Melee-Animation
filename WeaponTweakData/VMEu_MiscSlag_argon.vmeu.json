@@ -1,0 +1,14 @@
+{
+  "TextureModID": "argon.vmeu",
+  "ItemDefName": "VMEu_MiscSlag",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.212796569,
+  "OffY": -0.06759428,
+  "Rotation": -55.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": 0.08330344,
+  "BladeEnd": 0.584002,
+  "MeleeWeaponType": 9
+}

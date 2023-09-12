@@ -1,0 +1,13 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_BoneNeedle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.165230557,
+  "OffY": -0.0250347257,
+  "Rotation": 100.0,
+  "HandsMode": 1,
+  "BladeStart": 0.05075801,
+  "BladeEnd": 0.338659585,
+  "MeleeWeaponType": 48
+}

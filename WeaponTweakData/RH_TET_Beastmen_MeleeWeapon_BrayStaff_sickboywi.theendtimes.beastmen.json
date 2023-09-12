@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.beastmen",
+  "ItemDefName": "RH_TET_Beastmen_MeleeWeapon_BrayStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.549483061,
+  "OffY": -0.0670101047,
+  "Rotation": 47.29231,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.103362858,
+  "BladeEnd": 1.50387371,
+  "MeleeWeaponType": 1
+}

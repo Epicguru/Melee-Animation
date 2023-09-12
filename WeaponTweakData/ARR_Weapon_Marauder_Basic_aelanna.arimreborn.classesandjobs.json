@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aelanna.arimreborn.classesandjobs",
+  "ItemDefName": "ARR_Weapon_Marauder_Basic",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.32164824,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.535577834,
+  "BladeEnd": 0.9543912,
+  "MeleeWeaponType": 2
+}
