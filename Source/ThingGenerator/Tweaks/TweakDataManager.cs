@@ -220,12 +220,14 @@ namespace AM.Tweaks
                 {
                     foreach (var retex in pair.report.AllRetextures)
                     {
+                        // Skip the active retexture, it has already been tried.
                         if (retex.mod == pair.report.ActiveRetextureMod)
                             continue;
 
+                        // Try to load a tweak for this retexture...
                         tweak = TryLoad(pair.weapon, retex.mod);
                         if (tweak == null)
-                            yield return (ItemTweakData.MakeModID(pair.report.ActiveRetextureMod), pair.report.ActiveRetextureMod.Name, pair.weapon);
+                            yield return (ItemTweakData.MakeModID(retex.mod), retex.mod.Name, pair.weapon);
                         else if (!includeRedundant)
                             break;
                     }

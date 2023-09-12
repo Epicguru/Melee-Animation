@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AM.Outcome;
+using JetBrains.Annotations;
 using Verse;
 
 namespace AM.CombatExtendedPatch;

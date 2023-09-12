@@ -9,6 +9,7 @@ using AM.Controller;
 using AM.Controller.Reports;
 using AM.Controller.Requests;
 using AM.Grappling;
+using AM.Outcome;
 using JetBrains.Annotations;
 using RimWorld;
 using Unity.Jobs.LowLevel.Unsafe;
