@@ -1,0 +1,13 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_BoneWhistle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.197775573,
+  "OffY": -0.05758056,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.095821,
+  "BladeEnd": 0.4563237,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aelanna.arimreborn.classesandjobs",
+  "ItemDefName": "ARR_RelicWeapon_Bravura",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.311597049,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.428361565,
+  "BladeEnd": 0.9577416,
+  "MeleeWeaponType": 2
+}

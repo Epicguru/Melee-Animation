@@ -1,0 +1,11 @@
+{
+  "TextureModID": "aelanna.arimreborn.core",
+  "ItemDefName": "ARR_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3451023,
+  "Rotation": 45.0,
+  "BladeStart": 0.559031367,
+  "BladeEnd": 1.01469994,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "primitiveproduction.velcroboy333",
+  "ItemDefName": "VBY_BambooBoneSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3930481,
+  "Rotation": 45.0,
+  "BladeStart": 0.0808000043,
+  "BladeEnd": 1.03963757,
+  "MeleeWeaponType": 7
+}

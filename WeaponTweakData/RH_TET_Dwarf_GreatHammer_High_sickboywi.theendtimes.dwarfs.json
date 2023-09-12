@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarf_GreatHammer_High",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.365204871,
+  "Rotation": 45.0,
+  "BladeStart": 0.5184906,
+  "BladeEnd": 0.8334375,
+  "MeleeWeaponType": 1
+}

@@ -139,12 +139,17 @@ namespace AM.UI
                 string MakeName(ModTweakContainer container)
                 {
                     int total = container.Reports.Count();
+                    int withFallback = 0;
                     int done = 0;
                     foreach (var rep in container.Reports)
                     {
                         var tweak = TweakDataManager.TryGetTweak(rep.Weapon, container.Mod);
                         if (tweak != null)
                             done++;
+
+                        var any = TweakDataManager.TryGetTweak(rep.Weapon);
+                        if (any != null)
+                            withFallback++;
                     }
 
                     string color = "red";
@@ -153,7 +158,7 @@ namespace AM.UI
                         color = done >= total ? "green" : "yellow";
                     }
 
-                    return $"<color={color}>{container.Mod.Name} ({done}/{total})</color>";
+                    return $"<color={color}>{container.Mod.Name} ({done}/{withFallback}/{total})</color>";
                 }
 
                 var source = TweakDataManager.GetTweaksReportForActiveMods();
@@ -237,6 +242,7 @@ namespace AM.UI
                 {
                     bool hasTweak = TweakDataManager.TryGetTweak(def, Mod) != null;
                     bool hasFallback = false;
+                    ModContentPack fallbackRetexMod = null;
                     if (!hasTweak)
                     {
                         // Find fallback tweak.
@@ -249,12 +255,17 @@ namespace AM.UI
                             var fallback = TweakDataManager.TryGetTweak(def, retex.mod);
                             if (fallback != null)
                             {
+                                fallbackRetexMod = retex.mod;
                                 hasFallback = true;
                                 break;
                             }
                         }
                     }
-                    list.Add(new FloatMenuOption($"<color={(hasTweak ? "#97ff87" : hasFallback ? "#fff082" : "#ff828a")}>{def.LabelCap}</color> ", () =>
+
+                    string additional = "";
+                    if (fallbackRetexMod != null)
+                        additional = $" [Fllbk: {fallbackRetexMod.Name}]";
+                    list.Add(new FloatMenuOption($"<color={(hasTweak ? "#97ff87" : hasFallback ? "#fff082" : "#ff828a")}>{def.LabelCap}{additional}</color> ", () =>
                     {
                         Def = def;
                         ResetBuffers();

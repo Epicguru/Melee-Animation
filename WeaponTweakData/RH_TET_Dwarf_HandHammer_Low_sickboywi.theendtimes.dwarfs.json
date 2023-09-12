@@ -1,0 +1,15 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarf_HandHammer_Low",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.113917112,
+  "OffY": -0.0469070375,
+  "Rotation": 42.47113,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.283954948,
+  "BladeEnd": 0.521841,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "icc.tov.doom",
+  "ItemDefName": "MeleeWeapon_UACSaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2528527,
+  "OffY": -0.0225313,
+  "BladeStart": 0.143387422,
+  "BladeEnd": 0.741721869,
+  "MeleeWeaponType": 6
+}

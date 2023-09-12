@@ -1,0 +1,15 @@
+{
+  "TextureModID": "sickboywi.theendtimes.beastmen",
+  "ItemDefName": "RH_TET_Beastmen_MeleeWeapon_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.150772929,
+  "OffY": 0.0100512952,
+  "Rotation": 46.38978,
+  "ScaleX": 0.5,
+  "ScaleY": 0.5,
+  "HandsMode": 1,
+  "BladeStart": 0.0933115855,
+  "BladeEnd": 0.421660721,
+  "MeleeWeaponType": 48
+}

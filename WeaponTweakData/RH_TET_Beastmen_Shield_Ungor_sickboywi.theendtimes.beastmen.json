@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sickboywi.theendtimes.beastmen",
+  "ItemDefName": "RH_TET_Beastmen_Shield_Ungor",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.120617971,
+  "OffY": -0.0938140452,
+  "BladeStart": -0.121120974,
+  "BladeEnd": 0.381454557,
+  "MeleeWeaponType": 8
+}

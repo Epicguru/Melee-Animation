@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarfs_MagicWeapon_SmednirAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.408761442,
+  "OffY": -0.00670084357,
+  "Rotation": 43.47955,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.458516479,
+  "BladeEnd": 1.0984627,
+  "MeleeWeaponType": 2
+}

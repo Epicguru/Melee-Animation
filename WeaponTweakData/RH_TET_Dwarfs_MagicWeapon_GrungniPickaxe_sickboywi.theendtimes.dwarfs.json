@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarfs_MagicWeapon_GrungniPickaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3015458,
+  "OffY": -0.0737109557,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.6561958,
+  "BladeEnd": 0.987895966,
+  "MeleeWeaponType": 2
+}

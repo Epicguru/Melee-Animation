@@ -1,0 +1,12 @@
+{
+  "TextureModID": "primitiveproduction.velcroboy333",
+  "ItemDefName": "VBY_BoneSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2653703,
+  "OffY": 0.0175244361,
+  "Rotation": 45.0,
+  "BladeStart": 0.09832443,
+  "BladeEnd": 0.8168268,
+  "MeleeWeaponType": 6
+}

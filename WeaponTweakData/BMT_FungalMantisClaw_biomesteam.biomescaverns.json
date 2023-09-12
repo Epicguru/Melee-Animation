@@ -1,0 +1,13 @@
+{
+  "TextureModID": "biomesteam.biomescaverns",
+  "ItemDefName": "BMT_FungalMantisClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.232824862,
+  "OffY": 0.0250347182,
+  "Rotation": -24.449,
+  "FlipX": true,
+  "BladeStart": 0.128366426,
+  "BladeEnd": 0.62906456,
+  "MeleeWeaponType": 1
+}

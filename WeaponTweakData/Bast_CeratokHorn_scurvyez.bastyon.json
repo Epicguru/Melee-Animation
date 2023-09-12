@@ -1,0 +1,13 @@
+{
+  "TextureModID": "scurvyez.bastyon",
+  "ItemDefName": "Bast_CeratokHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.172741264,
+  "OffY": -0.0175244212,
+  "Rotation": 5.0,
+  "FlipY": true,
+  "BladeStart": 0.08831071,
+  "BladeEnd": 0.5189111,
+  "MeleeWeaponType": 2
+}

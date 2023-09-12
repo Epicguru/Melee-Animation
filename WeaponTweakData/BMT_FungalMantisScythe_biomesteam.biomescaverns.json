@@ -1,0 +1,17 @@
+{
+  "TextureModID": "biomesteam.biomescaverns",
+  "ItemDefName": "BMT_FungalMantisScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.137692,
+  "OffY": -0.0250349343,
+  "BladeStart": 0.376212269,
+  "BladeEnd": 0.611540139,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.9,
+    "g": 0.689215,
+    "b": 0.109555632,
+    "a": 1.0
+  }
+}

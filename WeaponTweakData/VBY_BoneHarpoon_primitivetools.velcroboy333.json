@@ -1,0 +1,12 @@
+{
+  "TextureModID": "primitivetools.velcroboy333",
+  "ItemDefName": "VBY_BoneHarpoon",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.335468,
+  "OffY": -0.007510703,
+  "Rotation": 45.0,
+  "BladeStart": 0.4488134,
+  "BladeEnd": 1.01710582,
+  "MeleeWeaponType": 7
+}

@@ -1,0 +1,9 @@
+{
+  "TextureModID": "alexispopcorn.mime",
+  "ItemDefName": "AP_ImaginaryKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "HandsMode": 1,
+  "BladeEnd": 0.214103922,
+  "MeleeWeaponType": 48
+}

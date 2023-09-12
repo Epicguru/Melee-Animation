@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mlie.thewitchertrials",
+  "ItemDefName": "WitcherTrials_Melee_SteelSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.42309013,
+  "Rotation": 45.0,
+  "BladeStart": 0.110842004,
+  "BladeEnd": 1.09471428,
+  "MeleeWeaponType": 6
+}

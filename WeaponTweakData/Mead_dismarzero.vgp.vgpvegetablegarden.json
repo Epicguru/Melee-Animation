@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dismarzero.vgp.vgpvegetablegarden",
+  "ItemDefName": "Mead",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1452023,
+  "OffY": -0.0375527,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.095821,
+  "BladeEnd": 0.441302717,
+  "MeleeWeaponType": 8
+}

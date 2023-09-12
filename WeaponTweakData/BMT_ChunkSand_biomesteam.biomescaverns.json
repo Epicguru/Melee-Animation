@@ -1,0 +1,14 @@
+{
+  "TextureModID": "biomesteam.biomescaverns",
+  "ItemDefName": "BMT_ChunkSand",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2052863,
+  "OffY": -0.0200278573,
+  "Rotation": -55.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "BladeStart": 0.09832443,
+  "BladeEnd": 0.553959966,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "aelanna.arimreborn.core",
+  "ItemDefName": "ARR_Zweihander",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.459018946,
+  "OffY": -0.0301546454,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.146919459,
+  "BladeEnd": 1.20567894,
+  "MeleeWeaponType": 6
+}

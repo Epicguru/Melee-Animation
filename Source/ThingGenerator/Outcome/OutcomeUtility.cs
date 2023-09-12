@@ -146,14 +146,21 @@ public static class OutcomeUtility
         bool canPen = Rand.Chance(chanceToPen);
         Log($"Random will pen outcome: {canPen}");
 
+        // Cap chance to pen to make percentage calculations work.
+        chanceToPen = Mathf.Clamp01(chanceToPen);
+
         // Calculate kill chance based on lethality and settings.
         bool preventKill = Core.Settings.ExecutionsOnFriendliesAreNotLethal && (victim.IsColonist || victim.IsSlaveOfColony || victim.IsPrisonerOfColony || victim.Faction == Faction.OfPlayerSilentFail);
         bool attemptKill = Rand.Chance(lethality);
         Log($"Prevent kill: {preventKill}");
-        Log($"Attempt kill: {attemptKill}");
+        Log($"Attempt kill: {attemptKill} (from random lethality chance)");
 
+        // Cap lethality to 100% because otherwise it messes up percentage calculations.
+        lethality = Mathf.Clamp01(lethality);
+
+        float preventKillCoef = preventKill ? 0f : 1f;
         if (report != null)
-            report.KillChance = preventKill ? 0f : chanceToPen * lethality;
+            report.KillChance = preventKillCoef * chanceToPen * lethality; // Absolute chance to kill.
 
         var outcome = ExecutionOutcome.Nothing;
         if (canPen && !preventKill && attemptKill)
@@ -165,13 +172,16 @@ public static class OutcomeUtility
         }
 
         Log("Moving on to down or injure...");
-
         float downChance = RemapClamped(4, 20, 0.2f, 0.9f, attackerMeleeSkill);
         Log(canPen ? $"Chance to down, based on melee skill of {attackerMeleeSkill:N1}: {downChance:P1}" : "Cannot down, pen chance failed. Will damage.");
         if (report != null)
         {
-            report.DownChance = (1f - lethality) * downChance * chanceToPen;
-            report.InjureChance = (1f - lethality) * (1f - downChance);
+            report.DownChance = (1 - report.KillChance) * chanceToPen * downChance;
+            report.InjureChance = 1 - report.KillChance - report.DownChance;
+
+            float sum = report.KillChance + report.DownChance + report.InjureChance;
+            if (Math.Abs(sum - 1f) > 0.001f)
+                Core.Error($"Bad percentage calculation ({sum})! Please tell the developer he is an idiot.");
         }
 
         if (outcome == ExecutionOutcome.Nothing && canPen && Rand.Chance(downChance))

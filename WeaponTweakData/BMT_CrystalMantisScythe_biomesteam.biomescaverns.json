@@ -1,0 +1,17 @@
+{
+  "TextureModID": "biomesteam.biomescaverns",
+  "ItemDefName": "BMT_CrystalMantisScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.137692,
+  "OffY": -0.0250349343,
+  "BladeStart": 0.376212269,
+  "BladeEnd": 0.611540139,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.372108966,
+    "g": 0.8105257,
+    "b": 0.9641976,
+    "a": 1.0
+  }
+}

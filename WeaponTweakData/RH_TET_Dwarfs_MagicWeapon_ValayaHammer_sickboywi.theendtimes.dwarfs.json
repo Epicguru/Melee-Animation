@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sickboywi.theendtimes.dwarfs",
+  "ItemDefName": "RH_TET_Dwarfs_MagicWeapon_ValayaHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.365204871,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.6190055,
+  "BladeEnd": 1.02106607,
+  "MeleeWeaponType": 1
+}

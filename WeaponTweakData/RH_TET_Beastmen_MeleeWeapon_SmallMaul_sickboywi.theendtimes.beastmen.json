@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sickboywi.theendtimes.beastmen",
+  "ItemDefName": "RH_TET_Beastmen_MeleeWeapon_SmallMaul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.07036051,
+  "Rotation": 45.0,
+  "ScaleX": 0.75,
+  "ScaleY": 0.75,
+  "BladeStart": 0.150269881,
+  "BladeEnd": 0.4987221,
+  "MeleeWeaponType": 8
+}
