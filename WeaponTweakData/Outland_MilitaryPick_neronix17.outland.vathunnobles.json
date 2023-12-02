@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.vathunnobles",
+  "ItemDefName": "Outland_MilitaryPick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.104761958,
+  "OffY": 0.0253967345,
+  "BladeStart": 0.2983332,
+  "BladeEnd": 0.498333037,
+  "MeleeWeaponType": 2
+}

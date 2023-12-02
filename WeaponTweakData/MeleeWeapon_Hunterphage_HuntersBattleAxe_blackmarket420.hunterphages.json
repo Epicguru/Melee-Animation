@@ -1,0 +1,14 @@
+{
+  "TextureModID": "blackmarket420.hunterphages",
+  "ItemDefName": "MeleeWeapon_Hunterphage_HuntersBattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.40017283,
+  "OffY": 0.0504156053,
+  "Rotation": 35.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.458229721,
+  "BladeEnd": 1.02540469,
+  "MeleeWeaponType": 2
+}

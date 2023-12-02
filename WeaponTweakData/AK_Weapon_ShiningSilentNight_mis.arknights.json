@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_ShiningSilentNight",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4126988,
+  "Rotation": -44.54759,
+  "BladeStart": 0.09404767,
+  "BladeEnd": 1.07817411,
+  "MeleeWeaponType": 6
+}

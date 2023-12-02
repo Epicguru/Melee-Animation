@@ -1,0 +1,13 @@
+{
+  "TextureModID": "blackmarket420.hunterphages",
+  "ItemDefName": "MeleeWeapon_Hunterphage_HuntingKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.182756528,
+  "ScaleX": 0.85,
+  "ScaleY": 0.85,
+  "HandsMode": 1,
+  "BladeStart": 0.09586808,
+  "BladeEnd": 0.5370041,
+  "MeleeWeaponType": 48
+}

@@ -1,0 +1,10 @@
+{
+  "TextureModID": "dianawinters.orassans",
+  "ItemDefName": "Catberryjuice",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1301587,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "MeleeWeaponType": 8
+}

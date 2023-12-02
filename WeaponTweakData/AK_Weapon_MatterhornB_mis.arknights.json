@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_MatterhornB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2507938,
+  "OffY": 0.0698413849,
+  "Rotation": -95.12521,
+  "BladeStart": 0.03373012,
+  "BladeEnd": 0.7035712,
+  "MeleeWeaponType": 1
+}

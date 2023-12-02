@@ -1,0 +1,10 @@
+{
+  "TextureModID": "vexedtrees980.rimgnoblinsbiotech",
+  "ItemDefName": "RG_MeleeWeapon_ToxSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.180952132,
+  "BladeStart": 0.0864284,
+  "BladeEnd": 0.6165872,
+  "MeleeWeaponType": 4
+}

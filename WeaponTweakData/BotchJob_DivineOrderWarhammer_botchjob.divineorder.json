@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.divineorder",
+  "ItemDefName": "BotchJob_DivineOrderWarhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.292063117,
+  "Rotation": 90.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.513094962,
+  "BladeEnd": 0.906745553,
+  "MeleeWeaponType": 1
+}

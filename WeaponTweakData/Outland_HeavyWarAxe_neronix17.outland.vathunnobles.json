@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outland.vathunnobles",
+  "ItemDefName": "Outland_HeavyWarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3047618,
+  "OffY": -0.0285715163,
+  "Rotation": 45.0,
+  "BladeStart": 0.507857144,
+  "BladeEnd": 0.818967938,
+  "MeleeWeaponType": 2
+}

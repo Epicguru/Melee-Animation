@@ -1,0 +1,11 @@
+{
+  "TextureModID": "solaris.sys",
+  "ItemDefName": "SYS_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.168254048,
+  "HandsMode": 1,
+  "BladeStart": 0.125634938,
+  "BladeEnd": 0.414523572,
+  "MeleeWeaponType": 48
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "blackmarket420.hunterphages",
+  "ItemDefName": "MeleeWeapon_Special_CaptainLudsHolyBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.538816333,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.141084552,
+  "BladeEnd": 1.35105741,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "r"
+}

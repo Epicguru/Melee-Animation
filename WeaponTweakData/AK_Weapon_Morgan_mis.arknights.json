@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Morgan",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.320634961,
+  "OffY": -0.0126982927,
+  "Rotation": -145.0,
+  "FlipY": true,
+  "BladeStart": 0.08452357,
+  "BladeEnd": 0.6845235,
+  "MeleeWeaponType": 6
+}

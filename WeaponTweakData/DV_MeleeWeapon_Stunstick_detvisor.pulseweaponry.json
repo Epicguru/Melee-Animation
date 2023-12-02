@@ -1,0 +1,12 @@
+{
+  "TextureModID": "detvisor.pulseweaponry",
+  "ItemDefName": "DV_MeleeWeapon_Stunstick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.234920651,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.103571251,
+  "BladeEnd": 0.7384921,
+  "MeleeWeaponType": 9
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_Ginunting",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.330158979,
+  "OffY": -0.0031747818,
+  "BladeStart": 0.1308728,
+  "BladeEnd": 0.7753172,
+  "MeleeWeaponType": 6
+}

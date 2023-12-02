@@ -1,0 +1,15 @@
+{
+  "TextureModID": "dismarzero.vgp.vgpgardendrinks",
+  "ItemDefName": "Wine",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.196825773,
+  "OffY": -0.0031747818,
+  "Rotation": -90.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.06341256,
+  "BladeEnd": 0.498333037,
+  "MeleeWeaponType": 8
+}

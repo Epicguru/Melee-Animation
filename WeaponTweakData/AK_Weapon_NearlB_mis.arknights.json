@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_NearlB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.260317355,
+  "OffY": 0.02222222,
+  "Rotation": 30.0,
+  "BladeStart": 0.04007917,
+  "BladeEnd": 0.779761434,
+  "MeleeWeaponType": 1
+}

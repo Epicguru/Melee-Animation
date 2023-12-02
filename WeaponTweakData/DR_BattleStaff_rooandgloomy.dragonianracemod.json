@@ -1,0 +1,11 @@
+{
+  "TextureModID": "rooandgloomy.dragonianracemod",
+  "ItemDefName": "DR_BattleStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.196825325,
+  "Rotation": 90.0,
+  "BladeStart": 0.08325387,
+  "BladeEnd": 0.5403965,
+  "MeleeWeaponType": 8
+}

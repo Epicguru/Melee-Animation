@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outland.redburnpact",
+  "ItemDefName": "Outland_PactFork",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3619048,
+  "OffY": -0.0190476775,
+  "Rotation": 45.0,
+  "BladeStart": 0.577698231,
+  "BladeEnd": 1.01896775,
+  "MeleeWeaponType": 5
+}

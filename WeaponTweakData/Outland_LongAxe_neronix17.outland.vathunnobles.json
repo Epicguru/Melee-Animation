@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outland.vathunnobles",
+  "ItemDefName": "Outland_LongAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.209523976,
+  "OffY": -0.08253976,
+  "Rotation": 45.0,
+  "BladeStart": 0.371348858,
+  "BladeEnd": 0.685634732,
+  "MeleeWeaponType": 2
+}

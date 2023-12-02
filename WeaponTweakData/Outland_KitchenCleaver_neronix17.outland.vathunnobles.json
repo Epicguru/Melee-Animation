@@ -1,0 +1,13 @@
+{
+  "TextureModID": "neronix17.outland.vathunnobles",
+  "ItemDefName": "Outland_KitchenCleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0603175759,
+  "OffY": 0.0126983523,
+  "Rotation": 10.81037,
+  "HandsMode": 1,
+  "BladeStart": 0.114206016,
+  "BladeEnd": 0.507857144,
+  "MeleeWeaponType": 48
+}

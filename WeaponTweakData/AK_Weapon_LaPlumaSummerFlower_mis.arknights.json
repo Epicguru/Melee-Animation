@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_LaPlumaSummerFlower",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3396826,
+  "OffY": -0.07936522,
+  "Rotation": 140.0,
+  "BladeStart": 0.5448413,
+  "BladeEnd": 0.8305554,
+  "MeleeWeaponType": 2
+}

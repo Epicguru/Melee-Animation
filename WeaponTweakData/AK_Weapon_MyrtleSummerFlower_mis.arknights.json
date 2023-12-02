@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_MyrtleSummerFlower",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3555552,
+  "OffY": -0.06984168,
+  "Rotation": 130.8541,
+  "BladeStart": 0.108650595,
+  "BladeEnd": 0.9340471,
+  "MeleeWeaponType": 1
+}

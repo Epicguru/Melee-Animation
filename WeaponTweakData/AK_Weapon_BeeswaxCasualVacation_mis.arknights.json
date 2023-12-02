@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_BeeswaxCasualVacation",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.355555236,
+  "OffY": -0.01269865,
+  "Rotation": 135.0,
+  "BladeStart": 0.135317028,
+  "BladeEnd": 1.01150751,
+  "MeleeWeaponType": 1
+}

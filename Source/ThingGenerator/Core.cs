@@ -48,216 +48,18 @@ public class Core : Mod
             Verse.Log.Error(e.ToString());
     }
 
-    public Core(ModContentPack content) : base(content)
+    private static void CheckSimpleSidearms()
     {
-        AddParsers();
-
-        string assemblies = string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName);
-        Log($"Hello, world!\nBuild date: {GetBuildDate(Assembly.GetExecutingAssembly()):g}\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
-
-        Harmony = new Harmony(content.PackageId);
-        Harmony.PatchAll();
-        ModContent = content;
-
-        // Initialize settings.
-        Settings = GetSettings<Settings>();
-
-        AddLateLoadAction(true, "Loading default shaders", () =>
-        {
-            AnimRenderer.DefaultCutout ??= new Material(ThingDefOf.AIPersonaCore.graphic.Shader);
-            AnimRenderer.DefaultTransparent ??= new Material(ShaderTypeDefOf.Transparent.Shader);
-        });
-
-        AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
-        AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(Harmony));
-        AddLateLoadAction(false, "Finding all lassos...", AM.Content.FindAllLassos);
-
-        AddLateLoadAction(true, "Loading main content...", AM.Content.Load);
-        AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
-        AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
-        AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
-        AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
-        AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
-        AddLateLoadAction(true, "Patch VBE", PatchVBE);
-        AddLateLoadAction(true, "Apply final patches", Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.PatchAll);
-
-        AddLateLoadEvents();
+        IsSimpleSidearmsActive = ModLister.GetActiveModWithIdentifier("PeteTimesSix.SimpleSidearms") != null;
     }
 
-    private static void PatchVBE()
+    private static DateTime GetBuildDate(Assembly assembly)
     {
-        if (ModLister.GetActiveModWithIdentifier("vanillaexpanded.backgrounds") == null)
-            return;
-
-        Patch_VBE_Utils_DrawBG.TryApplyPatch();
+        var attribute = assembly.GetCustomAttribute<BuildDateAttribute>();
+        return attribute?.DateTime ?? default;
     }
 
-    private static void PreCacheAllRetextures()
-    {
-        var time = RetextureUtility.PreCacheAllTextureReports(rep =>
-        {
-            if (rep.HasError)
-            {
-                Error($"Error generating texture report [{rep.Weapon?.LabelCap}]: {rep.ErrorMessage}");
-            }
-        }, false);
-        Log($"PreCached all retexture info in {time.TotalMilliseconds:F1}ms");
-    }
-
-    private void LoadAllTweakData()
-    {
-        var modsAndMissingWeaponCount = new Dictionary<string, (string name, int wc)>();
-
-        foreach (var pair in TweakDataManager.LoadAllForActiveMods(false))
-        {
-            if (!modsAndMissingWeaponCount.TryGetValue(pair.modPackageID, out var found))
-                modsAndMissingWeaponCount.Add(pair.modPackageID, (pair.modName, 0));
-
-            modsAndMissingWeaponCount[pair.modPackageID] = (pair.modName, found.wc + 1);
-        }
-
-        Log($"Loaded tweak data for {TweakDataManager.TweakDataLoadedCount} weapons.");
-
-        if (modsAndMissingWeaponCount.Count == 0)
-            return;
-
-        foreach (var pair in modsAndMissingWeaponCount)
-        {
-            Warn($"{pair.Key} '{pair.Value.name}' has {pair.Value.wc} missing weapon tweak data.");
-        }
-
-        var toUpload = new List<MissingModRequest>();
-        toUpload.AddRange(modsAndMissingWeaponCount.Select(p => new MissingModRequest
-        {
-            ModID = p.Key,
-            ModName = p.Value.name,
-            WeaponCount = p.Value.wc
-        }));
-
-        if (Settings.SendStatistics && !Settings.IsFirstTimeRunning)
-        {
-            Task.Run(() => UploadMissingModData(toUpload)).ContinueWith(t =>
-            {
-                if (t.IsCompletedSuccessfully)
-                {
-                    Log("Successfully reported missing mod/weapons.");
-                    return;
-                }
-
-                Warn($"Reporting missing mod/weapons failed with exception:\n{t.Exception}");
-            });
-        }
-        else
-        {
-            Log(Settings.IsFirstTimeRunning
-                ? "Mod is running for the first time - log sending is disabled."
-                : "Skipping reporting of missing mod/weapons because user opted out.");
-        }
-
-        if (!Settings.IsFirstTimeRunning)
-            return;
-
-        Settings.IsFirstTimeRunning = false;
-        try
-        {
-            base.WriteSettings();
-        }
-        catch (Exception e)
-        {
-            Error("Failed to save settings to flag first run as over.", e);
-        }
-    }
-
-    private static async Task UploadMissingModData(IList<MissingModRequest> list)
-    {
-        var client = new ModRequestClient();
-        await client.TryPostModRequests(list);
-    }
-
-    private void AddLateLoadEvents()
-    {
-        // Different thread loading...
-        LongEventHandler.QueueLongEvent(() =>
-        {
-            LongEventHandler.SetCurrentEventText("Load Advanced Animation Mod");
-            while (lateLoadActions.TryDequeue(out var pair))
-            {
-                try
-                {
-                    LongEventHandler.SetCurrentEventText($"{ModTitle}: {pair.title}\n");
-                    pair.action();
-                }
-                catch (Exception e)
-                {
-                    Error($"Exception in post-load event (async) '{pair.title}':", e);
-                }
-            }
-        }, "Load Advanced Animation Mod", true, null);
-
-        // Same thread loading...
-        LongEventHandler.QueueLongEvent(() =>
-        {
-            while (lateLoadActionsSync.TryDequeue(out var pair))
-            {
-                try
-                {
-                    LongEventHandler.SetCurrentEventText($"{ModTitle}:\n{pair.title}");
-                    pair.action();
-                }
-                catch (Exception e)
-                {
-                    Error($"Exception in post-load event '{pair.title}':", e);
-                }
-            }
-        }, "Load Advanced Animation Mod", false, null);
-    }
-
-    private void AddLateLoadAction(bool synchronous, string title, Action a)
-    {
-        if (a == null)
-            return;
-        (synchronous ? lateLoadActionsSync : lateLoadActions).Enqueue((title, a));
-    }
-
-    private void AddParsers()
-    {
-        AddParser(byte.Parse);
-        AddParser(decimal.Parse);
-        AddParser(short.Parse);
-        AddParser(ushort.Parse);
-        AddParser(uint.Parse);
-        AddParser(ulong.Parse);
-    }
-
-    private void AddParser<T>(Func<string, T> func)
-    {
-        if (func == null)
-            return;
-
-        // We need to do two checks because of a Rimworld bug in the HandlesType method.
-        // If the T is a primitive type, HandlesType returns true, even though it is not actually handled.
-        if (typeof(T).IsPrimitive && ParseHelper.CanParse(typeof(T), default(T).ToString()))
-        {
-            Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
-            return;
-        }
-        if (!typeof(T).IsPrimitive && ParseHelper.HandlesType(typeof(T)))
-        {
-            Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
-            return;
-        }
-
-        ParseHelper.Parsers<T>.Register(func);
-    }
-
-    public override string SettingsCategory() => ModTitle;
-
-    public override void DoSettingsWindowContents(Rect inRect)
-    {
-        SimpleSettings.DrawWindow(Settings, inRect);
-    }
-
-    private void LogPotentialConflicts(Harmony h)
+    private static void LogPotentialConflicts(Harmony h)
     {
         bool IsSelf(Patch p)
         {
@@ -319,15 +121,214 @@ public class Core : Mod
         Log(str2.ToString());
     }
 
-    private void CheckSimpleSidearms()
+    private static void AddParsers()
     {
-        IsSimpleSidearmsActive = ModLister.GetActiveModWithIdentifier("PeteTimesSix.SimpleSidearms") != null;
+        AddParser(byte.Parse);
+        AddParser(decimal.Parse);
+        AddParser(short.Parse);
+        AddParser(ushort.Parse);
+        AddParser(uint.Parse);
+        AddParser(ulong.Parse);
     }
 
-    private static DateTime GetBuildDate(Assembly assembly)
+    private static void AddParser<T>(Func<string, T> func)
     {
-        var attribute = assembly.GetCustomAttribute<BuildDateAttribute>();
-        return attribute?.DateTime ?? default;
+        if (func == null)
+            return;
+
+        // We need to do two checks because of a Rimworld bug in the HandlesType method.
+        // If the T is a primitive type, HandlesType returns true, even though it is not actually handled.
+        if (typeof(T).IsPrimitive && ParseHelper.CanParse(typeof(T), default(T).ToString()))
+        {
+            Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
+            return;
+        }
+        if (!typeof(T).IsPrimitive && ParseHelper.HandlesType(typeof(T)))
+        {
+            Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
+            return;
+        }
+
+        ParseHelper.Parsers<T>.Register(func);
+    }
+
+    private static void PatchVBE()
+    {
+        if (ModLister.GetActiveModWithIdentifier("vanillaexpanded.backgrounds") == null)
+            return;
+
+        Patch_VBE_Utils_DrawBG.TryApplyPatch();
+    }
+
+    private static void PreCacheAllRetextures()
+    {
+        var time = RetextureUtility.PreCacheAllTextureReports(rep =>
+        {
+            if (rep.HasError)
+            {
+                Error($"Error generating texture report [{rep.Weapon?.LabelCap}]: {rep.ErrorMessage}");
+            }
+        }, false);
+        Log($"PreCached all retexture info in {time.TotalMilliseconds:F1}ms");
+    }
+
+    private static async Task UploadMissingModData(IEnumerable<MissingModRequest> list)
+    {
+        var client = new ModRequestClient();
+        await client.TryPostModRequests(list);
+    }
+
+    public Core(ModContentPack content) : base(content)
+    {
+        AddParsers();
+
+        string assemblies = string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName);
+        Log($"Hello, world!\nBuild date: {GetBuildDate(Assembly.GetExecutingAssembly()):g}\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
+
+        Harmony = new Harmony(content.PackageId);
+        Harmony.PatchAll();
+        ModContent = content;
+
+        // Initialize settings.
+        Settings = GetSettings<Settings>();
+
+        AddLateLoadAction(true, "Loading default shaders", () =>
+        {
+            AnimRenderer.DefaultCutout ??= new Material(ThingDefOf.AIPersonaCore.graphic.Shader);
+            AnimRenderer.DefaultTransparent ??= new Material(ShaderTypeDefOf.Transparent.Shader);
+        });
+
+        AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
+        AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(Harmony));
+        AddLateLoadAction(false, "Finding all lassos...", AM.Content.FindAllLassos);
+
+        AddLateLoadAction(true, "Loading main content...", AM.Content.Load);
+        AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
+        AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
+        AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
+        AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
+        AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
+        AddLateLoadAction(true, "Patch VBE", PatchVBE);
+        AddLateLoadAction(true, "Apply final patches", Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.PatchAll);
+
+        AddLateLoadEvents();
+    }
+
+    private void LoadAllTweakData()
+    {
+        var modsAndMissingWeaponCount = new Dictionary<string, (string name, int wc)>();
+
+        // Get all tweak data for active mods.
+        foreach (var pair in TweakDataManager.LoadAllForActiveMods(false))
+        {
+            if (!modsAndMissingWeaponCount.TryGetValue(pair.modPackageID, out var found))
+                modsAndMissingWeaponCount.Add(pair.modPackageID, (pair.modName, 0));
+
+            modsAndMissingWeaponCount[pair.modPackageID] = (pair.modName, found.wc + 1);
+        }
+
+        Log($"Loaded tweak data for {TweakDataManager.TweakDataLoadedCount} weapons.");
+
+        if (modsAndMissingWeaponCount.Count == 0)
+            return;
+
+        foreach (var pair in modsAndMissingWeaponCount)
+        {
+            Warn($"{pair.Key} '{pair.Value.name}' has {pair.Value.wc} missing weapon tweak data.");
+        }
+
+        var toUpload = new List<MissingModRequest>();
+        toUpload.AddRange(modsAndMissingWeaponCount.Select(p => new MissingModRequest
+        {
+            ModID = p.Key,
+            ModName = p.Value.name,
+            WeaponCount = p.Value.wc
+        }));
+
+        if (Settings.SendStatistics && !Settings.IsFirstTimeRunning)
+        {
+            Task.Run(() => UploadMissingModData(toUpload)).ContinueWith(t =>
+            {
+                if (t.IsCompletedSuccessfully)
+                {
+                    Log("Successfully reported missing mod/weapons.");
+                    return;
+                }
+
+                Warn($"Reporting missing mod/weapons failed with exception:\n{t.Exception}");
+            });
+        }
+        else
+        {
+            Log(Settings.IsFirstTimeRunning
+                ? "Mod is running for the first time - log sending is disabled."
+                : "Skipping reporting of missing mod/weapons because user opted out.");
+        }
+
+        if (!Settings.IsFirstTimeRunning)
+            return;
+
+        Settings.IsFirstTimeRunning = false;
+        try
+        {
+            base.WriteSettings();
+        }
+        catch (Exception e)
+        {
+            Error("Failed to save settings to flag first run as over.", e);
+        }
+    }
+
+    private void AddLateLoadEvents()
+    {
+        // Different thread loading...
+        LongEventHandler.QueueLongEvent(() =>
+        {
+            LongEventHandler.SetCurrentEventText("Load Advanced Animation Mod");
+            while (lateLoadActions.TryDequeue(out var pair))
+            {
+                try
+                {
+                    LongEventHandler.SetCurrentEventText($"{ModTitle}: {pair.title}\n");
+                    pair.action();
+                }
+                catch (Exception e)
+                {
+                    Error($"Exception in post-load event (async) '{pair.title}':", e);
+                }
+            }
+        }, "Load Advanced Animation Mod", true, null);
+
+        // Same thread loading...
+        LongEventHandler.QueueLongEvent(() =>
+        {
+            while (lateLoadActionsSync.TryDequeue(out var pair))
+            {
+                try
+                {
+                    LongEventHandler.SetCurrentEventText($"{ModTitle}:\n{pair.title}");
+                    pair.action();
+                }
+                catch (Exception e)
+                {
+                    Error($"Exception in post-load event '{pair.title}':", e);
+                }
+            }
+        }, "Load Advanced Animation Mod", false, null);
+    }
+
+    private void AddLateLoadAction(bool synchronous, string title, Action a)
+    {
+        if (a == null)
+            return;
+        (synchronous ? lateLoadActionsSync : lateLoadActions).Enqueue((title, a));
+    }
+
+    public override string SettingsCategory() => ModTitle;
+
+    public override void DoSettingsWindowContents(Rect inRect)
+    {
+        SimpleSettings.DrawWindow(Settings, inRect);
     }
 }
 

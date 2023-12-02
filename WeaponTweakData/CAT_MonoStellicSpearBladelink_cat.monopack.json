@@ -1,0 +1,13 @@
+{
+  "TextureModID": "cat.monopack",
+  "ItemDefName": "CAT_MonoStellicSpearBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.450793624,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.80706346,
+  "BladeEnd": 1.35626948,
+  "MeleeWeaponType": 7
+}

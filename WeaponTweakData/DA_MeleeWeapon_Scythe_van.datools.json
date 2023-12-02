@@ -1,0 +1,12 @@
+{
+  "TextureModID": "van.datools",
+  "ItemDefName": "DA_MeleeWeapon_Scythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3619048,
+  "OffY": -0.09206334,
+  "Rotation": 45.0,
+  "BladeStart": 0.530872941,
+  "BladeEnd": 0.80388844,
+  "MeleeWeaponType": 2
+}

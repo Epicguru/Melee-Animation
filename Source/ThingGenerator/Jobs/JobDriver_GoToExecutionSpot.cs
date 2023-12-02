@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AM.Outcome;
 using Verse;
 using Verse.AI;
 

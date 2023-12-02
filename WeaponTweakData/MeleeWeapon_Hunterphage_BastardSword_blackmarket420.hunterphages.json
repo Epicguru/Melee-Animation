@@ -1,0 +1,11 @@
+{
+  "TextureModID": "blackmarket420.hunterphages",
+  "ItemDefName": "MeleeWeapon_Hunterphage_BastardSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.419079244,
+  "Rotation": 45.0,
+  "BladeStart": 0.127378061,
+  "BladeEnd": 1.07582,
+  "MeleeWeaponType": 6
+}

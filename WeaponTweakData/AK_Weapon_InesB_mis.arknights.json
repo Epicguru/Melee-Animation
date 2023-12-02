@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_InesB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.206348866,
+  "OffY": 0.05396825,
+  "Rotation": -85.0,
+  "HandsMode": 1,
+  "BladeEnd": 0.429285526,
+  "MeleeWeaponType": 48
+}

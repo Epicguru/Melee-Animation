@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_VulcanA",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.133333221,
+  "OffY": 0.00317451358,
+  "Rotation": -150.0,
+  "BladeStart": 0.128967971,
+  "BladeEnd": 0.3289678,
+  "MeleeWeaponType": 24
+}

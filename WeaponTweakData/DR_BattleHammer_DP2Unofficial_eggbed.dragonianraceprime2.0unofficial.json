@@ -1,0 +1,12 @@
+{
+  "TextureModID": "eggbed.dragonianraceprime2.0unofficial",
+  "ItemDefName": "DR_BattleHammer_DP2Unofficial",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3079368,
+  "OffY": -0.0158731639,
+  "Rotation": 47.79435,
+  "BladeStart": 0.486428559,
+  "BladeEnd": 0.7689681,
+  "MeleeWeaponType": 1
+}

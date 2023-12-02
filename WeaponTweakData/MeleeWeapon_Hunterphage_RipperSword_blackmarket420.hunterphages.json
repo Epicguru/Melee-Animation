@@ -1,0 +1,11 @@
+{
+  "TextureModID": "blackmarket420.hunterphages",
+  "ItemDefName": "MeleeWeapon_Hunterphage_RipperSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.299342215,
+  "OffY": -0.0220567584,
+  "BladeStart": 0.07806511,
+  "BladeEnd": 0.7712789,
+  "MeleeWeaponType": 6
+}

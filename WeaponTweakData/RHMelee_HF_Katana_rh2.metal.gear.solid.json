@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rh2.metal.gear.solid",
+  "ItemDefName": "RHMelee_HF_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5904764,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.138492078,
+  "BladeEnd": 1.45277762,
+  "MeleeWeaponType": 6
+}

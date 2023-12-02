@@ -1,0 +1,11 @@
+{
+  "TextureModID": "phonicmas.40kcore",
+  "ItemDefName": "BEWH_Plaguesword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3150972,
+  "Rotation": 45.0,
+  "BladeStart": 0.0864153951,
+  "BladeEnd": 0.8836108,
+  "MeleeWeaponType": 6
+}

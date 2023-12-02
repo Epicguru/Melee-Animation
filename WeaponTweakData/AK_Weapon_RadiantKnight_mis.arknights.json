@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_RadiantKnight",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.314285874,
+  "Rotation": 45.0,
+  "BladeStart": 0.468650579,
+  "BladeEnd": 0.98928535,
+  "MeleeWeaponType": 6
+}

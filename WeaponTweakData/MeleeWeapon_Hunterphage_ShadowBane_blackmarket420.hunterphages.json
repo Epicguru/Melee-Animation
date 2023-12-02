@@ -1,0 +1,11 @@
+{
+  "TextureModID": "blackmarket420.hunterphages",
+  "ItemDefName": "MeleeWeapon_Hunterphage_ShadowBane",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.270983636,
+  "OffY": -0.00315091014,
+  "BladeStart": 0.103272781,
+  "BladeEnd": 0.7397689,
+  "MeleeWeaponType": 6
+}

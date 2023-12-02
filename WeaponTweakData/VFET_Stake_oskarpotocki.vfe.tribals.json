@@ -1,0 +1,11 @@
+{
+  "TextureModID": "oskarpotocki.vfe.tribals",
+  "ItemDefName": "VFET_Stake",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.288888633,
+  "OffY": -0.0253967345,
+  "BladeStart": 0.08563476,
+  "BladeEnd": 0.7554759,
+  "MeleeWeaponType": 5
+}

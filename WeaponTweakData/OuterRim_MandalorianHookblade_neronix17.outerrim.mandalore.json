@@ -1,0 +1,10 @@
+{
+  "TextureModID": "neronix17.outerrim.mandalore",
+  "ItemDefName": "OuterRim_MandalorianHookblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.222222015,
+  "BladeStart": 0.09595197,
+  "BladeEnd": 0.661031663,
+  "MeleeWeaponType": 6
+}

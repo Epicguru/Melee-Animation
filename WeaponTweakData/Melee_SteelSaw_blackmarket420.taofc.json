@@ -1,0 +1,13 @@
+{
+  "TextureModID": "blackmarket420.taofc",
+  "ItemDefName": "Melee_SteelSaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.9238094,
+  "OffY": 0.190476239,
+  "ScaleX": 2.5,
+  "ScaleY": 2.5,
+  "BladeStart": 1.27293611,
+  "BladeEnd": 2.07928538,
+  "MeleeWeaponType": 7
+}

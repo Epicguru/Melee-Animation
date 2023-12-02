@@ -1,0 +1,20 @@
+{
+  "TextureModID": "blackmarket420.taofc",
+  "ItemDefName": "Melee_BloodLetterMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.304762,
+  "OffY": 0.07301565,
+  "Rotation": 30.0,
+  "ScaleX": 3.0,
+  "ScaleY": 3.0,
+  "BladeStart": 1.27293611,
+  "BladeEnd": 2.55547571,
+  "MeleeWeaponType": 3,
+  "TrailTint": {
+    "r": 0.492592752,
+    "g": 0.0332045,
+    "b": 0.0332045,
+    "a": 0.779012442
+  }
+}

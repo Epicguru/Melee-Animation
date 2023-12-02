@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Yato",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.20952341,
+  "OffY": -0.00952409953,
+  "Rotation": -25.0,
+  "BladeStart": 0.103571251,
+  "BladeEnd": 0.662301362,
+  "MeleeWeaponType": 6
+}

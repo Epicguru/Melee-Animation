@@ -1,0 +1,12 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_PoliceTonfa",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.180952147,
+  "OffY": -0.0603173375,
+  "HandsMode": 1,
+  "BladeStart": 0.0451585166,
+  "BladeEnd": 0.521348834,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,17 @@
+{
+  "TextureModID": "cat.plasmapack",
+  "ItemDefName": "CAT_PlasmaAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.182756543,
+  "Rotation": 45.0,
+  "BladeStart": 0.09586808,
+  "BladeEnd": 0.395210266,
+  "MeleeWeaponType": 16,
+  "TrailTint": {
+    "r": 0.986419857,
+    "g": 0.886978567,
+    "b": 0.0275222715,
+    "a": 1.0
+  }
+}

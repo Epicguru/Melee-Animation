@@ -1,0 +1,10 @@
+{
+  "TextureModID": "vanya.outsource.automechnekotest",
+  "ItemDefName": "SZMechNeko_TacticsKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.225396544,
+  "OffY": 0.02539672,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

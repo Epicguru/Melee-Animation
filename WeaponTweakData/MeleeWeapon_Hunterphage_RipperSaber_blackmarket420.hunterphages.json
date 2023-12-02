@@ -1,0 +1,11 @@
+{
+  "TextureModID": "blackmarket420.hunterphages",
+  "ItemDefName": "MeleeWeapon_Hunterphage_RipperSaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.305643976,
+  "OffY": -0.009452641,
+  "BladeStart": 0.112725988,
+  "BladeEnd": 0.7838825,
+  "MeleeWeaponType": 6
+}

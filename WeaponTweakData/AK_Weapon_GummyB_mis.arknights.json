@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_GummyB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2952382,
+  "OffY": -0.02539672,
+  "Rotation": 48.04243,
+  "BladeStart": 0.1194444,
+  "BladeEnd": 0.713094831,
+  "MeleeWeaponType": 1
+}

@@ -11,6 +11,7 @@ using System.Linq;
 using Verse.AI;
 using AM.Idle;
 using AM.Jobs;
+using AM.Outcome;
 using AM.UniqueSkills;
 using static UnityEngine.GraphicsBuffer;
 

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "van.datools",
+  "ItemDefName": "DA_MeleeWeapon_Hammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.09841293,
+  "OffY": -0.0158728957,
+  "BladeStart": 0.24515833,
+  "BladeEnd": 0.454682261,
+  "MeleeWeaponType": 8
+}

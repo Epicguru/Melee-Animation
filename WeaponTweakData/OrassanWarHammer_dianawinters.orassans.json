@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dianawinters.orassans",
+  "ItemDefName": "OrassanWarHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.29523766,
+  "OffY": -0.006349325,
+  "HandsMode": 1,
+  "BladeStart": 0.210238025,
+  "BladeEnd": 0.5340475,
+  "MeleeWeaponType": 8
+}

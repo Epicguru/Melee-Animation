@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Ceylon",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.22539708,
+  "Rotation": 90.0,
+  "BladeStart": 0.205158681,
+  "BladeEnd": 0.595634758,
+  "MeleeWeaponType": 1
+}

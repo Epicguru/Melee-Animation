@@ -35,7 +35,7 @@ public class ModReportingDAL
         ";
 
         var dt = DateTime.UtcNow;
-        string writeMonth = (dt.Year - 2000) + dt.Month.ToString().PadLeft(2, '0');
+        string writeMonth = "2" + (dt.Year - 2000) + dt.Month.ToString().PadLeft(2, '0');
 
         foreach (var request in requests)
         {
@@ -45,8 +45,8 @@ public class ModReportingDAL
 
                 Key = new Dictionary<string, AttributeValue>
                 {
-                    { "pk", new AttributeValue { S = request.ModID } },
-                    { "sk", new AttributeValue { S = request.ModID } }
+                    { "pk", new AttributeValue { S = writeMonth + request.ModID } },
+                    { "sk", new AttributeValue { S = writeMonth + request.ModID } }
                 },
 
                 ExpressionAttributeNames = ModRequestAttributeNames,
@@ -69,7 +69,7 @@ public class ModReportingDAL
                     { ":wm", new AttributeValue { N =  writeMonth }}
                 },
 
-                UpdateExpression = EXPRESSION
+                UpdateExpression = EXPRESSION,
             };
 
             var response = await db.UpdateItemAsync(req);

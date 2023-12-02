@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sovereign.illithid",
+  "ItemDefName": "GS_IllithidStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.320634931,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.238809288,
+  "BladeEnd": 0.9848411,
+  "MeleeWeaponType": 1
+}

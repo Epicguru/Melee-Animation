@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Utage",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.244444728,
+  "OffY": -0.01269865,
+  "Rotation": -135.0,
+  "FlipY": true,
+  "BladeStart": 0.0718249455,
+  "BladeEnd": 0.640079141,
+  "MeleeWeaponType": 6
+}

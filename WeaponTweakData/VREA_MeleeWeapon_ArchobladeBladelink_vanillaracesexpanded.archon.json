@@ -1,0 +1,19 @@
+{
+  "TextureModID": "vanillaracesexpanded.archon",
+  "ItemDefName": "VREA_MeleeWeapon_ArchobladeBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.46319288,
+  "OffY": -0.00315088034,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.22190696,
+  "BladeEnd": 1.20500982,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9367147,
+    "g": 0.9790124,
+    "b": 0.0273155943,
+    "a": 1.0
+  }
+}

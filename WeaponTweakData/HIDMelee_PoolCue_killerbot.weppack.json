@@ -1,0 +1,12 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_PoolCue",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3619048,
+  "OffY": -0.00952409953,
+  "Rotation": 45.0,
+  "BladeStart": 0.06420619,
+  "BladeEnd": 1.04833317,
+  "MeleeWeaponType": 1
+}

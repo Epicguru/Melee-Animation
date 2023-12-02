@@ -1,0 +1,11 @@
+{
+  "TextureModID": "phonicmas.40kcore",
+  "ItemDefName": "BEWH_Hellblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.400173426,
+  "Rotation": 45.0,
+  "BladeStart": 0.2817755,
+  "BladeEnd": 1.060065,
+  "MeleeWeaponType": 6
+}

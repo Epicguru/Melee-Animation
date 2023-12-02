@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_MuelsyseB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.336507559,
+  "Rotation": 45.0,
+  "BladeStart": 0.159444049,
+  "BladeEnd": 0.972142458,
+  "MeleeWeaponType": 6
+}

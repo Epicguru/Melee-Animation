@@ -1,0 +1,11 @@
+{
+  "TextureModID": "phonicmas.40kcore",
+  "ItemDefName": "BEWH_DaemonetteClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.245775938,
+  "OffY": -0.07877442,
+  "BladeStart": 0.117924854,
+  "BladeEnd": 0.71660924,
+  "MeleeWeaponType": 6
+}

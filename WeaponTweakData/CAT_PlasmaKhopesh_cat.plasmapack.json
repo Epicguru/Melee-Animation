@@ -1,0 +1,18 @@
+{
+  "TextureModID": "cat.plasmapack",
+  "ItemDefName": "CAT_PlasmaKhopesh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.352909446,
+  "OffY": 0.00315089431,
+  "Rotation": 45.0,
+  "BladeStart": 0.139981627,
+  "BladeEnd": 0.9088185,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.986419857,
+    "g": 0.886978567,
+    "b": 0.0275222715,
+    "a": 1.0
+  }
+}

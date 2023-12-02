@@ -1,0 +1,13 @@
+{
+  "TextureModID": "eggbed.dragonianraceprime2.0unofficial",
+  "ItemDefName": "MeleeWeapon_Drakesclaw_DP2Unofficial",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.177777588,
+  "OffY": -0.0444443971,
+  "Rotation": 95.0,
+  "HandsMode": 1,
+  "BladeStart": 0.143571422,
+  "BladeEnd": 0.426111,
+  "MeleeWeaponType": 48
+}

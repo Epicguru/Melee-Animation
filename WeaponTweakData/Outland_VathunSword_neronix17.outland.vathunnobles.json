@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.vathunnobles",
+  "ItemDefName": "Outland_VathunSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.285713553,
+  "OffY": 2.98023224E-07,
+  "BladeStart": 0.09515834,
+  "BladeEnd": 0.7554759,
+  "MeleeWeaponType": 6
+}

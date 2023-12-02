@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Indra",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.009523571,
+  "OffY": 0.03174603,
+  "Rotation": -88.5266,
+  "HandsMode": 1,
+  "BladeStart": 0.0432536937,
+  "BladeEnd": 0.344840944,
+  "MeleeWeaponType": 48
+}

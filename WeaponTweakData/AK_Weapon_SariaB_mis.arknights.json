@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_SariaB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0984123945,
+  "OffY": 0.0253967643,
+  "HandsMode": 1,
+  "BladeStart": 0.100396723,
+  "BladeEnd": 0.548015833,
+  "MeleeWeaponType": 32
+}

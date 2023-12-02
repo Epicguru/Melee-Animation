@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_BeagleB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.244444728,
+  "OffY": -0.015873149,
+  "Rotation": 75.0,
+  "BladeStart": 0.0210314933,
+  "BladeEnd": 0.497221828,
+  "MeleeWeaponType": 8
+}

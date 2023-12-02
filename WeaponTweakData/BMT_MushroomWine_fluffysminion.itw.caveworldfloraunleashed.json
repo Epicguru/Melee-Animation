@@ -1,0 +1,14 @@
+{
+  "TextureModID": "fluffysminion.itw.caveworldfloraunleashed",
+  "ItemDefName": "BMT_MushroomWine",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.208285451,
+  "Rotation": -90.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.09288583,
+  "BladeEnd": 0.53702426,
+  "MeleeWeaponType": 8
+}

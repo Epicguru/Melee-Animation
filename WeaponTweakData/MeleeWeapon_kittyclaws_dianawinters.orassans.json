@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dianawinters.orassans",
+  "ItemDefName": "MeleeWeapon_kittyclaws",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3396826,
+  "OffY": 0.03174606,
+  "BladeStart": 0.0864284,
+  "BladeEnd": 0.8229361,
+  "MeleeWeaponType": 6
+}

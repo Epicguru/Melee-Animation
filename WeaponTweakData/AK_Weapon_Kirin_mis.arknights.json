@@ -1,0 +1,17 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Kirin",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.231746137,
+  "Rotation": -43.37997,
+  "BladeStart": 0.100396723,
+  "BladeEnd": 0.7257934,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.372,
+    "g": 0.811,
+    "b": 0.964,
+    "a": 1.0
+  }
+}

@@ -1,14 +1,13 @@
-﻿using AM.Outcome;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AM.Patches;
 using JetBrains.Annotations;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Verse;
 
-namespace AM;
+namespace AM.Outcome;
 
 /// <summary>
 /// Helper class to determine and then execute the outcome of duels and executions.
