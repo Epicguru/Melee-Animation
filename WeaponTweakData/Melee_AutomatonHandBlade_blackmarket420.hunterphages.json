@@ -1,0 +1,15 @@
+{
+  "TextureModID": "blackmarket420.hunterphages",
+  "ItemDefName": "Melee_AutomatonHandBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.456890583,
+  "OffY": -0.0126041025,
+  "Rotation": 31.33002,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "HandsMode": 2,
+  "BladeStart": 0.5653627,
+  "BladeEnd": 1.24912333,
+  "MeleeWeaponType": 6
+}

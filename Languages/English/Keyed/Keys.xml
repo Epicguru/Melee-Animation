@@ -137,10 +137,6 @@
   <AM.Skill.Gilgamesh.LowPsy>Psylink level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowPsy>
   <AM.Skill.Gilgamesh.LowMelee>Melee level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowMelee>
 
-  <!-- Gilgamesh skill -->
-  <AM.Skill.Gilgamesh.LowPsy>Psylink level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowPsy>
-  <AM.Skill.Gilgamesh.LowMelee>Melee level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowMelee>
-
   <AM.Patch.OptDisabled>The invisibilty optimization has been disabled by the Melee Animation mod due to visual bugs.</AM.Patch.OptDisabled>
 
 </LanguageData>

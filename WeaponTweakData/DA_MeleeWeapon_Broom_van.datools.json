@@ -1,0 +1,12 @@
+{
+  "TextureModID": "van.datools",
+  "ItemDefName": "DA_MeleeWeapon_Broom",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.441269517,
+  "OffY": -0.00317451358,
+  "Rotation": -135.0,
+  "BladeStart": 0.378492057,
+  "BladeEnd": 1.09912658,
+  "MeleeWeaponType": 1
+}

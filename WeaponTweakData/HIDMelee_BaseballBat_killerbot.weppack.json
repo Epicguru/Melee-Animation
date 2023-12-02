@@ -1,0 +1,12 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_BaseballBat",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.333333522,
+  "OffY": 0.00317505,
+  "Rotation": 45.0,
+  "BladeStart": 0.168968156,
+  "BladeEnd": 0.9086504,
+  "MeleeWeaponType": 1
+}

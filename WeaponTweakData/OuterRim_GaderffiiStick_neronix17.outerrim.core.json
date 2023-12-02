@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outerrim.core",
+  "ItemDefName": "OuterRim_GaderffiiStick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.342857152,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.148015648,
+  "BladeEnd": 0.9638886,
+  "MeleeWeaponType": 3
+}

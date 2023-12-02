@@ -1,0 +1,10 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_PassengerC",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 90.0,
+  "HandsMode": 1,
+  "BladeEnd": 0.421031654,
+  "MeleeWeaponType": 8
+}

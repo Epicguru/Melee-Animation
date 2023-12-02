@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Kazemaru",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.203174353,
+  "OffY": 0.00317452848,
+  "Rotation": -31.74988,
+  "BladeStart": 0.208333209,
+  "BladeEnd": 0.6845235,
+  "MeleeWeaponType": 54
+}

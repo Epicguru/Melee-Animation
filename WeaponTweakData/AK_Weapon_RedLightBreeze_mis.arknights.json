@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_RedLightBreeze",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.165079,
+  "OffY": 0.0698413849,
+  "Rotation": -35.0,
+  "HandsMode": 1,
+  "BladeStart": 0.103571251,
+  "BladeEnd": 0.462301522,
+  "MeleeWeaponType": 48
+}

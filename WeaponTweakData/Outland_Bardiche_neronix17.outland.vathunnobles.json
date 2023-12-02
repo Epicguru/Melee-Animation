@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outland.vathunnobles",
+  "ItemDefName": "Outland_Bardiche",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.387301564,
+  "OffY": -0.00952409953,
+  "Rotation": 45.0,
+  "BladeStart": 0.3396031,
+  "BladeEnd": 1.05388856,
+  "MeleeWeaponType": 6
+}

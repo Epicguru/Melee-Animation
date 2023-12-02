@@ -1,0 +1,12 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_M9Bayonet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.14920637,
+  "OffY": -0.006349027,
+  "HandsMode": 1,
+  "BladeStart": 0.0864284,
+  "BladeEnd": 0.391190171,
+  "MeleeWeaponType": 48
+}

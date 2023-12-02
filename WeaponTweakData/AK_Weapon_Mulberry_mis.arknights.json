@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Mulberry",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3079368,
+  "Rotation": 45.0,
+  "BladeStart": 0.3607141,
+  "BladeEnd": 0.948015451,
+  "MeleeWeaponType": 1
+}

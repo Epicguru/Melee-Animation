@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_AshlockB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2666664,
+  "OffY": -0.00317452475,
+  "Rotation": 50.0,
+  "BladeStart": 0.0749999955,
+  "BladeEnd": 0.79246,
+  "MeleeWeaponType": 1
+}

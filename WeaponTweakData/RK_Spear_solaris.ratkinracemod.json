@@ -1,0 +1,12 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_Spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.339682579,
+  "OffY": -0.00634931028,
+  "Rotation": 44.05064,
+  "BladeStart": 0.09912702,
+  "BladeEnd": 0.965793431,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Almond",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.203174353,
+  "OffY": 0.009523839,
+  "Rotation": -2.765271,
+  "BladeStart": 0.052777797,
+  "BladeEnd": 0.6051583,
+  "MeleeWeaponType": 9
+}

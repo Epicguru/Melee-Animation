@@ -1,0 +1,11 @@
+{
+  "TextureModID": "grimworld.astramilitarum",
+  "ItemDefName": "GW_AM_MeleeWeapon_PowerFist",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.114285536,
+  "OffY": 0.0380950868,
+  "HandsMode": 2,
+  "BladeEnd": 0.248332858,
+  "MeleeWeaponType": 40
+}

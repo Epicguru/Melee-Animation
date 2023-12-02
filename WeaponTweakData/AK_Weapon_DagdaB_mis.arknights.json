@@ -1,0 +1,14 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_DagdaB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.05079347,
+  "OffY": 0.0571424961,
+  "Rotation": 85.20191,
+  "FlipY": true,
+  "HandsMode": 1,
+  "BladeStart": 0.0432536937,
+  "BladeEnd": 0.398809463,
+  "MeleeWeaponType": 48
+}

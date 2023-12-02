@@ -1,0 +1,13 @@
+{
+  "TextureModID": "cat.monopack",
+  "ItemDefName": "CAT_MonoGlaive",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5650797,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.946745753,
+  "BladeEnd": 1.45150781,
+  "MeleeWeaponType": 7
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "neronix17.outland.vathunnobles",
+  "ItemDefName": "Outland_WarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.225396544,
+  "OffY": 0.006349325,
+  "BladeStart": 0.387222022,
+  "BladeEnd": 0.701507866,
+  "MeleeWeaponType": 6
+}

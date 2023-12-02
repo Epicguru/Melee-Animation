@@ -1,0 +1,10 @@
+{
+  "TextureModID": "neronix17.outland.redburnpact",
+  "ItemDefName": "Outland_ObsidianSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.330159,
+  "BladeStart": 0.1099203,
+  "BladeEnd": 0.814682245,
+  "MeleeWeaponType": 6
+}

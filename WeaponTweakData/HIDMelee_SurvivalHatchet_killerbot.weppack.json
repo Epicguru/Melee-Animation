@@ -1,0 +1,11 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_SurvivalHatchet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.136508271,
+  "OffY": 0.006349325,
+  "BladeStart": 0.08325387,
+  "BladeEnd": 0.476904452,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,10 @@
+{
+  "TextureModID": "rimeffect.asarireapers",
+  "ItemDefName": "RE_MeleeWeapon_AsariSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.311110824,
+  "BladeStart": 0.0876981,
+  "BladeEnd": 0.8115077,
+  "MeleeWeaponType": 6
+}

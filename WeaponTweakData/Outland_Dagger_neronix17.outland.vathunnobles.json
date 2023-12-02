@@ -1,0 +1,12 @@
+{
+  "TextureModID": "neronix17.outland.vathunnobles",
+  "ItemDefName": "Outland_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.117460042,
+  "OffY": -0.0031747818,
+  "HandsMode": 1,
+  "BladeStart": 0.130079165,
+  "BladeEnd": 0.5681742,
+  "MeleeWeaponType": 48
+}

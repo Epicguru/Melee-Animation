@@ -1,0 +1,12 @@
+{
+  "TextureModID": "eggbed.dragonianraceprime2.0unofficial",
+  "ItemDefName": "MeleeWeapon_DR_Rageblade_DP2Unofficial",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.266666949,
+  "OffY": -0.0285712555,
+  "Rotation": 45.0,
+  "BladeStart": -0.196111187,
+  "BladeEnd": 0.8769046,
+  "MeleeWeaponType": 6
+}

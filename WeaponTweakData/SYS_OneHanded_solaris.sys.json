@@ -1,0 +1,11 @@
+{
+  "TextureModID": "solaris.sys",
+  "ItemDefName": "SYS_OneHanded",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.292063147,
+  "HandsMode": 1,
+  "BladeStart": 0.173412383,
+  "BladeEnd": 0.7448411,
+  "MeleeWeaponType": 54
+}

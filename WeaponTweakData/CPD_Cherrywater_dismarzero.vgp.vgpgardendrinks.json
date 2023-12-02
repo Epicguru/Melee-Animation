@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dismarzero.vgp.vgpgardendrinks",
+  "ItemDefName": "CPD_Cherrywater",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.263492376,
+  "OffY": -0.0031747818,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeStart": 0.07293614,
+  "BladeEnd": 0.644364834,
+  "MeleeWeaponType": 8
+}

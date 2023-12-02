@@ -1,0 +1,11 @@
+{
+  "TextureModID": "grimworld.astramilitarum",
+  "ItemDefName": "GW_AM_MeleeWeapon_Chainsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.29841274,
+  "OffY": -0.006349027,
+  "BladeStart": 0.153095,
+  "BladeEnd": 0.7213492,
+  "MeleeWeaponType": 6
+}

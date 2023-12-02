@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rooandgloomy.dragonianracemod",
+  "ItemDefName": "DR_Battlesword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.466666758,
+  "Rotation": 90.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.213412553,
+  "BladeEnd": 1.194365,
+  "MeleeWeaponType": 6
+}

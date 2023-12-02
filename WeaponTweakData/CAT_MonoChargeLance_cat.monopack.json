@@ -1,0 +1,13 @@
+{
+  "TextureModID": "cat.monopack",
+  "ItemDefName": "CAT_MonoChargeLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.577777863,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.2705556,
+  "BladeEnd": 1.42293608,
+  "MeleeWeaponType": 5
+}

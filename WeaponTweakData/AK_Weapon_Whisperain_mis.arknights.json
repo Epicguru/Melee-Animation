@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_Whisperain",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4476191,
+  "Rotation": -130.0,
+  "HandsMode": 1,
+  "BladeStart": 0.116269879,
+  "BladeEnd": 1.0686506,
+  "MeleeWeaponType": 5
+}

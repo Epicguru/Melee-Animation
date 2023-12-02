@@ -1,0 +1,10 @@
+{
+  "TextureModID": "van.datools",
+  "ItemDefName": "DA_MeleeWeapon_Cleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1555554,
+  "OffY": 0.0253970027,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

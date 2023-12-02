@@ -34,7 +34,7 @@
   <!-- _____ 1.4 _____ -->
   <ItemGroup Condition="'$(Configuration)'=='v1.4'">
     <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3704</Version>
+      <Version>1.4.3901</Version>
     </PackageReference>
     <Reference Include="CombatExtended">
       <HintPath>CombatExtended_14.dll</HintPath>

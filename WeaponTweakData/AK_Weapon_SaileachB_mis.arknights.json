@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_SaileachB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.431746423,
+  "OffY": -0.0412698761,
+  "Rotation": 50.0,
+  "BladeStart": 0.103571251,
+  "BladeEnd": 0.8432535,
+  "MeleeWeaponType": 5
+}

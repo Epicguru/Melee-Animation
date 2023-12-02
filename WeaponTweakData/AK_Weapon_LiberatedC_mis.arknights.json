@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_LiberatedC",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.368253827,
+  "OffY": 0.009524107,
+  "Rotation": 45.0,
+  "BladeStart": 0.081349045,
+  "BladeEnd": 0.998809457,
+  "MeleeWeaponType": 1
+}

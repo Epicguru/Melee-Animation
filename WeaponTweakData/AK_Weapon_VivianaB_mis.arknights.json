@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_VivianaB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.212697908,
+  "OffY": 0.00317454338,
+  "Rotation": 92.34369,
+  "HandsMode": 1,
+  "BladeStart": 0.0749999955,
+  "BladeEnd": 0.462301522,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ancot.kiirorace",
+  "ItemDefName": "Kiiro_Claw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.180952132,
+  "OffY": 0.228571117,
+  "Rotation": -15.27076,
+  "HandsMode": 2,
+  "BladeStart": 0.114999644,
+  "BladeEnd": 0.562618732,
+  "MeleeWeaponType": 6
+}

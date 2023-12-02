@@ -1,0 +1,13 @@
+{
+  "TextureModID": "neronix17.outland.redburnpact",
+  "ItemDefName": "Outland_PactDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.14603132,
+  "OffY": 0.0190474056,
+  "Rotation": 3.456098,
+  "HandsMode": 1,
+  "BladeStart": 0.025317207,
+  "BladeEnd": 0.5967459,
+  "MeleeWeaponType": 50
+}

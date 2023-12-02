@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_LavaB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1968253,
+  "OffY": 0.10476169,
+  "HandsMode": 1,
+  "BladeStart": 0.0686504245,
+  "BladeEnd": 0.4273807,
+  "MeleeWeaponType": 8
+}

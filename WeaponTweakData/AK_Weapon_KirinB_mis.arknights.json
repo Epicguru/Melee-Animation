@@ -1,0 +1,11 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_KirinB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.199999332,
+  "OffY": 0.03174627,
+  "Rotation": -40.0,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

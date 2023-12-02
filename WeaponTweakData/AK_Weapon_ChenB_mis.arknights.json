@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mis.arknights",
+  "ItemDefName": "AK_Weapon_ChenB",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3555557,
+  "OffY": 0.0285712481,
+  "Rotation": -35.0,
+  "BladeStart": 0.0876981,
+  "BladeEnd": 0.95119,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "solaris.sys",
+  "ItemDefName": "SYS_TwoHanded",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.415872753,
+  "Rotation": -45.0,
+  "BladeStart": 0.167063326,
+  "BladeEnd": 1.03372979,
+  "MeleeWeaponType": 6
+}

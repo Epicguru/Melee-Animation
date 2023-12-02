@@ -1,0 +1,12 @@
+{
+  "TextureModID": "solaris.ratkinracemod",
+  "ItemDefName": "RK_Halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.292063177,
+  "OffY": 0.006349057,
+  "Rotation": 43.35408,
+  "BladeStart": 0.6165872,
+  "BladeEnd": 0.9308726,
+  "MeleeWeaponType": 5
+}

@@ -324,7 +324,7 @@ public class Settings : SimpleSettingsBase
 
     [Label("Send Anonymous Patch Statistics")]
     [Description("When a mod is missing a patch (that allows the melee weapons to do animations), the ID of said mod is anonymously logged to " +
-                 "let this mod's author know that a patch is needed. The <b>only</b> information logged is that ID.\n" +
+                 "let this mod's author know that a patch is needed. The <b>only</b> information logged is: mod ID, mod name, weapon count.\n" +
                  "You can opt out of this functionality by disabling this option.\nNote: logging does not occur the first time you run the game with this mod.")]
     public bool SendStatistics = true;
 
