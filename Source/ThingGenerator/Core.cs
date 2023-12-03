@@ -27,6 +27,7 @@ public class Core : Mod
     public static Settings Settings;
     public static Harmony Harmony;
     public static bool IsSimpleSidearmsActive;
+    public static bool IsTacticowlActive;
 
     private readonly Queue<(string title, Action action)> lateLoadActions = new Queue<(string title, Action action)>();
     private readonly Queue<(string title, Action action)> lateLoadActionsSync = new Queue<(string title, Action action)>();
@@ -51,6 +52,7 @@ public class Core : Mod
     private static void CheckSimpleSidearms()
     {
         IsSimpleSidearmsActive = ModLister.GetActiveModWithIdentifier("PeteTimesSix.SimpleSidearms") != null;
+		IsTacticowlActive = ModLister.GetActiveModWithIdentifier("owlchemist.tacticowl") != null;
     }
 
     private static DateTime GetBuildDate(Assembly assembly)

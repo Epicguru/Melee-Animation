@@ -12,7 +12,8 @@ public static class CAI5000AnimationPatch
 
     public static void Init()
     {
-        IdleControllerComp.ShouldDrawAdditional = ShouldDraw;
+        IdleControllerComp.ShouldDrawAdditional.Add(ShouldDraw);
+
         GameComp.LazyTick += FlushOldMapsFromCache;
     }
 

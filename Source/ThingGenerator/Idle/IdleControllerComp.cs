@@ -15,7 +15,7 @@ namespace AM.Idle;
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp
 {
-    public static Func<IdleControllerComp, bool> ShouldDrawAdditional = _ => true;
+    public static readonly List<Predicate<IdleControllerComp>> ShouldDrawAdditional = new List<Predicate<IdleControllerComp>>();
     public static double TotalTickTimeMS;
     public static int TotalActive;
 
@@ -107,10 +107,15 @@ public class IdleControllerComp : ThingComp
                 vanillaShouldDraw = true;
         }
 
+        // Dual wield check.
+
         // Additional draw check:
         // Used for mod compatibility such as Fog of War etc.
-        if (!ShouldDrawAdditional(this))
-            return false;
+        foreach (var item in ShouldDrawAdditional)
+        {
+            if (!item(this))
+                return false;
+        }
 
         // Has a valid melee weapon:
         weapon = GetMeleeWeapon();
