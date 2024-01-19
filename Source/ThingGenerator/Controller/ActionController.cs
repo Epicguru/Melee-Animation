@@ -15,20 +15,21 @@ namespace AM.Controller;
 
 public class ActionController
 {
-    public static Func<IntVec3, Map, bool> LOSValidator => Core.Settings.MaxFillPctForLasso >= 0.99f ? AlwaysTrue : MaxFillPct;
+    public static Func<IntVec3, Map, bool> LOSValidator => CheckCell;
 
-    private static bool AlwaysTrue(IntVec3 a, Map b) => true;
-
-    private static bool MaxFillPct(IntVec3 cell, Map map)
+    private static bool CheckCell(IntVec3 cell, Map map)
     {
         var building = cell.GetEdifice(map);
         if (building == null)
-            return true;
+            return cell.WalkableByAny(map);
 
         if (building.def.fillPercent <= Core.Settings.MaxFillPctForLasso)
             return true;
 
-        return building is Building_Door { Open: true };
+        if (building is Building_Door { Open: true })
+            return true;
+
+        return cell.WalkableByAny(map);
     }
 
     public static void TryGiveDuelThoughts(Pawn winner, Pawn loser, bool isFriendlyDuel)
