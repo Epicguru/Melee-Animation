@@ -118,7 +118,7 @@ public class Settings : SimpleSettingsBase
     #endregion
 
     #region Executions & Duels
-    [Header("Executions & Duels")]
+    [Header("Executions & Duels", order = 0)]
     [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
                  "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
                  "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
@@ -205,7 +205,7 @@ public class Settings : SimpleSettingsBase
     #endregion
 
     #region Visuals
-    [Header("Visuals")]
+    [Header("Visuals", order = 1)]
     [Description("Should pawn hands be displayed holding melee weapons?")]
     [WebContent("HandsEnabled", false)]
     public bool ShowHands = true;
@@ -277,7 +277,7 @@ public class Settings : SimpleSettingsBase
     #endregion
 
     #region Performance
-    [Header("Performance")]
+    [Header("Performance", order = 2)]
     [Description("The maximum number of CPU threads to use when processing pawns for automatic executions & lasso usage.\n" +
                  "If set to 0, the thread count is automatically determined based on your CPU, and if set to 1 then multi-threaded processing is disabled.\n" +
                  "Set to 1 if you experience error spam caused by a mod conflict, although it will decrease performance considerably.")]
@@ -300,7 +300,7 @@ public class Settings : SimpleSettingsBase
 
     #region Other
 
-    [Header("Other")]
+    [Header("Other", order = 3)]
     [Label("Friendly Pawn Lethality Bonus")]
     [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
     [Percentage]

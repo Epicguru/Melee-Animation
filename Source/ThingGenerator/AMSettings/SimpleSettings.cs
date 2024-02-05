@@ -16,6 +16,22 @@ namespace AM.AMSettings;
 
 public abstract class SimpleSettingsBase : ModSettings
 {
+    public string GetName()
+    {
+        string translationKey = GetType().FullName;
+        if (translationKey.TryTranslate(out var result))
+            return result;
+        return PresetName;
+    }
+
+    public string GetDescription()
+    {
+        string translationKey = $"{GetType().FullName}.Desc";
+        if (translationKey.TryTranslate(out var result))
+            return result;
+        return PresetDescription;
+    }
+
     public virtual string PresetName => null;
     public virtual string PresetDescription => null;
 }
@@ -41,7 +57,7 @@ public static class SimpleSettings
         { typeof(bool), DrawToggle },
         { typeof(Color), DrawColor }
     };
-    public static Func<MemberWrapper, DrawHandler> SelectDrawHandler = DefaultDrawHandlerSelector;
+    public static Func<MemberWrapper, DrawHandler> SelectDrawHandler { get; set; } = DefaultDrawHandlerSelector;
         
     private static readonly Dictionary<Type, FieldHolder> settingsFields = new Dictionary<Type, FieldHolder>();
     private static readonly Stack<ScribeSaver> saverStack = new Stack<ScribeSaver>();
@@ -52,6 +68,31 @@ public static class SimpleSettings
     private static MemberWrapper highlightedMember;
 
     internal static string TranslateOrSelf(this string str) => str.TryTranslate(out var found) ? found : str;
+
+    private static string GenerateTranslationKeys(SimpleSettingsBase settings)
+    {
+        FieldHolder holder = GetHolder(settings);
+
+        var str = new StringBuilder(1024);
+        string settingsType = settings.GetType().FullName;
+
+        void Emit(string key, string contents)
+        {
+            str.Append('<').Append(key).Append("><").Append(contents).Append("></").Append(key).AppendLine(">");
+        }
+
+        foreach (var member in holder.Members.Values)
+        {
+            var header = member.TryGetCustomAttribute<HeaderAttribute>();
+            if (header != null)
+            {
+                Emit($"{settingsType}.Header{header.order}", header.header);
+            }
+
+            var label = member.TryGetCustomAttribute<LabelAttribute>();
+            Emit()
+        }
+    }
 
     public static void Init(SimpleSettingsBase settings)
     {
@@ -243,13 +284,13 @@ public static class SimpleSettings
 
         var holder = GetHolder(settings);
 
-        if (Widgets.ButtonText(inRect with {height = 24, width = inRect.width * 0.2f}, $"<b>Preset:</b> {currentPreset?.PresetName ?? "Custom"}"))
+        if (Widgets.ButtonText(inRect with {height = 24, width = inRect.width * 0.2f}, $"<b>{"SimpleSettings.Preset".Translate()}</b> {currentPreset?.GetName() ?? "SimpleSettings.Preset.Custom".Translate()}"))
             ShowPresetsDropdown(settings, holder);
         if (currentPreset != null)
-            TooltipHandler.TipRegion(inRect with {height = 24, width = inRect.width * 0.2f}, currentPreset.PresetDescription);
+            TooltipHandler.TipRegion(inRect with {height = 24, width = inRect.width * 0.2f}, currentPreset.GetDescription());
 
         var tips = inRect with {height = 24, x = inRect.width * 0.2f + 20};
-        Widgets.LabelFit(tips, "Right-click to set an option back to its default value.");
+        Widgets.LabelFit(tips, "SimpleSettings.ClickToReset".Translate());
         Widgets.DrawLineHorizontal(inRect.x, inRect.y + 30, inRect.width);
         inRect.yMin += 38;
 
@@ -288,7 +329,7 @@ public static class SimpleSettings
                 if(isCurrentTab)
                 {
                     var headerRect = new Rect(new Vector2(pos.x, pos.y + 12), new Vector2(inRect.width - 20, headerHeight));
-                    string headerText = $"{settings.GetType().FullName}.{header.header}".TryTranslate(out var found) ? found : header.header;
+                    string headerText = $"{settings.GetType().FullName}.Header{header.order}".TryTranslate(out var found) ? found : header.header;
                     Widgets.Label(headerRect, $"<color=cyan><b><size=22>{headerText}</size></b></color>");
 
                     pos.y += headerHeight + 12;
@@ -1007,14 +1048,14 @@ public static class SimpleSettings
 
         protected virtual string MakeDisplayName()
         {
+            if (TranslationName.TryTranslate(out var found))
+                return found;
+
             var label = TryGetCustomAttribute<LabelAttribute>();
             if (label != null)
             {
                 return label.Label.TranslateOrSelf();
             }
-
-            if (TranslationName.TryTranslate(out var found))
-                return found;
 
             var str = new StringBuilder();
             bool lastWasLower = true;
@@ -1047,9 +1088,12 @@ public static class SimpleSettings
 
         public virtual string GetDescription()
         {
+            if ($"{TranslationName}.Desc".TryTranslate(out var found))
+                return found;
+
             var attr = TryGetCustomAttribute<DescriptionAttribute>();
             if (attr == null)
-                return $"{TranslationName}.Desc".TryTranslate(out var found) ? found : null;
+                return string.Empty;
 
             return attr.Description.TranslateOrSelf();
         }
