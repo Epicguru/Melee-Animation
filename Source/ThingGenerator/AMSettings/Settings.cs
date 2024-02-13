@@ -135,13 +135,21 @@ public class Settings : SimpleSettingsBase
     [VisibleIf(nameof(EnableExecutions))]
     public bool EnemiesCanExecute = true;
 
-    [Label("Execution Failure Chance (Multiplier)")]
-    [Description("A general multiplier on the chance that an execution attempt will result in failure, stunning the attacking pawn and leaving them vulnerable for a short time.\n" +
-        "Affects all pawns. The failure chance greatly decreases with melee skill.")]
+    [Label("Execution Failure Chance (Low Skill)")]
+    [Description("The chance that an execution attempt will result in failure, stunning the attacking pawn and leaving them vulnerable for a short time.\n" +
+        "This is the chance when a pawn has 0 melee skill.\n" +
+        "Affects all pawns.")]
     [Percentage]
     [VisibleIf(nameof(EnableExecutions))]
-    [Range(0, 10)]
-    public float ChanceToFailMulti = 1f;
+    public float ChanceToFailMinSkill = 0.15f;
+
+    [Label("Execution Failure Chance (High Skill)")]
+    [Description("The chance that an execution attempt will result in failure, stunning the attacking pawn and leaving them vulnerable for a short time.\n" +
+                 "This is the chance when a pawn has 20 melee skill.\n" +
+                 "Affects all pawns.")]
+    [Percentage]
+    [VisibleIf(nameof(EnableExecutions))]
+    public float ChanceToFailMaxSkill = 0.03f;
 
     [Label("Automatic Execution Average Interval (Friendly)")]
     [Description("This is the average time, in seconds, at which friendly pawns will attempt to start an execution animation on the enemy they are currently fighting.\n" +

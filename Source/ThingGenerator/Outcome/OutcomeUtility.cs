@@ -137,7 +137,7 @@ public static class OutcomeUtility
         var outcome = ExecutionOutcome.Nothing;
 
         // Before anything else: check for failure chance.
-        float chanceToFail = canFail ? Mathf.Clamp01(RemapClamped(0, 20, 0.15f, 0.01f, attackerMeleeSkill) * Core.Settings.ChanceToFailMulti) : 0f;
+        float chanceToFail = canFail ? Mathf.Clamp01(RemapClamped(0, 20, Core.Settings.ChanceToFailMinSkill, Core.Settings.ChanceToFailMaxSkill, attackerMeleeSkill)) : 0f;
         Log($"Chance to fail: {chanceToFail:P1} based on melee skill {attackerMeleeSkill:F1}");
         bool willFail = Rand.Chance(chanceToFail);
         if (willFail && report == null)

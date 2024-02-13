@@ -349,9 +349,15 @@ Technical: This is the standard deviation used in the duel outcome normal distri
 You can opt out of this functionality by disabling this option.
 Note: logging does not occur the first time you run the game with this mod.</AM.AMSettings.Settings.SendStatistics.Desc>
 
-  <AM.AMSettings.Settings.ChanceToFailMulti>Execution Failure Chance (Multiplier)</AM.AMSettings.Settings.ChanceToFailMulti>
-  <AM.AMSettings.Settings.ChanceToFailMulti.Desc>A general multiplier on the chance that an execution attempt will result in failure, stunning the attacking pawn and leaving them vulnerable for a short time.
-Affects all pawns. The failure chance greatly decreases with melee skill.</AM.AMSettings.Settings.ChanceToFailMulti.Desc>
+  <AM.AMSettings.Settings.ChanceToFailMinSkill>Execution Failure Chance (Low Skill)</AM.AMSettings.Settings.ChanceToFailMinSkill>
+  <AM.AMSettings.Settings.ChanceToFailMinSkill.Desc>The chance that an execution attempt will result in failure, stunning the attacking pawn and leaving them vulnerable for a short time.
+This is the chance when a pawn has 0 melee skill.
+Affects all pawns.</AM.AMSettings.Settings.ChanceToFailMinSkill.Desc>
+
+  <AM.AMSettings.Settings.ChanceToFailMaxSkill>Execution Failure Chance (High Skill)</AM.AMSettings.Settings.ChanceToFailMaxSkill>
+  <AM.AMSettings.Settings.ChanceToFailMaxSkill.Desc>The chance that an execution attempt will result in failure, stunning the attacking pawn and leaving them vulnerable for a short time.
+This is the chance when a pawn has 20 melee skill.
+Affects all pawns.</AM.AMSettings.Settings.ChanceToFailMaxSkill.Desc>
 
   <AM.ExecutionOutcome.Injured>Injured</AM.ExecutionOutcome.Injured>
   <AM.ExecutionOutcome.Downed>Downed</AM.ExecutionOutcome.Downed>
