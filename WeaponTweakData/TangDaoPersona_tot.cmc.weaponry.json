@@ -1,0 +1,13 @@
+{
+  "TextureModID": "tot.cmc.weaponry",
+  "ItemDefName": "TangDaoPersona",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.489129961,
+  "OffY": 0.0301934853,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.110733531,
+  "BladeEnd": 1.20674813,
+  "MeleeWeaponType": 6
+}

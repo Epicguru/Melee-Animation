@@ -1,0 +1,13 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "MeleeWeapon_smith_hammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.08152172,
+  "OffY": 0.009057999,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.208408847,
+  "BladeEnd": 0.452974081,
+  "MeleeWeaponType": 8
+}

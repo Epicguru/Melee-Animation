@@ -118,15 +118,30 @@ public class Settings : SimpleSettingsBase
     #endregion
 
     #region Executions & Duels
-    [Header("Executions & Duels")]
+    [Header("Executions & Duels", order = 0)]
+
+    [Description("Entirely enables or disables the execution system. Disabling this means that no pawns will every be able to do executions, " +
+                 "and the option is removed from the UI.")]
+    public bool EnableExecutions = true;
+
     [Description("If true, your pawns will automatically execute enemy pawns in combat, without your input.\n" +
                  "This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.\n\n" +
                  "This only changes the <b>default</b> setting. It can also be configured on a per-pawn basis.")]
+    [VisibleIf(nameof(EnableExecutions))]
     public bool AutoExecute = true;
 
     [Label("Enemies Can Perform Executions")]
     [Description("Can enemies perform execution animations?")]
+    [VisibleIf(nameof(EnableExecutions))]
     public bool EnemiesCanExecute = true;
+
+    [Label("Execution Failure Chance (Multiplier)")]
+    [Description("A general multiplier on the chance that an execution attempt will result in failure, stunning the attacking pawn and leaving them vulnerable for a short time.\n" +
+        "Affects all pawns. The failure chance greatly decreases with melee skill.")]
+    [Percentage]
+    [VisibleIf(nameof(EnableExecutions))]
+    [Range(0, 10)]
+    public float ChanceToFailMulti = 1f;
 
     [Label("Automatic Execution Average Interval (Friendly)")]
     [Description("This is the average time, in seconds, at which friendly pawns will attempt to start an execution animation on the enemy they are currently fighting.\n" +
@@ -134,6 +149,7 @@ public class Settings : SimpleSettingsBase
                  "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
     [Range(0.5f, 240)]
     [Step(1f)]
+    [VisibleIf(nameof(EnableExecutions))]
     public float ExecuteAttemptMTBSeconds = 10;
 
     [Label("Automatic Execution Average Interval (Enemy)")]
@@ -142,30 +158,35 @@ public class Settings : SimpleSettingsBase
                  "This does not affect execution cooldown, which is a pawn-specific stat.\n\nLower values can greatly impact performance on populated maps.")]
     [Range(0.5f, 240)]
     [Step(1f)]
-    [VisibleIf(nameof(EnemiesCanExecute))]
+    [VisibleIf(nameof(EnableExecutions))]
     public float ExecuteAttemptMTBSecondsEnemy = 30;
 
     [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
+    [VisibleIf(nameof(EnableExecutions))]
     public bool AnimalsCanBeExecuted = false;
 
     [Range(0, 10)]
     [Percentage]
     [Description("A general modifier on the lethality of execution animations. Higher values make executions more lethal. Affects all pawns.")]
+    [VisibleIf(nameof(EnableExecutions))]
     public float ExecutionLethalityModifier = 1f;
 
     [Label("Executions Are Non Lethal On Friendlies")]
     [Description("If enabled, execution animations on friendly pawns are always non-lethal regardless of other settings.\nPrisoners and slaves are considered friendly.\n\nUseful when trying to stop a mental break or prisoner uprising without causing a bloodbath.")]
+    [VisibleIf(nameof(EnableExecutions))]
     public bool ExecutionsOnFriendliesAreNotLethal = true;
 
     [Label("Execution Armor Strength")]
     [Description("A multiplier on the effectiveness of armor when calculating execution animation outcome.\nLower values decrease the effect of armor on the outcome, higher values increase the strength of armor.\nSet to 0% to make armor be ignored.")]
     [Percentage]
     [Range(0, 5)]
+    [VisibleIf(nameof(EnableExecutions))]
     public float ExecutionArmorCoefficient = 1f;
 
     [Description("If true, executions can destroy specific vital body parts, such as the heart or head.\n" +
                  "If false, the pawn is simply killed by 'magic' (no specific part takes damage)\n" +
                  "Note: if disabled, combat log generation does not work properly for the execution, and will give a default message: \"<i>name was killed.</i>\"")]
+    [VisibleIf(nameof(EnableExecutions))]
     public bool ExecutionsCanDestroyBodyParts = true;
 
     [Label("Amount Skill Affects Execution Cooldown")]
@@ -175,7 +196,26 @@ public class Settings : SimpleSettingsBase
                  "Note: only affects friendly pawns.")]
     [Range(0, 2)]
     [Percentage]
+    [VisibleIf(nameof(EnableExecutions))]
     public float MeleeSkillExecCooldownFactor = 1f;
+
+    [Label("Execution Cooldown Factor (Friendly)")]
+    [Description("This adjust the execution cooldown time for friendly pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
+    [Percentage]
+    [Range(0.01f, 5f)]
+    [Step(0.01f)]
+    [VisibleIf(nameof(EnableExecutions))]
+    public float FriendlyExecCooldownFactor = 1f;
+
+    [Label("Execution Cooldown Factor (Enemy)")]
+    [Description("This adjust the execution cooldown time for hostile pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
+    [Percentage]
+    [Range(0.01f, 5f)]
+    [Step(0.01f)]
+    [VisibleIf(nameof(EnableExecutions))]
+    public float EnemyExecCooldownFactor = 1f;
+
+    // Duel visuals:
 
     [Description("The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.")]
     [Min(1)]
@@ -188,24 +228,10 @@ public class Settings : SimpleSettingsBase
     [Description("The cooldown time, in seconds, after a friendly duel where a friendly duel cannot be started again.")]
     [Min(0)]
     public float FriendlyDuelCooldown = 60 * 5;
-
-    [Label("Execution Cooldown Factor (Friendly)")]
-    [Description("This adjust the execution cooldown time for friendly pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
-    [Percentage]
-    [Range(0.01f, 5f)]
-    [Step(0.01f)]
-    public float FriendlyExecCooldownFactor = 1f;
-
-    [Label("Execution Cooldown Factor (Enemy)")]
-    [Description("This adjust the execution cooldown time for hostile pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn's stats.")]
-    [Percentage]
-    [Range(0.01f, 5f)]
-    [Step(0.01f)]
-    public float EnemyExecCooldownFactor = 1f;
     #endregion
 
     #region Visuals
-    [Header("Visuals")]
+    [Header("Visuals", order = 1)]
     [Description("Should pawn hands be displayed holding melee weapons?")]
     [WebContent("HandsEnabled", false)]
     public bool ShowHands = true;
@@ -277,7 +303,7 @@ public class Settings : SimpleSettingsBase
     #endregion
 
     #region Performance
-    [Header("Performance")]
+    [Header("Performance", order = 2)]
     [Description("The maximum number of CPU threads to use when processing pawns for automatic executions & lasso usage.\n" +
                  "If set to 0, the thread count is automatically determined based on your CPU, and if set to 1 then multi-threaded processing is disabled.\n" +
                  "Set to 1 if you experience error spam caused by a mod conflict, although it will decrease performance considerably.")]
@@ -300,7 +326,7 @@ public class Settings : SimpleSettingsBase
 
     #region Other
 
-    [Header("Other")]
+    [Header("Other", order = 3)]
     [Label("Friendly Pawn Lethality Bonus")]
     [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
     [Percentage]

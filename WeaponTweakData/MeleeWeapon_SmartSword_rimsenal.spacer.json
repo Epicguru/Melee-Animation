@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rimsenal.spacer",
+  "ItemDefName": "MeleeWeapon_SmartSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3834537,
+  "OffY": -0.0513284951,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.192255273,
+  "BladeEnd": 0.9621829,
+  "MeleeWeaponType": 6
+}

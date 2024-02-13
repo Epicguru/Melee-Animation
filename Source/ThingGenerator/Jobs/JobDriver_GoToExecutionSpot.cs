@@ -59,17 +59,35 @@ public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
                 return;
             }
 
+            var outcome = OutcomeUtility.GenerateRandomOutcome(toil.actor, Target, true);
+
             // Check space...
+            bool failDoubleLoop = false;
             except.Clear();
             while (true)
             {
-                // Pick random anim, weighted.
-                var anim = possibilities.RandomElementByWeightExcept(d => (fixedAnimationList ? 0.1f : 0f) + d.Probability, except);
-                if (anim == null)
+                AnimDef anim;
+                if (outcome == ExecutionOutcome.Failure)
                 {
-                    Core.Warn("No possible execution animations after reaching target (no space)!");
-                    return;
+                    if (failDoubleLoop)
+                    {
+                        Core.Error("Detected start of infinite loop, no space for execution fail animation: did you start an animation inside a wall?");
+                        return;
+                    }
+
+                    anim = AM_DefOf.AM_Execution_Fail;
+                    failDoubleLoop = true;
                 }
+                else
+                {
+                    // Pick random anim, weighted.
+                    anim = possibilities.RandomElementByWeightExcept(d => (fixedAnimationList ? 0.1f : 0f) + d.Probability, except);
+                    if (anim == null)
+                    {
+                        Core.Warn("No possible execution animations after reaching target (no space)!");
+                        return;
+                    }
+                }                
 
                 except.Add(anim);
 
@@ -82,7 +100,7 @@ public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
                     // Can do the animation!
                     var args = new AnimationStartParameters(anim, toil.actor, Target)
                     {
-                        ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(toil.actor, Target),
+                        ExecutionOutcome = outcome,
                         FlipX = flipX,
                     };
 

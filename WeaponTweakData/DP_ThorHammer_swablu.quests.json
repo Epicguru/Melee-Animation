@@ -1,0 +1,19 @@
+{
+  "TextureModID": "swablu.quests",
+  "ItemDefName": "DP_ThorHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.27777794,
+  "OffY": -0.0332125127,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.122811027,
+  "BladeEnd": 0.9259509,
+  "MeleeWeaponType": 1,
+  "TrailTint": {
+    "r": 0.5878427,
+    "g": 0.443553448,
+    "b": 0.6901235,
+    "a": 1.0
+  }
+}

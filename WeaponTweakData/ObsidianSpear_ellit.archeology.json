@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ellit.archeology",
+  "ItemDefName": "ObsidianSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3743965,
+  "Rotation": 45.0,
+  "BladeStart": 0.09669362,
+  "BladeEnd": 0.9149302,
+  "MeleeWeaponType": 4
+}

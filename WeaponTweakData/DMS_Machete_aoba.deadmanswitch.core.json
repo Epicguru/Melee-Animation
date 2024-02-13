@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aoba.deadmanswitch.core",
+  "ItemDefName": "DMS_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3291062,
+  "OffY": -0.0120772421,
+  "Rotation": 45.0,
+  "BladeStart": 0.219429016,
+  "BladeEnd": 0.9923759,
+  "MeleeWeaponType": 6
+}

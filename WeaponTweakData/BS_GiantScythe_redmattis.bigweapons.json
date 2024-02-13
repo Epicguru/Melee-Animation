@@ -1,0 +1,13 @@
+{
+  "TextureModID": "redmattis.bigweapons",
+  "ItemDefName": "BS_GiantScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.8333333,
+  "OffY": 0.06340574,
+  "ScaleX": 2.6,
+  "ScaleY": 2.6,
+  "BladeStart": 1.69089639,
+  "BladeEnd": 2.05321527,
+  "MeleeWeaponType": 2
+}

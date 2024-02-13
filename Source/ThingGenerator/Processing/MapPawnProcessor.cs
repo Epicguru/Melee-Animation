@@ -147,8 +147,15 @@ public class MapPawnProcessor : IDisposable
                 var finalArgs = args with
                 {
                     // Generate outcome here to avoid threading errors:
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn, true),
                 };
+
+                // Force failure animation for failure outcome.
+                if (finalArgs.ExecutionOutcome == ExecutionOutcome.Failure)
+                {
+                    finalArgs.Animation = AM_DefOf.AM_Execution_Fail;
+                }
+
                 bool worked = finalArgs.TryTrigger();
 
                 // Set execution cooldown.
@@ -161,8 +168,14 @@ public class MapPawnProcessor : IDisposable
                 var finalArgs = args with
                 {
                     // Generate outcome here to avoid threading errors:
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn, true),
                 };
+
+                // Force failure animation for failure outcome.
+                if (finalArgs.ExecutionOutcome == ExecutionOutcome.Failure)
+                {
+                    finalArgs.Animation = AM_DefOf.AM_Execution_Fail;
+                }
 
                 // Lasso.
                 if (!JobDriver_GrapplePawn.GiveJob(args.MainPawn, args.SecondPawn, pair.lassoToHere.Value, false, finalArgs))
@@ -470,7 +483,7 @@ public class MapPawnProcessor : IDisposable
                 PawnMeleeLevel = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0,
                 MeleeWeapon = weapon,
                 Lasso = lasso,
-                CanExecute = weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
+                CanExecute = Core.Settings.EnableExecutions && weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
                 CanGrapple = lasso != null  && mData.ResolvedAutoGrapple && mData.IsGrappleOffCooldown() && FormalGrappleCheck(pawn),
                 LassoRange = lasso != null ? pawn.GetStatValue(AM_DefOf.AM_GrappleRadius) : 0
             };

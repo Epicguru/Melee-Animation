@@ -1,0 +1,18 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "Zodiac_Weapon_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.377415717,
+  "OffY": -0.003019251,
+  "Rotation": 46.46072,
+  "BladeStart": 0.151041612,
+  "BladeEnd": 1.02060652,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9,
+    "g": 0.689,
+    "b": 0.11,
+    "a": 1.0
+  }
+}

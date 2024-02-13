@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ellit.archeology",
+  "ItemDefName": "SpiritSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.36835742,
+  "Rotation": 45.0,
+  "BladeStart": 0.09669362,
+  "BladeEnd": 0.9209688,
+  "MeleeWeaponType": 4
+}

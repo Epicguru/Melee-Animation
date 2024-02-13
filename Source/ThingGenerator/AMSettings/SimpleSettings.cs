@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
+using System.Security;
 using System.Text;
 using AM.UI;
 using AM.Video;
@@ -16,12 +18,34 @@ namespace AM.AMSettings;
 
 public abstract class SimpleSettingsBase : ModSettings
 {
+    public string GetName()
+    {
+        string translationKey = GetType().FullName;
+        if (translationKey.TryTranslate(out var result))
+            return result;
+        return PresetName;
+    }
+
+    public string GetDescription()
+    {
+        string translationKey = $"{GetType().FullName}.Desc";
+        if (translationKey.TryTranslate(out var result))
+            return result;
+        return PresetDescription;
+    }
+
     public virtual string PresetName => null;
     public virtual string PresetDescription => null;
 }
 
 public static class SimpleSettings
 {
+    [DebugOutput("AnimationMod", onlyWhenPlaying = false)]
+    public static void OutputTranslationKeys()
+    {
+        Log.Message(GenerateTranslationKeys(Core.Settings));
+    }
+
     public delegate float DrawHandler(SimpleSettingsBase settings, MemberWrapper member, Rect area);
 
     public static readonly Dictionary<Type, DrawHandler> DrawHandlers = new Dictionary<Type, DrawHandler>
@@ -41,7 +65,7 @@ public static class SimpleSettings
         { typeof(bool), DrawToggle },
         { typeof(Color), DrawColor }
     };
-    public static Func<MemberWrapper, DrawHandler> SelectDrawHandler = DefaultDrawHandlerSelector;
+    public static Func<MemberWrapper, DrawHandler> SelectDrawHandler { get; set; } = DefaultDrawHandlerSelector;
         
     private static readonly Dictionary<Type, FieldHolder> settingsFields = new Dictionary<Type, FieldHolder>();
     private static readonly Stack<ScribeSaver> saverStack = new Stack<ScribeSaver>();
@@ -52,6 +76,44 @@ public static class SimpleSettings
     private static MemberWrapper highlightedMember;
 
     internal static string TranslateOrSelf(this string str) => str.TryTranslate(out var found) ? found : str;
+
+    private static string GenerateTranslationKeys(SimpleSettingsBase settings)
+    {
+        FieldHolder holder = GetHolder(settings);
+
+        var str = new StringBuilder(1024);
+        string settingsType = settings.GetType().FullName;
+
+        void Emit(string key, string contents)
+        {
+            str.Append("  <").Append(key).Append(">").Append(SecurityElement.Escape(contents)).Append("</").Append(key).AppendLine(">");
+        }
+
+        foreach (var member in holder.Members.Values)
+        {
+            var header = member.TryGetCustomAttribute<HeaderAttribute>();
+            if (header != null)
+            {
+                Emit($"{settingsType}.Header.{EscapeXmlName(header.header)}", header.header);
+            }
+
+            Emit($"{member.TranslationName}", member.DisplayName);
+            Emit($"{member.TranslationName}.Desc", SecurityElement.Escape(member.GetDescription()));
+        }
+
+        return str.ToString();
+    }
+
+    private static string EscapeXmlName(string name) => ReplaceAll(name, stackalloc char[] { ' ', '&' }, '_');
+
+    private static string ReplaceAll(string input, ReadOnlySpan<char> chars, char replacement)
+    {
+        for (int i = 0; i < chars.Length; i++)
+        {
+            input = input.Replace(chars[i], replacement);
+        }
+        return input;
+    }
 
     public static void Init(SimpleSettingsBase settings)
     {
@@ -243,13 +305,13 @@ public static class SimpleSettings
 
         var holder = GetHolder(settings);
 
-        if (Widgets.ButtonText(inRect with {height = 24, width = inRect.width * 0.2f}, $"<b>Preset:</b> {currentPreset?.PresetName ?? "Custom"}"))
+        if (Widgets.ButtonText(inRect with {height = 24, width = inRect.width * 0.2f}, $"<b>{"SimpleSettings.Preset".Translate()}</b> {currentPreset?.GetName() ?? "SimpleSettings.Preset.Custom".Translate()}"))
             ShowPresetsDropdown(settings, holder);
         if (currentPreset != null)
-            TooltipHandler.TipRegion(inRect with {height = 24, width = inRect.width * 0.2f}, currentPreset.PresetDescription);
+            TooltipHandler.TipRegion(inRect with {height = 24, width = inRect.width * 0.2f}, currentPreset.GetDescription());
 
         var tips = inRect with {height = 24, x = inRect.width * 0.2f + 20};
-        Widgets.LabelFit(tips, "Right-click to set an option back to its default value.");
+        Widgets.LabelFit(tips, "SimpleSettings.ClickToReset".Translate());
         Widgets.DrawLineHorizontal(inRect.x, inRect.y + 30, inRect.width);
         inRect.yMin += 38;
 
@@ -262,7 +324,6 @@ public static class SimpleSettings
         inRect.width *= 0.7f;
         inRect.y += 28;
         inRect.height -= 28;
-
 
         Widgets.BeginScrollView(inRect, ref holder.UI_Scroll, new Rect(0, 0, holder.UI_LastSize.x, holder.UI_LastSize.y));
         var size = new Vector2(inRect.width - 20, 0);
@@ -288,7 +349,7 @@ public static class SimpleSettings
                 if(isCurrentTab)
                 {
                     var headerRect = new Rect(new Vector2(pos.x, pos.y + 12), new Vector2(inRect.width - 20, headerHeight));
-                    string headerText = $"{settings.GetType().FullName}.{header.header}".TryTranslate(out var found) ? found : header.header;
+                    string headerText = $"{settings.GetType().FullName}.Header.{EscapeXmlName(header.header)}".TryTranslate(out var found) ? found : header.header;
                     Widgets.Label(headerRect, $"<color=cyan><b><size=22>{headerText}</size></b></color>");
 
                     pos.y += headerHeight + 12;
@@ -302,6 +363,10 @@ public static class SimpleSettings
 
             var handler = SelectDrawHandler(member);
             if (handler == null)
+                continue;
+
+            // Conditional visibility:
+            if (!member.ShouldDraw(settings, holder))
                 continue;
 
             if (!didHeader)
@@ -319,10 +384,6 @@ public static class SimpleSettings
                 pos.y += 12;
                 size.y += 12;
             }
-
-            // Conditional visibility:
-            if (!member.ShouldDraw(settings, holder))
-                continue;
 
             var area = new Rect(new Vector2(pos.x + 20, pos.y), new Vector2(inRect.width - 40, inRect.height - pos.y));
             float height = handler(settings, member, area);
@@ -350,7 +411,7 @@ public static class SimpleSettings
             var area = new Rect(tabBar.x + tabWidth * i, tabBar.y, tabWidth, tabBar.height);
             bool active = holder.UI_SelectedTab == tab;
             GUI.color = active ? Color.grey : Color.white;
-            string tabText = $"{settings.GetType().FullName}.{tab}".TryTranslate(out var found) ? found : tab;
+            string tabText = $"{settings.GetType().FullName}.Header.{tab.Replace(' ', '_')}".TryTranslate(out var found) ? found : tab;
             if (Widgets.ButtonText(area.ExpandedBy(-2, 0), $"<b><color=lightblue>{tabText}</color></b>"))
                 holder.UI_SelectedTab = tab;
             if (active)
@@ -1007,14 +1068,14 @@ public static class SimpleSettings
 
         protected virtual string MakeDisplayName()
         {
+            if (TranslationName.TryTranslate(out var found))
+                return found;
+
             var label = TryGetCustomAttribute<LabelAttribute>();
             if (label != null)
             {
                 return label.Label.TranslateOrSelf();
             }
-
-            if (TranslationName.TryTranslate(out var found))
-                return found;
 
             var str = new StringBuilder();
             bool lastWasLower = true;
@@ -1047,9 +1108,12 @@ public static class SimpleSettings
 
         public virtual string GetDescription()
         {
+            if ($"{TranslationName}.Desc".TryTranslate(out var found))
+                return found;
+
             var attr = TryGetCustomAttribute<DescriptionAttribute>();
             if (attr == null)
-                return $"{TranslationName}.Desc".TryTranslate(out var found) ? found : null;
+                return string.Empty;
 
             return attr.Description.TranslateOrSelf();
         }

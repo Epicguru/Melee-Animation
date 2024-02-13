@@ -1,0 +1,10 @@
+{
+  "TextureModID": "rimsenal.spacer",
+  "ItemDefName": "MeleeWeapon_StunProd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2928747,
+  "BladeStart": 0.116772026,
+  "BladeEnd": 0.69346267,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ellit.archeology",
+  "ItemDefName": "EL_ChippedLongSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.256642222,
+  "OffY": -0.0271742418,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.07450154,
+  "BladeEnd": 0.61496073,
+  "MeleeWeaponType": 8
+}

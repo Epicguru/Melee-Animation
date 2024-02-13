@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ellit.archeology",
+  "ItemDefName": "EL_HandaxeUltra",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.06340574,
+  "OffY": -0.00301974639,
+  "ScaleX": 0.45,
+  "ScaleY": 0.45,
+  "BladeEnd": 0.2798155,
+  "MeleeWeaponType": 8
+}

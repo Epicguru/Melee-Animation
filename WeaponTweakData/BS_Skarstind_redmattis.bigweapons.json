@@ -1,0 +1,20 @@
+{
+  "TextureModID": "redmattis.bigweapons",
+  "ItemDefName": "BS_Skarstind",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.9541059,
+  "OffY": -0.0483089946,
+  "Rotation": 45.0,
+  "ScaleX": 2.35,
+  "ScaleY": 2.35,
+  "BladeStart": 1.23497868,
+  "BladeEnd": 2.33703184,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.372,
+    "g": 0.811,
+    "b": 0.964,
+    "a": 1.0
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "MeleeWeapon_Atarpick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.241545975,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.449954331,
+  "BladeEnd": 0.591862559,
+  "MeleeWeaponType": 2
+}

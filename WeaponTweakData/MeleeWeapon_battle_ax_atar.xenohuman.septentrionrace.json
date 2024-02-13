@@ -1,0 +1,11 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "MeleeWeapon_battle_ax",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1962558,
+  "HandsMode": 1,
+  "BladeStart": 0.292949826,
+  "BladeEnd": 0.649229765,
+  "MeleeWeaponType": 2
+}

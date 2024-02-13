@@ -33,6 +33,7 @@ public class PawnColumnWorker_Lasso : PawnColumnWorker_Base
     protected override Color GetIconColor(Pawn pawn, PawnMeleeData data)
     {
         bool hasLasso = pawn.TryGetLasso() != null;
+
         if (!hasLasso)
             return Color.yellow;
         return base.GetIconColor(pawn, data);

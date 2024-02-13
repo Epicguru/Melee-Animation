@@ -1,0 +1,12 @@
+{
+  "TextureModID": "k4g.rww2",
+  "ItemDefName": "K4G_MeleeWeapon_WW2GermanServiceBayonet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1630435,
+  "OffY": -0.0060389936,
+  "HandsMode": 1,
+  "BladeStart": 0.07857762,
+  "BladeEnd": 0.431838334,
+  "MeleeWeaponType": 48
+}

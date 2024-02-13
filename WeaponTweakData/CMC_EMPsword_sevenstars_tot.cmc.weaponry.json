@@ -1,0 +1,12 @@
+{
+  "TextureModID": "tot.cmc.weaponry",
+  "ItemDefName": "CMC_EMPsword_sevenstars",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.446859956,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.10469503,
+  "BladeEnd": 1.07993615,
+  "MeleeWeaponType": 6
+}

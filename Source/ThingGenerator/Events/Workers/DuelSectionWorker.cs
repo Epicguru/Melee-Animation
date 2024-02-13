@@ -67,7 +67,7 @@ namespace AM.Events.Workers
                     bool firstWins = Rand.Chance(chanceToWin);
                     Pawn winner = firstWins ? first : second;
                     Pawn loser = firstWins ? second : first;
-                    var outcome = input.Animator.IsFriendlyDuel ? ExecutionOutcome.Nothing : OutcomeUtility.GenerateRandomOutcome(winner, loser);
+                    var outcome = input.Animator.IsFriendlyDuel ? ExecutionOutcome.Nothing : OutcomeUtility.GenerateRandomOutcome(winner, loser, true);
 
                     ThrowMote(winner, loser, firstWins ? chanceToWin : 1f - chanceToWin);
                     End(input, winner, loser, outcome);
@@ -141,6 +141,12 @@ namespace AM.Events.Workers
                 // Check the relationship between the pawns to determine if they're going to reject the hand.
                 bool soreLoser = loser.relations.OpinionOf(winner) <= -10;
                 return soreLoser ? AM_DefOf.AM_Duel_WinFriendlyDuel_Reject : AM_DefOf.AM_Duel_WinFriendlyDuel;
+            }
+
+            // Failure has a specific animation:
+            if (outcome == ExecutionOutcome.Failure)
+            {
+                return AM_DefOf.AM_Execution_Fail;
             }
 
             // List all possible execution animations.

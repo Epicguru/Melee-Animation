@@ -1,0 +1,11 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "MeleeWeapon_longsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.301932454,
+  "OffY": -0.0271742418,
+  "BladeStart": 0.117828868,
+  "BladeEnd": 0.779060543,
+  "MeleeWeaponType": 6
+}

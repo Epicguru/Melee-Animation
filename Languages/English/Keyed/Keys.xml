@@ -23,6 +23,7 @@
   <AM.ProbReport.Kill>Kill</AM.ProbReport.Kill>
   <AM.ProbReport.Down>Down</AM.ProbReport.Down>
   <AM.ProbReport.Injure>Injure</AM.ProbReport.Injure>
+  <AM.ProbReport.Fail>Fail</AM.ProbReport.Fail>
 
   <!-- Duel command messages -->
   <AM.Error.Duel.Internal>Int.Error: {Error}</AM.Error.Duel.Internal>
@@ -138,5 +139,223 @@
   <AM.Skill.Gilgamesh.LowMelee>Melee level {0} is below required level {1}.</AM.Skill.Gilgamesh.LowMelee>
 
   <AM.Patch.OptDisabled>The invisibilty optimization has been disabled by the Melee Animation mod due to visual bugs.</AM.Patch.OptDisabled>
+
+  <!-- Translate settings menu: -->
+  <SimpleSettings.Preset>Preset:</SimpleSettings.Preset>
+  <SimpleSettings.Preset.Custom>Custom</SimpleSettings.Preset.Custom>
+  <SimpleSettings.ClickToReset>Right-click to set an option back to its default value.</SimpleSettings.ClickToReset>
+
+  <AM.AMSettings.Presets.Default>Default</AM.AMSettings.Presets.Default>
+  <AM.AMSettings.Presets.Default.Desc>Enables all features the mod has to offer</AM.AMSettings.Presets.Default.Desc>
+
+  <AM.AMSettings.Presets.NoLassos>No Lassos</AM.AMSettings.Presets.NoLassos>
+  <AM.AMSettings.Presets.NoLassos.Desc>Everything is enabled except lassos. You can still craft and use lassos manually if you want but enemies will not spawn with or use lassos.
+
+* Adds melee attack animations.
+* Adds melee weapon idle animations
+* Adds duels
+* Adds execution animations
+* Adds Unique Skills</AM.AMSettings.Presets.NoLassos.Desc>
+
+  <AM.AMSettings.Presets.VanillaPlus>Vanilla+</AM.AMSettings.Presets.VanillaPlus>
+  <AM.AMSettings.Presets.VanillaPlus.Desc>Keeps things very close to vanilla combat. Your pawns will not use lassos unless you manually instruct them to. Your pawns can not do executions, ever. Enemies will never do executions or use lassos.
+
+* Adds melee attack animations.
+* Adds melee weapon idle animations
+* Lassos can be used by friendly pawns, but must be equipped and triggered manually.</AM.AMSettings.Presets.VanillaPlus.Desc>
+
+  <AM.AMSettings.Settings.Header.General>General</AM.AMSettings.Settings.Header.General>
+  <AM.AMSettings.Settings.AnimateAtIdle>Always Animate Weapons</AM.AMSettings.Settings.AnimateAtIdle>
+  <AM.AMSettings.Settings.AnimateAtIdle.Desc>If enabled, melee weapons are animated whenever they are held, such as when standing drafted or while moving in combat.
+If disabled, animations are limited to duels, special skills and executions.
+
+&lt;b&gt;Leaving this enabled can have a large performance impact on densely populated maps.
+Please reload your save after changing this setting.&lt;/b&gt;</AM.AMSettings.Settings.AnimateAtIdle.Desc>
+  <AM.AMSettings.Settings.EnableUniqueSkills>Enable Unique Skills</AM.AMSettings.Settings.EnableUniqueSkills>
+  <AM.AMSettings.Settings.EnableUniqueSkills.Desc>Enables or disables the Unique Skill system.
+Unique Skills are powerful attacks or abilities that are unlocked under certain conditions.
+Only your colonists can use these skills and they must be activated manually. See the Steam workshop page for more info.</AM.AMSettings.Settings.EnableUniqueSkills.Desc>
+  <AM.AMSettings.Settings.AllowInvisiblePawns>Animated Pawns Considered Invisible</AM.AMSettings.Settings.AllowInvisiblePawns>
+  <AM.AMSettings.Settings.AllowInvisiblePawns.Desc>When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: they will not be actively targeted or shot at. This makes executions less risky.
+Note that pawns in animations can still take damage, such as from stray gunfire or explosions.</AM.AMSettings.Settings.AllowInvisiblePawns.Desc>
+  <AM.AMSettings.Settings.GlobalAnimationSpeed>Global Animation Speed</AM.AMSettings.Settings.GlobalAnimationSpeed>
+  <AM.AMSettings.Settings.GlobalAnimationSpeed.Desc>A modifier on the speed of all animations.
+Higher is faster.</AM.AMSettings.Settings.GlobalAnimationSpeed.Desc>
+  <AM.AMSettings.Settings.animSettings>Individual Animation Settings</AM.AMSettings.Settings.animSettings>
+  <AM.AMSettings.Settings.animSettings.Desc></AM.AMSettings.Settings.animSettings.Desc>
+  <AM.AMSettings.Settings.Header.Lasso>Lasso</AM.AMSettings.Settings.Header.Lasso>
+  <AM.AMSettings.Settings.AutoGrapple>Auto Lasso</AM.AMSettings.Settings.AutoGrapple>
+  <AM.AMSettings.Settings.AutoGrapple.Desc>If true, your colonists will automatically use their lassos against enemies.
+
+This only changes the &lt;b&gt;default&lt;/b&gt; setting. It can also be configured on a per-pawn basis.</AM.AMSettings.Settings.AutoGrapple.Desc>
+  <AM.AMSettings.Settings.GrappleAttemptMTBSeconds>Automatic Lasso Average Interval (Friendly)</AM.AMSettings.Settings.GrappleAttemptMTBSeconds>
+  <AM.AMSettings.Settings.GrappleAttemptMTBSeconds.Desc>This is the average time, in seconds, at which friendly pawns will attempt to use their lasso to pull an enemy into melee range.
+If their execution is off cooldown and Auto Execute is enabled, they will immediately execute the lassoed target too.</AM.AMSettings.Settings.GrappleAttemptMTBSeconds.Desc>
+  <AM.AMSettings.Settings.LassoSpawnChance>Lasso Commonality</AM.AMSettings.Settings.LassoSpawnChance>
+  <AM.AMSettings.Settings.LassoSpawnChance.Desc>This is the % chance for any &lt;b&gt;melee fighter&lt;/b&gt; pawn to spawn with a lasso equipped.
+Set this to 0% to disable natural lasso generation on pawns.</AM.AMSettings.Settings.LassoSpawnChance.Desc>
+  <AM.AMSettings.Settings.EnemiesCanGrapple>Enemies Can Lasso</AM.AMSettings.Settings.EnemiesCanGrapple>
+  <AM.AMSettings.Settings.EnemiesCanGrapple.Desc>Can enemies use lassos (if they have any) to pull your colonists into melee range?</AM.AMSettings.Settings.EnemiesCanGrapple.Desc>
+  <AM.AMSettings.Settings.GrappleAttemptMTBSecondsEnemy>Automatic Lasso Average Interval (Enemy)</AM.AMSettings.Settings.GrappleAttemptMTBSecondsEnemy>
+  <AM.AMSettings.Settings.GrappleAttemptMTBSecondsEnemy.Desc>This is the average time, in seconds, at which enemy pawns will attempt to use their lasso to pull a target into melee range.
+If their execution is off cooldown and &apos;Enemies Can Perform Executions&apos; is enabled, they will immediately execute the lassoed target too.</AM.AMSettings.Settings.GrappleAttemptMTBSecondsEnemy.Desc>
+  <AM.AMSettings.Settings.MinMeleeSkillToLasso>Minimum Melee Skill</AM.AMSettings.Settings.MinMeleeSkillToLasso>
+  <AM.AMSettings.Settings.MinMeleeSkillToLasso.Desc>The minumum melee skill required to use a lasso.
+Affects all pawns.</AM.AMSettings.Settings.MinMeleeSkillToLasso.Desc>
+  <AM.AMSettings.Settings.MinManipulationToLasso>Minimum Manipulation</AM.AMSettings.Settings.MinManipulationToLasso>
+  <AM.AMSettings.Settings.MinManipulationToLasso.Desc>The minimum Manipulation stat required to use a lasso.
+Affects all pawns.</AM.AMSettings.Settings.MinManipulationToLasso.Desc>
+  <AM.AMSettings.Settings.MaxLassoMass>Max Pawn Mass</AM.AMSettings.Settings.MaxLassoMass>
+  <AM.AMSettings.Settings.MaxLassoMass.Desc>The maximum mass that a pawn can have in order for it to be lassoed. The mass is measured in kilograms. You can check the mass of pawns in their Stat sheet.
+Set to zero to disable the mass limit.</AM.AMSettings.Settings.MaxLassoMass.Desc>
+  <AM.AMSettings.Settings.MaxLassoBodySize>Max Pawn Size</AM.AMSettings.Settings.MaxLassoBodySize>
+  <AM.AMSettings.Settings.MaxLassoBodySize.Desc>The maximum &apos;body size&apos; that a pawn can have in order for it to be lassoed.
+For reference, here are some example body sizes:
+• Chicken: 0.3
+• Human: 1
+• Boomalope: 2
+• Warg: 3
+• Thrumbo: 4
+
+
+Set to zero to disable the body size limit.</AM.AMSettings.Settings.MaxLassoBodySize.Desc>
+  <AM.AMSettings.Settings.GrappleSpeed>Lasso Travel Speed</AM.AMSettings.Settings.GrappleSpeed>
+  <AM.AMSettings.Settings.GrappleSpeed.Desc>Adjusts the speed &lt;b&gt;(not cooldown)&lt;/b&gt; of lassos, making it faster or slower to ensnare and pull in an enemy.
+Higher values make the lasso faster.
+Affects all pawns.</AM.AMSettings.Settings.GrappleSpeed.Desc>
+  <AM.AMSettings.Settings.MaxFillPctForLasso>Max Building Fill For Lasso Drag</AM.AMSettings.Settings.MaxFillPctForLasso>
+  <AM.AMSettings.Settings.MaxFillPctForLasso.Desc>The maximum &apos;fill&apos; percentage of a building that a pawn can be dragged through by a lasso.
+Lower values mean that pawns can &lt;b&gt;not&lt;/b&gt; be dragged through/over partial cover such as sand bags or embrasures. A value of 100% means that the lasso can pull pawns though/over anything except completely solid walls and buildings.</AM.AMSettings.Settings.MaxFillPctForLasso.Desc>
+  <AM.AMSettings.Settings.Header.Executions___Duels>Executions &amp; Duels</AM.AMSettings.Settings.Header.Executions___Duels>
+  <AM.AMSettings.Settings.EnableExecutions>Enable Executions</AM.AMSettings.Settings.EnableExecutions>
+  <AM.AMSettings.Settings.EnableExecutions.Desc>Entirely enables or disables the execution system. Disabling this means that no pawns will every be able to do executions, and the option is removed from the UI.</AM.AMSettings.Settings.EnableExecutions.Desc>
+  <AM.AMSettings.Settings.AutoExecute>Auto Execute</AM.AMSettings.Settings.AutoExecute>
+  <AM.AMSettings.Settings.AutoExecute.Desc>If true, your pawns will automatically execute enemy pawns in combat, without your input.
+This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.
+
+This only changes the &lt;b&gt;default&lt;/b&gt; setting. It can also be configured on a per-pawn basis.</AM.AMSettings.Settings.AutoExecute.Desc>
+  <AM.AMSettings.Settings.EnemiesCanExecute>Enemies Can Perform Executions</AM.AMSettings.Settings.EnemiesCanExecute>
+  <AM.AMSettings.Settings.EnemiesCanExecute.Desc>Can enemies perform execution animations?</AM.AMSettings.Settings.EnemiesCanExecute.Desc>
+  <AM.AMSettings.Settings.ExecuteAttemptMTBSeconds>Automatic Execution Average Interval (Friendly)</AM.AMSettings.Settings.ExecuteAttemptMTBSeconds>
+  <AM.AMSettings.Settings.ExecuteAttemptMTBSeconds.Desc>This is the average time, in seconds, at which friendly pawns will attempt to start an execution animation on the enemy they are currently fighting.
+For example, if this is set to 5 and your pawn is fighting in melee, an execution animation will be triggered on average after 5 seconds.
+This does not affect execution cooldown, which is a pawn-specific stat.
+
+Lower values can greatly impact performance on populated maps.</AM.AMSettings.Settings.ExecuteAttemptMTBSeconds.Desc>
+  <AM.AMSettings.Settings.ExecuteAttemptMTBSecondsEnemy>Automatic Execution Average Interval (Enemy)</AM.AMSettings.Settings.ExecuteAttemptMTBSecondsEnemy>
+  <AM.AMSettings.Settings.ExecuteAttemptMTBSecondsEnemy.Desc>This is the average time, in seconds, at which enemy pawns will attempt to start an execution animation on the target they are currently fighting.
+For example, if this is set to 5 and an enemy is fighting in melee, an execution animation will be triggered on average after 5 seconds.
+This does not affect execution cooldown, which is a pawn-specific stat.
+
+Lower values can greatly impact performance on populated maps.</AM.AMSettings.Settings.ExecuteAttemptMTBSecondsEnemy.Desc>
+  <AM.AMSettings.Settings.AnimalsCanBeExecuted>Animals Can Be Executed</AM.AMSettings.Settings.AnimalsCanBeExecuted>
+  <AM.AMSettings.Settings.AnimalsCanBeExecuted.Desc>Allows animals to be executed.
+You are a bad person if you enable this.</AM.AMSettings.Settings.AnimalsCanBeExecuted.Desc>
+  <AM.AMSettings.Settings.ExecutionLethalityModifier>Execution Lethality Modifier</AM.AMSettings.Settings.ExecutionLethalityModifier>
+  <AM.AMSettings.Settings.ExecutionLethalityModifier.Desc>A general modifier on the lethality of execution animations. Higher values make executions more lethal. Affects all pawns.</AM.AMSettings.Settings.ExecutionLethalityModifier.Desc>
+  <AM.AMSettings.Settings.ExecutionsOnFriendliesAreNotLethal>Executions Are Non Lethal On Friendlies</AM.AMSettings.Settings.ExecutionsOnFriendliesAreNotLethal>
+  <AM.AMSettings.Settings.ExecutionsOnFriendliesAreNotLethal.Desc>If enabled, execution animations on friendly pawns are always non-lethal regardless of other settings.
+Prisoners and slaves are considered friendly.
+
+Useful when trying to stop a mental break or prisoner uprising without causing a bloodbath.</AM.AMSettings.Settings.ExecutionsOnFriendliesAreNotLethal.Desc>
+  <AM.AMSettings.Settings.ExecutionArmorCoefficient>Execution Armor Strength</AM.AMSettings.Settings.ExecutionArmorCoefficient>
+  <AM.AMSettings.Settings.ExecutionArmorCoefficient.Desc>A multiplier on the effectiveness of armor when calculating execution animation outcome.
+Lower values decrease the effect of armor on the outcome, higher values increase the strength of armor.
+Set to 0% to make armor be ignored.</AM.AMSettings.Settings.ExecutionArmorCoefficient.Desc>
+  <AM.AMSettings.Settings.ExecutionsCanDestroyBodyParts>Executions Can Destroy Body Parts</AM.AMSettings.Settings.ExecutionsCanDestroyBodyParts>
+  <AM.AMSettings.Settings.ExecutionsCanDestroyBodyParts.Desc>If true, executions can destroy specific vital body parts, such as the heart or head.
+If false, the pawn is simply killed by &apos;magic&apos; (no specific part takes damage)
+Note: if disabled, combat log generation does not work properly for the execution, and will give a default message: &quot;&lt;i&gt;name was killed.&lt;/i&gt;&quot;</AM.AMSettings.Settings.ExecutionsCanDestroyBodyParts.Desc>
+  <AM.AMSettings.Settings.MeleeSkillExecCooldownFactor>Amount Skill Affects Execution Cooldown</AM.AMSettings.Settings.MeleeSkillExecCooldownFactor>
+  <AM.AMSettings.Settings.MeleeSkillExecCooldownFactor.Desc>The amount that melee skill affects execution cooldown time.
+Higher melee skill means lower cooldown, changing this value increases or decreases the effect of melee skill.
+Set to 0% to disable melee skill as a factor.
+
+Note: only affects friendly pawns.</AM.AMSettings.Settings.MeleeSkillExecCooldownFactor.Desc>
+  <AM.AMSettings.Settings.FriendlyExecCooldownFactor>Execution Cooldown Factor (Friendly)</AM.AMSettings.Settings.FriendlyExecCooldownFactor>
+  <AM.AMSettings.Settings.FriendlyExecCooldownFactor.Desc>This adjust the execution cooldown time for friendly pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn&apos;s stats.</AM.AMSettings.Settings.FriendlyExecCooldownFactor.Desc>
+  <AM.AMSettings.Settings.EnemyExecCooldownFactor>Execution Cooldown Factor (Enemy)</AM.AMSettings.Settings.EnemyExecCooldownFactor>
+  <AM.AMSettings.Settings.EnemyExecCooldownFactor.Desc>This adjust the execution cooldown time for hostile pawns. Lower values decrease the cooldown. You can see the final cooldown time in the pawn&apos;s stats.</AM.AMSettings.Settings.EnemyExecCooldownFactor.Desc>
+  <AM.AMSettings.Settings.MinDuelDuration>Min Duel Duration</AM.AMSettings.Settings.MinDuelDuration>
+  <AM.AMSettings.Settings.MinDuelDuration.Desc>The minimum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.</AM.AMSettings.Settings.MinDuelDuration.Desc>
+  <AM.AMSettings.Settings.MaxDuelDuration>Max Duel Duration</AM.AMSettings.Settings.MaxDuelDuration>
+  <AM.AMSettings.Settings.MaxDuelDuration.Desc>The maximum number of attacks in a duel. Just affects the duration of the animation, has no impact on the outcome of the duel.</AM.AMSettings.Settings.MaxDuelDuration.Desc>
+  <AM.AMSettings.Settings.FriendlyDuelCooldown>Friendly Duel Cooldown</AM.AMSettings.Settings.FriendlyDuelCooldown>
+  <AM.AMSettings.Settings.FriendlyDuelCooldown.Desc>The cooldown time, in seconds, after a friendly duel where a friendly duel cannot be started again.</AM.AMSettings.Settings.FriendlyDuelCooldown.Desc>
+  <AM.AMSettings.Settings.Header.Visuals>Visuals</AM.AMSettings.Settings.Header.Visuals>
+  <AM.AMSettings.Settings.ShowHands>Show Hands</AM.AMSettings.Settings.ShowHands>
+  <AM.AMSettings.Settings.ShowHands.Desc>Should pawn hands be displayed holding melee weapons?</AM.AMSettings.Settings.ShowHands.Desc>
+  <AM.AMSettings.Settings.Gore_DamageEffect>Damage Effect</AM.AMSettings.Settings.Gore_DamageEffect>
+  <AM.AMSettings.Settings.Gore_DamageEffect.Desc>Enable or disable the damage affect in animations.
+The damage effect is normally a small, temporary puff of blood.</AM.AMSettings.Settings.Gore_DamageEffect.Desc>
+  <AM.AMSettings.Settings.Gore_FloorBlood>Blood (filth)</AM.AMSettings.Settings.Gore_FloorBlood>
+  <AM.AMSettings.Settings.Gore_FloorBlood.Desc>Enable or disable the spawning of blood in animations.
+The blood is filth that must be cleaned up. Includes modded blood and mechanoid blood (oil).</AM.AMSettings.Settings.Gore_FloorBlood.Desc>
+  <AM.AMSettings.Settings.CorpseOffsetMode>Corpse Offset Mode</AM.AMSettings.Settings.CorpseOffsetMode>
+  <AM.AMSettings.Settings.CorpseOffsetMode.Desc>In order for the animation to transition seamlessly to regular gameplay, execution animations leave the corpse of the victim in non-vanilla positions and rotations.
+This offset can be confusing however, because the corpse no longer occupies the center of the tile.
+&lt;b&gt;Note:&lt;/b&gt; The offset corpses are reset after a save-reload.</AM.AMSettings.Settings.CorpseOffsetMode.Desc>
+  <AM.AMSettings.Settings.MoveAnimSpeedCoef>Move Animation Speed</AM.AMSettings.Settings.MoveAnimSpeedCoef>
+  <AM.AMSettings.Settings.MoveAnimSpeedCoef.Desc>Changes the speed of the movement animations.
+Higher values increase the speed. This is just a visual change, it obviously doesn&apos;t change the pawn&apos;s movement speed.</AM.AMSettings.Settings.MoveAnimSpeedCoef.Desc>
+  <AM.AMSettings.Settings.SpeedUpAttackAnims>Increase Animation Speed When Attacks Are Fast</AM.AMSettings.Settings.SpeedUpAttackAnims>
+  <AM.AMSettings.Settings.SpeedUpAttackAnims.Desc>If enabled, the speed of melee attack animations will be automatically increased to match the pawn&apos;s melee speed.
+If false, the attack animation speed will never change however the animation may be interrupted by the next attack animation starting before the last one ended.
+This is a purely visual change and does not affect combat.</AM.AMSettings.Settings.SpeedUpAttackAnims.Desc>
+  <AM.AMSettings.Settings.FlavourMTB>Idle Animation Average Interval</AM.AMSettings.Settings.FlavourMTB>
+  <AM.AMSettings.Settings.FlavourMTB.Desc>Pawns standing with their weapon out (such as when drafted) will sometimes play an animation where they swing their weapon about, flourish it etc.
+This option controls the average time, in seconds, between the occurrence of this animation.
+Set to 0 to disable the animations entirely.</AM.AMSettings.Settings.FlavourMTB.Desc>
+  <AM.AMSettings.Settings.AttackPauseDuration>Attack Pause Duration</AM.AMSettings.Settings.AttackPauseDuration>
+  <AM.AMSettings.Settings.AttackPauseDuration.Desc>When doing a regular melee attack, the animation will very briefly pause at the point when the weapon intersects the target.
+This lets you know whether an attack connected, as well as giving the hit a bit more visual &lt;i&gt;oomph&lt;/i&gt;.
+This setting changes the duration of that pause, or disables it entirely. This is a purely visual change and does not affect combat.</AM.AMSettings.Settings.AttackPauseDuration.Desc>
+  <AM.AMSettings.Settings.TrailColor>Weapon Trail Color</AM.AMSettings.Settings.TrailColor>
+  <AM.AMSettings.Settings.TrailColor.Desc>The base color of weapon trails. If you set the alpha to 0, trails will be disabled.</AM.AMSettings.Settings.TrailColor.Desc>
+  <AM.AMSettings.Settings.TrailLengthScale>Weapon Trail Length</AM.AMSettings.Settings.TrailLengthScale>
+  <AM.AMSettings.Settings.TrailLengthScale.Desc>A multiplier on the length of weapon trails. If 0%, trails are disabled.</AM.AMSettings.Settings.TrailLengthScale.Desc>
+  <AM.AMSettings.Settings.DrawNamesInAnimation>Draw Names In Animation</AM.AMSettings.Settings.DrawNamesInAnimation>
+  <AM.AMSettings.Settings.DrawNamesInAnimation.Desc>If true, the name of pawns is drawn below them, just like in the base game.
+If false, the name is not drawn, for a more cinematic animation.</AM.AMSettings.Settings.DrawNamesInAnimation.Desc>
+  <AM.AMSettings.Settings.ShowExecutionMotes>Show Execution Outcome Text</AM.AMSettings.Settings.ShowExecutionMotes>
+  <AM.AMSettings.Settings.ShowExecutionMotes.Desc>Enables or disables the text popup that shows the outcome of an execution (i.e. injure, down or kill) when an execution animation plays.</AM.AMSettings.Settings.ShowExecutionMotes.Desc>
+  <AM.AMSettings.Settings.Header.Performance>Performance</AM.AMSettings.Settings.Header.Performance>
+  <AM.AMSettings.Settings.MaxProcessingThreads>Max Processing Threads</AM.AMSettings.Settings.MaxProcessingThreads>
+  <AM.AMSettings.Settings.MaxProcessingThreads.Desc>The maximum number of CPU threads to use when processing pawns for automatic executions &amp; lasso usage.
+If set to 0, the thread count is automatically determined based on your CPU, and if set to 1 then multi-threaded processing is disabled.
+Set to 1 if you experience error spam caused by a mod conflict, although it will decrease performance considerably.</AM.AMSettings.Settings.MaxProcessingThreads.Desc>
+  <AM.AMSettings.Settings.MultithreadedMatrixCalculations>Multithreaded Matrix Calculations</AM.AMSettings.Settings.MultithreadedMatrixCalculations>
+  <AM.AMSettings.Settings.MultithreadedMatrixCalculations.Desc>When enabled, multiple CPU threads are used to calculate complex matrix transformation needed for animations.
+The number of threads is given by the Max Processing Threads setting.</AM.AMSettings.Settings.MultithreadedMatrixCalculations.Desc>
+  <AM.AMSettings.Settings.OffscreenCulling>Offscreen Culling</AM.AMSettings.Settings.OffscreenCulling>
+  <AM.AMSettings.Settings.OffscreenCulling.Desc>When enabled, offscreen animations are not drawn to save time and increase FPS.
+This option is only here in case there are unexpected bugs related to this culling.</AM.AMSettings.Settings.OffscreenCulling.Desc>
+  <AM.AMSettings.Settings.ScanTickInterval>Scan Tick Interval</AM.AMSettings.Settings.ScanTickInterval>
+  <AM.AMSettings.Settings.ScanTickInterval.Desc>The number of ticks between scanning all pawns on the map for automatic execution/duel/lasso opportunities.
+Higher values can increase FPS at the cost of less responsiveness.</AM.AMSettings.Settings.ScanTickInterval.Desc>
+  <AM.AMSettings.Settings.Header.Other>Other</AM.AMSettings.Settings.Header.Other>
+  <AM.AMSettings.Settings.FriendlyPawnLethalityBonus>Friendly Pawn Lethality Bonus</AM.AMSettings.Settings.FriendlyPawnLethalityBonus>
+  <AM.AMSettings.Settings.FriendlyPawnLethalityBonus.Desc>Positive values act as a lethality bonus for friendly pawns (including slaves) in execution &amp; duel outcomes, meaning that they will be lethal more often.</AM.AMSettings.Settings.FriendlyPawnLethalityBonus.Desc>
+  <AM.AMSettings.Settings.FriendlyPawnDuelBonus>Friendly Pawn Duel Ability Bonus</AM.AMSettings.Settings.FriendlyPawnDuelBonus>
+  <AM.AMSettings.Settings.FriendlyPawnDuelBonus.Desc>Positive values act as a duel ability bonus for friendly pawns (including slaves), meaning that they will win duels more often.</AM.AMSettings.Settings.FriendlyPawnDuelBonus.Desc>
+  <AM.AMSettings.Settings.NormalDist>Duel Normal Distribution</AM.AMSettings.Settings.NormalDist>
+  <AM.AMSettings.Settings.NormalDist.Desc>Higher values make duel outcomes less dependent on duel ability and more on randomness, lower values make the outcome more dependent on duel ability and less on randomness.
+
+Technical: This is the standard deviation used in the duel outcome normal distribution curve.</AM.AMSettings.Settings.NormalDist.Desc>
+  <AM.AMSettings.Settings.WarnOfFriendlyExecution>Show Warning Before Executing Friendly</AM.AMSettings.Settings.WarnOfFriendlyExecution>
+  <AM.AMSettings.Settings.WarnOfFriendlyExecution.Desc>Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Shift] key when selecting a friendly pawn for execution.</AM.AMSettings.Settings.WarnOfFriendlyExecution.Desc>
+  <AM.AMSettings.Settings.SendStatistics>Send Anonymous Patch Statistics</AM.AMSettings.Settings.SendStatistics>
+  <AM.AMSettings.Settings.SendStatistics.Desc>When a mod is missing a patch (that allows the melee weapons to do animations), the ID of said mod is anonymously logged to let this mod&apos;s author know that a patch is needed. The &lt;b&gt;only&lt;/b&gt; information logged is: mod ID, mod name, weapon count.
+You can opt out of this functionality by disabling this option.
+Note: logging does not occur the first time you run the game with this mod.</AM.AMSettings.Settings.SendStatistics.Desc>
+
+  <AM.AMSettings.Settings.ChanceToFailMulti>Execution Failure Chance (Multiplier)</AM.AMSettings.Settings.ChanceToFailMulti>
+  <AM.AMSettings.Settings.ChanceToFailMulti.Desc>A general multiplier on the chance that an execution attempt will result in failure, stunning the attacking pawn and leaving them vulnerable for a short time.
+Affects all pawns. The failure chance greatly decreases with melee skill.</AM.AMSettings.Settings.ChanceToFailMulti.Desc>
+
+  <AM.ExecutionOutcome.Injured>Injured</AM.ExecutionOutcome.Injured>
+  <AM.ExecutionOutcome.Downed>Downed</AM.ExecutionOutcome.Downed>
+  <AM.ExecutionOutcome.Killed>Killed</AM.ExecutionOutcome.Killed>
+  <AM.ExecutionOutcome.Failed>Failed!</AM.ExecutionOutcome.Failed>
 
 </LanguageData>

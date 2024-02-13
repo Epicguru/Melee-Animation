@@ -1,0 +1,12 @@
+{
+  "TextureModID": "k4g.rww2",
+  "ItemDefName": "K4G_MeleeWeapon_WW2AmericanServiceBayonet",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.172101259,
+  "OffY": -0.0120774955,
+  "HandsMode": 1,
+  "BladeStart": 0.07253912,
+  "BladeEnd": 0.446935058,
+  "MeleeWeaponType": 48
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "aoba.deadmanswitch.core",
+  "ItemDefName": "DMS_StunBaton",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.344202936,
+  "OffY": -0.003019249,
+  "Rotation": 45.0,
+  "BladeStart": 0.116772026,
+  "BladeEnd": 0.965202153,
+  "MeleeWeaponType": 1
+}

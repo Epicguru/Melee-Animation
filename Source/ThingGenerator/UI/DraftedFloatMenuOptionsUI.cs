@@ -70,7 +70,7 @@ public static class DraftedFloatMenuOptionsUI
         if (!pawn.IsColonistPlayerControlled)
             yield break;
 
-        // Downed pawns can't do shit.
+        // Downed pawns can't do anything.
         if (pawn.Downed)
             yield break;
 
@@ -87,6 +87,14 @@ public static class DraftedFloatMenuOptionsUI
 
         IEnumerable<FloatMenuOption> GetExecutionAttemptOption(Pawn target)
         {
+            // Skip everything if executions are not enabled.
+            // This hides the UI and avoids the processing.
+            if (!Core.Settings.EnableExecutions)
+            {
+                noExecEver = true;
+                yield break;
+            }
+
             var request = new ExecutionAttemptRequest
             {
                 CanUseLasso = lasso != null,
@@ -123,11 +131,13 @@ public static class DraftedFloatMenuOptionsUI
             if (target == pawn)
                 continue;
 
-            // Unique skills.
+            // Unique skills:
             foreach (var op in GenerateSkillOptions(pawn, target, skills))
                 yield return op;
 
             bool isEnemy = target.HostileTo(Faction.OfPlayer);
+            
+            // Lasso:
             if (lasso != null)
             {
                 var request = new GrappleAttemptRequest
@@ -136,7 +146,7 @@ public static class DraftedFloatMenuOptionsUI
                     Target = target,
                     DoNotCheckLasso = true,
                     GrappleSpotPickingBehaviour = isEnemy ? GrappleSpotPickingBehaviour.PreferAdjacent : GrappleSpotPickingBehaviour.Closest,
-                    OccupiedMask = smallMask
+                    OccupiedMask = smallMask                    
                 };
                 var grappleReport = controller.GetGrappleReport(request);
 
@@ -430,10 +440,13 @@ public static class DraftedFloatMenuOptionsUI
             var selectedAdjacent = report.PossibleExecutions.Where(p => p.LassoToHere == null).RandomElementByWeightWithFallback(p => (request.OnlyTheseAnimations != null ? 0.1f : 0f) + p.Animation.Probability);
             if (selectedAdjacent.IsValid)
             {
-                var startArgs = new AnimationStartParameters(selectedAdjacent.Animation.AnimDef, grappler, report.Target)
+                var outcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target, true);
+                var anim = outcome == ExecutionOutcome.Failure ? AM_DefOf.AM_Execution_Fail : selectedAdjacent.Animation.AnimDef;
+
+                var startArgs = new AnimationStartParameters(anim, grappler, report.Target)
                 {
                     FlipX = selectedAdjacent.Animation.FlipX,
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
+                    ExecutionOutcome = outcome
                 };
 
                 if (!startArgs.TryTrigger())
@@ -451,10 +464,13 @@ public static class DraftedFloatMenuOptionsUI
             var selectedLasso = report.PossibleExecutions.Where(p => p.LassoToHere != null).RandomElementByWeightWithFallback(p => (request.OnlyTheseAnimations != null ? 0.1f : 0f) + p.Animation.Probability);
             if (selectedLasso.IsValid)
             {
-                var startArgs2 = new AnimationStartParameters(selectedLasso.Animation.AnimDef, grappler, report.Target)
+                var outcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target, true);
+                var anim = outcome == ExecutionOutcome.Failure ? AM_DefOf.AM_Execution_Fail : selectedLasso.Animation.AnimDef;
+
+                var startArgs2 = new AnimationStartParameters(anim, grappler, report.Target)
                 {
                     FlipX = selectedLasso.Animation.FlipX,
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
+                    ExecutionOutcome = outcome
                 };
 
                 if (!JobDriver_GrapplePawn.GiveJob(grappler, target, selectedLasso.LassoToHere.Value, false, startArgs2))
@@ -483,7 +499,7 @@ public static class DraftedFloatMenuOptionsUI
         string label = "AM.Exec.FloatMenu".Translate(targetName) + append;
         string tt = "AM.Exec.FloatMenu.Tip";
         var probs = new OutcomeUtility.ProbabilityReport();
-        OutcomeUtility.GenerateRandomOutcome(grappler, target, probs);
+        OutcomeUtility.GenerateRandomOutcome(grappler, target, true, probs);
         tt = tt.Translate(grappler.Name.ToStringShort, targetName, probs.ToString());
         var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
 

@@ -9,6 +9,8 @@ public class PawnColumnWorker_Execute : PawnColumnWorker_Base
 {
     protected override Texture2D Icon => Content.IconExecute;
 
+    public override bool VisibleCurrently => base.VisibleCurrently && Core.Settings.EnableExecutions;
+
     protected override string MakeTooltip(PawnMeleeData data)
     {
         var tip = data.AutoExecute switch
