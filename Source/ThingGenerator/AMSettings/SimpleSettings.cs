@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
+using System.Security;
 using System.Text;
 using AM.UI;
 using AM.Video;
@@ -38,6 +40,12 @@ public abstract class SimpleSettingsBase : ModSettings
 
 public static class SimpleSettings
 {
+    [DebugOutput("AnimationMod", onlyWhenPlaying = false)]
+    public static void OutputTranslationKeys()
+    {
+        Log.Message(GenerateTranslationKeys(Core.Settings));
+    }
+
     public delegate float DrawHandler(SimpleSettingsBase settings, MemberWrapper member, Rect area);
 
     public static readonly Dictionary<Type, DrawHandler> DrawHandlers = new Dictionary<Type, DrawHandler>
@@ -78,7 +86,7 @@ public static class SimpleSettings
 
         void Emit(string key, string contents)
         {
-            str.Append('<').Append(key).Append("><").Append(contents).Append("></").Append(key).AppendLine(">");
+            str.Append('<').Append(key).Append(">").Append(SecurityElement.Escape(contents)).Append("</").Append(key).AppendLine(">");
         }
 
         foreach (var member in holder.Members.Values)
@@ -86,12 +94,14 @@ public static class SimpleSettings
             var header = member.TryGetCustomAttribute<HeaderAttribute>();
             if (header != null)
             {
-                Emit($"{settingsType}.Header{header.order}", header.header);
+                Emit($"{settingsType}.Header.{header.header.Replace(' ', '_')}", header.header);
             }
 
-            var label = member.TryGetCustomAttribute<LabelAttribute>();
-            Emit()
+            Emit($"{member.TranslationName}", member.DisplayName);
+            Emit($"{member.TranslationName}.Desc", SecurityElement.Escape(member.GetDescription()));
         }
+
+        return str.ToString();
     }
 
     public static void Init(SimpleSettingsBase settings)
@@ -304,7 +314,6 @@ public static class SimpleSettings
         inRect.y += 28;
         inRect.height -= 28;
 
-
         Widgets.BeginScrollView(inRect, ref holder.UI_Scroll, new Rect(0, 0, holder.UI_LastSize.x, holder.UI_LastSize.y));
         var size = new Vector2(inRect.width - 20, 0);
         var pos = Vector2.zero;
@@ -329,7 +338,7 @@ public static class SimpleSettings
                 if(isCurrentTab)
                 {
                     var headerRect = new Rect(new Vector2(pos.x, pos.y + 12), new Vector2(inRect.width - 20, headerHeight));
-                    string headerText = $"{settings.GetType().FullName}.Header{header.order}".TryTranslate(out var found) ? found : header.header;
+                    string headerText = $"{settings.GetType().FullName}.Header.{header.header.Replace(' ', '_')}".TryTranslate(out var found) ? found : header.header;
                     Widgets.Label(headerRect, $"<color=cyan><b><size=22>{headerText}</size></b></color>");
 
                     pos.y += headerHeight + 12;
@@ -343,6 +352,10 @@ public static class SimpleSettings
 
             var handler = SelectDrawHandler(member);
             if (handler == null)
+                continue;
+
+            // Conditional visibility:
+            if (!member.ShouldDraw(settings, holder))
                 continue;
 
             if (!didHeader)
@@ -360,10 +373,6 @@ public static class SimpleSettings
                 pos.y += 12;
                 size.y += 12;
             }
-
-            // Conditional visibility:
-            if (!member.ShouldDraw(settings, holder))
-                continue;
 
             var area = new Rect(new Vector2(pos.x + 20, pos.y), new Vector2(inRect.width - 40, inRect.height - pos.y));
             float height = handler(settings, member, area);
@@ -391,7 +400,7 @@ public static class SimpleSettings
             var area = new Rect(tabBar.x + tabWidth * i, tabBar.y, tabWidth, tabBar.height);
             bool active = holder.UI_SelectedTab == tab;
             GUI.color = active ? Color.grey : Color.white;
-            string tabText = $"{settings.GetType().FullName}.{tab}".TryTranslate(out var found) ? found : tab;
+            string tabText = $"{settings.GetType().FullName}.Header.{tab.Replace(' ', '_')}".TryTranslate(out var found) ? found : tab;
             if (Widgets.ButtonText(area.ExpandedBy(-2, 0), $"<b><color=lightblue>{tabText}</color></b>"))
                 holder.UI_SelectedTab = tab;
             if (active)

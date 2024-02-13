@@ -149,6 +149,7 @@
 
   <AM.AMSettings.Presets.NoLassos>No Lassos</AM.AMSettings.Presets.NoLassos>
   <AM.AMSettings.Presets.NoLassos.Desc>Everything is enabled except lassos. You can still craft and use lassos manually if you want but enemies will not spawn with or use lassos.
+
 * Adds melee attack animations.
 * Adds melee weapon idle animations
 * Adds duels
@@ -156,12 +157,13 @@
 * Adds Unique Skills</AM.AMSettings.Presets.NoLassos.Desc>
 
   <AM.AMSettings.Presets.VanillaPlus>Vanilla+</AM.AMSettings.Presets.VanillaPlus>
-  <AM.AMSettings.Presets.VanillaPlus.Desc>Keeps things very close to vanilla combat. Your pawns will not do executions or use lassos unless you manually instruct them to. Enemies will never do executions or use lassos.
+  <AM.AMSettings.Presets.VanillaPlus.Desc>Keeps things very close to vanilla combat. Your pawns will not use lassos unless you manually instruct them to. Your pawns can not do executions, ever. Enemies will never do executions or use lassos.
+
 * Adds melee attack animations.
-* Adds melee weapon idle animations</AM.AMSettings.Presets.VanillaPlus.Desc>
+* Adds melee weapon idle animations
+* Lassos can be used by friendly pawns, but must be equipped and triggered manually.</AM.AMSettings.Presets.VanillaPlus.Desc>
 
-
-  <AM.AMSettings.Settings.Header0>LKAJSDLKJAKLSD</AM.AMSettings.Settings.Header0>
+  <AM.AMSettings.Settings.Header.General>LKAJSDLKJAKLSD</AM.AMSettings.Settings.Header.General>
 
 
 </LanguageData>
