@@ -21,7 +21,7 @@ public class ActionController
     {
         var building = cell.GetEdifice(map);
         if (building == null)
-            return cell.WalkableByAny(map);
+            return true;
 
         if (building.def.fillPercent <= Core.Settings.MaxFillPctForLasso)
             return true;

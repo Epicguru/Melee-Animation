@@ -79,6 +79,9 @@ public static class OutcomeUtility
             case ExecutionOutcome.Nothing:
                 return true;
 
+            case ExecutionOutcome.Failure:
+                return Failure(attacker, target, args);
+
             case ExecutionOutcome.Damage:
                 return Damage(attacker, target, args);
 
@@ -131,6 +134,19 @@ public static class OutcomeUtility
                 Core.Log(msg);
         }
 
+        var outcome = ExecutionOutcome.Nothing;
+
+        // Before anything else: check for failure chance.
+        float chanceToFail = RemapClamped(0, 20, 0.2f, 0.02f, attackerMeleeSkill) * Core.Settings.ChanceToFailMulti;
+        Log($"Chance to fail: {chanceToFail:P1} based on melee skill {attackerMeleeSkill:F1}");
+        bool willFail = Rand.Chance(chanceToFail);
+        if (willFail && report == null)
+        {
+            Log("Failed.");
+            outcome = ExecutionOutcome.Failure;
+            return outcome;
+        }
+
         // Armor calculations for down or kill.
         var armorStat = dmgDef?.armorCategory?.armorRatingStat ?? StatDefOf.ArmorRating_Sharp;
         Log($"Armor stat: {armorStat}, weapon pen: {weaponPen:F2}, lethality: {lethality:F2}");
@@ -159,9 +175,8 @@ public static class OutcomeUtility
 
         float preventKillCoef = preventKill ? 0f : 1f;
         if (report != null)
-            report.KillChance = preventKillCoef * chanceToPen * lethality; // Absolute chance to kill.
+            report.KillChance = preventKillCoef * chanceToPen * lethality * (1 - chanceToFail); // Absolute chance to kill.
 
-        var outcome = ExecutionOutcome.Nothing;
         if (canPen && !preventKill && attemptKill)
         {
             Log("Killed!");
@@ -175,8 +190,8 @@ public static class OutcomeUtility
         Log(canPen ? $"Chance to down, based on melee skill of {attackerMeleeSkill:N1}: {downChance:P1}" : "Cannot down, pen chance failed. Will damage.");
         if (report != null)
         {
-            report.DownChance = (1 - report.KillChance) * chanceToPen * downChance;
-            report.InjureChance = 1 - report.KillChance - report.DownChance;
+            report.DownChance = (1 - report.KillChance) * chanceToPen * downChance * (1 - chanceToFail);
+            report.InjureChance = (1 - report.KillChance - report.DownChance) * (1 - chanceToFail);
 
             float sum = report.KillChance + report.DownChance + report.InjureChance;
             if (Math.Abs(sum - 1f) > 0.001f)
@@ -371,7 +386,7 @@ public static class OutcomeUtility
         return true;
     }
 
-    private static bool Down(Pawn attacker, Pawn pawn, in AdditionalArgs args)
+    private static bool Down(Pawn attacker, Pawn pawn, in AdditionalArgs _)
     {
         // Give the downed hediff.
         var h = pawn.health.AddHediff(AM_DefOf.AM_KnockedOut);
@@ -380,6 +395,14 @@ public static class OutcomeUtility
             Core.Error($"Failed to give {pawn} the knocked out hediff!");
         
         return h != null;
+    }
+
+    private static bool Failure(Pawn attacker, Pawn target, in AdditionalArgs _)
+    {
+        // Stun both parties, but the attacker is stunned for longer leaving them vulnerable.
+        attacker.stances?.stunner?.StunFor(100, attacker, false);
+        target.stances?.stunner?.StunFor(30, attacker, false);
+        return true;
     }
 
     private static bool IsDeathless(Pawn pawn)

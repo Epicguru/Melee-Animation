@@ -4,6 +4,7 @@ using System;
 using AM.Outcome;
 using UnityEngine;
 using Verse;
+using Verse.Noise;
 
 namespace AM.Events.Workers
 {
@@ -43,9 +44,10 @@ namespace AM.Events.Workers
             {
                 (string outcome, Color color) = animator.ExecutionOutcome switch
                 {
-                    ExecutionOutcome.Damage => ("Injured", Color.yellow),
-                    ExecutionOutcome.Down   => ("Downed", Color.Lerp(Color.yellow, Color.magenta, 0.35f)),
-                    ExecutionOutcome.Kill   => ("Killed", Color.Lerp(Color.white, Color.red, 0.7f)),
+                    ExecutionOutcome.Damage => ("AM.ExecutionOutcome.Injured".Trs(), Color.yellow),
+                    ExecutionOutcome.Down => ("AM.ExecutionOutcome.Downed".Trs(), Color.Lerp(Color.yellow, Color.magenta, 0.35f)),
+                    ExecutionOutcome.Kill => ("AM.ExecutionOutcome.Killed".Trs(), Color.Lerp(Color.white, Color.red, 0.6f)),
+                    ExecutionOutcome.Failure => ("AM.ExecutionOutcome.Failed".Trs(), (Color)new Color32(255, 31, 165, 255)),
                     _ => (null, default)
                 };
                 if (outcome != null)
@@ -55,7 +57,11 @@ namespace AM.Events.Workers
             switch (animator.ExecutionOutcome)
             {
                 case ExecutionOutcome.Nothing:
-                    return;
+                    break;
+
+                case ExecutionOutcome.Failure:
+                    DoFailure(i, pawn, killer, e);
+                    break;
 
                 case ExecutionOutcome.Damage:
                     Injure(i, pawn, killer, e);
@@ -79,7 +85,7 @@ namespace AM.Events.Workers
                     return;
 
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(animator.ExecutionOutcome.ToString());
             }
 
 
@@ -88,9 +94,22 @@ namespace AM.Events.Workers
             // with the victim standing back up.
         }
 
-        private void Injure(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
+        private static void DoFailure(AnimEventInput i, Pawn pawn, Pawn attacker, KillPawnEvent @event)
         {
-            var args = new OutcomeUtility.AdditionalArgs()
+            var args = new OutcomeUtility.AdditionalArgs
+            {
+                BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
+                DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
+                LogGenDef = @event.BattleLogDef.AsDefOfType(AM_DefOf.AM_Execution_Generic),
+                Weapon = attacker.GetFirstMeleeWeapon(),
+            };
+
+            OutcomeUtility.PerformOutcome(ExecutionOutcome.Failure, attacker, pawn, args);
+        }
+
+        private static void Injure(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
+        {
+            var args = new OutcomeUtility.AdditionalArgs
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
@@ -102,9 +121,9 @@ namespace AM.Events.Workers
             OutcomeUtility.PerformOutcome(ExecutionOutcome.Damage, killer, pawn, args);
         }
 
-        private void Down(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
+        private static void Down(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
         {
-            var args = new OutcomeUtility.AdditionalArgs()
+            var args = new OutcomeUtility.AdditionalArgs
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),
@@ -115,9 +134,9 @@ namespace AM.Events.Workers
             OutcomeUtility.PerformOutcome(ExecutionOutcome.Down, killer, pawn, args);
         }
 
-        private void Kill(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
+        private static void Kill(AnimEventInput i, Pawn pawn, Pawn killer, KillPawnEvent @event)
         {
-            var args = new OutcomeUtility.AdditionalArgs()
+            var args = new OutcomeUtility.AdditionalArgs
             {
                 BodyPartDef = @event.TargetBodyPart.AsDefOfType<BodyPartDef>(),
                 DamageDef = @event.DamageDef.AsDefOfType(DamageDefOf.Cut),

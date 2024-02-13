@@ -580,9 +580,10 @@ namespace AM.UI
 
             if (ui.ButtonTextLabeled("Execution outcome: ", executionOutcome.ToString()))
             {
-                var options = new ExecutionOutcome[]
+                var options = new[]
                 {
                     ExecutionOutcome.Nothing,
+                    ExecutionOutcome.Failure,
                     ExecutionOutcome.Damage,
                     ExecutionOutcome.Down,
                     ExecutionOutcome.Kill
