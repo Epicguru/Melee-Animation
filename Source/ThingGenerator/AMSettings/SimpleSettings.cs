@@ -86,7 +86,7 @@ public static class SimpleSettings
 
         void Emit(string key, string contents)
         {
-            str.Append('<').Append(key).Append(">").Append(SecurityElement.Escape(contents)).Append("</").Append(key).AppendLine(">");
+            str.Append("  <").Append(key).Append(">").Append(SecurityElement.Escape(contents)).Append("</").Append(key).AppendLine(">");
         }
 
         foreach (var member in holder.Members.Values)
@@ -94,7 +94,7 @@ public static class SimpleSettings
             var header = member.TryGetCustomAttribute<HeaderAttribute>();
             if (header != null)
             {
-                Emit($"{settingsType}.Header.{header.header.Replace(' ', '_')}", header.header);
+                Emit($"{settingsType}.Header.{EscapeXmlName(header.header)}", header.header);
             }
 
             Emit($"{member.TranslationName}", member.DisplayName);
@@ -102,6 +102,17 @@ public static class SimpleSettings
         }
 
         return str.ToString();
+    }
+
+    private static string EscapeXmlName(string name) => ReplaceAll(name, stackalloc char[] { ' ', '&' }, '_');
+
+    private static string ReplaceAll(string input, ReadOnlySpan<char> chars, char replacement)
+    {
+        for (int i = 0; i < chars.Length; i++)
+        {
+            input = input.Replace(chars[i], replacement);
+        }
+        return input;
     }
 
     public static void Init(SimpleSettingsBase settings)
@@ -338,7 +349,7 @@ public static class SimpleSettings
                 if(isCurrentTab)
                 {
                     var headerRect = new Rect(new Vector2(pos.x, pos.y + 12), new Vector2(inRect.width - 20, headerHeight));
-                    string headerText = $"{settings.GetType().FullName}.Header.{header.header.Replace(' ', '_')}".TryTranslate(out var found) ? found : header.header;
+                    string headerText = $"{settings.GetType().FullName}.Header.{EscapeXmlName(header.header)}".TryTranslate(out var found) ? found : header.header;
                     Widgets.Label(headerRect, $"<color=cyan><b><size=22>{headerText}</size></b></color>");
 
                     pos.y += headerHeight + 12;
