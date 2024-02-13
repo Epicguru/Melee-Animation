@@ -110,7 +110,7 @@ public static class OutcomeUtility
         return Mathf.Clamp01((float)normal.LeftProbability(diff));
     }
 
-    public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim, ProbabilityReport report = null)
+    public static ExecutionOutcome GenerateRandomOutcome(Pawn attacker, Pawn victim, bool canFail, ProbabilityReport report = null)
     {
         // Get lethality, adjusted by settings.
         float aL = attacker.GetStatValue(AM_DefOf.AM_Lethality);
@@ -120,13 +120,13 @@ public static class OutcomeUtility
         var damageDef = mainAttack.DamageDef;
         var corePart = GetCoreBodyPart(victim);
 
-        return GenerateRandomOutcome(damageDef, victim, corePart, mainAttack.ArmorPen, meleeSkill, aL, report);
+        return GenerateRandomOutcome(damageDef, victim, corePart, mainAttack.ArmorPen, meleeSkill, aL, canFail, report);
     }
 
     /// <summary>
     /// Generates a random execution outcome based on an lethality value.
     /// </summary>
-    public static ExecutionOutcome GenerateRandomOutcome(DamageDef dmgDef, Pawn victim, BodyPartRecord bodyPart, float weaponPen, float attackerMeleeSkill, float lethality, ProbabilityReport report = null)
+    public static ExecutionOutcome GenerateRandomOutcome(DamageDef dmgDef, Pawn victim, BodyPartRecord bodyPart, float weaponPen, float attackerMeleeSkill, float lethality, bool canFail, ProbabilityReport report = null)
     {
         static void Log(string msg)
         {
@@ -137,15 +137,17 @@ public static class OutcomeUtility
         var outcome = ExecutionOutcome.Nothing;
 
         // Before anything else: check for failure chance.
-        float chanceToFail = RemapClamped(0, 20, 0.2f, 0.02f, attackerMeleeSkill) * Core.Settings.ChanceToFailMulti;
+        float chanceToFail = canFail ? Mathf.Clamp01(RemapClamped(0, 20, 0.15f, 0.01f, attackerMeleeSkill) * Core.Settings.ChanceToFailMulti) : 0f;
         Log($"Chance to fail: {chanceToFail:P1} based on melee skill {attackerMeleeSkill:F1}");
         bool willFail = Rand.Chance(chanceToFail);
         if (willFail && report == null)
         {
-            Log("Failed.");
+            Log("Outcome: Failed.");
             outcome = ExecutionOutcome.Failure;
             return outcome;
         }
+        if (report != null)
+            report.FailureChance = chanceToFail;
 
         // Armor calculations for down or kill.
         var armorStat = dmgDef?.armorCategory?.armorRatingStat ?? StatDefOf.ArmorRating_Sharp;
@@ -190,12 +192,12 @@ public static class OutcomeUtility
         Log(canPen ? $"Chance to down, based on melee skill of {attackerMeleeSkill:N1}: {downChance:P1}" : "Cannot down, pen chance failed. Will damage.");
         if (report != null)
         {
-            report.DownChance = (1 - report.KillChance) * chanceToPen * downChance * (1 - chanceToFail);
-            report.InjureChance = (1 - report.KillChance - report.DownChance) * (1 - chanceToFail);
+            report.DownChance = (1 - report.KillChance - report.FailureChance) * chanceToPen * downChance;
+            report.InjureChance = (1 - report.KillChance - report.DownChance - report.FailureChance);
 
-            float sum = report.KillChance + report.DownChance + report.InjureChance;
+            float sum = report.KillChance + report.DownChance + report.InjureChance + report.FailureChance;
             if (Math.Abs(sum - 1f) > 0.001f)
-                Core.Error($"Bad percentage calculation ({sum})! Please tell the developer he is an idiot.");
+                Core.Warn($"Bad percentage calculation ({sum})! Please tell the developer he is an idiot.");
         }
 
         if (outcome == ExecutionOutcome.Nothing && canPen && Rand.Chance(downChance))
@@ -399,9 +401,8 @@ public static class OutcomeUtility
 
     private static bool Failure(Pawn attacker, Pawn target, in AdditionalArgs _)
     {
-        // Stun both parties, but the attacker is stunned for longer leaving them vulnerable.
-        attacker.stances?.stunner?.StunFor(100, attacker, false);
-        target.stances?.stunner?.StunFor(30, attacker, false);
+        // Stun the attacker for a bit.
+        attacker.stances?.stunner?.StunFor(60 * 3, attacker, false);
         return true;
     }
 
@@ -515,19 +516,21 @@ public static class OutcomeUtility
 
     public class ProbabilityReport
     {
+        public float FailureChance { get; set; }
         public float DownChance { get; set; }
         public float InjureChance { get; set; }
         public float KillChance { get; set; }
 
         public void Normalize()
         {
-            float sum = DownChance + InjureChance + KillChance;
+            float sum = DownChance + InjureChance + KillChance + FailureChance;
             if (sum == 0f)
                 return;
 
             DownChance /= sum;
             InjureChance /= sum;
             KillChance /= sum;
+            FailureChance /= sum;
         }
 
         private static string InColor(float pct)
@@ -537,6 +540,6 @@ public static class OutcomeUtility
             return $"<color={hex}>{pct*100:F0}%</color>";
         }
 
-        public override string ToString() => $"{"AM.ProbReport.Kill".Trs()}: {InColor(KillChance)}\n{"AM.ProbReport.Down".Trs()}: {InColor(DownChance)}\n{"AM.ProbReport.Injure".Trs()}: {InColor(InjureChance)}";
+        public override string ToString() => $"{"AM.ProbReport.Kill".Trs()}: {InColor(KillChance)}\n{"AM.ProbReport.Down".Trs()}: {InColor(DownChance)}\n{"AM.ProbReport.Injure".Trs()}: {InColor(InjureChance)}\n{"AM.ProbReport.Fail".Trs()}: {InColor(FailureChance)}";
     }
 }

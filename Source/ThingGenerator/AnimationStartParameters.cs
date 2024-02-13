@@ -70,6 +70,12 @@ namespace AM
             if (Animation == null || Map == null)
                 return false;
 
+            if (ExecutionOutcome == ExecutionOutcome.Failure && Animation.fixedOutcome != ExecutionOutcome.Failure)
+            {
+                Core.Error($"Execution outcome is set as Failure but the animation ({Animation}) does not have fixed Failure outcome. Report to developer.");
+                return false;
+            }
+
             return Animation.pawnCount == PawnCount();
         }
 

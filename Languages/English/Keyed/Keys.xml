@@ -23,6 +23,7 @@
   <AM.ProbReport.Kill>Kill</AM.ProbReport.Kill>
   <AM.ProbReport.Down>Down</AM.ProbReport.Down>
   <AM.ProbReport.Injure>Injure</AM.ProbReport.Injure>
+  <AM.ProbReport.Fail>Fail</AM.ProbReport.Fail>
 
   <!-- Duel command messages -->
   <AM.Error.Duel.Internal>Int.Error: {Error}</AM.Error.Duel.Internal>

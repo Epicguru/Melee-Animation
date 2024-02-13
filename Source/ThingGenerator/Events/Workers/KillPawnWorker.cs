@@ -1,10 +1,9 @@
-﻿using AM.UI;
+﻿using AM.Outcome;
+using AM.UI;
 using RimWorld;
 using System;
-using AM.Outcome;
 using UnityEngine;
 using Verse;
-using Verse.Noise;
 
 namespace AM.Events.Workers
 {
@@ -60,6 +59,11 @@ namespace AM.Events.Workers
                     break;
 
                 case ExecutionOutcome.Failure:
+
+                    // Sanity check:
+                    if (i.Animator.Def.fixedOutcome != ExecutionOutcome.Failure)
+                        Core.Error($"ExecutionOutcome is set to Failure, but the animation definition {i.Animator.Def.defName} does not have a fixed outcome of Failure. Report to developer.");
+
                     DoFailure(i, pawn, killer, e);
                     break;
 

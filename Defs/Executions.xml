@@ -29,6 +29,16 @@
   </AM.AnimDef>
 
   <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Fail</defName>
+    <label>Execution: Fail</label>
+    <data>Execution_Fail.json</data>
+    <fixedOutcome>Failure</fixedOutcome>
+    <canEditProbability>false</canEditProbability>
+    <weaponFilter Class="AM.Reqs.True" />
+    <relativeProbability>0</relativeProbability> <!-- Do not occur naturally, the outcome worker will cause it to happen when necessary. -->
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
     <defName>AM_Execution_Shank</defName>
     <label>Execution: Shank</label>
     <data>Execution_Shank.json</data>

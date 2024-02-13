@@ -147,8 +147,15 @@ public class MapPawnProcessor : IDisposable
                 var finalArgs = args with
                 {
                     // Generate outcome here to avoid threading errors:
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn, true),
                 };
+
+                // Force failure animation for failure outcome.
+                if (finalArgs.ExecutionOutcome == ExecutionOutcome.Failure)
+                {
+                    finalArgs.Animation = AM_DefOf.AM_Execution_Fail;
+                }
+
                 bool worked = finalArgs.TryTrigger();
 
                 // Set execution cooldown.
@@ -161,8 +168,14 @@ public class MapPawnProcessor : IDisposable
                 var finalArgs = args with
                 {
                     // Generate outcome here to avoid threading errors:
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn),
+                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn, true),
                 };
+
+                // Force failure animation for failure outcome.
+                if (finalArgs.ExecutionOutcome == ExecutionOutcome.Failure)
+                {
+                    finalArgs.Animation = AM_DefOf.AM_Execution_Fail;
+                }
 
                 // Lasso.
                 if (!JobDriver_GrapplePawn.GiveJob(args.MainPawn, args.SecondPawn, pair.lassoToHere.Value, false, finalArgs))

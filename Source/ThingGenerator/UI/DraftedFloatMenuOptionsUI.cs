@@ -440,10 +440,13 @@ public static class DraftedFloatMenuOptionsUI
             var selectedAdjacent = report.PossibleExecutions.Where(p => p.LassoToHere == null).RandomElementByWeightWithFallback(p => (request.OnlyTheseAnimations != null ? 0.1f : 0f) + p.Animation.Probability);
             if (selectedAdjacent.IsValid)
             {
-                var startArgs = new AnimationStartParameters(selectedAdjacent.Animation.AnimDef, grappler, report.Target)
+                var outcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target, true);
+                var anim = outcome == ExecutionOutcome.Failure ? AM_DefOf.AM_Execution_Fail : selectedAdjacent.Animation.AnimDef;
+
+                var startArgs = new AnimationStartParameters(anim, grappler, report.Target)
                 {
                     FlipX = selectedAdjacent.Animation.FlipX,
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
+                    ExecutionOutcome = outcome
                 };
 
                 if (!startArgs.TryTrigger())
@@ -461,10 +464,13 @@ public static class DraftedFloatMenuOptionsUI
             var selectedLasso = report.PossibleExecutions.Where(p => p.LassoToHere != null).RandomElementByWeightWithFallback(p => (request.OnlyTheseAnimations != null ? 0.1f : 0f) + p.Animation.Probability);
             if (selectedLasso.IsValid)
             {
-                var startArgs2 = new AnimationStartParameters(selectedLasso.Animation.AnimDef, grappler, report.Target)
+                var outcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target, true);
+                var anim = outcome == ExecutionOutcome.Failure ? AM_DefOf.AM_Execution_Fail : selectedLasso.Animation.AnimDef;
+
+                var startArgs2 = new AnimationStartParameters(anim, grappler, report.Target)
                 {
                     FlipX = selectedLasso.Animation.FlipX,
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target)
+                    ExecutionOutcome = outcome
                 };
 
                 if (!JobDriver_GrapplePawn.GiveJob(grappler, target, selectedLasso.LassoToHere.Value, false, startArgs2))
@@ -493,7 +499,7 @@ public static class DraftedFloatMenuOptionsUI
         string label = "AM.Exec.FloatMenu".Translate(targetName) + append;
         string tt = "AM.Exec.FloatMenu.Tip";
         var probs = new OutcomeUtility.ProbabilityReport();
-        OutcomeUtility.GenerateRandomOutcome(grappler, target, probs);
+        OutcomeUtility.GenerateRandomOutcome(grappler, target, true, probs);
         tt = tt.Translate(grappler.Name.ToStringShort, targetName, probs.ToString());
         var priority = enemy ? MenuOptionPriority.AttackEnemy : MenuOptionPriority.VeryLow;
 

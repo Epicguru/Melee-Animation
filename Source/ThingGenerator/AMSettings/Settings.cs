@@ -140,7 +140,7 @@ public class Settings : SimpleSettingsBase
         "Affects all pawns. The failure chance greatly decreases with melee skill.")]
     [Percentage]
     [VisibleIf(nameof(EnableExecutions))]
-    [Range(0, 2)]
+    [Range(0, 10)]
     public float ChanceToFailMulti = 1f;
 
     [Label("Automatic Execution Average Interval (Friendly)")]
