@@ -9,6 +9,10 @@ public class PawnColumnWorker_Lasso : PawnColumnWorker_Base
 {
     protected override Texture2D Icon => Content.IconGrapple;
 
+    public override bool VisibleCurrently => base.VisibleCurrently && hasLassoLatestKnownValue;
+
+    private bool hasLassoLatestKnownValue = true;
+
     protected override string MakeTooltip(PawnMeleeData data)
     {
         var tip = data.AutoGrapple switch
@@ -33,6 +37,8 @@ public class PawnColumnWorker_Lasso : PawnColumnWorker_Base
     protected override Color GetIconColor(Pawn pawn, PawnMeleeData data)
     {
         bool hasLasso = pawn.TryGetLasso() != null;
+        hasLassoLatestKnownValue = hasLasso;
+
         if (!hasLasso)
             return Color.yellow;
         return base.GetIconColor(pawn, data);

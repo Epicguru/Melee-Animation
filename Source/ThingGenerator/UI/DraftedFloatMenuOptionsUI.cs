@@ -70,7 +70,7 @@ public static class DraftedFloatMenuOptionsUI
         if (!pawn.IsColonistPlayerControlled)
             yield break;
 
-        // Downed pawns can't do shit.
+        // Downed pawns can't do anything.
         if (pawn.Downed)
             yield break;
 
@@ -87,6 +87,14 @@ public static class DraftedFloatMenuOptionsUI
 
         IEnumerable<FloatMenuOption> GetExecutionAttemptOption(Pawn target)
         {
+            // Skip everything if executions are not enabled.
+            // This hides the UI and avoids the processing.
+            if (!Core.Settings.EnableExecutions)
+            {
+                noExecEver = true;
+                yield break;
+            }
+
             var request = new ExecutionAttemptRequest
             {
                 CanUseLasso = lasso != null,
@@ -123,11 +131,13 @@ public static class DraftedFloatMenuOptionsUI
             if (target == pawn)
                 continue;
 
-            // Unique skills.
+            // Unique skills:
             foreach (var op in GenerateSkillOptions(pawn, target, skills))
                 yield return op;
 
             bool isEnemy = target.HostileTo(Faction.OfPlayer);
+            
+            // Lasso:
             if (lasso != null)
             {
                 var request = new GrappleAttemptRequest
@@ -136,7 +146,7 @@ public static class DraftedFloatMenuOptionsUI
                     Target = target,
                     DoNotCheckLasso = true,
                     GrappleSpotPickingBehaviour = isEnemy ? GrappleSpotPickingBehaviour.PreferAdjacent : GrappleSpotPickingBehaviour.Closest,
-                    OccupiedMask = smallMask
+                    OccupiedMask = smallMask                    
                 };
                 var grappleReport = controller.GetGrappleReport(request);
 

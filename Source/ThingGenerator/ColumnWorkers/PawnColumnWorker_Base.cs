@@ -1,6 +1,6 @@
-﻿using System;
-using AM.PawnData;
+﻿using AM.PawnData;
 using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
 

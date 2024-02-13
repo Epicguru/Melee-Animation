@@ -470,7 +470,7 @@ public class MapPawnProcessor : IDisposable
                 PawnMeleeLevel = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0,
                 MeleeWeapon = weapon,
                 Lasso = lasso,
-                CanExecute = weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
+                CanExecute = Core.Settings.EnableExecutions && weapon != null && mData.ResolvedAutoExecute && mData.IsExecutionOffCooldown(),
                 CanGrapple = lasso != null  && mData.ResolvedAutoGrapple && mData.IsGrappleOffCooldown() && FormalGrappleCheck(pawn),
                 LassoRange = lasso != null ? pawn.GetStatValue(AM_DefOf.AM_GrappleRadius) : 0
             };
