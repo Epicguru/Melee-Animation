@@ -1,0 +1,13 @@
+{
+  "TextureModID": "inoshishi3.kttfde",
+  "ItemDefName": "Overlord_MeleeWeapon_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.01751208,
+  "OffY": -0.0120774806,
+  "ScaleX": 2.4,
+  "ScaleY": 2.4,
+  "BladeStart": 0.524380744,
+  "BladeEnd": 2.20312452,
+  "MeleeWeaponType": 6
+}

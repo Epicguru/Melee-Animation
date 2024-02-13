@@ -1,0 +1,13 @@
+{
+  "TextureModID": "tot.cmc.weaponry",
+  "ItemDefName": "CMC_EMPsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.458937466,
+  "OffY": -0.0120770037,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.08959828,
+  "BladeEnd": 1.07993615,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "MeleeWeapon_Atarbothhandsax",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6672707,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.809254,
+  "BladeEnd": 1.395003,
+  "MeleeWeaponType": 2
+}

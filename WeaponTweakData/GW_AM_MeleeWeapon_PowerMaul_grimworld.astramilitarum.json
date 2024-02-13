@@ -1,0 +1,12 @@
+{
+  "TextureModID": "grimworld.astramilitarum",
+  "ItemDefName": "GW_AM_MeleeWeapon_PowerMaul",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.320048451,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.119791277,
+  "BladeEnd": 0.7538492,
+  "MeleeWeaponType": 9
+}

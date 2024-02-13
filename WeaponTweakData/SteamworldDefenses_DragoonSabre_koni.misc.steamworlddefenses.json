@@ -1,0 +1,11 @@
+{
+  "TextureModID": "koni.misc.steamworlddefenses",
+  "ItemDefName": "SteamworldDefenses_DragoonSabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.336016774,
+  "OffY": -0.0342241228,
+  "BladeStart": 0.103527069,
+  "BladeEnd": 0.80978477,
+  "MeleeWeaponType": 6
+}

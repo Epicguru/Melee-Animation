@@ -1,0 +1,11 @@
+{
+  "TextureModID": "koni.misc.steamworlddefenses",
+  "ItemDefName": "SteamworldDefenses_CuirassierSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354684442,
+  "OffY": -0.0466688834,
+  "BladeStart": 0.12219473,
+  "BladeEnd": 0.834674835,
+  "MeleeWeaponType": 6
+}

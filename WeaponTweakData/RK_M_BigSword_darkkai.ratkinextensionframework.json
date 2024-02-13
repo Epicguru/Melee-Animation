@@ -1,0 +1,13 @@
+{
+  "TextureModID": "darkkai.ratkinextensionframework",
+  "ItemDefName": "RK_M_BigSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6099034,
+  "Rotation": -45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.273777,
+  "BladeEnd": 1.40602314,
+  "MeleeWeaponType": 6
+}

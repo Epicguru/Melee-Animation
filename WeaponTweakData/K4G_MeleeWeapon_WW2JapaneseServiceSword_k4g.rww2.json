@@ -1,0 +1,12 @@
+{
+  "TextureModID": "k4g.rww2",
+  "ItemDefName": "K4G_MeleeWeapon_WW2JapaneseServiceSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.295893431,
+  "OffY": -0.0271737576,
+  "Rotation": 1.648058,
+  "BladeStart": 0.105751865,
+  "BladeEnd": 0.794157267,
+  "MeleeWeaponType": 6
+}

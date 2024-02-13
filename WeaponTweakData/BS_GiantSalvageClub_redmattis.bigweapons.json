@@ -1,0 +1,13 @@
+{
+  "TextureModID": "redmattis.bigweapons",
+  "ItemDefName": "BS_GiantSalvageClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 1.029589,
+  "OffY": -0.0966182351,
+  "ScaleX": 3.2,
+  "ScaleY": 3.2,
+  "BladeStart": 0.700558543,
+  "BladeEnd": 2.30683827,
+  "MeleeWeaponType": 1
+}

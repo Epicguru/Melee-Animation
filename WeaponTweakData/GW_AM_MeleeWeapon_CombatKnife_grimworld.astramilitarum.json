@@ -1,0 +1,11 @@
+{
+  "TextureModID": "grimworld.astramilitarum",
+  "ItemDefName": "GW_AM_MeleeWeapon_CombatKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.223429963,
+  "HandsMode": 1,
+  "BladeStart": 0.110733531,
+  "BladeEnd": 0.545515954,
+  "MeleeWeaponType": 48
+}

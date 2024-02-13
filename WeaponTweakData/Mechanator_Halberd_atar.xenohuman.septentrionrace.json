@@ -1,0 +1,13 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "Mechanator_Halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5072464,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.670365036,
+  "BladeEnd": 1.237998,
+  "MeleeWeaponType": 2
+}

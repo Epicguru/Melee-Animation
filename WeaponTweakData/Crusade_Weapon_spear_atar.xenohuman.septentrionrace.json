@@ -1,0 +1,13 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "Crusade_Weapon_spear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6219809,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.169157609,
+  "BladeEnd": 1.6033361,
+  "MeleeWeaponType": 5
+}

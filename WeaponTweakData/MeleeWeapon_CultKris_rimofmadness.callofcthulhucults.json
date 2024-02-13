@@ -1,0 +1,15 @@
+{
+  "TextureModID": "rimofmadness.callofcthulhucults",
+  "ItemDefName": "MeleeWeapon_CultKris",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.247584462,
+  "OffY": 0.00905824453,
+  "Rotation": -3.05236,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "HandsMode": 1,
+  "BladeStart": 0.110733531,
+  "BladeEnd": 0.6089217,
+  "MeleeWeaponType": 48
+}

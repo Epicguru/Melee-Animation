@@ -1,0 +1,11 @@
+{
+  "TextureModID": "grimworld.astramilitarum",
+  "ItemDefName": "GW_AM_MeleeWeapon_CatachanFang",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.19625622,
+  "HandsMode": 1,
+  "BladeStart": 0.10469503,
+  "BladeEnd": 0.636095941,
+  "MeleeWeaponType": 48
+}

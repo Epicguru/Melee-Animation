@@ -1,0 +1,13 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "MeleeWeapon_Dopplehander",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.467995167,
+  "Rotation": 45.0,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "BladeStart": 0.3623941,
+  "BladeEnd": 1.26517165,
+  "MeleeWeaponType": 6
+}

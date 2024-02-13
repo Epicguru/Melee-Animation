@@ -1,0 +1,12 @@
+{
+  "TextureModID": "oark.ratkinfaction.oberoniaaurea",
+  "ItemDefName": "OA_RK_Mountain_Stick_B",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3291067,
+  "OffY": 0.01207725,
+  "Rotation": -90.0,
+  "BladeStart": 0.07450154,
+  "BladeEnd": 0.8142357,
+  "MeleeWeaponType": 3
+}

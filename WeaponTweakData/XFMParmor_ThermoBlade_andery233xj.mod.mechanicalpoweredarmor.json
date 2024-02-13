@@ -1,0 +1,19 @@
+{
+  "TextureModID": "andery233xj.mod.mechanicalpoweredarmor",
+  "ItemDefName": "XFMParmor_ThermoBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4951694,
+  "OffY": -0.0241549984,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.101675779,
+  "BladeEnd": 1.11314893,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9,
+    "g": 0.689,
+    "b": 0.11,
+    "a": 1.0
+  }
+}

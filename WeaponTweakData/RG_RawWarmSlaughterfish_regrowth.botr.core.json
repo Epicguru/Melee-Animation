@@ -1,0 +1,13 @@
+{
+  "TextureModID": "regrowth.botr.core",
+  "ItemDefName": "RG_RawWarmSlaughterfish",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1835643,
+  "OffY": -0.0124452785,
+  "Rotation": -165.0,
+  "FlipY": true,
+  "BladeStart": 0.119083539,
+  "BladeEnd": 0.660444,
+  "MeleeWeaponType": 8
+}

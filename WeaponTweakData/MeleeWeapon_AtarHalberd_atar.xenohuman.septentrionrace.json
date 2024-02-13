@@ -1,0 +1,13 @@
+{
+  "TextureModID": "atar.xenohuman.septentrionrace",
+  "ItemDefName": "MeleeWeapon_AtarHalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5797104,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.6733843,
+  "BladeEnd": 1.38292539,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ellit.archeology",
+  "ItemDefName": "EL_CeremonialTantoSmart",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.22946848,
+  "OffY": -0.0150967538,
+  "FlipX": true,
+  "BladeStart": 0.09669362,
+  "BladeEnd": 0.703577757,
+  "MeleeWeaponType": 22
+}
