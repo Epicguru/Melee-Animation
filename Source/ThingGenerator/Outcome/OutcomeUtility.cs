@@ -317,7 +317,7 @@ public static class OutcomeUtility
         {
             // TODO check does this correctly get the right verbs even if the melee weapon is a sidearm?
             Verb verb;
-            int limit = 100;
+            int limit = 1000;
             do
             {
                 verb = attacker.meleeVerbs.TryGetMeleeVerb(pawn);

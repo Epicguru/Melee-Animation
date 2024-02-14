@@ -54,7 +54,7 @@ public class KnockbackFlyer : PawnFlyer
             // This normally hard crashes the game!
             flyer.jobQueue = null;
 
-            var t = GenSpawn.Spawn(flyer, targetPos, map, WipeMode.Vanish);
+            var t = GenSpawn.Spawn(flyer, targetPos, map);
             if (t == null)
                 flyer.RespawnPawn();
             

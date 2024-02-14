@@ -12,7 +12,7 @@ namespace AM.Patches
 
         public static AnimRenderer GetAnimator(Pawn pawn)
         {
-            if (pawn == lastPawn && lastRenderer is {IsDestroyed: false})
+            if (pawn == lastPawn && lastRenderer is { IsDestroyed: false })
                 return lastRenderer;
 
             lastPawn = pawn;
@@ -95,7 +95,7 @@ namespace AM.Patches
     /// and body angle. Driven by the active animation.
     /// </summary>
     [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnInternal))]
-    static class PreventDrawPatch
+    static class ModifyDrawPatch
     {
         public static bool AllowNext = false;
         public static bool DoNotModify = false;
@@ -105,9 +105,11 @@ namespace AM.Patches
         [HarmonyBefore("rimworld.Nals.FacialAnimation")] // Must go before facial animation otherwise the face gets fucky.
         static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, PawnRenderFlags flags)
         {
+            // Do not affect portrait rendering:
             if (flags.HasFlag(PawnRenderFlags.Portrait))
                 return true;
 
+            // Get the animator for this pawn.
             var anim = PatchMaster.GetAnimator(___pawn);
             if (anim != null)
             {

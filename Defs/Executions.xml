@@ -130,7 +130,8 @@
     <data>Execution_BluntPunt.json</data>
 
     <!-- Temporarily disabled until bugs are fixed: -->
-    <relativeProbability>0</relativeProbability>
+    <!-- 14/02/24 Re-enabled for further testing. Works on my machine... -->
+    <relativeProbability>0.5</relativeProbability>
 
     <weaponFilter Class="AM.Reqs.AnyType">
       <types>Long_Stab, Long_Blunt, Long_Sharp</types>
