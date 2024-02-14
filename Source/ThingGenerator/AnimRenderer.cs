@@ -1321,8 +1321,8 @@ public class AnimRenderer : IExposable
         var handsMode = tweak?.HandsMode ?? HandsMode.Default;
 
         // Hands and skin color...
-        string mainHandName = $"HandA{(index > 0 ? (index + 1) : "")}";
-        string altHandName = $"HandB{(index > 0 ? (index + 1) : "")}";
+        string mainHandName = $"HandA{(index > 0 ? index + 1 : "")}";
+        string altHandName = $"HandB{(index > 0 ? index + 1 : "")}";
 
         Color skinColor = pawn.story?.SkinColor ?? Color.white;
 
@@ -1330,15 +1330,31 @@ public class AnimRenderer : IExposable
         // not care about hand visibility, then it is dictated by the weapon.
         var vis = Def.GetHandsVisibility(index);
 
-        bool? animMainHand = vis.showMainHand;
-        if (animMainHand != null && !pawn.RaceProps.Humanlike)
-            animMainHand = null;
-        bool? animAltHand = vis.showAltHand;
-        if (animAltHand != null && !pawn.RaceProps.Humanlike)
-            animAltHand = null;
+        /*
+         * Order of descending priority for deciding what hand(s) to show:
+         *  - Mod settings.
+         *  - Has hands (humanoids only).
+         *  - Animation requirement.
+         *  - Weapon requirement.
+         */
 
-        bool showMain = Core.Settings.ShowHands && (animMainHand ?? (weapon != null && handsMode != HandsMode.No_Hands));
-        bool showAlt =  Core.Settings.ShowHands && (animAltHand  ?? (weapon != null && handsMode == HandsMode.Default));
+        // Settings:
+        bool settingsShowHands = Core.Settings.ShowHands;
+
+        // Humanoid?
+        bool isHumanoid = pawn.RaceProps.Humanlike;
+
+        // Animation requirement.
+        bool? animMainHand = vis.showMainHand;
+        bool? animAltHand = vis.showAltHand;
+
+        // Weapon requirement:
+        bool? weaponMainHand = weapon == null ? null : handsMode != HandsMode.No_Hands;
+        bool? weaponAltHand  = weapon == null ? null : handsMode == HandsMode.Default;
+
+        // Final calculation:
+        bool showMain = settingsShowHands && isHumanoid && (animMainHand ?? weaponMainHand ?? false);
+        bool showAlt  = settingsShowHands && isHumanoid && (animAltHand ?? weaponAltHand ?? false);
 
         // Apply main hand.
         var mainHandPart = GetPart(mainHandName);

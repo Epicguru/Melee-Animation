@@ -362,8 +362,6 @@ public class Settings : SimpleSettingsBase
                  "You can opt out of this functionality by disabling this option.\nNote: logging does not occur the first time you run the game with this mod.")]
     public bool SendStatistics = true;
 
-    public bool TrailsAreDisabled => TrailColor.a <= 0 || TrailLengthScale <= 0;
-
     [NonSerialized]
     public bool IsFirstTimeRunning = true;
     #endregion
