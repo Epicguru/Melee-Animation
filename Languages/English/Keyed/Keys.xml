@@ -55,6 +55,8 @@
 
   <AM.Error.Grapple.Dead>{Grappler} is dead</AM.Error.Grapple.Dead>
   <AM.Error.Exec.Dead>{Exec} is dead</AM.Error.Exec.Dead>
+  <AM.Error.Grapple.Stunned>{Grappler} is stunned</AM.Error.Grapple.Stunned>
+  <AM.Error.Exec.Stunned>{Exec} is stunned</AM.Error.Exec.Stunned>
   <AM.Error.Exec.NoWalk>{Target} is not adjacent to {Exec}, and cannot be lassoed or walked to.</AM.Error.Exec.NoWalk>
   <AM.Error.Exec.NoWalk.Short>{Target} cannot be reached</AM.Error.Exec.NoWalk.Short>
   <AM.Error.Grapple.DeadTarget>{Target} is dead</AM.Error.Grapple.DeadTarget>
