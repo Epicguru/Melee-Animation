@@ -354,7 +354,7 @@ public class AnimRenderer : IExposable
     public double SeekMS;
     public double SweepMS;
 
-    private List<AnimPartData> bodies = new List<AnimPartData>();
+    private readonly Dictionary<Pawn, PawnLinkedParts> pawnToParts = new Dictionary<Pawn, PawnLinkedParts>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
     private AnimPartSnapshot[] snapshots;
     private AnimPartOverrideData[] overrides;
@@ -517,7 +517,7 @@ public class AnimRenderer : IExposable
     /// Gets the current state (snapshot) for a particular animation part.
     /// </summary>
     public AnimPartSnapshot GetSnapshot(AnimPartData part) => part == null ? default : snapshots[part.Index];
-    
+
     /// <summary>
     /// Gets the override data based on the part index.
     /// See <see cref="GetOverride(AnimPartData)"/>.
@@ -625,25 +625,26 @@ public class AnimRenderer : IExposable
         if (pawn == null)
             return null;
 
-        // TODO remove this nonsense and correctly link pawns with bodies when adding pawns.
-        while (bodies.Count < Pawns.Count)
-        {
-            bodies.Add(null);
-        }
+        if (!pawnToParts.TryGetValue(pawn, out var data) || data.BodyIndex == -1)
+            return null;
 
-        for (int i = 0; i < Pawns.Count; i++)
-        {
-            if (Pawns[i] == pawn)
-            {
-                var b = bodies[i];
-                if (b != null)
-                    return b;
+        return Data.Parts[data.BodyIndex];
+    }
 
-                bodies[i] = GetPart($"Body{Alphabet[i]}");
-                return bodies[i];
-            }
-        }
-        return null;
+    /// <summary>
+    /// Gets the <see cref="AnimPartData"/> associated with a pawn's body.
+    /// This part data can then be used to get the current position of the body using <see cref="GetSnapshot(AnimPartData)"/>.
+    /// </summary>
+    /// <returns>The part data, or null if the pawn is null or is not captured by this animation.</returns>
+    public AnimPartData GetPawnHead(Pawn pawn)
+    {
+        if (pawn == null)
+            return null;
+
+        if (!pawnToParts.TryGetValue(pawn, out var data) || data.HeadIndex == -1)
+            return null;
+
+        return Data.Parts[data.HeadIndex];
     }
 
     /// <summary>
@@ -899,21 +900,22 @@ public class AnimRenderer : IExposable
             if (pawn == null || pawn.Destroyed)
                 continue;
 
-            var pawnSS = GetSnapshot(GetPawnBody(pawn));
+            var bodySS = GetSnapshot(GetPawnBody(pawn));
 
-            if (!pawnSS.Active)
+            if (!bodySS.Active)
             {
                 if (Def.drawDisabledPawns)
                 {
                     // Regular pawn render.
                     PreventDrawPatchUpper.AllowNext = true;
-                    PreventDrawPatch.AllowNext = true;
-                    PreventDrawPatch.DoNotModify = true; // Don't use animation position/rotation.
+                    ModifyDrawPatch.AllowNext = true;
+                    ModifyDrawPatch.DoNotModify = true; // Don't use animation position/rotation.
+                    ModifyDrawPatch.NextDrawMode = ModifyDrawPatch.DrawMode.Full;
                     MakePawnConsideredInvisible.IsRendering = true;
 
                     pawn.DrawAt(pawn.DrawPosHeld ?? pawn.DrawPos);
 
-                    PreventDrawPatch.DoNotModify = false;
+                    ModifyDrawPatch.DoNotModify = false;
                     MakePawnConsideredInvisible.IsRendering = false;
 
                     // Draw label.
@@ -927,23 +929,54 @@ public class AnimRenderer : IExposable
                 continue;
             }
 
+            var headSS = GetSnapshot(GetPawnHead(pawn));
+
+            // ---- Animated pawn draw: ----
+
             // Position and direction.
-            var pos = pawnSS.GetWorldPosition();
-            var dir = pawnSS.GetWorldDirection();
+            var pos = bodySS.GetWorldPosition();
+            var headPos = headSS.GetWorldPosition();
+            var bodyPos = pos; // Used for label rendering, pos is modified in second pass.
+            var dir = bodySS.GetWorldDirection();
 
             // Worker pre-draw
-            AnimationRendererWorker?.PreRenderPawn(pawnSS, ref pos, ref dir, pawn);
+            AnimationRendererWorker?.PreRenderPawn(bodySS, ref pos, ref dir, pawn);
 
-            bool suppressShadow = Def.shadowDrawFromData && pawnSS.DataC > 0.2f;
+            // Render. Two passes are required if the pawn is beheaded.
+            bool isBeheaded = IsPawnBeheaded(pawn, headSS);
+            int passCount = isBeheaded ? 2 : 1;
 
-            // Render pawn in custom position using patches.
-            PreventDrawPatchUpper.AllowNext = true;
-            PreventDrawPatch.AllowNext = true;
-            MakePawnConsideredInvisible.IsRendering = true;
-            Patch_PawnRenderer_DrawInvisibleShadow.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
-            pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
-            Patch_PawnRenderer_DrawInvisibleShadow.Suppress = false;
-            MakePawnConsideredInvisible.IsRendering = false;
+            for (int i = 0; i < passCount; i++)
+            {
+                bool suppressShadow = i > 0 || (Def.shadowDrawFromData && bodySS.DataC > 0.2f);
+
+                // If on second pass (head-only pass).
+                if (i == 1)
+                {
+                    // Head uses a different position from the body.
+                    pos = headPos;
+
+                    // Head rotation needs to be sent manually because the head
+                    // does not have a direction curve to sample.
+                    ModifyDrawPatch.HeadRotation = dir; // Copy body facing direction.
+                }
+
+                // Render pawn in custom position using patches.
+                PreventDrawPatchUpper.AllowNext = true;
+                ModifyDrawPatch.AllowNext = true;
+
+                ModifyDrawPatch.NextDrawMode = !isBeheaded 
+                                               ? ModifyDrawPatch.DrawMode.Full
+                                               : i == 0 ? ModifyDrawPatch.DrawMode.BodyOnly : ModifyDrawPatch.DrawMode.HeadOnly;
+
+                MakePawnConsideredInvisible.IsRendering = true;
+                Patch_PawnRenderer_DrawInvisibleShadow.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
+
+                pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
+
+                Patch_PawnRenderer_DrawInvisibleShadow.Suppress = false;
+                MakePawnConsideredInvisible.IsRendering = false;
+            }
 
             // Render shadow.
             if (Def.shadowDrawFromData)
@@ -953,27 +986,32 @@ public class AnimRenderer : IExposable
                 // value of 1 means shadow is a ground-based entity shadow (a-la-minecraft).
                 Vector3 groundPos = pos with { z = RootPosition.z };
                 Vector3 scale = new Vector3(1, 1, 0.5f);
-                Color color = new Color(0, 0, 0, pawnSS.DataC * 0.6f);
+                Color color = new Color(0, 0, 0, bodySS.DataC * 0.6f);
 
-                if (pawnSS.DataC > 0f)
+                if (bodySS.DataC > 0f)
                     DrawSimpleShadow(groundPos, scale, color);
-            }
-            else
-            {
-                // Regular shadow draw, just like base game.
-                // Only required in Rimworld 1.3, in 1.4 it is baked into the RenderPawnAt method.
-#if V13
-                pawn.Drawer.renderer.DrawInvisibleShadow(pos);
-#endif
             }
 
             // Figure out where to draw the pawn label.
-            Vector3 drawPos = pos;
+            Vector3 drawPos = bodyPos;
             drawPos.z -= 0.6f;
             Vector2 vector = Find.Camera.WorldToScreenPoint(drawPos) / Prefs.UIScale;
             vector.y = Verse.UI.screenHeight - vector.y;
             labelDraw?.Invoke(pawn, vector);
         }
+    }
+
+    [Pure]
+    private bool IsPawnBeheaded(Pawn pawn, in AnimPartSnapshot headSS)
+    {
+        // Not sure if this is okay: are there any pawns that are not humanoid
+        // but can have their heads removed by rendering separately?
+        if (pawn.RaceProps?.Humanlike != true)
+            return false;
+
+        // Render beheaded if the head is not in it's default position
+        // i.e. attached to the neck.
+        return headSS.LocalPosition.x != 0 || headSS.LocalPosition.z != 0;
     }
 
     private void DrawSimpleShadow(Vector3 pos, Vector3 size, Color color)
@@ -1258,10 +1296,18 @@ public class AnimRenderer : IExposable
         if (pawn == null)
             return false;
 
+        char tagChar = Alphabet[index];
+
         if (register)
+        {
             Pawns.Add(pawn);
 
-        char tagChar = Alphabet[index];
+            pawnToParts[pawn] = new PawnLinkedParts
+            {
+                BodyIndex = Data.GetPartIndex($"Body{tagChar}"),
+                HeadIndex = Data.GetPartIndex($"Head{tagChar}")
+            };
+        }
 
         // Hands.
         ConfigureHandsForPawn(pawn, index);
@@ -1273,39 +1319,40 @@ public class AnimRenderer : IExposable
 
         // Apply weapon.
         var itemPart = GetPart(itemName);
-        if (weapon != null && itemPart != null && tweak != null)
+
+        if (weapon == null || itemPart == null || tweak == null)
+            return true;
+
+        tweak.Apply(this, itemPart);
+        var ov = GetOverride(itemPart);
+        ov.Weapon = weapon;
+        ov.Material = weapon.Graphic?.MatSingleFor(weapon);
+        ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
+
+        // FIX: Certain vanilla textures are set to Clamp instead of Wrap. This breaks flipping.
+        // Which ones seems random. (Beer is Clamp, Breach Axe is Repeat).
+        // For now, force them to be Repeat. Not sure if this will have any negative impact elsewhere in the game. Hopefully not.
+        if (ov.Material != null)
         {
-            tweak.Apply(this, itemPart);
-            var ov = GetOverride(itemPart);
-            ov.Weapon = weapon;
-            ov.Material = weapon.Graphic?.MatSingleFor(weapon);
-            ov.UseMPB = false; // Do not use the material property block, because it will override the material second color and mask.
+            var main = ov.Material.mainTexture;
+            if(main != null)
+                main.wrapMode = TextureWrapMode.Repeat;
 
-            // FIX: Certain vanilla textures are set to Clamp instead of Wrap. This breaks flipping.
-            // Which ones seems random. (Beer is Clamp, Breach Axe is Repeat).
-            // For now, force them to be repeat. Not sure if this will have any negative impact elsewhere in the game. Hopefully not.
-            if (ov.Material != null)
+            var mask = ov.Material.HasProperty(ShaderPropertyIDs.MaskTex) ? ov.Material.GetTexture(ShaderPropertyIDs.MaskTex) : null;
+            if (mask != null)
+                mask.wrapMode = TextureWrapMode.Repeat;
+        }
+
+        if (ov.CustomRenderer != null)
+            ov.CustomRenderer.Item = weapon;
+
+        InitSweepMeshes();
+        foreach (var path in sweeps)
+        {
+            if (path.Part == itemPart)
             {
-                var main = ov.Material.mainTexture;
-                if(main != null)
-                    main.wrapMode = TextureWrapMode.Repeat;
-
-                var mask = ov.Material.HasProperty(ShaderPropertyIDs.MaskTex) ? ov.Material.GetTexture(ShaderPropertyIDs.MaskTex) : null;
-                if (mask != null)
-                    mask.wrapMode = TextureWrapMode.Repeat;
-            }
-
-            if (ov.CustomRenderer != null)
-                ov.CustomRenderer.Item = weapon;
-
-            InitSweepMeshes();
-            foreach (var path in sweeps)
-            {
-                if (path.Part == itemPart)
-                {
-                    path.DownDst = tweak.BladeStart;
-                    path.UpDst = tweak.BladeEnd;
-                }
+                path.DownDst = tweak.BladeStart;
+                path.UpDst = tweak.BladeEnd;
             }
         }
 
@@ -1390,5 +1437,11 @@ public class AnimRenderer : IExposable
             Scribe_Collections.Look(ref DuelSegmentsDone, "duelSegmentsDone", LookMode.Value);
             DuelSegmentsDone ??= new HashSet<int>();
         }
+    }
+
+    private readonly struct PawnLinkedParts
+    {
+        public required int BodyIndex { get; init; }
+        public required int HeadIndex { get; init; }
     }
 }

@@ -99,11 +99,20 @@ namespace AM.Patches
     {
         public static bool AllowNext = false;
         public static bool DoNotModify = false;
+        public static DrawMode NextDrawMode = DrawMode.Full;
+        public static Rot4 HeadRotation; // only used when NextDrawMode is HeadOnly.
+
+        public enum DrawMode
+        {
+            Full,
+            BodyOnly,
+            HeadOnly
+        }
 
         [HarmonyPriority(Priority.Last)] // As late as possible. We want to be the last to modify results.
-        [HarmonyAfter("com.yayo.yayoAni")] // Fuck off yayo :)
+        [HarmonyAfter("com.yayo.yayoAni")] // Go away.
         [HarmonyBefore("rimworld.Nals.FacialAnimation")] // Must go before facial animation otherwise the face gets fucky.
-        static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, PawnRenderFlags flags)
+        static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, ref PawnRenderFlags flags, ref bool renderBody)
         {
             // Do not affect portrait rendering:
             if (flags.HasFlag(PawnRenderFlags.Portrait))
@@ -115,9 +124,25 @@ namespace AM.Patches
             {
                 if (!DoNotModify)
                 {
-                    var body = anim.GetSnapshot(anim.GetPawnBody(___pawn));
-                    angle = body.GetWorldRotation();
-                    bodyFacing = body.GetWorldDirection();
+                    var part = NextDrawMode == DrawMode.HeadOnly ? anim.GetPawnHead(___pawn) : anim.GetPawnBody(___pawn);
+                    var snapshot = anim.GetSnapshot(part);
+                    angle = snapshot.GetWorldRotation();
+
+                    bodyFacing = NextDrawMode == DrawMode.HeadOnly ? HeadRotation : snapshot.GetWorldDirection();
+
+                    switch (NextDrawMode)
+                    {
+                        case DrawMode.BodyOnly:
+                            // Render head stump, do not render head gear.
+                            flags |= PawnRenderFlags.HeadStump;
+                            flags &= ~PawnRenderFlags.Headgear;
+                            break;
+
+                        case DrawMode.HeadOnly:
+                            // Do not render body.
+                            renderBody = false;
+                            break;
+                    }
                 }
 
                 if(!AllowNext)

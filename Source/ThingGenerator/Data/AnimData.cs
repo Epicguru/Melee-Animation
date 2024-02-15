@@ -228,10 +228,13 @@ public class AnimData
             if (part.Name == name)
                 return part;
         }
-#if !UNITY_EDITOR
-        Core.Warn($"Failed to find part called '{name}'");
-#endif
+
         return null;
+    }
+
+    public int GetPartIndex(string partName)
+    {
+        return parts.FirstIndexOf(p => p.Name == partName);
     }
 
     public IReadOnlyList<SweepPointCollection> GetSweepPaths(AnimPartData forPart)

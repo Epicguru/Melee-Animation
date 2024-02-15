@@ -203,6 +203,14 @@
   </AM.AnimDef>
 
   <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_HeadRemoval</defName>
+    <label>Execution: Head Be Gone</label>
+    <data>Execution_HeadRemoval.json</data>
+    <weaponFilter Class="AM.Reqs.True" />
+    <relativeProbability>0</relativeProbability>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
     <defName>AM_Execution_SpearLift</defName>
     <label>Execution: Spear Stab</label>
     <data>Execution_Spear.json</data>
