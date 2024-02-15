@@ -1,12 +1,17 @@
 ﻿using System;
 using HarmonyLib;
+using JetBrains.Annotations;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace AM.Patches;
 
+/// <summary>
+/// Used to spawn lassos on melee pawns when they first generate.
+/// </summary>
 [HarmonyPatch(typeof(PawnGenerator), nameof(PawnGenerator.GenerateGearFor))]
+[UsedImplicitly]
 public static class Patch_PawnGenerator_GeneratePawn
 {
     [HarmonyPriority(Priority.Last)]

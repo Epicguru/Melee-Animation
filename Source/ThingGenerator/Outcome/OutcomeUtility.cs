@@ -25,7 +25,9 @@ public static class OutcomeUtility
 
     [UsedImplicitly]
     [TweakValue("Melee Animation")]
+#pragma warning disable CS0649 // Field 'OutcomeUtility.debugLogExecutionOutcome' is never assigned to, and will always have its default value false
     private static bool debugLogExecutionOutcome;
+#pragma warning restore CS0649 // Field 'OutcomeUtility.debugLogExecutionOutcome' is never assigned to, and will always have its default value false
 
     public ref struct AdditionalArgs
     {

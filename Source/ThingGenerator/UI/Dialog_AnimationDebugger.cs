@@ -781,7 +781,9 @@ namespace AM.UI
             }
             public Vector2 Size = new(212f, 28f);
             public string Tooltip;
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
             public string CustomName;
+#pragma warning restore CS0649 // Field is never assigned to, and will always have its default value
 
             private float? _camDst;
             private string searchLabel = "";

@@ -6,7 +6,7 @@ using Verse;
 namespace AM.Patches;
 
 /// <summary>
-/// A patch to control pawn animations.
+/// Used to override drawing melee weapons.
 /// </summary>
 [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.DrawEquipment))]
 public static class Patch_PawnRenderer_DrawEquipment

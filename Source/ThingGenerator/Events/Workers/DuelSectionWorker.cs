@@ -20,7 +20,7 @@ namespace AM.Events.Workers
             if (input.Animator == null)
                 return;
 
-            var saveData = input.Animator.SD;
+            var saveData = input.Animator.CurrentSaveData;
 
             UpdateEventPoints(input.Data);
 

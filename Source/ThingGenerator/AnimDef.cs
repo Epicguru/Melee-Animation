@@ -89,7 +89,7 @@ public class AnimDef : Def
 
         public bool IsEqualForSettings(object other)
         {
-            return other is SettingsData osd && osd.Enabled == this.Enabled && osd.Probability == this.Probability;
+            return other is SettingsData osd && osd.Enabled == Enabled && Math.Abs(osd.Probability - Probability) < 0.0001f;
         }
     }
 
@@ -98,7 +98,7 @@ public class AnimDef : Def
     {
         get
         {
-            var mod = base.modContentPack;
+            var mod = modContentPack;
             if (mod == null)
             {
                 Core.Error($"This def '{defName}' has no modContentPack, so FullDataPath cannot be resolved! Returning relative path instead...");
@@ -143,7 +143,6 @@ public class AnimDef : Def
     [XmlIgnore] public SettingsData SData;
 
     public AnimType type = AnimType.Execution;
-    private string data;
     public string jobString;
     public Type rendererWorker;
     public int pawnCount;
@@ -162,7 +161,7 @@ public class AnimDef : Def
     public ISweepProvider sweepProvider;
     public bool drawDisabledPawns;
     public bool shadowDrawFromData;
-    public int? minMeleeSkill = null;
+    public int? minMeleeSkill;
     public bool canEditProbability = true;
     public IdleType idleType;
     public bool pointAtTarget;
@@ -170,6 +169,10 @@ public class AnimDef : Def
     public int idleFrame;
     public ExecutionOutcome? fixedOutcome;
     public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
+
+#pragma warning disable CS0649 // Field 'AnimDef.data' is never assigned to, and will always have its default value null
+    private string data;
+#pragma warning restore CS0649 // Field 'AnimDef.data' is never assigned to, and will always have its default value null
 
     public class HandsVisibilityData
     {
@@ -296,18 +299,18 @@ public class AnimDef : Def
 
     public IntVec2? TryGetCell(AnimCellData.Type type, bool flipX, bool flipY, int? pawnIndex = null)
     {
-        foreach(var data in cellData)            
-            if (data.type == type && data.pawnIndex == pawnIndex)
-                return Flip(data.GetCell(), flipX, flipY);
+        foreach(var cell in cellData)            
+            if (cell.type == type && cell.pawnIndex == pawnIndex)
+                return Flip(cell.GetCell(), flipX, flipY);
             
         return null;
     }
 
     public IEnumerable<IntVec2> GetCells(AnimCellData.Type type, bool flipX, bool flipY, int? pawnIndex = null)
     {
-        foreach (var data in cellData)            
-            if (data.type == type && data.pawnIndex == pawnIndex)                
-                foreach (var cell in data.GetCells())
+        foreach (var cData in cellData)            
+            if (cData.type == type && cData.pawnIndex == pawnIndex)                
+                foreach (var cell in cData.GetCells())
                     yield return Flip(cell, flipX, flipY);
     }
 

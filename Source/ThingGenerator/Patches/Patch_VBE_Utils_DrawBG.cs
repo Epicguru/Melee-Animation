@@ -7,6 +7,9 @@ using Verse;
 
 namespace AM.Patches;
 
+/// <summary>
+/// Used to patch in the custom background when using Vanilla Backgrounds Expanded.
+/// </summary>
 public static class Patch_VBE_Utils_DrawBG
 {
     private static UI_BackgroundMain BackgroundMain => UIMenuBackgroundManager.background as UI_BackgroundMain;

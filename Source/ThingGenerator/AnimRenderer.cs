@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using AM.Events;
+﻿using AM.Events;
 using AM.Idle;
 using AM.Patches;
 using AM.Processing;
 using AM.RendererWorkers;
 using AM.Sweep;
 using AM.Tweaks;
-using AM.UI;
 using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -249,7 +248,6 @@ public class AnimRenderer : IExposable
     /// Should the animator be saved with the map?
     /// </summary>
     public bool ShouldSave => !IsDestroyed && PawnCount > 0;
-
     /// <summary>
     /// The root world position of this animation.
     /// Derived from <see cref="RootTransform"/>.
@@ -271,7 +269,7 @@ public class AnimRenderer : IExposable
     /// <summary>
     /// The base transform that the animation is centered on.
     /// Useful functions to modify this are <see cref="Matrix4x4.TRS(Vector3, Quaternion, Vector3)"/>
-    /// and <see cref="Extensions.MakeAnimationMatrix(Pawn)"/>.
+    /// and <see cref="Extensions.MakeAnimationMatrix(Pawn, float)"/>.
     /// </summary>
     public Matrix4x4 RootTransform = Matrix4x4.identity;
     /// <summary>
@@ -330,7 +328,7 @@ public class AnimRenderer : IExposable
     /// <summary>
     /// Save data such as data used to track duel status.
     /// </summary>
-    public SaveData SD = new SaveData();
+    public SaveData CurrentSaveData = new SaveData();
     /// <summary>
     /// An action that is invoked when <see cref="OnEnd"/> is called.
     /// This action is not serialized.
@@ -438,8 +436,8 @@ public class AnimRenderer : IExposable
         Scribe_Values.Look(ref ExecutionOutcome, "execOutcome");
         Scribe_Values.Look(ref IsFriendlyDuel, "isFriendlyDuel");
         Scribe_Defs.Look(ref CustomJobDef, "customJobDef");
-        Scribe_Deep.Look(ref SD, "saveData");
-        SD ??= new SaveData();
+        Scribe_Deep.Look(ref CurrentSaveData, "saveData");
+        CurrentSaveData ??= new SaveData();
 
         if (Scribe.mode == LoadSaveMode.PostLoadInit)
         {
@@ -542,7 +540,7 @@ public class AnimRenderer : IExposable
     /// <summary>
     /// Causes this animation renderer to be registered with the system, and finish setting up.
     /// Note: this is not the preferred way of starting an animation.
-    /// Instead, consider using <see cref="AnimationManager.StartAnimation"/>.
+    /// Instead, consider using <see cref="AnimationStartParameters.TryTrigger()"/>.
     /// </summary>
     public bool Register()
     {
@@ -907,16 +905,16 @@ public class AnimRenderer : IExposable
                 if (Def.drawDisabledPawns)
                 {
                     // Regular pawn render.
-                    PreventDrawPatchUpper.AllowNext = true;
-                    ModifyDrawPatch.AllowNext = true;
-                    ModifyDrawPatch.DoNotModify = true; // Don't use animation position/rotation.
-                    ModifyDrawPatch.NextDrawMode = ModifyDrawPatch.DrawMode.Full;
-                    MakePawnConsideredInvisible.IsRendering = true;
+                    Patch_PawnRenderer_RenderPawnAt.AllowNext = true;
+                    Patch_PawnRenderer_RenderPawnInternal.AllowNext = true;
+                    Patch_PawnRenderer_RenderPawnInternal.DoNotModify = true; // Don't use animation position/rotation.
+                    Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full;
+                    Patch_PawnUtility_IsInvisible.IsRendering = true;
 
                     pawn.DrawAt(pawn.DrawPosHeld ?? pawn.DrawPos);
 
-                    ModifyDrawPatch.DoNotModify = false;
-                    MakePawnConsideredInvisible.IsRendering = false;
+                    Patch_PawnRenderer_RenderPawnInternal.DoNotModify = false;
+                    Patch_PawnUtility_IsInvisible.IsRendering = false;
 
                     // Draw label.
                     Vector3 drawPos2 = pawn.DrawPos;
@@ -958,24 +956,24 @@ public class AnimRenderer : IExposable
 
                     // Head rotation needs to be sent manually because the head
                     // does not have a direction curve to sample.
-                    ModifyDrawPatch.HeadRotation = dir; // Copy body facing direction.
+                    Patch_PawnRenderer_RenderPawnInternal.HeadRotation = dir; // Copy body facing direction.
                 }
 
                 // Render pawn in custom position using patches.
-                PreventDrawPatchUpper.AllowNext = true;
-                ModifyDrawPatch.AllowNext = true;
+                Patch_PawnRenderer_RenderPawnAt.AllowNext = true;
+                Patch_PawnRenderer_RenderPawnInternal.AllowNext = true;
 
-                ModifyDrawPatch.NextDrawMode = !isBeheaded 
-                                               ? ModifyDrawPatch.DrawMode.Full
-                                               : i == 0 ? ModifyDrawPatch.DrawMode.BodyOnly : ModifyDrawPatch.DrawMode.HeadOnly;
+                Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = !isBeheaded 
+                                               ? Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full
+                                               : i == 0 ? Patch_PawnRenderer_RenderPawnInternal.DrawMode.BodyOnly : Patch_PawnRenderer_RenderPawnInternal.DrawMode.HeadOnly;
 
-                MakePawnConsideredInvisible.IsRendering = true;
+                Patch_PawnUtility_IsInvisible.IsRendering = true;
                 Patch_PawnRenderer_DrawInvisibleShadow.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
 
                 pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
 
                 Patch_PawnRenderer_DrawInvisibleShadow.Suppress = false;
-                MakePawnConsideredInvisible.IsRendering = false;
+                Patch_PawnUtility_IsInvisible.IsRendering = false;
             }
 
             // Render shadow.
