@@ -25,6 +25,7 @@ namespace AM
         }
 
         public readonly MapPawnProcessor PawnProcessor;
+        public readonly HashSet<Pawn> BeheadedPawns = new HashSet<Pawn>(16);
 
         private readonly List<Action> toDraw = new List<Action>();
         private readonly List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
@@ -40,6 +41,8 @@ namespace AM
         {
             base.MapRemoved();
             PawnProcessor.Dispose();
+            heads.Clear();
+            BeheadedPawns.Clear();
         }
 
         public void AddPostDraw(Action draw)
@@ -124,6 +127,7 @@ namespace AM
             };
 
             heads.Add(instance);
+            BeheadedPawns.Add(pawn);
         }
 
         private void RenderHeads()
@@ -143,11 +147,11 @@ namespace AM
 
                 if (!stayAlive)
                 {
+                    BeheadedPawns.Remove(heads[i].Pawn);
                     // Remove at swap back, for speed reasons:
                     heads[i] = heads[^1];
                     heads.RemoveAt(heads.Count - 1);
                     i--;
-                    Core.Warn("Deleted head");
                 }
             }
         }

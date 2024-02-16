@@ -108,12 +108,12 @@ public class AnimDef : Def
 
             string relative = data.Trim();
             if (string.IsNullOrWhiteSpace(new FileInfo(relative).Extension))
-                relative += ".anim";
+                relative += ".json";
 
             return Path.Combine(mod.RootDir, "Animations", relative);
         }
     }
-    public virtual string FullNonLethalDataPath => FullDataPath.Replace(".anim", "_NL.anim");
+    public virtual string FullNonLethalDataPath => FullDataPath.Replace(".json", "_NL.json");
     public AnimData Data
     {
         get

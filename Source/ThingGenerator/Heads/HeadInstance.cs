@@ -33,6 +33,7 @@ public sealed class HeadInstance
         Patch_PawnRenderer_RenderPawnInternal.StandaloneHeadRotation = Rotation;
         Patch_PawnRenderer_DrawInvisibleShadow.Suppress = true; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
         Patch_PawnRenderer_RenderPawnInternal.AllowNext = true;
+
         try
         {
             Pawn.Drawer.renderer.RenderPawnAt(Position, Direction, true);

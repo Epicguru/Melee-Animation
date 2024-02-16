@@ -77,7 +77,7 @@ static class Patch_PawnRenderer_RenderPawnInternal
     private static bool RenderStandaloneHeadMode(ref Rot4 bodyFacing, ref PawnRenderFlags flags, ref float angle, ref bool renderBody)
     {
         // Add headgear, remove head stump.
-        flags |= PawnRenderFlags.Headgear;
+        //flags |= PawnRenderFlags.Headgear;
         flags &= ~PawnRenderFlags.HeadStump;
 
         angle = StandaloneHeadRotation;
