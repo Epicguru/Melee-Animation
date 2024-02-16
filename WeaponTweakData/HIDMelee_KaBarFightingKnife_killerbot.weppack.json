@@ -1,0 +1,12 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_KaBarFightingKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.19542706,
+  "OffY": -0.009160921,
+  "HandsMode": 1,
+  "BladeStart": 0.104660086,
+  "BladeEnd": 0.477193326,
+  "MeleeWeaponType": 48
+}

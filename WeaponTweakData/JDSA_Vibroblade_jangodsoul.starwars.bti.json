@@ -1,0 +1,12 @@
+{
+  "TextureModID": "jangodsoul.starwars.bti",
+  "ItemDefName": "JDSA_Vibroblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.137409478,
+  "OffY": -0.009160444,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 1,
+  "MeleeWeaponType": 48
+}

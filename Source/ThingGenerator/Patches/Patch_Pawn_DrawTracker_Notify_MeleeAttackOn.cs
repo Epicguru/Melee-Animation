@@ -1,11 +1,16 @@
 ﻿using System;
 using AM.Idle;
 using HarmonyLib;
+using JetBrains.Annotations;
 using Verse;
 
 namespace AM.Patches;
 
+/// <summary>
+/// Used to detect melee attacks, to play the attack animation.
+/// </summary>
 [HarmonyPatch(typeof(Pawn_DrawTracker), nameof(Pawn_DrawTracker.Notify_MeleeAttackOn))]
+[UsedImplicitly]
 public static class Patch_Pawn_DrawTracker_Notify_MeleeAttackOn
 {
     public static void Prefix(Pawn_DrawTracker __instance, Thing Target)

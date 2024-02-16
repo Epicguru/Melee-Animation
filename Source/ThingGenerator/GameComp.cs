@@ -1,4 +1,5 @@
 ﻿using AM.Grappling;
+using AM.Heads;
 using AM.Idle;
 using AM.Patches;
 using AM.PawnData;
@@ -21,7 +22,9 @@ public class GameComp : GameComponent
     public static ulong FrameCounter;
     [TweakValue("Melee Animation")]
     [UsedImplicitly]
+#pragma warning disable CS0649 // Field 'GameComp.drawTextureExtractor' is never assigned to, and will always have its default value false
     private static bool drawTextureExtractor;
+#pragma warning restore CS0649 // Field 'GameComp.drawTextureExtractor' is never assigned to, and will always have its default value false
 
     public readonly Game Game;
 

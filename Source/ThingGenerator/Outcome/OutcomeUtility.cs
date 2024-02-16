@@ -25,7 +25,9 @@ public static class OutcomeUtility
 
     [UsedImplicitly]
     [TweakValue("Melee Animation")]
+#pragma warning disable CS0649 // Field 'OutcomeUtility.debugLogExecutionOutcome' is never assigned to, and will always have its default value false
     private static bool debugLogExecutionOutcome;
+#pragma warning restore CS0649 // Field 'OutcomeUtility.debugLogExecutionOutcome' is never assigned to, and will always have its default value false
 
     public ref struct AdditionalArgs
     {
@@ -137,7 +139,7 @@ public static class OutcomeUtility
         var outcome = ExecutionOutcome.Nothing;
 
         // Before anything else: check for failure chance.
-        float chanceToFail = canFail ? Mathf.Clamp01(RemapClamped(0, 20, 0.15f, 0.01f, attackerMeleeSkill) * Core.Settings.ChanceToFailMulti) : 0f;
+        float chanceToFail = canFail ? Mathf.Clamp01(RemapClamped(0, 20, Core.Settings.ChanceToFailMinSkill, Core.Settings.ChanceToFailMaxSkill, attackerMeleeSkill)) : 0f;
         Log($"Chance to fail: {chanceToFail:P1} based on melee skill {attackerMeleeSkill:F1}");
         bool willFail = Rand.Chance(chanceToFail);
         if (willFail && report == null)
@@ -317,14 +319,21 @@ public static class OutcomeUtility
         {
             // TODO check does this correctly get the right verbs even if the melee weapon is a sidearm?
             Verb verb;
-            int limit = 100;
+            int limit = 1000;
             do
             {
                 verb = attacker.meleeVerbs.TryGetMeleeVerb(pawn);
                 if (limit-- == 0)
                 {
-                    Core.Error($"Failed to find random verb for weapon '{args.Weapon}' on pawn {pawn}. May be a result of an optimization mod or bug.");
+                    Core.Error($"Failed to find random verb for weapon '{args.Weapon}' on pawn {pawn}. May be a result of an optimization mod or bug.\n" +
+                        $"The possible verbs are {string.Join(", ", attacker.meleeVerbs.GetUpdatedAvailableVerbsList(false).Where(v => v.IsMeleeAttack).Select(v => v.verb))}");
                     return false;
+                }
+
+                // Force verb refresh if required.
+                if (verb.EquipmentSource != args.Weapon)
+                {
+                    attacker.meleeVerbs.ChooseMeleeVerb(pawn);
                 }
 
             } while (verb.EquipmentSource != args.Weapon);

@@ -77,6 +77,10 @@ public class ActionController
         if (req.Grappler.Downed)
             return new GrappleAttemptReport(req, "Downed");
 
+        // Stunned.
+        if (req.Grappler.stances?.stunner.Stunned ?? false)
+            return new GrappleAttemptReport(req, "Stunned");
+
         // Check if grappler is in an animation.
         if (req.Grappler.IsInAnimation())
             return new GrappleAttemptReport(req, "SelfInAnimation");
@@ -224,6 +228,13 @@ public class ActionController
         if (req.Executioner.Downed)
         {
             yield return new ExecutionAttemptReport(req, "Downed");
+            yield break;
+        }
+
+        // Check stunned.
+        if (req.Executioner.stances?.stunner.Stunned ?? false)
+        {
+            yield return new ExecutionAttemptReport(req, "Stunned");
             yield break;
         }
 
@@ -570,7 +581,8 @@ public class ActionController
                     tempStartDataList.Add(new PossibleExecution.AnimStartData
                     {
                         AnimDef = anim,
-                        FlipX = true
+                        FlipX = true,
+                        OccupiedMask = args.OccupiedMask
                     });
                 }
             }
@@ -582,7 +594,8 @@ public class ActionController
                     tempStartDataList.Add(new PossibleExecution.AnimStartData
                     {
                         AnimDef = anim,
-                        FlipX = false
+                        FlipX = false,
+                        OccupiedMask = args.OccupiedMask
                     });
                 }
             }

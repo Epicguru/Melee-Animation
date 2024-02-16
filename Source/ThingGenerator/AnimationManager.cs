@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AM.Events;
+using AM.Heads;
 using AM.Processing;
 using UnityEngine;
 using Verse;
@@ -10,6 +12,8 @@ namespace AM
 {
     public class AnimationManager : MapComponent
     {
+        public static ConditionalWeakTable<Pawn, HeadInstance> PawnToHeadInstance { get; } = new ConditionalWeakTable<Pawn, HeadInstance>();
+        
         [TweakValue("Melee Animation Mod", 0, 10)]
         public static int CullingPadding = 5;
         public static bool IsDoingMultithreadedSeek { get; private set; }
@@ -27,6 +31,7 @@ namespace AM
 
         private readonly List<Action> toDraw = new List<Action>();
         private readonly List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
+        private readonly List<HeadInstance> heads = new List<HeadInstance>(128);
         private HashSet<AnimRenderer> ioRenderers = new HashSet<AnimRenderer>();
 
         public AnimationManager(Map map) : base(map)
@@ -38,6 +43,11 @@ namespace AM
         {
             base.MapRemoved();
             PawnProcessor.Dispose();
+            foreach (var head in heads)
+            {
+                PawnToHeadInstance.Remove(head.Pawn);
+            }
+            heads.Clear();
         }
 
         public void AddPostDraw(Action draw)
@@ -54,7 +64,9 @@ namespace AM
             if (Find.TickManager.Paused)
                 dt = 0f;
 
+            RenderHeads(); 
             Draw(dt);
+
 
             foreach (var action in toDraw)
                 action?.Invoke();
@@ -95,6 +107,61 @@ namespace AM
 
             AnimRenderer.DrawAll(deltaTime, map, onEvent, viewBounds, Core.Settings.DrawNamesInAnimation ? DrawLabel : null);
             AnimRenderer.RemoveDestroyed();
+        }
+
+        public void AddDroppedHeadFor(Pawn pawn, AnimRenderer animRenderer)
+        {
+            var head = animRenderer.GetPawnHead(pawn);
+            var body = animRenderer.GetPawnBody(pawn);
+            if (head == null || body == null)
+            {
+                Core.Warn("Failed to find head and/or body part to spawn dropped head.");
+                return;
+            }
+
+            var headSS = animRenderer.GetSnapshot(head);
+            var bodySS = animRenderer.GetSnapshot(body);
+
+            var instance = new HeadInstance
+            {
+                Pawn = pawn,
+                Direction = bodySS.GetWorldDirection(),
+                Position = headSS.GetWorldPosition(),
+                Rotation = headSS.GetWorldRotation(),
+                TimeToLive = 120,
+                Map = pawn.Map ?? pawn.Corpse?.Map
+            };
+
+            heads.Add(instance);
+
+            PawnToHeadInstance.Add(pawn, instance);
+        }
+
+        private void RenderHeads()
+        {
+            for (int i = 0; i < heads.Count; i++)
+            {
+                var head = heads[i];
+                bool stayAlive;
+                try
+                {
+                    stayAlive = head.Render();
+                }
+                catch (Exception e)
+                {
+                    Core.Error($"Exception rendering dropped head of {head.Pawn}. Head will be deleted.", e);
+                    stayAlive = false;
+                }
+
+                if (!stayAlive)
+                {
+                    PawnToHeadInstance.Remove(head.Pawn);
+                    // Remove at swap back, for speed reasons:
+                    heads[i] = heads[^1];
+                    heads.RemoveAt(heads.Count - 1);
+                    i--;
+                }
+            }
         }
 
         private static readonly List<(AnimRenderer, EventBase)> eventsToDo = new List<(AnimRenderer, EventBase)>(128);
@@ -138,7 +205,6 @@ namespace AM
             try
             {
                 EventHelper.Handle(ev, r);
-                Core.Log($"Did event {ev} for {r}");
             }
             catch (Exception e)
             {

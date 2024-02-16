@@ -1,0 +1,12 @@
+{
+  "TextureModID": "arektpp.simplerh2frweap",
+  "ItemDefName": "RNMeleeWeapon_VintageKABAR_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.192970186,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.16639857,
+  "BladeEnd": 0.5462131,
+  "MeleeWeaponType": 48
+}

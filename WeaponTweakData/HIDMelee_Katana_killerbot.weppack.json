@@ -1,0 +1,12 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3664258,
+  "OffY": 0.00305372477,
+  "Rotation": 50.0,
+  "BladeStart": 0.119927973,
+  "BladeEnd": 0.99019,
+  "MeleeWeaponType": 6
+}

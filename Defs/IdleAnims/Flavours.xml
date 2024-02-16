@@ -22,6 +22,7 @@
       </li>
     </handsVisibility>
   </AM.AnimDef>
+
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_TinyFlavour2</defName>
     <data>Idle_Tiny_FlavourCheer.json</data>
@@ -29,6 +30,7 @@
       <size>Tiny</size>
     </weaponFilter>
   </AM.AnimDef>
+
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_TinyFlavour3</defName>
     <data>Idle_Tiny_Flavour2.json</data>
@@ -47,6 +49,7 @@
       <size>Medium</size>
     </weaponFilter>
   </AM.AnimDef>
+
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_MediumFlavour2</defName>
     <data>Idle_MediumSharp_Flavour2.json</data>
@@ -59,6 +62,7 @@
       </subs>
     </weaponFilter>
   </AM.AnimDef>
+
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_MediumFlavour3</defName>
     <data>Idle_Medium_CheerFlavour.json</data>
@@ -66,11 +70,20 @@
       <size>Medium</size>
     </weaponFilter>
   </AM.AnimDef>
+
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_MediumFlavour4</defName>
     <data>Idle_Medium_PolishFlavour.json</data>
     <weaponFilter Class="AM.Reqs.AnySize">
       <size>Medium</size>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>AM_Idle_MediumFlavour5</defName>
+    <data>Idle_Medium_HypeUpFlavour.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Medium, Colossal</size>
     </weaponFilter>
   </AM.AnimDef>  
 
@@ -82,6 +95,7 @@
       <size>Colossal</size>
     </weaponFilter>
   </AM.AnimDef>
+
   <AM.AnimDef ParentName="AnimFlavour">
     <defName>AM_Idle_ColossalFlavour2</defName>
     <data>Idle_Colossal_FlavourCheer.json</data>

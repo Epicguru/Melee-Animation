@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_WhirligigSaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.403068542,
+  "OffY": -0.0122139081,
+  "Rotation": 45.0,
+  "BladeStart": 0.425283223,
+  "BladeEnd": 0.959654748,
+  "MeleeWeaponType": 3
+}

@@ -1,0 +1,17 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_HolyMoonlightSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.531318069,
+  "Rotation": 45.0,
+  "BladeStart": 0.0893927,
+  "BladeEnd": 1.21004593,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.372,
+    "g": 0.811,
+    "b": 0.964,
+    "a": 1.0
+  }
+}

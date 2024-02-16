@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_HunterAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2503912,
+  "OffY": 0.009160444,
+  "Rotation": 45.0,
+  "BladeStart": 0.3336764,
+  "BladeEnd": 0.7428524,
+  "MeleeWeaponType": 6
+}

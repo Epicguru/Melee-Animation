@@ -13,8 +13,9 @@ public class PatchCore : Mod
     {
         try
         {
-            CAI5000AnimationPatch.Init();
+            CAI5000AnimationPatch.Init();            
             new Harmony(content.Name).PatchAll();
+
             Core.Log("Initialized CAI-5000 patch");
         }
         catch (Exception e)

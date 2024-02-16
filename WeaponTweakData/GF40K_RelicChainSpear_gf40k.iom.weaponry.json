@@ -1,0 +1,14 @@
+{
+  "TextureModID": "gf40k.iom.weaponry",
+  "ItemDefName": "GF40K_RelicChainSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3419975,
+  "OffY": -0.009160683,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.505591452,
+  "BladeEnd": 1.03080261,
+  "MeleeWeaponType": 7
+}

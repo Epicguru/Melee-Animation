@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_BeastClaw",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.164891779,
+  "OffY": -0.0244283229,
+  "HandsMode": 1,
+  "BladeStart": 0.09549966,
+  "BladeEnd": 0.5779606,
+  "MeleeWeaponType": 32
+}

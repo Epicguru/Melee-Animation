@@ -1,0 +1,11 @@
+{
+  "TextureModID": "kikohi.berf",
+  "ItemDefName": "SequoiaWoodLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.137409985,
+  "OffY": -0.0916068256,
+  "Rotation": 43.41922,
+  "BladeEnd": 0.4405511,
+  "MeleeWeaponType": 8
+}

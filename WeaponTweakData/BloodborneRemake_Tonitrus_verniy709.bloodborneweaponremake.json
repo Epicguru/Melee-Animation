@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_Tonitrus",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.247337639,
+  "OffY": 0.00305348635,
+  "Rotation": 45.0,
+  "BladeStart": 0.055803448,
+  "BladeEnd": 0.6970492,
+  "MeleeWeaponType": 1
+}

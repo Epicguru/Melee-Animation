@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_ThreadedCane",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.311462224,
+  "OffY": -0.009160668,
+  "Rotation": -133.5816,
+  "BladeStart": 0.06496388,
+  "BladeEnd": 0.8314057,
+  "MeleeWeaponType": 1
+}

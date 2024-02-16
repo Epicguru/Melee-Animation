@@ -1,0 +1,10 @@
+{
+  "TextureModID": "flangopink.vanillaxcomweapons",
+  "ItemDefName": "XCOM_Util_CVPsiAmp",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.192373574,
+  "OffY": 0.006107211,
+  "Rotation": 25.0,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_RifleSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.381693661,
+  "Rotation": 45.0,
+  "BladeStart": 0.5871215,
+  "BladeEnd": 1.05736852,
+  "MeleeWeaponType": 4
+}

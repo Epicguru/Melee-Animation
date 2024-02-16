@@ -1,4 +1,4 @@
-
+﻿
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -15,6 +15,7 @@
     <Nullable>disable</Nullable>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	  <DebugType>none</DebugType>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,7 +41,7 @@
 	  <ProjectReference Include="..\AMRetextureSupport\AMRetextureSupport.csproj" />
 	  <ProjectReference Include="..\ModRequestAPI\ModRequestAPI.csproj" />
 	  
-	<!-- Ungodly hack to access rimworld private properties & methods -->
+	  <!-- Ungodly hack to access rimworld private properties & methods -->
     <Publicize Include="Assembly-CSharp" />
   </ItemGroup>
 

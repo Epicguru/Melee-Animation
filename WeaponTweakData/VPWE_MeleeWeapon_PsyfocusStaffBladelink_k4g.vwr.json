@@ -1,0 +1,10 @@
+{
+  "TextureModID": "k4g.vwr",
+  "ItemDefName": "VPWE_MeleeWeapon_PsyfocusStaffBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.238176733,
+  "BladeStart": 0.114736862,
+  "BladeEnd": 0.728500843,
+  "MeleeWeaponType": 9
+}

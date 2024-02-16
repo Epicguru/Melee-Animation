@@ -1,0 +1,14 @@
+{
+  "TextureModID": "gf40k.iom.weaponry",
+  "ItemDefName": "GF40K_RelicEviscerator",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.494675279,
+  "OffY": -0.0427496731,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.2704682,
+  "BladeEnd": 1.24149752,
+  "MeleeWeaponType": 6
+}

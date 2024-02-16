@@ -30,10 +30,11 @@ public class GrappleFlyer : PawnFlyer
         {
             victim.Rotation = Rot4.South;
             flyer.Grappler = grappler;
-            GenSpawn.Spawn(flyer, targetPos, grappler.Map, WipeMode.Vanish);
+            GenSpawn.Spawn(flyer, targetPos, grappler.Map);
             return flyer;
         }
 
+        Core.Warn("Base MakeFlyer method returned null.");
         return null;
     }
 

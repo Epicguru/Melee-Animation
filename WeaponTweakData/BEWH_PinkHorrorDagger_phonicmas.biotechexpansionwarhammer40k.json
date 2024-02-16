@@ -1,0 +1,11 @@
+{
+  "TextureModID": "phonicmas.biotechexpansionwarhammer40k",
+  "ItemDefName": "BEWH_PinkHorrorDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.189058319,
+  "HandsMode": 1,
+  "BladeStart": 0.130528957,
+  "BladeEnd": 0.5023433,
+  "MeleeWeaponType": 48
+}

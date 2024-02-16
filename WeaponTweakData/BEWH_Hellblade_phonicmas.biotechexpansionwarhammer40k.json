@@ -1,0 +1,11 @@
+{
+  "TextureModID": "phonicmas.biotechexpansionwarhammer40k",
+  "ItemDefName": "BEWH_Hellblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3572659,
+  "Rotation": 45.0,
+  "BladeStart": 0.224665046,
+  "BladeEnd": 1.02164161,
+  "MeleeWeaponType": 6
+}

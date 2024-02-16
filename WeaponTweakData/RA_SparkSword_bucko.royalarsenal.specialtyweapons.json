@@ -1,0 +1,10 @@
+{
+  "TextureModID": "bucko.royalarsenal.specialtyweapons",
+  "ItemDefName": "RA_SparkSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.317569166,
+  "BladeStart": 0.07809463,
+  "BladeEnd": 0.7834649,
+  "MeleeWeaponType": 6
+}

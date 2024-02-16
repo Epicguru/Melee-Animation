@@ -1,0 +1,11 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_Reiterpallasch",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3542124,
+  "Rotation": 45.0,
+  "BladeStart": 0.141302809,
+  "BladeEnd": 0.9016372,
+  "MeleeWeaponType": 6
+}

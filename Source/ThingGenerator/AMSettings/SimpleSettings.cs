@@ -276,13 +276,13 @@ public static class SimpleSettings
         foreach (var pre in presets)
         {
             var p = pre;
-            items.Add(new FloatMenuOption(pre.PresetName, () =>
+            items.Add(new FloatMenuOption(pre.GetName(), () =>
             {
                 SetToPreset(settings, p, f);
                 Core.Log($"Set settings to preset {pre.PresetName} ({pre.GetType()})");
             })
             {
-                tooltip = pre.PresetDescription
+                tooltip = pre.GetDescription()
             });
         }
         Find.WindowStack.Add(new FloatMenu(items));

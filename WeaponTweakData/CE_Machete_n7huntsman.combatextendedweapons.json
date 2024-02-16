@@ -1,0 +1,12 @@
+{
+  "TextureModID": "n7huntsman.combatextendedweapons",
+  "ItemDefName": "CE_Machete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.23206979,
+  "OffY": -0.0244288221,
+  "HandsMode": 1,
+  "BladeStart": 0.07809463,
+  "BladeEnd": 0.5819304,
+  "MeleeWeaponType": 54
+}

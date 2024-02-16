@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -14,11 +15,18 @@ public class PawnBody : MonoBehaviour
 
     private static readonly Vector2 headOffsetHorizontal = new Vector2(0.1f, 0.34f);
 
-    public AnimatedPart Body => _part ??= GetComponent<AnimatedPart>();
-    public AnimatedPart Head => _head ??= Body.transform.GetChild(0).GetComponent<AnimatedPart>();
+    public AnimatedPart Body => _part == null ? (_part = GetComponent<AnimatedPart>()) : _part;
+    public AnimatedPart Head => _head == null ? (_head = FindHead()) : _head;
     public BodyDirection Direction;
 
+    [NonSerialized]
     private AnimatedPart _part, _head;
+
+    private AnimatedPart FindHead()
+    {
+        string n = Body.CustomName.Replace("Body", "Head");
+        return GetComponentInParent<Animator>().transform.GetComponentsInChildren<AnimatedPart>().First(p => p.CustomName == n);
+    }
 
     private void LateUpdate()
     {

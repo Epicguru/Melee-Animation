@@ -1,0 +1,11 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_Kirkhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5007823,
+  "Rotation": 45.0,
+  "BladeStart": 0.590175,
+  "BladeEnd": 0.9688152,
+  "MeleeWeaponType": 1
+}
