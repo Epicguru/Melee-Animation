@@ -1,0 +1,11 @@
+{
+  "TextureModID": "gf40k.iom.weaponry",
+  "ItemDefName": "GF40K_RelicPowerSabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3633728,
+  "OffY": -0.03664273,
+  "BladeStart": 0.114736862,
+  "BladeEnd": 0.8384285,
+  "MeleeWeaponType": 6
+}

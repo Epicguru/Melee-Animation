@@ -1,0 +1,13 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_KosParasite",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.274819553,
+  "OffY": 0.009160683,
+  "Rotation": 35.54885,
+  "FlipX": true,
+  "BladeStart": 0.07412481,
+  "BladeEnd": 0.642085135,
+  "MeleeWeaponType": 8
+}

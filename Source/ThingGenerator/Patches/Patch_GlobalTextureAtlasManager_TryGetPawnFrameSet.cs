@@ -16,7 +16,7 @@ public static class Patch_GlobalTextureAtlasManager_TryGetPawnFrameSet
         var anim = PatchMaster.GetAnimator(pawn);
         if (anim == null)
         {
-            var isBeheaded = AnimationManager.PawnToHeadInstance.TryGetValue(pawn, out var head);
+            var isBeheaded = AnimationManager.PawnToHeadInstance.TryGetValue(pawn, out _);
             if (!isBeheaded)
                 return true;
         }        

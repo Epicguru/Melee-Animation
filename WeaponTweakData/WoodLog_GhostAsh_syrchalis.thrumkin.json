@@ -1,0 +1,12 @@
+{
+  "TextureModID": "syrchalis.thrumkin",
+  "ItemDefName": "WoodLog_GhostAsh",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.155730873,
+  "OffY": -0.07939243,
+  "Rotation": 45.0,
+  "BladeStart": 0.0139696067,
+  "BladeEnd": 0.465895265,
+  "MeleeWeaponType": 8
+}

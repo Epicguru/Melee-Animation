@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rh2.randy.burger.fast.food",
+  "ItemDefName": "RH2Beer_MuffBeer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0244283378,
+  "OffY": -0.07633816,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeEnd": 0.403908372,
+  "MeleeWeaponType": 8
+}

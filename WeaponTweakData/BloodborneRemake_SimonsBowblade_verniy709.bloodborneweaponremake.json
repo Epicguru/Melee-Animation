@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_SimonsBowblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.250391126,
+  "OffY": 0.00610744953,
+  "Rotation": 45.0,
+  "BladeStart": 0.122981451,
+  "BladeEnd": 0.7428524,
+  "MeleeWeaponType": 6
+}

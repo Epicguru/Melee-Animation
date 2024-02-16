@@ -1,0 +1,18 @@
+{
+  "TextureModID": "yanzihko.ae",
+  "ItemDefName": "MeleeWeapon_YanzArchotechBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354211867,
+  "OffY": 0.00305348635,
+  "Rotation": 42.42083,
+  "BladeStart": 0.148326114,
+  "BladeEnd": 0.9697315,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.36625433,
+    "g": 0.93703717,
+    "b": 0.387394637,
+    "a": 1.0
+  }
+}

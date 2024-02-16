@@ -1,0 +1,12 @@
+{
+  "TextureModID": "killerbot.weppack",
+  "ItemDefName": "HIDMelee_Sai",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.265659034,
+  "OffY": -0.00305398181,
+  "HandsMode": 1,
+  "BladeStart": 0.12603493,
+  "BladeEnd": 0.678727865,
+  "MeleeWeaponType": 40
+}

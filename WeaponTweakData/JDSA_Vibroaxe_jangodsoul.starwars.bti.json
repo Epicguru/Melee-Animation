@@ -1,0 +1,13 @@
+{
+  "TextureModID": "jangodsoul.starwars.bti",
+  "ItemDefName": "JDSA_Vibroaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2564986,
+  "OffY": 0.0152681172,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.458872467,
+  "BladeEnd": 0.794762969,
+  "MeleeWeaponType": 6
+}

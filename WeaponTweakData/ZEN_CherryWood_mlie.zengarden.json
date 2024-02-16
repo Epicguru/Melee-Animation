@@ -1,0 +1,12 @@
+{
+  "TextureModID": "mlie.zengarden",
+  "ItemDefName": "ZEN_CherryWood",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.152677387,
+  "OffY": -0.07633892,
+  "Rotation": 40.0,
+  "BladeStart": 0.01091613,
+  "BladeEnd": 0.4475739,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_StakeDriver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.210694939,
+  "OffY": -0.0213748422,
+  "BladeStart": 0.08633922,
+  "BladeEnd": 0.642085135,
+  "MeleeWeaponType": 56
+}

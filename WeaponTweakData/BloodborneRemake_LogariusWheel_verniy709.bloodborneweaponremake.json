@@ -1,0 +1,9 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_LogariusWheel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.167945713,
+  "OffY": -0.0885535851,
+  "MeleeWeaponType": 8
+}

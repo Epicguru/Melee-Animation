@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_BladeofMercy",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.152677357,
+  "OffY": 0.006106958,
+  "Rotation": 45.0,
+  "BladeStart": 0.04664302,
+  "BladeEnd": 0.614603341,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_FistofGratia",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.164891779,
+  "Rotation": -79.24842,
+  "HandsMode": 1,
+  "BladeStart": 0.0710713342,
+  "BladeEnd": 0.318409,
+  "MeleeWeaponType": 8
+}

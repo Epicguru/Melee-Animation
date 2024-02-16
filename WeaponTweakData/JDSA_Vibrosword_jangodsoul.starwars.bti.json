@@ -1,0 +1,13 @@
+{
+  "TextureModID": "jangodsoul.starwars.bti",
+  "ItemDefName": "JDSA_Vibrosword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.238176748,
+  "OffY": -0.03358875,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.110767543,
+  "BladeEnd": 0.663459957,
+  "MeleeWeaponType": 6
+}

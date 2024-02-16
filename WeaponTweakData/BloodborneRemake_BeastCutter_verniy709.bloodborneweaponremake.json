@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_BeastCutter",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.323676646,
+  "OffY": 0.00305347517,
+  "Rotation": 45.0,
+  "BladeStart": 0.122981451,
+  "BladeEnd": 0.8466731,
+  "MeleeWeaponType": 6
+}

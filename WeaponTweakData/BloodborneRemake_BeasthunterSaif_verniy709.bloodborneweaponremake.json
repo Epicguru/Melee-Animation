@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_BeasthunterSaif",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.262605548,
+  "OffY": 0.00610720366,
+  "Rotation": -130.0,
+  "BladeStart": -0.0296959188,
+  "BladeEnd": 0.642085135,
+  "MeleeWeaponType": 6
+}

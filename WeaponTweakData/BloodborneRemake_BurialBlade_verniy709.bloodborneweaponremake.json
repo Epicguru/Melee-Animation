@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_BurialBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.372533262,
+  "OffY": -0.09160633,
+  "Rotation": 53.38105,
+  "BladeStart": 0.565746665,
+  "BladeEnd": 0.82529825,
+  "MeleeWeaponType": 2
+}

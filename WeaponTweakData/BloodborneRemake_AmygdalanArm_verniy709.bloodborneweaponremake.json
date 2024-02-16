@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_AmygdalanArm",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.222909212,
+  "OffY": 0.00305373967,
+  "Rotation": 45.0,
+  "BladeStart": 0.07412481,
+  "BladeEnd": 0.529103935,
+  "MeleeWeaponType": 9
+}

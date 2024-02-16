@@ -1482,6 +1482,68 @@ MonoBehaviour:
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
   SplitDrawMode: 0
+--- !u!1 &211945041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211945042}
+  - component: {fileID: 211945043}
+  m_Layer: 0
+  m_Name: HandGrabSparks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &211945042
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211945041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.085, y: 0, z: -0.147}
+  m_LocalScale: {x: 0.3673111, y: 0.3673111, z: 0.3673111}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1768372577}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &211945043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211945041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac72458fde51c546a95b850d16b9030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomName: 
+  TexturePath: AM/HandGrabSparks
+  DoNotIncludeTexture: 0
+  IdleOffset: {x: 0, y: 0}
+  IdleRotation: 0
+  IdleScale: {x: 1, y: 1}
+  IdleFlipX: 0
+  IdleFlipY: 0
+  TransparentByDefault: 0
+  Tint: {r: 1, g: 0.7166688, b: 0.4862745, a: 0.7490196}
+  DataA: 0
+  DataB: 0
+  DataC: 0
+  FlipX: 0
+  FlipY: 0
+  FrameIndex: 0
+  SplitDrawPivot: {fileID: 0}
+  SplitDrawMode: 0
 --- !u!1 &245629384
 GameObject:
   m_ObjectHideFlags: 0
@@ -9242,7 +9304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: 8d9e1901f4490a343931aed3332dadc3, type: 2}
+  Clip: {fileID: 7400000, guid: 9f75553351a41154994dcbc5ee0c26ad, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -10030,7 +10092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1694323722
 Animator:
   serializedVersion: 5
@@ -10497,7 +10559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: 86ecf91f1ac20154489983f4e7ef0efc, type: 2}
+  Clip: {fileID: 7400000, guid: 8a57511f747019e40bbc31539684346c, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -10535,6 +10597,7 @@ Transform:
   - {fileID: 292260768}
   - {fileID: 987502972}
   - {fileID: 1460379187}
+  - {fileID: 211945042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1802891470
@@ -11098,7 +11161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1914720448
 Transform:
   m_ObjectHideFlags: 0
@@ -11154,7 +11217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: a804605a405c69343bd333632087c06e, type: 2}
+  Clip: {fileID: 7400000, guid: 1a5fe004d2c03944b967bfb72438a20d, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -12538,8 +12601,8 @@ SceneRoots:
   - {fileID: 336345000}
   - {fileID: 343237699}
   - {fileID: 523862470}
-  - {fileID: 1768372577}
   - {fileID: 1550348914}
   - {fileID: 1914720448}
-  - {fileID: 1694323724}
   - {fileID: 558904575}
+  - {fileID: 1768372577}
+  - {fileID: 1694323724}

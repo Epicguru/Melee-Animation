@@ -1,0 +1,19 @@
+{
+  "TextureModID": "cat.plasmapack",
+  "ItemDefName": "RA_PlasmaGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.556678653,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.197182745,
+  "BladeEnd": 1.36669314,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.987,
+    "g": 0.58,
+    "b": 0.061,
+    "a": 0.998
+  }
+}

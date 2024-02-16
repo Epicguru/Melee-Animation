@@ -1,0 +1,11 @@
+{
+  "TextureModID": "bucko.royalarsenal.specialtyweapons",
+  "ItemDefName": "RA_SparkSwordBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.338944,
+  "OffY": -0.006107457,
+  "BladeStart": 0.0964155,
+  "BladeEnd": 0.8017863,
+  "MeleeWeaponType": 6
+}

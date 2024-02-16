@@ -1,0 +1,12 @@
+{
+  "TextureModID": "gf40k.iom.weaponry",
+  "ItemDefName": "GF40K_ChainAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.23817727,
+  "OffY": -0.0854993761,
+  "Rotation": 90.0,
+  "BladeStart": 0.114736862,
+  "BladeEnd": 0.6185731,
+  "MeleeWeaponType": 2
+}

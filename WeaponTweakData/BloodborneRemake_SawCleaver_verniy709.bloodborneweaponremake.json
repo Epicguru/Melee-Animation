@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_SawCleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1862666,
+  "OffY": -0.006106958,
+  "Rotation": 35.0,
+  "BladeStart": 0.0100002876,
+  "BladeEnd": 0.519943535,
+  "MeleeWeaponType": 6
+}

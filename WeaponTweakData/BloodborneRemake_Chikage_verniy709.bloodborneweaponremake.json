@@ -1,0 +1,12 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_Chikage",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.35115844,
+  "OffY": -0.0152679086,
+  "Rotation": 47.80218,
+  "BladeStart": 0.09549966,
+  "BladeEnd": 0.861941,
+  "MeleeWeaponType": 1
+}

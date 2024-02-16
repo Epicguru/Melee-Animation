@@ -1,0 +1,11 @@
+{
+  "TextureModID": "gf40k.iom.weaponry",
+  "ItemDefName": "GF40K_RelicChainSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.345051467,
+  "OffY": -0.036642462,
+  "BladeStart": 0.163594007,
+  "BladeEnd": 0.8140002,
+  "MeleeWeaponType": 6
+}

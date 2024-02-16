@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "BMT_MushroomLogPlanks",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2473377,
+  "OffY": -0.128249526,
+  "Rotation": 35.0,
+  "BladeStart": 0.0322909728,
+  "BladeEnd": 0.679644167,
+  "MeleeWeaponType": 8
+}

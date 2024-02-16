@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mos.yegormobilearmoraa02.xmb",
+  "ItemDefName": "AMP_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354212373,
+  "OffY": -0.027482301,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.230772,
+  "BladeEnd": 0.930035353,
+  "MeleeWeaponType": 6
+}

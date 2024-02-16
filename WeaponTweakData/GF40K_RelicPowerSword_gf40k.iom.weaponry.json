@@ -1,0 +1,10 @@
+{
+  "TextureModID": "gf40k.iom.weaponry",
+  "ItemDefName": "GF40K_RelicPowerSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.354211867,
+  "BladeStart": 0.166647479,
+  "BladeEnd": 0.8384285,
+  "MeleeWeaponType": 6
+}

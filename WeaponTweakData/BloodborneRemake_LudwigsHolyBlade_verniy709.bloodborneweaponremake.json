@@ -1,0 +1,11 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_LudwigsHolyBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.485514462,
+  "Rotation": 45.0,
+  "BladeStart": 0.104660086,
+  "BladeEnd": 1.17645669,
+  "MeleeWeaponType": 6
+}

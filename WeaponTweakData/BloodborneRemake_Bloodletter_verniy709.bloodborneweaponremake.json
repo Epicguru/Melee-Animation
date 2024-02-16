@@ -1,0 +1,11 @@
+{
+  "TextureModID": "verniy709.bloodborneweaponremake",
+  "ItemDefName": "BloodborneRemake_Bloodletter",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.42749685,
+  "Rotation": 45.0,
+  "BladeStart": 0.455818474,
+  "BladeEnd": 1.05736852,
+  "MeleeWeaponType": 3
+}
