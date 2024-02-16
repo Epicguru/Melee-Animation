@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AM.Events;
 using AM.Heads;
@@ -11,6 +12,8 @@ namespace AM
 {
     public class AnimationManager : MapComponent
     {
+        public static ConditionalWeakTable<Pawn, HeadInstance> PawnToHeadInstance { get; } = new ConditionalWeakTable<Pawn, HeadInstance>();
+        
         [TweakValue("Melee Animation Mod", 0, 10)]
         public static int CullingPadding = 5;
         public static bool IsDoingMultithreadedSeek { get; private set; }
@@ -25,7 +28,6 @@ namespace AM
         }
 
         public readonly MapPawnProcessor PawnProcessor;
-        public readonly HashSet<Pawn> BeheadedPawns = new HashSet<Pawn>(16);
 
         private readonly List<Action> toDraw = new List<Action>();
         private readonly List<(Pawn pawn, Vector2 position)> labels = new List<(Pawn pawn, Vector2 position)>();
@@ -41,8 +43,11 @@ namespace AM
         {
             base.MapRemoved();
             PawnProcessor.Dispose();
+            foreach (var head in heads)
+            {
+                PawnToHeadInstance.Remove(head.Pawn);
+            }
             heads.Clear();
-            BeheadedPawns.Clear();
         }
 
         public void AddPostDraw(Action draw)
@@ -127,7 +132,8 @@ namespace AM
             };
 
             heads.Add(instance);
-            BeheadedPawns.Add(pawn);
+
+            PawnToHeadInstance.Add(pawn, instance);
         }
 
         private void RenderHeads()
@@ -147,7 +153,7 @@ namespace AM
 
                 if (!stayAlive)
                 {
-                    BeheadedPawns.Remove(heads[i].Pawn);
+                    PawnToHeadInstance.Remove(heads[i].Pawn);
                     // Remove at swap back, for speed reasons:
                     heads[i] = heads[^1];
                     heads.RemoveAt(heads.Count - 1);
