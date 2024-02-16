@@ -1,5 +1,5 @@
 {
-  "ExportTimeUTC": "2024-02-15T19:56:37.3292843Z",
+  "ExportTimeUTC": "2024-02-16T12:55:42.9383289Z",
   "Name": "Execution_SpearThrow_NL",
   "Length": 4.266667,
   "Bounds": {
@@ -24,7 +24,7 @@
   ],
   "Parts": [
     {
-      "ID": 21928,
+      "ID": 19844,
       "Path": "PawnAHolding",
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
@@ -837,7 +837,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 21950,
+      "ID": 19866,
       "Path": "BodyA",
       "CustomName": "BodyA",
       "Curves": {
@@ -1675,7 +1675,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 21616,
+      "ID": 19460,
       "Path": "BodyB",
       "CustomName": "BodyB",
       "Curves": {
@@ -2344,10 +2344,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 21366,
+      "ID": 19166,
       "Path": "PawnAHolding/ItemA",
       "CustomName": "ItemA",
-      "ParentID": 21928,
+      "ParentID": 19844,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
           "Keyframes": [
@@ -2877,7 +2877,7 @@
         "AnimatedPart.FrameIndex": 0.0,
         "PawnBody.Direction": 0.0
       },
-      "SplitDrawPivotPartID": 22024,
+      "SplitDrawPivotPartID": 19940,
       "SweepPaths": [
         [
           {
@@ -3962,10 +3962,10 @@
       ]
     },
     {
-      "ID": 21904,
+      "ID": 19814,
       "Path": "PawnAHolding/HandA",
       "CustomName": "HandA",
-      "ParentID": 21928,
+      "ParentID": 19844,
       "Curves": {
         "Transform.localEulerAnglesRaw.x": {
           "Keyframes": [
@@ -4419,10 +4419,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 22238,
+      "ID": 20186,
       "Path": "PawnAHolding/HandB",
       "CustomName": "HandB",
-      "ParentID": 21928,
+      "ParentID": 19844,
       "Curves": {
         "Transform.m_LocalPosition.x": {
           "Keyframes": [
@@ -4710,7 +4710,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 22024,
+      "ID": 19940,
       "Path": "WeaponACutoff",
       "Curves": {
         "Transform.m_LocalPosition.x": {
@@ -5037,10 +5037,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 21470,
+      "ID": 19292,
       "Path": "BodyA/HeadA",
       "CustomName": "HeadA",
-      "ParentID": 21950,
+      "ParentID": 19866,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -5069,9 +5069,9 @@
       "SweepPaths": []
     },
     {
-      "ID": -12227562,
+      "ID": 19226,
       "Path": "BodyB/HeadContainer",
-      "ParentID": 21616,
+      "ParentID": 19460,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -5100,10 +5100,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 22136,
+      "ID": 20072,
       "Path": "BodyB/HeadContainer/HeadB",
       "CustomName": "HeadB",
-      "ParentID": -12227562,
+      "ParentID": 19226,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -5132,7 +5132,7 @@
       "SweepPaths": []
     },
     {
-      "ID": 21676,
+      "ID": 19544,
       "Path": "PawnBHolding",
       "Curves": {},
       "DefaultValues": {
@@ -5162,10 +5162,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 21938,
+      "ID": 19854,
       "Path": "PawnBHolding/HandA",
       "CustomName": "HandA2",
-      "ParentID": 21676,
+      "ParentID": 19544,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -5194,10 +5194,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 21658,
+      "ID": 19520,
       "Path": "PawnBHolding/HandB",
       "CustomName": "HandB2",
-      "ParentID": 21676,
+      "ParentID": 19544,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -5226,10 +5226,10 @@
       "SweepPaths": []
     },
     {
-      "ID": 22054,
+      "ID": 19976,
       "Path": "PawnBHolding/ItemB",
       "CustomName": "ItemB",
-      "ParentID": 21676,
+      "ParentID": 19544,
       "Curves": {},
       "DefaultValues": {
         "GameObject.m_IsActive": 1.0,
@@ -5260,7 +5260,7 @@
       ]
     },
     {
-      "ID": 21922,
+      "ID": 19838,
       "Path": "HandGrabSparks",
       "TexturePath": "AM/HandGrabSparks",
       "Curves": {},
@@ -5291,7 +5291,7 @@
       "SweepPaths": []
     },
     {
-      "ID": -5395966,
+      "ID": 20214,
       "Path": "QuestionMark",
       "TexturePath": "AM/QuestionMark",
       "Curves": {},
