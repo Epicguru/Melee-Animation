@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AM.Outcome;
+using AM.Reqs;
 using UnityEngine;
 using Verse;
 
@@ -150,7 +151,8 @@ namespace AM.Events.Workers
             }
 
             // List all possible execution animations.
-            var allAnims = AnimDef.GetExecutionAnimationsForPawnAndWeapon(winner, winner.GetFirstMeleeWeapon()?.def).ToList();
+            var weaponDef = winner.GetFirstMeleeWeapon()?.def;
+            var allAnims = AnimDef.GetExecutionAnimationsForPawnAndWeapon(winner, weaponDef).ToList();
 
             // Make a space mask.
             bool flipX = winner.Position.x > loser.Position.x;
@@ -178,6 +180,21 @@ namespace AM.Events.Workers
                 // Valid!
                 anim = rand;
                 break;
+            }
+
+            // Do animation promotion.
+            if (anim != null)
+            {
+                anim = anim.TryGetPromotionDef(new AnimDef.PromotionInput
+                {
+                    Attacker = winner,
+                    Victim = loser,
+                    FlipX = flipX,
+                    OccupiedMask = mask,
+                    OriginalAnim = anim,
+                    Outcome = outcome,
+                    ReqInput = new ReqInput(weaponDef)
+                }) ?? anim;
             }
 
             return anim;

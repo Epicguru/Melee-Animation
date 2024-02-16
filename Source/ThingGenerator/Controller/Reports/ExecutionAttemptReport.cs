@@ -121,5 +121,10 @@ public struct PossibleExecution
         /// Whether the animation needs to be mirrored horizontally.
         /// </summary>
         public bool FlipX;
+
+        /// <summary>
+        /// Space bitmask for occupied slots.
+        /// </summary>
+        public required ulong OccupiedMask;
     }
 }

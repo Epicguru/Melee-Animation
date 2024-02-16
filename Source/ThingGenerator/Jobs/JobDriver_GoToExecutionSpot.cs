@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AM.Outcome;
+using AM.Reqs;
 using Verse;
 using Verse.AI;
 
@@ -97,6 +98,21 @@ public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
 
                 if (result == 0)
                 {
+                    // Do animation promotion, unless using fixed animations.
+                    if (!fixedAnimationList)
+                    {
+                        anim = anim.TryGetPromotionDef(new AnimDef.PromotionInput
+                        {
+                            Attacker = toil.actor,
+                            FlipX = flipX,
+                            OccupiedMask = occupiedMask,
+                            OriginalAnim = anim,
+                            Outcome = outcome,
+                            ReqInput = new ReqInput(weaponDef),
+                            Victim = Target
+                        }) ?? anim;
+                    }
+
                     // Can do the animation!
                     var args = new AnimationStartParameters(anim, toil.actor, Target)
                     {

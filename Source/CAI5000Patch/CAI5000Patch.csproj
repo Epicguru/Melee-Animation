@@ -25,6 +25,10 @@
     <PackageReference Include="Lib.Harmony" Version="2.2.2">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
+    <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <!-- _____ 1.4 _____ -->
@@ -38,6 +42,9 @@
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
+
+    <!-- Ungodly hack to access CombatAI private code -->
+    <Publicize Include="CombatAI_14" />
   </ItemGroup>
 
 

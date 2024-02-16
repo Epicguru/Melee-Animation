@@ -12,6 +12,7 @@ using Verse.AI;
 using AM.Idle;
 using AM.Jobs;
 using AM.Outcome;
+using AM.Reqs;
 using AM.UniqueSkills;
 using static UnityEngine.GraphicsBuffer;
 
@@ -372,7 +373,7 @@ public static class DraftedFloatMenuOptionsUI
         };
     }
 
-    private static void ExecutionEnabledOnClick(Pawn target, Pawn grappler, ExecutionAttemptReport report, ExecutionAttemptRequest request)
+    private static void ExecutionEnabledOnClick(Pawn target, Pawn attacker, ExecutionAttemptReport report, ExecutionAttemptRequest request)
     {
         if (Core.Settings.WarnOfFriendlyExecution)
         {
@@ -384,9 +385,8 @@ public static class DraftedFloatMenuOptionsUI
             }
         }
 
-        // Update request.
-        SpaceChecker.MakeOccupiedMask(grappler.Map, grappler.Position, out uint newMask);
-        request.OccupiedMask = newMask;
+        // Update request.        
+        request.OccupiedMask = SpaceChecker.MakeOccupiedMask(attacker.Map, attacker.Position, out _);
 
         // Get new report
         report.Dispose();
@@ -404,32 +404,31 @@ public static class DraftedFloatMenuOptionsUI
 
         if (report.IsWalking)
         {
-            // TODO allow fixed animation here.
             // Walk to and execute target.
             // Make walk job and reset all verbs (stop firing, attacking).
             var walkJob = JobMaker.MakeJob(AM_DefOf.AM_WalkToExecution, target);
 
-            if (grappler.verbTracker?.AllVerbs != null)
-                foreach (var verb in grappler.verbTracker.AllVerbs)
+            if (attacker.verbTracker?.AllVerbs != null)
+                foreach (var verb in attacker.verbTracker.AllVerbs)
                     verb.Reset();
 
-            if (grappler.equipment?.AllEquipmentVerbs != null)
-                foreach (var verb in grappler.equipment.AllEquipmentVerbs)
+            if (attacker.equipment?.AllEquipmentVerbs != null)
+                foreach (var verb in attacker.equipment.AllEquipmentVerbs)
                     verb.Reset();
 
             // Start walking.
             JobDriver_GoToExecutionSpot.UseTheseAnimations = request.OnlyTheseAnimations;
-            grappler.jobs.StartJob(walkJob, JobCondition.InterruptForced);
+            attacker.jobs.StartJob(walkJob, JobCondition.InterruptForced);
             JobDriver_GoToExecutionSpot.UseTheseAnimations = null;
 
-            if (grappler.CurJobDef == AM_DefOf.AM_WalkToExecution)
+            if (attacker.CurJobDef == AM_DefOf.AM_WalkToExecution)
             {
                 return;
             }
 
-            Core.Error($"CRITICAL ERROR: Failed to force interrupt {grappler}'s job with execution goto job. Likely a mod conflict or invalid start parameters.");
+            Core.Error($"CRITICAL ERROR: Failed to force interrupt {attacker}'s job with execution goto job. Likely a mod conflict or invalid start parameters.");
             string reason = "AM.Gizmo.Error.NoLasso".Translate(
-                new NamedArgument(grappler.NameShortColored, "Pawn"),
+                new NamedArgument(attacker.NameShortColored, "Pawn"),
                 new NamedArgument(target.NameShortColored, "Target"));
             string error = "AM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
             Messages.Message(error, MessageTypeDefOf.RejectInput, false);
@@ -440,10 +439,25 @@ public static class DraftedFloatMenuOptionsUI
             var selectedAdjacent = report.PossibleExecutions.Where(p => p.LassoToHere == null).RandomElementByWeightWithFallback(p => (request.OnlyTheseAnimations != null ? 0.1f : 0f) + p.Animation.Probability);
             if (selectedAdjacent.IsValid)
             {
-                var outcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target, true);
+                var outcome = OutcomeUtility.GenerateRandomOutcome(attacker, report.Target, true);
                 var anim = outcome == ExecutionOutcome.Failure ? AM_DefOf.AM_Execution_Fail : selectedAdjacent.Animation.AnimDef;
 
-                var startArgs = new AnimationStartParameters(anim, grappler, report.Target)
+                if (outcome is not (ExecutionOutcome.Failure or ExecutionOutcome.Nothing))
+                {
+                    // Do animation promotion:
+                    anim = anim.TryGetPromotionDef(new AnimDef.PromotionInput
+                    {
+                        Attacker = attacker,
+                        Victim = report.Target,
+                        Outcome = outcome,
+                        FlipX = selectedAdjacent.Animation.FlipX,
+                        OriginalAnim = anim,
+                        OccupiedMask = request.OccupiedMask,
+                        ReqInput = new ReqInput(attacker.GetFirstMeleeWeapon()?.def)
+                    }) ?? anim;
+                }
+
+                var startArgs = new AnimationStartParameters(anim, attacker, report.Target)
                 {
                     FlipX = selectedAdjacent.Animation.FlipX,
                     ExecutionOutcome = outcome
@@ -456,7 +470,7 @@ public static class DraftedFloatMenuOptionsUI
                 }
 
                 // Set cooldown.
-                grappler.GetMeleeData().TimeSinceExecuted = 0;
+                attacker.GetMeleeData().TimeSinceExecuted = 0;
                 return;
             }
 
@@ -464,23 +478,38 @@ public static class DraftedFloatMenuOptionsUI
             var selectedLasso = report.PossibleExecutions.Where(p => p.LassoToHere != null).RandomElementByWeightWithFallback(p => (request.OnlyTheseAnimations != null ? 0.1f : 0f) + p.Animation.Probability);
             if (selectedLasso.IsValid)
             {
-                var outcome = OutcomeUtility.GenerateRandomOutcome(grappler, report.Target, true);
+                var outcome = OutcomeUtility.GenerateRandomOutcome(attacker, report.Target, true);
                 var anim = outcome == ExecutionOutcome.Failure ? AM_DefOf.AM_Execution_Fail : selectedLasso.Animation.AnimDef;
 
-                var startArgs2 = new AnimationStartParameters(anim, grappler, report.Target)
+                if (outcome is not (ExecutionOutcome.Failure or ExecutionOutcome.Nothing))
+                {
+                    // Do animation promotion:
+                    anim = anim.TryGetPromotionDef(new AnimDef.PromotionInput
+                    {
+                        Attacker = attacker,
+                        Victim = report.Target,
+                        Outcome = outcome,
+                        FlipX = selectedAdjacent.Animation.FlipX,
+                        OriginalAnim = anim,
+                        OccupiedMask = request.OccupiedMask,
+                        ReqInput = new ReqInput(attacker.GetFirstMeleeWeapon()?.def)
+                    }) ?? anim;
+                }
+
+                var startArgs2 = new AnimationStartParameters(anim, attacker, report.Target)
                 {
                     FlipX = selectedLasso.Animation.FlipX,
                     ExecutionOutcome = outcome
                 };
 
-                if (!JobDriver_GrapplePawn.GiveJob(grappler, target, selectedLasso.LassoToHere.Value, false, startArgs2))
+                if (!JobDriver_GrapplePawn.GiveJob(attacker, target, selectedLasso.LassoToHere.Value, false, startArgs2))
                 {
-                    Core.Error($"Failed to give grapple job to {grappler}.");
+                    Core.Error($"Failed to give grapple job to {attacker}.");
                     return;
                 }
 
                 // Set grapple cooldown.
-                grappler.GetMeleeData().TimeSinceGrappled = 0;
+                attacker.GetMeleeData().TimeSinceGrappled = 0;
                 return;
             }
 

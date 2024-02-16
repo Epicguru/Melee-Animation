@@ -1,4 +1,5 @@
 ﻿using AM.Grappling;
+using AM.Heads;
 using AM.Idle;
 using AM.Patches;
 using AM.PawnData;

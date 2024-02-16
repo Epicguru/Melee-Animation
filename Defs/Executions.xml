@@ -207,7 +207,36 @@
     <label>Execution: Head Be Gone</label>
     <data>Execution_HeadRemoval.json</data>
     <weaponFilter Class="AM.Reqs.True" />
+    <!-- Does not occur naturally, just used for testing. -->
     <relativeProbability>0</relativeProbability>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Behead</defName>
+    <label>Execution: Behead</label>
+    <data>Execution_Behead.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Sharp</types>
+    </weaponFilter>
+    <!-- Does not occur naturally, instead uses the promotion system. -->
+    <relativeProbability>0</relativeProbability>
+    <promotionRules>
+      <onlyWhenOutcomeIs>Kill</onlyWhenOutcomeIs>
+      <promotionWorkers>
+        <li>AM.PromotionWorkers.MustHaveHeadPromotionWorker</li>
+      </promotionWorkers>
+    </promotionRules>
+    <!-- Spawn head upon end. -->
+    <spawnDroppedHeadsForPawnIndices>
+      <li>1</li>
+    </spawnDroppedHeadsForPawnIndices>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
   </AM.AnimDef>
 
   <AM.AnimDef ParentName="AnimExecutionBase">

@@ -5,6 +5,7 @@ using AM.Processing;
 using AM.RendererWorkers;
 using AM.Sweep;
 using AM.Tweaks;
+using AM.UI;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,10 @@ public class AnimRenderer : IExposable
 {
     #region Static stuff
 
-    public static readonly char[] Alphabet = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+    public static readonly char[] Alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public static readonly List<AnimRenderer> PostLoadPendingAnimators = new List<AnimRenderer>();
+    public static event Action<Pawn, AnimRenderer> PrePawnSpecialRender;
+    public static event Action<Pawn, AnimRenderer> PostPawnSpecialRender;
     public static Material DefaultCutout, DefaultTransparent;
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
     public static IReadOnlyCollection<Pawn> CapturedPawns => pawnToRenderer.Keys;
@@ -46,7 +49,7 @@ public class AnimRenderer : IExposable
         if (pawn == null)
             return null;
 
-        return pawnToRenderer.TryGetValue(pawn, out var found) ? found : null;
+        return pawnToRenderer.GetValueOrDefault(pawn);
     }
 
     public static Texture2D ResolveTexture(in AnimPartSnapshot snapshot)
@@ -910,9 +913,11 @@ public class AnimRenderer : IExposable
                     Patch_PawnRenderer_RenderPawnInternal.DoNotModify = true; // Don't use animation position/rotation.
                     Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full;
                     Patch_PawnUtility_IsInvisible.IsRendering = true;
+                    PrePawnSpecialRender?.Invoke(pawn, this);
 
                     pawn.DrawAt(pawn.DrawPosHeld ?? pawn.DrawPos);
 
+                    PostPawnSpecialRender?.Invoke(pawn, this);
                     Patch_PawnRenderer_RenderPawnInternal.DoNotModify = false;
                     Patch_PawnUtility_IsInvisible.IsRendering = false;
 
@@ -941,7 +946,7 @@ public class AnimRenderer : IExposable
             AnimationRendererWorker?.PreRenderPawn(bodySS, ref pos, ref dir, pawn);
 
             // Render. Two passes are required if the pawn is beheaded.
-            bool isBeheaded = IsPawnBeheaded(pawn, headSS);
+            bool isBeheaded = IsPawnBeheaded(pawn, bodySS, headSS);
             int passCount = isBeheaded ? 2 : 1;
 
             for (int i = 0; i < passCount; i++)
@@ -1000,16 +1005,16 @@ public class AnimRenderer : IExposable
     }
 
     [Pure]
-    private bool IsPawnBeheaded(Pawn pawn, in AnimPartSnapshot headSS)
+    private bool IsPawnBeheaded(Pawn pawn, in AnimPartSnapshot bodySS, in AnimPartSnapshot headSS)
     {
         // Not sure if this is okay: are there any pawns that are not humanoid
         // but can have their heads removed by rendering separately?
         if (pawn.RaceProps?.Humanlike != true)
             return false;
 
-        // Render beheaded if the head is not in it's default position
-        // i.e. attached to the neck.
-        return headSS.LocalPosition.x != 0 || headSS.LocalPosition.z != 0;
+        // Render as beheaded if the head and body are not rendering at the same position.
+        var bodyToHeadDelta = bodySS.GetWorldPosition() - headSS.GetWorldPosition();
+        return bodyToHeadDelta.sqrMagnitude > 0.01f * 0.01f;
     }
 
     private void DrawSimpleShadow(Vector3 pos, Vector3 size, Color color)
@@ -1196,6 +1201,10 @@ public class AnimRenderer : IExposable
             if (WasInterrupted)
                 return;
 
+            // Spawn heads.
+            if (!Dialog_AnimationDebugger.IsInRehearsalMode)
+                SpawnDroppedHeads();
+
             TeleportPawnsToEnd();
         }
         catch (Exception e)
@@ -1210,6 +1219,22 @@ public class AnimRenderer : IExposable
             }
 
             OnEndAction?.Invoke(this);
+        }
+    }
+
+    private void SpawnDroppedHeads()
+    {
+        if (ExecutionOutcome == ExecutionOutcome.Kill)
+        {
+            var comp = Map.GetAnimManager();
+
+            foreach (var index in Def.spawnDroppedHeadsForPawnIndices)
+            {
+                if (index < 0 || index >= Pawns.Count)
+                    continue;
+
+                comp.AddDroppedHeadFor(Pawns[index], this);
+            }
         }
     }
 

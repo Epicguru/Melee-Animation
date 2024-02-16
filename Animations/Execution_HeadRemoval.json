@@ -1,8 +1,13 @@
 {
-  "ExportTimeUTC": "2024-02-14T21:13:36.6558736Z",
+  "ExportTimeUTC": "2024-02-15T16:44:15.3521725Z",
   "Name": "Execution_HeadRemoval",
   "Length": 2.5,
-  "Events": [],
+  "Events": [
+    {
+      "Time": 2.5,
+      "Data": "KillPawn;0;1;Head;Cut;AM_Execution_Generic;True"
+    }
+  ],
   "Parts": [
     {
       "ID": -7208314,

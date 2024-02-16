@@ -325,8 +325,15 @@ public static class OutcomeUtility
                 verb = attacker.meleeVerbs.TryGetMeleeVerb(pawn);
                 if (limit-- == 0)
                 {
-                    Core.Error($"Failed to find random verb for weapon '{args.Weapon}' on pawn {pawn}. May be a result of an optimization mod or bug.");
+                    Core.Error($"Failed to find random verb for weapon '{args.Weapon}' on pawn {pawn}. May be a result of an optimization mod or bug.\n" +
+                        $"The possible verbs are {string.Join(", ", attacker.meleeVerbs.GetUpdatedAvailableVerbsList(false).Where(v => v.IsMeleeAttack).Select(v => v.verb))}");
                     return false;
+                }
+
+                // Force verb refresh if required.
+                if (verb.EquipmentSource != args.Weapon)
+                {
+                    attacker.meleeVerbs.ChooseMeleeVerb(pawn);
                 }
 
             } while (verb.EquipmentSource != args.Weapon);

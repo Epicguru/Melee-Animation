@@ -1,17 +1,17 @@
-﻿using System;
+﻿using AM.Controller;
+using AM.Controller.Requests;
+using AM.Grappling;
+using AM.Outcome;
+using AM.Reqs;
+using JetBrains.Annotations;
+using RimWorld;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AM.Controller;
-using AM.Controller.Reports;
-using AM.Controller.Requests;
-using AM.Grappling;
-using AM.Outcome;
-using JetBrains.Annotations;
-using RimWorld;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
@@ -48,7 +48,7 @@ public class MapPawnProcessor : IDisposable
     private readonly List<AttackerData> attackers = new List<AttackerData>(128);
     private readonly List<IntRange> slices = new List<IntRange>(32);
     private readonly List<TaskData> targetsPool = new List<TaskData>();
-    private readonly ConcurrentQueue<(AnimationStartParameters args, IntVec3? lassoToHere)> toStart = new ConcurrentQueue<(AnimationStartParameters, IntVec3?)>();
+    private readonly ConcurrentQueue<(AnimationStartParameters args, IntVec3? lassoToHere, ulong occupiedMask)> toStart = new ConcurrentQueue<(AnimationStartParameters, IntVec3?, ulong)>();
     private readonly ActionController generalController = new ActionController();
     private readonly Map map;
     private int targetsIndex;
@@ -141,13 +141,30 @@ public class MapPawnProcessor : IDisposable
         while (toStart.TryDequeue(out var pair))
         {
             var args = pair.args;
+
+            // Generate outcome here to avoid threading errors:
+            var outcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn, true);
+
             if (pair.lassoToHere == null)
             {
+                // Instant execution:
+
                 // Instant trigger.
                 var finalArgs = args with
                 {
-                    // Generate outcome here to avoid threading errors:
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn, true),
+                    ExecutionOutcome = outcome,
+
+                    // Do animation promotion:
+                    Animation = args.Animation.TryGetPromotionDef(new AnimDef.PromotionInput
+                    {
+                        Attacker = args.MainPawn,
+                        Victim = args.SecondPawn,
+                        FlipX = args.FlipX,
+                        OccupiedMask = pair.occupiedMask,
+                        OriginalAnim = args.Animation,
+                        Outcome = outcome,
+                        ReqInput = new ReqInput(args.MainPawn.GetFirstMeleeWeapon()?.def)
+                    }) ?? args.Animation
                 };
 
                 // Force failure animation for failure outcome.
@@ -167,8 +184,19 @@ public class MapPawnProcessor : IDisposable
                 // Lasso + execution:
                 var finalArgs = args with
                 {
-                    // Generate outcome here to avoid threading errors:
-                    ExecutionOutcome = OutcomeUtility.GenerateRandomOutcome(args.MainPawn, args.SecondPawn, true),
+                    ExecutionOutcome = outcome,
+
+                    // Do animation promotion:
+                    Animation = args.Animation.TryGetPromotionDef(new AnimDef.PromotionInput
+                    {
+                        Attacker = args.MainPawn,
+                        Victim = args.SecondPawn,
+                        FlipX = args.FlipX,
+                        OccupiedMask = pair.occupiedMask,
+                        OriginalAnim = args.Animation,
+                        Outcome = outcome,
+                        ReqInput = new ReqInput(args.MainPawn.GetFirstMeleeWeapon()?.def)
+                    }) ?? args.Animation
                 };
 
                 // Force failure animation for failure outcome.
@@ -191,13 +219,13 @@ public class MapPawnProcessor : IDisposable
             {
                 // Just lasso:
                 // Lasso.
-                if (!JobDriver_GrapplePawn.GiveJob(args.MainPawn, args.SecondPawn, pair.lassoToHere.Value, false, default))
+                if (!JobDriver_GrapplePawn.GiveJob(args.MainPawn, args.SecondPawn, pair.lassoToHere.Value))
                 {
                     Core.Error($"Failed to give grapple job to {args.MainPawn}.");
                     return;
                 }
 
-                // Set lasso cooldown. Execution cooldown is set buy the job driver.
+                // Set lasso cooldown. Execution cooldown is set by the job driver.
                 args.MainPawn.GetMeleeData().TimeSinceGrappled = 0;
             }
         }
@@ -283,7 +311,7 @@ public class MapPawnProcessor : IDisposable
         return true;
     }
 
-    private static void ProcessSlice(List<AttackerData> attackers, IntRange slice, Map map, TaskData taskData, ConcurrentQueue<(AnimationStartParameters, IntVec3?)> startArgs, DiagnosticInfo diag)
+    private static void ProcessSlice(List<AttackerData> attackers, IntRange slice, Map map, TaskData taskData, ConcurrentQueue<(AnimationStartParameters, IntVec3?, ulong)> startArgs, DiagnosticInfo diag)
     {
         diag.StartupTimesMS[taskData.Index] = RefTimer.ToMilliseconds(taskData.ScheduleTick, RefTimer.GetTickNow());
         diag.TargetFindTimesMS[taskData.Index] = 0;
@@ -355,7 +383,8 @@ public class MapPawnProcessor : IDisposable
                             Anim = selected.Animation.AnimDef,
                             FlipX = selected.Animation.FlipX,
                             Target = report.Target,
-                            LassoToHere = selected.LassoToHere
+                            LassoToHere = selected.LassoToHere,
+                            OccupiedMask = occupiedMask
                         };
                         break;
                     }
@@ -391,7 +420,8 @@ public class MapPawnProcessor : IDisposable
                             Anim = null,
                             FlipX = false,
                             LassoToHere = report.DestinationCell,
-                            Target = target
+                            Target = target,
+                            OccupiedMask = occupiedMask
                         };
                         break;
                     }
@@ -404,7 +434,7 @@ public class MapPawnProcessor : IDisposable
                     startArgs.Enqueue((new AnimationStartParameters(toPerform.Anim, pawn, toPerform.Target)
                     {
                         FlipX = toPerform.FlipX
-                    }, toPerform.LassoToHere));
+                    }, toPerform.LassoToHere, toPerform.OccupiedMask));
                 }
             }
         }
@@ -559,6 +589,7 @@ public class MapPawnProcessor : IDisposable
         public required AnimDef Anim { get; init; }
         public required bool FlipX { get; init; }
         public required Pawn Target { get; init; }
+        public required ulong OccupiedMask { get; init; }
         public IntVec3? LassoToHere { get; init; }
     }
 

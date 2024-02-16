@@ -1832,4 +1832,11 @@ AnimationClip:
     flags: 0
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 2.5
+    functionName: AnimEvent
+    data: 
+    objectReferenceParameter: {fileID: 11400000, guid: 5e98863ac6154264ab77088ca7032b49, type: 2}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

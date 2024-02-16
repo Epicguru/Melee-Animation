@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using UnityEngine;
 using Verse;
 
 namespace AM.Patches;
@@ -13,13 +14,16 @@ static class Patch_PawnRenderer_RenderPawnInternal
     public static bool AllowNext;
     public static bool DoNotModify = false;
     public static DrawMode NextDrawMode = DrawMode.Full;
-    public static Rot4 HeadRotation; // only used when NextDrawMode is HeadOnly.
+    public static Rot4 HeadRotation; // Only used when NextDrawMode is HeadOnly or HeadStandalone.
+
+    public static float StandaloneHeadRotation;
 
     public enum DrawMode
     {
         Full,
         BodyOnly,
-        HeadOnly
+        HeadOnly,
+        HeadStandalone
     }
 
     [HarmonyPriority(Priority.Last)] // As late as possible. We want to be the last to modify results.
@@ -31,8 +35,9 @@ static class Patch_PawnRenderer_RenderPawnInternal
         if (flags.HasFlag(PawnRenderFlags.Portrait))
             return true;
 
-        int i = 0;
-        i.ToString();
+        // Standalone head (i.e. dropped head on ground after animation) gets a custom method that does things slightly differently.
+        if (NextDrawMode == DrawMode.HeadStandalone)
+            return RenderStandaloneHeadMode(ref bodyFacing, ref flags, ref angle, ref renderBody);
 
         // Get the animator for this pawn.
         var anim = PatchMaster.GetAnimator(___pawn);
@@ -66,6 +71,18 @@ static class Patch_PawnRenderer_RenderPawnInternal
         }
 
         AllowNext = false;
+        return true;
+    }
+
+    private static bool RenderStandaloneHeadMode(ref Rot4 bodyFacing, ref PawnRenderFlags flags, ref float angle, ref bool renderBody)
+    {
+        // Add headgear, remove head stump.
+        flags |= PawnRenderFlags.Headgear;
+        flags &= ~PawnRenderFlags.HeadStump;
+
+        angle = StandaloneHeadRotation;
+        bodyFacing = HeadRotation;
+        renderBody = false;
         return true;
     }
 }

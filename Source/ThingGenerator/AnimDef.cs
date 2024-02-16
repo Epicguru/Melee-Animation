@@ -11,6 +11,7 @@ using AM.Reqs;
 using AM.Sweep;
 using JetBrains.Annotations;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace AM;
@@ -139,7 +140,8 @@ public class AnimDef : Def
     /// in a 7x7 cell grid around the animation root cell.
     /// </summary>
     public ulong ClearMask, FlipClearMask;
-    public float Probability => relativeProbability * ((SData?.Enabled ?? true) ? (SData?.Probability ?? 1f) : 0f);
+    public float Probability => relativeProbability * UserEditedProbability;
+    public float UserEditedProbability => (SData?.Enabled ?? true) ? (SData?.Probability ?? 1f) : 0f;
     [XmlIgnore] public SettingsData SData;
 
     public AnimType type = AnimType.Execution;
@@ -169,17 +171,12 @@ public class AnimDef : Def
     public int idleFrame;
     public ExecutionOutcome? fixedOutcome;
     public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
+    public PromotionData promotionRules;
+    public List<int> spawnDroppedHeadsForPawnIndices = new List<int>();
 
 #pragma warning disable CS0649 // Field 'AnimDef.data' is never assigned to, and will always have its default value null
     private string data;
 #pragma warning restore CS0649 // Field 'AnimDef.data' is never assigned to, and will always have its default value null
-
-    public class HandsVisibilityData
-    {
-        public int pawnIndex = -1;
-        public bool? showMainHand = null;
-        public bool? showAltHand = null;
-    }
 
     private Dictionary<string, string> additionalData = new Dictionary<string, string>();
     private float relativeProbability = 1;
@@ -295,6 +292,15 @@ public class AnimDef : Def
         base.PostLoad();
         ClearMask = SpaceChecker.MakeClearMask(this, false);
         FlipClearMask = SpaceChecker.MakeClearMask(this, true);
+
+        if (promotionRules == null)
+            return;
+
+        if (relativeProbability != 0)
+            Core.Warn($"{this} has relativeProbability of {relativeProbability:P1} but it also uses Promotion Rules. This might be a mistake.");
+
+        promotionRules.Def = this;
+        promotionRules.PostLoad();
     }
 
     public IntVec2? TryGetCell(AnimCellData.Type type, bool flipX, bool flipY, int? pawnIndex = null)
@@ -337,5 +343,116 @@ public class AnimDef : Def
         foreach (var thing in DefDatabase<ThingDef>.AllDefsListForReading)
             if (thing.IsMeleeWeapon && Allows(new ReqInput(thing)))
                 yield return thing;
+    }
+
+    /*
+     * Animation promotion is where a selected animation is swapped out for a different animation just before it starts.
+     * The reason this is done is that certain conditions need to be met for some animations,
+     * and the inputs for those conditions may not be known until after the animation selection calculations 
+     * have already been done, hence the need to 'promote' an already selected animation to a different one.
+     */
+    public AnimDef TryGetPromotionDef(PromotionInput input)
+    {
+        if (input.OriginalAnim != this)
+            Core.Error($"Original anim should be this one: {this}. Instead got {input.OriginalAnim}");
+
+        var allPossibles = from def in GetDefsOfType(AnimType.Execution)
+                           where def.promotionRules != null
+                           let chance = def.promotionRules.GetRelativePromotionChanceFor(input)
+                           where chance > 0
+                           select (def, chance);
+
+        int possibleCount = allPossibles.Count();
+
+        // Chance to promote at all:
+        // Needs to be thought out... A future task.
+        float promotionChanceForAny = Mathf.Min(possibleCount * 0.4f, 0.6f);
+        if (!Rand.Chance(promotionChanceForAny))
+            return null;
+
+        var selected = allPossibles.RandomElementByWeightWithFallback(pair => pair.chance);
+
+        if (selected.def != null)
+        {
+            Core.Log($"Promoted animation: {input.OriginalAnim} -> {selected} ({promotionChanceForAny:P0} general promotion chance, {selected.chance:P0} relative chance)");
+        }
+
+        return selected.def;
+    }
+
+    public class HandsVisibilityData
+    {
+        public int pawnIndex = -1;
+        public bool? showMainHand = null;
+        public bool? showAltHand = null;
+    }
+
+    public class PromotionData
+    {
+        public AnimDef Def { get; set; }
+
+        public ExecutionOutcome onlyWhenOutcomeIs = ExecutionOutcome.Nothing;
+        public float basePromotionRelativeChance = 1f;
+        public List<Type> promotionWorkers = new List<Type>();
+
+        private readonly List<IPromotionWorker> workers = new List<IPromotionWorker>();
+
+        public float GetRelativePromotionChanceFor(in PromotionInput input)
+        {
+            // Outcome must be in the allowed range.
+            if (!onlyWhenOutcomeIs.HasFlag(input.Outcome))
+                return 0;
+
+            // Must allow the used weapon.
+            if (!Def.Allows(input.ReqInput))
+                return 0f;
+
+            // Base chance from def and user settings.
+            float chance = basePromotionRelativeChance * Def.UserEditedProbability;
+            if (chance <= 0f)
+                return 0f;
+
+            // Must have enough space.
+            if (!CheckMasks(input))
+                return 0f;
+
+            // Do all the specific workers.
+            foreach (var worker in workers)
+            {
+                chance *= worker.GetPromotionRelativeChanceFor(input);
+            }
+
+            return chance;
+        }
+
+        private bool CheckMasks(in PromotionInput input)
+        {
+            ulong mask = input.FlipX ? Def.FlipClearMask : Def.ClearMask;
+            return (mask & input.OccupiedMask) == 0;
+        }
+
+        public void PostLoad()
+        {
+            foreach (var type in promotionWorkers)
+            {
+                workers.Add(Activator.CreateInstance(type) as IPromotionWorker);
+            }
+        }
+    }
+
+    public interface IPromotionWorker
+    {
+        float GetPromotionRelativeChanceFor(in PromotionInput input);
+    }
+
+    public struct PromotionInput
+    {
+        public required Pawn Attacker;
+        public required Pawn Victim;
+        public required ReqInput ReqInput;
+        public required AnimDef OriginalAnim;
+        public required ExecutionOutcome Outcome;
+        public required ulong OccupiedMask;
+        public required bool FlipX;
     }
 }

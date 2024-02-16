@@ -581,7 +581,8 @@ public class ActionController
                     tempStartDataList.Add(new PossibleExecution.AnimStartData
                     {
                         AnimDef = anim,
-                        FlipX = true
+                        FlipX = true,
+                        OccupiedMask = args.OccupiedMask
                     });
                 }
             }
@@ -593,7 +594,8 @@ public class ActionController
                     tempStartDataList.Add(new PossibleExecution.AnimStartData
                     {
                         AnimDef = anim,
-                        FlipX = false
+                        FlipX = false,
+                        OccupiedMask = args.OccupiedMask
                     });
                 }
             }

@@ -15,22 +15,20 @@ public static class Patch_PawnRenderer_RenderPawnAt
 
     [HarmonyPriority(Priority.First)]
     public static bool Prefix(Pawn ___pawn)
-    {
+    {        
+        var anim = PatchMaster.GetAnimator(___pawn);
+        if (anim != null && !AllowNext)
         {
-            var anim = PatchMaster.GetAnimator(___pawn);
-            if (anim != null && !AllowNext)
-            {
-                return false;
-            }
-
-            var job = ___pawn.CurJob;
-            if (job?.def == AM_DefOf.AM_GrapplePawn)
-            {
-                JobDriver_GrapplePawn.DrawEnsnaringRope(___pawn, job);
-            }
-
-            AllowNext = false;
-            return true;
+            return false;
         }
+
+        var job = ___pawn.CurJob;
+        if (job?.def == AM_DefOf.AM_GrapplePawn)
+        {
+            JobDriver_GrapplePawn.DrawEnsnaringRope(___pawn, job);
+        }
+
+        AllowNext = false;
+        return true;        
     }
 }
