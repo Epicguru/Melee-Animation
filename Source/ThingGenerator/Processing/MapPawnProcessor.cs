@@ -493,6 +493,10 @@ public class MapPawnProcessor : IDisposable
             if (pawn.IsInAnimation() || GrabUtility.IsBeingTargetedForGrapple(pawn))
                 continue;
 
+            // If fire at will is disabled, don't process them. They should not be attacking or lassoing.
+            if (pawn.drafter?.FireAtWill == false)
+                continue;
+
             // Should this pawn even be scanned?
             GetSecondsMTB(pawn, out float execMTB, out float lassoMTB);
             bool execRandom = Rand.MTBEventOccurs(execMTB, 60f, Core.Settings.ScanTickInterval);

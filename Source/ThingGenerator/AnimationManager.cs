@@ -128,7 +128,8 @@ namespace AM
                 Direction = bodySS.GetWorldDirection(),
                 Position = headSS.GetWorldPosition(),
                 Rotation = headSS.GetWorldRotation(),
-                TimeToLive = 120
+                TimeToLive = 120,
+                Map = pawn.Map ?? pawn.Corpse?.Map
             };
 
             heads.Add(instance);
@@ -140,20 +141,21 @@ namespace AM
         {
             for (int i = 0; i < heads.Count; i++)
             {
+                var head = heads[i];
                 bool stayAlive;
                 try
                 {
-                    stayAlive = heads[i].Render();
+                    stayAlive = head.Render();
                 }
                 catch (Exception e)
                 {
-                    Core.Error($"Exception rendering dropped head of {heads[i].Pawn}. Head will be deleted.", e);
+                    Core.Error($"Exception rendering dropped head of {head.Pawn}. Head will be deleted.", e);
                     stayAlive = false;
                 }
 
                 if (!stayAlive)
                 {
-                    PawnToHeadInstance.Remove(heads[i].Pawn);
+                    PawnToHeadInstance.Remove(head.Pawn);
                     // Remove at swap back, for speed reasons:
                     heads[i] = heads[^1];
                     heads.RemoveAt(heads.Count - 1);
@@ -203,7 +205,6 @@ namespace AM
             try
             {
                 EventHelper.Handle(ev, r);
-                Core.Log($"Did event {ev} for {r}");
             }
             catch (Exception e)
             {

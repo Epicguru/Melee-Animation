@@ -367,11 +367,8 @@ public class AnimDef : Def
         // Chance to promote at all:
         // Needs to be thought out... A future task.
         float promotionChanceForAny = Mathf.Min(possibleCount * 0.5f, 0.65f);
-        if (!Rand.Chance(promotionChanceForAny))
-        {
-            Core.Log($"Did not promote from {input.OriginalAnim} ({input.Outcome}), {promotionChanceForAny:P1} chance failed.");
-            return null;
-        }
+        if (!Rand.Chance(promotionChanceForAny))       
+            return null;        
 
         var selected = allPossibles.RandomElementByWeightWithFallback(pair => pair.chance);
 

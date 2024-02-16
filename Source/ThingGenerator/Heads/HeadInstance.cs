@@ -11,6 +11,7 @@ namespace AM.Heads;
 public sealed class HeadInstance
 {
     public Pawn Pawn { get; set; }
+    public Map Map { get; set; }
     public Vector3 Position { get; set; }
     public float Rotation { get; set; }
     public float TimeToLive { get; set; }
@@ -26,6 +27,10 @@ public sealed class HeadInstance
         TimeToLive -= Time.unscaledDeltaTime;
         if (TimeToLive <= 0f)
             return false;
+
+        // Do not actually render if the map is not currently visible.
+        if (Map != Find.CurrentMap)
+            return true;
 
         //Render pawn in custom position using patches.
         Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.HeadStandalone;
