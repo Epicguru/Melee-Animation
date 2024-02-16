@@ -22,18 +22,21 @@ public static class Patch_PawnGenerator_GeneratePawn
             if (pawn == null)
                 return;
 
-            switch (Core.Settings.LassoSpawnChance)
-            {
-                case <= 0f:
-                case < 1f when !Rand.Chance(Core.Settings.LassoSpawnChance):
-                    return;
-            }
+            // Spawn chance from settings:
+            if (!Rand.Chance(Core.Settings.LassoSpawnChance))
+                return;
 
+            // Basic pawn checks.
             if (!pawn.def.race.Humanlike || !pawn.def.race.ToolUser || pawn.apparel == null)
                 return;
 
+            // Only give to pawns with melee weapons.
             var weapon = pawn.GetFirstMeleeWeapon();
             if (weapon == null)
+                return;
+
+            // Don't bother giving to pawns that do not have the required melee skill.
+            if (Core.Settings.MinMeleeSkillToLasso > 0 && !HasSkillToUseLasso(pawn))
                 return;
 
             GiveLasso(pawn, GetRandomLasso());
@@ -42,6 +45,12 @@ public static class Patch_PawnGenerator_GeneratePawn
         {
             Core.Error("Exception in pawn generation postfix:", e);
         }
+    }
+
+    private static bool HasSkillToUseLasso(Pawn pawn)
+    {
+        int skill = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? -1;
+        return skill >= Core.Settings.MinMeleeSkillToLasso;
     }
 
     private static void GiveLasso(Pawn pawn, ThingDef lasso)
@@ -62,6 +71,7 @@ public static class Patch_PawnGenerator_GeneratePawn
 
     private static ThingDef GetRandomLasso()
     {
-        return Content.LassoDefs.RandomElementByWeightWithFallback(l => 1f / Mathf.Pow(l.BaseMarketValue, 4));
+        // Random lasso with a heavy weight on cheaper ones.
+        return Content.LassoDefs.RandomElementByWeightWithFallback(l => 1f / Mathf.Pow(l.BaseMarketValue, 3));
     }
 }
