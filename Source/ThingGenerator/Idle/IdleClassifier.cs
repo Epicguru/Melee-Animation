@@ -18,15 +18,20 @@ public static class IdleClassifier
         if (tweakData == null)
             return default;
 
+        // Take override from def into consideration.
+        var def = tweakData.GetDef();
+        var overrideData = def != null && MeleeAnimationAdjustmentDef.AllWeaponAdjustments.TryGetValue(def, out var found) ? found : null;
+        WeaponSize? forceSize = overrideData?.overrideSize;
+
         float length = GetLength(tweakData);
         bool isTiny = length <= TinySizeThreshold;
         var cat = tweakData.MeleeWeaponType.ToCategory();
 
         if (isTiny)
-            return (WeaponSize.Tiny, cat);
+            return (forceSize ?? WeaponSize.Tiny, cat);
 
         bool isColossal = length >= ColossalSizeThreshold;
-        return isColossal ? (WeaponSize.Colossal, cat) : (WeaponSize.Medium, cat);
+        return isColossal ? (forceSize ?? WeaponSize.Colossal, cat) : (forceSize ?? WeaponSize.Medium, cat);
     }
 
     private static float GetLength(ItemTweakData tweakData) => Mathf.Max(tweakData.BladeLength, tweakData.MaxDistanceFromHand);
@@ -43,7 +48,7 @@ public static class IdleClassifier
     private static void LogTextureCategories()
     {
         var data = from def in DefDatabase<ThingDef>.AllDefsListForReading
-           where def.IsMeleeWeapon
+           where def.IsMeleeWeapon()
            let tweak = TweakDataManager.TryGetTweak(def)
            where tweak != null
            let cat = Classify(tweak)

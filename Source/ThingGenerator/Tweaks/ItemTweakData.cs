@@ -83,7 +83,6 @@ namespace AM.Tweaks
         private Texture2D cachedTex;
         private ModContentPack cachedMod;
         private ISweepProvider cachedSweepProvider;
-
         private AnimDef idleAnimCached;
         private AnimDef moveHorAnimCached;
         private AnimDef moveVertAnimCached;

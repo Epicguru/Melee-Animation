@@ -21,6 +21,7 @@ namespace AM;
 [HotSwapAll]
 public class Core : Mod
 {
+    public static readonly HashSet<ThingDef> ForceConsiderTheseMeleeWeapons = new HashSet<ThingDef>();
     public static Func<Pawn, float> GetBodyDrawSizeFactor = _ => 1f;
     public static string ModTitle => ModContent?.Name;
     public static ModContentPack ModContent;
@@ -138,16 +139,18 @@ public class Core : Mod
         if (func == null)
             return;
 
+        // Warnings removed as of 10/03/24: Vanilla rimworld has now added the required uint32 parser, resulting in constant warning.
+
         // We need to do two checks because of a Rimworld bug in the HandlesType method.
         // If the T is a primitive type, HandlesType returns true, even though it is not actually handled.
         if (typeof(T).IsPrimitive && ParseHelper.CanParse(typeof(T), default(T).ToString()))
         {
-            Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
+            //Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
             return;
         }
         if (!typeof(T).IsPrimitive && ParseHelper.HandlesType(typeof(T)))
         {
-            Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
+            //Warn($"There is already a parser for the type '{typeof(T).FullName}'. I wonder who added it...");
             return;
         }
 
@@ -184,6 +187,8 @@ public class Core : Mod
     {
         AddParsers();
 
+        RetextureUtility.IsMeleeWeapon = def => def.IsMeleeWeapon();
+
         string assemblies = string.Join(",\n", from a in content.assemblies.loadedAssemblies select a.FullName);
         Log($"Hello, world!\nBuild date: {GetBuildDate(Assembly.GetExecutingAssembly()):g}\nLoaded assemblies ({content.assemblies.loadedAssemblies.Count}):\n{assemblies}");
 
@@ -207,6 +212,7 @@ public class Core : Mod
         AddLateLoadAction(true, "Loading main content...", AM.Content.Load);
         AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
         AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
+        AddLateLoadAction(true, "Registering def overrides...", RegisterWeaponDefOverrides);
         AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
         AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
         AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
@@ -214,6 +220,14 @@ public class Core : Mod
         AddLateLoadAction(true, "Apply final patches", Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.PatchAll);
 
         AddLateLoadEvents();
+    }
+
+    private static void RegisterWeaponDefOverrides()
+    {
+        foreach (var def in DefDatabase<MeleeAnimationAdjustmentDef>.AllDefsListForReading)
+        {
+            def.RegisterData();
+        }
     }
 
     private void LoadAllTweakData()

@@ -171,7 +171,7 @@ namespace AM.Tweaks
         private static void LogAllRetextureCompletion()
         {
             var all = from td in DefDatabase<ThingDef>.AllDefsListForReading
-                      where td.IsMeleeWeapon
+                      where td.IsMeleeWeapon()
                       let report = RetextureUtility.GetTextureReport(td)
                       where !report.HasError
                       from pair in report.AllRetextures
@@ -198,7 +198,7 @@ namespace AM.Tweaks
         public static IEnumerable<(string modPackageID, string modName, ThingDef weapon)> LoadAllForActiveMods(bool includeRedundant)
         {
             var data = from weapon in DefDatabase<ThingDef>.AllDefsListForReading
-                where weapon.IsMeleeWeapon
+                where weapon.IsMeleeWeapon()
                 let report = RetextureUtility.GetTextureReport(weapon)
                 select (weapon, report);
 

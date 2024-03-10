@@ -57,6 +57,12 @@ public static class Extensions
         return (T)GenGeneric.InvokeStaticMethodOnGenericType(typeof(DefDatabase<>), typeof(T), "GetNamed", defName, true) ?? fallback;
     }
 
+    /// <summary>
+    /// Returns true if <see cref="ThingDef.IsMeleeWeapon"/> is true OR this weapon has been manually marked as a melee weapon
+    /// by this mod.
+    /// </summary>
+    public static bool IsMeleeWeapon(this ThingDef def) => def.IsMeleeWeapon || Core.ForceConsiderTheseMeleeWeapons.Contains(def);
+
     public static float ToAngleFlatNew(this in Vector3 vector) => Mathf.Atan2(vector.z, vector.x) * Mathf.Rad2Deg;
 
     public static bool Polarity(this float f) => f > 0;
@@ -116,7 +122,7 @@ public static class Extensions
         if (pawn?.equipment == null)
             return null;
 
-        if (pawn.equipment.Primary?.def.IsMeleeWeapon ?? false)
+        if (pawn.equipment.Primary?.def.IsMeleeWeapon() ?? false)
         {
             tweakData = TweakDataManager.TryGetTweak(pawn.equipment.Primary.def);
             if (tweakData != null)
@@ -125,7 +131,7 @@ public static class Extensions
 
         foreach(var item in pawn.equipment.AllEquipmentListForReading)
         {
-            if (item.def.IsMeleeWeapon)
+            if (item.def.IsMeleeWeapon())
             {
                 tweakData = TweakDataManager.TryGetTweak(item.def);
                 if (tweakData != null)
@@ -137,7 +143,7 @@ public static class Extensions
         {
             foreach (var item in pawn.inventory.innerContainer)
             {
-                if (item is ThingWithComps twc && item.def.IsMeleeWeapon)
+                if (item is ThingWithComps twc && item.def.IsMeleeWeapon())
                 {
                     tweakData = TweakDataManager.TryGetTweak(item.def);
                     if (tweakData != null)
@@ -231,7 +237,7 @@ public static class Extensions
             foreach (var def in DefDatabase<ThingDef>.AllDefsListForReading)
             {
                 var tweak = TweakDataManager.TryGetTweak(def);
-                if (!def.IsMeleeWeapon || tweak == null)
+                if (!def.IsMeleeWeapon() || tweak == null)
                     continue;
 
                 if (onlySize != null)
@@ -265,7 +271,7 @@ public static class Extensions
         foreach (var def in DefDatabase<ThingDef>.AllDefsListForReading)
         {
             var tweak = TweakDataManager.TryGetTweak(def);
-            if (!def.IsMeleeWeapon || tweak == null)
+            if (!def.IsMeleeWeapon() || tweak == null)
                 continue;
 
             if (onlySize != null)

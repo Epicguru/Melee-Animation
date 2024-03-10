@@ -6,6 +6,7 @@ namespace AM.Patches;
 /// <summary>
 /// Overrides various parameters of the pawn rendering, specifically direction (north, east etc.)
 /// and body angle. Driven by the active animation.
+/// Also used to render severed heads.
 /// </summary>
 [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnInternal))]
 static class Patch_PawnRenderer_RenderPawnInternal
@@ -76,7 +77,7 @@ static class Patch_PawnRenderer_RenderPawnInternal
     private static bool RenderStandaloneHeadMode(ref Rot4 bodyFacing, ref PawnRenderFlags flags, ref float angle, ref bool renderBody)
     {
         // Add headgear, remove head stump.
-        //flags |= PawnRenderFlags.Headgear;
+        flags |= PawnRenderFlags.Headgear;
         flags &= ~PawnRenderFlags.HeadStump;
 
         angle = StandaloneHeadRotation;

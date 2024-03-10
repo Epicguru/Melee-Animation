@@ -16,7 +16,7 @@ public class GilgameshRendererWorker : AnimationRendererWorker
     {
         // Get all supported long stabbing weapon tweak data.
         // This is used to ensure correct rendering during the attack.
-        var allTweaks = DefDatabase<ThingDef>.AllDefsListForReading.Where(td => td.IsMeleeWeapon).Select(TweakDataManager.TryGetTweak).Where(tweak => tweak != null && tweak.MeleeWeaponType.HasFlag(MeleeWeaponType.Long_Stab) && string.IsNullOrEmpty(tweak.CustomRendererClass));
+        var allTweaks = DefDatabase<ThingDef>.AllDefsListForReading.Where(td => td.IsMeleeWeapon()).Select(TweakDataManager.TryGetTweak).Where(tweak => tweak != null && tweak.MeleeWeaponType.HasFlag(MeleeWeaponType.Long_Stab) && string.IsNullOrEmpty(tweak.CustomRendererClass));
         if (!allTweaks.Any())
         {
             Core.Error("Failed to find any long stabbing weapons for use with gilgamesh attack");
