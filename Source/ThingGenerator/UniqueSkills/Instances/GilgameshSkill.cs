@@ -68,6 +68,10 @@ public class GilgameshSkill : ChanneledUniqueSkillInstance
             float max = Def.GetData("MaxPsyComaDays", float.Parse, 3);
             float daysToRemove = Rand.Range(min, max);
             timer.ticksToDisappear = Mathf.RoundToInt(GenDate.TicksPerDay * daysToRemove);
+
+            if (timer.ticksToDisappear <= 0)
+                return;
+
             Core.Log($"Set psy coma to {daysToRemove:F2} days, {timer.ticksToDisappear} ticks.");
         }
         else
