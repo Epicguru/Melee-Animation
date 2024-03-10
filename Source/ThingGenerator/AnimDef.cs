@@ -341,7 +341,7 @@ public class AnimDef : Def
     public IEnumerable<ThingDef> GetAllAllowedWeapons()
     {
         foreach (var thing in DefDatabase<ThingDef>.AllDefsListForReading)
-            if (thing.IsMeleeWeapon && Allows(new ReqInput(thing)))
+            if (thing.IsMeleeWeapon() && Allows(new ReqInput(thing)))
                 yield return thing;
     }
 

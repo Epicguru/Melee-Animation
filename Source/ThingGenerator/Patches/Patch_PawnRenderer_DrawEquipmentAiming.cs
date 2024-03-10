@@ -26,7 +26,7 @@ public static class Patch_PawnRenderer_DrawEquipment
 
         // Only for melee weapons...
         var wep = pawn.equipment?.Primary?.def;
-        bool isMeleeWeapon = wep?.IsMeleeWeapon ?? false;
+        bool isMeleeWeapon = wep?.IsMeleeWeapon() ?? false;
         if (isMeleeWeapon && TweakDataManager.TryGetTweak(wep) == null)
             isMeleeWeapon = false;
         comp.PreDraw();

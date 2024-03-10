@@ -11,6 +11,7 @@ namespace AM.Retexture;
 [HotSwapAll]
 public static class RetextureUtility
 {
+    public static Predicate<ThingDef> IsMeleeWeapon;
     public static int CachedReportCount => reportCache.Count;
     public static IEnumerable<ActiveTextureReport> AllCachedReports => reportCache.Values;
 
@@ -49,7 +50,7 @@ public static class RetextureUtility
     public static TimeSpan PreCacheAllTextureReports(Action<ActiveTextureReport> onReport, bool full)
     {
         var sw = Stopwatch.StartNew();
-        foreach (var weapon in DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon))
+        foreach (var weapon in DefDatabase<ThingDef>.AllDefsListForReading.Where(d => IsMeleeWeapon(d)))
         {
             onReport(GetTextureReport(weapon, 0, full));
         }
@@ -234,7 +235,7 @@ public static class RetextureUtility
     [DebugOutput("Melee Animation")]
     private static void LogAllTextureReports()
     {
-        var meleeWeapons = DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon);
+        var meleeWeapons = DefDatabase<ThingDef>.AllDefsListForReading.Where(d => IsMeleeWeapon(d));
 
         TableDataGetter<ThingDef>[] table = new TableDataGetter<ThingDef>[6];
         table[0] = new TableDataGetter<ThingDef>("Def Name", d => d.defName);

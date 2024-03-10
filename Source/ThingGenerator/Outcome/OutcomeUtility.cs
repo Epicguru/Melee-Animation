@@ -235,7 +235,7 @@ public static class OutcomeUtility
     [DebugOutput("Melee Animation")]
     private static void LogAllMeleeWeaponVerbs()
     {
-        var meleeWeapons = DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon);
+        var meleeWeapons = DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon());
         var created = new HashSet<ThingWithComps>();
         foreach (var def in meleeWeapons)
         {

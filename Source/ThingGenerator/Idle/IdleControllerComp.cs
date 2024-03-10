@@ -383,7 +383,7 @@ public class IdleControllerComp : ThingComp
     private Thing GetMeleeWeapon()
     {
         var weapon = (parent as Pawn)?.equipment?.Primary;
-        if (weapon != null && weapon.def.IsMeleeWeapon && weapon.TryGetTweakData() != null)
+        if (weapon != null && weapon.def.IsMeleeWeapon() && weapon.TryGetTweakData() != null)
             return weapon;
         return null;
     }
