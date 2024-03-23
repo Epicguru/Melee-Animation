@@ -1,4 +1,7 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
+using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace AM.Patches;
@@ -29,7 +32,40 @@ static class Patch_PawnRenderer_RenderPawnInternal
     [HarmonyPriority(Priority.Last)] // As late as possible. We want to be the last to modify results.
     [HarmonyAfter("com.yayo.yayoAni")] // Go away.
     [HarmonyBefore("rimworld.Nals.FacialAnimation")] // Must go before facial animation otherwise the face gets fucky.
-    public static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, ref PawnRenderFlags flags, ref bool renderBody)
+#if V14
+    private static bool Prefix(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, ref PawnRenderFlags flags, ref bool renderBody)
+    {
+        return ModifyRenderData(___pawn, ref bodyFacing, ref angle, ref flags, ref renderBody);
+    }
+#else
+    private static bool Prefix(Pawn ___pawn, ref PawnDrawParms parms)
+    {
+        float angle = parms.matrix.rotation.eulerAngles.y;
+        float oldAngle = angle;
+
+        bool renderBody = !parms.skipFlags.HasFlag(AM_DefOf.Body);
+
+        ref Rot4 bodyFacing = ref parms.facing;
+        ref PawnRenderFlags flags = ref parms.flags;
+
+        bool result = ModifyRenderData(___pawn, ref bodyFacing, ref angle, ref flags, ref renderBody);
+
+        if (renderBody)
+            parms.skipFlags |= AM_DefOf.Body;
+        else
+            parms.skipFlags &= ~AM_DefOf.Body;
+
+        float delta = oldAngle - angle;
+        if (Math.Abs(delta) > 0.001f)
+        {
+            parms.matrix *= Matrix4x4.Rotate(Quaternion.Euler(0, delta, 0));
+        }
+
+        return result;
+    }
+#endif
+
+    public static bool ModifyRenderData(Pawn ___pawn, ref Rot4 bodyFacing, ref float angle, ref PawnRenderFlags flags, ref bool renderBody)
     {
         // Do not affect portrait rendering:
         if (flags.HasFlag(PawnRenderFlags.Portrait))

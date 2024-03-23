@@ -9,11 +9,15 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<RootNamespace>AM.Retexture</RootNamespace>
-		<Configurations>v1.4</Configurations>
+		<Configurations>v1.4;v1.5</Configurations>
 		<Nullable>disable</Nullable>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<DebugType>none</DebugType>
-	</PropertyGroup>
+    
+    <!-- Version preprocesor defines here: -->
+    <DefineConstants Condition="'$(Configuration)'=='v1.4'">V14</DefineConstants>
+    <DefineConstants Condition="'$(Configuration)'=='v1.5'">V15</DefineConstants>
+  </PropertyGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
@@ -29,7 +33,12 @@
 
 	<!-- _____ 1.4 _____ -->
 	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3901" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3901" />
 	</ItemGroup>
+
+  <!-- _____ 1.5 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4033-beta" />
+  </ItemGroup>
 
 </Project>

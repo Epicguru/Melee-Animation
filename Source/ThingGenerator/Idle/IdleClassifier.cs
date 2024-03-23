@@ -2,6 +2,9 @@
 using AM.Tweaks;
 using UnityEngine;
 using Verse;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM.Idle;
 

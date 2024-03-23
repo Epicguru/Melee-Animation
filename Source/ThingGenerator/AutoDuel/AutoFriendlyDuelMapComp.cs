@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Verse;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM.AutoDuel;
 

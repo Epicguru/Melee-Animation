@@ -1,5 +1,4 @@
 ﻿using AM.Grappling;
-using AM.Heads;
 using AM.Idle;
 using AM.Patches;
 using AM.PawnData;
@@ -11,6 +10,9 @@ using System.IO;
 using UnityEngine;
 using Verse;
 using Object = UnityEngine.Object;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM;
 

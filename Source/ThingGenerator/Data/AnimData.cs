@@ -8,6 +8,7 @@ using AM.Tweaks;
 using Newtonsoft.Json;
 using AM.Data.Model;
 using AM.Events;
+using Keyframe = UnityEngine.Keyframe;
 #if !UNITY_EDITOR
 using Verse;
 #endif

@@ -915,7 +915,11 @@ public class AnimRenderer : IExposable
                     Patch_PawnUtility_IsInvisible.IsRendering = true;
                     PrePawnSpecialRender?.Invoke(pawn, this);
 
+#if V14
                     pawn.DrawAt(pawn.DrawPosHeld ?? pawn.DrawPos);
+#else
+                    pawn.DrawNowAt(pawn.DrawPosHeld ?? pawn.DrawPos);
+#endif
 
                     PostPawnSpecialRender?.Invoke(pawn, this);
                     Patch_PawnRenderer_RenderPawnInternal.DoNotModify = false;

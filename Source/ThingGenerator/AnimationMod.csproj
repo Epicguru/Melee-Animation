@@ -9,13 +9,13 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4</Configurations>
+    <Configurations>v1.4;v1.5</Configurations>
     <AssemblyName>zAnimationMod</AssemblyName>
     <RootNamespace>AM</RootNamespace>
     <Nullable>disable</Nullable>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	  <DebugType>none</DebugType>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,12 +51,23 @@
 	  <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3901" />
   </ItemGroup>
 
-
   <!-- Output -->
   <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
     <OutputPath>..\..\1.4\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;V14</DefineConstants>
+  </PropertyGroup>
+
+  <!-- _____ 1.5 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4033-beta" />
+  </ItemGroup>
+
+  <!-- Output -->
+  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
+    <OutputPath>..\..\1.5\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;V15</DefineConstants>
   </PropertyGroup>
 
 </Project>

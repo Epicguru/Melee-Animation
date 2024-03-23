@@ -77,7 +77,7 @@ namespace AM.Tweaks
         [System.ComponentModel.DefaultValue("")]
         public string CustomRendererClass;
         public string SweepProviderClass;
-        public Color? TrailTint = null;
+        public Color? TrailTint;
 
         private ThingDef cachedDef;
         private Texture2D cachedTex;
@@ -292,14 +292,14 @@ namespace AM.Tweaks
                 {
                     Core.Error($"Failed to create instance of ISweepProvider '{klass.FullName}':", e);
                     return null;
-;               }
+                }
             }
 
             cachedSweepProvider = instance;
             return cachedSweepProvider;
         }
 
-        public virtual AnimPartOverrideData Apply(AnimRenderer renderer, AnimPartData part)
+        public AnimPartOverrideData Apply(AnimRenderer renderer, AnimPartData part)
         {
             if (part == null)
                 return null;
@@ -329,14 +329,14 @@ namespace AM.Tweaks
 
         public void SaveTo(string filePath)
         {
-            var settings = new JsonSerializerSettings()
+            var settings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
                 DefaultValueHandling = DefaultValueHandling.Ignore,
                 NullValueHandling = NullValueHandling.Ignore,
                 Error = (e, t) =>
                 {
-                    Core.Error($"Json saving error: {t.ErrorContext.Error.Message}");
+                    Core.Error($"Json saving error: {t.ErrorContext.Error.Message}\n{e}");
                 },
                 Converters = new List<JsonConverter>()
                 {

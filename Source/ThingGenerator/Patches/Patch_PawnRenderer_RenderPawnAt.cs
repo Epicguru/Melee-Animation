@@ -15,8 +15,9 @@ public static class Patch_PawnRenderer_RenderPawnAt
 
     [HarmonyPriority(Priority.First)]
     public static bool Prefix(Pawn ___pawn)
-    {        
+    {
         var anim = PatchMaster.GetAnimator(___pawn);
+
         if (anim != null && !AllowNext)
         {
             return false;

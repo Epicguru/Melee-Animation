@@ -9,6 +9,9 @@ using JetBrains.Annotations;
 using RimWorld;
 using UnityEngine;
 using Verse;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM.Idle;
 
@@ -64,8 +67,8 @@ public class IdleControllerComp : ThingComp
 
         try
         {
-            // If the animation is about to draw but it was just destroyed (by the animation ending)
-            // the immediately tick to get a new animation running before the frame is drawn.
+            // If the animation is about to draw, but it was just destroyed (by the animation ending)
+            // then immediately tick to get a new animation running before the frame is drawn.
             // This prevents an annoying flicker.
             if (CurrentAnimation.IsDestroyed)
             {
@@ -99,7 +102,11 @@ public class IdleControllerComp : ThingComp
         }
 
         // Vanilla checks.
+#if V14
         bool vanillaShouldDraw = pawn.drawer.renderer.CarryWeaponOpenly();
+#else
+        bool vanillaShouldDraw = PawnRenderUtility.CarryWeaponOpenly(pawn);
+#endif
         if (!vanillaShouldDraw)
         {
             // Sometimes the pawn will not be 'openly carrying' but will still be aiming their weapon, such as when casting psycasts.

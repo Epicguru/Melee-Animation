@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM.AMSettings;
 
@@ -425,10 +428,11 @@ public class Settings : SimpleSettingsBase
             {
                 checkbox.x += 110;
                 checkbox.width = 200;
-#if V13
-                    def.SData.Probability = Widgets.HorizontalSlider(checkbox, def.SData.Probability, 0f, 10f, label: $"Relative Probability: {def.SData.Probability * 100f:F0}%");
-#else
+
+#if V14
                 def.SData.Probability = Widgets.HorizontalSlider_NewTemp(checkbox, def.SData.Probability, 0f, 10f, label: $"Relative Probability: {def.SData.Probability * 100f:F0}%", roundTo: 0.05f);
+#else
+                def.SData.Probability = Widgets.HorizontalSlider(checkbox, def.SData.Probability, 0f, 10f, label: $"Relative Probability: {def.SData.Probability * 100f:F0}%", roundTo: 0.05f);
 #endif
             }
 

@@ -4,6 +4,9 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM.Grappling;
 
@@ -40,7 +43,13 @@ public class KnockbackFlyer : PawnFlyer
         var start = victim.DrawPos;
         var end = targetPos.ToVector3ShiftedWithAltitude(start.y);
 
-        KnockbackFlyer flyer = MakeFlyer(AM_DefOf.AM_KnockbackFlyer, victim, targetPos, EffecterDefOf.ConstructDirt, SoundDefOf.Pawn_Melee_Punch_HitBuilding) as KnockbackFlyer;
+#if V14
+        var soundDef = SoundDefOf.Pawn_Melee_Punch_HitBuilding;
+#else
+        var soundDef = SoundDefOf.Pawn_Melee_Punch_HitBuilding_Generic;
+#endif
+
+        KnockbackFlyer flyer = MakeFlyer(AM_DefOf.AM_KnockbackFlyer, victim, targetPos, EffecterDefOf.ConstructDirt, soundDef) as KnockbackFlyer;
 
         if (flyer?.FlyingPawn != null)
         {

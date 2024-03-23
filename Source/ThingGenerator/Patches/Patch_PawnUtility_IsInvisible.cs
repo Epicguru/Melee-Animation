@@ -4,6 +4,10 @@ using Verse;
 
 namespace AM.Patches;
 
+/*
+ * Note: this changed in RW 1.5, the method that needs patching has changed.
+ */
+
 /// <summary>
 /// Make pawns be considered invisible during animations.
 /// This should prevent them from being targeted by enemies.
@@ -12,6 +16,7 @@ namespace AM.Patches;
 /// However, making pawns invincible during animations would be very overpowered and broken, so making them untargettable instead is a nice
 /// compromise.
 /// </summary>
+#if V14
 [HarmonyPatch(typeof(PawnUtility), nameof(PawnUtility.IsInvisible))]
 public static class Patch_PawnUtility_IsInvisible
 {
@@ -32,3 +37,25 @@ public static class Patch_PawnUtility_IsInvisible
         return true;
     }
 }
+#else
+[HarmonyPatch(typeof(InvisibilityUtility), nameof(InvisibilityUtility.IsPsychologicallyInvisible))]
+public static class Patch_PawnUtility_IsInvisible
+{
+    public static bool IsRendering;
+
+    [HarmonyPriority(Priority.First)]
+    public static bool Prefix(Pawn pawn, ref bool __result)
+    {
+        if (!Core.Settings.AllowInvisiblePawns)
+            return true;
+
+        var anim = PatchMaster.GetAnimator(pawn);
+        if (anim != null && !IsRendering)
+        {
+            __result = true;
+            return false;
+        }
+        return true;
+    }
+}
+#endif

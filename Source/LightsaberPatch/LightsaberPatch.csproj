@@ -8,7 +8,7 @@
     <LangVersion>preview</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4</Configurations>
+    <Configurations>v1.4;v1.5</Configurations>
     <AssemblyName>AM.LightsaberPatch</AssemblyName>
     <RootNamespace>AM.LightsaberPatch</RootNamespace>
   </PropertyGroup>
@@ -52,6 +52,36 @@
 	  <OutputPath>..\..\Patch_Lightsabers\1.4\Assemblies\</OutputPath>
 	  <Optimize>true</Optimize>
 	  <DefineConstants>TRACE;V14</DefineConstants>
+  </PropertyGroup>
+
+  <!-- _____ 1.5 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
+    <PackageReference Include="Krafs.Rimworld.Ref">
+      <Version>1.5.4033-beta</Version>
+    </PackageReference>
+    <Reference Include="SWSaber">
+      <HintPath>refs/1.4/SWSaber.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CompActivatableEffect">
+      <HintPath>refs/1.4/CompActivatableEffect.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CompSlotLoadable">
+      <HintPath>refs/1.4/CompSlotLoadable.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  
+  <!-- Output -->
+  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
+    <DebugType>none</DebugType>
+    <OutputPath>..\..\Patch_Lightsabers\1.5\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;V15</DefineConstants>
   </PropertyGroup>
 
 </Project>

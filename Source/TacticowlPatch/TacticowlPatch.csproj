@@ -8,7 +8,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4</Configurations>
+    <Configurations>v1.4;v1.5</Configurations>
     <RootNamespace>AM.TacticowlPatch</RootNamespace>
     <AssemblyName>AM.TacticowlPatch</AssemblyName>
     <Nullable>disable</Nullable>
@@ -30,7 +30,7 @@
       <Version>1.4.3901</Version>
     </PackageReference>
     <Reference Include="Tacticowl">
-      <HintPath>Tacticowl.dll</HintPath>
+      <HintPath>Tacticowl14.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
@@ -43,6 +43,27 @@
     <OutputPath>..\..\Patch_Tacticowl\1.4\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;V14</DefineConstants>
+  </PropertyGroup>
+
+  <!-- _____ 1.5 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
+    <PackageReference Include="Krafs.Rimworld.Ref">
+      <Version>1.5.4033-beta</Version>
+    </PackageReference>
+    <Reference Include="Tacticowl">
+      <HintPath>Tacticowl14.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Output -->
+  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
+    <DebugType>none</DebugType>
+    <OutputPath>..\..\Patch_Tacticowl\1.5\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;V15</DefineConstants>
   </PropertyGroup>
 
 </Project>

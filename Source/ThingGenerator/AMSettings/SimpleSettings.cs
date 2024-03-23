@@ -13,6 +13,9 @@ using ColourPicker;
 using RimWorld;
 using UnityEngine;
 using Verse;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM.AMSettings;
 
@@ -601,12 +604,12 @@ public static class SimpleSettings
         float step = member.TryGetCustomAttribute<StepAttribute>()?.Step ?? -1;
 
         // Simple slider for now.
-#if V13
-            float changed = Widgets.HorizontalSlider(sliderArea, value, min.Value, max.Value, roundTo: step);
-#else
+#if V14
         float changed = Widgets.HorizontalSlider_NewTemp(sliderArea, value, min.Value, max.Value, roundTo: step);
+#else
+        float changed = Widgets.HorizontalSlider(sliderArea, value, min.Value, max.Value, roundTo: step);
 #endif
-        if (changed != value)
+        if (Math.Abs(changed - value) > 0.0001f)
         {
             Type type = member.MemberType;
             bool isFloatType = type == typeof(float) || type == typeof(double) || type == typeof(decimal);

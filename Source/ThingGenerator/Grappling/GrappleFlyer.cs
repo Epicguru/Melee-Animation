@@ -56,6 +56,7 @@ public class GrappleFlyer : PawnFlyer
     {
         get
         {
+#if V14
             if (this.cachedShadowMaterial == null && !this.def.pawnFlyer.shadow.NullOrEmpty())
             {
                 this.cachedShadowMaterial =
@@ -63,6 +64,9 @@ public class GrappleFlyer : PawnFlyer
             }
 
             return this.cachedShadowMaterial;
+#else
+            return this.def.pawnFlyer.ShadowMaterial;
+#endif
         }
     }
 

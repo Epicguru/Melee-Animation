@@ -13,6 +13,9 @@ using JetBrains.Annotations;
 using RimWorld;
 using UnityEngine;
 using Verse;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM;
 

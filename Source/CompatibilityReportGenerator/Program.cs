@@ -15,7 +15,7 @@ public static class Program
             Description = "The directory that the tweak .json files are located in.",
             IsRequired = true,
             AllowMultipleArgumentsPerToken = false,
-            Arity = ArgumentArity.ExactlyOne,
+            Arity = ArgumentArity.ExactlyOne
         };
 
         var outputOption = new Option<FileInfo>("--output")
@@ -23,7 +23,7 @@ public static class Program
             Description = "The file path to output the markdown file to.",
             IsRequired = true,
             AllowMultipleArgumentsPerToken = false,
-            Arity = ArgumentArity.ExactlyOne,
+            Arity = ArgumentArity.ExactlyOne
         };
 
         rootCmd.AddOption(dirOption);

@@ -8,7 +8,7 @@
 		<LangVersion>preview</LangVersion>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-		<Configurations>v1.4</Configurations>
+		<Configurations>v1.4;v1.5</Configurations>
 		<AssemblyName>AM.AlienRacesPatch</AssemblyName>
 		<RootNamespace>AM.AlienRacesPatch</RootNamespace>
 	</PropertyGroup>
@@ -29,7 +29,7 @@
 			<Private>False</Private>
 		</Reference>
 		<PackageReference Include="Krafs.Rimworld.Ref">
-			<Version>1.4.3901</Version>
+      <Version>1.4.3901</Version>
 		</PackageReference>
 	</ItemGroup>
 
@@ -39,5 +39,24 @@
 		<Optimize>true</Optimize>
 		<DefineConstants>TRACE;V14</DefineConstants>
 	</PropertyGroup>
+
+  <!-- _____ 1.5 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
+    <Reference Include="AlienRace">
+      <HintPath>refs/1.4/AlienRace14.dll</HintPath> <!-- TODO CHANGE ME ONCE HAR UPDATES! -->
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <PackageReference Include="Krafs.Rimworld.Ref">
+      <Version>1.5.4033-beta</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
+    <DebugType>none</DebugType>
+    <OutputPath>..\..\Patch_AlienRaces\1.5\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;V15</DefineConstants>
+  </PropertyGroup>
 
 </Project>

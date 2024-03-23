@@ -16,6 +16,9 @@ using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+#if !V14
+using LudeonTK;
+#endif
 
 namespace AM.Processing;
 
