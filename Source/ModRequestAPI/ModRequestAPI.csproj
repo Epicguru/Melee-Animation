@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>net472</TargetFramework>
-	<OutputType>Library</OutputType>
-	<ImplicitUsings>disable</ImplicitUsings>
-	<Nullable>disable</Nullable>
-	<NoStdLib>false</NoStdLib>
-	<LangVersion>11</LangVersion>
-	<DebugType>none</DebugType>
+		<TargetFramework>net472</TargetFramework>
+		<OutputType>Library</OutputType>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<NoStdLib>false</NoStdLib>
+		<LangVersion>latest</LangVersion>
+		<DebugType>none</DebugType>
   </PropertyGroup>
 
 	<ItemGroup>

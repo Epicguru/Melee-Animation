@@ -29,5 +29,6 @@ Load as far down as possible.</description>
     <li>erdelf.humanoidalienraces</li>
     <li>Krkr.rule56</li>
     <li>ceteam.combatextended</li>
+    <li>taranchuk.performanceoptimizer</li>
   </loadAfter>
 </ModMetaData>

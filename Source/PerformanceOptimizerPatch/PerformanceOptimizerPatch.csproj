@@ -1,4 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../GlobalCommon.targets" />
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
@@ -8,7 +10,6 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4;v1.5</Configurations>
     <RootNamespace>AM.PerformanceOptimizerPatch</RootNamespace>
     <AssemblyName>zz.AM.PerformanceOptimizerPatch</AssemblyName>
     <Nullable>disable</Nullable>
@@ -24,55 +25,29 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+    <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
     <Publicize Include="PerformanceOptimizer" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4060-beta" />
   </ItemGroup>
-
-  <!-- _____ 1.4 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3901</Version>
-    </PackageReference>
-    <Reference Include="PerformanceOptimizer">
-      <HintPath>refs/1.4/PerformanceOptimizer.dll</HintPath>
+  
+  	<ItemGroup>
+	  <Reference Include="PerformanceOptimizer">
+	    <HintPath>refs\PerformanceOptimizer.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
-    </Reference>
-  </ItemGroup>
+	  </Reference>
+	</ItemGroup>  
 
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+  <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_PerformanceOptimizer\1.4\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_PerformanceOptimizer\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V14</DefineConstants>
-  </PropertyGroup>
-
-  
-  <!-- _____ 1.5 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.5.4033-beta</Version>
-    </PackageReference>
-    <Reference Include="PerformanceOptimizer">
-      <HintPath>refs/1.4/PerformanceOptimizer.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-      <Private>False</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </Reference>
-  </ItemGroup>
-  
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
-    <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_PerformanceOptimizer\1.5\Assemblies\</OutputPath>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V15</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 </Project>

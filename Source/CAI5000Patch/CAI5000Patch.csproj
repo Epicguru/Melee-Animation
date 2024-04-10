@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="../GlobalCommon.targets"/>
+
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
@@ -8,7 +10,6 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4;v1.5</Configurations>
     <RootNamespace>AM.CAI5000Patch</RootNamespace>
     <AssemblyName>AM.CAI5000Patch</AssemblyName>
     <Nullable>disable</Nullable>
@@ -17,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+    <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
@@ -29,52 +30,24 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4060-beta" />
+    <Publicize Include="CombatAI" />
   </ItemGroup>
 
-  <!-- _____ 1.4 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3901</Version>
-    </PackageReference>
+  <ItemGroup>
     <Reference Include="CombatAI">
-      <HintPath>CombatAI_14.dll</HintPath>
+      <HintPath>refs\CombatAI.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
-    <!-- Ungodly hack to access CombatAI private code -->
-    <Publicize Include="CombatAI_14" />
   </ItemGroup>
 
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+  <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_CAI5000\1.4\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_CAI5000\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V14</DefineConstants>
-  </PropertyGroup>
-
-  
-  <!-- _____ 1.5 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.5.4033-beta</Version>
-    </PackageReference>
-    <Reference Include="CombatAI">
-      <HintPath>CombatAI_14.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-      <Private>False</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </Reference>
-    <Publicize Include="CombatAI_14" />
-  </ItemGroup>
-  
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
-    <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_CAI5000\1.5\Assemblies\</OutputPath>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V15</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 </Project>

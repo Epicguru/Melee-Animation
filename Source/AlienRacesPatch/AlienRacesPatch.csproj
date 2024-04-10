@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
+  <Import Project="../GlobalCommon.targets"/>
+
+  <PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -8,55 +10,36 @@
 		<LangVersion>preview</LangVersion>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-		<Configurations>v1.4;v1.5</Configurations>
 		<AssemblyName>AM.AlienRacesPatch</AssemblyName>
 		<RootNamespace>AM.AlienRacesPatch</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+	  <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4060-beta" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
 			<CopyLocal>False</CopyLocal>
 			<Private>False</Private>
 			<ExcludeAssets>all</ExcludeAssets>
 		</ProjectReference>
 	</ItemGroup>
 
-	<!-- _____ 1.4 _____ -->
-	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
-		<Reference Include="AlienRace">
-			<HintPath>refs/1.4/AlienRace14.dll</HintPath>
-			<CopyLocal>False</CopyLocal>
-			<Private>False</Private>
-		</Reference>
-		<PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3901</Version>
-		</PackageReference>
-	</ItemGroup>
-
-	<PropertyGroup Condition="'$(Configuration)'=='v1.4'">
-		<DebugType>none</DebugType>
-		<OutputPath>..\..\Patch_AlienRaces\1.4\Assemblies\</OutputPath>
-		<Optimize>true</Optimize>
-		<DefineConstants>TRACE;V14</DefineConstants>
-	</PropertyGroup>
-
-  <!-- _____ 1.5 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
-    <Reference Include="AlienRace">
-      <HintPath>refs/1.4/AlienRace14.dll</HintPath> <!-- TODO CHANGE ME ONCE HAR UPDATES! -->
+	<ItemGroup>
+	  <Reference Include="AlienRace">
+	    <HintPath>refs\AlienRace.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
-    </Reference>
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.5.4033-beta</Version>
-    </PackageReference>
-  </ItemGroup>
+      <ExcludeAssets>runtime</ExcludeAssets>
+	  </Reference>
+	</ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
+  <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_AlienRaces\1.5\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_AlienRaces\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V15</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 </Project>

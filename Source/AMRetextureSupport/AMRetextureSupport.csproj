@@ -9,14 +9,9 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<RootNamespace>AM.Retexture</RootNamespace>
-		<Configurations>v1.4;v1.5</Configurations>
 		<Nullable>disable</Nullable>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<DebugType>none</DebugType>
-    
-    <!-- Version preprocesor defines here: -->
-    <DefineConstants Condition="'$(Configuration)'=='v1.4'">V14</DefineConstants>
-    <DefineConstants Condition="'$(Configuration)'=='v1.5'">V15</DefineConstants>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -24,21 +19,12 @@
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-	</ItemGroup>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4060-beta" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<!-- Ungodly hack to access rimworld private properties & methods -->
 		<Publicize Include="Assembly-CSharp" />
 	</ItemGroup>
-
-	<!-- _____ 1.4 _____ -->
-	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3901" />
-	</ItemGroup>
-
-  <!-- _____ 1.5 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4033-beta" />
-  </ItemGroup>
 
 </Project>

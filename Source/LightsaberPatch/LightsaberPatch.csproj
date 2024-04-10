@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="../GlobalCommon.targets"/>
+
   <PropertyGroup>
     <TargetFramework>net480</TargetFramework>
     <OutputType>Library</OutputType>
@@ -8,7 +10,6 @@
     <LangVersion>preview</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4;v1.5</Configurations>
     <AssemblyName>AM.LightsaberPatch</AssemblyName>
     <RootNamespace>AM.LightsaberPatch</RootNamespace>
   </PropertyGroup>
@@ -17,71 +18,40 @@
     <PackageReference Include="Lib.Harmony" Version="2.3.1.1">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
-    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+    <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4060-beta" />
   </ItemGroup>
 
-	<!-- _____ 1.4 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-	  <PackageReference Include="Krafs.Rimworld.Ref">
-		  <Version>1.4.3901</Version>
-	  </PackageReference>
-	  <Reference Include="SWSaber">
-		  <HintPath>refs/1.4/SWSaber.dll</HintPath>
-		  <CopyLocal>False</CopyLocal>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="CompActivatableEffect">
-		  <HintPath>refs/1.4/CompActivatableEffect.dll</HintPath>
-		  <CopyLocal>False</CopyLocal>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="CompSlotLoadable">
-		  <HintPath>refs/1.4/CompSlotLoadable.dll</HintPath>
-		  <CopyLocal>False</CopyLocal>
-		  <Private>False</Private>
-	  </Reference>
-  </ItemGroup>
-
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
-	  <DebugType>none</DebugType>
-	  <OutputPath>..\..\Patch_Lightsabers\1.4\Assemblies\</OutputPath>
-	  <Optimize>true</Optimize>
-	  <DefineConstants>TRACE;V14</DefineConstants>
-  </PropertyGroup>
-
-  <!-- _____ 1.5 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.5.4033-beta</Version>
-    </PackageReference>
-    <Reference Include="SWSaber">
-      <HintPath>refs/1.4/SWSaber.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-      <Private>False</Private>
-    </Reference>
+  <ItemGroup>
     <Reference Include="CompActivatableEffect">
-      <HintPath>refs/1.4/CompActivatableEffect.dll</HintPath>
+      <HintPath>refs\CompActivatableEffect.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
     <Reference Include="CompSlotLoadable">
-      <HintPath>refs/1.4/CompSlotLoadable.dll</HintPath>
+      <HintPath>refs\CompSlotLoadable.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </Reference>
+    <Reference Include="SWSaber">
+      <HintPath>refs\SWSaber.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
   </ItemGroup>
-  
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
+
+  <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_Lightsabers\1.5\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_Lightsabers\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V15</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 </Project>

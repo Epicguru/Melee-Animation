@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="../GlobalCommon.targets"/>
+
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
@@ -8,7 +10,6 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4;v1.5</Configurations>
     <RootNamespace>AM.CombatExtendedPatch</RootNamespace>
     <AssemblyName>zz.AM.CombatExtendedPatch</AssemblyName>
     <Nullable>disable</Nullable>
@@ -24,55 +25,29 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+    <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4060-beta" />
+    <Publicize Include="CombatExtended" />
   </ItemGroup>
 
-  <!-- _____ 1.4 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3901</Version>
-    </PackageReference>
+  <ItemGroup>
     <Reference Include="CombatExtended">
-      <HintPath>CombatExtended_14.dll</HintPath>
+      <HintPath>refs\CombatExtended.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
-    <Publicize Include="CombatExtended_14" />
   </ItemGroup>
 
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+  <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_CombatExtended\1.4\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_CombatExtended\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V14</DefineConstants>
-  </PropertyGroup>
-
-
-  <!-- _____ 1.5 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.5'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.5.4033-beta</Version>
-    </PackageReference>
-    <Reference Include="CombatExtended">
-      <HintPath>CombatExtended_14.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-      <Private>False</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </Reference>
-    <Publicize Include="CombatExtended_14" />
-  </ItemGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='v1.5'">
-    <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_CombatExtended\1.5\Assemblies\</OutputPath>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V15</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 </Project>
