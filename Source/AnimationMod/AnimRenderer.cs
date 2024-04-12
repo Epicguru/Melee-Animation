@@ -182,9 +182,7 @@ public class AnimRenderer : IExposable
         // Draw and handle events.
         try
         {
-            //Core.Log($"R2: {renderer}");
             bool cull = Core.Settings.OffscreenCulling && !viewBounds.Contains(renderer.RootPosition.ToIntVec3());
-            Core.Log($"Pre-draw with {renderer}");
             renderer.Draw(null, dt ?? 0, onEvent, cull, labelDraw);
         }
         catch (Exception e)
@@ -727,7 +725,6 @@ public class AnimRenderer : IExposable
 
     public void Draw(float? atTime, float dt, Action<AnimRenderer, EventBase> eventOutput, bool cullDraw, Action<Pawn, Vector2> labelDraw = null)
     {
-        Core.Log("Start draw 2");
         if (IsDestroyed)
             return;
 
@@ -735,8 +732,6 @@ public class AnimRenderer : IExposable
         foreach (var item in sweeps)
             if (item != null)
                 item.MirrorHorizontal = MirrorHorizontal;
-
-        Core.Log("A");
 
         if (eventOutput != null)
             Seek(atTime, dt, e => eventOutput(this, e));
@@ -757,16 +752,10 @@ public class AnimRenderer : IExposable
             path.Draw(time);
         timer2.GetElapsedMilliseconds(out SweepMS);
 
-        Core.Log("B");
-
-
         foreach (var snap in snapshots)
         {
             if (!ShouldDraw(snap))
                 continue;
-
-            Core.Log($"Start {snap.PartName}");
-
 
             var tex = ResolveTexture(snap);
             if (tex == null)
@@ -802,8 +791,6 @@ public class AnimRenderer : IExposable
 
             bool useMPB = forceMPB || ov.UseMPB;
             var color = snap.FinalColor;
-
-            Core.Log($"  - {snap.PartName} draw...");
 
             int passes = 1;
             for (int i = 0; i < passes; i++)
@@ -846,14 +833,10 @@ public class AnimRenderer : IExposable
 
                 var finalMpb = useMPB ? pb : null;
 
-                Core.Log("Pre render...");
                 AnimationRendererWorker?.PreRenderPart(snap, ov, ref mesh, ref matrix, ref mat, ref finalMpb);
-                Core.Log("Post-Pre render...");
                 Graphics.DrawMesh(mesh, matrix, mat, 0, Camera, 0, finalMpb);
             }
         }
-
-        Core.Log("Done");
 
         DrawPawns(labelDraw);
 
@@ -991,9 +974,11 @@ public class AnimRenderer : IExposable
 
                 Patch_PawnUtility_IsInvisible.IsRendering = true;
                 Patch_PawnRenderer_DrawInvisibleShadow.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
+                PrePawnSpecialRender?.Invoke(pawn, this);
 
                 pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
 
+                PostPawnSpecialRender?.Invoke(pawn, this);
                 Patch_PawnRenderer_DrawInvisibleShadow.Suppress = false;
                 Patch_PawnUtility_IsInvisible.IsRendering = false;
             }

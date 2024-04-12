@@ -1,0 +1,13 @@
+
+<!-- Patches facial animation mod to use the melee attack animation during duels and executions -->
+<Patch>
+
+  <!-- Note: this assumes that all animations are melee animations. This should probably be fixed -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/FacialAnimation.FaceAnimationDef[defName="AttackMelee"]/targetJobs</xpath>
+    <value>
+      <li>AM_InAnimation</li>
+      <li>AM_GrapplePawn</li>
+    </value>
+  </Operation>
+</Patch>

@@ -32,8 +32,18 @@ static class Patch_PawnRenderer_RenderPawnInternal
     [HarmonyPriority(Priority.Last)] // As late as possible. We want to be the last to modify results.
     [HarmonyAfter("com.yayo.yayoAni")] // Go away.
     [HarmonyBefore("rimworld.Nals.FacialAnimation")] // Must go before facial animation otherwise the face gets fucky.
-    private static bool Prefix(Pawn ___pawn, ref PawnDrawParms parms)
+    private static bool Prefix(PawnRenderer __instance, Pawn ___pawn, ref PawnDrawParms parms)
     {
+        //parms.matrix
+
+        __instance.renderTree.ParallelPreDraw(parms);
+
+        return true;
+
+        // Do not modify when the result will be stored in cache.
+        if (parms.Cache)
+            return true;
+
         float angle = parms.matrix.rotation.eulerAngles.y;
         float oldAngle = angle;
 
@@ -41,6 +51,19 @@ static class Patch_PawnRenderer_RenderPawnInternal
 
         ref Rot4 bodyFacing = ref parms.facing;
         ref PawnRenderFlags flags = ref parms.flags;
+
+        if (AllowNext)
+        {
+            //parms.matrix *= Matrix4x4.Scale(0.5f * Vector3.one);
+            //__instance.renderTree.SetDirty();
+            //__instance.EnsureGraphicsInitialized();
+            //parms.coveredInFoam = true;
+            AllowNext = false;
+            return true;
+        }
+
+
+        return false;
 
         bool result = ModifyRenderData(___pawn, ref bodyFacing, ref angle, ref flags, ref renderBody);
 
@@ -52,7 +75,7 @@ static class Patch_PawnRenderer_RenderPawnInternal
         float delta = oldAngle - angle;
         if (Math.Abs(delta) > 0.001f)
         {
-            parms.matrix *= Matrix4x4.Rotate(Quaternion.Euler(0, delta, 0));
+            parms.matrix *= Matrix4x4.Rotate(Quaternion.Euler(45, delta, 0));
         }
 
         return result;
@@ -74,25 +97,29 @@ static class Patch_PawnRenderer_RenderPawnInternal
         {
             if (!DoNotModify)
             {
-                var part = NextDrawMode == DrawMode.HeadOnly ? anim.GetPawnHead(___pawn) : anim.GetPawnBody(___pawn);
-                var snapshot = anim.GetSnapshot(part);
-                angle = snapshot.GetWorldRotation();
+                //var part = NextDrawMode == DrawMode.HeadOnly ? anim.GetPawnHead(___pawn) : anim.GetPawnBody(___pawn);
+                //var snapshot = anim.GetSnapshot(part);
+                //angle = snapshot.GetWorldRotation();
 
-                bodyFacing = NextDrawMode == DrawMode.HeadOnly ? HeadRotation : snapshot.GetWorldDirection();
+                angle = 5;
+                bodyFacing = Rot4.East;
+                renderBody = false;
 
-                switch (NextDrawMode)
-                {
-                    case DrawMode.BodyOnly:
-                        // Render head stump, do not render head gear.
-                        flags |= PawnRenderFlags.HeadStump;
-                        flags &= ~PawnRenderFlags.Headgear;
-                        break;
+                //bodyFacing = NextDrawMode == DrawMode.HeadOnly ? HeadRotation : snapshot.GetWorldDirection();
 
-                    case DrawMode.HeadOnly:
-                        // Do not render body.
-                        renderBody = false;
-                        break;
-                }
+                //switch (NextDrawMode)
+                //{
+                //    case DrawMode.BodyOnly:
+                //        // Render head stump, do not render head gear.
+                //        flags |= PawnRenderFlags.HeadStump;
+                //        flags &= ~PawnRenderFlags.Headgear;
+                //        break;
+
+                //    case DrawMode.HeadOnly:
+                //        // Do not render body.
+                //        renderBody = false;
+                //        break;
+                //}
             }
 
             if (!AllowNext)
@@ -106,7 +133,7 @@ static class Patch_PawnRenderer_RenderPawnInternal
     private static bool RenderStandaloneHeadMode(ref Rot4 bodyFacing, ref PawnRenderFlags flags, ref float angle, ref bool renderBody)
     {
         // Add headgear, remove head stump.
-        flags |= PawnRenderFlags.Headgear;
+        flags |= PawnRenderFlags.Headgear | PawnRenderFlags.DrawNow;
         flags &= ~PawnRenderFlags.HeadStump;
 
         angle = StandaloneHeadRotation;

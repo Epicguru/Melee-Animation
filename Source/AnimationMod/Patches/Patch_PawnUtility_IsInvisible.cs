@@ -4,9 +4,6 @@ using Verse;
 
 namespace AM.Patches;
 
-/*
- * Note: this changed in RW 1.5, the method that needs patching has changed.
- */
 
 /// <summary>
 /// Make pawns be considered invisible during animations.

@@ -1,7 +1,5 @@
 ﻿
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <Import Project="../GlobalCommon.targets" />
   
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>

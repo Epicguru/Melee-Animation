@@ -8,19 +8,18 @@ namespace AM.Patches;
 /// <summary>
 /// Used to override drawing melee weapons.
 /// </summary>
-[HarmonyPatch(typeof(PawnRenderUtility), nameof(PawnRenderUtility.DrawEquipmentAndApparelExtras))]
+[HarmonyPatch(typeof(PawnRenderUtility), nameof(PawnRenderUtility.DrawEquipmentAiming))]
 public static class Patch_PawnRenderer_DrawEquipment
 {
     [HarmonyPriority(Priority.First)]
     [HarmonyBefore("com.yayo.yayoAni")]
-    private static bool Prefix(Pawn pawn)
-    {
-        return WorkerMethod(pawn);
-    }
-
-    public static bool WorkerMethod(Pawn pawn)
+    private static bool Prefix(Thing eq)
     {
         if (!Core.Settings.AnimateAtIdle)
+            return true;
+
+        var pawn = eq.TryGetComp<CompEquippable>()?.Holder;
+        if (pawn == null)
             return true;
 
         var comp = pawn.GetComp<IdleControllerComp>();
