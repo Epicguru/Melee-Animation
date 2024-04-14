@@ -3,6 +3,9 @@
   <PropertyGroup>
       <!-- The Rimworld major version, such as 1.5.  -->
       <RimworldVersion>1.5</RimworldVersion>
+
+      <!-- Other common properties -->
+      <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
 
 </Project>
