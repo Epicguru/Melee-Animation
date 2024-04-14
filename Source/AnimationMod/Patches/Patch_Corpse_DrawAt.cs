@@ -7,37 +7,50 @@ using LudeonTK;
 
 namespace AM.Patches;
 
-
-[HarmonyPatch(typeof(ThingWithComps), nameof(ThingWithComps.DrawAt))] // Corpse DrawAt was removed in 1.5
+[HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.ParallelPreRenderPawnAt))] // Corpse DrawAt was removed in 1.5
 public static class Patch_Corpse_DrawAt
 {
     public static readonly Dictionary<Corpse, CorpseInterpolate> Interpolators = new Dictionary<Corpse, CorpseInterpolate>();
+    public static readonly Dictionary<Pawn, Rot4> OverrideRotations = new Dictionary<Pawn, Rot4>();
 
     public static void Tick()
     {
         if(GenTicks.TicksGame % (60 * 30) == 0)
+        {
             Interpolators.RemoveAll(p => !p.Key.Spawned);
+            OverrideRotations.RemoveAll(p => !p.Key.SpawnedOrAnyParentSpawned);
+        }
     }
 
-    [HarmonyPriority(Priority.First)]
-    private static void Prefix(ThingWithComps __instance, ref Vector3 drawLoc)
+    [HarmonyPriority(Priority.Last)]
+    private static void Prefix(PawnRenderer __instance, ref Vector3 drawLoc, ref Rot4? rotOverride)
     {
-        if (__instance is not Corpse corpse)
+        var corpse = __instance.pawn.ParentHolder as Corpse;
+
+        if (corpse == null)
             return;
 
-        DoOffsetLogic(corpse, ref drawLoc);
+        DoOffsetLogic(corpse, ref drawLoc, ref rotOverride);
     }
 
-    private static void DoOffsetLogic(Corpse __instance, ref Vector3 drawLoc)
+    private static void DoOffsetLogic(Corpse corpse, ref Vector3 drawLoc, ref Rot4? rotOverride)
     {
+        // Override facing direction of corpse:
+        if (OverrideRotations.TryGetValue(corpse.InnerPawn, out var foundRot))
+        {
+            rotOverride = foundRot;
+        }
+
+        // Override position and rotation of corpse...
+
         if (Core.Settings.CorpseOffsetMode == CorpseOffsetMode.None)
             return;
 
-        if (!Interpolators.TryGetValue(__instance, out var found))
+        if (!Interpolators.TryGetValue(corpse, out var found))
             return;
 
         if (!found.Update(ref drawLoc))
-            Interpolators.Remove(__instance);
+            Interpolators.Remove(corpse);
     }
 }
 
@@ -53,6 +66,7 @@ public class CorpseInterpolate
     public CorpseInterpolate(Corpse corpse, Vector3 startPos)
     {
         TargetPosition = corpse.DrawPos;
+        startPos.y = TargetPosition.y;
         InitialOffset = startPos - TargetPosition;
         CurrentPosition = startPos;
     }

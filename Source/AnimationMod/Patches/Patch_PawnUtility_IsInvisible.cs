@@ -16,6 +16,8 @@ namespace AM.Patches;
 [HarmonyPatch(typeof(InvisibilityUtility), nameof(InvisibilityUtility.IsPsychologicallyInvisible))]
 public static class Patch_PawnUtility_IsInvisible
 {
+    public static bool IsRendering;
+
     [HarmonyPriority(Priority.First)]
     public static bool Prefix(Pawn pawn, ref bool __result)
     {
@@ -23,7 +25,7 @@ public static class Patch_PawnUtility_IsInvisible
             return true;
 
         var anim = PatchMaster.GetAnimator(pawn);
-        if (anim != null)
+        if (anim != null && !IsRendering)
         {
             __result = true;
             return false;

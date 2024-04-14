@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Patches", "Patches", "{7C1C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TacticowlPatch", "TacticowlPatch\TacticowlPatch.csproj", "{DEC2223C-6DD4-48EF-9438-8F4E97B6C542}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacialAnimationPatch", "FacialAnimationPatch\FacialAnimationPatch.csproj", "{B5AC984E-8B51-426B-9F54-CC85006449F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{DEC2223C-6DD4-48EF-9438-8F4E97B6C542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEC2223C-6DD4-48EF-9438-8F4E97B6C542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEC2223C-6DD4-48EF-9438-8F4E97B6C542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5AC984E-8B51-426B-9F54-CC85006449F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5AC984E-8B51-426B-9F54-CC85006449F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5AC984E-8B51-426B-9F54-CC85006449F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5AC984E-8B51-426B-9F54-CC85006449F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{06C481CC-E8D0-46D6-B02B-127DD9E3A1AA} = {3549402C-9759-4ABC-938C-FC4F801C156F}
 		{7B881968-1527-40FC-9FB3-85A5A01BEE88} = {7C1CE274-810E-467E-B8EF-4AB2A83E17F9}
 		{DEC2223C-6DD4-48EF-9438-8F4E97B6C542} = {7C1CE274-810E-467E-B8EF-4AB2A83E17F9}
+		{B5AC984E-8B51-426B-9F54-CC85006449F1} = {7C1CE274-810E-467E-B8EF-4AB2A83E17F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1478B48A-1088-4408-9427-E3B4EADB515C}

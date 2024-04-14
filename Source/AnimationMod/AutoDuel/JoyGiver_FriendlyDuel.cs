@@ -27,12 +27,12 @@ public class JoyGiver_FriendlyDuel : JoyGiver
         if (!AutoFriendlyDuelMapComp.CanPawnDuel(pawn))
             return null;
 
-        // Try get a duel partner.
+        // Try to get a duel partner.
         var partner = comp.TryGetRandomDuelPartner(pawn);
         if (partner == null)
             return null;
 
-        // Try get a duel spot for us two:
+        // Try to get a duel spot for us two:
         var spot = comp.TryGetBestDuelSpotFor(pawn, partner);
         if (spot == null)
             return null;

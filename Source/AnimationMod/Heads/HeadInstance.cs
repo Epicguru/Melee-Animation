@@ -33,19 +33,24 @@ public sealed class HeadInstance
             return true;
 
         //Render pawn in custom position using patches.
-        Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.HeadStandalone;
-        Patch_PawnRenderer_RenderPawnInternal.HeadRotation = Direction;
-        Patch_PawnRenderer_RenderPawnInternal.StandaloneHeadRotation = Rotation;
+        Patch_PawnRenderer_RenderPawnAt.NextDrawMode = Patch_PawnRenderer_RenderPawnAt.DrawMode.HeadStandalone;
+        Patch_PawnRenderer_RenderPawnAt.HeadRotation = Direction;
+        Patch_PawnRenderer_RenderPawnAt.StandaloneHeadAngle = Rotation;
+        Patch_PawnRenderer_RenderPawnAt.StandaloneHeadPosition = Position;
+        Patch_PawnRenderer_RenderPawnAt.AllowNext = true;
         Patch_PawnRenderer_DrawShadowInternal.Suppress = true; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
-        Patch_PawnRenderer_RenderPawnInternal.AllowNext = true;
 
         try
         {
+            AnimRenderer.PrePawnSpecialRender?.Invoke(Pawn, null, Map);
+
             Pawn.Drawer.renderer.RenderPawnAt(Position, Direction, true);
+
+            AnimRenderer.PostPawnSpecialRender?.Invoke(Pawn, null, Map);
         }
         finally
         {
-            Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full;
+            Patch_PawnRenderer_RenderPawnAt.NextDrawMode = Patch_PawnRenderer_RenderPawnAt.DrawMode.Full;
             Patch_PawnRenderer_DrawShadowInternal.Suppress = false;
         }
         return true;

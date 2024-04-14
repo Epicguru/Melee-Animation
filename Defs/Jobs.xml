@@ -47,7 +47,7 @@
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>true</playerInterruptible>
     <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
-    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <dropThingBeforeJob>true</dropThingBeforeJob>
     <suspendable>false</suspendable>
     <neverShowWeapon>true</neverShowWeapon>
     <isIdle>false</isIdle>

@@ -89,7 +89,7 @@ public class GrappleFlyer : PawnFlyer
         ticksFlightTime = Mathf.Max(2, (int)(ticksFlightTime / (speed * Core.Settings.GrappleSpeed)));
     }
 
-    private void RecomputePosition()
+    private new void RecomputePosition()
     {
         if (this.positionLastComputedTick == this.ticksFlying)
         {
@@ -158,7 +158,7 @@ public class GrappleFlyer : PawnFlyer
         Graphics.DrawMesh(MeshPool.plane10, trs, mat, 0, null, 0, mpb);
     }
 
-    private void DrawShadow(Vector3 drawLoc, float height)
+    private new void DrawShadow(Vector3 drawLoc, float height)
     {
         Material shadowMaterial = this.ShadowMaterial;
         if (shadowMaterial == null)

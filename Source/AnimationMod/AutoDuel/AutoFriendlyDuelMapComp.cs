@@ -155,7 +155,15 @@ public class AutoFriendlyDuelMapComp : MapComponent
             return false;
 
         // Check pawn is in recreation and not doing anything majorly important.
-        if (pawn.timetable.CurrentAssignment != TimeAssignmentDefOf.Joy || !(pawn.CurJobDef?.playerInterruptible ?? true))
+        bool currentTimetableAllowsJob = pawn.timetable.CurrentAssignment.allowJoy;
+        bool currentTimetableIsSleep = pawn.timetable.CurrentAssignment == TimeAssignmentDefOf.Sleep;
+        if (currentTimetableIsSleep || !currentTimetableAllowsJob)
+            return false;
+
+        bool canInterruptJob = pawn.CurJobDef?.playerInterruptible ?? true;
+        bool isJobPlayerForced = pawn.CurJob?.playerForced ?? false;
+
+        if (!canInterruptJob || isJobPlayerForced)
             return false;
 
         return true;

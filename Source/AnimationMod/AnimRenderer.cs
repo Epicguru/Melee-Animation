@@ -27,8 +27,8 @@ public class AnimRenderer : IExposable
 
     public static readonly char[] Alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public static readonly List<AnimRenderer> PostLoadPendingAnimators = new List<AnimRenderer>();
-    public static event Action<Pawn, AnimRenderer> PrePawnSpecialRender;
-    public static event Action<Pawn, AnimRenderer> PostPawnSpecialRender;
+    public static Action<Pawn, AnimRenderer, Map> PrePawnSpecialRender;
+    public static Action<Pawn, AnimRenderer, Map> PostPawnSpecialRender;
     public static Material DefaultCutout, DefaultTransparent;
     public static IReadOnlyList<AnimRenderer> ActiveRenderers => activeRenderers;
     public static IReadOnlyCollection<Pawn> CapturedPawns => pawnToRenderer.Keys;
@@ -909,15 +909,16 @@ public class AnimRenderer : IExposable
                 {
                     // Regular pawn render.
                     Patch_PawnRenderer_RenderPawnAt.AllowNext = true;
-                    Patch_PawnRenderer_RenderPawnInternal.AllowNext = true;
-                    Patch_PawnRenderer_RenderPawnInternal.DoNotModify = true; // Don't use animation position/rotation.
-                    Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full;
-                    PrePawnSpecialRender?.Invoke(pawn, this);
+                    Patch_PawnRenderer_RenderPawnAt.DoNotModify = true; // Don't use animation position/rotation.
+                    Patch_PawnRenderer_RenderPawnAt.NextDrawMode = Patch_PawnRenderer_RenderPawnAt.DrawMode.Full;
+                    Patch_PawnUtility_IsInvisible.IsRendering = true;
+                    PrePawnSpecialRender?.Invoke(pawn, this, Map);
 
                     pawn.DrawNowAt(pawn.DrawPosHeld ?? pawn.DrawPos);
 
-                    PostPawnSpecialRender?.Invoke(pawn, this);
-                    Patch_PawnRenderer_RenderPawnInternal.DoNotModify = false;
+                    PostPawnSpecialRender?.Invoke(pawn, this, Map);
+                    Patch_PawnRenderer_RenderPawnAt.DoNotModify = false;
+                    Patch_PawnUtility_IsInvisible.IsRendering = false;
 
                     // Draw label.
                     Vector3 drawPos2 = pawn.DrawPos;
@@ -959,24 +960,26 @@ public class AnimRenderer : IExposable
 
                     // Head rotation needs to be sent manually because the head
                     // does not have a direction curve to sample.
-                    Patch_PawnRenderer_RenderPawnInternal.HeadRotation = dir; // Copy body facing direction.
+                    Patch_PawnRenderer_RenderPawnAt.HeadRotation = dir; // Copy body facing direction.
                 }
 
                 // Render pawn in custom position using patches.
                 Patch_PawnRenderer_RenderPawnAt.AllowNext = true;
-                Patch_PawnRenderer_RenderPawnInternal.AllowNext = true;
 
-                Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = !isBeheaded 
-                                               ? Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full
-                                               : i == 0 ? Patch_PawnRenderer_RenderPawnInternal.DrawMode.BodyOnly : Patch_PawnRenderer_RenderPawnInternal.DrawMode.HeadOnly;
+                Patch_PawnRenderer_RenderPawnAt.NextDrawMode = !isBeheaded 
+                                               ? Patch_PawnRenderer_RenderPawnAt.DrawMode.Full
+                                               : i == 0 ? Patch_PawnRenderer_RenderPawnAt.DrawMode.BodyOnly : Patch_PawnRenderer_RenderPawnAt.DrawMode.HeadOnly;
 
                 Patch_PawnRenderer_DrawShadowInternal.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
-                PrePawnSpecialRender?.Invoke(pawn, this);
+                Patch_PawnUtility_IsInvisible.IsRendering = true;
+
+                    PrePawnSpecialRender?.Invoke(pawn, this, Map);
 
                 pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
 
-                PostPawnSpecialRender?.Invoke(pawn, this);
+                PostPawnSpecialRender?.Invoke(pawn, this, Map);
                 Patch_PawnRenderer_DrawShadowInternal.Suppress = false;
+                Patch_PawnUtility_IsInvisible.IsRendering = false;
             }
 
             // Render shadow.

@@ -501,8 +501,7 @@ public static class OutcomeUtility
         {
             // Do corpse interpolation - interpolates the corpse to the correct position, after the animated position.
             Patch_Corpse_DrawAt.Interpolators[pawn.Corpse] = new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition());
-
-            Patch_PawnRenderer_LayingFacing.OverrideRotations[pawn] = ss.GetWorldDirection();
+            Patch_Corpse_DrawAt.OverrideRotations[pawn] = ss.GetWorldDirection();
         }
         else if (!isDeathless)
         {

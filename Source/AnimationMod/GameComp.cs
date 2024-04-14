@@ -113,7 +113,6 @@ public class GameComp : GameComponent
         GrabUtility.Tick();
 
         Patch_Corpse_DrawAt.Tick();
-        Patch_PawnRenderer_LayingFacing.Tick();
 
         const float DT = 1 / 60f;
 

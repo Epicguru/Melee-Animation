@@ -1,44 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net480</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NoStdLib>false</NoStdLib>
     <LangVersion>preview</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <AssemblyName>AM.LightsaberPatch</AssemblyName>
-    <RootNamespace>AM.LightsaberPatch</RootNamespace>
+    <AssemblyName>AM.FacialAnimationPatch</AssemblyName>
+    <RootNamespace>AM.FacialAnimationPatch</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
     <PackageReference Include="Lib.Harmony" Version="2.3.3">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
+    <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <Publicize Include="FacialAnimation" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CompActivatableEffect">
-      <HintPath>refs\CompActivatableEffect.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-      <Private>False</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </Reference>
-    <Reference Include="CompSlotLoadable">
-      <HintPath>refs\CompSlotLoadable.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-      <Private>False</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </Reference>
-    <Reference Include="SWSaber">
-      <HintPath>refs\SWSaber.dll</HintPath>
+    <Reference Include="FacialAnimation">
+      <HintPath>refs\FacialAnimation.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
@@ -47,9 +44,8 @@
 
   <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_Lightsabers\$(RimworldVersion)\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_FacialAnimation\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-
 </Project>
