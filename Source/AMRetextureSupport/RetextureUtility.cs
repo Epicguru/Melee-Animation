@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using Verse;
+using LudeonTK;
 
 namespace AM.Retexture;
 
@@ -38,8 +39,8 @@ public static class RetextureUtility
         },
 
     };
-    private static HashSet<ModContentPack> OfficialMods;
-    private static ModContentPack CoreMCP;
+    private static HashSet<ModContentPack> officialMods;
+    private static ModContentPack coreMCP;
 
     /// <summary>
     /// Gets the mod that is providing the active texture for this weapon def.
@@ -114,14 +115,14 @@ public static class RetextureUtility
         var resource = Resources.Load<Texture2D>($"Textures/{texPath}");
         if (resource != null)
         {
-            OfficialMods ??= LoadedModManager.RunningModsListForReading.Where(m => m.IsOfficialMod).ToHashSet();
-            CoreMCP ??= OfficialMods.First(m => m.PackageId == ModContentPack.CoreModPackageId);
+            officialMods ??= LoadedModManager.RunningModsListForReading.Where(m => m.IsOfficialMod).ToHashSet();
+            coreMCP ??= officialMods.First(m => m.PackageId == ModContentPack.CoreModPackageId);
 
             // If the weapon comes from a dlc, then that dlc is the texture provider.
             // Otherwise, just set the provider as one of the official mods (core or dlc).
             ModContentPack mod = weapon.modContentPack;
-            if (!OfficialMods.Contains(mod))
-                mod = CoreMCP;
+            if (!officialMods.Contains(mod))
+                mod = coreMCP;
 
             if (!hasFirst)
             {

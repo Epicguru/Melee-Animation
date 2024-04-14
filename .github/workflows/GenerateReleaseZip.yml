@@ -36,10 +36,10 @@ jobs:
     - name: Setup Dotnet
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
 
-    - name: Build Mod 1.4
-      run: dotnet build ${{ env.SLN_PATH }} --configuration v1.4
+    - name: Build Mod
+      run: dotnet build ${{ env.SLN_PATH }} --configuration Release
 
     # I don't know how well testing will work without Rimworld actually installed. 
     # But if you have unit tests configured to work with dotnet, you may be able 
@@ -61,6 +61,7 @@ jobs:
         retention-days: 7
         path: |
           1.4/
+          1.5/
           About/
           Animations/
           Bundles/
@@ -105,6 +106,7 @@ jobs:
     - name: Create Mod Folders
       run: |
         mkdir -p ${{ env.MOD_PATH }}/1.4/
+        mkdir -p ${{ env.MOD_PATH }}/1.5/
         mkdir -p ${{ env.MOD_PATH }}/About/
         mkdir -p ${{ env.MOD_PATH }}/Animations/
         mkdir -p ${{ env.MOD_PATH }}/Bundles/

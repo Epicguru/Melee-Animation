@@ -17,10 +17,8 @@ namespace AM.CAI5000Patch;
  */
 public static class FixCustomRenderInAnimator
 {
-    public static void PreCustomPawnRender(Pawn pawn, AnimRenderer anim)
+    public static void PreCustomPawnRender(Pawn pawn, AnimRenderer anim, Map map)
     {
-        var map = anim.Map;
-
         // This is CAI code:
         if (Pawn_Patch.fogThings == null || Pawn_Patch.fogThings.map != map)
         {
@@ -28,7 +26,7 @@ public static class FixCustomRenderInAnimator
         }
     }
 
-    public static void PostCustomPawnRender(Pawn pawn, AnimRenderer anim)
+    public static void PostCustomPawnRender(Pawn pawn, AnimRenderer anim, Map map)
     {
         // CAI always sets fogThings to null after the map has rendered each frame.
         // I do not know why, probably to make sure it can be GC'd once the player exits to the main menu.

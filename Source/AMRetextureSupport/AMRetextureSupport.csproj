@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net472</TargetFramework>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<NoStdLib>false</NoStdLib>
@@ -9,27 +8,22 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<RootNamespace>AM.Retexture</RootNamespace>
-		<Configurations>v1.4</Configurations>
 		<Nullable>disable</Nullable>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<DebugType>none</DebugType>
-	</PropertyGroup>
+  </PropertyGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-	</ItemGroup>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<!-- Ungodly hack to access rimworld private properties & methods -->
 		<Publicize Include="Assembly-CSharp" />
-	</ItemGroup>
-
-	<!-- _____ 1.4 _____ -->
-	<ItemGroup Condition="'$(Configuration)'=='v1.4'">
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3901" />
 	</ItemGroup>
 
 </Project>
