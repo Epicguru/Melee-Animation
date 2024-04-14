@@ -8,7 +8,6 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4</Configurations>
     <RootNamespace>AM.CAI5000Patch</RootNamespace>
     <AssemblyName>AM.CAI5000Patch</AssemblyName>
     <Nullable>disable</Nullable>
@@ -17,43 +16,36 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+    <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
-    <PackageReference Include="Lib.Harmony" Version="2.3.1.1">
+    <PackageReference Include="Lib.Harmony" Version="2.3.3">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
+    <Publicize Include="CombatAI" />
   </ItemGroup>
 
-  <!-- _____ 1.4 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3901</Version>
-    </PackageReference>
+  <ItemGroup>
     <Reference Include="CombatAI">
-      <HintPath>CombatAI_14.dll</HintPath>
+      <HintPath>refs\CombatAI.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
-
-    <!-- Ungodly hack to access CombatAI private code -->
-    <Publicize Include="CombatAI_14" />
   </ItemGroup>
 
-
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+  <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_CAI5000\1.4\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_CAI5000\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V14</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 </Project>

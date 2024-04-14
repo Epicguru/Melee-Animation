@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latest</LangVersion>
     <NoStdLib>false</NoStdLib>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4</Configurations>
     <RootNamespace>AM.TacticowlPatch</RootNamespace>
     <AssemblyName>AM.TacticowlPatch</AssemblyName>
     <Nullable>disable</Nullable>
@@ -17,32 +16,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+    <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
   </ItemGroup>
 
-  <!-- _____ 1.4 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3901</Version>
-    </PackageReference>
+  <ItemGroup>
     <Reference Include="Tacticowl">
-      <HintPath>Tacticowl.dll</HintPath>
+      <HintPath>refs\Tacticowl.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
     </Reference>
   </ItemGroup>
 
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+  <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_Tacticowl\1.4\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_Tacticowl\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V14</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 </Project>

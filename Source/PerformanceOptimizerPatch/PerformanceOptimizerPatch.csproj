@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
@@ -8,7 +8,6 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <Configurations>v1.4</Configurations>
     <RootNamespace>AM.PerformanceOptimizerPatch</RootNamespace>
     <AssemblyName>zz.AM.PerformanceOptimizerPatch</AssemblyName>
     <Nullable>disable</Nullable>
@@ -17,40 +16,36 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.3.1.1">
+    <PackageReference Include="Lib.Harmony" Version="2.3.3">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+    <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
+    <Publicize Include="PerformanceOptimizer" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
   </ItemGroup>
-
-  <!-- _____ 1.4 _____ -->
-  <ItemGroup Condition="'$(Configuration)'=='v1.4'">
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3901</Version>
-    </PackageReference>
-    <Reference Include="PerformanceOptimizer">
-      <HintPath>refs/1.4.PerformanceOptimizer.dll</HintPath>
+  
+  	<ItemGroup>
+	  <Reference Include="PerformanceOptimizer">
+	    <HintPath>refs\PerformanceOptimizer.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>False</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
-    </Reference>
-    <Publicize Include="PerformanceOptimizer" />
-  </ItemGroup>
+	  </Reference>
+	</ItemGroup>  
 
-  <!-- Output -->
-  <PropertyGroup Condition="'$(Configuration)'=='v1.4'">
+  <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_PerformanceOptimizer\1.4\Assemblies\</OutputPath>
+    <OutputPath>..\..\Patch_PerformanceOptimizer\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;V14</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 </Project>

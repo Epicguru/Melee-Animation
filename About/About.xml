@@ -5,6 +5,7 @@
   <author>Epicguru</author>
   <supportedVersions>
     <li>1.4</li>
+    <li>1.5</li>
   </supportedVersions>
   <description>Adds detailed melee combat animations, including duels, executions, and unique skills. Also (optionally) adds lassos to pull enemies into melee range.
 
@@ -28,5 +29,7 @@ Load as far down as possible.</description>
     <li>erdelf.humanoidalienraces</li>
     <li>Krkr.rule56</li>
     <li>ceteam.combatextended</li>
+    <li>taranchuk.performanceoptimizer</li>
+    <li>Nals.FacialAnimation</li>
   </loadAfter>
 </ModMetaData>
