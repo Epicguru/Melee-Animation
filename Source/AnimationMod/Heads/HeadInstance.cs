@@ -36,7 +36,7 @@ public sealed class HeadInstance
         Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.HeadStandalone;
         Patch_PawnRenderer_RenderPawnInternal.HeadRotation = Direction;
         Patch_PawnRenderer_RenderPawnInternal.StandaloneHeadRotation = Rotation;
-        Patch_PawnRenderer_DrawInvisibleShadow.Suppress = true; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
+        Patch_PawnRenderer_DrawShadowInternal.Suppress = true; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
         Patch_PawnRenderer_RenderPawnInternal.AllowNext = true;
 
         try
@@ -46,7 +46,7 @@ public sealed class HeadInstance
         finally
         {
             Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full;
-            Patch_PawnRenderer_DrawInvisibleShadow.Suppress = false;
+            Patch_PawnRenderer_DrawShadowInternal.Suppress = false;
         }
         return true;
     }

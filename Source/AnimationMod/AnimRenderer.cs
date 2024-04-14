@@ -912,14 +912,12 @@ public class AnimRenderer : IExposable
                     Patch_PawnRenderer_RenderPawnInternal.AllowNext = true;
                     Patch_PawnRenderer_RenderPawnInternal.DoNotModify = true; // Don't use animation position/rotation.
                     Patch_PawnRenderer_RenderPawnInternal.NextDrawMode = Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full;
-                    Patch_PawnUtility_IsInvisible.IsRendering = true;
                     PrePawnSpecialRender?.Invoke(pawn, this);
 
                     pawn.DrawNowAt(pawn.DrawPosHeld ?? pawn.DrawPos);
 
                     PostPawnSpecialRender?.Invoke(pawn, this);
                     Patch_PawnRenderer_RenderPawnInternal.DoNotModify = false;
-                    Patch_PawnUtility_IsInvisible.IsRendering = false;
 
                     // Draw label.
                     Vector3 drawPos2 = pawn.DrawPos;
@@ -972,15 +970,13 @@ public class AnimRenderer : IExposable
                                                ? Patch_PawnRenderer_RenderPawnInternal.DrawMode.Full
                                                : i == 0 ? Patch_PawnRenderer_RenderPawnInternal.DrawMode.BodyOnly : Patch_PawnRenderer_RenderPawnInternal.DrawMode.HeadOnly;
 
-                Patch_PawnUtility_IsInvisible.IsRendering = true;
-                Patch_PawnRenderer_DrawInvisibleShadow.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
+                Patch_PawnRenderer_DrawShadowInternal.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
                 PrePawnSpecialRender?.Invoke(pawn, this);
 
                 pawn.Drawer.renderer.RenderPawnAt(pos, dir, true); // This direction here is not the final one.
 
                 PostPawnSpecialRender?.Invoke(pawn, this);
-                Patch_PawnRenderer_DrawInvisibleShadow.Suppress = false;
-                Patch_PawnUtility_IsInvisible.IsRendering = false;
+                Patch_PawnRenderer_DrawShadowInternal.Suppress = false;
             }
 
             // Render shadow.

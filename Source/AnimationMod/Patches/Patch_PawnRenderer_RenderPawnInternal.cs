@@ -11,9 +11,13 @@ namespace AM.Patches;
 /// and body angle. Driven by the active animation.
 /// Also used to render severed heads.
 /// </summary>
-[HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnInternal))]
+//[HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnInternal))]
 static class Patch_PawnRenderer_RenderPawnInternal
 {
+    /*
+     * Steps to ensure that I can render exactly how I want:
+     */
+
     public static bool AllowNext;
     public static bool DoNotModify = false;
     public static DrawMode NextDrawMode = DrawMode.Full;

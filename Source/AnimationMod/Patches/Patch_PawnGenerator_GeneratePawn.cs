@@ -55,7 +55,7 @@ public static class Patch_PawnGenerator_GeneratePawn
 
     private static void GiveLasso(Pawn pawn, ThingDef lasso)
     {
-        if (pawn == null || lasso == null)
+        if (pawn?.apparel == null || lasso == null)
             return;
 
         var thing = ThingMaker.MakeThing(lasso) as Apparel;

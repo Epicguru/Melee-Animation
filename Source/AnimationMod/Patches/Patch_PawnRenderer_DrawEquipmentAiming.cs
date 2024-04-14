@@ -7,6 +7,8 @@ namespace AM.Patches;
 
 /// <summary>
 /// Used to override drawing melee weapons.
+/// Prevents the standard (or modded) melee weapon from rendering,
+/// and also notifies the IdleControllerComp that it is supposed to be rendering.
 /// </summary>
 [HarmonyPatch(typeof(PawnRenderUtility), nameof(PawnRenderUtility.DrawEquipmentAiming))]
 public static class Patch_PawnRenderer_DrawEquipment
