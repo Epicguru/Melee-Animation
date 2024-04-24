@@ -30,7 +30,7 @@ public static class Patch_DrawFaceGraphicsComp_CompRenderNodes
         {
             __state = true;
             __instance.SetDirty();
-            Patch_PawnUtility_IsInvisible.IsRendering = true;
+            Patch_InvisibilityUtility_IsPsychologicallyInvisible.IsRendering = true;
         }
     }
 
@@ -38,7 +38,7 @@ public static class Patch_DrawFaceGraphicsComp_CompRenderNodes
     {
         if (__state)
         {
-            Patch_PawnUtility_IsInvisible.IsRendering = false;
+            Patch_InvisibilityUtility_IsPsychologicallyInvisible.IsRendering = false;
         }
     }
 }
