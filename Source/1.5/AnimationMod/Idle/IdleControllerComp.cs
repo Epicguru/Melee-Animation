@@ -10,6 +10,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using LudeonTK;
+using System.Linq;
 
 namespace AM.Idle;
 
@@ -520,7 +521,7 @@ public class IdleControllerComp : ThingComp
             if (!ShouldHaveSkills())
                 return;
 
-            if (skills == null)
+            if (skills == null || skills.Any(s => s == null))
                 PopulateSkills();
 
             for (int i = 0; i < skills.Length; i++)
