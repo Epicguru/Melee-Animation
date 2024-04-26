@@ -14,7 +14,7 @@ namespace AM.Patches;
 /// compromise.
 /// </summary>
 [HarmonyPatch(typeof(InvisibilityUtility), nameof(InvisibilityUtility.IsPsychologicallyInvisible))]
-public static class Patch_PawnUtility_IsInvisible
+public static class Patch_InvisibilityUtility_IsPsychologicallyInvisible
 {
     public static bool IsRendering;
 

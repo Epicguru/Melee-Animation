@@ -911,14 +911,14 @@ public class AnimRenderer : IExposable
                     Patch_PawnRenderer_RenderPawnAt.AllowNext = true;
                     Patch_PawnRenderer_RenderPawnAt.DoNotModify = true; // Don't use animation position/rotation.
                     Patch_PawnRenderer_RenderPawnAt.NextDrawMode = Patch_PawnRenderer_RenderPawnAt.DrawMode.Full;
-                    Patch_PawnUtility_IsInvisible.IsRendering = true;
+                    Patch_InvisibilityUtility_IsPsychologicallyInvisible.IsRendering = true;
                     PrePawnSpecialRender?.Invoke(pawn, this, Map);
 
                     pawn.DrawNowAt(pawn.DrawPosHeld ?? pawn.DrawPos);
 
                     PostPawnSpecialRender?.Invoke(pawn, this, Map);
                     Patch_PawnRenderer_RenderPawnAt.DoNotModify = false;
-                    Patch_PawnUtility_IsInvisible.IsRendering = false;
+                    Patch_InvisibilityUtility_IsPsychologicallyInvisible.IsRendering = false;
 
                     // Draw label.
                     Vector3 drawPos2 = pawn.DrawPos;
@@ -971,7 +971,7 @@ public class AnimRenderer : IExposable
                                                : i == 0 ? Patch_PawnRenderer_RenderPawnAt.DrawMode.BodyOnly : Patch_PawnRenderer_RenderPawnAt.DrawMode.HeadOnly;
 
                 Patch_PawnRenderer_DrawShadowInternal.Suppress = suppressShadow; // In 1.4 shadow rendering is baked into RenderPawnAt and may need to be prevented.
-                Patch_PawnUtility_IsInvisible.IsRendering = true;
+                Patch_InvisibilityUtility_IsPsychologicallyInvisible.IsRendering = true;
 
                     PrePawnSpecialRender?.Invoke(pawn, this, Map);
 
@@ -979,7 +979,7 @@ public class AnimRenderer : IExposable
 
                 PostPawnSpecialRender?.Invoke(pawn, this, Map);
                 Patch_PawnRenderer_DrawShadowInternal.Suppress = false;
-                Patch_PawnUtility_IsInvisible.IsRendering = false;
+                Patch_InvisibilityUtility_IsPsychologicallyInvisible.IsRendering = false;
             }
 
             // Render shadow.
