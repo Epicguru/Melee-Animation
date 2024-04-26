@@ -45,12 +45,11 @@ public class GrappleFlyer : PawnFlyer
     public int TotalDurationTicks => ticksFlightTime;
     public Pawn Grappler;
 
-    private Material cachedShadowMaterial;
-    private Effecter flightEffecter = null;
-    private int positionLastComputedTick = -1;
-    private Vector3 groundPos;
-    private Vector3 effectivePos;
-    private float effectiveHeight;
+    private new Effecter flightEffecter = null;
+    private new int positionLastComputedTick = -1;
+    private new Vector3 groundPos;
+    private new Vector3 effectivePos;
+    private new float effectiveHeight;
 
     private Material ShadowMaterial => this.def.pawnFlyer.ShadowMaterial;
 

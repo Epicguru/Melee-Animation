@@ -192,7 +192,7 @@ public class KnockbackFlyer : PawnFlyer
         map.flecks.CreateFleck(dataStatic);
     }
 
-    private void LandingEffects()
+    private new void LandingEffects()
     {
         soundLanding.PlayOneShot(new TargetInfo(EndPos.ToIntVec3(), Map));
 

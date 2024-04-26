@@ -16,6 +16,9 @@ namespace AM.Patches;
 [HarmonyPatch(typeof(InvisibilityUtility), nameof(InvisibilityUtility.IsPsychologicallyInvisible))]
 public static class Patch_InvisibilityUtility_IsPsychologicallyInvisible
 {
+    /// <summary>
+    /// If true, the patch is disabled.
+    /// </summary>
     public static bool IsRendering;
 
     [HarmonyPriority(Priority.First)]
@@ -24,8 +27,7 @@ public static class Patch_InvisibilityUtility_IsPsychologicallyInvisible
         if (!Core.Settings.AllowInvisiblePawns)
             return true;
 
-        var anim = PatchMaster.GetAnimator(pawn);
-        if (anim != null && !IsRendering)
+        if (!IsRendering && PatchMaster.GetAnimator(pawn) != null)
         {
             __result = true;
             return false;

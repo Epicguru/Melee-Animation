@@ -15,9 +15,6 @@ public static class CAI5000AnimationPatch
         IdleControllerComp.ShouldDrawAdditional.Add(ShouldDraw);
 
         GameComp.LazyTick += FlushOldMapsFromCache;
-
-        AnimRenderer.PrePawnSpecialRender += FixCustomRenderInAnimator.PreCustomPawnRender;
-        AnimRenderer.PostPawnSpecialRender += FixCustomRenderInAnimator.PostCustomPawnRender;
     }
 
     private static MapComponent_FogGrid GetFogger(ThingComp comp)
