@@ -300,7 +300,6 @@ public class Core : Mod
         // Different thread loading...
         LongEventHandler.QueueLongEvent(() =>
         {
-            LongEventHandler.SetCurrentEventText("Load Advanced Animation Mod");
             while (lateLoadActions.TryDequeue(out var pair))
             {
                 try
@@ -313,7 +312,7 @@ public class Core : Mod
                     Error($"Exception in post-load event (async) '{pair.title}':", e);
                 }
             }
-        }, "Load Advanced Animation Mod", true, null);
+        }, "AM.LoadingText", true, null);
 
         // Same thread loading...
         LongEventHandler.QueueLongEvent(() =>
@@ -330,7 +329,7 @@ public class Core : Mod
                     Error($"Exception in post-load event '{pair.title}':", e);
                 }
             }
-        }, "Load Advanced Animation Mod", false, null);
+        }, "AM.LoadingText", false, null);
     }
 
     private void AddLateLoadAction(bool synchronous, string title, Action a)
