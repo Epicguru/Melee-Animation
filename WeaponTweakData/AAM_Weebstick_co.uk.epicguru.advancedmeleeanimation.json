@@ -2,7 +2,7 @@
   "TextureModID": "co.uk.epicguru.advancedmeleeanimation",
   "ItemDefName": "AM_Weebstick",
   "ItemType": "ThingDef",
-  "ItemTypeNamespace": "Verse",
+  "ItemTypeNamespace": "Verse", 
   "OffX": 0.5748144,
   "OffY": 0.005926132,
   "Rotation": 45.0,
