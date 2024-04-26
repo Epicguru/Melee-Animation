@@ -12,6 +12,9 @@
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>none</DebugType>
+
+    <!-- Duplicate type caused by publiciser content (which includes a .cs file) being brought in from the referenced .dll -->
+    <NoWarn>CS0436</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,6 +6,7 @@
 
       <!-- Other common properties -->
       <TargetFramework>net48</TargetFramework>
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>

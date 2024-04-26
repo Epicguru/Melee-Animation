@@ -12,6 +12,8 @@
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>none</DebugType>
+    <!-- CombatAI assembly, as released on Steam, is built on AMD, throws warning, harmless but annoying. -->
+    <NoWarn>MSB3270</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
