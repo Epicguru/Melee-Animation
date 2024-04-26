@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_Log_OE_FungalWoodLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.137183487,
+  "OffY": -0.06859177,
+  "Rotation": 41.90465,
+  "ScaleX": 0.75,
+  "ScaleY": 0.75,
+  "BladeEnd": 0.4159164,
+  "MeleeWeaponType": 8
+}

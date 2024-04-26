@@ -1,0 +1,11 @@
+{
+  "TextureModID": "obsidiaexpansion.core",
+  "ItemDefName": "OTC_Trophy_Sword_Acid",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.236953735,
+  "OffY": -0.0155892046,
+  "BladeStart": 0.0866749659,
+  "BladeEnd": 0.6385279,
+  "MeleeWeaponType": 6
+}

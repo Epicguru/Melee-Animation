@@ -1,0 +1,14 @@
+{
+  "TextureModID": "fs.reviaracebiotech",
+  "ItemDefName": "ReviaWarPick",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5082036,
+  "OffY": 0.01870694,
+  "Rotation": 50.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.7817918,
+  "BladeEnd": 0.981331646,
+  "MeleeWeaponType": 3
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "xmb.breadmech",
+  "ItemDefName": "BM_Knife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.199539855,
+  "OffY": 0.00623574853,
+  "HandsMode": 1,
+  "BladeStart": 0.09789892,
+  "BladeEnd": 0.54998225,
+  "MeleeWeaponType": 48
+}

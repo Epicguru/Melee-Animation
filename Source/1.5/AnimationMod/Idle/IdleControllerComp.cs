@@ -10,6 +10,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using LudeonTK;
+using System.Linq;
 
 namespace AM.Idle;
 
@@ -463,14 +464,26 @@ public class IdleControllerComp : ThingComp
 
     private Matrix4x4 MakePawnMatrix(Pawn pawn, bool north)
     {
-        var mat = Matrix4x4.TRS(pawn.DrawPos + new Vector3(0, north ? -0.8f : 0.1f), Quaternion.identity, Vector3.one);
+        var offset = new Vector3(0, north ? -0.8f : 0.1f, 0);
+
+        Matrix4x4 animationMatrix;
+        if (Core.Settings.InheritBodyPosture)
+        {
+            var currentDrawResults = pawn.drawer.renderer.results;
+            animationMatrix = currentDrawResults.parms.matrix * Matrix4x4.Translate(offset);
+        }
+        else
+        {
+            animationMatrix = Matrix4x4.TRS(pawn.DrawPos + offset, Quaternion.identity, Vector3.one);
+        }
+
         if (CurrentAnimation == null || !CurrentAnimation.Def.pointAtTarget)
-            return mat;
+            return animationMatrix;
 
         float frame = CurrentAnimation.CurrentTime * 60f;
         float lerp = Mathf.InverseLerp(CurrentAnimation.Def.returnToIdleStart, CurrentAnimation.Def.returnToIdleEnd, frame);
 
-        float idle = 0;
+        const float IDLE_ANGLE = 0;
         float point = -pauseAngle;
         if (CurrentAnimation.MirrorHorizontal)
         {
@@ -478,12 +491,16 @@ public class IdleControllerComp : ThingComp
         }
 
         if (CurrentAnimation.Def.idleType == IdleType.AttackNorth)
+        {
             point += 90;
-        if (CurrentAnimation.Def.idleType == IdleType.AttackSouth)
+        }
+        else if (CurrentAnimation.Def.idleType == IdleType.AttackSouth)
+        {
             point -= 90;
+        }
 
-        float a = Mathf.LerpAngle(point, idle, lerp);
-        return mat * Matrix4x4.Rotate(Quaternion.Euler(0f, a, 0f));
+        float a = Mathf.LerpAngle(point, IDLE_ANGLE, lerp);
+        return animationMatrix * Matrix4x4.Rotate(Quaternion.Euler(0f, a, 0f));
     }
 
     public override void PostDeSpawn(Map map)
@@ -520,7 +537,7 @@ public class IdleControllerComp : ThingComp
             if (!ShouldHaveSkills())
                 return;
 
-            if (skills == null)
+            if (skills == null || skills.Any(s => s == null))
                 PopulateSkills();
 
             for (int i = 0; i < skills.Length; i++)

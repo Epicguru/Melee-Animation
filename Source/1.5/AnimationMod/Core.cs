@@ -253,16 +253,19 @@ public class Core : Mod
             Warn($"{pair.Key} '{pair.Value.name}' has {pair.Value.wc} missing weapon tweak data.");
         }
 
-        var toUpload = new List<MissingModRequest>();
-        toUpload.AddRange(modsAndMissingWeaponCount.Select(p => new MissingModRequest
-        {
-            ModID = p.Key,
-            ModName = p.Value.name,
-            WeaponCount = p.Value.wc
-        }));
-
         if (Settings.SendStatistics && !Settings.IsFirstTimeRunning)
         {
+            var modBuildTime = GetBuildDate(Assembly.GetExecutingAssembly());
+
+            var toUpload = new List<MissingModRequest>();
+            toUpload.AddRange(modsAndMissingWeaponCount.Select(p => new MissingModRequest
+            {
+                ModID = p.Key,
+                ModName = p.Value.name,
+                WeaponCount = p.Value.wc,
+                ModBuildTimeUtc = modBuildTime
+            }));
+
             Task.Run(() => UploadMissingModData(toUpload)).ContinueWith(t =>
             {
                 if (t.IsCompletedSuccessfully)
@@ -300,7 +303,6 @@ public class Core : Mod
         // Different thread loading...
         LongEventHandler.QueueLongEvent(() =>
         {
-            LongEventHandler.SetCurrentEventText("Load Advanced Animation Mod");
             while (lateLoadActions.TryDequeue(out var pair))
             {
                 try
@@ -313,7 +315,7 @@ public class Core : Mod
                     Error($"Exception in post-load event (async) '{pair.title}':", e);
                 }
             }
-        }, "Load Advanced Animation Mod", true, null);
+        }, "AM.LoadingText", true, null);
 
         // Same thread loading...
         LongEventHandler.QueueLongEvent(() =>
@@ -330,7 +332,7 @@ public class Core : Mod
                     Error($"Exception in post-load event '{pair.title}':", e);
                 }
             }
-        }, "Load Advanced Animation Mod", false, null);
+        }, "AM.LoadingText", false, null);
     }
 
     private void AddLateLoadAction(bool synchronous, string title, Action a)

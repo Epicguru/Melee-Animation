@@ -1,0 +1,15 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_Wine_Griffon",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.205775827,
+  "OffY": -0.00623548031,
+  "Rotation": -90.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "HandsMode": 1,
+  "BladeStart": 0.0386608765,
+  "BladeEnd": 0.534393,
+  "MeleeWeaponType": 8
+}

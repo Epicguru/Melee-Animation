@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimdaedricweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Daedric_Greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.486378968,
+  "OffY": -0.00935351849,
+  "ScaleX": 1.5,
+  "ScaleY": 1.1,
+  "BladeStart": 0.136404127,
+  "BladeEnd": 1.2525816,
+  "MeleeWeaponType": 6
+}

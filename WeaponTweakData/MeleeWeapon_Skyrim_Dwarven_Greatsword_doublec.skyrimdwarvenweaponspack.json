@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimdwarvenweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Dwarven_Greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4957322,
+  "OffY": -0.00311774015,
+  "ScaleX": 1.6,
+  "ScaleY": 1.1,
+  "BladeStart": 0.163529158,
+  "BladeEnd": 1.2547642,
+  "MeleeWeaponType": 6
+}

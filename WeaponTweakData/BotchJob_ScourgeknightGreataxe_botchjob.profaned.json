@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.profaned",
+  "ItemDefName": "BotchJob_ScourgeknightGreataxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.227600515,
+  "Rotation": 90.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.3452977,
+  "BladeEnd": 0.66019696,
+  "MeleeWeaponType": 2
+}

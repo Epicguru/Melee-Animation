@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimdragonboneweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Dragonbone_WarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1340658,
+  "OffY": 0.009353459,
+  "ScaleX": 1.05,
+  "ScaleY": 0.8,
+  "BladeStart": 0.279823661,
+  "BladeEnd": 0.5292489,
+  "MeleeWeaponType": 18
+}

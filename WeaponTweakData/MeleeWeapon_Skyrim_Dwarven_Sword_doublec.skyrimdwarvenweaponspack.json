@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimdwarvenweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Dwarven_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4458473,
+  "OffY": -0.009353727,
+  "ScaleX": 1.3,
+  "BladeStart": 0.1042906,
+  "BladeEnd": 1.0832845,
+  "MeleeWeaponType": 6
+}

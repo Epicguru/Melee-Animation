@@ -1,0 +1,11 @@
+{
+  "TextureModID": "obsidiaexpansion.core",
+  "ItemDefName": "ODC_Trophy_Sickle_A",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.299310029,
+  "OffY": -0.0374138877,
+  "BladeStart": 0.07108576,
+  "BladeEnd": 0.747651339,
+  "MeleeWeaponType": 6
+}

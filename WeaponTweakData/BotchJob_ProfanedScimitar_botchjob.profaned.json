@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.profaned",
+  "ItemDefName": "BotchJob_ProfanedScimitar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.286838561,
+  "OffY": -0.00311774015,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.117697179,
+  "BladeEnd": 0.894032955,
+  "MeleeWeaponType": 6
+}

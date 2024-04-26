@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimelvenweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Elven_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.187068373,
+  "OffY": -0.00623548031,
+  "ScaleX": 0.7,
+  "ScaleY": 0.55,
+  "HandsMode": 1,
+  "BladeStart": 0.105226226,
+  "MeleeWeaponType": 48
+}

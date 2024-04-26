@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimdaedricweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Daedric_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1808334,
+  "OffY": -0.0405316353,
+  "ScaleY": 0.8,
+  "BladeStart": 0.09275476,
+  "BladeEnd": 0.622783065,
+  "MeleeWeaponType": 48
+}

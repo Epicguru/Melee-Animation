@@ -1,0 +1,11 @@
+{
+  "TextureModID": "cp.rimmunation.2.weapons",
+  "ItemDefName": "RNMeleeWeapon_Manganese_Wakizashi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4427296,
+  "Rotation": 45.0,
+  "BladeStart": 0.11037039,
+  "BladeEnd": 0.924120069,
+  "MeleeWeaponType": 6
+}

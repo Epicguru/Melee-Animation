@@ -1,0 +1,11 @@
+{
+  "TextureModID": "doublec.skyrimelvenweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Elven_Warhammeraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.308663756,
+  "ScaleX": 1.5,
+  "BladeStart": 0.3297085,
+  "BladeEnd": 0.993803144,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimelvenweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Elven_Greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.439611822,
+  "ScaleX": 1.5,
+  "ScaleY": 1.1,
+  "BladeStart": 0.19252494,
+  "BladeEnd": 1.18398976,
+  "MeleeWeaponType": 6
+}

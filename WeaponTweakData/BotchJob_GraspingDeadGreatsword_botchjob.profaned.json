@@ -1,0 +1,20 @@
+{
+  "TextureModID": "botchjob.profaned",
+  "ItemDefName": "BotchJob_GraspingDeadGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.598620653,
+  "OffY": -0.0187069327,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.273588181,
+  "BladeEnd": 1.53630292,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.166682884,
+    "g": 0.695061862,
+    "b": 0.108635649,
+    "a": 0.902
+  }
+}

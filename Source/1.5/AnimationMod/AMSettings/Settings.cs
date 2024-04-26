@@ -17,10 +17,17 @@ public class Settings : SimpleSettingsBase
     #region General
     [Header("General")]
     [Label("Always Animate Weapons")]
-    [Description("If enabled, melee weapons are animated whenever they are held, such as when standing drafted or while moving in combat.\nIf disabled, animations are limited to duels, special skills and executions.\n\n" +
+    [Description("If enabled, melee weapons are animated whenever they are held, such as when standing drafted, while moving in combat or while attacking.\nIf disabled, animations are limited to duels, special skills and executions.\n\n" +
                  "<b>Leaving this enabled can have a large performance impact on densely populated maps.\nPlease reload your save after changing this setting.</b>")]
     [WebContent("AlwaysAnimate", true)]
     public bool AnimateAtIdle = true;
+
+    [Label("Animations Use Body Posture")]
+    [Description("When enabled, simple animations (such as holding, walking and attacking with a melee weapon) will inherit body posture.\n" +
+        "This means that any other mods that modify pawn position, angle or size will also apply that change to the animated hands and weapon.\n" +
+        "Note: this does not apply to execution or duel animations, for technical reasons.")]
+    [VisibleIf(nameof(AnimateAtIdle))]
+    public bool InheritBodyPosture = true;
 
     [Label("Enable Unique Skills")]
     [Description("Enables or disables the Unique Skill system.\n" +

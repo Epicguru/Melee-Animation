@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimdragonboneweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Dragonbone_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.19330439,
+  "OffY": -0.009353474,
+  "ScaleX": 0.9,
+  "ScaleY": 0.8,
+  "BladeStart": 0.0459876619,
+  "BladeEnd": 0.6165476,
+  "MeleeWeaponType": 9
+}

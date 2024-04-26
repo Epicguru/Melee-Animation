@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimdaedricweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Daedric_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2244828,
+  "OffY": -0.0124712586,
+  "ScaleX": 1.1,
+  "ScaleY": 0.8,
+  "BladeStart": 0.19252494,
+  "BladeEnd": 0.710081756,
+  "MeleeWeaponType": 9
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "projectjedi.factions",
+  "ItemDefName": "PJ_VScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2587784,
+  "OffY": -0.0187069476,
+  "Rotation": 90.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": -0.26267612,
+  "BladeEnd": 0.8347944,
+  "MeleeWeaponType": 6
+}

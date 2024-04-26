@@ -1,0 +1,15 @@
+{
+  "TextureModID": "projectjedi.factions",
+  "ItemDefName": "PJ_Vibroaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.639152169,
+  "OffY": 0.0530030876,
+  "Rotation": 2.916248,
+  "ScaleX": 2.3,
+  "ScaleY": 2.3,
+  "FlipX": true,
+  "BladeStart": 1.18087208,
+  "BladeEnd": 1.72648954,
+  "MeleeWeaponType": 6
+}

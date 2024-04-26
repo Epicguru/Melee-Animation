@@ -1,0 +1,14 @@
+{
+  "TextureModID": "botchjob.profaned",
+  "ItemDefName": "BotchJob_ProfanedScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.38660872,
+  "OffY": -0.0374136269,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.613429844,
+  "BladeEnd": 0.975096166,
+  "MeleeWeaponType": 2
+}

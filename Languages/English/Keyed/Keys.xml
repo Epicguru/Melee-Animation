@@ -2,6 +2,7 @@
 <LanguageData>
 
   <AM.ModTitle>Epicguru's Melee Animation</AM.ModTitle>
+  <AM.LoadingText>Loading Melee Animation</AM.LoadingText>
 
   <AM.Animation>Animation</AM.Animation>
 

@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace ModRequestAPI.Models
 {
-    public class MissingModRequest
+    public sealed class MissingModRequest
     {
         /// <summary>
         /// The ID of the mod that is missing weapons.
@@ -21,5 +22,11 @@ namespace ModRequestAPI.Models
         /// </summary>
         [JsonProperty("WeaponCount")]
         public int WeaponCount { get; set; }
+
+        /// <summary>
+        /// The time and date, in UTC time, that the Melee Animation mod was built at.
+        /// </summary>
+        [JsonProperty("ModBuildTimeUtc")]
+        public DateTime? ModBuildTimeUtc { get; set; }
     }
 }

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.profaned",
+  "ItemDefName": "BotchJob_ProfanedWarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2494252,
+  "OffY": -0.009353727,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.3608869,
+  "BladeEnd": 0.753731132,
+  "MeleeWeaponType": 18
+}

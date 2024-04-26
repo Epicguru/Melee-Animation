@@ -1,0 +1,19 @@
+{
+  "TextureModID": "botchjob.profaned",
+  "ItemDefName": "BotchJob_FrostboundGreataxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.205775857,
+  "Rotation": 90.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.3452977,
+  "BladeEnd": 0.6539615,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.372,
+    "g": 0.811,
+    "b": 0.964,
+    "a": 1.0
+  }
+}

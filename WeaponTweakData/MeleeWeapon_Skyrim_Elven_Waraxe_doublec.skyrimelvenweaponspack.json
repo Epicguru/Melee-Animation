@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimelvenweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Elven_WarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.22760053,
+  "OffY": -0.137183785,
+  "ScaleX": 1.2,
+  "ScaleY": 0.8,
+  "BladeStart": 0.23305656,
+  "BladeEnd": 0.7662026,
+  "MeleeWeaponType": 2
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "rh2.faction.militaires.sans.frontieres",
+  "ItemDefName": "RHMelee_StunRod",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3554314,
+  "OffY": -0.009353474,
+  "Rotation": 45.0,
+  "BladeStart": 0.16446428,
+  "BladeEnd": 0.8347944,
+  "MeleeWeaponType": 9
+}
