@@ -263,7 +263,7 @@ public class Core : Mod
                 ModID = p.Key,
                 ModName = p.Value.name,
                 WeaponCount = p.Value.wc,
-                MeleeAnimationBuildTimeUtc = modBuildTime
+                MeleeAnimationBuildTimeUtc = modBuildTime.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
             }));
 
             Task.Run(() => UploadMissingModData(toUpload)).ContinueWith(t =>

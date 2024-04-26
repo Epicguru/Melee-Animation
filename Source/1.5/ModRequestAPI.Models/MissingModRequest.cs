@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace ModRequestAPI.Models
 {
@@ -27,6 +26,6 @@ namespace ModRequestAPI.Models
         /// The time and date, in UTC time, that the Melee Animation mod was built at.
         /// </summary>
         [JsonProperty("ModBuildTimeUtc")]
-        public DateTime? MeleeAnimationBuildTimeUtc { get; set; }
+        public string MeleeAnimationBuildTimeUtc { get; set; }
     }
 }
