@@ -27,7 +27,7 @@ jobs:
       run: dotnet build Source/${{ env.LATEST_RW_VERSION }} --configuration Release
 
     - name: Run generator
-      run: .\Source\${{ env.LATEST_RW_VERSION }}\CompatibilityReportGenerator\bin\Debug\net472\CompatibilityReportGenerator.exe --directory "./WeaponTweakData" --output "./WeaponTweakData/Compatible Mods.md"
+      run: .\Source\${{ env.LATEST_RW_VERSION }}\CompatibilityReportGenerator\bin\Debug\net48\CompatibilityReportGenerator.exe --directory "./WeaponTweakData" --output "./WeaponTweakData/Compatible Mods.md"
     
     - name: Check for changes
       run: git status
