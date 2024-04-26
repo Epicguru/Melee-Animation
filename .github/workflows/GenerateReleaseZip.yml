@@ -99,7 +99,7 @@ jobs:
         zip -r ./${{ env.MOD_NAME }}.zip ./${{ env.MOD_NAME }}/*
 
     - name: Upload Mod Zip Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4.3.3
       with:
         name: ${{ env.MOD_NAME }}
         path: ${{ env.MOD_PATH }}.zip
@@ -123,7 +123,7 @@ jobs:
 
     - name: Download Mod Artifacts from Build Step
       id: download_zip
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: ${{ env.MOD_NAME }}
 
