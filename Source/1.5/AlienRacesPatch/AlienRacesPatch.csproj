@@ -34,7 +34,7 @@
 
   <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_AlienRaces\$(RimworldVersion)\Assemblies\</OutputPath>
+    <OutputPath>..\..\..\Patch_AlienRaces\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>

@@ -42,7 +42,7 @@
 
   <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_CAI5000\$(RimworldVersion)\Assemblies\</OutputPath>
+    <OutputPath>..\..\..\Patch_CAI5000\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>

@@ -49,7 +49,7 @@
 
   <!-- Output -->
   <PropertyGroup>
-    <OutputPath>..\..\$(RimworldVersion)\Assemblies\</OutputPath>
+    <OutputPath>..\..\..\$(RimworldVersion)\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 

@@ -46,7 +46,7 @@
 
   <PropertyGroup>
     <DebugType>none</DebugType>
-    <OutputPath>..\..\Patch_Lightsabers\$(RimworldVersion)\Assemblies\</OutputPath>
+    <OutputPath>..\..\..\Patch_Lightsabers\$(RimworldVersion)\Assemblies\</OutputPath>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
