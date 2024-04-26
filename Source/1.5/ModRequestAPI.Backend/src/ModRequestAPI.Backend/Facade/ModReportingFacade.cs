@@ -39,15 +39,12 @@ public class ModReportingFacade
             if (req.ModName.Length > 64)
                 return "Mod name too long";
 
-            if (string.IsNullOrEmpty(req.MeleeAnimationBuildTimeUtc))
+            if (req.ModBuildTimeUtc == null)
                 return "Missing mod build time, probably very old version of Melee Animation submitting the request.";
 
-            if (!DateTime.TryParseExact(req.MeleeAnimationBuildTimeUtc, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateTime))
-                return "Invalid mod build time.";
-
-            if (dateTime < currentBuildDate)
+            if (req.ModBuildTimeUtc.Value < currentBuildDate)
             {
-                TimeSpan delta = currentBuildDate - dateTime;
+                TimeSpan delta = currentBuildDate - req.ModBuildTimeUtc.Value;
                 TimeSpan deltaToNow = DateTime.UtcNow - currentBuildDate;
                 return "Your version of Melee Animation is not up to date, mod support request is rejected.\nPlease update to the latest version of the mod.\n" + 
                     $"Last Melee Animation mod update: {deltaToNow.TotalDays} days ago. Your mod version is {delta.TotalDays} days out of date.";
