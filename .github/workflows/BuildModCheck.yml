@@ -13,6 +13,11 @@ on:
       # use a separate workflow for them.
       - 'v*'
 
+  pull_request:
+    branches:
+      - master
+      - develop
+
 jobs:
   build:
     name: Build & Test v${{ matrix.rimworld-version }} on ${{ matrix.operating-system }}
