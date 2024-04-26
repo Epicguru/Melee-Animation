@@ -24,10 +24,10 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Build Mod ${{ env.LATEST_RW_VERSION }}
-      run: dotnet build Source/${{ env.LATEST_RW_VERSION }} --configuration Release
+      run: dotnet build Source/${{ env.LATEST_RW_VERSION }}/CompatibilityReportGenerator --configuration Release
 
     - name: Run generator
-      run: .\Source\${{ env.LATEST_RW_VERSION }}\CompatibilityReportGenerator\bin\Debug\net48\CompatibilityReportGenerator.exe --directory "./WeaponTweakData" --output "./WeaponTweakData/Compatible Mods.md"
+      run: .\Source\${{ env.LATEST_RW_VERSION }}\CompatibilityReportGenerator\bin\Release\net48\CompatibilityReportGenerator.exe --directory "./WeaponTweakData" --output "./WeaponTweakData/Compatible Mods.md"
     
     - name: Check for changes
       run: git status
