@@ -36,7 +36,7 @@ on:
 jobs:
 
   build:
-    name: Build on ${{ matrix.operating-system }}
+    name: Build for RW v${{ matrix.rimworld-version }}
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
