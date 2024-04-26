@@ -1,13 +1,8 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Generate Compatibility List
 
 env:
-  # Change this to point to your solution, or the folder in which your solution 
-  # can be found.
-  SLN_PATH: Source/
+  LATEST_RW_VERSION: 1.5
 
-# Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -15,40 +10,39 @@ on:
     paths:
       - WeaponTweakData/*
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     if: "!contains(github.event.commits[0].message, '[AUTO CI]')"
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4.1.4
 
     - name: Setup Dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4.0.0
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
 
-    - name: Build Mod 1.4
-      run: dotnet build ${{ env.SLN_PATH }} --configuration v1.4
+    - name: Build Mod ${{ env.LATEST_RW_VERSION }}
+      run: dotnet build Source/${{ env.LATEST_RW_VERSION }} --configuration Release
 
-    - name: Run generator.
-      run: .\Source\CompatibilityReportGenerator\bin\Debug\net472\CompatibilityReportGenerator.exe --directory "./WeaponTweakData" --output "./WeaponTweakData/Compatible Mods.md"
+    - name: Run generator
+      run: .\Source\${{ env.LATEST_RW_VERSION }}\CompatibilityReportGenerator\bin\Debug\net472\CompatibilityReportGenerator.exe --directory "./WeaponTweakData" --output "./WeaponTweakData/Compatible Mods.md"
     
-    - name: Check for changes.
+    - name: Check for changes
       run: git status
     
-    - name: Stage changes.
+    - name: Stage changes
       run: git add .
     
-    - name: Commit changes.
+    - name: Commit changes
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -m "[AUTO CI] Update compatible mod list." -m "[skip ci]"
     
     - name: Push to ${{ github.ref }}.
-      uses: ad-m/github-push-action@master
+      uses: ad-m/github-push-action@v0.8.0
       with:
         github_token: ${{ secrets.CI_TOKEN }}
         branch: ${{ github.ref }}

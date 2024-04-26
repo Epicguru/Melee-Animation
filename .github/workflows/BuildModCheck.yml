@@ -1,9 +1,5 @@
 name: Check Build Status
 
-env:
-  # Change this to point to your solution, or the folder in which your solution 
-  # can be found.
-  SLN_PATH: Source/
 
 on:
   push:
@@ -19,21 +15,23 @@ on:
 
 jobs:
   build:
-    name: Build on ${{ matrix.operating-system }}
+    name: Build & Test v${{ matrix.rimworld-version }} on ${{ matrix.operating-system }}
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        # You can configure operating systems to build on here. It shouldn't make a difference 
-        # operating-system: [ubuntu-latest, windows-latest, macOS-latest]
         operating-system: [ubuntu-latest]
+        rimworld-version: [1.4, 1.5]
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4.1.4
       
     - name: Setup Dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4.0.0
       with:
         dotnet-version: 8.0.x
 
     - name: Build Mod
-      run: dotnet build ${{ env.SLN_PATH }} --configuration Release
+      run: dotnet build Source/${{ matrix.rimworld-version }} --configuration Release
+
+    - name: Test Mod
+      run: dotnet test Source/${{ matrix.rimworld-version }} --configuration Release
