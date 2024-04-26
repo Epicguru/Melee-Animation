@@ -253,16 +253,19 @@ public class Core : Mod
             Warn($"{pair.Key} '{pair.Value.name}' has {pair.Value.wc} missing weapon tweak data.");
         }
 
-        var toUpload = new List<MissingModRequest>();
-        toUpload.AddRange(modsAndMissingWeaponCount.Select(p => new MissingModRequest
-        {
-            ModID = p.Key,
-            ModName = p.Value.name,
-            WeaponCount = p.Value.wc
-        }));
-
         if (Settings.SendStatistics && !Settings.IsFirstTimeRunning)
         {
+            var modBuildTime = GetBuildDate(Assembly.GetExecutingAssembly());
+
+            var toUpload = new List<MissingModRequest>();
+            toUpload.AddRange(modsAndMissingWeaponCount.Select(p => new MissingModRequest
+            {
+                ModID = p.Key,
+                ModName = p.Value.name,
+                WeaponCount = p.Value.wc,
+                MeleeAnimationBuildTimeUtc = modBuildTime
+            }));
+
             Task.Run(() => UploadMissingModData(toUpload)).ContinueWith(t =>
             {
                 if (t.IsCompletedSuccessfully)

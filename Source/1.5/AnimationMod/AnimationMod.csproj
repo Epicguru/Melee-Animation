@@ -52,5 +52,9 @@
     <OutputPath>..\..\..\$(RimworldVersion)\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo Build time is $([System.DateTime]::UtcNow.ToString(&quot;yyyyMMddHHmmss&quot;)). Assign this value in ModReportingFacade.cs and update the AWS API!" />
+  </Target>
 
 </Project>

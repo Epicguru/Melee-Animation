@@ -1,10 +1,14 @@
-﻿using ModRequestAPI.Backend.DAL;
+﻿using System.Globalization;
+using ModRequestAPI.Backend.DAL;
 using ModRequestAPI.Models;
 
 namespace ModRequestAPI.Backend.Facade;
 
 public class ModReportingFacade
 {
+    // CHANGE THIS DATE TIME WHEN UPDATING!
+    private static readonly DateTime currentBuildDate = DateTime.ParseExact("20240426130022", "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
     private readonly ModReportingDAL dal;
 
     public ModReportingFacade(ModReportingDAL dal)
@@ -14,7 +18,7 @@ public class ModReportingFacade
 
     /// <summary>
     /// Attempts to record a missing mod.
-    /// Returns false if an error occurs.
+    /// Returns the error message if an error occurs.
     /// </summary>
     public async Task<string?> ReportMissingModAsync(IEnumerable<MissingModRequest?> requests)
     {
@@ -34,6 +38,12 @@ public class ModReportingFacade
 
             if (req.ModName.Length > 64)
                 return "Mod name too long";
+
+            if (req.MeleeAnimationBuildTimeUtc == null)
+                return "Missing mod build time, probably very old mod version submitted the request.";
+
+            if (req.MeleeAnimationBuildTimeUtc.Value < currentBuildDate)
+                return $"Outdated Melee Animation mod submitted the request, {req.MeleeAnimationBuildTimeUtc.Value} vs current {currentBuildDate}.\nPlease update the mod to the latest version.";
         }
 
         return await dal.WriteModRequestAsync(requests!) ? null : "Internal error when writing to db.";
