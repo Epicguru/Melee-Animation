@@ -1,7 +1,6 @@
-﻿using System;
-using AlienRace;
-using AM;
+﻿using AlienRace;
 using JetBrains.Annotations;
+using System;
 using Verse;
 
 namespace AM.AlienRacesPatch;
