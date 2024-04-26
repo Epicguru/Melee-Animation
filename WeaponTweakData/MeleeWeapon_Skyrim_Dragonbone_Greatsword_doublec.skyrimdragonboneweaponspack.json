@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimdragonboneweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Dragonbone_Greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.489496678,
+  "ScaleX": 1.6,
+  "ScaleY": 1.1,
+  "BladeStart": 0.167582527,
+  "BladeEnd": 1.23699236,
+  "MeleeWeaponType": 6
+}

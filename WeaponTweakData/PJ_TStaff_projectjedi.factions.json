@@ -1,0 +1,12 @@
+{
+  "TextureModID": "projectjedi.factions",
+  "ItemDefName": "PJ_TStaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 46.29958,
+  "ScaleX": 2.3,
+  "ScaleY": 2.3,
+  "BladeStart": -1.49733019,
+  "BladeEnd": 1.43341494,
+  "MeleeWeaponType": 1
+}

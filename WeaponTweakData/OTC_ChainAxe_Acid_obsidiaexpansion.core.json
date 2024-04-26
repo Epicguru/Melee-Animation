@@ -1,0 +1,12 @@
+{
+  "TextureModID": "obsidiaexpansion.core",
+  "ItemDefName": "OTC_ChainAxe_Acid",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.134065837,
+  "OffY": -0.06859176,
+  "Rotation": -1.323526,
+  "BladeStart": 0.03990787,
+  "BladeEnd": 0.367278069,
+  "MeleeWeaponType": 48
+}

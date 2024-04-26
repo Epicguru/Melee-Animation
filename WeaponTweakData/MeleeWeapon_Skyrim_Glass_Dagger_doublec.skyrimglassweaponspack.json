@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimglassweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Glass_Dagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1964221,
+  "ScaleX": 0.8,
+  "ScaleY": 0.55,
+  "HandsMode": 1,
+  "BladeStart": 0.09899024,
+  "MeleeWeaponType": 48
+}

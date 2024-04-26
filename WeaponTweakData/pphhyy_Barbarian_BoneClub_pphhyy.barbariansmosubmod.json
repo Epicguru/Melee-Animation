@@ -1,0 +1,11 @@
+{
+  "TextureModID": "pphhyy.barbariansmosubmod",
+  "ItemDefName": "pphhyy_Barbarian_BoneClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.215129063,
+  "OffY": -0.0218246579,
+  "BladeStart": 0.0834015459,
+  "BladeEnd": 0.675786138,
+  "MeleeWeaponType": 9
+}

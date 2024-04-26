@@ -1,0 +1,11 @@
+{
+  "TextureModID": "obsidiaexpansion.core",
+  "ItemDefName": "ODC_Rapier_P_Cryo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.336723924,
+  "OffY": -0.04988535,
+  "BladeStart": 0.152149,
+  "BladeEnd": 0.8131259,
+  "MeleeWeaponType": 4
+}

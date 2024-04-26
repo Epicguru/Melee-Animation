@@ -1,0 +1,11 @@
+{
+  "TextureModID": "pphhyy.barbariansmosubmod",
+  "ItemDefName": "pphhyy_Barbarian_RustedAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.246306956,
+  "OffY": -0.08106324,
+  "BladeStart": 0.3920648,
+  "BladeEnd": 0.738142431,
+  "MeleeWeaponType": 2
+}

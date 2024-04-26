@@ -1,0 +1,13 @@
+{
+  "TextureModID": "pphhyy.barbariansmosubmod",
+  "ItemDefName": "pphhyy_Barbarian_RustedClaymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.492614955,
+  "OffY": -0.0810627341,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.130168647,
+  "BladeEnd": 1.20581448,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimelvenweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Elven_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.196422115,
+  "OffY": -0.0187069178,
+  "ScaleY": 0.8,
+  "BladeStart": 0.373357862,
+  "BladeEnd": 0.66643244,
+  "MeleeWeaponType": 9
+}

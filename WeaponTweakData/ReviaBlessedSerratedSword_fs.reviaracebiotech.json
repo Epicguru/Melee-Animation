@@ -1,0 +1,12 @@
+{
+  "TextureModID": "fs.reviaracebiotech",
+  "ItemDefName": "ReviaBlessedSerratedSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.299310029,
+  "OffY": -0.0311784148,
+  "Rotation": 3.95037,
+  "BladeStart": 0.0459876619,
+  "BladeEnd": 0.7443779,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimdaedricweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Daedric_WarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.330488443,
+  "OffY": -0.0467671,
+  "ScaleX": 1.3,
+  "ScaleY": 0.8,
+  "BladeStart": 0.420125484,
+  "BladeEnd": 0.9439178,
+  "MeleeWeaponType": 2
+}

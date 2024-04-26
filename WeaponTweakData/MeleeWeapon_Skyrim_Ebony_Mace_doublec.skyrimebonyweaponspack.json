@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimebonyweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Ebony_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2525429,
+  "OffY": -0.012471199,
+  "ScaleX": 1.1,
+  "ScaleY": 0.8,
+  "BladeStart": 0.364004642,
+  "BladeEnd": 0.7007286,
+  "MeleeWeaponType": 9
+}

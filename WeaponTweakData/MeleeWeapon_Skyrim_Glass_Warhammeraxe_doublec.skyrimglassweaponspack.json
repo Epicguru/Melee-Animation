@@ -1,0 +1,11 @@
+{
+  "TextureModID": "doublec.skyrimglassweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Glass_Warhammeraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.305545539,
+  "ScaleX": 1.5,
+  "BladeStart": 0.7350242,
+  "BladeEnd": 1.0031563,
+  "MeleeWeaponType": 1
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "pphhyy.barbariansmosubmod",
+  "ItemDefName": "pphhyy_Barbarian_RustedGreatSkullMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.38972643,
+  "OffY": -0.006235212,
+  "Rotation": -1.250388,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.5822514,
+  "BladeEnd": 0.9719784,
+  "MeleeWeaponType": 1
+}

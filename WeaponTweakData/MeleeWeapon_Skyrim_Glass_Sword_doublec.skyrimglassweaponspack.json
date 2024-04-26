@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimglassweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Glass_Sword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4302581,
+  "ScaleX": 1.4,
+  "ScaleY": 0.95,
+  "BladeStart": 0.123933166,
+  "BladeEnd": 1.090455,
+  "MeleeWeaponType": 6
+}

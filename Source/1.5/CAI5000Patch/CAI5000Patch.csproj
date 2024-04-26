@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <LangVersion>preview</LangVersion>
+    <NoStdLib>false</NoStdLib>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <RootNamespace>AM.CAI5000Patch</RootNamespace>
+    <AssemblyName>AM.CAI5000Patch</AssemblyName>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>none</DebugType>
+    <!-- CombatAI assembly, as released on Steam, is built on AMD, throws warning, harmless but annoying. -->
+    <NoWarn>MSB3270</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnimationMod\AnimationMod.csproj">
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>all</ExcludeAssets>
+    </ProjectReference>
+    <PackageReference Include="Lib.Harmony" Version="2.3.3">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
+    <Publicize Include="CombatAI" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CombatAI">
+      <HintPath>refs\CombatAI.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DebugType>none</DebugType>
+    <OutputPath>..\..\..\Patch_CAI5000\$(RimworldVersion)\Assemblies\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+</Project>
