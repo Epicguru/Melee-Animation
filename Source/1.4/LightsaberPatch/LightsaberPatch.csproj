@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net480</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoStdLib>false</NoStdLib>
+    <LangVersion>preview</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Configurations>Release</Configurations>
+    <AssemblyName>AM.LightsaberPatch</AssemblyName>
+    <RootNamespace>AM.LightsaberPatch</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.3.1.1">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <ProjectReference Include="..\ThingGenerator\AnimationMod.csproj">
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+      <ExcludeAssets>all</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+	<!-- _____ 1.4 _____ -->
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+	  <PackageReference Include="Krafs.Rimworld.Ref">
+		  <Version>1.4.3901</Version>
+	  </PackageReference>
+	  <Reference Include="SWSaber">
+		  <HintPath>refs/1.4/SWSaber.dll</HintPath>
+		  <CopyLocal>False</CopyLocal>
+		  <Private>False</Private>
+	  </Reference>
+	  <Reference Include="CompActivatableEffect">
+		  <HintPath>refs/1.4/CompActivatableEffect.dll</HintPath>
+		  <CopyLocal>False</CopyLocal>
+		  <Private>False</Private>
+	  </Reference>
+	  <Reference Include="CompSlotLoadable">
+		  <HintPath>refs/1.4/CompSlotLoadable.dll</HintPath>
+		  <CopyLocal>False</CopyLocal>
+		  <Private>False</Private>
+	  </Reference>
+  </ItemGroup>
+
+  <!-- Output -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+	  <DebugType>none</DebugType>
+	  <OutputPath>..\..\..\Patch_Lightsabers\1.4\Assemblies\</OutputPath>
+	  <Optimize>true</Optimize>
+	  <DefineConstants>TRACE;V14</DefineConstants>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,56 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <LangVersion>latest</LangVersion>
+    <NoStdLib>false</NoStdLib>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <AssemblyName>zAnimationMod</AssemblyName>
+    <RootNamespace>AM</RootNamespace>
+    <Nullable>disable</Nullable>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <DebugType>none</DebugType>
+    <!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <AssemblyAttribute Include="AM.BuildDateAttribute">
+	    <_Parameter1>$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</_Parameter1>
+	  </AssemblyAttribute>
+	  <PackageReference Include="BetterFloatMenu" Version="15.0.0" />
+	  <PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+    <PackageReference Include="Lib.Harmony" Version="2.3.3">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Include="PolySharp" Version="1.14.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
+    <PackageReference Include="Portable.Meta.Numerics" Version="3.1.0.73149" />
+	  <ProjectReference Include="..\AMRetextureSupport\AMRetextureSupport.csproj" />
+	  <ProjectReference Include="..\ModRequestAPI\ModRequestAPI.csproj" />
+	  
+	  <!-- Ungodly hack to access rimworld private properties & methods -->
+    <Publicize Include="Assembly-CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="0ColourPicker">
+      <HintPath>refs\0ColourPicker.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Output -->
+  <PropertyGroup>
+    <OutputPath>..\..\..\$(RimworldVersion)\Assemblies\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+</Project>

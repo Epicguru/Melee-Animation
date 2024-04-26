@@ -1,9 +1,6 @@
 name: Generate Github Release Zip
 
 env:
-  # Change this to point to your solution, or the folder in which your solution 
-  # can be found.
-  SLN_PATH: Source/
   # Change this to what you want your folder name to be in people's Mods/
   # folder. It should be unique to your mod.
   MOD_NAME: MeleeAnimation
@@ -11,6 +8,23 @@ env:
   # release job are drafts or prereleases.
   RELEASE_DRAFT: false
   RELEASE_PRERELEASE: false
+
+  MOD_CONTENTS: |
+    About/
+    Animations/
+    Bundles/
+    WeaponTweakData/
+    Defs/
+    Patches/
+    Languages/
+    Patch_AlienRaces/
+    Patch_FacialAnimation/
+    Patch_Lightsabers/
+    Patch_CAI5000/
+    Patch_CombatExtended/
+    Sounds/
+    Textures/
+    loadfolders.xml
 
 on:
   push:
@@ -20,6 +34,7 @@ on:
       - 'v*'
 
 jobs:
+
   build:
     name: Build on ${{ matrix.operating-system }}
     runs-on: ${{ matrix.operating-system }}
@@ -29,58 +44,35 @@ jobs:
         # cross-platform using mono. I chose Ubuntu because it ran the fastest
         # for the build steps. 
         operating-system: [ubuntu-latest]
+        rimworld-version: [1.4, 1.5] # Add Rimworld version here!
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4.1.4
       
     - name: Setup Dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4.0.0
       with:
         dotnet-version: 8.0.x
 
-    - name: Build Mod
-      run: dotnet build ${{ env.SLN_PATH }} --configuration Release
-
-    # I don't know how well testing will work without Rimworld actually installed. 
-    # But if you have unit tests configured to work with dotnet, you may be able 
-    # to uncomment this and add a testing step.
-    # - name: Test Mod
-    #   run: dotnet test ${{ env.SLN_PATH }} --no-restore --verbosity normal
-
-    # There is no `zip` command on windows so you need to use tar.
-    # - name: Zip-up Mod
-    #   run: tar --exclude="*." -zcvf dist.tar.gz About/ Assemblies/ Defs/ Languages/ Patches/ RimCI/ Sounds/ Textures/
+    - name: Build Mod (RW ${{ matrix.rimworld-version }})
+      run: dotnet build Source/${{ matrix.rimworld-version }} --configuration Release
 
     # To modify this with your own directory structure, just change the paths to 
     # whatever you want. It will not upload any empty directories, those with only
     # hidden files will also be excluded.
-    - name: Upload Mod Artifacts
-      uses: actions/upload-artifact@v3
+    - name: Upload Mod Artifacts (RW ${{ matrix.rimworld-version }})
+      uses: actions/upload-artifact@v4.3.3
       with:
-        name: build
-        retention-days: 7
+        name: build-${{ matrix.rimworld-version }}
+        retention-days: 1
         path: |
-          1.4/
-          1.5/
-          About/
-          Animations/
-          Bundles/
-          WeaponTweakData/
-          Defs/
-          Patches/
-          Languages/
-          Patch_AlienRaces/
-          Patch_FacialAnimation/
-          Patch_Lightsabers/
-          Patch_CAI5000/
-          Patch_CombatExtended/
-          Sounds/
-          Textures/
-          loadfolders.xml
+          ${{ matrix.rimworld-version }}/
+          ${{ env.MOD_CONTENTS }}
           !**/.*
         # This final path is to exclude hidden files such as .gitkeep and .DS_STORE. 
         # I would recommend keeping it, but I don't think it will break anything if 
         # you remove or modify it.
+
   package:
     name: Package
     needs: build
@@ -90,37 +82,16 @@ jobs:
       # This is a special syntax for GitHub Actions that sets an environment
       # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
       run: echo "MOD_PATH=$HOME/$MOD_NAME" >> $GITHUB_ENV
-      # run: echo "::set-env name=MOD_PATH::$HOME/$MOD_NAME"
     
     - name: Create Mod Folder
       run: mkdir -p ${{ env.MOD_PATH }}
 
     - name: Download Mod Artifacts from Build Step
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
-        name: build
+        # Note that 'name' is not specified, this will cause all artifacts from this run to be downloaded.
+        merge-multiple: true # Important, this merges the different rimworld version outputs
         path: ${{ env.MOD_PATH }}
-
-    # If you have any other Rimworld folders that didn't get scooped up in the
-    # artifacts, add them here. It may be neccessary to change this for v1.1 mods.
-    - name: Create Mod Folders
-      run: |
-        mkdir -p ${{ env.MOD_PATH }}/1.4/
-        mkdir -p ${{ env.MOD_PATH }}/1.5/
-        mkdir -p ${{ env.MOD_PATH }}/About/
-        mkdir -p ${{ env.MOD_PATH }}/Animations/
-        mkdir -p ${{ env.MOD_PATH }}/Bundles/
-        mkdir -p ${{ env.MOD_PATH }}/WeaponTweakData/
-        mkdir -p ${{ env.MOD_PATH }}/Defs/
-        mkdir -p ${{ env.MOD_PATH }}/Patches/
-        mkdir -p ${{ env.MOD_PATH }}/Languages/
-        mkdir -p ${{ env.MOD_PATH }}/Patch_AlienRaces/
-        mkdir -p ${{ env.MOD_PATH }}/Patch_FacialAnimation/
-        mkdir -p ${{ env.MOD_PATH }}/Patch_Lightsabers/
-        mkdir -p ${{ env.MOD_PATH }}/Patch_CAI5000/
-        mkdir -p ${{ env.MOD_PATH }}/Patch_CombatExtended/
-        mkdir -p ${{ env.MOD_PATH }}/Sounds/
-        mkdir -p ${{ env.MOD_PATH }}/Textures/
         
     - name: Zip Mod
       run: | 
@@ -143,13 +114,11 @@ jobs:
       id: get_version
       # This is a special syntax for GitHub Actions that sets an output
       # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
-      # run: echo ::set-output name=VERSION::$(echo ${{ github.ref }} | cut -d / -f 3)
       run: echo "VERSION=$(echo ${{ github.ref }} | cut -d / -f 3)" >> $GITHUB_OUTPUT
 
     - name: Set Environment Variables
       # This is a special syntax for GitHub Actions that sets an environment
       # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
-      # run: echo "::set-env name=MOD_RELEASE::$MOD_NAME-${{ steps.get_version.outputs.VERSION }}"
       run: echo "MOD_RELEASE=$MOD_NAME-${{ steps.get_version.outputs.VERSION }}" >> $GITHUB_ENV
 
     - name: Download Mod Artifacts from Build Step
@@ -160,7 +129,7 @@ jobs:
 
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
+      uses: actions/create-release@v1.1.4
       env:
         GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
       with:
