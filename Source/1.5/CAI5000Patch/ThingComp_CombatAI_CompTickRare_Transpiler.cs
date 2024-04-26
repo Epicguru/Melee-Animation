@@ -9,6 +9,9 @@ using Verse;
 
 namespace AM.CAI5000Patch;
 
+/// <summary>
+/// Prevents pawns from running away (a mechanic added by CAI) during animations.
+/// </summary>
 [UsedImplicitly]
 [HarmonyPatch(typeof(ThingComp_CombatAI), nameof(ThingComp_CombatAI.CompTickRare))]
 public static class ThingComp_CombatAI_CompTickRare_Transpiler
