@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimdwarvenweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Dwarven_Warhammeraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.402197957,
+  "OffY": -0.009353474,
+  "ScaleX": 1.5,
+  "BladeStart": 0.3069487,
+  "BladeEnd": 1.15187621,
+  "MeleeWeaponType": 1
+}

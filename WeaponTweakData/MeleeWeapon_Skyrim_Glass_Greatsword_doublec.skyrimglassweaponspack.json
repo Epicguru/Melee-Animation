@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimglassweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Glass_Greatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.427140355,
+  "ScaleX": 1.5,
+  "ScaleY": 1.1,
+  "BladeStart": 0.1270509,
+  "BladeEnd": 1.13098669,
+  "MeleeWeaponType": 6
+}

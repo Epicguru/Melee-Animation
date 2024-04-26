@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sarg.alphamemes",
+  "ItemDefName": "GU_RedWood",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.106005132,
+  "OffY": -0.02182468,
+  "Rotation": 40.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeEnd": 0.3286172,
+  "MeleeWeaponType": 8
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "xmb.breadmech",
+  "ItemDefName": "BM_Jackhammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.399080217,
+  "OffY": -0.0374136269,
+  "ScaleX": 1.6,
+  "ScaleY": 1.6,
+  "BladeStart": 0.104134917,
+  "BladeEnd": 1.086246,
+  "MeleeWeaponType": 5
+}

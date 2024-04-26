@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "Beer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.168361962,
+  "OffY": -0.01870668,
+  "FlipX": true,
+  "HandsMode": 1,
+  "BladeStart": 0.0615768656,
+  "BladeEnd": 0.3920648,
+  "MeleeWeaponType": 8
+}

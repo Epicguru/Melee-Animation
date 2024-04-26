@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimglassweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Glass_Mace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.196422115,
+  "ScaleX": 1.1,
+  "ScaleY": 0.8,
+  "BladeStart": 0.348415434,
+  "BladeEnd": 0.691374838,
+  "MeleeWeaponType": 9
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimebonyweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Ebony_WarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.246306956,
+  "OffY": 0.0436496139,
+  "ScaleX": 1.3,
+  "ScaleY": 0.8,
+  "BladeStart": 0.370240122,
+  "BladeEnd": 0.831676662,
+  "MeleeWeaponType": 2
+}

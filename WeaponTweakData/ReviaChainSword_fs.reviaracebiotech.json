@@ -1,0 +1,11 @@
+{
+  "TextureModID": "fs.reviaracebiotech",
+  "ItemDefName": "ReviaChainSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3336057,
+  "OffY": -0.00623574853,
+  "BladeStart": 0.0958725,
+  "BladeEnd": 0.8067342,
+  "MeleeWeaponType": 6
+}

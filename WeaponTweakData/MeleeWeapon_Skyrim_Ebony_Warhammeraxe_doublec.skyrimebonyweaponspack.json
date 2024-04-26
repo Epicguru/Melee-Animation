@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimebonyweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Ebony_Warhammeraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2806031,
+  "OffY": -0.0374136567,
+  "ScaleX": 1.5,
+  "BladeStart": 0.485599518,
+  "BladeEnd": 0.9844494,
+  "MeleeWeaponType": 1
+}

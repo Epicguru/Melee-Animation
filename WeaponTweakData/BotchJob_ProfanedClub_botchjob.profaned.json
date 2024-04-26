@@ -1,0 +1,13 @@
+{
+  "TextureModID": "botchjob.profaned",
+  "ItemDefName": "BotchJob_ProfanedClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.243189216,
+  "OffY": 0.0187069178,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.117697179,
+  "BladeEnd": 0.725671,
+  "MeleeWeaponType": 9
+}

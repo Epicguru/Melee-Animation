@@ -1,0 +1,12 @@
+{
+  "TextureModID": "doublec.skyrimdragonboneweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Dragonbone_Warhammeraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.433376372,
+  "OffY": -0.012471199,
+  "ScaleX": 1.5,
+  "BladeStart": 0.3920648,
+  "BladeEnd": 1.12163353,
+  "MeleeWeaponType": 1
+}

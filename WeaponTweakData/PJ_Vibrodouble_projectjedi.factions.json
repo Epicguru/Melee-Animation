@@ -1,0 +1,12 @@
+{
+  "TextureModID": "projectjedi.factions",
+  "ItemDefName": "PJ_Vibrodouble",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "ScaleX": 2.3,
+  "ScaleY": 2.3,
+  "FlipY": true,
+  "BladeStart": -1.10136819,
+  "BladeEnd": 1.09357333,
+  "MeleeWeaponType": 6
+}

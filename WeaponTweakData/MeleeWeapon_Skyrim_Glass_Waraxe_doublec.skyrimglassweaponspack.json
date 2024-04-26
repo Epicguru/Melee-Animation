@@ -1,0 +1,13 @@
+{
+  "TextureModID": "doublec.skyrimglassweaponspack",
+  "ItemDefName": "MeleeWeapon_Skyrim_Glass_WarAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.277485371,
+  "OffY": -0.009353459,
+  "ScaleX": 1.3,
+  "ScaleY": 0.8,
+  "BladeStart": 0.286059141,
+  "BladeEnd": 0.8877975,
+  "MeleeWeaponType": 6
+}

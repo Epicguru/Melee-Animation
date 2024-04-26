@@ -1,0 +1,11 @@
+{
+  "TextureModID": "pphhyy.barbariansmosubmod",
+  "ItemDefName": "pphhyy_Barbarian_RustedSkullMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.23071827,
+  "OffY": -0.009353459,
+  "BladeStart": 0.3764756,
+  "BladeEnd": 0.6789039,
+  "MeleeWeaponType": 1
+}
