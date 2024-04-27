@@ -1,4 +1,5 @@
 ﻿using AM.Events;
+using AM.Hands;
 using AM.Idle;
 using AM.Patches;
 using AM.Processing;
@@ -706,7 +707,7 @@ public class AnimRenderer : IExposable
     /// Is this pawn valid to be used in this animator?
     /// Checks simple conditions such as not dead, destroyed, downed, or held by another Thing...
     /// </summary>
-    public virtual bool IsPawnValid(Pawn p, bool ignoreNotSpawned = false)
+    protected virtual bool IsPawnValid(Pawn p, bool ignoreNotSpawned = false)
     {
         // Summary:
         // Not dead or downed.
@@ -1006,7 +1007,7 @@ public class AnimRenderer : IExposable
     }
 
     [Pure]
-    private bool IsPawnBeheaded(Pawn pawn, in AnimPartSnapshot bodySS, in AnimPartSnapshot headSS)
+    private static bool IsPawnBeheaded(Pawn pawn, in AnimPartSnapshot bodySS, in AnimPartSnapshot headSS)
     {
         // Not sure if this is okay: are there any pawns that are not humanoid
         // but can have their heads removed by rendering separately?
@@ -1383,7 +1384,7 @@ public class AnimRenderer : IExposable
         return true;
     }
 
-    private void ConfigureHandsForPawn(Pawn pawn, int index)
+    public void ConfigureHandsForPawn(Pawn pawn, int index)
     {
         var weapon = pawn.GetFirstMeleeWeapon();
         var tweak = weapon?.TryGetTweakData();
@@ -1394,6 +1395,10 @@ public class AnimRenderer : IExposable
         string altHandName = $"HandB{(index > 0 ? index + 1 : "")}";
 
         Color skinColor = pawn.story?.SkinColor ?? Color.white;
+        Color mainHandColor = skinColor;
+        Color altHandColor = skinColor;
+        var mainHandTex = Content.Hand;
+        var altHandTex = Content.Hand;
 
         // Hand visibility uses the animation data first and foremost, and if the animation does
         // not care about hand visibility, then it is dictated by the weapon.
@@ -1403,6 +1408,7 @@ public class AnimRenderer : IExposable
          * Order of descending priority for deciding what hand(s) to show:
          *  - Mod settings.
          *  - Has hands (humanoids only).
+         *  - Pawn health, prosthetics, etc.
          *  - Animation requirement.
          *  - Weapon requirement.
          */
@@ -1413,6 +1419,37 @@ public class AnimRenderer : IExposable
         // Humanoid?
         bool isHumanoid = pawn.RaceProps.Humanlike;
 
+        // Health, prosthetics:
+        bool healthDrawMain = true;
+        bool healthDrawAlt = true;
+
+        if (settingsShowHands && isHumanoid)
+        {
+            Span<HandInfo> handInfo = stackalloc HandInfo[2];
+            int handCount = HandUtility.GetHandData(pawn, handInfo);
+
+            if (handCount > 1)
+            {
+                var mainHand = handInfo[1];
+                mainHandColor = mainHand.Color;
+
+                if (mainHand.Flags.HasFlag(HandFlags.Clothed))
+                    mainHandTex = Content.HandClothed;
+            }
+            if (handCount > 0)
+            {
+                var altHand = handInfo[0];
+                altHandColor = altHand.Color;
+
+                if (altHand.Flags.HasFlag(HandFlags.Clothed))
+                    altHandTex = Content.HandClothed;
+
+                if (handCount == 1)                
+                    healthDrawMain = false;
+                
+            }
+        }
+
         // Animation requirement.
         bool? animMainHand = vis.showMainHand;
         bool? animAltHand = vis.showAltHand;
@@ -1422,8 +1459,8 @@ public class AnimRenderer : IExposable
         bool? weaponAltHand  = weapon == null ? null : handsMode == HandsMode.Default;
 
         // Final calculation:
-        bool showMain = settingsShowHands && isHumanoid && (animMainHand ?? weaponMainHand ?? false);
-        bool showAlt  = settingsShowHands && isHumanoid && (animAltHand ?? weaponAltHand ?? false);
+        bool showMain = settingsShowHands && isHumanoid && healthDrawMain && (animMainHand ?? weaponMainHand ?? false);
+        bool showAlt  = settingsShowHands && isHumanoid && healthDrawAlt  && (animAltHand  ?? weaponAltHand  ?? false);
 
         // Apply main hand.
         var mainHandPart = GetPart(mainHandName);
@@ -1431,8 +1468,8 @@ public class AnimRenderer : IExposable
         {
             var ov = GetOverride(mainHandPart);
             ov.PreventDraw = !showMain;
-            ov.Texture = AnimationManager.HandTexture;
-            ov.ColorOverride = skinColor;
+            ov.Texture = mainHandTex;
+            ov.ColorOverride = mainHandColor;
         }
 
         // Apply alt hand.
@@ -1441,8 +1478,8 @@ public class AnimRenderer : IExposable
         {
             var ov = GetOverride(altHandPart);
             ov.PreventDraw = !showAlt;
-            ov.Texture = AnimationManager.HandTexture;
-            ov.ColorOverride = skinColor;
+            ov.Texture = altHandTex;
+            ov.ColorOverride = altHandColor;
         }
     }
 

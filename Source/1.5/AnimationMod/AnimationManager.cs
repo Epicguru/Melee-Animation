@@ -19,14 +19,8 @@ namespace AM
         public static int CullingPadding = 5;
         public static bool IsDoingMultithreadedSeek { get; private set; }
         public static double MultithreadedSeekTimeMS;
-        public static Texture2D HandTexture;
 
         private static ulong frameLastSeeked;
-
-        public static void Init()
-        {
-            HandTexture = ContentFinder<Texture2D>.Get("AM/Hand");
-        }
 
         public readonly MapPawnProcessor PawnProcessor;
 

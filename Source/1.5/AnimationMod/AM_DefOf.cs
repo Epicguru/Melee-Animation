@@ -48,4 +48,6 @@ public static class AM_DefOf
     public static HediffDef AM_KnockedOut;
 
     public static RenderSkipFlagDef Body;
+
+    public static BodyPartGroupDef Hands;
 }
