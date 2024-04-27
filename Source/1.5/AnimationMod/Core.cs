@@ -1,4 +1,5 @@
 ﻿using AM.AMSettings;
+using AM.Hands;
 using AM.Patches;
 using AM.Retexture;
 using AM.Tweaks;
@@ -199,6 +200,7 @@ public class Core : Mod
         // Initialize settings.
         Settings = GetSettings<Settings>();
 
+        // Sync:
         AddLateLoadAction(true, "Loading default shaders", () =>
         {
             AnimRenderer.DefaultCutout ??= new Material(ThingDefOf.AIPersonaCore.graphic.Shader);
@@ -209,8 +211,8 @@ public class Core : Mod
         AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(Harmony));
         AddLateLoadAction(false, "Finding all lassos...", AM.Content.FindAllLassos);
 
+        // Async:
         AddLateLoadAction(true, "Loading main content...", AM.Content.Load);
-        AddLateLoadAction(true, "Loading misc textures...", AnimationManager.Init);
         AddLateLoadAction(true, "Initializing anim defs...", AnimDef.Init);
         AddLateLoadAction(true, "Registering def overrides...", RegisterWeaponDefOverrides);
         AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
@@ -218,6 +220,7 @@ public class Core : Mod
         AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
         AddLateLoadAction(true, "Patch VBE", PatchVBE);
         AddLateLoadAction(true, "Apply final patches", Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.PatchAll);
+        AddLateLoadAction(true, "Cache gloves", HandUtility.DoInitialLoading);
 
         AddLateLoadEvents();
     }

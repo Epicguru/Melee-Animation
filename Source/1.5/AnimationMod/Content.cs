@@ -20,6 +20,10 @@ namespace AM
         public static Texture2D BoundMaleRope;
         [Content("AM/Shadow")]
         public static Texture2D Shadow;
+        [Content("AM/Hand")]
+        public static Texture2D Hand;
+        [Content("AM/HandClothed")]
+        public static Texture2D HandClothed;
 
         // UI
         [Content("AM/UI/IconExecute")]
