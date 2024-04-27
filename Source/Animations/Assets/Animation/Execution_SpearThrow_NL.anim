@@ -7224,3 +7224,10 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 3.2
+    functionName: AnimEvent
+    data: 
+    objectReferenceParameter: {fileID: 11400000, guid: 7308b40eac4c6c948831617862754089, type: 2}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
