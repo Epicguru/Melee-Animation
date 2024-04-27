@@ -57,7 +57,7 @@ public static class HandUtility
         }
         
         timer.Stop();
-        Core.Log($"Found {apparelThatCoversHands.Count} items of clothing that cover hands, took {timer.Elapsed.TotalMilliseconds:F2} ms.");
+        Core.Log($"Found {apparelThatCoversHands.Count} items of clothing that cover hands, took {timer.Elapsed.TotalMilliseconds:F2} ms:\n{string.Join(",\n", apparelThatCoversHands.Select(ap => $"{ap.defName} ({ap.LabelCap})"))}");
     }
     
     public static int GetHandData(Pawn pawn, Span<HandInfo> output)
@@ -274,25 +274,36 @@ public static class HandUtility
         }
     }
 
-    private static Color MakeAverageColor(IReadOnlyCollection<Color32> pixels)
+    private static Color MakeAverageColor(IEnumerable<Color32> pixels)
     {
-        decimal r = 0;
-        decimal g = 0;
-        decimal b = 0;
+        double r = 0;
+        double g = 0;
+        double b = 0;
+        double sum = 0;
 
-        const decimal BYTE_MAX_RECIPROCAL = 1.0m / 255.0m;
+        const double BYTE_MAX_RECIPROCAL = 1.0 / 255.0;
 
         foreach (var pixel in pixels)
         {
-            decimal weight = pixel.a * BYTE_MAX_RECIPROCAL;
-            
+            double alpha = pixel.a * BYTE_MAX_RECIPROCAL;
+            double average = (pixel.r + pixel.g + pixel.b) * (1.0 / 3.0);
+            double weight = alpha * SmoothStep(0, 0.25, average);            
+
             r += pixel.r * weight;
             g += pixel.g * weight;
             b += pixel.b * weight;
+
+            sum += weight;
         }
 
-        decimal normalizer = pixels.Count * BYTE_MAX_RECIPROCAL;
+        double normalizer = 1.0 / sum * BYTE_MAX_RECIPROCAL;
         return new Color((float) (r * normalizer), (float) (g * normalizer), (float) (b * normalizer), 1f);
+    }
+
+    private static double SmoothStep(double a, double b, double x)
+    {
+        double t = Math.Min(Math.Max((x - a) / (b - a), 0), 1);
+        return t * t * (3 - 2 * t);
     }
     
     private static Color GetSkinColor(Pawn pawn)
