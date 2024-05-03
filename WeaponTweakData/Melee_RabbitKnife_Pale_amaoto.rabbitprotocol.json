@@ -1,0 +1,11 @@
+{
+  "TextureModID": "amaoto.rabbitprotocol",
+  "ItemDefName": "Melee_RabbitKnife_Pale",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.242777288,
+  "OffY": -0.0161852837,
+  "BladeStart": 0.123492293,
+  "BladeEnd": 0.6446544,
+  "MeleeWeaponType": 48
+}

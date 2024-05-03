@@ -36,6 +36,12 @@ public class Settings : SimpleSettingsBase
     [WebContent("Skills", false)]
     public bool EnableUniqueSkills = true;
 
+    [Label("Unique Skill Cooldown Multiplier")]
+    [Description("A multiplier on the cooldown of all unique skills.\nHigher percentage means longer cooldown.")]
+    [Percentage]
+    [Range(0.01f, 10f)]
+    public float SkillCooldownFactor = 1f;
+
     [Label("Animated Pawns Considered Invisible")]
     [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
                  "they will not be actively targeted or shot at. This makes executions less risky.\n" +

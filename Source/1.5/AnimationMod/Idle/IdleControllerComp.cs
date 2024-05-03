@@ -538,7 +538,9 @@ public class IdleControllerComp : ThingComp
                 return;
 
             if (skills == null || skills.Any(s => s == null))
+            {
                 PopulateSkills();
+            }
 
             for (int i = 0; i < skills.Length; i++)
             {
@@ -578,7 +580,7 @@ public class IdleControllerComp : ThingComp
                 var instance = Activator.CreateInstance(list[i].instanceClass) as UniqueSkillInstance;
                 if (instance == null)
                 {
-                    Log.Error($"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
+                    Core.Error($"Failed to create instance of class '{list[i].instanceClass}'. This will surely cause issues down the line.");
                     continue;
                 }
 
