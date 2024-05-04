@@ -40,6 +40,7 @@ public class Settings : SimpleSettingsBase
     [Description("A multiplier on the cooldown of all unique skills.\nHigher percentage means longer cooldown.")]
     [Percentage]
     [Range(0.01f, 10f)]
+    [VisibleIf(nameof(EnableUniqueSkills))]
     public float SkillCooldownFactor = 1f;
 
     [Label("Animated Pawns Considered Invisible")]
