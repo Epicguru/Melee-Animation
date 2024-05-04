@@ -31,7 +31,7 @@
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
     <Publicize Include="PerformanceOptimizer" />
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4069" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4084" />
   </ItemGroup>
   
   	<ItemGroup>
