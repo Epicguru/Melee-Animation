@@ -378,7 +378,7 @@ public class IdleControllerComp : ThingComp
             StartAnim(anim);
     }
 
-    private void StartAnim(AnimDef def)
+    protected void StartAnim(AnimDef def)
     {
         ClearAnimation();
 
@@ -413,7 +413,7 @@ public class IdleControllerComp : ThingComp
         return null;
     }
 
-    public void NotifyPawnDidMeleeAttack(Thing target, Verb_MeleeAttack verbUsed)
+    public virtual void NotifyPawnDidMeleeAttack(Thing target, Verb_MeleeAttack verbUsed)
     {
         // Check valid state.
         var pawn = parent as Pawn;
