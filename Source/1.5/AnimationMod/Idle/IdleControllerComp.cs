@@ -327,6 +327,9 @@ public class IdleControllerComp : ThingComp
         CurrentAnimation.TimeScale = GetMoveAnimationSpeed(pawn);
     }
 
+    /// <summary>
+    /// Handles animations when the pawn is not moving.
+    /// </summary>
     protected virtual void EnsureFacingOrIdle(Pawn pawn, ItemTweakData tweak)
     {
         var rot = pawn.Rotation;
@@ -413,27 +416,38 @@ public class IdleControllerComp : ThingComp
         return null;
     }
 
+    protected virtual IReadOnlyList<AnimDef> GetAttackAnimationsFor(Pawn pawn, Thing weapon, out bool allowPauseEver)
+    {
+        allowPauseEver = true;
+        var tweak = weapon?.TryGetTweakData();
+        if (tweak == null)
+            return null;
+        
+        return tweak.GetAttackAnimations(pawn.Rotation);
+    }
+    
     public virtual void NotifyPawnDidMeleeAttack(Thing target, Verb_MeleeAttack verbUsed)
     {
         // Check valid state.
         var pawn = parent as Pawn;
         var weapon = GetMeleeWeapon();
-        var tweak = weapon?.TryGetTweakData();
-        if (tweak == null)
+        var rot = pawn.Rotation;
+        var anims = GetAttackAnimationsFor(pawn, weapon, out bool allowPauseEver);
+        if (anims == null || anims.Count == 0)
+        {
+            Core.Warn($"Failed to find any attack animation to play for {weapon}, rot: {rot.AsVector2}!");
             return;
+        }
 
         // Attempt to get an attack animation for current weapon and stance.
-        var rot = pawn.Rotation;
         bool didHit = target != null && Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.lastTarget == target;
 
-        // Get list of attack animations.
-        var anims = tweak.GetAttackAnimations(rot);
         var anim = SelectRandomAnim(anims, lastAttack);
 
         lastAttack = anim;
         if (anim == null)
         {
-            Core.Warn($"Failed to find any attack animation to play for {weapon} {tweak.GetCategory()}, rot: {rot.AsVector2} !");
+            Core.Warn($"Failed to find any attack animation to play for {weapon}, rot: {rot.AsVector2}!");
             return;
         }
 
@@ -459,7 +473,7 @@ public class IdleControllerComp : ThingComp
             pauseAngle = angle;
 
             // Only if we actually hit:
-            if (didHit && Core.Settings.AttackPauseDuration != AttackPauseIntensity.Disabled)
+            if (didHit && allowPauseEver && Core.Settings.AttackPauseDuration != AttackPauseIntensity.Disabled)
                 pauseTicks = (int)Core.Settings.AttackPauseDuration;
         }
 
