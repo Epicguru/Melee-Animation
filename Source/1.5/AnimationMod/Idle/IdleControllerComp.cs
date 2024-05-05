@@ -516,8 +516,7 @@ public class IdleControllerComp : ThingComp
         if (CurrentAnimation == null || !CurrentAnimation.Def.pointAtTarget)
             return animationMatrix;
 
-        float frame = CurrentAnimation.CurrentTime * 60f;
-        float lerp = Mathf.InverseLerp(CurrentAnimation.Def.returnToIdleStart, CurrentAnimation.Def.returnToIdleEnd, frame);
+        float lerp = GetPointAtTargetLerp();
 
         const float IDLE_ANGLE = 0;
         float point = -pauseAngle;
@@ -537,6 +536,16 @@ public class IdleControllerComp : ThingComp
 
         float a = Mathf.LerpAngle(point, IDLE_ANGLE, lerp);
         return animationMatrix * Matrix4x4.Rotate(Quaternion.Euler(0f, a, 0f));
+    }
+
+    /// <summary>
+    /// 0 is point at target, 1 is idle.
+    /// </summary>
+    protected virtual float GetPointAtTargetLerp()
+    {
+        float frame = CurrentAnimation.CurrentTime * 60f;
+        float lerp = Mathf.InverseLerp(CurrentAnimation.Def.returnToIdleStart, CurrentAnimation.Def.returnToIdleEnd, frame);
+        return lerp;
     }
 
     public override void PostDeSpawn(Map map)

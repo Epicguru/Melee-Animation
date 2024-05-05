@@ -11,6 +11,7 @@ public struct ReqInput
     public MeleeWeaponType TypeFlags;
     public WeaponSize SizeFlags;
     public WeaponCat CategoryFlags;
+    public bool IsFists;
 
     public ReqInput(ThingDef weapon) : this(TweakDataManager.TryGetTweak(weapon))
     {
@@ -22,6 +23,7 @@ public struct ReqInput
         WeaponDef = td?.GetDef();
         TweakData = td;
         TypeFlags = td?.MeleeWeaponType ?? 0;
+        IsFists = false;
 
         var pair = td?.GetCategory() ?? (default, default);
         SizeFlags = pair.size;
