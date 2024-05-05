@@ -107,17 +107,34 @@ public class IdleControllerComp : ThingComp
         }
     }
 
+    protected bool SimpleShouldBeActiveChecks(out Pawn pawn)
+    {
+        pawn = parent as Pawn;
+        return Core.Settings.AnimateAtIdle
+               && pawn != null
+               && (pawn.CurJob == null || !pawn.CurJob.def.neverShowWeapon)
+               && !pawn.Dead
+               && !pawn.Downed
+               && pawn.Spawned;
+    }
+
+    protected bool AdditionalShouldBeActiveChecks()
+    {
+        foreach (var item in ShouldDrawAdditional)
+        {
+            if (!item(this))
+                return false;
+        }
+
+        return true;
+    }
+
     protected virtual bool ShouldBeActive(out Thing weapon)
     {
         weapon = null;
 
         // Basic checks:
-        if (!Core.Settings.AnimateAtIdle
-            || parent is not Pawn pawn
-            || (pawn.CurJob != null && pawn.CurJob.def.neverShowWeapon) 
-            || pawn.Dead
-            || pawn.Downed
-            || !pawn.Spawned)
+        if (!SimpleShouldBeActiveChecks(out Pawn pawn))
         {
             return false;
         }
@@ -132,14 +149,11 @@ public class IdleControllerComp : ThingComp
                 vanillaShouldDraw = true;
         }
 
-        // Dual wield check.
-
         // Additional draw check:
         // Used for mod compatibility such as Fog of War etc.
-        foreach (var item in ShouldDrawAdditional)
+        if (!AdditionalShouldBeActiveChecks())
         {
-            if (!item(this))
-                return false;
+            return false;
         }
 
         // Has a valid melee weapon:
