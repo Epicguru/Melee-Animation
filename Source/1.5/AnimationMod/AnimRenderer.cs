@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AM.Events;
 using AM.Hands;
 using AM.Idle;
@@ -366,15 +367,17 @@ public class AnimRenderer : IExposable
     private readonly Dictionary<Pawn, PawnLinkedParts> pawnToParts = new Dictionary<Pawn, PawnLinkedParts>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
     private AnimPartSnapshot[] snapshots;
+    private AnimPartSnapshot[] interpolateFromSnapshots;
     private AnimPartOverrideData[] overrides;
     private PartWithSweep[] sweeps;
     private MaterialPropertyBlock pb;
+    private Pawn[] pawnsForPostLoad; 
     private float time = -1;
-    private Pawn[] pawnsForPostLoad;
     private bool hasStarted;
     private bool lastMirrorX, lastMirrorZ;
     private bool hasDoneOnEnd;
     private bool delayedDestroy;
+    private float interpolationLength;
 
     [UsedImplicitly]
     public AnimRenderer()
@@ -1094,23 +1097,61 @@ public class AnimRenderer : IExposable
         }
     }
 
-    private void SeekInt(float time, Action<EventBase> eventsOutput, bool mirrorX = false, bool mirrorY = false)
+    public void SetupLerpFrom(AnimRenderer oldAnimator, float interpolationLength)
     {
-        time = Mathf.Clamp(time, 0f, Duration);
+        interpolateFromSnapshots = new AnimPartSnapshot[Data.Parts.Count];
+        
+        for (int i = 0; i < interpolateFromSnapshots.Length; i++)
+        {
+            var selfPart = Data.Parts[i];
+            
+            var found = oldAnimator.Data.Parts.FirstOrDefault(p => p.Path == selfPart.Path);
+            if (found == null)
+                continue;
 
+            interpolateFromSnapshots[i] = oldAnimator.GetSnapshot(found);
+        }
+
+        this.interpolationLength = interpolationLength;
+    }
+    
+    private float GetLerpTime()
+    {
+        if (interpolateFromSnapshots == null || interpolationLength == 0)
+            return 0;
+
+        return time / interpolationLength;
+    }
+
+    private void SeekInt(float newTime, Action<EventBase> eventsOutput, bool mirrorX = false, bool mirrorY = false)
+    {
+        newTime = Mathf.Clamp(newTime, 0f, Duration);
+
+        float lerpTime = GetLerpTime();
+        
         // Pass 1: Evaluate curves, make local matrices.
         for (int i = 0; i < Data.Parts.Count; i++)
         {
-            snapshots[i] = new AnimPartSnapshot(Data.Parts[i], this, time);
+            snapshots[i] = new AnimPartSnapshot(Data.Parts[i], this, newTime);
+            
+            // Do interpolation if necessary.
+            if (interpolateFromSnapshots == null)
+                continue;
+
+            ref var toInterpolateFrom = ref interpolateFromSnapshots[i];
+            if (!toInterpolateFrom.Valid)
+                continue;
+
+            snapshots[i] = AnimPartSnapshot.Lerp(toInterpolateFrom, snapshots[i], lerpTime);
         }
 
         // Pass 2: Resolve world matrices using inheritance tree.
         for (int i = 0; i < Data.Parts.Count; i++)
             snapshots[i].UpdateWorldMatrix(mirrorX, mirrorY);
 
-        float start = Mathf.Min(this.time, time);
-        float end = Mathf.Max(this.time, time);
-        this.time = time;
+        float start = Mathf.Min(this.time, newTime);
+        float end = Mathf.Max(this.time, newTime);
+        this.time = newTime;
 
         if (eventsOutput == null)
             return;
@@ -1241,17 +1282,19 @@ public class AnimRenderer : IExposable
 
     private void SpawnDroppedHeads()
     {
-        if (ExecutionOutcome == ExecutionOutcome.Kill)
+        if (ExecutionOutcome != ExecutionOutcome.Kill)
         {
-            var comp = Map.GetAnimManager();
+            return;
+        }
+        
+        var comp = Map.GetAnimManager();
 
-            foreach (var index in Def.spawnDroppedHeadsForPawnIndices)
-            {
-                if (index < 0 || index >= Pawns.Count)
-                    continue;
+        foreach (var index in Def.spawnDroppedHeadsForPawnIndices)
+        {
+            if (index < 0 || index >= Pawns.Count)
+                continue;
 
-                comp.AddDroppedHeadFor(Pawns[index], this);
-            }
+            comp.AddDroppedHeadFor(Pawns[index], this);
         }
     }
 
