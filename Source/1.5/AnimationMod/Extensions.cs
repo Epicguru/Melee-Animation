@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -45,6 +46,7 @@ public static class Extensions
     public static bool IsInAnimation(this Pawn pawn, out AnimRenderer animRenderer)
         => (animRenderer = AnimRenderer.TryGetAnimator(pawn)) != null;
 
+    [UsedImplicitly] // Used in Fists Of Fury
     public static bool IsInActiveMeleeCombat(this Pawn pawn)
         => pawn.jobs?.curDriver is JobDriver_AttackMelee or JobDriver_AttackStatic;
 

@@ -359,6 +359,11 @@ public class IdleControllerComp : ThingComp
         CurrentAnimation.Seek(idleTime, 0f, null);
     }
 
+    protected virtual IReadOnlyList<AnimDef> GetFlavourAnimations(ItemTweakData tweakData)
+    {
+        return tweakData.GetFlavourAnimations();
+    }
+
     private void HandleStartingFlavourAnim(ItemTweakData tweak)
     {
         // Check if disabled from settings:
@@ -374,7 +379,7 @@ public class IdleControllerComp : ThingComp
             return;
 
         // Pick random flavour.
-        var anim = SelectRandomAnim(tweak.GetFlavourAnimations(), lastFlavour);
+        var anim = SelectRandomAnim(GetFlavourAnimations(tweak), lastFlavour);
         lastFlavour = anim;
 
         // Play said flavour.
