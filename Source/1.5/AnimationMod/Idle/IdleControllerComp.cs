@@ -46,20 +46,42 @@ public class IdleControllerComp : ThingComp
         }
     }
 
-    public AnimRenderer CurrentAnimation;
+    protected static AnimDef SelectRandomAnim(IReadOnlyList<AnimDef> anims, AnimDef preferNotThis)
+    {
+        if (anims.Count == 0)
+            return null;
 
+        if (anims.Count == 1)
+            return anims[0];
+
+        for (int i = 0; i < 20; i++)
+        {
+            var picked = anims.RandomElementByWeight(d => d.Probability);
+            if (picked != preferNotThis)
+                return picked;
+        }
+
+        // Fallback in case there are not alternatives.
+        return anims.RandomElementByWeight(d => d.Probability);
+    }
+    
+    public AnimRenderer CurrentAnimation => currentAnimation;
+
+    private UniqueSkillInstance[] skills;
+    private AnimDef lastAttack;
+    private AnimDef lastFlavour;
+    private AnimRenderer currentAnimation;
     private float pauseAngle;
     private int pauseTicks;
     private bool isPausing;
     private float lastSpeed;
     private float lastDelta;
-    private AnimDef lastAttack;
-    private AnimDef lastFlavour;
     private uint ticksMoving;
     private int drawTick;
-    private UniqueSkillInstance[] skills;
+    [TweakValue("Melee Animation")]
+    protected static bool IsLeftHanded; // TODO make instance, or come from pawn.
 
-    public void PreDraw()
+    public virtual void PreDraw()
     {
         if (parent is not Pawn pawn || CurrentAnimation == null)
             return;
@@ -85,7 +107,7 @@ public class IdleControllerComp : ThingComp
         }
     }
 
-    private bool ShouldBeActive(out Thing weapon)
+    protected virtual bool ShouldBeActive(out Thing weapon)
     {
         weapon = null;
 
@@ -168,9 +190,9 @@ public class IdleControllerComp : ThingComp
         }
     }
 
-    private void TickActive(Thing weapon)
+    protected virtual void TickActive(Thing weapon)
     {
-        bool IsPlayingAnim() => CurrentAnimation is {IsDestroyed: false};
+        bool IsPlayingAnim() => CurrentAnimation is { IsDestroyed: false };
 
         var pawn = (Pawn)parent;
 
@@ -183,13 +205,13 @@ public class IdleControllerComp : ThingComp
             ticksMoving = 0;
         bool isMoving = ticksMoving >= 2;
 
-        var tweak = weapon.TryGetTweakData();
+        var tweak = weapon?.TryGetTweakData();
         bool isAttacking = IsPlayingAnim() && CurrentAnimation.Def.idleType.IsAttack();
 
         // If attacking, it takes priority over everything else.
         if (isAttacking)
         {
-            DoAttackPausing();
+            UpdateAttackAnimation();
             return;
         }
 
@@ -209,25 +231,25 @@ public class IdleControllerComp : ThingComp
         }
 
         // Randomly interrupt idle with Flavour.
-        TickFlavour(tweak);
+        HandleStartingFlavourAnim(tweak);
 
         // Mirror and loop:
         if (CurrentAnimation == null)
             return;
 
         bool shouldLoop = CurrentAnimation.Def.idleType.IsIdle(false) || CurrentAnimation.Def.idleType.IsMove();
-        bool shouldBeMirrored = pawn.Rotation == Rot4.West || pawn.Rotation == Rot4.North;
+        bool shouldBeMirrored = pawn.Rotation == Rot4.West || (pawn.Rotation == (IsLeftHanded ? Rot4.South : Rot4.North));
         CurrentAnimation.Loop = shouldLoop;
         CurrentAnimation.MirrorHorizontal = shouldBeMirrored;
 
         // Normally animation root transform is set from the draw method.
-        // However when pawns are culled, the draw method is not called so the animation
-        // position can get out of sync. These lines ensure that the matrix is updated if the draw hasn't be called due to culling.
+        // However, when pawns are culled, the draw method is not called so the animation
+        // position can get out of sync. These lines ensure that the matrix is updated if the draw hasn't been called due to culling.
         if (Find.TickManager.TicksAbs - drawTick >= 2)
             CurrentAnimation.RootTransform = MakePawnMatrix(pawn, pawn.Rotation == Rot4.North);
     }
 
-    private void DoAttackPausing()
+    protected virtual void UpdateAttackAnimation()
     {
         if (pauseTicks > 0)
         {
@@ -262,14 +284,19 @@ public class IdleControllerComp : ThingComp
         }
     }
 
+    protected virtual AnimDef GetMovementAnimation(ItemTweakData tweak, bool horizontal)
+    {
+        return horizontal ? tweak.GetMoveHorizontalAnimation() : tweak.GetMoveVerticalAnimation();
+    }
+
     private void EnsuringMoving(Pawn pawn, ItemTweakData tweak)
     {
         bool horizontal = pawn.Rotation.IsHorizontal;
 
-        var anim = horizontal ? tweak.GetMoveHorizontalAnimation() : tweak.GetMoveVerticalAnimation();
+        var anim = GetMovementAnimation(tweak, horizontal);
         if (anim == null)
         {
-            Core.Warn($"Missing movement animation for {tweak.ItemDefName}, horizontal: {horizontal}");
+            Core.Warn($"Missing movement animation for {tweak?.ItemDefName ?? "<null>"}, horizontal: {horizontal}");
             return;
         }
 
@@ -286,7 +313,7 @@ public class IdleControllerComp : ThingComp
         CurrentAnimation.TimeScale = GetMoveAnimationSpeed(pawn);
     }
 
-    private void EnsureFacingOrIdle(Pawn pawn, ItemTweakData tweak)
+    protected virtual void EnsureFacingOrIdle(Pawn pawn, ItemTweakData tweak)
     {
         var rot = pawn.Rotation;
         bool facingSouth = rot == Rot4.South;
@@ -314,7 +341,7 @@ public class IdleControllerComp : ThingComp
         CurrentAnimation.Seek(idleTime, 0f, null);
     }
 
-    private void TickFlavour(ItemTweakData tweak)
+    private void HandleStartingFlavourAnim(ItemTweakData tweak)
     {
         // Check if disabled from settings:
         if (Core.Settings.FlavourMTB <= 0f)
@@ -329,7 +356,7 @@ public class IdleControllerComp : ThingComp
             return;
 
         // Pick random flavour.
-        var anim = Random(tweak.GetFlavourAnimations(), lastFlavour);
+        var anim = SelectRandomAnim(tweak.GetFlavourAnimations(), lastFlavour);
         lastFlavour = anim;
 
         // Play said flavour.
@@ -346,7 +373,7 @@ public class IdleControllerComp : ThingComp
             DoNotRegisterPawns = true,
         };
 
-        if (!args.TryTrigger(out CurrentAnimation))
+        if (!args.TryTrigger(out currentAnimation))
             Core.Error($"Failed to start idle anim '{def}'!");
     }
 
@@ -362,25 +389,6 @@ public class IdleControllerComp : ThingComp
         float pctPerTick = pawn.pather.CostToPayThisTick() / pawn.pather.nextCellCostTotal;
         float dstPerSecond = 60f * dst * pctPerTick;
         return Mathf.Clamp(Mathf.Pow(dstPerSecond / REF_SPEED, EXP), MIN_COEF, MAX_COEF) * Core.Settings.MoveAnimSpeedCoef;
-    }
-
-    private static AnimDef Random(IReadOnlyList<AnimDef> anims, AnimDef preferNotThis)
-    {
-        if (anims.Count == 0)
-            return null;
-
-        if (anims.Count == 1)
-            return anims[0];
-
-        for (int i = 0; i < 20; i++)
-        {
-            var picked = anims.RandomElementByWeight(d => d.Probability);
-            if (picked != preferNotThis)
-                return picked;
-        }
-
-        // Fallback in case there are not alternatives.
-        return anims.RandomElementByWeight(d => d.Probability);
     }
 
     private Thing GetMeleeWeapon()
@@ -406,7 +414,7 @@ public class IdleControllerComp : ThingComp
 
         // Get list of attack animations.
         var anims = tweak.GetAttackAnimations(rot);
-        var anim = Random(anims, lastAttack);
+        var anim = SelectRandomAnim(anims, lastAttack);
 
         lastAttack = anim;
         if (anim == null)
@@ -452,7 +460,7 @@ public class IdleControllerComp : ThingComp
         };
 
         ClearAnimation();
-        if (!args.TryTrigger(out CurrentAnimation))
+        if (!args.TryTrigger(out currentAnimation))
         {
             Core.Error($"Failed to trigger attack animation for {pawn} ({args}). Dead: {pawn.Dead}, Downed: {pawn.Downed}, InAnim: {pawn.TryGetAnimator() != null}");
         }
@@ -517,15 +525,13 @@ public class IdleControllerComp : ThingComp
 
     public void ClearAnimation()
     {
-        if (CurrentAnimation == null)
+        if (currentAnimation == null)
             return;
+        
+        if (!currentAnimation.IsDestroyed)
+            currentAnimation.Destroy();
 
-        //Core.Log($"[{parent}] Cleared {CurrentAnimation?.ToString() ?? "null"}");
-
-        if (!CurrentAnimation.IsDestroyed)
-            CurrentAnimation.Destroy();
-
-        CurrentAnimation = null;
+        currentAnimation = null;
     }
 
     public override void PostExposeData()
