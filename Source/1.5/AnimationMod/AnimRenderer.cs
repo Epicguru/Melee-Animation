@@ -1504,7 +1504,6 @@ public class AnimRenderer : IExposable
 
                 if (handCount == 1)                
                     healthDrawMain = false;
-                
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using AM.AMSettings;
 using AM.Patches;
@@ -66,7 +66,8 @@ public class IdleControllerComp : ThingComp
     }
     
     public AnimRenderer CurrentAnimation => currentAnimation;
-
+    public bool IsFistsOfFuryComp { get; protected set; } = false;
+    
     private UniqueSkillInstance[] skills;
     private AnimDef lastAttack;
     private AnimDef lastFlavour;

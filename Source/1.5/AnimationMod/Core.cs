@@ -29,6 +29,7 @@ public class Core : Mod
     public static Settings Settings;
     public static Harmony Harmony;
     public static bool IsSimpleSidearmsActive;
+    public static bool IsFistsOfFuryActive;
     public static bool IsTacticowlActive;
 
     private readonly Queue<(string title, Action action)> lateLoadActions = new Queue<(string title, Action action)>();
@@ -51,9 +52,10 @@ public class Core : Mod
             Verse.Log.Error(e.ToString());
     }
 
-    private static void CheckSimpleSidearms()
+    private static void CheckForActiveMods()
     {
         IsSimpleSidearmsActive = ModLister.GetActiveModWithIdentifier("PeteTimesSix.SimpleSidearms") != null;
+        IsFistsOfFuryActive = ModLister.GetActiveModWithIdentifier("co.uk.epicguru.fistsoffury") != null;
 		IsTacticowlActive = ModLister.GetActiveModWithIdentifier("owlchemist.tacticowl") != null;
     }
 
@@ -207,7 +209,7 @@ public class Core : Mod
             AnimRenderer.DefaultTransparent ??= new Material(ShaderTypeDefOf.Transparent.Shader);
         });
 
-        AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckSimpleSidearms);
+        AddLateLoadAction(false, "Checking for Simple Sidearms install...", CheckForActiveMods);
         AddLateLoadAction(false, "Checking for patch conflicts...", () => LogPotentialConflicts(Harmony));
         AddLateLoadAction(false, "Finding all lassos...", AM.Content.FindAllLassos);
 
