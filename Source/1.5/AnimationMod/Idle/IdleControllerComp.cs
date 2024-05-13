@@ -540,6 +540,8 @@ public class IdleControllerComp : ThingComp
             point -= 90;
         }
 
+        point += CurrentAnimation.Def.pointAtTargetAngleOffset;
+
         float a = Mathf.LerpAngle(point, IDLE_ANGLE, lerp);
         return animationMatrix * Matrix4x4.Rotate(Quaternion.Euler(0f, a, 0f));
     }

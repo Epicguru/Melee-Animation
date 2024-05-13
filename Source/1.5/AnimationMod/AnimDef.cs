@@ -168,6 +168,7 @@ public class AnimDef : Def
     public bool canEditProbability = true;
     public IdleType idleType;
     public bool pointAtTarget;
+    public float pointAtTargetAngleOffset;
     public int returnToIdleStart, returnToIdleEnd;
     public int idleFrame;
     public ExecutionOutcome? fixedOutcome;
