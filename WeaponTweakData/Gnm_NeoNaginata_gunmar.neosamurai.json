@@ -1,0 +1,19 @@
+{
+  "TextureModID": "gunmar.neosamurai",
+  "ItemDefName": "Gnm_NeoNaginata",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4534151,
+  "Rotation": 45.0,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "BladeStart": 0.6152902,
+  "BladeEnd": 1.14373052,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.372,
+    "g": 0.811,
+    "b": 0.964,
+    "a": 0.571605
+  }
+}

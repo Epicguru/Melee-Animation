@@ -1,0 +1,19 @@
+{
+  "TextureModID": "gunmar.neosamurai",
+  "ItemDefName": "Gnm_NeoKunai",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.205504388,
+  "ScaleX": 1.05,
+  "ScaleY": 1.05,
+  "HandsMode": 1,
+  "BladeStart": 0.161875173,
+  "BladeEnd": 0.540264964,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.372,
+    "g": 0.811,
+    "b": 0.964,
+    "a": 0.571605
+  }
+}
