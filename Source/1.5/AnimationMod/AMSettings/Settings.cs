@@ -261,8 +261,9 @@ public class Settings : SimpleSettingsBase
     [WebContent("HandsEnabled", false)]
     public bool ShowHands = true;
 
+    [Label("Dynamic Hand Color & Appearance")]
     [VisibleIf(nameof(ShowHands))]
-    [Description("When enabled, the color of hands will be based on clothes covering hands, then bionic hand color, then skin color, in that order and as appropriate.\n" +
+    [Description("When enabled, the color and appearance of hands will be based on clothes covering hands, then bionic hand color, then skin color, in that order and as appropriate.\n" +
                  "If disabled, the color of hands will always be based on skin color.")]
     public bool AdvancedHandVisuals = true;
 
