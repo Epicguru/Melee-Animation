@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 26 Apr 2024, 7:38 PM.`  
+`Updated 22 May 2024, 3:57 PM.`  
 
-**Melee Animation supports 2479 weapons from 317 mods.**  
+**Melee Animation supports 2495 weapons from 320 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -192,6 +192,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Moyo-Light in the Abyss** | aoba.redmoyo | 5 | *Epicguru* |
 | **Moyo-The cartel arrives** | nemonian.mycartel | 3 | *Epicguru* |
 | **Naki Race HAR Edition** | seioch.naki.har | 2 | *Epicguru* |
+| **Neo Samurai** | gunmar.neosamurai | 7 | *Epicguru* |
 | **NewRatkinPlus** | solaris.ratkinracemod | 17 | *Epicguru* |
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
 | **NierAutomata Weapon Pack** | verniy709.nierautomata.weapon | 32 | *Epicguru* |
@@ -219,6 +220,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Psysword** | xedos.psyblade | 2 | *Epicguru* |
 | **Pulse Weaponry** | detvisor.pulseweaponry | 1 | *Epicguru* |
 | **Pyramid Heads Helmet** | kropolis.pyramidhead | 1 | *Epicguru* |
+| **Rabbit Protocol** | amaoto.rabbitprotocol | 1 | *Epicguru* |
 | **Race to the Rim** | sargoskar.racetotherim | 2 | *Epicguru* |
 | **Ratkin Auxiliary framework** | darkkai.ratkinextensionframework | 1 | *Epicguru* |
 | **Ratkin Faction:Oberonia aurea** | oark.ratkinfaction.oberoniaaurea | 3 | *Epicguru* |
@@ -257,6 +259,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Royal Arsenal: Specialty Weapons** | bucko.royalarsenal.specialtyweapons | 2 | *Epicguru* |
 | **Royal Thrumbos (Continued)** | mlie.royalthrumbos | 2 | *Epicguru* |
 | **Royalty** | ludeon.rimworld.royalty | 14 | *Epicguru* |
+| **SGG1's Retexture : Revia Race** | sgg1.raviaretexture | 8 | *Epicguru* |
 | **SheathYourSword** | solaris.sys | 3 | *Epicguru* |
 | **Simple Medieval Axe And Mace** | miko.simplemedievalaxeandmace | 5 | *Epicguru* |
 | **Simple Medieval Saber And Spear** | miko.simplemedievalsaberandspear | 7 | *Epicguru* |
