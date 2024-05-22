@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sgg1.raviaretexture",
+  "ItemDefName": "ReviaSerratedScythe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.579119742,
+  "OffY": -0.033178933,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.794102848,
+  "BladeEnd": 1.43656433,
+  "MeleeWeaponType": 3
+}

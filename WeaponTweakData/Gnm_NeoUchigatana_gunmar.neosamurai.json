@@ -1,0 +1,18 @@
+{
+  "TextureModID": "gunmar.neosamurai",
+  "ItemDefName": "Gnm_NeoUchigatana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.300102144,
+  "ScaleX": 1.05,
+  "ScaleY": 1.05,
+  "BladeStart": 0.0933737,
+  "BladeEnd": 0.804485142,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.372,
+    "g": 0.811,
+    "b": 0.964,
+    "a": 0.571605
+  }
+}

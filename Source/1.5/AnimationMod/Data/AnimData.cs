@@ -352,6 +352,30 @@ public class AnimPartData
 
 public struct AnimPartSnapshot
 {
+    public static AnimPartSnapshot Lerp(in AnimPartSnapshot a, in AnimPartSnapshot b, float t)
+    {
+        AnimPartSnapshot result = new AnimPartSnapshot
+        {
+            Time = Mathf.LerpUnclamped(a.Time, b.Time, t),
+            FlipX = t > 0.5f ? b.FlipX : a.FlipX,
+            FlipY = t > 0.5f ? b.FlipY : a.FlipY,
+            Active = t > 0.5f ? b.Active : a.Active,
+            Color = Color.LerpUnclamped(a.Color, b.Color, t),
+            LocalPosition = Vector3.LerpUnclamped(a.LocalPosition, b.LocalPosition, t),
+            LocalRotation = Quaternion.SlerpUnclamped(Quaternion.Euler(a.LocalRotation), Quaternion.Euler(b.LocalRotation), t).eulerAngles,
+            LocalScale = Vector3.LerpUnclamped(a.LocalScale, b.LocalScale, t),
+            Direction = t > 0.5f ? b.Direction : a.Direction,
+            DataA = Mathf.LerpUnclamped(a.DataA, b.DataA, t),
+            DataB = Mathf.LerpUnclamped(a.DataB, b.DataB, t),
+            DataC = Mathf.LerpUnclamped(a.DataC, b.DataC, t),
+            FrameIndex = (int)Mathf.LerpUnclamped(a.FrameIndex, b.FrameIndex, t),
+            SplitDrawMode = t > 0.5f ? b.SplitDrawMode : a.SplitDrawMode
+        };
+
+        result.UpdateLocalMatrix();
+        return result;
+    }
+    
     public bool Valid => Part != null;
     public string TexturePath => Part?.TexturePath == null ? null : (Part.TexturePath + (FrameIndex > 0 ? FrameIndex.ToString() : null));
     public string PartName => Part?.Name;

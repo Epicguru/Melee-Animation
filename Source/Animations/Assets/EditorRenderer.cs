@@ -122,6 +122,12 @@ public class EditorRenderer : Editor
 
     private IEnumerator SaveCoroutine(AnimationDataCreator t, AnimationClip clip)
     {
+        if (!EnsureSaveLocation())
+        {
+            Debug.LogWarning("Export cancelled.");
+            yield break;
+        }
+
         yield return null;
 
         window.recording = false;
@@ -138,6 +144,12 @@ public class EditorRenderer : Editor
 
     private IEnumerator SaveAllCoroutine(AnimationDataCreator t)
     {
+        if (!EnsureSaveLocation())
+        {
+            Debug.LogWarning("Export cancelled.");
+            yield break;
+        }
+
         yield return null;
 
         var controller = t.GetComponent<Animator>();
@@ -159,16 +171,30 @@ public class EditorRenderer : Editor
         }
     }
 
+    private static bool EnsureSaveLocation()
+    {
+        if (IsValid())
+            return true;
+
+        EditorUtility.DisplayDialog("Set Output Folder", "You must pick an output folder for the animations.\nPlease select the 'Animations' folder in your mod.", "Ok");
+
+        ExportHelper.ShowChangeExportLocationDialogue();
+        return IsValid();
+
+        static bool IsValid() => !string.IsNullOrEmpty(ExportHelper.OutputDirectoryPath) && Directory.Exists(ExportHelper.OutputDirectoryPath);
+    }
+
     private Rect Save(AnimationDataCreator t, AnimationClip clip)
     {
-        string FILE = @$"../..\Animations\{clip.name}.json";
+        string fileName = $"{clip.name}.json";
+        string file = Path.Combine(ExportHelper.OutputDirectoryPath, fileName);
 
         var bounds = PopulateSweeps(clip, t);
         string json = AnimData.Save(clip, t, bounds);
 
-        File.WriteAllText(FILE, json);
+        File.WriteAllText(file, json);
 
-        Debug.Log($"Wrote {clip.name} in {new FileInfo(FILE).Length / 1024f:F1} Kb to {new FileInfo(FILE).FullName}. Bounds: {bounds}");
+        Debug.Log($"Wrote {clip.name} in {new FileInfo(file).Length / 1024f:F1} Kb to {new FileInfo(file).FullName}. Bounds: {bounds}");
         return bounds;
     }
 

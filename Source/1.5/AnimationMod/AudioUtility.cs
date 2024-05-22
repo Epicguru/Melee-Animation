@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using System;
+using RimWorld;
 using Verse;
 
 namespace AM;
@@ -16,28 +17,23 @@ public static class AudioUtility
             return attackerWeapon.def.meleeHitSound;
         }
 
-        // TODO attempt to extract tool info from thingDef.
-        //if (this.tool != null && !this.tool.soundMeleeHit.NullOrUndefined())
-        //{
-        //    return this.tool.soundMeleeHit;
-        //}
-        //attackerWeaponDef.tools[0].soundMeleeHit
-
         VerbProperties verbProps = attackerWeapon?.def.verbs?.FirstOrFallback();
 
-        if (attackerWeapon != null && attackerWeapon.Stuff != null)
+        if (attackerWeapon is not { Stuff: not null })
         {
-            if (verbProps != null && verbProps.meleeDamageDef.armorCategory == DamageArmorCategoryDefOf.Sharp)
+            return SoundDefOf.Pawn_Melee_Punch_HitPawn;
+        }
+        
+        if (verbProps != null && verbProps.meleeDamageDef.armorCategory == DamageArmorCategoryDefOf.Sharp)
+        {
+            if (!attackerWeapon.Stuff.stuffProps.soundMeleeHitSharp.NullOrUndefined())
             {
-                if (!attackerWeapon.Stuff.stuffProps.soundMeleeHitSharp.NullOrUndefined())
-                {
-                    return attackerWeapon.Stuff.stuffProps.soundMeleeHitSharp;
-                }
+                return attackerWeapon.Stuff.stuffProps.soundMeleeHitSharp;
             }
-            else if (!attackerWeapon.Stuff.stuffProps.soundMeleeHitBlunt.NullOrUndefined())
-            {
-                return attackerWeapon.Stuff.stuffProps.soundMeleeHitBlunt;
-            }
+        }
+        else if (!attackerWeapon.Stuff.stuffProps.soundMeleeHitBlunt.NullOrUndefined())
+        {
+            return attackerWeapon.Stuff.stuffProps.soundMeleeHitBlunt;
         }
 
         return SoundDefOf.Pawn_Melee_Punch_HitPawn;
@@ -65,12 +61,68 @@ public static class AudioUtility
     private static WeaponMaterial GetMaterial(Thing weapon)
     {
         if (weapon?.Stuff == null)
+        {
+            if (IsMadeFromExclusive(weapon.def, thing => thing.IsStuff && IsWoody(thing)))
+            {
+                return WeaponMaterial.Wood;
+            }
+            
+            if (IsMadeFromExclusive(weapon.def, thing => thing.IsStuff && IsStony(thing)))
+            {
+                return WeaponMaterial.Stone;
+            }
+            
             return WeaponMaterial.Metal;
+        }
 
         if (IsWoody(weapon.Stuff))
+        {
             return WeaponMaterial.Wood;
+        }
 
         return IsStony(weapon.Stuff) ? WeaponMaterial.Stone : WeaponMaterial.Metal;
+    }
+
+    private static bool IsMadeFromExclusive(ThingDef thing, Predicate<ThingDef> isValidMaterial)
+    {
+        if (thing.AllRecipes == null || thing.AllRecipes.Count == 0)
+        {
+            return false;
+        }
+
+        foreach (var rec in thing.AllRecipes)
+        {
+            if (!IsValidRecipe(rec, isValidMaterial))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool IsValidRecipe(RecipeDef rec, Predicate<ThingDef> isValidMaterial)
+    {
+        if (rec.ingredients.Count != 1)
+        {
+            return false;
+        }
+
+        var ing = rec.ingredients[0];
+        if (ing.IsFixedIngredient || ing.filter == null)
+        {
+            return isValidMaterial(ing.FixedIngredient);
+        }
+
+        foreach (var item in ing.filter.AllowedThingDefs)
+        {
+            if (!isValidMaterial(item))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static bool IsStony(ThingDef material)

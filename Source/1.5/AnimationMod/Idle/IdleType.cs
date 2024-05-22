@@ -8,5 +8,6 @@ public enum IdleType
     Flavour,
     AttackHorizontal,
     AttackSouth,
-    AttackNorth
+    AttackNorth,
+    IdleSpecial,
 }

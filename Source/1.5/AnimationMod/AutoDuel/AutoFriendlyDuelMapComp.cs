@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Verse;
 using LudeonTK;
+using Verse.AI.Group;
 
 namespace AM.AutoDuel;
 
@@ -162,7 +163,7 @@ public class AutoFriendlyDuelMapComp : MapComponent
 
         bool canInterruptJob = pawn.CurJobDef?.playerInterruptible ?? true;
         bool isJobPlayerForced = pawn.CurJob?.playerForced ?? false;
-
+        
         if (!canInterruptJob || isJobPlayerForced)
             return false;
 
