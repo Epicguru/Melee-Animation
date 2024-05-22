@@ -261,6 +261,11 @@ public class Settings : SimpleSettingsBase
     [WebContent("HandsEnabled", false)]
     public bool ShowHands = true;
 
+    [VisibleIf(nameof(ShowHands))]
+    [Description("When enabled, the color of hands will be based on clothes covering hands, then bionic hand color, then skin color, in that order and as appropriate.\n" +
+                 "If disabled, the color of hands will always be based on skin color.")]
+    public bool AdvancedHandVisuals = true;
+
     [Label("Damage Effect")]
     [Description("Enable or disable the damage affect in animations.\n" +
                  "The damage effect is normally a small, temporary puff of blood.")]

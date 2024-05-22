@@ -92,6 +92,18 @@ public static class HandUtility
         {
             if (!IsHand(part))
                 continue;
+
+            if (!Core.Settings.AdvancedHandVisuals)
+            {
+                // Write hand with natural skin color.
+                if (!TryWriteToOutput(ref count, output, new HandInfo
+                {
+                    Color = GetSkinColor(pawn),
+                    Flags = HandFlags.Natural
+                })){ return count; }
+
+                continue;
+            }
             
             // Check for clothes or armor covering the hand.
             Color? apparelColor = TryGetColorOfApparelCoveringHand(part);
@@ -132,6 +144,18 @@ public static class HandUtility
 
             if (!IsArtificialHand(addedPart.Part, out var actualHandPart))
                 continue;
+
+            // If advanced hands are disabled, report this artificial hand as a natural one with regular skin color.
+            if (!Core.Settings.AdvancedHandVisuals)
+            {
+                if (!TryWriteToOutput(ref count, output, new HandInfo
+                {
+                    Color = GetSkinColor(pawn),
+                    Flags = HandFlags.Natural
+                })){ return count; }
+
+                continue;
+            }
             
             Color? apparelColor = TryGetColorOfApparelCoveringHand(actualHandPart);
             Color color = apparelColor ?? TryGetArtificialHandColor(addedPart.def) ?? GetSkinColor(pawn);
