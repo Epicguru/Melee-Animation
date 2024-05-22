@@ -500,8 +500,8 @@ public static class OutcomeUtility
         if (pawn.Corpse != null)
         {
             // Do corpse interpolation - interpolates the corpse to the correct position, after the animated position.
-            Patch_Corpse_DrawAt.Interpolators[pawn.Corpse] = new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition());
-            Patch_Corpse_DrawAt.OverrideRotations[pawn] = ss.GetWorldDirection();
+            Patch_PawnRenderer_ParallelPreRenderPawnAt.Interpolators[pawn.Corpse] = new CorpseInterpolate(pawn.Corpse, ss.GetWorldPosition());
+            Patch_PawnRenderer_ParallelPreRenderPawnAt.OverrideRotations[pawn] = ss.GetWorldDirection();
         }
         else if (!isDeathless)
         {

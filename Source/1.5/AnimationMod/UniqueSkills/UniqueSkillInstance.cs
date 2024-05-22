@@ -6,7 +6,6 @@ public abstract class UniqueSkillInstance : IExposable
 {
     public UniqueSkillDef Def;
     public Pawn Pawn;
-
     public int TickLastTriggered = -1000000;
 
     public virtual void ExposeData()
@@ -19,7 +18,7 @@ public abstract class UniqueSkillInstance : IExposable
     public float GetCooldownSecondsLeft()
     {
         int ticksSinceLast = GenTicks.TicksGame - TickLastTriggered;
-        return (Def.baseCooldownTicks - ticksSinceLast) / 60f;
+        return ((Def.baseCooldownTicks * Core.Settings.SkillCooldownFactor) - ticksSinceLast) / 60f;
     }
 
     /// <summary>

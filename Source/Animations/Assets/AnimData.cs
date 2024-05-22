@@ -196,7 +196,6 @@ public class AnimData
         foreach (var go in EnumerateChildrenDeep(animatorRoot))
         {
             string path = MakeRelativePath(animatorRoot, go);
-            Debug.Log($"{go} adds {path}");
             if (paths.Add(path))
             {
                 //Debug.LogWarning($"Saved {path} from being stripped from the output.");

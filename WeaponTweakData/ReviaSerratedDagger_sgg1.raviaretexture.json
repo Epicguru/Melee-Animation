@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sgg1.raviaretexture",
+  "ItemDefName": "ReviaSerratedDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.165893644,
+  "OffY": 0.0271460861,
+  "HandsMode": 1,
+  "BladeStart": 0.114391021,
+  "BladeEnd": 0.54873085,
+  "MeleeWeaponType": 48
+}

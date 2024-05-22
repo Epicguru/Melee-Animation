@@ -7,8 +7,11 @@ using LudeonTK;
 
 namespace AM.Patches;
 
+/// <summary>
+/// This patch is just for corpse offsets, nothing else.
+/// </summary>
 [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.ParallelPreRenderPawnAt))] // Corpse DrawAt was removed in 1.5
-public static class Patch_Corpse_DrawAt
+public static class Patch_PawnRenderer_ParallelPreRenderPawnAt
 {
     public static readonly Dictionary<Corpse, CorpseInterpolate> Interpolators = new Dictionary<Corpse, CorpseInterpolate>();
     public static readonly Dictionary<Pawn, Rot4> OverrideRotations = new Dictionary<Pawn, Rot4>();
@@ -22,12 +25,10 @@ public static class Patch_Corpse_DrawAt
         }
     }
 
-    [HarmonyPriority(Priority.Last)]
+    [HarmonyPriority(Priority.First)]
     private static void Prefix(PawnRenderer __instance, ref Vector3 drawLoc, ref Rot4? rotOverride)
     {
-        var corpse = __instance.pawn.ParentHolder as Corpse;
-
-        if (corpse == null)
+        if (__instance.pawn.ParentHolder is not Corpse corpse)
             return;
 
         DoOffsetLogic(corpse, ref drawLoc, ref rotOverride);

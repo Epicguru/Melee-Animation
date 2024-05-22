@@ -112,7 +112,7 @@ public class GameComp : GameComponent
         AnimRenderer.RemoveDestroyed();
         GrabUtility.Tick();
 
-        Patch_Corpse_DrawAt.Tick();
+        Patch_PawnRenderer_ParallelPreRenderPawnAt.Tick();
 
         const float DT = 1 / 60f;
 

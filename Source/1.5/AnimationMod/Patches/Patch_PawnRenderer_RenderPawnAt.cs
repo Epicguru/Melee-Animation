@@ -1,4 +1,5 @@
 ﻿using AM.Grappling;
+using AM.Idle;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -26,6 +27,13 @@ public static class Patch_PawnRenderer_RenderPawnAt
     public static bool Prefix(Pawn ___pawn, PawnRenderTree ___renderTree, ref PawnRenderer.PreRenderResults ___results, ref PawnRenderer.PreRenderResults? __state)
     {
         __state = null; // Harmony requires this to be initialized.
+
+        // Fists of fury component needs it's PreDraw called here, because normally it is only called when equipment is aiming.
+        if (Core.IsFistsOfFuryActive)
+        {
+            var comp = ___pawn.TryGetComp<IdleControllerComp>();
+            comp?.PreDraw();
+        }
 
         // Draw the ropes that bind the pawn when being grappled.
         DrawGrappleRopeIfRequired(___pawn);

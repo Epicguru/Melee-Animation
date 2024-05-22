@@ -1,4 +1,7 @@
-﻿using AM.Events;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AM.Events;
 using AM.Hands;
 using AM.Idle;
 using AM.Patches;
@@ -8,8 +11,6 @@ using AM.Sweep;
 using AM.Tweaks;
 using AM.UI;
 using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -26,7 +27,7 @@ public class AnimRenderer : IExposable
 {
     #region Static stuff
 
-    public static readonly char[] Alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+    public static readonly char[] Alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     public static readonly List<AnimRenderer> PostLoadPendingAnimators = new List<AnimRenderer>();
     public static Action<Pawn, AnimRenderer, Map> PrePawnSpecialRender;
     public static Action<Pawn, AnimRenderer, Map> PostPawnSpecialRender;
@@ -35,10 +36,17 @@ public class AnimRenderer : IExposable
     public static IReadOnlyCollection<Pawn> CapturedPawns => pawnToRenderer.Keys;
     public static int TotalCapturedPawnCount => pawnToRenderer.Count;
 
+    private static readonly int mainTexShaderProp = Shader.PropertyToID("_MainTex");
+    private static readonly int colorOneShaderProp = Shader.PropertyToID("_Color");
+    private static readonly int colorTwoShaderProp = Shader.PropertyToID("_ColorTwo");
+    private static readonly int cutoffAngleShaderProp = Shader.PropertyToID("CutoffAngle");
+    private static readonly int polarityShaderProp = Shader.PropertyToID("Polarity");
+    private static readonly int distanceShaderProp = Shader.PropertyToID("Distance");
     private static readonly MaterialPropertyBlock shadowMpb = new MaterialPropertyBlock();
     private static readonly List<AnimRenderer> activeRenderers = new List<AnimRenderer>();
     private static readonly Dictionary<Pawn, AnimRenderer> pawnToRenderer = new Dictionary<Pawn, AnimRenderer>();
     private static readonly Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
+    private static AnimPartSnapshot dummySnapshot;
 
     /// <summary>
     /// Tries to get the <see cref="AnimRenderer"/> that a pawn currently belongs to.
@@ -359,15 +367,17 @@ public class AnimRenderer : IExposable
     private readonly Dictionary<Pawn, PawnLinkedParts> pawnToParts = new Dictionary<Pawn, PawnLinkedParts>();
     private HashSet<Pawn> pawnsValidEvenIfDespawned = new HashSet<Pawn>();
     private AnimPartSnapshot[] snapshots;
+    private AnimPartSnapshot[] interpolateFromSnapshots;
     private AnimPartOverrideData[] overrides;
     private PartWithSweep[] sweeps;
     private MaterialPropertyBlock pb;
+    private Pawn[] pawnsForPostLoad; 
     private float time = -1;
-    private Pawn[] pawnsForPostLoad;
     private bool hasStarted;
     private bool lastMirrorX, lastMirrorZ;
     private bool hasDoneOnEnd;
     private bool delayedDestroy;
+    private float interpolationLength;
 
     [UsedImplicitly]
     public AnimRenderer()
@@ -518,7 +528,15 @@ public class AnimRenderer : IExposable
     /// <summary>
     /// Gets the current state (snapshot) for a particular animation part.
     /// </summary>
-    public AnimPartSnapshot GetSnapshot(AnimPartData part) => part == null ? default : snapshots[part.Index];
+    [System.Diagnostics.Contracts.Pure]
+    public ref AnimPartSnapshot GetSnapshot(AnimPartData part)
+    {
+        if (part == null)
+        {
+            return ref dummySnapshot;
+        }
+        return ref snapshots[part.Index];
+    }
 
     /// <summary>
     /// Gets the override data based on the part index.
@@ -802,7 +820,7 @@ public class AnimRenderer : IExposable
                     pb.Clear();
 
                     // Basic texture and color, always used. Color might be replaced, see below.
-                    pb.SetColor("_Color", color);
+                    pb.SetColor(colorOneShaderProp, color);
 
                     if (ov.Material != null)
                     {
@@ -812,15 +830,15 @@ public class AnimRenderer : IExposable
                         if (doesUseMask && (mask = ov.Material.GetTexture(ShaderPropertyIDs.MaskTex)) != null)
                         {
                             // Tint is applied to the mask.
-                            pb.SetColor("_Color", color); // Color comes from animation.
-                            pb.SetColor("_ColorTwo", ov.Weapon.DrawColor); // Mask tint
+                            pb.SetColor(colorOneShaderProp, color); // Color comes from animation.
+                            pb.SetColor(colorTwoShaderProp, ov.Weapon.DrawColor); // Mask tint
                             pb.SetTexture(ShaderPropertyIDs.MaskTex, mask);
 
                         }
                         else
                         {
                             // Tint is applied straight to main color.
-                            pb.SetColor("_Color", color * ov.Weapon.DrawColor);
+                            pb.SetColor(colorOneShaderProp, color * ov.Weapon.DrawColor);
                         }
                     }
 
@@ -829,7 +847,7 @@ public class AnimRenderer : IExposable
                         ConfigureSplitDraw(snap, ref matrix, pb, ov, i, ref passes, ref tex);
                     }
 
-                    pb.SetTexture("_MainTex", tex);
+                    pb.SetTexture(mainTexShaderProp, tex);
                 }
 
                 var finalMpb = useMPB ? pb : null;
@@ -854,7 +872,7 @@ public class AnimRenderer : IExposable
         bool fy = MirrorVertical ? !preFy : preFy;
 
         float textureRot = ov.LocalRotation * Mathf.Deg2Rad;
-        pb.SetFloat("CutoffAngle", textureRot * (fy ? -1f : 1f));
+        pb.SetFloat(cutoffAngleShaderProp, textureRot * (fy ? -1f : 1f));
         var mode = part.SplitDrawMode;
         if (mode == AnimData.SplitDrawMode.BeforeAndAfter)
         {
@@ -864,7 +882,7 @@ public class AnimRenderer : IExposable
             else
                 matrix *= Matrix4x4.Translate(new Vector3(0, -0.9f, 0)); // This is the actual offset depth here.
         }
-        pb.SetFloat("Polarity", mode == AnimData.SplitDrawMode.Before ? 1f : -1f);
+        pb.SetFloat(polarityShaderProp, mode == AnimData.SplitDrawMode.Before ? 1f : -1f);
 
         // The total length of the weapon sprite, in world units (1 unit = 1 cell).
         float length = matrix.lossyScale.x * Remap(Mathf.Abs(Mathf.Sin(textureRot * 2f)), 0, 1f, 1f, 1.41421356237f); // sqrt(2)
@@ -883,7 +901,7 @@ public class AnimRenderer : IExposable
         if (!fx)
             lerp = 1 - lerp;
 
-        pb.SetFloat("Distance", distanceScale * (-1f + lerp * 2f));
+        pb.SetFloat(distanceShaderProp, distanceScale * (-1f + lerp * 2f));
 
         // Experimental, aims to fix issue where split drawing does not use the weapon ideology style.
         if (ov.Material?.mainTexture is Texture2D tex)
@@ -1022,8 +1040,8 @@ public class AnimRenderer : IExposable
     private void DrawSimpleShadow(Vector3 pos, Vector3 size, Color color)
     {
         var trs = Matrix4x4.TRS(pos, Quaternion.identity, size);
-        shadowMpb.SetColor("_Color", color);
-        shadowMpb.SetTexture("_MainTex", Content.Shadow);
+        shadowMpb.SetColor(colorOneShaderProp, color);
+        shadowMpb.SetTexture(mainTexShaderProp, Content.Shadow);
         Graphics.DrawMesh(MeshPool.plane10, trs, DefaultTransparent, 0, Camera, 0, shadowMpb);
     }
 
@@ -1079,23 +1097,61 @@ public class AnimRenderer : IExposable
         }
     }
 
-    private void SeekInt(float time, Action<EventBase> eventsOutput, bool mirrorX = false, bool mirrorY = false)
+    public void SetupLerpFrom(AnimRenderer oldAnimator, float interpolationLength)
     {
-        time = Mathf.Clamp(time, 0f, Duration);
+        interpolateFromSnapshots = new AnimPartSnapshot[Data.Parts.Count];
+        
+        for (int i = 0; i < interpolateFromSnapshots.Length; i++)
+        {
+            var selfPart = Data.Parts[i];
+            
+            var found = oldAnimator.Data.Parts.FirstOrDefault(p => p.Path == selfPart.Path);
+            if (found == null)
+                continue;
 
+            interpolateFromSnapshots[i] = oldAnimator.GetSnapshot(found);
+        }
+
+        this.interpolationLength = interpolationLength;
+    }
+    
+    private float GetLerpTime()
+    {
+        if (interpolateFromSnapshots == null || interpolationLength == 0)
+            return 0;
+
+        return time / interpolationLength;
+    }
+
+    private void SeekInt(float newTime, Action<EventBase> eventsOutput, bool mirrorX = false, bool mirrorY = false)
+    {
+        newTime = Mathf.Clamp(newTime, 0f, Duration);
+
+        float lerpTime = GetLerpTime();
+        
         // Pass 1: Evaluate curves, make local matrices.
         for (int i = 0; i < Data.Parts.Count; i++)
         {
-            snapshots[i] = new AnimPartSnapshot(Data.Parts[i], this, time);
+            snapshots[i] = new AnimPartSnapshot(Data.Parts[i], this, newTime);
+            
+            // Do interpolation if necessary.
+            if (interpolateFromSnapshots == null)
+                continue;
+
+            ref var toInterpolateFrom = ref interpolateFromSnapshots[i];
+            if (!toInterpolateFrom.Valid)
+                continue;
+
+            snapshots[i] = AnimPartSnapshot.Lerp(toInterpolateFrom, snapshots[i], lerpTime);
         }
 
         // Pass 2: Resolve world matrices using inheritance tree.
         for (int i = 0; i < Data.Parts.Count; i++)
             snapshots[i].UpdateWorldMatrix(mirrorX, mirrorY);
 
-        float start = Mathf.Min(this.time, time);
-        float end = Mathf.Max(this.time, time);
-        this.time = time;
+        float start = Mathf.Min(this.time, newTime);
+        float end = Mathf.Max(this.time, newTime);
+        this.time = newTime;
 
         if (eventsOutput == null)
             return;
@@ -1226,17 +1282,19 @@ public class AnimRenderer : IExposable
 
     private void SpawnDroppedHeads()
     {
-        if (ExecutionOutcome == ExecutionOutcome.Kill)
+        if (ExecutionOutcome != ExecutionOutcome.Kill)
         {
-            var comp = Map.GetAnimManager();
+            return;
+        }
+        
+        var comp = Map.GetAnimManager();
 
-            foreach (var index in Def.spawnDroppedHeadsForPawnIndices)
-            {
-                if (index < 0 || index >= Pawns.Count)
-                    continue;
+        foreach (var index in Def.spawnDroppedHeadsForPawnIndices)
+        {
+            if (index < 0 || index >= Pawns.Count)
+                continue;
 
-                comp.AddDroppedHeadFor(Pawns[index], this);
-            }
+            comp.AddDroppedHeadFor(Pawns[index], this);
         }
     }
 
@@ -1446,7 +1504,6 @@ public class AnimRenderer : IExposable
 
                 if (handCount == 1)                
                     healthDrawMain = false;
-                
             }
         }
 

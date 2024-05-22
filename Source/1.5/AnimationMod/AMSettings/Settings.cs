@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
 using LudeonTK;
 
 namespace AM.AMSettings;
 
+[UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.Members)]
 public class Settings : SimpleSettingsBase
 {
     [TweakValue("Melee Animation")]
@@ -35,6 +37,13 @@ public class Settings : SimpleSettingsBase
                  "Only your colonists can use these skills and they must be activated manually. See the Steam workshop page for more info.")]
     [WebContent("Skills", false)]
     public bool EnableUniqueSkills = true;
+
+    [Label("Unique Skill Cooldown Multiplier")]
+    [Description("A multiplier on the cooldown of all unique skills.\nHigher percentage means longer cooldown.")]
+    [Percentage]
+    [Range(0.01f, 10f)]
+    [VisibleIf(nameof(EnableUniqueSkills))]
+    public float SkillCooldownFactor = 1f;
 
     [Label("Animated Pawns Considered Invisible")]
     [Description("When in an animation, such as an execution, pawns are considered invisible by all other pawns and turrets: " +
@@ -86,7 +95,7 @@ public class Settings : SimpleSettingsBase
     public float GrappleAttemptMTBSecondsEnemy = 40;
 
     [Label("Minimum Melee Skill")]
-    [Description("The minumum melee skill required to use a lasso.\nAffects all pawns.")]
+    [Description("The minimum melee skill required to use a lasso.\nAffects all pawns.")]
     [Range(0, 20)]
     public int MinMeleeSkillToLasso = 4;
 
@@ -98,7 +107,7 @@ public class Settings : SimpleSettingsBase
     [Label("Max Pawn Mass")]
     [Description("The maximum mass that a pawn can have in order for it to be lassoed. The mass is measured in kilograms. You can check the mass of pawns in their Stat sheet.\nSet to zero to disable the mass limit.")]
     [Min(0)]
-    public float MaxLassoMass = 0f;
+    public float MaxLassoMass;
 
     [Label("Max Pawn Size")]
     [Description("The maximum 'body size' that a pawn can have in order for it to be lassoed.\nFor reference, here are some example body sizes:\n" +
@@ -179,7 +188,7 @@ public class Settings : SimpleSettingsBase
 
     [Description("Allows animals to be executed.\nYou are a bad person if you enable this.")]
     [VisibleIf(nameof(EnableExecutions))]
-    public bool AnimalsCanBeExecuted = false;
+    public bool AnimalsCanBeExecuted;
 
     [Range(0, 10)]
     [Percentage]
@@ -251,6 +260,12 @@ public class Settings : SimpleSettingsBase
     [Description("Should pawn hands be displayed holding melee weapons?")]
     [WebContent("HandsEnabled", false)]
     public bool ShowHands = true;
+
+    [Label("Dynamic Hand Color & Appearance")]
+    [VisibleIf(nameof(ShowHands))]
+    [Description("When enabled, the color and appearance of hands will be based on clothes covering hands, then bionic hand color, then skin color, in that order and as appropriate.\n" +
+                 "If disabled, the color of hands will always be based on skin color.")]
+    public bool AdvancedHandVisuals = true;
 
     [Label("Damage Effect")]
     [Description("Enable or disable the damage affect in animations.\n" +
@@ -324,7 +339,7 @@ public class Settings : SimpleSettingsBase
                  "If set to 0, the thread count is automatically determined based on your CPU, and if set to 1 then multi-threaded processing is disabled.\n" +
                  "Set to 1 if you experience error spam caused by a mod conflict, although it will decrease performance considerably.")]
     [Range(0, 64)]
-    public int MaxProcessingThreads = 0;
+    public int MaxProcessingThreads;
 
     [Description("When enabled, multiple CPU threads are used to calculate complex matrix transformation needed for animations.\n" +
                  "The number of threads is given by the Max Processing Threads setting.")]
@@ -347,7 +362,7 @@ public class Settings : SimpleSettingsBase
     [Description("Positive values act as a lethality bonus for friendly pawns (including slaves) in execution & duel outcomes, meaning that they will be lethal more often.")]
     [Percentage]
     [Range(-1, 1)]
-    public float FriendlyPawnLethalityBonus = 0f;
+    public float FriendlyPawnLethalityBonus;
 
     [Label("Friendly Pawn Duel Ability Bonus")]
     [Description("Positive values act as a duel ability bonus for friendly pawns (including slaves), meaning that they will win duels more often.")]
@@ -364,6 +379,11 @@ public class Settings : SimpleSettingsBase
     [Description("Prevents you from accidentally executing a friendly pawn by requiring you to hold the [Shift] key when selecting a friendly pawn for execution.")]
     public bool WarnOfFriendlyExecution = true;
 
+    [Label("Duel Volume")]
+    [Description("Duels make noise when swords clash. This slider controls the volume of those sounds.")]
+    [Percentage]
+    public float DuelVolumePct = 1f;
+    
     [Label("Send Anonymous Patch Statistics")]
     [Description("When a mod is missing a patch (that allows the melee weapons to do animations), the ID of said mod is anonymously logged to " +
                  "let this mod's author know that a patch is needed. The <b>only</b> information logged is: mod ID, mod name, weapon count.\n" +

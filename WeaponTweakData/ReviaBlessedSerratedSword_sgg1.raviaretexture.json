@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sgg1.raviaretexture",
+  "ItemDefName": "ReviaBlessedSerratedSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4946649,
+  "Rotation": 45.0,
+  "BladeStart": 0.12344005,
+  "BladeEnd": 1.176111,
+  "MeleeWeaponType": 6
+}
