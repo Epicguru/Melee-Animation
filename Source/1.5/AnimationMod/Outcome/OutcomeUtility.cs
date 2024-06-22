@@ -418,7 +418,7 @@ public static class OutcomeUtility
 
     private static bool IsDeathless(Pawn pawn)
     {
-        return pawn.genes?.HasGene(GeneDefOf.Deathless) ?? false;
+        return pawn.genes?.HasActiveGene(GeneDefOf.Deathless) ?? false;
     }
 
     private static bool Kill(Pawn killer, Pawn pawn, in AdditionalArgs args)
