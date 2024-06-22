@@ -437,6 +437,13 @@ public class IdleControllerComp : ThingComp
         // Check valid state.
         var pawn = parent as Pawn;
         var weapon = GetMeleeWeapon();
+
+        // If there is no weapon, and Fists of Fury is not active, then don't play an attack animation.
+        if (weapon == null && !Core.IsFistsOfFuryActive)
+        {
+            return;
+        }
+
         var rot = pawn.Rotation;
         var anims = GetAttackAnimationsFor(pawn, weapon, out bool allowPauseEver);
         if (anims == null || anims.Count == 0)
