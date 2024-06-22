@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4.1.4
+    - uses: actions/checkout@v4.1.7
 
     - name: Setup Dotnet
       uses: actions/setup-dotnet@v4.0.0
