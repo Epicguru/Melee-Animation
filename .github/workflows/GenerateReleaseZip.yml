@@ -87,7 +87,7 @@ jobs:
       run: mkdir -p ${{ env.MOD_PATH }}
 
     - name: Download Mod Artifacts from Build Step
-      uses: actions/download-artifact@v4.1.7
+      uses: actions/download-artifact@v4.1.8
       with:
         # Note that 'name' is not specified, this will cause all artifacts from this run to be downloaded.
         merge-multiple: true # Important, this merges the different rimworld version outputs
@@ -123,7 +123,7 @@ jobs:
 
     - name: Download Mod Artifacts from Build Step
       id: download_zip
-      uses: actions/download-artifact@v4.1.7
+      uses: actions/download-artifact@v4.1.8
       with:
         name: ${{ env.MOD_NAME }}
 
