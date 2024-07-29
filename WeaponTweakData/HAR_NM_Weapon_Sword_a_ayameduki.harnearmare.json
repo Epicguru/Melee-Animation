@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ayameduki.harnearmare",
+  "ItemDefName": "HAR_NM_Weapon_Sword_a",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.7112341,
+  "OffY": -0.0492633022,
+  "Rotation": 1.001124,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.244775042,
+  "BladeEnd": 1.70727,
+  "MeleeWeaponType": 6
+}

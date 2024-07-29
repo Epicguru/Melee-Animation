@@ -1,0 +1,13 @@
+{
+  "TextureModID": "miho.fortifiedoutremer",
+  "ItemDefName": "Miho_Weapon_PowerHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3663936,
+  "OffY": -0.0184734464,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.09390729,
+  "BladeEnd": 0.9406149,
+  "MeleeWeaponType": 5
+}

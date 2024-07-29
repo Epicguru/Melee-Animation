@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ancot.milirarace",
+  "ItemDefName": "Milian_KnightHalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.591156,
+  "OffY": -0.0307891183,
+  "Rotation": 46.63805,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.5003271,
+  "BladeEnd": 1.50098133,
+  "MeleeWeaponType": 7
+}

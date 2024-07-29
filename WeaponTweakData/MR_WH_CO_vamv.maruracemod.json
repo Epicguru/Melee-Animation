@@ -1,0 +1,12 @@
+{
+  "TextureModID": "vamv.maruracemod",
+  "ItemDefName": "MR_WH_CO",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.415656358,
+  "OffY": -0.00615822524,
+  "Rotation": 43.55044,
+  "BladeStart": 0.09698615,
+  "BladeEnd": 0.7435627,
+  "MeleeWeaponType": 9
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sutsutman.minchothemintchocoslimeharver",
+  "ItemDefName": "Mincho_PlateMintchocoBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.73586607,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.432590127,
+  "BladeEnd": 1.53484929,
+  "MeleeWeaponType": 7
+}

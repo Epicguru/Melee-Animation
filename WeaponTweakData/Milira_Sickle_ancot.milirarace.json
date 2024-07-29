@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ancot.milirarace",
+  "ItemDefName": "Milira_Sickle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.495708764,
+  "OffY": -0.126236349,
+  "Rotation": 55.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.558826447,
+  "BladeEnd": 1.1961664,
+  "MeleeWeaponType": 2
+}

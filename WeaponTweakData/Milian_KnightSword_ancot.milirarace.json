@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ancot.milirarace",
+  "ItemDefName": "Milian_KnightSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.42181462,
+  "OffY": -0.0153945684,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.1739597,
+  "BladeEnd": 1.10071969,
+  "MeleeWeaponType": 6
+}
