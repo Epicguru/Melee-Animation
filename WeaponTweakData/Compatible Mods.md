@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 22 May 2024, 3:57 PM.`  
+`Updated 29 Jul 2024, 1:37 PM.`  
 
-**Melee Animation supports 2495 weapons from 320 mods.**  
+**Melee Animation supports 2532 weapons from 324 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -26,6 +26,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **[1.4]Silkiera Race** | ayameduki.harsilkiera | 3 | *Epicguru* |
 | **[1.4]Xenoorca Race** | ayameduki.harxenoorca | 2 | *Epicguru* |
 | **[AP] Mime Meme** | alexispopcorn.mime | 3 | *Epicguru* |
+| **[Aya]Nearmare Race** | ayameduki.harnearmare | 1 | *Epicguru* |
 | **[FGO]Fate Grand Order - Styles Apparel Pack** | ricofox233.fgo.stylesapparelpack | 1 | *Epicguru* |
 | **[JDS] StarWars - Armory** | jangodsoul.starwars.bti | 4 | *Epicguru* |
 | **[K4G] Empires of Old - Core** | k4g.core | 6 | *Epicguru* |
@@ -109,7 +110,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **DOOM - Factions (Continued)** | mlie.doomfactions | 1 | *Epicguru* |
 | **Dragonian Prime Race2.0** | vazrua.dragonianraceprime2.0 | 4 | *Epicguru* |
 | **Dragonian Prime Race2.0 (Unofficial)** | eggbed.dragonianraceprime2.0unofficial | 3 | *Epicguru* |
-| **Dragons Descent** | onyxae.dragonsdescent | 5 | *Epicguru* |
+| **Dragons Descent** | onyxae.dragonsdescent | 6 | *Epicguru* |
 | **Dune FedaykinArmor** | pphhyy.fedaykinjihadarmor | 1 | *Epicguru* |
 | **Dungeon Pack** | swablu.quests | 1 | *Epicguru* |
 | **Dusk Armory** | harkon.df.dusk | 3 | *Epicguru* |
@@ -159,14 +160,14 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Kijin Race 3.0** | ssulunge.kijinrace3 | 5 | *Epicguru* |
 | **Kraltech Industries** | blackmarket420.kraltechindustries | 14 | *Epicguru* |
 | **Kurin HAR Edition** | seioch.kurin.har | 3 | *Epicguru* |
-| **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 4 | *Epicguru* |
+| **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 6 | *Epicguru* |
 | **Logistics_Mechanoid** | pal5k.logisticsmechanoid | 1 | *Epicguru* |
 | **M.I.S. - Arknights** | mis.arknights | 170 | *Epicguru* |
 | **MakaiTech** | aranmaho.makai | 7 | *Epicguru* |
 | **MakaiTech - Psycast** | aranmaho.makai.psycast | 1 | *Epicguru* |
 | **Makeshift Melee Weapons** | detvisor.makeshiftweapons | 3 | *Epicguru* |
 | **Malay Themed Expansion** | nstr.malay.themed.expansion | 6 | *Epicguru* |
-| **Maru Race** | vamv.maruracemod | 7 | *Epicguru* |
+| **Maru Race** | vamv.maruracemod | 13 | *Epicguru* |
 | **Mechanite Plague** | chairheir.mechaniteplague | 3 | *Epicguru* |
 | **Medieval Fantasy Quest Rewards Retexture** | serek.fantasyquestrewardsretexture | 7 | *Epicguru* |
 | **Medieval Fantasy Themed Quest Rewards** | botchjob.medievalfantasyquestrewards | 7 | *Epicguru* |
@@ -179,8 +180,9 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Melee Animation** | co.uk.epicguru.meleeanimation | 1 | *Epicguru* |
 | **Melee Please (Continued)** | mlie.meleeplease | 11 | *Epicguru* |
 | **Metal Rim Rising** | mgr.rim | 2 | *Epicguru* |
-| **Miho, the celestial fox** | miho.fortifiedoutremer | 8 | *Epicguru* |
-| **Mincho, The Mint Choco Slime ~ HAR ver.** | sutsutman.minchothemintchocoslimeharver | 3 | *Epicguru* |
+| **Miho, the celestial fox** | miho.fortifiedoutremer | 10 | *Epicguru* |
+| **Milira Race** | ancot.milirarace | 11 | *Epicguru* |
+| **Mincho, The Mint Choco Slime ~ HAR ver.** | sutsutman.minchothemintchocoslimeharver | 4 | *Epicguru* |
 | **Mono Weapons Pack** | cat.monopack | 22 | *Epicguru* |
 | **Moosesian race** | waffelf.moosesianrace | 7 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
@@ -210,7 +212,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Paniel the Automata** | ahndemi.panieltheautomata | 8 | *Epicguru* |
 | **Pawnmorpher** | tachyonite.pawnmorpherpublic | 1 | *Epicguru* |
 | **PLA-Armory** | issaczhuang.pla.armory | 3 | *Epicguru* |
-| **Plasma Weapons Pack** | cat.plasmapack | 16 | *Epicguru* |
+| **Plasma Weapons Pack** | cat.plasmapack | 18 | *Epicguru* |
 | **Polarisbloc - Mechenemy** | rsmaintain.vanya.polarisbloc.mechenemy | 2 | *Epicguru* |
 | **Possessed Weapons** | botchjob.possessedweapons | 11 | *Epicguru* |
 | **Power Tools** | simmin.powertools | 4 | *Epicguru* |
@@ -223,7 +225,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Rabbit Protocol** | amaoto.rabbitprotocol | 1 | *Epicguru* |
 | **Race to the Rim** | sargoskar.racetotherim | 2 | *Epicguru* |
 | **Ratkin Auxiliary framework** | darkkai.ratkinextensionframework | 1 | *Epicguru* |
-| **Ratkin Faction:Oberonia aurea** | oark.ratkinfaction.oberoniaaurea | 3 | *Epicguru* |
+| **Ratkin Faction:Oberonia aurea** | oark.ratkinfaction.oberoniaaurea | 9 | *Epicguru* |
 | **Ratkin Texture Reset** | fxz.texturereset.ratkin | 25 | *Epicguru* |
 | **Ratkin Weapons+** | bbb.ratkinweapon.morefailure | 11 | *Epicguru* |
 | **ReGrowth: Boiling** | regrowth.botr.boilingforest | 1 | *Epicguru* |
@@ -275,6 +277,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Skyrim Glass Weapons Pack** | doublec.skyrimglassweaponspack | 6 | *Epicguru* |
 | **Skyrim Orcish Weapons Pack** | doublec.skyrimorcishweaponspack | 6 | *Epicguru* |
 | **Skyrim Steel Weapons Pack** | doublec.skyrimsteelweaponspack | 6 | *Epicguru* |
+| **Spacer Arsenal** | det.spacerarsenal | 1 | *Epicguru* |
 | **Sparkling Worlds - Full Mod** | albion.sparklingworlds.full | 2 | *Epicguru* |
 | **Sparkling Worlds - Modular Core - Reduced features** | albion.sparklingworlds.core | 1 | *Epicguru* |
 | **Sparkling Worlds Addon - Weapons - Standalone Addon** | albion.sparklingworlds.addon.weapons | 2 | *Epicguru* |
@@ -314,7 +317,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Vanilla Melee Retexture** | zodgilla.vanillameleeretexture | 9 | *Epicguru* |
 | **Vanilla Psycasts Expanded** | vanillaexpanded.vpsycastse | 3 | *Epicguru* |
 | **Vanilla Races Expanded - Archon** | vanillaracesexpanded.archon | 1 | *Epicguru* |
-| **Vanilla Textures Expanded** | vanillaexpanded.vtexe | 28 | *Epicguru* |
+| **Vanilla Textures Expanded** | vanillaexpanded.vtexe | 29 | *Epicguru* |
 | **Vanilla Weapons Expanded** | vanillaexpanded.vwe | 11 | *Epicguru* |
 | **Vanilla Weapons Expanded - Laser** | vanillaexpanded.vwel | 1 | *Epicguru* |
 | **Vanilla Weapons Expanded - Non-Lethal** | vanillaexpanded.vwenl | 1 | *Epicguru* |
@@ -325,6 +328,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Vaults of Vagar** | alexprotopopov.vaultsofvagar | 1 | *Epicguru* |
 | **VGP Garden Drinks** | dismarzero.vgp.vgpgardendrinks | 12 | *Epicguru* |
 | **VGP Vegetable Garden** | dismarzero.vgp.vgpvegetablegarden | 3 | *Epicguru* |
+| **Vivi Race** | gguake.race.vivi | 3 | *Epicguru* |
 | **Warcasket Persona Weapons** | metalocif.warcasketpersonaweapons | 4 | *Epicguru* |
 | **Warcaskets: Adeptus Astartes** | buffsboy474.smwarcaskets.ideology.testing | 3 | *Epicguru* |
 | **Warhammer 40.000 - Core** | phonicmas.40kcore | 4 | *Epicguru* |
