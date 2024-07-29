@@ -1,0 +1,11 @@
+{
+  "TextureModID": "det.spacerarsenal",
+  "ItemDefName": "DV_MeleeWeapon_SparkSabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.298656642,
+  "OffY": -0.0307893753,
+  "BladeStart": 0.1585649,
+  "BladeEnd": 0.7774312,
+  "MeleeWeaponType": 6
+}

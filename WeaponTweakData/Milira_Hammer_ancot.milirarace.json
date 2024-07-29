@@ -1,0 +1,14 @@
+{
+  "TextureModID": "ancot.milirarace",
+  "ItemDefName": "Milira_Hammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6712079,
+  "OffY": 0.00307884812,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 1.03298271,
+  "BladeEnd": 1.350113,
+  "MeleeWeaponType": 1
+}

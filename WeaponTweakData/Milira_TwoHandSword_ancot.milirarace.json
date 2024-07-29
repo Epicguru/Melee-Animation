@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ancot.milirarace",
+  "ItemDefName": "Milira_TwoHandSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6096297,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.217064783,
+  "BladeEnd": 1.63645422,
+  "MeleeWeaponType": 6
+}

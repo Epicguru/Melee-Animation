@@ -1,0 +1,15 @@
+{
+  "TextureModID": "inoshishi3.kttfde",
+  "ItemDefName": "MeleeWeapon_Spoon",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.113920361,
+  "OffY": 0.01231619,
+  "Rotation": 9.493865,
+  "ScaleX": 0.35,
+  "ScaleY": 0.35,
+  "HandsMode": 1,
+  "BladeStart": 0.06619704,
+  "BladeEnd": 0.2878801,
+  "MeleeWeaponType": 8
+}

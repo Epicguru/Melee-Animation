@@ -1,0 +1,14 @@
+{
+  "TextureModID": "gguake.race.vivi",
+  "ItemDefName": "VV_Mead",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.166262567,
+  "Rotation": -90.0,
+  "ScaleX": 0.7,
+  "ScaleY": 0.7,
+  "HandsMode": 1,
+  "BladeStart": 0.09698615,
+  "BladeEnd": 0.484932274,
+  "MeleeWeaponType": 8
+}

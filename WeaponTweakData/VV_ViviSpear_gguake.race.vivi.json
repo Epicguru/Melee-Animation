@@ -1,0 +1,11 @@
+{
+  "TextureModID": "gguake.race.vivi",
+  "ItemDefName": "VV_ViviSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2617092,
+  "Rotation": 45.0,
+  "BladeStart": 0.1431706,
+  "BladeEnd": 0.8882727,
+  "MeleeWeaponType": 5
+}

@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ancot.milirarace",
+  "ItemDefName": "Milian_KnightHammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2832623,
+  "OffY": -0.00615799427,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.358695924,
+  "BladeEnd": 0.67890507,
+  "MeleeWeaponType": 1
+}

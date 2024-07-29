@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ancot.milirarace",
+  "ItemDefName": "Milian_KnightLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.628102839,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.429511279,
+  "BladeEnd": 1.56871772,
+  "MeleeWeaponType": 5
+}
