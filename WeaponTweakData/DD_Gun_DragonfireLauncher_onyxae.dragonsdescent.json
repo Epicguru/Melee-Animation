@@ -1,0 +1,12 @@
+{
+  "TextureModID": "onyxae.dragonsdescent",
+  "ItemDefName": "DD_Gun_DragonfireLauncher",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.230920166,
+  "OffY": 0.0554205142,
+  "Rotation": 5.0,
+  "BladeStart": 0.08467071,
+  "BladeEnd": 0.706615865,
+  "MeleeWeaponType": 8
+}

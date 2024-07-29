@@ -47,10 +47,10 @@ jobs:
         rimworld-version: [1.4, 1.5] # Add Rimworld version here!
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4.1.4
+      uses: actions/checkout@v4.1.7
       
     - name: Setup Dotnet
-      uses: actions/setup-dotnet@v4.0.0
+      uses: actions/setup-dotnet@v4.0.1
       with:
         dotnet-version: 8.0.x
 
@@ -61,7 +61,7 @@ jobs:
     # whatever you want. It will not upload any empty directories, those with only
     # hidden files will also be excluded.
     - name: Upload Mod Artifacts (RW ${{ matrix.rimworld-version }})
-      uses: actions/upload-artifact@v4.3.3
+      uses: actions/upload-artifact@v4.3.4
       with:
         name: build-${{ matrix.rimworld-version }}
         retention-days: 1
@@ -87,7 +87,7 @@ jobs:
       run: mkdir -p ${{ env.MOD_PATH }}
 
     - name: Download Mod Artifacts from Build Step
-      uses: actions/download-artifact@v4.1.7
+      uses: actions/download-artifact@v4.1.8
       with:
         # Note that 'name' is not specified, this will cause all artifacts from this run to be downloaded.
         merge-multiple: true # Important, this merges the different rimworld version outputs
@@ -99,7 +99,7 @@ jobs:
         zip -r ./${{ env.MOD_NAME }}.zip ./${{ env.MOD_NAME }}/*
 
     - name: Upload Mod Zip Artifact
-      uses: actions/upload-artifact@v4.3.3
+      uses: actions/upload-artifact@v4.3.4
       with:
         name: ${{ env.MOD_NAME }}
         path: ${{ env.MOD_PATH }}.zip
@@ -123,7 +123,7 @@ jobs:
 
     - name: Download Mod Artifacts from Build Step
       id: download_zip
-      uses: actions/download-artifact@v4.1.7
+      uses: actions/download-artifact@v4.1.8
       with:
         name: ${{ env.MOD_NAME }}
 

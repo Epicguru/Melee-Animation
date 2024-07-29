@@ -1,0 +1,11 @@
+{
+  "TextureModID": "inoshishi3.kttfde",
+  "ItemDefName": "Kurin_MeleeWeapon_Longsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.360235333,
+  "Rotation": 45.0,
+  "BladeStart": 0.09698615,
+  "BladeEnd": 0.9190624,
+  "MeleeWeaponType": 6
+}

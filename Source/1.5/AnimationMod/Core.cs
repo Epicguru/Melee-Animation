@@ -22,6 +22,8 @@ namespace AM;
 [HotSwapAll]
 public class Core : Mod
 {
+    public const bool ENABLE_PATCH_REQUEST_API = false;
+
     public static readonly HashSet<ThingDef> ForceConsiderTheseMeleeWeapons = new HashSet<ThingDef>();
     public static Func<Pawn, float> GetBodyDrawSizeFactor = _ => 1f;
     public static string ModTitle => ModContent?.Name;
@@ -258,7 +260,8 @@ public class Core : Mod
             Warn($"{pair.Key} '{pair.Value.name}' has {pair.Value.wc} missing weapon tweak data.");
         }
 
-        if (Settings.SendStatistics && !Settings.IsFirstTimeRunning)
+#pragma warning disable CS0162 // Unreachable code detected
+        if (Settings.SendStatistics && !Settings.IsFirstTimeRunning && ENABLE_PATCH_REQUEST_API)
         {
             var modBuildTime = GetBuildDate(Assembly.GetExecutingAssembly());
 
@@ -282,11 +285,12 @@ public class Core : Mod
                 Warn($"Reporting missing mod/weapons failed with exception:\n{t.Exception}");
             });
         }
+#pragma warning restore CS0162 // Unreachable code detected
         else
         {
             Log(Settings.IsFirstTimeRunning
                 ? "Mod is running for the first time - log sending is disabled."
-                : "Skipping reporting of missing mod/weapons because user opted out.");
+                : "Skipping reporting of missing mod/weapons because user opted out or the feature is disabled by the developer.");
         }
 
         if (!Settings.IsFirstTimeRunning)

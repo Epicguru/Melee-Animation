@@ -1,0 +1,19 @@
+{
+  "TextureModID": "cat.plasmapack",
+  "ItemDefName": "CAT_PlasmaCleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.514182448,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.340222269,
+  "BladeEnd": 1.307008,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9,
+    "g": 0.689,
+    "b": 0.11,
+    "a": 1.0
+  }
+}

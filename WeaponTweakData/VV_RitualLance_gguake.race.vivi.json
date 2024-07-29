@@ -1,0 +1,13 @@
+{
+  "TextureModID": "gguake.race.vivi",
+  "ItemDefName": "VV_RitualLance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5418927,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.854404747,
+  "BladeEnd": 1.408613,
+  "MeleeWeaponType": 6
+}

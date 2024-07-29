@@ -1,0 +1,13 @@
+{
+  "TextureModID": "ancot.milirarace",
+  "ItemDefName": "Milian_RookBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.387946129,
+  "OffY": 0.0123159587,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.217064783,
+  "BladeEnd": 1.09456146,
+  "MeleeWeaponType": 6
+}

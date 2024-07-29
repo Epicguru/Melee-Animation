@@ -1,0 +1,13 @@
+{
+  "TextureModID": "miho.fortifiedoutremer",
+  "ItemDefName": "Miho_Weapon_RifleRecoillessSharp",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.252472669,
+  "OffY": 0.0215525329,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.100065015,
+  "BladeEnd": 0.845167637,
+  "MeleeWeaponType": 1
+}
