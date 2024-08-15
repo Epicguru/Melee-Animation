@@ -1,0 +1,18 @@
+{
+  "TextureModID": "cat.veacidweaponspack",
+  "ItemDefName": "CAT_ToxCurvedBladeBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.353343278,
+  "OffY": 0.006145194,
+  "Rotation": 46.42643,
+  "BladeStart": 0.12705,
+  "BladeEnd": 0.876752257,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.29,
+    "g": 1.0,
+    "b": 0.212,
+    "a": 0.902
+  }
+}

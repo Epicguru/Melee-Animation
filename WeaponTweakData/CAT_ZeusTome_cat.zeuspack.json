@@ -1,0 +1,9 @@
+{
+  "TextureModID": "cat.zeuspack",
+  "ItemDefName": "CAT_ZeusTome",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.178208113,
+  "OffY": 0.0430156663,
+  "MeleeWeaponType": 8
+}

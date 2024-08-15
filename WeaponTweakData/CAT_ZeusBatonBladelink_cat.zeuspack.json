@@ -1,0 +1,12 @@
+{
+  "TextureModID": "cat.zeuspack",
+  "ItemDefName": "CAT_ZeusBatonBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.276529849,
+  "OffY": -0.101394176,
+  "HandsMode": 1,
+  "BladeStart": 0.0502360873,
+  "BladeEnd": 0.664745867,
+  "MeleeWeaponType": 9
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "limetreesnake.military",
+  "ItemDefName": "LTS_Morakniv",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.125974536,
+  "OffY": 0.00614517927,
+  "HandsMode": 1,
+  "BladeStart": 0.105542161,
+  "BladeEnd": 0.3482733,
+  "MeleeWeaponType": 48
+}

@@ -1,0 +1,19 @@
+{
+  "TextureModID": "limetreesnake.military",
+  "ItemDefName": "LTS_ChargeGlove",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.17513518,
+  "OffY": 0.0030724667,
+  "Rotation": -2.651587,
+  "HandsMode": 2,
+  "BladeStart": 0.228443712,
+  "BladeEnd": 0.4250872,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.9,
+    "g": 0.689,
+    "b": 0.11,
+    "a": 1.0
+  }
+}

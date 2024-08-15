@@ -1,0 +1,11 @@
+{
+  "TextureModID": "limetreesnake.military",
+  "ItemDefName": "LTS_ArmingSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.491608262,
+  "Rotation": 135.0,
+  "BladeStart": 0.09017928,
+  "BladeEnd": 1.14406419,
+  "MeleeWeaponType": 6
+}
