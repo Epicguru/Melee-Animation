@@ -66,6 +66,8 @@
   <AM.Error.Exec.Downed>{Exec} is downed</AM.Error.Exec.Downed>
   <AM.Error.Exec.DownedTarget>{Target} is downed. Downed pawns cannot be executed.</AM.Error.Exec.DownedTarget>
   <AM.Error.Exec.DownedTarget.Short>{Target} is downed</AM.Error.Exec.DownedTarget.Short>
+  <AM.Error.Exec.BadRace>{Target} is not a valid target.</AM.Error.Exec.BadRace>
+  <AM.Error.Exec.BadRace.Short>{Target} is not a valid target</AM.Error.Exec.BadRace.Short>
 
   <AM.Error.Grapple.AlreadyTarget>{Target} is already being lassoed</AM.Error.Grapple.AlreadyTarget>
   <AM.Error.Grapple.AlreadyTarget.Short>Already being lassoed</AM.Error.Grapple.AlreadyTarget.Short>

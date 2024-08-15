@@ -120,7 +120,9 @@ public class AnimDef : Def
         get
         {
             if (resolvedData == null)
+            {
                 ResolveData();
+            }
 
             return resolvedData;
         }
@@ -130,7 +132,9 @@ public class AnimDef : Def
         get
         {
             if (resolvedData == null)
+            {
                 ResolveData();
+            }
 
             return resolvedNonLethalData ?? resolvedData;
         }
