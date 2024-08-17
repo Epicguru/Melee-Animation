@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_Sabre_Low",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.448492646,
+  "OffY": -5.14090061E-07,
+  "Rotation": 42.57466,
+  "BladeStart": 0.14163354,
+  "BladeEnd": 1.13828516,
+  "MeleeWeaponType": 6
+}

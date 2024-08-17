@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_Spear_Low",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.64159435,
+  "OffY": -0.0249161869,
+  "Rotation": 45.0,
+  "ScaleX": 1.8,
+  "ScaleY": 1.8,
+  "BladeStart": 0.132289648,
+  "BladeEnd": 1.85462856,
+  "MeleeWeaponType": 5
+}

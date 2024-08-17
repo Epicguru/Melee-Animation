@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_Lance",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6851977,
+  "OffY": -0.0311451256,
+  "Rotation": 45.0,
+  "ScaleX": 1.8,
+  "ScaleY": 1.8,
+  "BladeStart": 0.15720585,
+  "BladeEnd": 1.87643027,
+  "MeleeWeaponType": 5
+}

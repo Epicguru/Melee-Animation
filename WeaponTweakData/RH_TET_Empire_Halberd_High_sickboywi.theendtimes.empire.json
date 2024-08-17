@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_Halberd_High",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6509382,
+  "OffY": -0.040489018,
+  "Rotation": 45.0,
+  "ScaleX": 1.8,
+  "ScaleY": 1.8,
+  "BladeStart": 0.97944355,
+  "BladeEnd": 1.736276,
+  "MeleeWeaponType": 7
+}
