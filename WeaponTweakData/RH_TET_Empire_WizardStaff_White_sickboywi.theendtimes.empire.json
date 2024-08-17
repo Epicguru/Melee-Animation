@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_WizardStaff_White",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5076695,
+  "OffY": -0.0373745561,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.231954962,
+  "BladeEnd": 1.18188858,
+  "MeleeWeaponType": 1
+}

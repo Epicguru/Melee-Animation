@@ -1,0 +1,18 @@
+{
+  "TextureModID": "blackmarket420.enchantedsword",
+  "ItemDefName": "Melee_EnchantedSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.335953057,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.15487726,
+  "BladeEnd": 0.8452763,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.170615748,
+    "g": 0.4604488,
+    "b": 0.96913594,
+    "a": 0.91481483
+  }
+}

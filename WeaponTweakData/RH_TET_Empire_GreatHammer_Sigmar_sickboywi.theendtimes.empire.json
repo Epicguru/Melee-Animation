@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_GreatHammer_Sigmar",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.495211124,
+  "OffY": -0.02180174,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.7240516,
+  "BladeEnd": 1.066651,
+  "MeleeWeaponType": 6
+}
