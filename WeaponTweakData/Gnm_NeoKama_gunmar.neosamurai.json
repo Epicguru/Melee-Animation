@@ -1,0 +1,13 @@
+{
+  "TextureModID": "gunmar.neosamurai",
+  "ItemDefName": "Gnm_NeoKama",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.06452401,
+  "OffY": -0.0460883975,
+  "ScaleX": 1.05,
+  "ScaleY": 1.05,
+  "BladeStart": 0.222298756,
+  "BladeEnd": 0.4250872,
+  "MeleeWeaponType": 18
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_MeleeWeapon_ButcherCleaver",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.187425569,
+  "OffY": -0.0276527852,
+  "HandsMode": 1,
+  "BladeStart": 0.0840338245,
+  "BladeEnd": 0.551061749,
+  "MeleeWeaponType": 48
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "limetreesnake.military",
+  "ItemDefName": "LTS_Ulfberht",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5069706,
+  "Rotation": 135.0,
+  "BladeStart": 0.0993967056,
+  "BladeEnd": 1.17478943,
+  "MeleeWeaponType": 6
+}

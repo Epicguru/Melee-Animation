@@ -1,0 +1,11 @@
+{
+  "TextureModID": "cat.zeuspack",
+  "ItemDefName": "CAT_StellicCaneBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3656336,
+  "Rotation": 45.0,
+  "BladeStart": 0.0993967056,
+  "BladeEnd": 0.9935088,
+  "MeleeWeaponType": 1
+}

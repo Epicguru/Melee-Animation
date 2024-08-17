@@ -1,0 +1,11 @@
+{
+  "TextureModID": "limetreesnake.military",
+  "ItemDefName": "LTS_Pike",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3226175,
+  "Rotation": 135.0,
+  "BladeStart": 0.57871455,
+  "BladeEnd": 0.975073457,
+  "MeleeWeaponType": 7
+}

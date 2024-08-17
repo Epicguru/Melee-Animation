@@ -1,0 +1,11 @@
+{
+  "TextureModID": "limetreesnake.military",
+  "ItemDefName": "LTS_BatonCharged",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.258094,
+  "OffY": -0.01536262,
+  "BladeStart": 0.102469184,
+  "BladeEnd": 0.7354148,
+  "MeleeWeaponType": 1
+}

@@ -15,6 +15,8 @@ namespace AM.Controller;
 
 public class ActionController
 {
+    public static readonly List<Predicate<Pawn>> CanBeExecutedPredicates = [];
+
     public static Func<IntVec3, Map, bool> LOSValidator => CheckCell;
 
     private static bool CheckCell(IntVec3 cell, Map map)
@@ -263,7 +265,7 @@ public class ActionController
         }
 
         GetPossibleAdjacentExecutions(req, allAnims);
-        var ep = req.Executioner.Position;
+        var attackerPosition = req.Executioner.Position;
 
         // Check if the lasso can be used by getting a generic report.
         bool canUseLasso = req.CanUseLasso;
@@ -283,194 +285,204 @@ public class ActionController
             }
         }
 
-        ExecutionAttemptReport Process(Pawn target)
-        {
-            // Dead or downed.
-            if (target.Dead)
-                return new ExecutionAttemptReport(req, "DeadTarget");
-            if (target.Downed)
-                return new ExecutionAttemptReport(req, "DownedTarget");
-
-            // Animal when not allowed.
-            if (!Core.Settings.AnimalsCanBeExecuted && target.def.race.Animal)
-                return new ExecutionAttemptReport(req, "Internal", "Animals not allowed"); // Internal error because the UI should do the animal filtering.
-            
-            // In animation.
-            if (target.IsInAnimation())
-                return new ExecutionAttemptReport(req, "InAnimation");
-
-            // Make report assuming something will work out...
-            var report = new ExecutionAttemptReport
-            {
-                Target = target,
-                PossibleExecutions = ExecutionAttemptReport.BorrowList(),
-                CanExecute = true
-            };
-            report.PossibleExecutions.Clear();
-
-            // Check immediately adjacent.
-            var tp = target.Position;
-            if (tempStartDataList.Count > 0 && tp.z == ep.z)
-            {
-                bool east = tp.x == ep.x + 1;
-                bool west = tp.x == ep.x - 1;
-
-                if (west)
-                {
-                    foreach (var start in tempStartDataList)
-                    {
-                        if (start.FlipX)
-                        {
-                            report.PossibleExecutions.Add(new PossibleExecution
-                            {
-                                Animation = start,
-                                LassoToHere = null
-                            });
-                        }
-                    }
-
-                    // If anything can be done immediately, it takes priority over anything else.
-                    if (report.PossibleExecutions.Count > 0)
-                        return report;
-                }
-                else if (east)
-                {
-                    foreach (var start in tempStartDataList)
-                    {
-                        if (!start.FlipX)
-                        {
-                            report.PossibleExecutions.Add(new PossibleExecution
-                            {
-                                Animation = start,
-                                LassoToHere = null
-                            });
-                        }
-                    }
-
-                    // If anything can be done immediately, it takes priority over anything else.
-                    if (report.PossibleExecutions.Count > 0)
-                        return report;
-                }
-
-                // If the target is directly adjacent but still could not be executed,
-                // it must be because there was no space to perform any animation there.
-                if (east || west)
-                {
-                    report.Dispose();
-                    return new ExecutionAttemptReport(req, "NoSpace");
-                }
-            }
-
-            // Can the lasso be used?
-            if (canUseLasso)
-            {
-                // Generate a report.
-                var lassoReport = GetGrappleReport(new GrappleAttemptRequest
-                {
-                    DoNotCheckCooldown = true,
-                    DoNotCheckLasso = true,
-                    Grappler = req.Executioner,
-                    GrappleSpotPickingBehaviour = GrappleSpotPickingBehaviour.OnlyAdjacent,
-                    OccupiedMask = req.SmallOccupiedMask,
-                    Target = target,
-                    NoErrorMessages = true,
-                    TrustLassoUsability = req.TrustLassoUsability,
-                    LassoRange = req.LassoRange
-                });
-
-                // The lasso can bring them into range (directly adjacent)!
-                if (lassoReport.CanGrapple)
-                {
-                    bool flipX = lassoReport.DestinationCell.x < ep.x;
-
-                    // Find all execution animations that can be done from the grapple side.
-                    foreach (var start in tempStartDataList)
-                    {
-                        if (start.FlipX == flipX)
-                        {
-                            report.PossibleExecutions.Add(new PossibleExecution
-                            {
-                                Animation = start,
-                                LassoToHere = lassoReport.DestinationCell
-                            });
-                        }
-                    }
-
-                    // If any executions can be done, then this is the optimal execution route.
-                    if (report.PossibleExecutions.Count > 0)
-                    {
-                        return report;
-                    }
-                }
-            }
-
-            // Is the executioner allowed to walk to the target?
-            if (!req.CanWalk)
-            {
-                report.Dispose();
-                return new ExecutionAttemptReport(req, "NoWalk");
-            }
-
-            // The target is not adjacent and the lasso cannot be used.
-            // Must walk...
-            bool canReach = req.Executioner.CanReach(target, PathEndMode.Touch, Danger.Deadly);
-            if (!canReach)
-            {
-                // There is absolutely no way to reach the target by walking.
-                // Oh well.
-                report.Dispose();
-                return new ExecutionAttemptReport(req, "NoPath");
-            }
-
-            // Okay, attempt to walk + execute.
-            return report;
-        }
-
         if (req.Target != null)
         {
-            yield return Process(req.Target);
+            yield return MakeExecReportForTarget(canUseLasso, attackerPosition, req, req.Target);
         }
 
         if (req.Targets == null)
+        {
             yield break;
+        }
 
         foreach (var target in req.Targets)
         {
-            yield return Process(target);
+            yield return MakeExecReportForTarget(canUseLasso, attackerPosition, req, target);
         }
-        
+    }
+
+    private ExecutionAttemptReport MakeExecReportForTarget(bool canUseLasso, in IntVec3 attackerPosition, in ExecutionAttemptRequest req, Pawn target)
+    {
+        // Dead or downed.
+        if (target.Dead)
+            return new ExecutionAttemptReport(req, "DeadTarget");
+        if (target.Downed)
+            return new ExecutionAttemptReport(req, "DownedTarget");
+
+        // Animal when not allowed.
+        if (!Core.Settings.AnimalsCanBeExecuted && target.def.race.Animal)
+            return new ExecutionAttemptReport(req, "Internal", "Animals not allowed"); // Internal error because the UI should do the animal filtering.
+
+        // Invalid target pawn or pawn race (currently used for Vehicles).
+        foreach (var predicate in CanBeExecutedPredicates)
+        {
+            if (!predicate(req.Target))
+            {
+                return new ExecutionAttemptReport(req, "BadRace");
+            }
+        }
+
+        // In animation.
+        if (target.IsInAnimation())
+            return new ExecutionAttemptReport(req, "InAnimation");
+
+        // Make report assuming something will work out...
+        var report = new ExecutionAttemptReport
+        {
+            Target = target,
+            PossibleExecutions = ExecutionAttemptReport.BorrowList(),
+            CanExecute = true
+        };
+        report.PossibleExecutions.Clear();
+
+        // Check immediately adjacent.
+        var tp = target.Position;
+        if (tempStartDataList.Count > 0 && tp.z == attackerPosition.z)
+        {
+            bool east = tp.x == attackerPosition.x + 1;
+            bool west = tp.x == attackerPosition.x - 1;
+
+            if (west)
+            {
+                foreach (var start in tempStartDataList)
+                {
+                    if (start.FlipX)
+                    {
+                        report.PossibleExecutions.Add(new PossibleExecution
+                        {
+                            Animation = start,
+                            LassoToHere = null
+                        });
+                    }
+                }
+
+                // If anything can be done immediately, it takes priority over anything else.
+                if (report.PossibleExecutions.Count > 0)
+                    return report;
+            }
+            else if (east)
+            {
+                foreach (var start in tempStartDataList)
+                {
+                    if (!start.FlipX)
+                    {
+                        report.PossibleExecutions.Add(new PossibleExecution
+                        {
+                            Animation = start,
+                            LassoToHere = null
+                        });
+                    }
+                }
+
+                // If anything can be done immediately, it takes priority over anything else.
+                if (report.PossibleExecutions.Count > 0)
+                    return report;
+            }
+
+            // If the target is directly adjacent but still could not be executed,
+            // it must be because there was no space to perform any animation there.
+            if (east || west)
+            {
+                report.Dispose();
+                return new ExecutionAttemptReport(req, "NoSpace");
+            }
+        }
+
+        // Can the lasso be used?
+        if (canUseLasso)
+        {
+            // Generate a report.
+            var lassoReport = GetGrappleReport(new GrappleAttemptRequest
+            {
+                DoNotCheckCooldown = true,
+                DoNotCheckLasso = true,
+                Grappler = req.Executioner,
+                GrappleSpotPickingBehaviour = GrappleSpotPickingBehaviour.OnlyAdjacent,
+                OccupiedMask = req.SmallOccupiedMask,
+                Target = target,
+                NoErrorMessages = true,
+                TrustLassoUsability = req.TrustLassoUsability,
+                LassoRange = req.LassoRange
+            });
+
+            // The lasso can bring them into range (directly adjacent)!
+            if (lassoReport.CanGrapple)
+            {
+                bool flipX = lassoReport.DestinationCell.x < attackerPosition.x;
+
+                // Find all execution animations that can be done from the grapple side.
+                foreach (var start in tempStartDataList)
+                {
+                    if (start.FlipX == flipX)
+                    {
+                        report.PossibleExecutions.Add(new PossibleExecution
+                        {
+                            Animation = start,
+                            LassoToHere = lassoReport.DestinationCell
+                        });
+                    }
+                }
+
+                // If any executions can be done, then this is the optimal execution route.
+                if (report.PossibleExecutions.Count > 0)
+                {
+                    return report;
+                }
+            }
+        }
+
+        // Is the executioner allowed to walk to the target?
+        if (!req.CanWalk)
+        {
+            report.Dispose();
+            return new ExecutionAttemptReport(req, "NoWalk");
+        }
+
+        // The target is not adjacent and the lasso cannot be used.
+        // Must walk...
+        bool canReach = req.Executioner.CanReach(target, PathEndMode.Touch, Danger.Deadly);
+        if (!canReach)
+        {
+            // There is absolutely no way to reach the target by walking.
+            // Oh well.
+            report.Dispose();
+            return new ExecutionAttemptReport(req, "NoPath");
+        }
+
+        // Okay, attempt to walk + execute.
+        return report;
     }
 
     public DuelAttemptReport GetDuelReport(in DuelAttemptRequest req)
     {
-        bool CheckPawn(Pawn pawn, out string cat, out string msg, in DuelAttemptRequest req)
+        bool CheckPawn(Pawn pawn, out string outCat, out string outMsg, in DuelAttemptRequest req)
         {
-            msg = null;
+            outMsg = null;
 
             // Null.
             if (pawn == null)
             {
-                cat = "Internal";
-                msg = "Pawn is null.";
+                outCat = "Internal";
+                outMsg = "Pawn is null.";
                 return false;
             }
 
             // Not spawned.
             if (!pawn.Spawned)
             {
-                cat = "NotSpawned";
+                outCat = "NotSpawned";
                 return false;
             }
 
             // Dead or downed.
             if (pawn.Dead)
             {
-                cat = "Dead";
+                outCat = "Dead";
                 return false;
             }
             if (pawn.Downed)
             {
-                cat = "Downed";
+                outCat = "Downed";
                 return false;
             }
 
@@ -479,7 +491,7 @@ public class ActionController
             {
                 if (!pawn.GetMeleeData().IsFriendlyDuelOffCooldown())
                 {
-                    cat = "OnCooldown";
+                    outCat = "OnCooldown";
                     return false;
                 }
             }
@@ -491,24 +503,24 @@ public class ActionController
             // In an animation.
             if (pawn.TryGetAnimator() != null)
             {
-                cat = "NotSpawned"; // The message is quite generic.
+                outCat = "NotSpawned"; // The message is quite generic.
                 return false;
             }
 
             // Being lassoed.
             if (GrabUtility.IsBeingTargetedForGrapple(pawn))
             {
-                cat = "NotSpawned";
+                outCat = "NotSpawned";
                 return false;
             }
 
-            cat = null;
+            outCat = null;
             return true;
         }
 
         // Check both pawns for basic stuff:
         if (!CheckPawn(req.A, out var cat, out var msg, req))
-            return new DuelAttemptReport(req, cat, msg, true);
+            return new DuelAttemptReport(req, cat, msg);
         if (!CheckPawn(req.B, out cat, out msg, req))
             return new DuelAttemptReport(req, cat, msg, false);
 
@@ -564,8 +576,10 @@ public class ActionController
     {
         tempStartDataList.Clear();
 
-        if (!args.EastCell && !args.WestCell)
+        if (args is {EastCell: false, WestCell: false})
+        {
             return;
+        }
 
         var weapon = args.Executioner?.GetFirstMeleeWeapon();
         if (weapon == null)

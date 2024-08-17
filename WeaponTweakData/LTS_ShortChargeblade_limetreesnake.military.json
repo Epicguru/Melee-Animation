@@ -1,0 +1,17 @@
+{
+  "TextureModID": "limetreesnake.military",
+  "ItemDefName": "LTS_ShortChargeblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2488766,
+  "OffY": -0.009217262,
+  "BladeStart": 0.136267424,
+  "BladeEnd": 0.6248032,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.9,
+    "g": 0.689,
+    "b": 0.11,
+    "a": 1.0
+  }
+}
