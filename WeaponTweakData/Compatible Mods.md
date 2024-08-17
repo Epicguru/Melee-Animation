@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 29 Jul 2024, 1:37 PM.`  
+`Updated 17 Aug 2024, 7:35 PM.`  
 
-**Melee Animation supports 2532 weapons from 324 mods.**  
+**Melee Animation supports 2608 weapons from 329 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -32,6 +32,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **[K4G] Empires of Old - Core** | k4g.core | 6 | *Epicguru* |
 | **[K4G] RimWorld War 2** | k4g.rww2 | 12 | *Epicguru* |
 | **[K4G] Vanilla Weapon Retextures** | k4g.vwr | 18 | *Epicguru* |
+| **[LTS]Military** | limetreesnake.military | 10 | *Epicguru* |
 | **[LTS]Tenants** | limetreesnake.tenants | 3 | *Epicguru* |
 | **[Race]WarShipGirl R&#124;战舰少女R** | warshipgirlr.alienraces | 3 | *Epicguru* |
 | **[RF]Berserk - Character Apparel Pack** | rf.berserk.armory | 1 | *Epicguru* |
@@ -123,6 +124,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Elden Rim: Armory** | sharpie.eldenrima | 12 | *Epicguru* |
 | **El's Archeology** | ellit.archeology | 8 | *Epicguru* |
 | **Eltex Weaponry** | sirvan.eltexweaponry | 1 | *Epicguru* |
+| **Enchanted Sword** | blackmarket420.enchantedsword | 2 | *Epicguru* |
 | **Epona race Renaissance** | epona.eponarenaissance | 10 | *Epicguru* |
 | **Erin's Valheim Creatures** | erin.valheim.creatures | 1 | *Epicguru* |
 | **ExGT Bio Mechanoid** | xmb.breadmech | 2 | *Epicguru* |
@@ -172,7 +174,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Medieval Fantasy Quest Rewards Retexture** | serek.fantasyquestrewardsretexture | 7 | *Epicguru* |
 | **Medieval Fantasy Themed Quest Rewards** | botchjob.medievalfantasyquestrewards | 7 | *Epicguru* |
 | **Medieval Madness: Tools of the Trade** | madman.toolsofthetrade | 44 | *Epicguru* |
-| **Medieval Overhaul** | dankpyon.medieval.overhaul | 77 | *Epicguru* |
+| **Medieval Overhaul** | dankpyon.medieval.overhaul | 79 | *Epicguru* |
 | **Medieval Overhaul: Arcane Archaeologists** | ogam.medievaloverhaul.arcanearchaeologists | 4 | *Epicguru* |
 | **Medieval Overhaul: Barbarians** | pphhyy.barbariansmosubmod | 12 | *Epicguru* |
 | **Medieval Times (Continued)** | zal.medievaltimes | 58 | *Epicguru* |
@@ -194,7 +196,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Moyo-Light in the Abyss** | aoba.redmoyo | 5 | *Epicguru* |
 | **Moyo-The cartel arrives** | nemonian.mycartel | 3 | *Epicguru* |
 | **Naki Race HAR Edition** | seioch.naki.har | 2 | *Epicguru* |
-| **Neo Samurai** | gunmar.neosamurai | 7 | *Epicguru* |
+| **Neo Samurai** | gunmar.neosamurai | 9 | *Epicguru* |
 | **NewRatkinPlus** | solaris.ratkinracemod | 17 | *Epicguru* |
 | **NieR: Automata Weapon and Apparel Set** | xrushha.nierweaponsapparel | 2 | *Epicguru* |
 | **NierAutomata Weapon Pack** | verniy709.nierautomata.weapon | 32 | *Epicguru* |
@@ -244,8 +246,9 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **RimForge** | co.uk.epicguru.rimforge | 6 | *Epicguru* |
 | **RimFortress: Dwarven Plants** | dismarzero.vgp.rimfortressdwarvenplants | 6 | *Epicguru* |
 | **Rim-Gnoblins** | vexedtrees980.rimgnoblinsbiotech | 1 | *Epicguru* |
-| **Rimhammer - The End Times - Beastmen** | sickboywi.theendtimes.beastmen | 18 | *Epicguru* |
+| **Rimhammer - The End Times - Beastmen** | sickboywi.theendtimes.beastmen | 19 | *Epicguru* |
 | **Rimhammer - The End Times - Dwarfs** | sickboywi.theendtimes.dwarfs | 21 | *Epicguru* |
+| **Rimhammer - The End Times - Empire** | sickboywi.theendtimes.empire | 31 | *Epicguru* |
 | **Rimhammer - The End Times - Magic** | sickboywi.theendtimes.magic | 6 | *Epicguru* |
 | **Rimhammer - The End Times - Skaven** | sickboywi.theendtimes.skaven | 11 | *Epicguru* |
 | **Rimsenal - Core** | rimsenal.core | 7 | *Epicguru* |
@@ -297,6 +300,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **The Wild Fields - apparel and weapons** | serek.thewildfields | 4 | *Epicguru* |
 | **The Witcher Trials (Continued)** | mlie.thewitchertrials | 2 | *Epicguru* |
 | **TOT's CMC Weaponry** | tot.cmc.weaponry | 5 | *Epicguru* |
+| **Tox Weapons Pack** | cat.veacidweaponspack | 12 | *Epicguru* |
 | **T's Conversion Staff** | trickity.conversion.staff | 1 | *Epicguru* |
 | **T's Samurai Faction** | trickity.samurai.faction | 8 | *Epicguru* |
 | **Ultratech Weapons Plus** | side1iner.ultratechweaponsplusdev | 2 | *Epicguru* |
@@ -342,6 +346,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **XVI-MECHFRAME** | andery233xj.mod.mechanicalpoweredarmor | 2 | *Epicguru* |
 | **Yuran race** | rooandgloomy.yuranracemod | 4 | *Epicguru* |
 | **Zen Garden (Continued)** | mlie.zengarden | 3 | *Epicguru* |
+| **Zeus Weapons Pack** | cat.zeuspack | 16 | *Epicguru* |
 | **Zombieland** | brrainz.zombieland | 1 | *Epicguru* |
 | **妖怪村** | yokaimura.1.32 | 10 | *Epicguru* |
 | **虫娘 Insect Girls** | pupa.insectgirls | 2 | *Epicguru* |
