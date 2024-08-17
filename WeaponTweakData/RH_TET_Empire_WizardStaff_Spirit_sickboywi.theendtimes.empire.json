@@ -1,0 +1,15 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_WizardStaff_Spirit",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.504555,
+  "OffY": -0.13081044,
+  "Rotation": -135.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "FlipX": true,
+  "BladeStart": 0.857977,
+  "BladeEnd": 1.30647016,
+  "MeleeWeaponType": 2
+}

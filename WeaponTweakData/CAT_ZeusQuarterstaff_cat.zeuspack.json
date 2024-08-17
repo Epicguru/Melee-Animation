@@ -1,0 +1,12 @@
+{
+  "TextureModID": "cat.zeuspack",
+  "ItemDefName": "CAT_ZeusQuarterstaff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": -0.871529341,
+  "BladeEnd": 0.885969639,
+  "MeleeWeaponType": 1
+}

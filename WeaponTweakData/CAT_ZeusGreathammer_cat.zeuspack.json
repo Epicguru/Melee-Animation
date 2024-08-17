@@ -1,0 +1,13 @@
+{
+  "TextureModID": "cat.zeuspack",
+  "ItemDefName": "CAT_ZeusGreathammer",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.516188562,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.713907,
+  "BladeEnd": 1.19322479,
+  "MeleeWeaponType": 1
+}

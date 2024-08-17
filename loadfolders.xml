@@ -22,6 +22,7 @@
     <li IfModActive="ceteam.combatextended">Patch_CombatExtended/1.5</li>
     <li IfModActive="Taranchuk.PerformanceOptimizer">Patch_PerformanceOptimizer/1.5</li>
     <li IfModActive="owlchemist.tacticowl">Patch_Tacticowl/1.5</li>
+    <li IfModActive="SmashPhil.VehicleFramework">Patch_Vehicles/1.5</li>
   </v1.5>
 
 </loadFolders>

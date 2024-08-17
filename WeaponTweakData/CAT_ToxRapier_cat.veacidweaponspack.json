@@ -1,0 +1,17 @@
+{
+  "TextureModID": "cat.veacidweaponspack",
+  "ItemDefName": "CAT_ToxRapier",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3533428,
+  "OffY": 0.00307248533,
+  "BladeStart": 0.114759594,
+  "BladeEnd": 0.836809039,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.29,
+    "g": 1.0,
+    "b": 0.212,
+    "a": 0.902
+  }
+}

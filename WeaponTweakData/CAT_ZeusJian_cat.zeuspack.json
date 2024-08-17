@@ -1,0 +1,11 @@
+{
+  "TextureModID": "cat.zeuspack",
+  "ItemDefName": "CAT_ZeusJian",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.424011767,
+  "Rotation": 45.0,
+  "BladeStart": 0.2038634,
+  "BladeEnd": 1.09490311,
+  "MeleeWeaponType": 6
+}

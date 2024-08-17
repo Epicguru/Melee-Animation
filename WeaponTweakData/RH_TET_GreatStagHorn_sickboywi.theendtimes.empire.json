@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_GreatStagHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.302110434,
+  "OffY": -0.0373745561,
+  "Rotation": 128.4483,
+  "BladeStart": 0.147862464,
+  "BladeEnd": 0.857977,
+  "MeleeWeaponType": 9
+}

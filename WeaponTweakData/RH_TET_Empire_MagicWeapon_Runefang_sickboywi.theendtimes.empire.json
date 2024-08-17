@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_MagicWeapon_Runefang",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6042204,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.259985626,
+  "BladeEnd": 1.54940426,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.986,
+    "g": 0.887,
+    "b": 0.028,
+    "a": 1.0
+  }
+}

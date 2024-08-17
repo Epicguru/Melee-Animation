@@ -1,0 +1,11 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_Rapier_High",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.451608121,
+  "Rotation": 45.0,
+  "BladeStart": 0.238183886,
+  "BladeEnd": 1.13828516,
+  "MeleeWeaponType": 6
+}

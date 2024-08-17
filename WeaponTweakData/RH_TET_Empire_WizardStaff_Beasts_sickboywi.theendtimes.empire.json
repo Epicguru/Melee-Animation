@@ -1,0 +1,15 @@
+{
+  "TextureModID": "sickboywi.theendtimes.empire",
+  "ItemDefName": "RH_TET_Empire_WizardStaff_Beasts",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.451608121,
+  "OffY": -0.059176296,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "FlipY": true,
+  "BladeStart": 0.119831808,
+  "BladeEnd": 1.231721,
+  "MeleeWeaponType": 3
+}
