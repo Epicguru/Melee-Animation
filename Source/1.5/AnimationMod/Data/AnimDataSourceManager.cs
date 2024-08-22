@@ -13,6 +13,8 @@ public static class AnimDataSourceManager
         dataNameToFilePath.Clear();
         
         var activeMods = LoadedModManager.RunningModsListForReading;
+        int modsWithDataCount = 0;
+        Core.Log($"Scanning {activeMods.Count} mods for animation data...");
         
         foreach (var mod in activeMods)
         {
@@ -21,10 +23,11 @@ public static class AnimDataSourceManager
             string expectedPath = Path.Combine(dir, "Animations");
             if (!Directory.Exists(expectedPath))
             {
-                return;
+                continue;
             }
             
             string animFolderAbsolute = new FileInfo(expectedPath).FullName;
+            bool any = false;
             
             foreach (string filePath in Directory.GetFiles(expectedPath, "*.json", SearchOption.AllDirectories))
             {
@@ -33,10 +36,16 @@ public static class AnimDataSourceManager
                 string relativeWithoutExtension = Path.GetFileNameWithoutExtension(relative);
 
                 dataNameToFilePath[relativeWithoutExtension] = absolute;
+                any = true;
+            }
+
+            if (any)
+            {
+                modsWithDataCount++;
             }
         }
         
-        Core.Log($"Found {dataNameToFilePath.Count} mod folders with animation data, total {dataNameToFilePath.Count} loadable files.");
+        Core.Log($"Found {modsWithDataCount} mod folders with animation data, total {dataNameToFilePath.Count} loadable files.");
     }
 
     public static string TryGetDataFilePath(string dataName) => dataNameToFilePath.GetValueOrDefault(dataName);

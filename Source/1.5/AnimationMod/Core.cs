@@ -227,9 +227,18 @@ public class Core : Mod
         AddLateLoadAction(true, "Patch VBE", PatchVanillaBackgroundsExpanded);
         AddLateLoadAction(true, "Apply final patches", Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.PatchAll);
         AddLateLoadAction(true, "Cache gloves", HandUtility.DoInitialLoading);
-        AddLateLoadAction(true, "Find animation files", AnimDataSourceManager.ScanForDataFiles);
 
         AddLateLoadEvents();
+        
+        // This needs to be done now, before defs are loaded.
+        try
+        {
+            AnimDataSourceManager.ScanForDataFiles();
+        }
+        catch (Exception e)
+        {
+            Error("Failed to scan for animation data files.", e);
+        }
     }
 
     private static void RegisterWeaponDefOverrides()
