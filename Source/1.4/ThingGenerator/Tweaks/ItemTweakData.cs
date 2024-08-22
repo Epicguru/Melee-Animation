@@ -292,7 +292,7 @@ namespace AM.Tweaks
                 {
                     Core.Error($"Failed to create instance of ISweepProvider '{klass.FullName}':", e);
                     return null;
-;               }
+                }
             }
 
             cachedSweepProvider = instance;
