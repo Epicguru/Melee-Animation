@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using AM.AMSettings;
+using AM.Data;
 using AM.Idle;
 using AM.RendererWorkers;
 using AM.Reqs;
 using AM.Sweep;
 using JetBrains.Annotations;
+using LudeonTK;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using LudeonTK;
 
 namespace AM;
 
@@ -72,7 +72,7 @@ public class AnimDef : Def
                 continue;
 
             def.resolvedData = AnimData.Load(def.FullDataPath, false);
-            def.resolvedNonLethalData = File.Exists(def.FullNonLethalDataPath) ? AnimData.Load(def.FullNonLethalDataPath, false) : def.resolvedData;
+            def.resolvedNonLethalData = AnimData.Load(def.FullNonLethalDataPath, false) ?? def.resolvedData;
         }
     }
 
@@ -100,21 +100,29 @@ public class AnimDef : Def
     {
         get
         {
-            var mod = modContentPack;
-            if (mod == null)
+            string dataName = data.Trim();
+            if (dataName.EndsWith(".json"))
             {
-                Core.Error($"This def '{defName}' has no modContentPack, so FullDataPath cannot be resolved! Returning relative path instead...");
-                return data;
+                dataName = dataName[..^5];
             }
 
-            string relative = data.Trim();
-            if (string.IsNullOrWhiteSpace(new FileInfo(relative).Extension))
-                relative += ".json";
-
-            return Path.Combine(mod.RootDir, "Animations", relative);
+            return AnimDataSourceManager.TryGetDataFilePath(dataName);
         }
     }
-    public virtual string FullNonLethalDataPath => FullDataPath.Replace(".json", "_NL.json");
+    public virtual string FullNonLethalDataPath
+    {
+        get
+        {
+            string dataName = data.Trim();
+            if (dataName.EndsWith(".json"))
+            {
+                dataName = dataName[..^5];
+            }
+            dataName += "_NL";
+
+            return AnimDataSourceManager.TryGetDataFilePath(dataName);
+        }
+    }
     public AnimData Data
     {
         get
@@ -214,11 +222,8 @@ public class AnimDef : Def
 
     protected virtual void ResolveData()
     {
-        if (File.Exists(FullDataPath))
-            resolvedData = AnimData.Load(FullDataPath);
-
-        if (File.Exists(FullNonLethalDataPath))
-            resolvedNonLethalData = AnimData.Load(FullNonLethalDataPath);
+        resolvedData = AnimData.Load(FullDataPath);
+        resolvedNonLethalData = AnimData.Load(FullNonLethalDataPath);
     }
 
     public T TryGetAdditionalData<T>(string id, T defaultValue = default)
@@ -265,7 +270,7 @@ public class AnimDef : Def
 
         if (string.IsNullOrWhiteSpace(data))
             yield return "Animation has no data path! Please specify the location of the data file using the data tag.";
-        else if (!File.Exists(FullDataPath))
+        else if (FullDataPath == null) // Means not found in the file system.
             yield return $"Failed to find animation file at '{FullDataPath}'!";
 
         if (type is AnimType.Execution or AnimType.Duel or AnimType.Idle && weaponFilter == null)

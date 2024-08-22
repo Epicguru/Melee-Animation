@@ -75,10 +75,12 @@ public class AnimData
         tris[3] = 0;
         tris[4] = 2;
         tris[5] = 3;
-        Mesh mesh = new();
-        mesh.name = $"AM Mesh: {flipX}, {flipY}";
-        mesh.vertices = verts;
-        mesh.uv = (flipX && flipY) ? fxy : flipX ? fx : flipY ? fy : normal;
+        var mesh = new Mesh
+        {
+            name = $"AM Mesh: {flipX}, {flipY}",
+            vertices = verts,
+            uv = (flipX && flipY) ? fxy : flipX ? fx : flipY ? fy : normal
+        };
         mesh.SetTriangles(tris, 0);
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
@@ -88,7 +90,9 @@ public class AnimData
     public static AnimData Load(string filePath, bool allowFromCache = true, bool saveToCache = true)
     {
         if (filePath == null)
+        {
             return null;
+        }
 
         if (allowFromCache)
         {

@@ -1,4 +1,13 @@
-﻿using AM.AMSettings;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using AM.AMSettings;
+using AM.Data;
 using AM.Hands;
 using AM.Patches;
 using AM.Retexture;
@@ -7,13 +16,6 @@ using HarmonyLib;
 using ModRequestAPI;
 using ModRequestAPI.Models;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
@@ -162,7 +164,7 @@ public class Core : Mod
         ParseHelper.Parsers<T>.Register(func);
     }
 
-    private static void PatchVBE()
+    private static void PatchVanillaBackgroundsExpanded()
     {
         if (ModLister.GetActiveModWithIdentifier("vanillaexpanded.backgrounds") == null)
             return;
@@ -187,7 +189,7 @@ public class Core : Mod
         var client = new ModRequestClient();
         await client.TryPostModRequests(list);
     }
-
+    
     public Core(ModContentPack content) : base(content)
     {
         AddParsers();
@@ -222,11 +224,21 @@ public class Core : Mod
         AddLateLoadAction(true, "Applying settings...", Settings.PostLoadDefs);
         AddLateLoadAction(true, "Matching textures with mods...", PreCacheAllRetextures);
         AddLateLoadAction(true, "Loading weapon tweak data...", LoadAllTweakData);
-        AddLateLoadAction(true, "Patch VBE", PatchVBE);
+        AddLateLoadAction(true, "Patch VBE", PatchVanillaBackgroundsExpanded);
         AddLateLoadAction(true, "Apply final patches", Patch_Verb_MeleeAttack_ApplyMeleeDamageToTarget.PatchAll);
         AddLateLoadAction(true, "Cache gloves", HandUtility.DoInitialLoading);
 
         AddLateLoadEvents();
+        
+        // This needs to be done now, before defs are loaded.
+        try
+        {
+            AnimDataSourceManager.ScanForDataFiles();
+        }
+        catch (Exception e)
+        {
+            Error("Failed to scan for animation data files.", e);
+        }
     }
 
     private static void RegisterWeaponDefOverrides()
