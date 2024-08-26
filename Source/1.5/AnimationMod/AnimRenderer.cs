@@ -426,10 +426,13 @@ public class AnimRenderer : IExposable
         sweeps = new PartWithSweep[Data.SweepDataCount];
         foreach (var part in Data.PartsWithSweepData)
         {
+            var overrideData = GetOverride(part);
             var paths = Data.GetSweepPaths(part);
             foreach (var path in paths)
             {
-                sweeps[j++] = new PartWithSweep(this, part, path, new SweepMesh<PartWithSweep.Data>(), BasicSweepProvider.DefaultInstance);
+                float upDst = overrideData?.TweakData?.BladeEnd ?? 0.4f;
+                float downDst = overrideData?.TweakData?.BladeStart ?? 0.05f;
+                sweeps[j++] = new PartWithSweep(this, part, path, new SweepMesh<PartWithSweep.Data>(), BasicSweepProvider.DefaultInstance, upDst, downDst);
             }
         }
     }
@@ -1428,16 +1431,6 @@ public class AnimRenderer : IExposable
 
         if (ov.CustomRenderer != null)
             ov.CustomRenderer.Item = weapon;
-
-        InitSweepMeshes();
-        foreach (var path in sweeps)
-        {
-            if (path.Part == itemPart)
-            {
-                path.DownDst = tweak.BladeStart;
-                path.UpDst = tweak.BladeEnd;
-            }
-        }
 
         return true;
     }
