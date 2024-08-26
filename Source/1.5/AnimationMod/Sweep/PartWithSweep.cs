@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AM.Data.Model;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ public class PartWithSweep
     public readonly SweepPointCollection PointCollection;
     public readonly SweepMesh<Data> Mesh;
     public readonly AnimRenderer Renderer;
-    public float DownDst, UpDst;
+    public readonly float DownDst, UpDst;
     public bool MirrorHorizontal;
     public ISweepProvider ColorProvider;
 
@@ -25,14 +25,16 @@ public class PartWithSweep
         public float UpVel;
     }
 
-    public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection pointCollection, SweepMesh<Data> mesh, ISweepProvider colorProvider)
+    public PartWithSweep(AnimRenderer renderer, AnimPartData part, SweepPointCollection pointCollection, SweepMesh<Data> mesh, ISweepProvider colorProvider, float upDst, float downDst)
     {
         Renderer = renderer;
         Part = part;
         PointCollection = pointCollection;
         Mesh = mesh;
-        points = pointCollection.CloneWithVelocities(DownDst, UpDst);
         ColorProvider = colorProvider;
+        UpDst = upDst;
+        DownDst = downDst;
+        points = pointCollection.CloneWithVelocities(DownDst, UpDst);
     }
 
     public void Draw(float time)

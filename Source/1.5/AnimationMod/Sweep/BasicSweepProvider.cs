@@ -8,8 +8,8 @@ public class BasicSweepProvider : ISweepProvider
 
     public Color color = Color.white;
     public float length = 0.15f;
-    public float minVel = 1f;
-    public float maxVel = 2f;
+    public float minVel = 3.5f;
+    public float maxVel = 7f;
 
     public (Color low, Color high) GetTrailColors(in SweepProviderArgs args)
     {
