@@ -1,5 +1,5 @@
 # Compatible Mods List
-`Updated 17 Aug 2024, 7:35 PM.`  
+`Updated 26 Aug 2024, 11:26 AM.`  
 
 **Melee Animation supports 2608 weapons from 329 mods.**  
 
