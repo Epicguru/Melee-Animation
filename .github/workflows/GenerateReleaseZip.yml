@@ -96,6 +96,7 @@ jobs:
     - name: Zip Mod
       run: | 
         cd $HOME
+        sudo apt install zip
         zip -r ./${{ env.MOD_NAME }}.zip ./${{ env.MOD_NAME }}/*
 
     - name: Upload Mod Zip Artifact
@@ -110,22 +111,29 @@ jobs:
     needs: package
     runs-on: ubuntu-latest
     steps:
+
+    # This extracts the tag name (from github.ref) and uses it as a version
     - name: Get the Version
       id: get_version
-      # This is a special syntax for GitHub Actions that sets an output
-      # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
       run: echo "VERSION=$(echo ${{ github.ref }} | cut -d / -f 3)" >> $GITHUB_OUTPUT
 
+    # Set the release name to the mod name and the version from the step above.
     - name: Set Environment Variables
-      # This is a special syntax for GitHub Actions that sets an environment
-      # variable. See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
       run: echo "MOD_RELEASE=$MOD_NAME-${{ steps.get_version.outputs.VERSION }}" >> $GITHUB_ENV
 
+    # Download the build artifact from the package job.
     - name: Download Mod Artifacts from Build Step
       id: download_zip
       uses: actions/download-artifact@v4.1.8
       with:
         name: ${{ env.MOD_NAME }}
+
+    # Auto-generate changelog.
+    - name: Build Changelog
+      id: github_release
+      uses: mikepenz/release-changelog-builder-action@v5
+      env:
+        GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
 
     - name: Create Release
       id: create_release
@@ -135,6 +143,7 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: ${{ env.MOD_RELEASE }}
+        body: ${{ steps.github_release.outputs.changelog }}
         # These can be configured at the top of the workflow.
         draft: ${{ env.RELEASE_DRAFT }}
         prerelease: ${{ env.RELEASE_PRERELEASE }}
