@@ -377,7 +377,7 @@ public class AnimDef : Def
 
         // Chance to promote at all:
         // Needs to be thought out... A future task.
-        float promotionChanceForAny = Mathf.Min(possibleCount * 0.5f, 0.65f);
+        float promotionChanceForAny = Mathf.Min(possibleCount * 0.25f, 0.65f);
         if (!Rand.Chance(promotionChanceForAny))       
             return null;        
 

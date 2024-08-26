@@ -240,6 +240,25 @@
   </AM.AnimDef>
 
   <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_BeheadHigh</defName>
+    <label>Execution: Jumping Behead</label>
+    <data>Execution_HighBehead.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Sharp</types>
+    </weaponFilter>
+    <relativeProbability>0</relativeProbability>
+    <promotionRules>
+      <onlyWhenOutcomeIs>Kill</onlyWhenOutcomeIs>
+      <promotionWorkers>
+        <li>AM.PromotionWorkers.MustHaveHeadPromotionWorker</li>
+      </promotionWorkers>
+    </promotionRules>
+    <spawnDroppedHeadsForPawnIndices>
+      <li>1</li>
+    </spawnDroppedHeadsForPawnIndices>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
     <defName>AM_Execution_SpearLift</defName>
     <label>Execution: Spear Stab</label>
     <data>Execution_Spear.json</data>
