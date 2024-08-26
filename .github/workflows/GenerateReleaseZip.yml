@@ -121,16 +121,16 @@ jobs:
     - name: Set Environment Variables
       run: echo "MOD_RELEASE=$MOD_NAME-${{ steps.get_version.outputs.VERSION }}" >> $GITHUB_ENV
 
+    # The repository needs to be checked out for the next changelog step.
+    - name: Checkout Repository
+      uses: actions/checkout@v4.1.7
+
     # Download the build artifact from the package job.
     - name: Download Mod Artifacts from Build Step
       id: download_zip
       uses: actions/download-artifact@v4.1.8
       with:
         name: ${{ env.MOD_NAME }}
-
-    # The repository needs to be checked out for the next changelog step.
-    - name: Checkout Repository
-      uses: actions/checkout@v4.1.7
 
     # Auto-generate changelog.
     - name: Build Changelog
