@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 26 Aug 2024, 11:26 AM.`  
+`Updated 28 Sep 2024, 3:51 PM.`  
 
-**Melee Animation supports 2608 weapons from 329 mods.**  
+**Melee Animation supports 2623 weapons from 334 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -21,6 +21,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 
   | Mod Name | Mod ID | Weapon Count | Patch Author |
 | --- | --- | --- | --- |
+| **(Beta Testing) Thirst Flavour Pack** | mss.thirst | 1 | *Epicguru* |
 | **[1.4]Chaoura Race** | ayameduki.harchaoura | 3 | *Epicguru* |
 | **[1.4]Idearn Race** | ayameduki.haridearn | 1 | *Epicguru* |
 | **[1.4]Silkiera Race** | ayameduki.harsilkiera | 3 | *Epicguru* |
@@ -103,7 +104,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Combat Extended Melee** | ceteam.combatextendedmelee | 7 | *Epicguru* |
 | **Combat Extended: Weapons** | n7huntsman.combatextendedweapons | 3 | *Epicguru* |
 | **Contractors Arsenal** | zerophoenix.contractorsarsenalfaction | 1 | *Epicguru* |
-| **Core** | ludeon.rimworld | 18 | *Epicguru* |
+| **Core** | ludeon.rimworld | 19 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
 | **Dark Ages : Medieval Tools** | van.datools | 6 | *Epicguru* |
 | **Dinosauria** | spincrus.dinosauria | 1 | *Epicguru* |
@@ -139,6 +140,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Gods of Elona [1.4]** | karukus.godsofelona | 4 | *Epicguru* |
 | **Grains and Brewing (1.4+)** | tidal.grainsandbrewing | 4 | *Epicguru* |
 | **GrimWorld 40,000** | happypurging.ageofdarkness | 4 | *Epicguru* |
+| **GrimWorld 40,000 - Core Imperialis** | grimworld.core | 1 | *Epicguru* |
 | **Grimworld 40,000 - Hammer of the Imperium** | grimworld.astramilitarum | 9 | *Epicguru* |
 | **Grimworld: Melee** | grimworld.melee | 12 | *Epicguru* |
 | **Gtek's Assorted Weapons Pack (Vanilla Version)** | killerbot.weppack | 10 | *Epicguru* |
@@ -160,6 +162,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Kenshi Armory (1.4)** | biowreck.kenshiarmory | 12 | *Epicguru* |
 | **Kiiro Race** | ancot.kiirorace | 11 | *Epicguru* |
 | **Kijin Race 3.0** | ssulunge.kijinrace3 | 5 | *Epicguru* |
+| **Kit's Roman Weapons (Continued)** | zal.romanweapons | 4 | *Epicguru* |
 | **Kraltech Industries** | blackmarket420.kraltechindustries | 14 | *Epicguru* |
 | **Kurin HAR Edition** | seioch.kurin.har | 3 | *Epicguru* |
 | **Kurin, The Three Tailed Fox [Deluxe Edition]** | inoshishi3.kttfde | 6 | *Epicguru* |
@@ -233,6 +236,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **ReGrowth: Boiling** | regrowth.botr.boilingforest | 1 | *Epicguru* |
 | **ReGrowth: Core** | regrowth.botr.core | 3 | *Epicguru* |
 | **ReGrowth: Extinct Animals** | regrowth.botr.extinctanimalspack | 2 | *Epicguru* |
+| **ReGrowth: ReTextures** | regrowth.botr.retextures | 1 | *Epicguru* |
 | **Reinforced Mechanoid 2** | hlx.reinforcedmechanoids2 | 3 | *Epicguru* |
 | **Revia Race** | fs.reviarace | 8 | *Epicguru* |
 | **Revia Race - biotech** | fs.reviaracebiotech | 8 | *Epicguru* |
@@ -258,6 +262,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Rimwars:Vibro weapons** | sov.kotorone | 13 | *Epicguru* |
 | **Rimworld Ultratech** | conner.rimworldultratech | 2 | *Epicguru* |
 | **Rimworld Westernization Project (Continued)** | mlie.rimworldwesternizationproject | 4 | *Epicguru* |
+| **Roman Equipment** | wonyoungjun.romanequipment | 6 | *Epicguru* |
 | **Roo's Minotaur Xenotype** | rooboid.minotaur | 5 | *Epicguru* |
 | **Roo's Minotaur Xenotype Expanded** | rooboid.minotaur.expanded | 1 | *Epicguru* |
 | **Royal Arsenal** | bucko.royalarsenal | 4 | *Epicguru* |
@@ -321,7 +326,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Vanilla Melee Retexture** | zodgilla.vanillameleeretexture | 9 | *Epicguru* |
 | **Vanilla Psycasts Expanded** | vanillaexpanded.vpsycastse | 3 | *Epicguru* |
 | **Vanilla Races Expanded - Archon** | vanillaracesexpanded.archon | 1 | *Epicguru* |
-| **Vanilla Textures Expanded** | vanillaexpanded.vtexe | 29 | *Epicguru* |
+| **Vanilla Textures Expanded** | vanillaexpanded.vtexe | 30 | *Epicguru* |
 | **Vanilla Weapons Expanded** | vanillaexpanded.vwe | 11 | *Epicguru* |
 | **Vanilla Weapons Expanded - Laser** | vanillaexpanded.vwel | 1 | *Epicguru* |
 | **Vanilla Weapons Expanded - Non-Lethal** | vanillaexpanded.vwenl | 1 | *Epicguru* |
