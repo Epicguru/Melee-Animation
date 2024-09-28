@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ludeon.rimworld",
+  "ItemDefName": "AEXP_WalrusTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3023622,
+  "OffY": -0.0545929372,
+  "Rotation": 10.0,
+  "BladeStart": 0.02519685,
+  "BladeEnd": 0.7979008,
+  "MeleeWeaponType": 5
+}

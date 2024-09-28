@@ -1,0 +1,11 @@
+{
+  "TextureModID": "regrowth.botr.retextures",
+  "ItemDefName": "WoodLog",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2561677,
+  "Rotation": 45.0,
+  "BladeStart": 0.0503937,
+  "BladeEnd": 0.621522844,
+  "MeleeWeaponType": 8
+}

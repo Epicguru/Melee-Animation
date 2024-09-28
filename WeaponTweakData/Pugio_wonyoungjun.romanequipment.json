@@ -1,0 +1,14 @@
+{
+  "TextureModID": "wonyoungjun.romanequipment",
+  "ItemDefName": "Pugio",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.32369554,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "HandsMode": 1,
+  "BladeStart": 0.06998985,
+  "BladeEnd": 0.447713017,
+  "MeleeWeaponType": 6
+}

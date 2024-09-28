@@ -3,10 +3,10 @@
   "ItemDefName": "ReviaSerratedSword",
   "ItemType": "ThingDef",
   "ItemTypeNamespace": "Verse",
-  "OffX": 0.259397626,
-  "OffY": 0.006032847,
-  "Rotation": 47.61271,
-  "BladeStart": 0.115446784,
-  "BladeEnd": 0.766956747,
+  "OffX": 0.260176837,
+  "OffY": -0.008815765,
+  "Rotation": 50.0,
+  "BladeStart": 0.0459876619,
+  "BladeEnd": 0.7443779,
   "MeleeWeaponType": 6
 }

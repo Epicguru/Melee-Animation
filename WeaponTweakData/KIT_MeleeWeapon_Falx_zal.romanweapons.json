@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zal.romanweapons",
+  "ItemDefName": "KIT_MeleeWeapon_Falx",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.184777945,
+  "OffY": -0.0545929372,
+  "FlipY": true,
+  "BladeStart": 0.2036748,
+  "BladeEnd": 0.6110236,
+  "MeleeWeaponType": 54
+}

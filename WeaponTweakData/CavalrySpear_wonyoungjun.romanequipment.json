@@ -1,0 +1,13 @@
+{
+  "TextureModID": "wonyoungjun.romanequipment",
+  "ItemDefName": "CavalrySpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.45771122,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.0788777247,
+  "BladeEnd": 1.33202946,
+  "MeleeWeaponType": 5
+}

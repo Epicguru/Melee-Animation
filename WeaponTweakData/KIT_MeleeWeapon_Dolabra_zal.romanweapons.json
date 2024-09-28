@@ -1,0 +1,10 @@
+{
+  "TextureModID": "zal.romanweapons",
+  "ItemDefName": "KIT_MeleeWeapon_Dolabra",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.243570089,
+  "BladeStart": 0.130184233,
+  "BladeEnd": 0.6593181,
+  "MeleeWeaponType": 2
+}
