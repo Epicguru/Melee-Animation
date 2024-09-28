@@ -1,0 +1,19 @@
+{
+  "TextureModID": "grimworld.core",
+  "ItemDefName": "GW_SS_Phaseblade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.594644666,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.28808862,
+  "BladeEnd": 1.45891058,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.103780642,
+    "g": 0.9222221,
+    "b": 0.06967884,
+    "a": 0.826666653
+  }
+}

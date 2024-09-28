@@ -1,0 +1,11 @@
+{
+  "TextureModID": "zal.romanweapons",
+  "ItemDefName": "KIT_MeleeWeapon_Hasta",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.331758976,
+  "Rotation": 45.0,
+  "BladeStart": 0.09028897,
+  "BladeEnd": 1.01837325,
+  "MeleeWeaponType": 5
+}
