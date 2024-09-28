@@ -1,0 +1,12 @@
+{
+  "TextureModID": "zal.romanweapons",
+  "ItemDefName": "KIT_MeleeWeapon_Pugio",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.180577159,
+  "OffY": -0.02939646,
+  "HandsMode": 1,
+  "BladeStart": 0.123885028,
+  "BladeEnd": 0.573228359,
+  "MeleeWeaponType": 48
+}
