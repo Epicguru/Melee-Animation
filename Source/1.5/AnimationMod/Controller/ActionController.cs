@@ -706,7 +706,7 @@ public class ActionController
         var inA = new ReqInput(a.def);
         var inB = new ReqInput(b.def);
 
-        foreach (var anim in AnimDef.GetDefsOfType(AnimType.Duel))
+        foreach (var anim in AnimDef.GetDefsOfType(AnimType.Duel).OrderByDescending(def => def.Probability))
         {
             if (anim.weaponFilter == null)
                 continue;
