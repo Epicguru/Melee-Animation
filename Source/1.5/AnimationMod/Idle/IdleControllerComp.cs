@@ -1,26 +1,29 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AM.AMSettings;
 using AM.Patches;
 using AM.Processing;
 using AM.Tweaks;
 using AM.UniqueSkills;
 using JetBrains.Annotations;
+using LudeonTK;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using LudeonTK;
-using System.Linq;
 
 namespace AM.Idle;
 
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp
 {
+    [UsedImplicitly]
     public static readonly List<Predicate<IdleControllerComp>> ShouldDrawAdditional = new List<Predicate<IdleControllerComp>>();
     public static double TotalTickTimeMS;
     public static int TotalActive;
-
+    [TweakValue("Melee Animation")]
+    protected static bool IsLeftHanded; // TODO make instance, or come from pawn.
+    
     [UsedImplicitly]
     [DebugAction("Melee Animation", "Log Skills", allowedGameStates = AllowedGameStates.PlayingOnMap, actionType = DebugActionType.ToolMapForPawns)]
     private static void LogSkills(Pawn pawn)
@@ -79,8 +82,10 @@ public class IdleControllerComp : ThingComp
     private float lastDelta;
     private uint ticksMoving;
     private int drawTick;
-    [TweakValue("Melee Animation")]
-    protected static bool IsLeftHanded; // TODO make instance, or come from pawn.
+    private float dodgeRotationOffset;
+    private float dodgeRotationVelocity;
+    private Vector2 dodgePositionOffset;
+    private Vector2 dodgePositionVelocity;
 
     public virtual void PreDraw()
     {
@@ -172,6 +177,13 @@ public class IdleControllerComp : ThingComp
     public override void CompTick()
     {
         base.CompTick();
+        
+        dodgePositionOffset += dodgePositionVelocity;
+        dodgePositionVelocity *= 0.9f;
+        dodgePositionOffset *= 0.9f;
+        dodgeRotationOffset += dodgeRotationVelocity;
+        dodgeRotationVelocity *= 0.9f;
+        dodgeRotationOffset *= 0.9f;
 
         var timer = new RefTimer();
         try
@@ -669,5 +681,34 @@ public class IdleControllerComp : ThingComp
             }
         }
         return skills;
+    }
+    
+    /// <summary>
+    /// Called when this pawn dodges a melee attack.
+    /// </summary>
+    public virtual void OnMeleeDodge(Pawn attackedBy)
+    {
+        if (!Core.Settings.EnableDodgeMotion)
+            return;
+        
+        var directionFromAttacker = parent.DrawPos - attackedBy.DrawPos;
+        var directionFromAttackerFlat = directionFromAttacker.ToFlat().normalized;
+        
+        // Add dodge offset.
+        dodgePositionVelocity += directionFromAttackerFlat * 0.13f;
+        
+        // Add dodge rotation.
+        bool isToRight = parent.DrawPos.x > attackedBy.DrawPos.x;
+        dodgeRotationVelocity += isToRight ? 7f : -7f;
+    }
+    
+    public virtual void AddBodyDrawOffset(ref PawnRenderer.PreRenderResults pawnDrawArgs)
+    {
+        if (Mathf.Abs(dodgeRotationOffset) > 0.5f || dodgePositionOffset.sqrMagnitude > 0.02f)
+        {
+            pawnDrawArgs.useCached = false;
+            pawnDrawArgs.bodyPos += dodgePositionOffset.ToVector3();
+            pawnDrawArgs.bodyAngle += dodgeRotationOffset;
+        }
     }
 }

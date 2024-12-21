@@ -331,6 +331,11 @@ public class Settings : SimpleSettingsBase
     [Label("Show Execution Outcome Text")]
     [Description("Enables or disables the text popup that shows the outcome of an execution (i.e. injure, down or kill) when an execution animation plays.")]
     public bool ShowExecutionMotes = true;
+
+    [Label("Enable Dodge Motion")]
+    [Description("When enabled, pawns will visually move their body slightly when dodging a melee attack.\n" +
+                 "This is a purely visual change and does not affect combat.")]
+    public bool EnableDodgeMotion = true;
     #endregion
 
     #region Performance
