@@ -40,12 +40,6 @@ public abstract class SimpleSettingsBase : ModSettings
 
 public static class SimpleSettings
 {
-    [DebugOutput("AnimationMod", onlyWhenPlaying = false)]
-    public static void OutputTranslationKeys()
-    {
-        Log.Message(GenerateTranslationKeys(Core.Settings));
-    }
-
     public delegate float DrawHandler(SimpleSettingsBase settings, MemberWrapper member, Rect area);
 
     public static readonly Dictionary<Type, DrawHandler> DrawHandlers = new Dictionary<Type, DrawHandler>
@@ -77,7 +71,7 @@ public static class SimpleSettings
 
     internal static string TranslateOrSelf(this string str) => str.TryTranslate(out var found) ? found : str;
 
-    private static string GenerateTranslationKeys(SimpleSettingsBase settings)
+    public static string GenerateTranslationKeys(SimpleSettingsBase settings)
     {
         FieldHolder holder = GetHolder(settings);
 
