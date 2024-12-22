@@ -4768,7 +4768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: e13c5828a6c64dc49b5c89493bafa2e3, type: 2}
+  Clip: {fileID: 7400000, guid: d6701493e381514418599c0b2489ca73, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -4916,7 +4916,8 @@ Transform:
   m_LocalPosition: {x: 0.573, y: 0.25, z: 0.128}
   m_LocalScale: {x: 0.17500001, y: 0.17500001, z: 0.175}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 876623226}
   m_Father: {fileID: 758745603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &765970811
@@ -5799,6 +5800,57 @@ MonoBehaviour:
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
   SplitDrawMode: 0
+--- !u!1 &876623225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 876623226}
+  - component: {fileID: 876623227}
+  m_Layer: 0
+  m_Name: Trail
+  m_TagString: AnimIgnore
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &876623226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876623225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 765970810}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &876623227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876623225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13855950eb4b2c540afe94c38843ef05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForPart: {fileID: 765970809}
+  Mesh: {fileID: 0}
+  UpDst: 0.1
+  DownDst: -0.1
+  MakeMesh: 0
+  Filter: {fileID: 343237697}
+  GhostTime: 1
 --- !u!1 &888116117
 GameObject:
   m_ObjectHideFlags: 0
@@ -6514,7 +6566,8 @@ Transform:
   m_LocalPosition: {x: 0.332, y: 0.15, z: -0.05}
   m_LocalScale: {x: 0.17500001, y: 0.17500001, z: 0.175}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1462040265}
   m_Father: {fileID: 758745603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &971596378
@@ -9463,6 +9516,57 @@ Transform:
   - {fileID: 80704405}
   m_Father: {fileID: 1093114080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -67.293}
+--- !u!1 &1462040264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462040265}
+  - component: {fileID: 1462040266}
+  m_Layer: 0
+  m_Name: Trail
+  m_TagString: AnimIgnore
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1462040265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462040264}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 971596377}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1462040266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462040264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13855950eb4b2c540afe94c38843ef05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForPart: {fileID: 971596376}
+  Mesh: {fileID: 0}
+  UpDst: 0.1
+  DownDst: -0.1
+  MakeMesh: 0
+  Filter: {fileID: 343237697}
+  GhostTime: 1
 --- !u!1 &1464914352
 GameObject:
   m_ObjectHideFlags: 0
@@ -10355,7 +10459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: fa62f4d96a1e87840842b2d3f564273d, type: 2}
+  Clip: {fileID: 7400000, guid: 8d9e1901f4490a343931aed3332dadc3, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3

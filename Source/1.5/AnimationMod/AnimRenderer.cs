@@ -411,7 +411,7 @@ public class AnimRenderer : IExposable
         // Reason: A Unity bug where creating a new mesh (new Mesh()) during loading
         // crashes the game.
         // Solution: delay creating meshes until the game has started rendering.
-        sweeps = Array.Empty<PartWithSweep>();
+        sweeps = [];
 
         Debug.Assert(AnimationRendererWorker == null);
         AnimationRendererWorker = Def.TryMakeRendererWorker();
@@ -1248,6 +1248,8 @@ public class AnimRenderer : IExposable
                 continue;
             sweep.ColorProvider = sweepProvider;
         }
+        
+        Def.RunStartWorker(this);
     }
 
     public void OnEnd()
