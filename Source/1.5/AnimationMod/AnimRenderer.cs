@@ -1231,6 +1231,8 @@ public class AnimRenderer : IExposable
             var offset = Def.TryGetCell(AnimCellData.Type.PawnStart, MirrorHorizontal, MirrorVertical, i) ?? IntVec2.Zero;
             TeleportPawn(pawn, basePos + offset.ToIntVec3);
         }
+        
+        Def.RunStartWorker(this);
 
         // Custom sweep paths:
         ISweepProvider sweepProvider = BasicSweepProvider.DefaultInstance;
@@ -1248,8 +1250,6 @@ public class AnimRenderer : IExposable
                 continue;
             sweep.ColorProvider = sweepProvider;
         }
-        
-        Def.RunStartWorker(this);
     }
 
     public void OnEnd()
