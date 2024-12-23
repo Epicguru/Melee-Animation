@@ -68,6 +68,8 @@
   <AM.Error.Exec.DownedTarget.Short>{Target} is downed</AM.Error.Exec.DownedTarget.Short>
   <AM.Error.Exec.BadRace>{Target} is not a valid target.</AM.Error.Exec.BadRace>
   <AM.Error.Exec.BadRace.Short>{Target} is not a valid target</AM.Error.Exec.BadRace.Short>
+  <AM.Error.Exec.CannotFist>{Exec} has no weapon and cannot use their fists: {Additional}</AM.Error.Exec.CannotFist>
+  <AM.Error.Exec.CannotFist.Short>{Exec} cannot use their fists</AM.Error.Exec.CannotFist.Short>
 
   <AM.Error.Grapple.AlreadyTarget>{Target} is already being lassoed</AM.Error.Grapple.AlreadyTarget>
   <AM.Error.Grapple.AlreadyTarget.Short>Already being lassoed</AM.Error.Grapple.AlreadyTarget.Short>
