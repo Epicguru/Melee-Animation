@@ -211,12 +211,24 @@ public class ActionController
         if (req.Target == null && (req.Targets == null || !req.Targets.Any()))
             yield break;
 
-        // Missing weapon.
+        // Missing weapon, unless Fists of Fury is active.
         var weapon = req.Executioner.GetFirstMeleeWeapon();
         if (weapon == null)
         {
-            yield return new ExecutionAttemptReport(req, "NoWeapon");
-            yield break;
+            // If Fists of Fury is active, then the pawn can execute without a weapon.
+            if (!Core.IsFistsOfFuryActive)
+            {
+                yield return new ExecutionAttemptReport(req, "NoWeapon");
+                yield break;
+            }
+
+            // There are a few more conditions to check though...
+            bool canPawnDoFistExecs = req.Executioner.IsCapableOfFistExecutions(out string whyNot);
+            if (!canPawnDoFistExecs)
+            {
+                yield return new ExecutionAttemptReport(req, "NoWeapon", additional: whyNot);
+                yield break;
+            }
         }
 
         // Check spawned.
@@ -257,7 +269,7 @@ public class ActionController
         }
 
         // Get all animations.
-        var allAnims = req.OnlyTheseAnimations ?? AnimDef.GetExecutionAnimationsForPawnAndWeapon(req.Executioner, weapon.def, req.AttackerMeleeLevel).Where(d => d.Probability > 0);
+        var allAnims = req.OnlyTheseAnimations ?? AnimDef.GetExecutionAnimationsForPawnAndWeapon(req.Executioner, weapon?.def, req.AttackerMeleeLevel).Where(d => d.Probability > 0);
         if (!allAnims.Any())
         {
             yield return new ExecutionAttemptReport(req, "NoAnims");

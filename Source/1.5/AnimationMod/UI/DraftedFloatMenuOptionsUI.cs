@@ -78,7 +78,8 @@ public static class DraftedFloatMenuOptionsUI
         var weapon = pawn.GetFirstMeleeWeapon();
         var lasso = pawn.TryGetLasso();
         var skills = pawn.GetComp<IdleControllerComp>()?.GetSkills();
-        if (weapon == null && lasso == null && !(skills?.Any(s => s?.IsEnabledForPawn(out _) ?? false) ?? false))
+        bool isFistFighter = pawn.IsCapableOfFistExecutions(out _);
+        if (weapon == null && lasso == null && !(skills?.Any(s => s?.IsEnabledForPawn(out _) ?? false) ?? false) && !isFistFighter)
             yield break;
 
         ulong occupiedMask = SpaceChecker.MakeOccupiedMask(pawn.Map, pawn.Position, out uint smallMask);
