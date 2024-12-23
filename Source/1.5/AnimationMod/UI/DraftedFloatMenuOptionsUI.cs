@@ -78,7 +78,7 @@ public static class DraftedFloatMenuOptionsUI
         var weapon = pawn.GetFirstMeleeWeapon();
         var lasso = pawn.TryGetLasso();
         var skills = pawn.GetComp<IdleControllerComp>()?.GetSkills();
-        bool isFistFighter = pawn.IsCapableOfFistExecutions(out _);
+        bool isFistFighter = pawn.IsCapableOfFistExecutions(out string reason);
         if (weapon == null && lasso == null && !(skills?.Any(s => s?.IsEnabledForPawn(out _) ?? false) ?? false) && !isFistFighter)
             yield break;
 
@@ -158,7 +158,7 @@ public static class DraftedFloatMenuOptionsUI
             if ((target.def.race?.Animal ?? false) && !Core.Settings.AnimalsCanBeExecuted)
                 continue;
 
-            if (weapon != null && !noExecEver)
+            if ((weapon != null || isFistFighter) && !noExecEver)
             {
                 foreach (var op in GetExecutionAttemptOption(target))
                     if (op != null)

@@ -36,19 +36,22 @@ public class JobDriver_GoToExecutionSpot : JobDriver_GoToAnimationSpot
     protected override Toil MakeEndToil()
     {
         var toil = ToilMaker.MakeToil();
-
+        
         // Try do an execution animation.
         toil.initAction = () =>
         {
             if (Target == null)
+            {
+                Core.Error("Null target in toil creation.");
                 return;
+            }
 
             // Position and flip status.
             IntVec3 targetPos = Target.Position;
             bool flipX = targetPos.x < pawn.Position.x;
 
             // Get weapon, possible animations, and space mask.
-            var weaponDef = pawn.GetFirstMeleeWeapon().def;
+            var weaponDef = pawn.GetFirstMeleeWeapon()?.def;
             bool fixedAnimationList = OnlyTheseAnimations is { Count: > 0 };
             var possibilities = fixedAnimationList ? OnlyTheseAnimations : AnimDef.GetExecutionAnimationsForPawnAndWeapon(pawn, weaponDef);
             ulong occupiedMask = SpaceChecker.MakeOccupiedMask(pawn.Map, pawn.Position, out _);

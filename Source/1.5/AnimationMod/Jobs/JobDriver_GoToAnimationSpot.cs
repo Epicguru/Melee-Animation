@@ -76,8 +76,8 @@ namespace AM.Jobs
                 MoveToTarget(false);
             };
 
-            // Fail if melee weapon is lost.
-            toil.AddFailCondition(() => toil.actor.GetFirstMeleeWeapon() == null);
+            // Fail if melee weapon is lost and FoF is not active.
+            toil.AddFailCondition(() => toil.actor.GetFirstMeleeWeapon() == null && Core.IsFistsOfFuryActive == false);
 
             // Fail if target gets trapped by another animation.
             toil.AddFailCondition(() => Target?.TryGetAnimator() != null);
