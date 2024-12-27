@@ -1845,7 +1845,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 0
+  FlipX: 1
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
@@ -5674,7 +5674,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 1
+  FlipX: 0
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
@@ -8760,7 +8760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: f12eec176f65a0844a696471bd54ec9d, type: 2}
+  Clip: {fileID: 7400000, guid: 56bbefb2c512cb84f8db0ca6120c8a9d, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -12292,7 +12292,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 0
+  FlipX: 1
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
@@ -12978,7 +12978,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 1
+  FlipX: 0
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
