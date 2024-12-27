@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Mote_LandDust
   m_EditorClassIdentifier: 
   MoteDef: DustPuffThick
-  PartName: BodyBContainer
-  WithOffset: {x: 0, y: 0, z: 0}
+  PartName: PawnBContainer
+  WithOffset: {x: 0, y: 0, z: -0.4}
   CustomColor: {r: 1, g: 1, b: 1, a: 1}
   StartRotationSpeed: {x: 20, y: 50}
   StartVelocityMagnitude: {x: 0.25, y: 0.5}
