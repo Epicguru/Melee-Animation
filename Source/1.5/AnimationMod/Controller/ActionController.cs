@@ -226,7 +226,7 @@ public class ActionController
             bool canPawnDoFistExecs = req.Executioner.IsCapableOfFistExecutions(out string whyNot);
             if (!canPawnDoFistExecs)
             {
-                yield return new ExecutionAttemptReport(req, "NoWeapon", additional: whyNot);
+                yield return new ExecutionAttemptReport(req, "BadFists", additional: whyNot);
                 yield break;
             }
         }
@@ -593,8 +593,8 @@ public class ActionController
             return;
         }
 
-        var weapon = args.Executioner?.GetFirstMeleeWeapon();
-        if (weapon == null)
+        // No weapon, no fists of fury active, stop here.
+        if (!Core.IsFistsOfFuryActive && args.Executioner?.GetFirstMeleeWeapon() == null)
             return;
 
         foreach (var anim in animDefs)
