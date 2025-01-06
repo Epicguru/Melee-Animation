@@ -1,0 +1,10 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul",
+  "ItemDefName": "DankPyon_DarkWood",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.230492175,
+  "Rotation": 40.0,
+  "BladeEnd": 0.6218487,
+  "MeleeWeaponType": 8
+}

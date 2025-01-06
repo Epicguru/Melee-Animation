@@ -371,9 +371,9 @@ public static class OutcomeUtility
 
                 OutcomeWorker.PreDamage(verb);
 
-                ThingDef source = args.Weapon.def;
+                ThingDef weaponDef = args.Weapon?.def;
                 Vector3 direction = (pawn.Position - attacker.Position).ToVector3();
-                DamageInfo damageInfo = new DamageInfo(def, dmg, armorPenetration, -1f, attacker, null, source);
+                DamageInfo damageInfo = new DamageInfo(def, dmg, armorPenetration, -1f, attacker, null, weaponDef);
                 damageInfo.SetWeaponBodyPartGroup(bodyPartGroupDef);
                 damageInfo.SetAngle(direction);
                 damageInfo.SetIgnoreInstantKillProtection(false);

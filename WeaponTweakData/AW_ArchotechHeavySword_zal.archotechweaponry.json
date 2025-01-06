@@ -1,0 +1,17 @@
+{
+  "TextureModID": "zal.archotechweaponry",
+  "ItemDefName": "AW_ArchotechHeavySword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4177671,
+  "Rotation": 45.0,
+  "BladeStart": 0.242497,
+  "BladeEnd": 0.8859544,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.742696762,
+    "g": 0.97,
+    "b": 0.371833324,
+    "a": 0.936666667
+  }
+}

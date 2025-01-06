@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sarg.alphagenes",
+  "ItemDefName": "AG_ForsakenBulkSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.292917132,
+  "Rotation": 45.0,
+  "ScaleX": 0.8,
+  "ScaleY": 0.8,
+  "BladeStart": 0.07442977,
+  "BladeEnd": 0.8043217,
+  "MeleeWeaponType": 54,
+  "TrailTint": {
+    "r": 0.946666658,
+    "g": 0.693906546,
+    "b": 0.104133293,
+    "a": 0.94
+  }
+}

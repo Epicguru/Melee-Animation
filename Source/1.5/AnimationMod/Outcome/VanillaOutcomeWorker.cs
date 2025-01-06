@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -9,6 +10,30 @@ public sealed class VanillaOutcomeWorker : IOutcomeWorker
 {
     public IEnumerable<PossibleMeleeAttack> GetMeleeAttacksFor(ThingWithComps weapon, Pawn pawn)
     {
+        // Hand fists:
+        if (weapon == null)
+        {
+            foreach (var entry in pawn.meleeVerbs.GetUpdatedAvailableVerbsList(false))
+            {
+                var verb = entry.verb;
+                if (!verb.IsMeleeAttack)
+                    continue;
+
+                float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb.tool, pawn, null, verb.HediffCompSource);
+                float ap = verb.verbProps.AdjustedArmorPenetration(verb.tool, pawn, null, verb.HediffCompSource);
+                yield return new PossibleMeleeAttack
+                {
+                    Damage = dmg,
+                    ArmorPen = ap,
+                    Pawn = pawn,
+                    DamageDef = verb.GetDamageDef(),
+                    Verb = verb,
+                    Weapon = null
+                };
+            }
+            yield break;
+        }
+        
         var comp = weapon?.GetComp<CompEquippable>();
         if (comp == null)
             yield break;

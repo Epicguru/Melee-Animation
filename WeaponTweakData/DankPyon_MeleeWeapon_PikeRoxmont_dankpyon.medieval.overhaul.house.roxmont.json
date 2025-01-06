@@ -1,0 +1,13 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul.house.roxmont",
+  "ItemDefName": "DankPyon_MeleeWeapon_PikeRoxmont",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.6866747,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.170468181,
+  "BladeEnd": 1.67827129,
+  "MeleeWeaponType": 5
+}

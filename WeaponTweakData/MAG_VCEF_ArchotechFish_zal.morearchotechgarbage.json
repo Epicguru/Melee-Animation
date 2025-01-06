@@ -1,0 +1,8 @@
+{
+  "TextureModID": "zal.morearchotechgarbage",
+  "ItemDefName": "MAG_VCEF_ArchotechFish",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "HandsMode": 2,
+  "MeleeWeaponType": 8
+}
