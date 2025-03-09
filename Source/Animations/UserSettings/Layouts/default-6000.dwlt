@@ -527,8 +527,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Animation\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 516
-    y: 869.3334
+    x: 517
+    y: 24
     width: 1390.6666
     height: 476.6667
   m_SerializedDataModeController:
@@ -567,7 +567,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 869.3334
+    y: 24
     width: 515
     height: 476.6667
   m_SerializedDataModeController:
@@ -611,7 +611,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: c65e0000
     m_LastClickedID: 24262
-    m_ExpandedIDs: 00000000ba5e000000ca9a3bffffff7f
+    m_ExpandedIDs: 0000000022620000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -640,7 +640,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 
+    m_ExpandedIDs: 0000000022620000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -719,8 +719,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1908.6667
-    y: 78.66667
+    x: 1909.6666
+    y: 24
     width: 650.3334
     height: 1267.3334
   m_SerializedDataModeController:
@@ -769,7 +769,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 78.66667
+    y: 24
     width: 463.66666
     height: 764.6667
   m_SerializedDataModeController:
@@ -786,8 +786,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 4c620000
-      m_LastClickedID: 25164
+      m_SelectedIDs: 
+      m_LastClickedID: 0
       m_ExpandedIDs: 82e9ffff2cebffff4c62000092630000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -834,8 +834,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 464.6667
-    y: 78.66667
+    x: 465.66666
+    y: 24
     width: 1442
     height: 764.6667
   m_SerializedDataModeController:
@@ -1363,7 +1363,10 @@ MonoBehaviour:
   m_ReplacementString: 
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
-  m_LastDebugDrawMode: 35
+  m_LastDebugDrawMode:
+    drawMode: 35
+    name: 
+    section: 
   m_ViewIsLockedToObject: 0
 --- !u!114 &20
 MonoBehaviour:
