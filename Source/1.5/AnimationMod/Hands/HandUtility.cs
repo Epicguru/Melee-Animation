@@ -8,6 +8,7 @@ using LudeonTK;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Object = UnityEngine.Object;
 
 namespace AM.Hands;
 
@@ -294,7 +295,7 @@ public static class HandUtility
             RenderTexture.active = oldActiveRT;
             RenderTexture.ReleaseTemporary(tempRenderTexture);
             if (tempTexture != null)
-                UnityEngine.Object.Destroy(tempTexture);
+                Object.Destroy(tempTexture);
         }
     }
 

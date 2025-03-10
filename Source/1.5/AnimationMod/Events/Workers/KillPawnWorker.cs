@@ -1,7 +1,7 @@
-﻿using AM.Outcome;
+﻿using System;
+using AM.Outcome;
 using AM.UI;
 using RimWorld;
-using System;
 using UnityEngine;
 using Verse;
 

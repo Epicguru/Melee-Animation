@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AM;
 using Verse;
 
 namespace AM.Events.Workers

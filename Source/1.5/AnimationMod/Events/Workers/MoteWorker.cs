@@ -1,5 +1,4 @@
-﻿using AM;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 
 namespace AM.Events.Workers

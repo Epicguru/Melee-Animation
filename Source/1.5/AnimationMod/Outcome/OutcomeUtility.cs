@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using AM.Patches;
 using JetBrains.Annotations;
+using LudeonTK;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using LudeonTK;
 
 namespace AM.Outcome;
 

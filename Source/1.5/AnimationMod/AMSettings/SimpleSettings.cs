@@ -1,9 +1,4 @@
-﻿using AM.UI;
-using AM.Video;
-using ColourPicker;
-using LudeonTK;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +6,13 @@ using System.Linq;
 using System.Reflection;
 using System.Security;
 using System.Text;
+using AM.UI;
+using AM.Video;
+using ColourPicker;
+using RimWorld;
 using UnityEngine;
 using Verse;
+using ScaleMode = AM.UI.ScaleMode;
 
 namespace AM.AMSettings;
 
@@ -479,7 +479,7 @@ public static class SimpleSettings
             }
             else
             {
-                var fitted = tex.FitRect(inRect, UI.ScaleMode.Fit);
+                var fitted = tex.FitRect(inRect, ScaleMode.Fit);
                 GUI.DrawTexture(fitted, tex);
             }
         }

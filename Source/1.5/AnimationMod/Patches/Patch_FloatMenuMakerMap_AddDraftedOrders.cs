@@ -1,8 +1,8 @@
-﻿using AM.UI;
+﻿using System.Collections.Generic;
+using AM.UI;
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld;
-using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 

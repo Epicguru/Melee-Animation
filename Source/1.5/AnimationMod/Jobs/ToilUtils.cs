@@ -1,4 +1,5 @@
 ﻿using System;
+using RimWorld;
 using Verse;
 using Verse.AI;
 
@@ -10,7 +11,7 @@ public static class ToilUtils
     {
         var toil = ToilMaker.MakeToil();
         toil.defaultCompleteMode = ToilCompleteMode.Never;
-        toil.socialMode = RimWorld.RandomSocialMode.Off;
+        toil.socialMode = RandomSocialMode.Off;
 
         toil.initAction = () =>
         {
