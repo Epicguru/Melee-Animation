@@ -61,7 +61,7 @@ jobs:
     # whatever you want. It will not upload any empty directories, those with only
     # hidden files will also be excluded.
     - name: Upload Mod Artifacts (RW ${{ matrix.rimworld-version }})
-      uses: actions/upload-artifact@v4.6.1
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: build-${{ matrix.rimworld-version }}
         retention-days: 1
@@ -100,7 +100,7 @@ jobs:
         zip -r ./${{ env.MOD_NAME }}.zip ./${{ env.MOD_NAME }}/*
 
     - name: Upload Mod Zip Artifact
-      uses: actions/upload-artifact@v4.6.1
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: ${{ env.MOD_NAME }}
         path: ${{ env.MOD_PATH }}.zip
