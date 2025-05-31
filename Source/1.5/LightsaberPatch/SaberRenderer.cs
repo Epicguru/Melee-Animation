@@ -1,9 +1,11 @@
-﻿using SWSaber;
+﻿using JetBrains.Annotations;
+using SWSaber;
 using UnityEngine;
 using Verse;
 
 namespace AM.LightsaberPatch;
 
+[UsedImplicitly]
 public class SaberRenderer : PartRenderer
 {
     public override bool Draw()
