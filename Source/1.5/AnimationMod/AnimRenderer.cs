@@ -783,7 +783,7 @@ public class AnimRenderer : IExposable
             if (tex == null)
                 continue;
             
-            var mat = GetMaterialFor(snap, out bool forceMPB);
+            var mat = GetMaterialFor(snap, false, out bool forceMPB);
             if (mat == null)
                 continue;
 
@@ -805,6 +805,7 @@ public class AnimRenderer : IExposable
                 ov.CustomRenderer.TweakData = ov.TweakData;
                 ov.CustomRenderer.Mesh = mesh;
                 ov.CustomRenderer.Material = mat;
+                ov.CustomRenderer.MaterialWithoutSplitMode = GetMaterialFor(snap, true, out _);
 
                 bool stop = ov.CustomRenderer.Draw();
                 if (stop)
@@ -819,11 +820,10 @@ public class AnimRenderer : IExposable
             {
                 if (useMPB)
                 {
-                    //Core.Log($"Use mpb mat is {mat} for {ov.TweakData?.ItemDefName} on {snap.PartName} with mode {snap.SplitDrawMode}");
                     pb.Clear();
 
                     // Basic texture and color, always used. Color might be replaced, see below.
-                    pb.SetColor(colorOneShaderProp, color);
+                    pb.SetColor(colorOneShaderProp, color); 
 
                     if (ov.Material != null)
                     {
@@ -905,10 +905,12 @@ public class AnimRenderer : IExposable
             lerp = 1 - lerp;
 
         pb.SetFloat(distanceShaderProp, distanceScale * (-1f + lerp * 2f));
-
+        
         // Experimental, aims to fix issue where split drawing does not use the weapon ideology style.
         if (ov.Material?.mainTexture is Texture2D tex)
+        {
             texture = tex;
+        }
     }
 
     public void DrawGUI()
@@ -1352,12 +1354,12 @@ public class AnimRenderer : IExposable
         return snapshot.Active && !GetOverride(snapshot).PreventDraw && snapshot.FinalColor.a > 0;
     }
 
-    protected virtual Material GetMaterialFor(in AnimPartSnapshot snapshot, out bool forceMPB)
+    protected virtual Material GetMaterialFor(in AnimPartSnapshot snapshot, bool ignoreSplitMode, out bool forceMPB)
     {
         forceMPB = false;
 
         // If drawing in split mode, must use the split shader.
-        if (snapshot.SplitDrawMode != AnimData.SplitDrawMode.None && snapshot.SplitDrawPivot != null)
+        if (!ignoreSplitMode && snapshot.SplitDrawMode != AnimData.SplitDrawMode.None && snapshot.SplitDrawPivot != null)
         {
             // This shader is designed to work with the mpb.
             forceMPB = true;

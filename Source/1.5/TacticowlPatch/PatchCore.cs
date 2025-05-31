@@ -1,6 +1,7 @@
-﻿using AM.Idle;
+﻿using System;
+using AM.Idle;
 using JetBrains.Annotations;
-using System;
+using Tacticowl;
 using Verse;
 
 namespace AM.TacticowlPatch;
@@ -13,9 +14,8 @@ public class PatchCore : Mod
 	{
 		try
 		{
-			//IdleControllerComp.ShouldDrawAdditional.Add(ShouldDraw);
-
-			Core.Log("Initialized Tacticowl patch (currently not active)");
+			IdleControllerComp.ShouldDrawAdditional.Add(ShouldDraw);
+			Core.Log("Initialized Tacticowl patch");
 		}
 		catch (Exception e)
 		{
@@ -25,16 +25,11 @@ public class PatchCore : Mod
 
 	private static bool ShouldDraw(IdleControllerComp comp)
 	{
-		var pawn = comp.parent as Pawn;
-		if (pawn == null)
+		if (comp.parent is not Pawn pawn)
 			return true;
 
-		// All this stuff is internal!
-		// Have requested the author to change this.
-
-		//Tacticowl.ex
-		//return !pawn.HasOffHand();
-		return true;
+		// If the pawn has an off-hand weapon, do not draw the idle animation.
+		return !pawn.HasOffHand();
 	}
 }
   
