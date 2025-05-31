@@ -1,0 +1,20 @@
+{
+  "TextureModID": "melondove.wolfeinrace",
+  "ItemDefName": "W_Weapon_Melee_AlloyDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.234728009,
+  "Rotation": 50.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "HandsMode": 1,
+  "BladeStart": 0.09620056,
+  "BladeEnd": 0.596440852,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.0133333206,
+    "b": 0.0264893342,
+    "a": 0.8155554
+  }
+}

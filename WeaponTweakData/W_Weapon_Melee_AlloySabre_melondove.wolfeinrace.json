@@ -1,0 +1,20 @@
+{
+  "TextureModID": "melondove.wolfeinrace",
+  "ItemDefName": "W_Weapon_Melee_AlloySabre",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3078398,
+  "OffY": 0.0269361436,
+  "Rotation": 54.30536,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.09620056,
+  "BladeEnd": 1.16594517,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 1.0,
+    "g": 0.0133333206,
+    "b": 0.0264893342,
+    "a": 0.8155554
+  }
+}

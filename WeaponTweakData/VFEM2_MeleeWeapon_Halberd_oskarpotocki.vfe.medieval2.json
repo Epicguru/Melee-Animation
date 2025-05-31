@@ -1,0 +1,12 @@
+{
+  "TextureModID": "oskarpotocki.vfe.medieval2",
+  "ItemDefName": "VFEM2_MeleeWeapon_Halberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 3.0,
+  "ScaleY": 3.0,
+  "BladeStart": 1.25444949,
+  "BladeEnd": 1.9778744,
+  "MeleeWeaponType": 7
+}

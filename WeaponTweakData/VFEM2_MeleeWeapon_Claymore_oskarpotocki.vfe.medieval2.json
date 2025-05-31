@@ -1,0 +1,13 @@
+{
+  "TextureModID": "oskarpotocki.vfe.medieval2",
+  "ItemDefName": "VFEM2_MeleeWeapon_Claymore",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.507936537,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.150072157,
+  "BladeEnd": 1.31986582,
+  "MeleeWeaponType": 6
+}

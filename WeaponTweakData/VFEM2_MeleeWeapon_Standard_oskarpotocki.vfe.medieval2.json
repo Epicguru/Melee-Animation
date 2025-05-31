@@ -1,0 +1,11 @@
+{
+  "TextureModID": "oskarpotocki.vfe.medieval2",
+  "ItemDefName": "VFEM2_MeleeWeapon_Standard",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4117366,
+  "Rotation": 90.0,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "MeleeWeaponType": 5
+}
