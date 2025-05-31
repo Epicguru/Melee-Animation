@@ -32,7 +32,7 @@ public static class Patch_PawnRenderer_RenderPawnAt
         if (Core.IsFistsOfFuryActive)
         {
             var comp = ___pawn.TryGetComp<IdleControllerComp>();
-            comp?.PreDraw();
+            _ = comp?.PreDraw();
         }
 
         // Draw the ropes that bind the pawn when being grappled.

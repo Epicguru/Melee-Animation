@@ -1,6 +1,7 @@
-﻿using AM.Idle;
+using AM.Idle;
 using AM.Tweaks;
 using HarmonyLib;
+using JetBrains.Annotations;
 using Verse;
 
 namespace AM.Patches;
@@ -10,7 +11,7 @@ namespace AM.Patches;
 /// Prevents the standard (or modded) melee weapon from rendering,
 /// and also notifies the IdleControllerComp that it is supposed to be rendering.
 /// </summary>
-[HarmonyPatch(typeof(PawnRenderUtility), nameof(PawnRenderUtility.DrawEquipmentAiming))]
+[HarmonyPatch(typeof(PawnRenderUtility), nameof(PawnRenderUtility.DrawEquipmentAiming)), UsedImplicitly]
 public static class Patch_PawnRenderer_DrawEquipment
 {
     [HarmonyPriority(Priority.First)]
@@ -32,8 +33,12 @@ public static class Patch_PawnRenderer_DrawEquipment
         var wep = pawn.equipment?.Primary?.def;
         bool isMeleeWeapon = wep?.IsMeleeWeapon() ?? false;
         if (isMeleeWeapon && TweakDataManager.TryGetTweak(wep) == null)
+        {
             isMeleeWeapon = false;
-        comp.PreDraw();
-        return !isMeleeWeapon;
+        }
+        
+        bool wantsVanillaDraw = comp.PreDraw();
+        
+        return wantsVanillaDraw || !isMeleeWeapon;
     }
 }
