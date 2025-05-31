@@ -1,7 +1,7 @@
 # Compatible Mods List
-`Updated 28 Sep 2024, 3:51 PM.`  
+`Updated 31 May 2025, 5:07 PM.`  
 
-**Melee Animation supports 2623 weapons from 334 mods.**  
+**Melee Animation supports 2660 weapons from 344 mods.**  
 
 Other weapons may be compatible if the mod author has made a patch:  
 [Click here to see how you can create a patch yourself!](https://github.com/Epicguru/AnimationMod/blob/master/Source/TweakTutorial/AuthorTweaks.md)
@@ -66,6 +66,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Alpha Animals** | sarg.alphaanimals | 2 | *Epicguru* |
 | **Alpha Bees** | sarg.rimbees | 2 | *Epicguru* |
 | **Alpha Biomes** | sarg.alphabiomes | 3 | *Epicguru* |
+| **Alpha Genes** | sarg.alphagenes | 4 | *Epicguru* |
 | **Alpha Memes** | sarg.alphamemes | 1 | *Epicguru* |
 | **Ama the Raiju Race and Faction** | resurrectionem.ama | 2 | *Epicguru* |
 | **Ambition of the Cosmic: True Pinnacle of Creation** | explodoboy.snsambitioncosmic.gen4addon | 1 | *Epicguru* |
@@ -81,6 +82,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Arasaka Corporation** | alien.arasakacorporation | 2 | *Epicguru* |
 | **Archotech Expanded** | yanzihko.ae | 1 | *Epicguru* |
 | **Archotech Weaponry** | edern.archotechweaponry | 2 | *Epicguru* |
+| **Archotech Weaponry (Continued)** | zal.archotechweaponry | 2 | *Epicguru* |
 | **Arsenal of Reaction** | 4ydra.arsenalofreaction | 11 | *Epicguru* |
 | **Arsenal of Revolution** | 4ydra.arsenalofrevolution | 8 | *Epicguru* |
 | **Aspirrator's Arsenal** | aspirrator.arsenal | 7 | *Epicguru* |
@@ -104,7 +106,8 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Combat Extended Melee** | ceteam.combatextendedmelee | 7 | *Epicguru* |
 | **Combat Extended: Weapons** | n7huntsman.combatextendedweapons | 3 | *Epicguru* |
 | **Contractors Arsenal** | zerophoenix.contractorsarsenalfaction | 1 | *Epicguru* |
-| **Core** | ludeon.rimworld | 19 | *Epicguru* |
+| **Cooler Psycasts** | metalocif.coolerpsycasts | 1 | *Epicguru* |
+| **Core** | ludeon.rimworld | 20 | *Epicguru* |
 | **Cybernetic Warfare and Special Weapons (Continued)** | mlie.cyberneticwarfare | 4 | *Epicguru* |
 | **Dark Ages : Medieval Tools** | van.datools | 6 | *Epicguru* |
 | **Dinosauria** | spincrus.dinosauria | 1 | *Epicguru* |
@@ -172,14 +175,16 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **MakaiTech - Psycast** | aranmaho.makai.psycast | 1 | *Epicguru* |
 | **Makeshift Melee Weapons** | detvisor.makeshiftweapons | 3 | *Epicguru* |
 | **Malay Themed Expansion** | nstr.malay.themed.expansion | 6 | *Epicguru* |
+| **March of the Archocubes** | det.aprilfools.archocubes | 2 | *Epicguru* |
 | **Maru Race** | vamv.maruracemod | 13 | *Epicguru* |
 | **Mechanite Plague** | chairheir.mechaniteplague | 3 | *Epicguru* |
 | **Medieval Fantasy Quest Rewards Retexture** | serek.fantasyquestrewardsretexture | 7 | *Epicguru* |
 | **Medieval Fantasy Themed Quest Rewards** | botchjob.medievalfantasyquestrewards | 7 | *Epicguru* |
 | **Medieval Madness: Tools of the Trade** | madman.toolsofthetrade | 44 | *Epicguru* |
-| **Medieval Overhaul** | dankpyon.medieval.overhaul | 79 | *Epicguru* |
+| **Medieval Overhaul** | dankpyon.medieval.overhaul | 80 | *Epicguru* |
 | **Medieval Overhaul: Arcane Archaeologists** | ogam.medievaloverhaul.arcanearchaeologists | 4 | *Epicguru* |
 | **Medieval Overhaul: Barbarians** | pphhyy.barbariansmosubmod | 12 | *Epicguru* |
+| **Medieval Overhaul: House Roxmont** | dankpyon.medieval.overhaul.house.roxmont | 3 | *Epicguru* |
 | **Medieval Times (Continued)** | zal.medievaltimes | 58 | *Epicguru* |
 | **Megafauna** | spino.megafauna | 6 | *Epicguru* |
 | **Melee Animation** | co.uk.epicguru.meleeanimation | 1 | *Epicguru* |
@@ -190,6 +195,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Mincho, The Mint Choco Slime ~ HAR ver.** | sutsutman.minchothemintchocoslimeharver | 4 | *Epicguru* |
 | **Mono Weapons Pack** | cat.monopack | 22 | *Epicguru* |
 | **Moosesian race** | waffelf.moosesianrace | 7 | *Epicguru* |
+| **More Archotech Garbage (Continued)** | zal.morearchotechgarbage | 1 | *Epicguru* |
 | **More Melee Weapons!** | gunmar.moremeleeweapons | 18 | *Epicguru* |
 | **More Vanilla Textures** | tidal.morevanilla.textures | 2 | *Epicguru* |
 | **MorrowRim** | sirmashedpotato.morrowrim | 1 | *Epicguru* |
@@ -262,6 +268,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Rimwars:Vibro weapons** | sov.kotorone | 13 | *Epicguru* |
 | **Rimworld Ultratech** | conner.rimworldultratech | 2 | *Epicguru* |
 | **Rimworld Westernization Project (Continued)** | mlie.rimworldwesternizationproject | 4 | *Epicguru* |
+| **Robotic Servitude** | ghastly.roboticservitude | 1 | *Epicguru* |
 | **Roman Equipment** | wonyoungjun.romanequipment | 6 | *Epicguru* |
 | **Roo's Minotaur Xenotype** | rooboid.minotaur | 5 | *Epicguru* |
 | **Roo's Minotaur Xenotype Expanded** | rooboid.minotaur.expanded | 1 | *Epicguru* |
@@ -304,6 +311,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **The Profaned** | botchjob.profaned | 10 | *Epicguru* |
 | **The Wild Fields - apparel and weapons** | serek.thewildfields | 4 | *Epicguru* |
 | **The Witcher Trials (Continued)** | mlie.thewitchertrials | 2 | *Epicguru* |
+| **Titanfall 2-Ronin** | sakura.exosuit.ronin | 2 | *Epicguru* |
 | **TOT's CMC Weaponry** | tot.cmc.weaponry | 5 | *Epicguru* |
 | **Tox Weapons Pack** | cat.veacidweaponspack | 12 | *Epicguru* |
 | **T's Conversion Staff** | trickity.conversion.staff | 1 | *Epicguru* |
@@ -319,6 +327,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Vanilla Factions Expanded - Empire** | oskarpotocki.vfe.empire | 2 | *Epicguru* |
 | **Vanilla Factions Expanded - Insectoids** | oskarpotocki.vfe.insectoid | 1 | *Epicguru* |
 | **Vanilla Factions Expanded - Medieval** | oskarpotocki.vanillafactionsexpanded.medievalmodule | 2 | *Epicguru* |
+| **Vanilla Factions Expanded - Medieval 2** | oskarpotocki.vfe.medieval2 | 8 | *Epicguru* |
 | **Vanilla Factions Expanded - Pirates** | oskarpotocki.vfe.pirates | 6 | *Epicguru* |
 | **Vanilla Factions Expanded - Tribals** | oskarpotocki.vfe.tribals | 2 | *Epicguru* |
 | **Vanilla Factions Expanded - Vikings** | oskarpotocki.vfe.vikings | 7 | *Epicguru* |
@@ -347,6 +356,7 @@ Open an issue or leave a comment on the Workshop page - or even better, submit a
 | **Weapons+ Retexture** | dandman68.weaponplusretexture | 18 | *Epicguru* |
 | **Westerado (Continued)** | mlie.westerado | 15 | *Epicguru* |
 | **Wisteria Corporation** | suvi.wc | 10 | *Epicguru* |
+| **Wolfein Race** | melondove.wolfeinrace | 11 | *Epicguru* |
 | **Xeva Faction** | xeva.xevafaction.11 | 24 | *Epicguru* |
 | **XVI-MECHFRAME** | andery233xj.mod.mechanicalpoweredarmor | 2 | *Epicguru* |
 | **Yuran race** | rooandgloomy.yuranracemod | 4 | *Epicguru* |
