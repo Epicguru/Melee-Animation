@@ -411,7 +411,7 @@ public class AnimRenderer : IExposable
         // Reason: A Unity bug where creating a new mesh (new Mesh()) during loading
         // crashes the game.
         // Solution: delay creating meshes until the game has started rendering.
-        sweeps = Array.Empty<PartWithSweep>();
+        sweeps = [];
 
         Debug.Assert(AnimationRendererWorker == null);
         AnimationRendererWorker = Def.TryMakeRendererWorker();
@@ -1231,6 +1231,8 @@ public class AnimRenderer : IExposable
             var offset = Def.TryGetCell(AnimCellData.Type.PawnStart, MirrorHorizontal, MirrorVertical, i) ?? IntVec2.Zero;
             TeleportPawn(pawn, basePos + offset.ToIntVec3);
         }
+        
+        Def.RunStartWorker(this);
 
         // Custom sweep paths:
         ISweepProvider sweepProvider = BasicSweepProvider.DefaultInstance;

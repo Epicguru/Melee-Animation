@@ -1,0 +1,18 @@
+{
+  "TextureModID": "sarg.alphagenes",
+  "ItemDefName": "AG_ForsakenLongBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4081633,
+  "OffY": -0.0192076825,
+  "Rotation": 40.0,
+  "BladeStart": 0.141656652,
+  "BladeEnd": 1.04921961,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.946666658,
+    "g": 0.693906546,
+    "b": 0.104133293,
+    "a": 0.94
+  }
+}

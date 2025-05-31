@@ -1,0 +1,19 @@
+{
+  "TextureModID": "sarg.alphagenes",
+  "ItemDefName": "AG_ForsakenBattleAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.417767167,
+  "Rotation": 65.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.4297719,
+  "BladeEnd": 1.082833,
+  "MeleeWeaponType": 2,
+  "TrailTint": {
+    "r": 0.946666658,
+    "g": 0.693906546,
+    "b": 0.104133293,
+    "a": 0.94
+  }
+}

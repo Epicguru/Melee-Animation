@@ -1,5 +1,4 @@
-﻿using AM;
-using AM.Grappling;
+﻿using AM.Grappling;
 using Verse;
 
 namespace AM.Events.Workers;

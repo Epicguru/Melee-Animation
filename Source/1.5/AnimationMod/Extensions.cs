@@ -1,18 +1,19 @@
-﻿using AM.Events;
-using AM.Events.Workers;
-using AM.Idle;
-using AM.PawnData;
-using AM.Tweaks;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using AM.Events;
+using AM.Events.Workers;
+using AM.Hands;
+using AM.Idle;
+using AM.PawnData;
+using AM.Tweaks;
 using JetBrains.Annotations;
+using LudeonTK;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using LudeonTK;
 
 namespace AM;
 
@@ -68,6 +69,39 @@ public static class Extensions
 
     public static float ToAngleFlatNew(this in Vector3 vector) => Mathf.Atan2(vector.z, vector.x) * Mathf.Rad2Deg;
 
+    /// <summary>
+    /// Additional checks to see if the pawn is capable of executing using fists.
+    /// Only returns true if the pawn has hands, is humanlike, and Fists of Fury is active.
+    /// </summary>
+    public static bool IsCapableOfFistExecutions(this Pawn pawn, out string reasonWhyNot)
+    {
+        // Mod active.
+        if (!Core.IsFistsOfFuryActive)
+        {
+            reasonWhyNot = "[Internal Error] Fists of Fury is not active.";
+            return false;
+        }
+        
+        // Check if humanlike.
+        if (!pawn.RaceProps.Humanlike)
+        {
+            reasonWhyNot = "AM.FoF.ReasonCantFistExec.NotHumanlike".Trs(pawn.LabelShortCap);
+            return false;
+        }
+
+        // Check that the pawn has hands...
+        Span<HandInfo> hands = stackalloc HandInfo[2];
+        int handCount = HandUtility.GetHandData(pawn, hands);
+        if (handCount == 0)
+        {
+            reasonWhyNot = "AM.FoF.ReasonCantFistExec.MissingHands".Trs(pawn.LabelShortCap);
+            return false;
+        }
+        
+        reasonWhyNot = null;
+        return true;
+    }
+    
     public static bool Polarity(this float f) => f > 0;
 
     public static WeaponCat ToCategory(this MeleeWeaponType type)

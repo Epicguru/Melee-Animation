@@ -1,12 +1,12 @@
-﻿using AM.Controller.Reports;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using AM.Controller.Reports;
 using AM.Controller.Requests;
 using AM.Grappling;
 using AM.Reqs;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -211,12 +211,24 @@ public class ActionController
         if (req.Target == null && (req.Targets == null || !req.Targets.Any()))
             yield break;
 
-        // Missing weapon.
+        // Missing weapon, unless Fists of Fury is active.
         var weapon = req.Executioner.GetFirstMeleeWeapon();
         if (weapon == null)
         {
-            yield return new ExecutionAttemptReport(req, "NoWeapon");
-            yield break;
+            // If Fists of Fury is active, then the pawn can execute without a weapon.
+            if (!Core.IsFistsOfFuryActive)
+            {
+                yield return new ExecutionAttemptReport(req, "NoWeapon");
+                yield break;
+            }
+
+            // There are a few more conditions to check though...
+            bool canPawnDoFistExecs = req.Executioner.IsCapableOfFistExecutions(out string whyNot);
+            if (!canPawnDoFistExecs)
+            {
+                yield return new ExecutionAttemptReport(req, "BadFists", additional: whyNot);
+                yield break;
+            }
         }
 
         // Check spawned.
@@ -257,7 +269,7 @@ public class ActionController
         }
 
         // Get all animations.
-        var allAnims = req.OnlyTheseAnimations ?? AnimDef.GetExecutionAnimationsForPawnAndWeapon(req.Executioner, weapon.def, req.AttackerMeleeLevel).Where(d => d.Probability > 0);
+        var allAnims = req.OnlyTheseAnimations ?? AnimDef.GetExecutionAnimationsForPawnAndWeapon(req.Executioner, weapon?.def, req.AttackerMeleeLevel).Where(d => d.Probability > 0);
         if (!allAnims.Any())
         {
             yield return new ExecutionAttemptReport(req, "NoAnims");
@@ -581,8 +593,8 @@ public class ActionController
             return;
         }
 
-        var weapon = args.Executioner?.GetFirstMeleeWeapon();
-        if (weapon == null)
+        // No weapon, no fists of fury active, stop here.
+        if (!Core.IsFistsOfFuryActive && args.Executioner?.GetFirstMeleeWeapon() == null)
             return;
 
         foreach (var anim in animDefs)

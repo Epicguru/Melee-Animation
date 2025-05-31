@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using AM.Tweaks;
+using LudeonTK;
 using UnityEngine;
 using Verse;
-using LudeonTK;
 
 namespace AM.Idle;
 

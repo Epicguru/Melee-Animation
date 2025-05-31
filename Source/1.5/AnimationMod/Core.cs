@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -13,6 +12,8 @@ using AM.Patches;
 using AM.Retexture;
 using AM.Tweaks;
 using HarmonyLib;
+using JetBrains.Annotations;
+using LudeonTK;
 using ModRequestAPI;
 using ModRequestAPI.Models;
 using RimWorld;
@@ -56,6 +57,12 @@ public class Core : Mod
             Verse.Log.Error(e.ToString());
     }
 
+    [DebugOutput("AnimationMod", onlyWhenPlaying = false), UsedImplicitly]
+    public static void OutputTranslationKeys()
+    {
+        Log(SimpleSettings.GenerateTranslationKeys(Settings));
+    }
+    
     private static void CheckForActiveMods()
     {
         IsSimpleSidearmsActive = ModLister.GetActiveModWithIdentifier("PeteTimesSix.SimpleSidearms") != null;

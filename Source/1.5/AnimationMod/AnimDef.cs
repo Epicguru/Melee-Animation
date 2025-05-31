@@ -9,6 +9,7 @@ using AM.Idle;
 using AM.RendererWorkers;
 using AM.Reqs;
 using AM.Sweep;
+using AM.Tweaks;
 using JetBrains.Annotations;
 using LudeonTK;
 using RimWorld;
@@ -187,6 +188,7 @@ public class AnimDef : Def
     public List<HandsVisibilityData> handsVisibility = new List<HandsVisibilityData>();
     public PromotionData promotionRules;
     public List<int> spawnDroppedHeadsForPawnIndices = new List<int>();
+    public Type animStartWorker;
 
 #pragma warning disable CS0649 // Field 'AnimDef.data' is never assigned to, and will always have its default value null
     private string data;
@@ -211,6 +213,28 @@ public class AnimDef : Def
         return defaultHandsVisibilityData;
     }
 
+    public void RunStartWorker(AnimRenderer renderer)
+    {
+        if (animStartWorker == null)
+            return;
+
+        var instance = Activator.CreateInstance(animStartWorker, true) as IAnimStartWorker;
+        if (instance == null)
+        {
+            Core.Error($"Failed to create instance of IAnimInitWorker class '{animStartWorker}'!");
+            return;
+        }
+
+        try
+        {
+            instance.OnAnimInit(renderer);
+        }
+        catch (Exception e)
+        {
+            Core.Error($"Failed to run IAnimInitWorker class '{animStartWorker}'!", e);
+        }
+    }
+    
     public void SetDefaultSData()
     {
         SData = new SettingsData()

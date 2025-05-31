@@ -1,5 +1,4 @@
-﻿using AM;
-using AM.UI;
+﻿using AM.UI;
 using RimWorld;
 using UnityEngine;
 using Verse;

@@ -1,11 +1,11 @@
-﻿using AM.UniqueSkills;
-using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using AM.UniqueSkills;
+using JetBrains.Annotations;
 using Verse;
 
 namespace AM;
@@ -75,6 +75,7 @@ public class UniqueSkillDef : Def
         public string Value;
         public object CachedValue;
 
+        [UsedImplicitly]
         private void LoadDataFromXmlCustom(XmlNode node)
         {
             Key = node.Name;

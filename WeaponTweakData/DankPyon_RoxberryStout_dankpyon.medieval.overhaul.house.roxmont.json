@@ -1,0 +1,11 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul.house.roxmont",
+  "ItemDefName": "DankPyon_RoxberryStout",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.1920768,
+  "Rotation": -90.0,
+  "HandsMode": 1,
+  "BladeEnd": 0.5498199,
+  "MeleeWeaponType": 8
+}

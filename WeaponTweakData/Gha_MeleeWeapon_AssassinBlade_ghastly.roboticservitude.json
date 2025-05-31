@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ghastly.roboticservitude",
+  "ItemDefName": "Gha_MeleeWeapon_AssassinBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.364946,
+  "Rotation": 45.0,
+  "BladeStart": 0.242497,
+  "BladeEnd": 0.8715486,
+  "MeleeWeaponType": 6
+}

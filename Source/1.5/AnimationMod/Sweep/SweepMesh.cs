@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace AM.Sweep
 {
@@ -108,7 +109,7 @@ namespace AM.Sweep
 
         public void Dispose()
         {
-            UnityEngine.Object.Destroy(Mesh);
+            Object.Destroy(Mesh);
         }
 
         private struct LineData

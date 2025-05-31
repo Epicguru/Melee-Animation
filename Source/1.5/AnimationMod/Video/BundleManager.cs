@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace AM.Video;
 
@@ -102,7 +103,7 @@ public static class BundleManager
             }
         }
 
-        public T GetFirstAsset<T>() where T : UnityEngine.Object
+        public T GetFirstAsset<T>() where T : Object
         {
             if (Bundle == null)
                 return null;

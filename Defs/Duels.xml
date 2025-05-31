@@ -53,7 +53,7 @@
     <data>Duel_FriendlyEnd.json</data>
     <jobString>Deafeating [OTHER] in a duel!</jobString>
     <type>Other</type>
-    <weaponFilter Class="AM.Reqs.True"/> <!-- Allow anything to do this. Duel logic will handle weapon filtering -->
+    <weaponFilter Class="AM.Reqs.AnyWeapon"/> <!-- Allow anything to do this. Duel logic will handle weapon filtering -->
     <handsVisibility>
       <li>
         <pawnIndex>0</pawnIndex>

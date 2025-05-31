@@ -10,17 +10,19 @@ public struct ExecutionAttemptReport : IDisposable
 {
     private static readonly ConcurrentQueue<List<PossibleExecution>> listPool = new ConcurrentQueue<List<PossibleExecution>>();
 
-    private static readonly NamedArgument[] namedArgs = new NamedArgument[3];
+    private static readonly NamedArgument[] namedArgs = new NamedArgument[4];
 
     public static List<PossibleExecution> BorrowList() => listPool.TryDequeue(out var found) ? found : new List<PossibleExecution>(32);
 
     private static void ReturnList(List<PossibleExecution> list) => listPool.Enqueue(list);
 
-    private static NamedArgument[] GetNamedArgs(in ExecutionAttemptRequest request, Pawn target, string intErrorMsg)
+    private static NamedArgument[] GetNamedArgs(in ExecutionAttemptRequest request, Pawn target, string intErrorMsg, string additional)
     {
         namedArgs[0] = new NamedArgument(request.Executioner, "Exec");
         namedArgs[1] = new NamedArgument(target, "Target");
         namedArgs[2] = new NamedArgument(intErrorMsg, "Error");
+        if (additional != null)
+            namedArgs[3] = new NamedArgument(additional, "Additional");
         return namedArgs;
     }
 
@@ -59,11 +61,11 @@ public struct ExecutionAttemptReport : IDisposable
     public readonly string ErrorMessage;
     public readonly string ErrorMessageShort;
 
-    public ExecutionAttemptReport(in ExecutionAttemptRequest req, string errorTrsKey, string intErrorMsg = null) : this(req, null, errorTrsKey, intErrorMsg)
+    public ExecutionAttemptReport(in ExecutionAttemptRequest req, string errorTrsKey, string intErrorMsg = null, string additional = null) : this(req, null, errorTrsKey, intErrorMsg, additional)
     {
     }
 
-    public ExecutionAttemptReport(in ExecutionAttemptRequest req, Pawn target, string errorTrsKey, string intErrorMsg = null)
+    public ExecutionAttemptReport(in ExecutionAttemptRequest req, Pawn target, string errorTrsKey, string intErrorMsg = null, string additional = null)
     {
         CanExecute = false;
         PossibleExecutions = null;
@@ -76,7 +78,7 @@ public struct ExecutionAttemptReport : IDisposable
         }
         else
         {
-            var args = GetNamedArgs(req, target, intErrorMsg);
+            var args = GetNamedArgs(req, target, intErrorMsg, additional);
             errorTrsKey = $"AM.Error.Exec.{errorTrsKey}";
             ErrorMessage = errorTrsKey.Translate(args);
             ErrorMessageShort = intErrorMsg == null ? GetShortTrs(errorTrsKey, ErrorMessage, args) : ErrorMessage;

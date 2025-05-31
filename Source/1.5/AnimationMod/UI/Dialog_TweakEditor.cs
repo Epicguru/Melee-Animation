@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using AM.Retexture;
 using AM.Idle;
 using AM.Reqs;
+using AM.Retexture;
 using AM.Tweaks;
 using ColourPicker;
+using LudeonTK;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using LudeonTK;
+using Object = UnityEngine.Object;
 
 namespace AM.UI;
 
@@ -433,7 +435,7 @@ public class Dialog_TweakEditor : Window
                     bool flag = tweak.MeleeWeaponType.HasFlag(tag);
                     return $"<color={(flag ? "#97ff87" : "#ff828a")}>{tag.ToString().Replace('_', ' ')}</color>";
                 }
-                var list = System.Enum.GetValues(typeof(MeleeWeaponType)).Cast<MeleeWeaponType>();
+                var list = Enum.GetValues(typeof(MeleeWeaponType)).Cast<MeleeWeaponType>();
                 FloatMenuUtility.MakeMenu(list, MakeTagLabel, t => () =>
                 {
                     if (Input.GetKey(KeyCode.LeftShift))

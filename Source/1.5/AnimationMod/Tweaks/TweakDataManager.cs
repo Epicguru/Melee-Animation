@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AM.Retexture;
+using JetBrains.Annotations;
+using LudeonTK;
+using Newtonsoft.Json;
 using UnityEngine;
 using Verse;
-using LudeonTK;
+using Object = UnityEngine.Object;
 
 namespace AM.Tweaks;
 
@@ -196,6 +199,143 @@ public static class TweakDataManager
         DebugTables.MakeTablesDialog(all, table);
     }
 
+    [DebugAction("Melee Animation", allowedGameStates = AllowedGameStates.Entry), UsedImplicitly]
+    private static void OutputAllMeleeWeaponData()
+    {
+        // Ensure all tweak data is loaded.
+        foreach (var _ in LoadAllForActiveMods(true)) { }
+        
+        string[] imageFileExtensions = [".png", ".jpg", ".jpeg", ".bmp", ".tga"];
+        
+        string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string outputFolder = Path.Combine(desktop, "RimworldMeleeJsonDump");
+        foreach (var weapon in DefDatabase<ThingDef>.AllDefsListForReading.Where(d => d.IsMeleeWeapon()))
+        {
+            var tweak = TryGetTweak(weapon);
+            var texReport = RetextureUtility.GetTextureReport(weapon);
+            
+            var foldersToLoad = texReport.ActiveRetextureMod.foldersToLoadDescendingOrder;
+            string expectedPath = null;
+            
+            foreach (var folder in foldersToLoad)
+            {
+                foreach (var ext in imageFileExtensions)
+                {
+                    string path = Path.Combine(folder, "Textures", $"{texReport.TexturePath}{ext}");
+                    Core.Log($"Checking for texture at '{path}'");
+                    if (File.Exists(path))
+                    {
+                        expectedPath = path;
+                        break;
+                    }
+                }
+                if (expectedPath != null)
+                    break;
+            }
+
+            // Core and DLC are stored in asset bundles.
+            // They need to be dumped into a folder.
+            if (texReport.ActiveRetextureMod.IsCoreMod || texReport.ActiveRetextureMod.IsOfficialMod)
+            {
+                string savePath = Path.Combine(outputFolder, $"{weapon.defName}.png");
+                var srcTex = texReport.ActiveTexture;
+                
+                // Create a temporary RenderTexture of the same size as the texture
+                RenderTexture tmp = RenderTexture.GetTemporary( 
+                    srcTex.width,
+                    srcTex.height,
+                    0,
+                    RenderTextureFormat.Default,
+                    RenderTextureReadWrite.Linear);
+                
+                // Blit the pixels on texture to the RenderTexture
+                Graphics.Blit(srcTex, tmp);
+                
+                // Backup the currently set RenderTexture
+                RenderTexture previous = RenderTexture.active;
+
+                // Set the current RenderTexture to the temporary one we created
+                RenderTexture.active = tmp;
+
+                // Create a new readable Texture2D to copy the pixels to it
+                Texture2D myTexture2D = new Texture2D(srcTex.width, srcTex.height);
+
+                // Copy the pixels from the RenderTexture to the new Texture
+                myTexture2D.ReadPixels(new Rect(0, 0, tmp.width, tmp.height), 0, 0);
+                myTexture2D.Apply();
+
+                // Reset the active RenderTexture
+                RenderTexture.active = previous;
+                
+                // Save to file.
+                byte[] dataToSave = myTexture2D.EncodeToPNG();
+                File.WriteAllBytes(savePath, dataToSave);
+                
+                // Clean up.
+                RenderTexture.ReleaseTemporary(tmp);
+                Object.Destroy(myTexture2D);
+                
+                Core.Log($"Saved texture for {weapon.defName} to '{savePath}'.");
+                expectedPath = savePath;
+            }
+            
+            var data = new MeleeWeaponJsonDataForTweakGen
+            {
+                DefName = weapon.defName,
+                Label = weapon.LabelCap,
+                Description = weapon.DescriptionDetailed,
+                TexturePath = expectedPath,
+                TweakData = tweak == null ? null : new MeleeWeaponTweakDataForTweakGen(tweak)
+            };
+            
+            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            string outputPath = Path.Combine(outputFolder, $"{weapon.defName}.json");
+            Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+            File.WriteAllText(outputPath, json);
+        }
+        
+        Core.Log($"Finished writing melee weapon data to '{outputFolder}'");
+    }
+
+    private sealed record MeleeWeaponJsonDataForTweakGen
+    {
+        public required string DefName { get; init; }
+        public required string Label { get; init; }
+        public required string Description { get; init; }
+        public required string TexturePath { get; init; }
+        [CanBeNull]
+        public MeleeWeaponTweakDataForTweakGen TweakData { get; init; }
+    }
+
+    private sealed record MeleeWeaponTweakDataForTweakGen
+    {
+        public float Rotation { get; init; }
+        public float OffsetX { get; init; }
+        public float OffsetY { get; init; }
+        public bool IsSharp { get; init; }
+        public bool IsBlunt { get; init; }
+        public bool IsStab { get; init; }
+        public int HandCount { get; init; }
+        public bool IsLong { get; init; }
+
+        public MeleeWeaponTweakDataForTweakGen(ItemTweakData data)
+        {
+            Rotation = data.Rotation;
+            OffsetX = data.OffX;
+            OffsetY = data.OffY;
+            IsSharp = data.MeleeWeaponType.HasFlag(MeleeWeaponType.Long_Sharp) || data.MeleeWeaponType.HasFlag(MeleeWeaponType.Short_Sharp);
+            IsBlunt = data.MeleeWeaponType.HasFlag(MeleeWeaponType.Long_Blunt) || data.MeleeWeaponType.HasFlag(MeleeWeaponType.Short_Blunt);
+            IsStab = data.MeleeWeaponType.HasFlag(MeleeWeaponType.Short_Stab) || data.MeleeWeaponType.HasFlag(MeleeWeaponType.Long_Stab);
+            IsLong = data.MeleeWeaponType.HasFlag(MeleeWeaponType.Long_Blunt) || data.MeleeWeaponType.HasFlag(MeleeWeaponType.Long_Sharp) || data.MeleeWeaponType.HasFlag(MeleeWeaponType.Long_Stab);
+            HandCount = data.HandsMode switch
+            {
+                HandsMode.Default => 2,
+                HandsMode.Only_Main_Hand => 1,
+                _ => 0
+            };
+        }
+    }
+    
     public static IEnumerable<(string modPackageID, string modName, ThingDef weapon)> LoadAllForActiveMods(bool includeRedundant)
     {
         var data = from weapon in DefDatabase<ThingDef>.AllDefsListForReading

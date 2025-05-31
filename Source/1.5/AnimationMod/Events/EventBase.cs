@@ -1,7 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
+using Verse;
 
 namespace AM.Events;
 
@@ -41,7 +42,7 @@ public abstract class EventBase : ScriptableObject
     static EventBase()
     {
         allBases = new Dictionary<string, Func<EventBase>>();
-        var types = Verse.GenTypes.AllSubclassesNonAbstract(typeof(EventBase));
+        var types = GenTypes.AllSubclassesNonAbstract(typeof(EventBase));
         foreach (var type in types)
         {
             var instance = Activator.CreateInstance(type) as EventBase;
