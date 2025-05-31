@@ -17,8 +17,8 @@ namespace AM.Idle;
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp
 {
-    [UsedImplicitly]
-    public static readonly List<Predicate<IdleControllerComp>> ShouldDrawAdditional = new List<Predicate<IdleControllerComp>>();
+    [PublicAPI]
+    public static readonly List<IdleControllerDrawDelegate> ShouldDrawAdditional = [];
     public static double TotalTickTimeMS;
     public static int TotalActive;
     [TweakValue("Melee Animation")]
@@ -69,6 +69,7 @@ public class IdleControllerComp : ThingComp
     }
     
     public AnimRenderer CurrentAnimation => currentAnimation;
+    [PublicAPI]
     public bool IsFistsOfFuryComp { get; protected set; } = false;
     
     private UniqueSkillInstance[] skills;
@@ -86,12 +87,18 @@ public class IdleControllerComp : ThingComp
     private float dodgeRotationVelocity;
     private Vector2 dodgePositionOffset;
     private Vector2 dodgePositionVelocity;
+    private bool wantsVanillaDrawThisFrame;
 
-    public virtual void PreDraw()
+    /// <summary>
+    /// Returns true to indicate that the default vanilla weapon draw should be performed.
+    /// </summary>
+    [MustUseReturnValue]
+    public virtual bool PreDraw()
     {
         if (parent is not Pawn pawn || CurrentAnimation == null)
-            return;
+            return wantsVanillaDrawThisFrame;
 
+        bool shouldBeActive = false;
         try
         {
             // If the animation is about to draw, but it was just destroyed (by the animation ending)
@@ -99,8 +106,11 @@ public class IdleControllerComp : ThingComp
             // This prevents an annoying flicker.
             if (CurrentAnimation.IsDestroyed)
             {
-                if (ShouldBeActive(out var weapon))
+                shouldBeActive = ShouldBeActive(out var weapon, out wantsVanillaDrawThisFrame);
+                if (shouldBeActive)
+                {
                     TickActive(weapon);
+                }
             }
 
             // Update animator position to match pawn.
@@ -111,6 +121,13 @@ public class IdleControllerComp : ThingComp
         {
             Core.Error("PreDraw exception:", e);
         }
+
+        if (shouldBeActive && wantsVanillaDrawThisFrame)
+        {
+            Core.Warn("IdleComp is active and rendering but vanilla draw was also requested. This is likely a bug that will result in double-drawing the weapon. " +
+                      "Please report this to the mod author if this is logged more than once.");
+        }
+        return wantsVanillaDrawThisFrame;
     }
 
     protected bool SimpleShouldBeActiveChecks(out Pawn pawn)
@@ -124,20 +141,23 @@ public class IdleControllerComp : ThingComp
                && pawn.Spawned;
     }
 
-    protected bool AdditionalShouldBeActiveChecks()
+    protected bool AdditionalShouldBeActiveChecks(out bool doDefaultDraw)
     {
-        foreach (var item in ShouldDrawAdditional)
+        bool wantsToBeActive = true;
+        doDefaultDraw = false;
+        
+        foreach (var method in ShouldDrawAdditional)
         {
-            if (!item(this))
-                return false;
+            method(this, ref wantsToBeActive, ref doDefaultDraw);
         }
-
-        return true;
+        
+        return wantsToBeActive;
     }
 
-    protected virtual bool ShouldBeActive(out Thing weapon)
+    protected virtual bool ShouldBeActive(out Thing weapon, out bool wantsVanillaDraw)
     {
         weapon = null;
+        wantsVanillaDraw = false;
 
         // Basic checks:
         if (!SimpleShouldBeActiveChecks(out Pawn pawn))
@@ -157,7 +177,7 @@ public class IdleControllerComp : ThingComp
 
         // Additional draw check:
         // Used for mod compatibility such as Fog of War etc.
-        if (!AdditionalShouldBeActiveChecks())
+        if (!AdditionalShouldBeActiveChecks(out wantsVanillaDraw))
         {
             return false;
         }
@@ -190,7 +210,7 @@ public class IdleControllerComp : ThingComp
         {
             TickSkills();
 
-            if (!ShouldBeActive(out var weapon))
+            if (!ShouldBeActive(out var weapon, out wantsVanillaDrawThisFrame))
             {
                 ClearAnimation();
                 return;

@@ -23,13 +23,25 @@ public class PatchCore : Mod
 		}
 	}
 
-	private static bool ShouldDraw(IdleControllerComp comp)
+	private static void ShouldDraw(IdleControllerComp comp, ref bool shouldBeActive, ref bool doDefaultDraw)
 	{
+		// Mod settings to disable this patch.
+		if (Core.Settings.DualWieldDrawSingle)
+		{
+			return;
+		}
+		
 		if (comp.parent is not Pawn pawn)
-			return true;
+		{
+			return;
+		}
 
 		// If the pawn has an off-hand weapon, do not draw the idle animation.
-		return !pawn.HasOffHand();
+		if (pawn.HasOffHand())
+		{
+			shouldBeActive = false; // Do not draw the modded idle animation(s).
+			doDefaultDraw = true; // Do the vanilla draw instead, which in this case will draw the off-hand weapon as well from Tacticowl.
+		}
 	}
 }
   

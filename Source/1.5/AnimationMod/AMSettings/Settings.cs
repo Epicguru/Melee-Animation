@@ -336,6 +336,15 @@ public class Settings : SimpleSettingsBase
     [Description("When enabled, pawns will visually move their body slightly when dodging a melee attack.\n" +
                  "This is a purely visual change and does not affect combat.")]
     public bool EnableDodgeMotion = true;
+
+    [Label("Draw Single Weapon When Dual Wielding")]
+    [Description("This mod does not support properly drawing duel-wielding weapons (from the Tacticowl mod).\n" +
+                 "When this setting is enabled, the mod will draw only one of the two weapons when a pawn is dual-wielding.\n" +
+                 "When disabled, the default dual-wield drawing will be done but without any animations.\n\n" +
+                 "This does not affect execution or duel animations, which will always work regardless.")]
+    [VisibleIf(nameof(AnimateAtIdle))]
+    public bool DualWieldDrawSingle = false;
+    
     #endregion
 
     #region Performance
