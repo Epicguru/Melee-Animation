@@ -1,10 +1,10 @@
 ﻿using HarmonyLib;
-using PerformanceOptimizer;
+using JetBrains.Annotations;
 using Verse;
 
 namespace AM.PerformanceOptimizerPatch
 {
-    [HotSwapAll]
+    [HotSwapAll, UsedImplicitly]
     public class PatchCore : Mod
     {
         public static Harmony HarmonyInstance { get; private set; }
