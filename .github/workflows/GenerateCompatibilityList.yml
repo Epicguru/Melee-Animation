@@ -1,7 +1,7 @@
 name: Generate Compatibility List
 
 env:
-  LATEST_RW_VERSION: 1.5
+  LATEST_RW_VERSION: 1.5 # Update when Rimworld updates version!
 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
@@ -21,13 +21,10 @@ jobs:
     - name: Setup Dotnet
       uses: actions/setup-dotnet@v4.3.1
       with:
-        dotnet-version: 8.0.x
-
-    - name: Build Mod ${{ env.LATEST_RW_VERSION }}
-      run: dotnet build Source/${{ env.LATEST_RW_VERSION }}/CompatibilityReportGenerator --configuration Release
+        dotnet-version: 10.0.x
 
     - name: Run generator
-      run: .\Source\${{ env.LATEST_RW_VERSION }}\CompatibilityReportGenerator\bin\Release\net48\CompatibilityReportGenerator.exe --directory "./WeaponTweakData" --output "./WeaponTweakData/Compatible Mods.md"
+      run: dotnet run --project .\Source\${{ env.LATEST_RW_VERSION }}\CompatibilityReportGenerator --directory "./WeaponTweakData" --output "./WeaponTweakData/Compatible Mods.md"
     
     - name: Check for changes
       run: git status
