@@ -1,0 +1,14 @@
+{
+  "TextureModID": "melondove.wolfeinrace",
+  "ItemDefName": "W_Weapon_Melee_RebelAlloyDagger",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.24242425,
+  "Rotation": 50.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "HandsMode": 1,
+  "BladeStart": 0.126984119,
+  "BladeEnd": 0.596440852,
+  "MeleeWeaponType": 48
+}
