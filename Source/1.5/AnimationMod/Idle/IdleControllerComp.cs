@@ -21,8 +21,6 @@ public class IdleControllerComp : ThingComp
     public static readonly List<IdleControllerDrawDelegate> ShouldDrawAdditional = [];
     public static double TotalTickTimeMS;
     public static int TotalActive;
-    [TweakValue("Melee Animation")]
-    protected static bool IsLeftHanded; // TODO make instance, or come from pawn.
     
     [UsedImplicitly]
     [DebugAction("Melee Animation", "Log Skills", allowedGameStates = AllowedGameStates.PlayingOnMap, actionType = DebugActionType.ToolMapForPawns)]
@@ -130,6 +128,26 @@ public class IdleControllerComp : ThingComp
         return wantsVanillaDrawThisFrame;
     }
 
+    public virtual bool IsLeftHanded()
+    {
+        if (parent is null)
+            return false;
+
+        float chance = Core.Settings.LeftHandedChance;
+        switch (chance)
+        {
+            case <= 0f:
+                return false;
+
+            case >= 1f:
+                return true;
+
+            default:
+                int offset = Mathf.Abs(parent.HashOffset()) % 1000;
+                return offset <= chance * 1000;
+        }
+    }
+    
     protected bool SimpleShouldBeActiveChecks(out Pawn pawn)
     {
         pawn = parent as Pawn;
@@ -285,7 +303,7 @@ public class IdleControllerComp : ThingComp
             return;
 
         bool shouldLoop = CurrentAnimation.Def.idleType.IsIdle(false) || CurrentAnimation.Def.idleType.IsMove();
-        bool shouldBeMirrored = pawn.Rotation == Rot4.West || (pawn.Rotation == (IsLeftHanded ? Rot4.South : Rot4.North));
+        bool shouldBeMirrored = pawn.Rotation == Rot4.West || (pawn.Rotation == (IsLeftHanded() ? Rot4.South : Rot4.North));
         CurrentAnimation.Loop = shouldLoop;
         CurrentAnimation.MirrorHorizontal = shouldBeMirrored;
 

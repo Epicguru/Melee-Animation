@@ -342,7 +342,7 @@ public class Settings : SimpleSettingsBase
     [VisibleIf(nameof(AnimateAtIdle))]
     [Range(0f, 1f)]
     [Percentage]
-    public float LeftHandedChance = 0.33f;
+    public float LeftHandedChance = 0.20f;
     
     [Label("Draw Single Weapon When Dual Wielding")]
     [Description("This mod does not support properly drawing duel-wielding weapons (from the Tacticowl mod).\n" +
