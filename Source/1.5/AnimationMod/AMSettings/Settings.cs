@@ -337,6 +337,13 @@ public class Settings : SimpleSettingsBase
                  "This is a purely visual change and does not affect combat.")]
     public bool EnableDodgeMotion = true;
 
+    [Label("Left Handed Chance")]
+    [Description("This is the chance for a pawn to be left-handed, which simply affects which side the weapon is held on when standing still.")]
+    [VisibleIf(nameof(AnimateAtIdle))]
+    [Range(0f, 1f)]
+    [Percentage]
+    public float LeftHandedChance = 0.20f;
+    
     [Label("Draw Single Weapon When Dual Wielding")]
     [Description("This mod does not support properly drawing duel-wielding weapons (from the Tacticowl mod).\n" +
                  "When this setting is enabled, the mod will draw only one of the two weapons when a pawn is dual-wielding.\n" +
