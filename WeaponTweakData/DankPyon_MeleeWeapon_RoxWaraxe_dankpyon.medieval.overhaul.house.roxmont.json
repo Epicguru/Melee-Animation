@@ -1,0 +1,14 @@
+{
+  "TextureModID": "dankpyon.medieval.overhaul.house.roxmont",
+  "ItemDefName": "DankPyon_MeleeWeapon_RoxWaraxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4417767,
+  "OffY": -0.0624249578,
+  "Rotation": 45.0,
+  "ScaleX": 1.35,
+  "ScaleY": 1.35,
+  "BladeStart": 0.468187273,
+  "BladeEnd": 0.9819928,
+  "MeleeWeaponType": 2
+}

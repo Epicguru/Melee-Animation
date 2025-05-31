@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AM.AMSettings;
 using HarmonyLib;
+using LudeonTK;
 using UnityEngine;
 using Verse;
-using LudeonTK;
 
 namespace AM.Patches;
 

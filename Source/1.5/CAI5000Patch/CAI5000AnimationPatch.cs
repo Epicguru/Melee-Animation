@@ -37,24 +37,28 @@ public static class CAI5000AnimationPatch
         foggers.RemoveAll(p => p.Key.Index < 0);
     }
 
-    public static bool ShouldDraw(IdleControllerComp comp)
+    public static void ShouldDraw(IdleControllerComp comp, ref bool shouldBeActive, ref bool doDefaultDraw)
     {
         try
         {
             if (!Finder.Settings.FogOfWar_Enabled)
-                return true;
-
+                return;
+            
             var fogger = GetFogger(comp);
             if (fogger == null)
-                return true;
+                return;
 
-            // This is the CAI5000 fog-of-war check:
-            return !fogger.IsFogged(comp.parent.Position);
+            bool isHiddenByFog = fogger.IsFogged(comp.parent.Position);
+            
+            // Do not draw when in fog of war.
+            if (isHiddenByFog)
+            {
+                shouldBeActive = false;
+            }
         }
         catch (Exception e)
         {
             Core.Error("CAI5000 patch error:", e);
-            return true;
         }
     }
 }

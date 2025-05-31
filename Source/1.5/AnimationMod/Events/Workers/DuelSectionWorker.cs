@@ -1,10 +1,10 @@
-﻿using AM.Jobs;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AM.Jobs;
 using AM.Outcome;
 using AM.Reqs;
+using RimWorld;
 using UnityEngine;
 using Verse;
 

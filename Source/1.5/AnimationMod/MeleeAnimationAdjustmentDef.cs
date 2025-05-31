@@ -1,6 +1,6 @@
-﻿using AM.Idle;
+﻿using System.Collections.Generic;
+using AM.Idle;
 using JetBrains.Annotations;
-using System.Collections.Generic;
 using Verse;
 
 namespace AM;

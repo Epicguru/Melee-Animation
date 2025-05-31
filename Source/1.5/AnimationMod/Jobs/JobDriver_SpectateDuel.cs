@@ -1,8 +1,8 @@
-﻿using AM.Buildings;
+﻿using System.Collections.Generic;
+using AM.Buildings;
 using AM.Idle;
 using JetBrains.Annotations;
 using RimWorld;
-using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 using Verse.AI;

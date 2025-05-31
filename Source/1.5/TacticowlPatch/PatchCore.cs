@@ -1,6 +1,7 @@
-﻿using AM.Idle;
+﻿using System;
+using AM.Idle;
 using JetBrains.Annotations;
-using System;
+using Tacticowl;
 using Verse;
 
 namespace AM.TacticowlPatch;
@@ -13,9 +14,8 @@ public class PatchCore : Mod
 	{
 		try
 		{
-			//IdleControllerComp.ShouldDrawAdditional.Add(ShouldDraw);
-
-			Core.Log("Initialized Tacticowl patch (currently not active)");
+			IdleControllerComp.ShouldDrawAdditional.Add(ShouldDraw);
+			Core.Log("Initialized Tacticowl patch");
 		}
 		catch (Exception e)
 		{
@@ -23,18 +23,25 @@ public class PatchCore : Mod
 		}
 	}
 
-	private static bool ShouldDraw(IdleControllerComp comp)
+	private static void ShouldDraw(IdleControllerComp comp, ref bool shouldBeActive, ref bool doDefaultDraw)
 	{
-		var pawn = comp.parent as Pawn;
-		if (pawn == null)
-			return true;
+		// Mod settings to disable this patch.
+		if (Core.Settings.DualWieldDrawSingle)
+		{
+			return;
+		}
+		
+		if (comp.parent is not Pawn pawn)
+		{
+			return;
+		}
 
-		// All this stuff is internal!
-		// Have requested the author to change this.
-
-		//Tacticowl.ex
-		//return !pawn.HasOffHand();
-		return true;
+		// If the pawn has an off-hand weapon, do not draw the idle animation.
+		if (pawn.HasOffHand())
+		{
+			shouldBeActive = false; // Do not draw the modded idle animation(s).
+			doDefaultDraw = true; // Do the vanilla draw instead, which in this case will draw the off-hand weapon as well from Tacticowl.
+		}
 	}
 }
   

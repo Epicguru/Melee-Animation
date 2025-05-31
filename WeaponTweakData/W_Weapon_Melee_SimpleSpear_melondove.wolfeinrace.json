@@ -1,0 +1,14 @@
+{
+  "TextureModID": "melondove.wolfeinrace",
+  "ItemDefName": "W_Weapon_Melee_SimpleSpear",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.380952418,
+  "OffY": 0.00384812127,
+  "Rotation": 46.49442,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.16546464,
+  "BladeEnd": 0.9658492,
+  "MeleeWeaponType": 5
+}

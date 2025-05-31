@@ -4,7 +4,6 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using Verse.Noise;
 
 namespace AM.Grappling
 {

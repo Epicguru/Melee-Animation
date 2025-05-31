@@ -1,26 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AM.AMSettings;
 using AM.Patches;
 using AM.Processing;
 using AM.Tweaks;
 using AM.UniqueSkills;
 using JetBrains.Annotations;
+using LudeonTK;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using LudeonTK;
-using System.Linq;
 
 namespace AM.Idle;
 
 [UsedImplicitly]
 public class IdleControllerComp : ThingComp
 {
-    public static readonly List<Predicate<IdleControllerComp>> ShouldDrawAdditional = new List<Predicate<IdleControllerComp>>();
+    [PublicAPI]
+    public static readonly List<IdleControllerDrawDelegate> ShouldDrawAdditional = [];
     public static double TotalTickTimeMS;
     public static int TotalActive;
-
+    
     [UsedImplicitly]
     [DebugAction("Melee Animation", "Log Skills", allowedGameStates = AllowedGameStates.PlayingOnMap, actionType = DebugActionType.ToolMapForPawns)]
     private static void LogSkills(Pawn pawn)
@@ -66,6 +67,7 @@ public class IdleControllerComp : ThingComp
     }
     
     public AnimRenderer CurrentAnimation => currentAnimation;
+    [PublicAPI]
     public bool IsFistsOfFuryComp { get; protected set; } = false;
     
     private UniqueSkillInstance[] skills;
@@ -79,14 +81,22 @@ public class IdleControllerComp : ThingComp
     private float lastDelta;
     private uint ticksMoving;
     private int drawTick;
-    [TweakValue("Melee Animation")]
-    protected static bool IsLeftHanded; // TODO make instance, or come from pawn.
+    private float dodgeRotationOffset;
+    private float dodgeRotationVelocity;
+    private Vector2 dodgePositionOffset;
+    private Vector2 dodgePositionVelocity;
+    private bool wantsVanillaDrawThisFrame;
 
-    public virtual void PreDraw()
+    /// <summary>
+    /// Returns true to indicate that the default vanilla weapon draw should be performed.
+    /// </summary>
+    [MustUseReturnValue]
+    public virtual bool PreDraw()
     {
         if (parent is not Pawn pawn || CurrentAnimation == null)
-            return;
+            return wantsVanillaDrawThisFrame;
 
+        bool shouldBeActive = false;
         try
         {
             // If the animation is about to draw, but it was just destroyed (by the animation ending)
@@ -94,8 +104,11 @@ public class IdleControllerComp : ThingComp
             // This prevents an annoying flicker.
             if (CurrentAnimation.IsDestroyed)
             {
-                if (ShouldBeActive(out var weapon))
+                shouldBeActive = ShouldBeActive(out var weapon, out wantsVanillaDrawThisFrame);
+                if (shouldBeActive)
+                {
                     TickActive(weapon);
+                }
             }
 
             // Update animator position to match pawn.
@@ -106,8 +119,35 @@ public class IdleControllerComp : ThingComp
         {
             Core.Error("PreDraw exception:", e);
         }
+
+        if (shouldBeActive && wantsVanillaDrawThisFrame)
+        {
+            Core.Warn("IdleComp is active and rendering but vanilla draw was also requested. This is likely a bug that will result in double-drawing the weapon. " +
+                      "Please report this to the mod author if this is logged more than once.");
+        }
+        return wantsVanillaDrawThisFrame;
     }
 
+    public virtual bool IsLeftHanded()
+    {
+        if (parent is null)
+            return false;
+
+        float chance = Core.Settings.LeftHandedChance;
+        switch (chance)
+        {
+            case <= 0f:
+                return false;
+
+            case >= 1f:
+                return true;
+
+            default:
+                int offset = Mathf.Abs(parent.HashOffset()) % 1000;
+                return offset <= chance * 1000;
+        }
+    }
+    
     protected bool SimpleShouldBeActiveChecks(out Pawn pawn)
     {
         pawn = parent as Pawn;
@@ -119,20 +159,23 @@ public class IdleControllerComp : ThingComp
                && pawn.Spawned;
     }
 
-    protected bool AdditionalShouldBeActiveChecks()
+    protected bool AdditionalShouldBeActiveChecks(out bool doDefaultDraw)
     {
-        foreach (var item in ShouldDrawAdditional)
+        bool wantsToBeActive = true;
+        doDefaultDraw = false;
+        
+        foreach (var method in ShouldDrawAdditional)
         {
-            if (!item(this))
-                return false;
+            method(this, ref wantsToBeActive, ref doDefaultDraw);
         }
-
-        return true;
+        
+        return wantsToBeActive;
     }
 
-    protected virtual bool ShouldBeActive(out Thing weapon)
+    protected virtual bool ShouldBeActive(out Thing weapon, out bool wantsVanillaDraw)
     {
         weapon = null;
+        wantsVanillaDraw = false;
 
         // Basic checks:
         if (!SimpleShouldBeActiveChecks(out Pawn pawn))
@@ -152,7 +195,7 @@ public class IdleControllerComp : ThingComp
 
         // Additional draw check:
         // Used for mod compatibility such as Fog of War etc.
-        if (!AdditionalShouldBeActiveChecks())
+        if (!AdditionalShouldBeActiveChecks(out wantsVanillaDraw))
         {
             return false;
         }
@@ -172,13 +215,20 @@ public class IdleControllerComp : ThingComp
     public override void CompTick()
     {
         base.CompTick();
+        
+        dodgePositionOffset += dodgePositionVelocity;
+        dodgePositionVelocity *= 0.9f;
+        dodgePositionOffset *= 0.9f;
+        dodgeRotationOffset += dodgeRotationVelocity;
+        dodgeRotationVelocity *= 0.9f;
+        dodgeRotationOffset *= 0.9f;
 
         var timer = new RefTimer();
         try
         {
             TickSkills();
 
-            if (!ShouldBeActive(out var weapon))
+            if (!ShouldBeActive(out var weapon, out wantsVanillaDrawThisFrame))
             {
                 ClearAnimation();
                 return;
@@ -253,7 +303,7 @@ public class IdleControllerComp : ThingComp
             return;
 
         bool shouldLoop = CurrentAnimation.Def.idleType.IsIdle(false) || CurrentAnimation.Def.idleType.IsMove();
-        bool shouldBeMirrored = pawn.Rotation == Rot4.West || (pawn.Rotation == (IsLeftHanded ? Rot4.South : Rot4.North));
+        bool shouldBeMirrored = pawn.Rotation == Rot4.West || (pawn.Rotation == (IsLeftHanded() ? Rot4.South : Rot4.North));
         CurrentAnimation.Loop = shouldLoop;
         CurrentAnimation.MirrorHorizontal = shouldBeMirrored;
 
@@ -669,5 +719,34 @@ public class IdleControllerComp : ThingComp
             }
         }
         return skills;
+    }
+    
+    /// <summary>
+    /// Called when this pawn dodges a melee attack.
+    /// </summary>
+    public virtual void OnMeleeDodge(Pawn attackedBy)
+    {
+        if (!Core.Settings.EnableDodgeMotion)
+            return;
+        
+        var directionFromAttacker = parent.DrawPos - attackedBy.DrawPos;
+        var directionFromAttackerFlat = directionFromAttacker.ToFlat().normalized;
+        
+        // Add dodge offset.
+        dodgePositionVelocity += directionFromAttackerFlat * 0.13f;
+        
+        // Add dodge rotation.
+        bool isToRight = parent.DrawPos.x > attackedBy.DrawPos.x;
+        dodgeRotationVelocity += isToRight ? 7f : -7f;
+    }
+    
+    public virtual void AddBodyDrawOffset(ref PawnRenderer.PreRenderResults pawnDrawArgs)
+    {
+        if (Mathf.Abs(dodgeRotationOffset) > 0.5f || dodgePositionOffset.sqrMagnitude > 0.02f)
+        {
+            pawnDrawArgs.useCached = false;
+            pawnDrawArgs.bodyPos += dodgePositionOffset.ToVector3();
+            pawnDrawArgs.bodyAngle += dodgeRotationOffset;
+        }
     }
 }

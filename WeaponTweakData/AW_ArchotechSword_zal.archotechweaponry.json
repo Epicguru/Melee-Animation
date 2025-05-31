@@ -1,0 +1,16 @@
+{
+  "TextureModID": "zal.archotechweaponry",
+  "ItemDefName": "AW_ArchotechSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.369747877,
+  "BladeStart": 0.09363745,
+  "BladeEnd": 0.665066,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.742696762,
+    "g": 0.97,
+    "b": 0.371833324,
+    "a": 0.936666667
+  }
+}

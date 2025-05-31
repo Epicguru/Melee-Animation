@@ -1,20 +1,19 @@
 ﻿using System;
-using AM.Controller.Requests;
-using AM.Controller;
-using RimWorld;
 using System.Collections.Generic;
-using UnityEngine;
-using Verse;
-using AM.Controller.Reports;
-using AM.Grappling;
 using System.Linq;
-using Verse.AI;
+using AM.Controller;
+using AM.Controller.Reports;
+using AM.Controller.Requests;
+using AM.Grappling;
 using AM.Idle;
 using AM.Jobs;
 using AM.Outcome;
 using AM.Reqs;
 using AM.UniqueSkills;
-using static UnityEngine.GraphicsBuffer;
+using RimWorld;
+using UnityEngine;
+using Verse;
+using Verse.AI;
 
 namespace AM.UI;
 
@@ -78,7 +77,8 @@ public static class DraftedFloatMenuOptionsUI
         var weapon = pawn.GetFirstMeleeWeapon();
         var lasso = pawn.TryGetLasso();
         var skills = pawn.GetComp<IdleControllerComp>()?.GetSkills();
-        if (weapon == null && lasso == null && !(skills?.Any(s => s?.IsEnabledForPawn(out _) ?? false) ?? false))
+        bool isFistFighter = pawn.IsCapableOfFistExecutions(out string reason);
+        if (weapon == null && lasso == null && !(skills?.Any(s => s?.IsEnabledForPawn(out _) ?? false) ?? false) && !isFistFighter)
             yield break;
 
         ulong occupiedMask = SpaceChecker.MakeOccupiedMask(pawn.Map, pawn.Position, out uint smallMask);
@@ -157,7 +157,7 @@ public static class DraftedFloatMenuOptionsUI
             if ((target.def.race?.Animal ?? false) && !Core.Settings.AnimalsCanBeExecuted)
                 continue;
 
-            if (weapon != null && !noExecEver)
+            if ((weapon != null || isFistFighter) && !noExecEver)
             {
                 foreach (var op in GetExecutionAttemptOption(target))
                     if (op != null)
@@ -427,11 +427,8 @@ public static class DraftedFloatMenuOptionsUI
             }
 
             Core.Error($"CRITICAL ERROR: Failed to force interrupt {attacker}'s job with execution goto job. Likely a mod conflict or invalid start parameters.");
-            string reason = "AM.Gizmo.Error.NoLasso".Translate(
-                new NamedArgument(attacker.NameShortColored, "Pawn"),
-                new NamedArgument(target.NameShortColored, "Target"));
-            string error = "AM.Gizmo.Execute.Fail".Translate(new NamedArgument(reason, "Reason"));
-            Messages.Message(error, MessageTypeDefOf.RejectInput, false);
+            Core.Error($"There were {report.PossibleExecutions?.Count ?? -1} possible executions.");
+            Messages.Message("Failed to start execution, possibly no path or bug.", MessageTypeDefOf.RejectInput, false);
         }
         else
         {

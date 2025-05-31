@@ -1,0 +1,14 @@
+{
+  "TextureModID": "oskarpotocki.vfe.medieval2",
+  "ItemDefName": "VFEM2_MeleeWeapon_Pike",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0038485527,
+  "OffY": -0.0346320346,
+  "Rotation": 44.11906,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.103896104,
+  "BladeEnd": 1.34680164,
+  "MeleeWeaponType": 5
+}

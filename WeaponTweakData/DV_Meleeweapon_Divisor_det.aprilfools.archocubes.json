@@ -1,0 +1,19 @@
+{
+  "TextureModID": "det.aprilfools.archocubes",
+  "ItemDefName": "DV_Meleeweapon_Divisor",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.499399662,
+  "OffY": 0.0144057646,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.228091225,
+  "BladeEnd": 1.22689068,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.742696762,
+    "g": 0.97,
+    "b": 0.371833324,
+    "a": 0.936666667
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "TextureModID": "oskarpotocki.vfe.medieval2",
+  "ItemDefName": "VFEM2_MeleeWeapon_Shortsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.246272013,
+  "BladeStart": 0.107744575,
+  "BladeEnd": 0.6310729,
+  "MeleeWeaponType": 54
+}

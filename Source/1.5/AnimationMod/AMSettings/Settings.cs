@@ -1,11 +1,11 @@
-﻿using Meta.Numerics.Statistics.Distributions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using LudeonTK;
+using Meta.Numerics.Statistics.Distributions;
 using UnityEngine;
 using Verse;
-using LudeonTK;
 
 namespace AM.AMSettings;
 
@@ -331,6 +331,27 @@ public class Settings : SimpleSettingsBase
     [Label("Show Execution Outcome Text")]
     [Description("Enables or disables the text popup that shows the outcome of an execution (i.e. injure, down or kill) when an execution animation plays.")]
     public bool ShowExecutionMotes = true;
+
+    [Label("Enable Dodge Motion")]
+    [Description("When enabled, pawns will visually move their body slightly when dodging a melee attack.\n" +
+                 "This is a purely visual change and does not affect combat.")]
+    public bool EnableDodgeMotion = true;
+
+    [Label("Left Handed Chance")]
+    [Description("This is the chance for a pawn to be left-handed, which simply affects which side the weapon is held on when standing still.")]
+    [VisibleIf(nameof(AnimateAtIdle))]
+    [Range(0f, 1f)]
+    [Percentage]
+    public float LeftHandedChance = 0.20f;
+    
+    [Label("Draw Single Weapon When Dual Wielding")]
+    [Description("This mod does not support properly drawing duel-wielding weapons (from the Tacticowl mod).\n" +
+                 "When this setting is enabled, the mod will draw only one of the two weapons when a pawn is dual-wielding.\n" +
+                 "When disabled, the default dual-wield drawing will be done but without any animations.\n\n" +
+                 "This does not affect execution or duel animations, which will always work regardless.")]
+    [VisibleIf(nameof(AnimateAtIdle))]
+    public bool DualWieldDrawSingle = false;
+    
     #endregion
 
     #region Performance

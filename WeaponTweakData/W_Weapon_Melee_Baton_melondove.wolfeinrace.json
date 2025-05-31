@@ -1,0 +1,12 @@
+{
+  "TextureModID": "melondove.wolfeinrace",
+  "ItemDefName": "W_Weapon_Melee_Baton",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.150072128,
+  "OffY": -0.0115440115,
+  "Rotation": 50.0,
+  "BladeStart": 0.0461760461,
+  "BladeEnd": 0.5079365,
+  "MeleeWeaponType": 8
+}

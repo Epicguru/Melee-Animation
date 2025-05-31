@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ludeon.rimworld",
+  "ItemDefName": "BOR_Longsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.350540221,
+  "OffY": -0.024009645,
+  "BladeStart": 0.09363745,
+  "BladeEnd": 0.7899159,
+  "MeleeWeaponType": 6
+}

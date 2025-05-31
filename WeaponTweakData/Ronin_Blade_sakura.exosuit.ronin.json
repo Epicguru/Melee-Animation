@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sakura.exosuit.ronin",
+  "ItemDefName": "Ronin_Blade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.60028857,
+  "ScaleX": 2.0,
+  "ScaleY": 2.0,
+  "BladeStart": 0.3001443,
+  "BladeEnd": 1.50841773,
+  "MeleeWeaponType": 6
+}

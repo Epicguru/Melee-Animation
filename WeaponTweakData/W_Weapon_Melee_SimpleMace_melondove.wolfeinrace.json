@@ -1,0 +1,14 @@
+{
+  "TextureModID": "melondove.wolfeinrace",
+  "ItemDefName": "W_Weapon_Melee_SimpleMace",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3232323,
+  "OffY": 0.0038484633,
+  "Rotation": 46.51659,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.119288586,
+  "BladeEnd": 0.6772489,
+  "MeleeWeaponType": 9
+}

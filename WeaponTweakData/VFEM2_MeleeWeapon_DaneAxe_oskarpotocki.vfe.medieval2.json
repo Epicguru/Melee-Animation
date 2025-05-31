@@ -1,0 +1,12 @@
+{
+  "TextureModID": "oskarpotocki.vfe.medieval2",
+  "ItemDefName": "VFEM2_MeleeWeapon_DaneAxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3078406,
+  "OffY": -0.138528138,
+  "Rotation": 53.58847,
+  "BladeStart": 0.39634487,
+  "BladeEnd": 0.8350173,
+  "MeleeWeaponType": 2
+}

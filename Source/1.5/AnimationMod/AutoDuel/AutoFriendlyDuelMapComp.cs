@@ -1,14 +1,13 @@
-﻿using AM.Buildings;
-using AM.Tweaks;
-using JetBrains.Annotations;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Verse;
+using AM.Buildings;
+using AM.Tweaks;
+using JetBrains.Annotations;
 using LudeonTK;
-using Verse.AI.Group;
+using RimWorld;
+using Verse;
 
 namespace AM.AutoDuel;
 
