@@ -1,7 +1,7 @@
 name: Generate Compatibility List
 
 env:
-  LATEST_RW_VERSION: 1.5 # Update when Rimworld updates version!
+  LATEST_RW_VERSION: 1.6 # Update when Rimworld updates version!
 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
