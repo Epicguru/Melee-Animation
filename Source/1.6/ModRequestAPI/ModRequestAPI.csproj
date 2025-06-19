@@ -11,7 +11,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4489-beta" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4495-beta" />
 		<PackageReference Include="Unity.Newtonsoft.Json" Version="7.0.0" />
 	</ItemGroup>
 
