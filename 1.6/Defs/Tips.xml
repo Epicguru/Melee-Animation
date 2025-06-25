@@ -1,0 +1,12 @@
+<Defs>
+
+  <TipSetDef>
+    <defName>AM_Tips</defName>
+    <tips>
+      <li>Execution animations cannot be cancelled after they have started, but if either pawn is downed or killed, the animation is cancelled.</li>
+      <li>The lethality of execution animations can be adjusted in the mod settings.</li>
+      <li>Lasso cooldown is affected by the type of lasso, the pawn's melee skill, and the pawn's manipulation.</li>
+    </tips>
+  </TipSetDef>
+
+</Defs>
