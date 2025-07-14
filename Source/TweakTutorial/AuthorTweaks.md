@@ -5,7 +5,7 @@ This is because each weapon sits differently within it's texture - the animation
 There is also additional information such as blade length, weapon type (sharp, blunt) and weapon size (short, long) that need to be specified.
 
 ## Tweak Data Editor
-Tweak data is stored in a *.json* file inside the `ItemTweakData` folder in the root folder of a mod. However, you don't have to edit that json by hand. There is an editor included with the mod. To access it, enable developer mode, then go to actions and click **Open Tweak Editor**.
+Tweak data is stored in a *.json* file inside the `WeaponTweakData` folder in the root folder of a mod. However, you don't have to edit that json by hand. There is an editor included with the mod. To access it, enable developer mode, then go to actions and click **Open Tweak Editor**.
 
 ## Setup
 When you first open the editor it will look like this.
@@ -65,7 +65,7 @@ Here is a correct tweak preview looks like. Notice: the hands on the hilt, the b
 ![Output](ExampleOutput.png)
 
 ## Saving
-Click the **SAVE CHANGES** button to save the current mod's changes to the output folder. Important: you must click this button for each mod you are patching. After clicking this button, make sure that the files have been created by checking your mod (or patch mod) folder - you should see a folder called `ItemTweakData` that contains 1 or more `.json` files.
+Click the **SAVE CHANGES** button to save the current mod's changes to the output folder. Important: you must click this button for each mod you are patching. After clicking this button, make sure that the files have been created by checking your mod (or patch mod) folder - you should see a folder called `WeaponTweakData` that contains 1 or more `.json` files.
 
 ## Final notes
 Now that you tweak is created, it will be applied in-game. You can preview the weapon immediately, just load up a save. Tweak data is loaded in mod load order: if there are multiple mods that provide tweak data, the one loaded lower down is used.
