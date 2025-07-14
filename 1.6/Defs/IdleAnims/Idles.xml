@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+  <!-- Base -->
+  <AM.AnimDef Name="AnimIdle" Abstract="True">
+    <type>Idle</type>
+    <pawnCount>1</pawnCount>
+    <idleType>Idle</idleType>
+  </AM.AnimDef>
+
+  <!-- Tiny -->
+  <AM.AnimDef ParentName="AnimIdle">
+    <defName>AM_Idle_TinyIdle</defName>
+    <data>Idle_Tiny_Idle.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Tiny</size>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <!-- Medium -->
+  <AM.AnimDef ParentName="AnimIdle">
+    <defName>AM_Idle_MediumIdle</defName>
+    <data>Idle_MediumSharp_Idle.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Medium</size>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <!-- Colossal -->
+  <AM.AnimDef ParentName="AnimIdle">
+    <defName>AM_Idle_ColossalIdle</defName>
+    <data>Idle_ColossalSharp_Idle.json</data>
+    <weaponFilter Class="AM.Reqs.AnySize">
+      <size>Colossal</size>
+    </weaponFilter>
+  </AM.AnimDef>
+
+</Defs>

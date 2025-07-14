@@ -1,0 +1,166 @@
+<Defs>
+
+  <ApparelLayerDef>
+    <defName>AM_Hip</defName>
+    <label>lasso slot</label>
+    <drawOrder>301</drawOrder>
+  </ApparelLayerDef>
+
+  <ThingDef Name="AM_LassoBase" Abstract="True">
+		<thingClass>Apparel</thingClass>
+		<drawerType>MapMeshOnly</drawerType>
+		<generateAllowChance>0</generateAllowChance>
+		<category>Item</category>
+		<selectable>true</selectable>
+		<pathCost>10</pathCost>
+		<graphicData>
+			<onGroundRandomRotateAngle>35</onGroundRandomRotateAngle>
+      <texPath>AM/Rope/Lasso</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.6, 0.6)</drawSize>
+		</graphicData>
+		<drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>true</useHitPoints>
+		<statBases>
+			<Flammability>1.0</Flammability>
+			<DeteriorationRate>0</DeteriorationRate>
+			<EquipDelay>1</EquipDelay>
+      <MaxHitPoints>20</MaxHitPoints>
+		</statBases>
+		<thingCategories>
+			<li>ApparelUtility</li>
+		</thingCategories>
+		<altitudeLayer>Item</altitudeLayer>
+		<alwaysHaulable>true</alwaysHaulable>
+		<tickerType>Never</tickerType>
+		<comps>
+			<li Class="CompProperties_Forbiddable"/>
+		</comps>
+		<apparel>
+			<countsAsClothingForNudity>false</countsAsClothingForNudity>
+			<wearPerDay>0</wearPerDay>
+			<careIfWornByCorpse>false</careIfWornByCorpse>
+			<careIfDamaged>false</careIfDamaged>
+			<bodyPartGroups>
+				<li>Waist</li>
+			</bodyPartGroups>
+			<layers>
+				<li>AM_Hip</li>
+			</layers>
+      <tags>
+        <li>Lasso</li>
+      </tags>
+		</apparel>
+	</ThingDef>
+
+  <ThingDef Name="AM_LassoBaseMakeable" ParentName="AM_LassoBase" Abstract="True">
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Tailor</effectWorking>
+			<soundWorking>Recipe_Tailor</soundWorking>
+			<recipeUsers>
+				<li>ElectricTailoringBench</li>
+				<li>HandTailoringBench</li>
+			</recipeUsers>
+		</recipeMaker>
+	</ThingDef>
+
+  <ThingDef ParentName="AM_LassoBaseMakeable">
+		<defName>AM_LassoCloth</defName>
+		<label>Lasso</label>
+		<description>A cloth lasso that can drag enemies into melee range from a distance, or pull friendlies out of harm's way.</description>
+		<graphicData>
+      <color>(255, 214, 51)</color>
+		</graphicData>
+		<statBases>
+			<WorkToMake>1500</WorkToMake>
+			<MarketValue>150</MarketValue>
+			<Mass>1</Mass>
+		</statBases>
+		<comps>
+
+		</comps>
+		<equippedStatOffsets>
+			<!-- <AM_GrappleRadius>5</AM_GrappleRadius> -->
+		</equippedStatOffsets>
+		<costList>
+			<Cloth>40</Cloth>
+		</costList>
+		<recipeMaker>
+			<skillRequirements>
+				<Crafting>4</Crafting>
+			</skillRequirements>
+		</recipeMaker>
+		<techLevel>Neolithic</techLevel>
+	</ThingDef>
+
+  <ThingDef ParentName="AM_LassoBaseMakeable">
+		<defName>AM_LassoDevilstrand</defName>
+		<label>Devilstrand Lasso</label>
+		<description>A devilstrand lasso that can drag enemies into melee range from a distance, or pull friendlies out of harm's way.\nAllows increased lasso reach compared to a regular lasso.</description>
+		<graphicData>
+			<texPath>AM/Rope/Lasso</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+      <color>(180,60,60)</color>
+		</graphicData>
+		<statBases>
+			<WorkToMake>2200</WorkToMake>
+			<MarketValue>300</MarketValue>
+			<Mass>1.5</Mass>
+		</statBases>
+		<comps>
+
+		</comps>
+		<equippedStatOffsets>
+			<AM_GrappleRadius>8</AM_GrappleRadius>
+      <AM_GrappleSpeed>0.15</AM_GrappleSpeed>
+      <AM_GrappleCooldown>-5</AM_GrappleCooldown>
+		</equippedStatOffsets>
+		<costList>
+			<DevilstrandCloth>50</DevilstrandCloth>
+		</costList>
+		<recipeMaker>
+			<skillRequirements>
+				<Crafting>6</Crafting>
+			</skillRequirements>
+		</recipeMaker>
+		<techLevel>Neolithic</techLevel>
+	</ThingDef>
+
+  <ThingDef ParentName="AM_LassoBaseMakeable">
+		<defName>AM_LassoHyperwave</defName>
+		<label>Hyperwave Lasso</label>
+		<description>A hyperwave lasso that can drag enemies into melee range from a distance, or pull friendlies out of harm's way.\nAllows increased lasso reach compared to a devilstrand lasso.</description>
+		<graphicData>
+			<texPath>AM/Rope/Lasso</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+      <color>(0,106,126)</color>
+		</graphicData>
+		<statBases>
+			<WorkToMake>2700</WorkToMake>
+			<MarketValue>350</MarketValue>
+			<Mass>1.5</Mass>
+		</statBases>
+		<comps>
+
+		</comps>
+		<equippedStatOffsets>
+			<AM_GrappleRadius>14</AM_GrappleRadius>
+      <AM_GrappleSpeed>0.45</AM_GrappleSpeed>
+      <AM_GrappleCooldown>-10</AM_GrappleCooldown>      
+		</equippedStatOffsets>
+		<costList>
+			<Hyperweave>30</Hyperweave>
+      <Plasteel>10</Plasteel>
+		</costList>
+		<recipeMaker>
+			<skillRequirements>
+				<Crafting>6</Crafting>
+			</skillRequirements>
+		</recipeMaker>
+		<techLevel>Industrial</techLevel>
+	</ThingDef>
+
+
+</Defs>

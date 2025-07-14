@@ -1,0 +1,131 @@
+<Defs>
+
+  <!-- Mystic summon (gilgamesh attack) -->
+  <AM.UniqueSkillDef>
+    <defName>AM_Skill_Gilgamesh</defName>
+    <label>Mystic Weapon Summon</label>
+    <description>Summons a myriad of weapons, of unknown origin, to impale the target.
+Does not require line of sight, and the onslaught of weapons is sure to kill the victim.
+However, such a feat of psychic ability will put the summoner in a psychic coma for around 2 days.</description>
+    <type>ChanneledAnimation</type>
+    <animation>AM_GilgameshVictim</animation>
+    <instanceClass>AM.UniqueSkills.Instances.GilgameshSkill</instanceClass>
+    <data>
+      <PsyLevelRequired>5</PsyLevelRequired>
+      <MeleeLevelRequired>10</MeleeLevelRequired>
+      <MinPsyComaDays>1</MinPsyComaDays>
+      <MaxPsyComaDays>2</MaxPsyComaDays>
+    </data>
+  </AM.UniqueSkillDef>
+
+  <!-- Animation: Gilgamesh mystic weapon summon (victim animation) -->
+  <AM.AnimDef>
+    <defName>AM_GilgameshVictim</defName>
+    <label>Execution: Mystic Weapon Summon</label>
+    <!-- Note: This description is used on the casting pawn, not the victim pawn -->
+    <description>Casting unique skill: mystic weapon summon</description>
+    <type>Other</type>
+    <pawnCount>1</pawnCount>
+    <jobString>Uh oh...</jobString>
+    <cellData>
+      <li>
+        <type>PawnStart</type>
+        <position>(0, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
+    <data>Special_GilgameshVictim.json</data>
+    <rendererWorker>AM.RendererWorkers.GilgameshRendererWorker</rendererWorker>
+    <canEditProbability>false</canEditProbability>
+    <!-- Always lethal -->
+    <fixedOutcome>Kill</fixedOutcome>
+  </AM.AnimDef>
+
+
+
+  <!-- Weebstick -->
+  <AM.UniqueSkillDef>
+    <defName>AM_Skill_Weebstick</defName>
+    <label>Scarlet Edge</label>
+    <description>Slash through a single enemy using Scarlet Edge, killing them instantly.</description>
+    <type>Execution</type>
+    <animation>AM_Execution_Weebstick</animation>
+    <instanceClass>AM.UniqueSkills.Instances.WeebstickSkill</instanceClass>
+    <data>
+      <MeleeLevelRequired>16</MeleeLevelRequired>
+    </data>
+  </AM.UniqueSkillDef>
+
+  <!-- Weebstick execution -->
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Weebstick</defName>
+    <label>Execution: You insulted m'lady</label>
+    <data>Execution_Weebstick.json</data>
+
+    <!-- Do not allow it to occur normally, do not allow user to change probability -->
+    <relativeProbability>0</relativeProbability>
+    <canEditProbability>false</canEditProbability>
+    <!-- Always lethal -->
+    <fixedOutcome>Kill</fixedOutcome>
+
+    <weaponFilter Class="AM.Reqs.SpecificWeapon">
+      <weapon>AM_Weebstick</weapon>
+    </weaponFilter>
+
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(3, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+      <li>
+        <type>MustBeClear</type>
+        <position>(-1, 0)</position>
+      </li>
+    </cellData>
+  </AM.AnimDef>
+
+
+  <!-- Gae Bulg -->
+  <AM.UniqueSkillDef>
+    <defName>AM_Skill_GaeBulg</defName>
+    <label>Lance Ultrakill</label>
+    <description>Kill a single target in a complex and stylish animation that launches them into the air.\nAlways kills the target.</description>
+    <type>Execution</type>
+    <animation>AM_Execution_GaeBulg</animation>
+    <instanceClass>AM.UniqueSkills.Instances.GaeBulgSkill</instanceClass>
+    <data>
+      <MeleeLevelRequired>18</MeleeLevelRequired>
+    </data>
+  </AM.UniqueSkillDef>
+
+  <!-- Gae Bulg execution anim -->
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_GaeBulg</defName>
+    <label>Execution: Gáe Bulg</label>
+    <data>Execution_GaeBulgAir.json</data>
+    <weaponFilter Class="AM.Reqs.SpecificWeapon">
+      <weapon>RF_GaeBulg</weapon>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
+    <shadowDrawFromData>true</shadowDrawFromData>
+    <!-- Do not allow it to occur normally, do not allow user to change probability -->
+    <relativeProbability>0</relativeProbability>
+    <canEditProbability>false</canEditProbability>
+    <!-- Always lethal -->
+    <fixedOutcome>Kill</fixedOutcome>
+
+  </AM.AnimDef>
+
+</Defs>

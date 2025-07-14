@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+  <AM.AnimDef Name="AnimExecutionBase" Abstract="True">
+    <type>Execution</type>
+    <pawnCount>2</pawnCount>
+    <jobString>Executing [OTHER].</jobString>
+    <cellData>
+      <li>
+        <type>PawnStart</type>
+        <position>(0, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+      <li>
+        <type>PawnStart</type>
+        <position>(1, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Stab</defName>
+    <label>Execution: Stab</label>
+    <data>Execution_Stab.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Short_Stab, Long_Stab</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Fail</defName>
+    <label>Execution: Fail</label>
+    <data>Execution_Fail.json</data>
+    <fixedOutcome>Failure</fixedOutcome>
+    <canEditProbability>false</canEditProbability>
+    <weaponFilter Class="AM.Reqs.AnyWeapon" />
+    <relativeProbability>0</relativeProbability> <!-- Do not occur naturally, the outcome worker will cause it to happen when necessary. -->
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Shank</defName>
+    <label>Execution: Shank</label>
+    <data>Execution_Shank.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Short_Stab</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Bash</defName>
+    <label>Execution: Bash</label>
+    <data>Execution_Bash.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Short_Blunt</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_BashLarge</defName>
+    <label>Execution: Big Bash</label>
+    <data>Execution_BashLarge.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Blunt</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_UpSlash</defName>
+    <label>Execution: Upwards Slash</label>
+    <data>Execution_UpSlash.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Blunt, Long_Sharp, Short_Blunt</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_UpSlash_Doubletap</defName>
+    <label>Execution: Upwards Slash (doubletap)</label>
+    <data>Execution_UpSlash_DoubleTap.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_UpDownSlash</defName>
+    <label>Execution: Up &#38; Down Slash</label>
+    <data>Execution_UpAndDownSlash.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Blunt, Long_Sharp</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_SekiroBS</defName>
+    <label>Execution: Acrobatic Backstab</label>
+    <data>Execution_SekiroBS.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab, Long_Sharp, Short_Sharp</types>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_ThrowSharp</defName>
+    <label>Execution: Throw Sharp</label>
+    <data>Execution_ThrowSharp.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab</types>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Punt</defName>
+    <label>Execution: Punt</label>
+    <data>Execution_BluntPunt.json</data>
+
+    <!-- Temporarily disabled until bugs are fixed: -->
+    <!-- 14/02/24 Re-enabled for further testing. Works on my machine... -->
+    <relativeProbability>0.5</relativeProbability>
+
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab, Long_Blunt, Long_Sharp</types>
+    </weaponFilter>
+    <drawDisabledPawns>true</drawDisabledPawns>
+    <additionalData>
+      <li>
+        <!-- How far the punt will send the victim flying, measured in cells -->
+        <key>PuntRange</key>
+        <value>10</value>
+      </li>
+    </additionalData>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_HeadStab</defName>
+    <label>Execution: Head Stab</label>
+    <data>Execution_HeadStab.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_KnockdownStab</defName>
+    <label>Execution: Knockdown Stab</label>
+    <data>Execution_KnockdownStab.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab, Short_Stab</types>
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+      <li>
+        <type>PawnEnd</type>
+        <position>(1, 0)</position>
+        <pawnIndex>0</pawnIndex>
+      </li>
+    </cellData>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Passover</defName>
+    <label>Execution: Passover</label>
+    <data>Execution_Passover.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab</types>      
+    </weaponFilter>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(-1, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
+    <shadowDrawFromData>true</shadowDrawFromData>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Whirlwind</defName>
+    <label>Execution: Whirlwind</label>
+    <data>Execution_Whirlwind.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_HeadRemoval</defName>
+    <label>Execution: Head Be Gone</label>
+    <data>Execution_HeadRemoval.json</data>
+    <weaponFilter Class="AM.Reqs.True" />
+    <!-- Does not occur naturally, just used for testing. -->
+    <relativeProbability>0</relativeProbability>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_Behead</defName>
+    <label>Execution: Behead</label>
+    <data>Execution_Behead.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Sharp</types>
+    </weaponFilter>
+    <!-- Does not occur naturally, instead uses the promotion system. -->
+    <relativeProbability>0</relativeProbability>
+    <promotionRules>
+      <onlyWhenOutcomeIs>Kill</onlyWhenOutcomeIs>
+      <promotionWorkers>
+        <li>AM.PromotionWorkers.MustHaveHeadPromotionWorker</li>
+      </promotionWorkers>
+    </promotionRules>
+    <!-- Spawn head upon end. -->
+    <spawnDroppedHeadsForPawnIndices>
+      <li>1</li>
+    </spawnDroppedHeadsForPawnIndices>
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_BeheadHigh</defName>
+    <label>Execution: Jumping Behead</label>
+    <data>Execution_HighBehead.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Sharp</types>
+    </weaponFilter>
+    <relativeProbability>0</relativeProbability>
+    <promotionRules>
+      <onlyWhenOutcomeIs>Kill</onlyWhenOutcomeIs>
+      <promotionWorkers>
+        <li>AM.PromotionWorkers.MustHaveHeadPromotionWorker</li>
+      </promotionWorkers>
+    </promotionRules>
+    <spawnDroppedHeadsForPawnIndices>
+      <li>1</li>
+    </spawnDroppedHeadsForPawnIndices>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_SpearLift</defName>
+    <label>Execution: Spear Stab</label>
+    <data>Execution_Spear.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_JumpThrow</defName>
+    <label>Execution: Jump Throw</label>
+    <data>Execution_SpearThrow.json</data>
+    <weaponFilter Class="AM.Reqs.AnyType">
+      <types>Long_Stab</types>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimExecutionBase">
+    <defName>AM_Execution_PocketSand</defName>
+    <label>Execution: Pocket Sand!</label>
+    <data>Execution_PocketSand.json</data>
+    <weaponFilter Class="AM.Reqs.AnyWeapon"/> <!-- Anything can pocket sand! -->
+    <relativeProbability>0.6</relativeProbability> <!-- Lower relative chance, because pocket sand can be done with any melee weapon it gets seen more often by virtue of always being available -->
+    <cellData>
+      <li>
+        <type>PawnEnd</type>
+        <position>(2, 0)</position>
+        <pawnIndex>1</pawnIndex>
+      </li>
+    </cellData>
+
+    <!-- Force hands to be visible to throw sand with -->
+    <handsVisibility>
+      <li>
+        <pawnIndex>0</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+      <li>
+        <pawnIndex>1</pawnIndex>
+        <showMainHand>true</showMainHand>
+        <showAltHand>true</showAltHand>
+      </li>
+    </handsVisibility>
+  </AM.AnimDef>
+
+</Defs>

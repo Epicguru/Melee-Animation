@@ -75,8 +75,8 @@ public class UniqueSkillDef : Def
         public string Value;
         public object CachedValue;
 
-        [UsedImplicitly]
-        private void LoadDataFromXmlCustom(XmlNode node)
+        [UsedImplicitly] // Needs to be a public method (not private!) as of Rimworld 1.6.
+        public void LoadDataFromXmlCustom(XmlNode node)
         {
             Key = node.Name;
             Value = node.InnerText;
