@@ -1,0 +1,11 @@
+{
+  "TextureModID": "jtc.grineer",
+  "ItemDefName": "MeleeWeapon_Gmachete",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3421514,
+  "Rotation": 45.0,
+  "BladeStart": 0.197531074,
+  "BladeEnd": 0.867724836,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "jtc.grineer",
+  "ItemDefName": "MeleeWeapon_Amphis",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "Rotation": 45.0,
+  "ScaleX": 1.35,
+  "ScaleY": 1.35,
+  "BladeStart": -0.846560836,
+  "BladeEnd": 0.8747797,
+  "MeleeWeaponType": 1
+}

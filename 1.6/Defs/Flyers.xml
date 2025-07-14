@@ -1,0 +1,25 @@
+<Defs>
+
+  <!-- Grapple -->
+  <ThingDef ParentName="PawnFlyerBase">
+    <defName>AM_GrappleFlyer</defName>
+    <thingClass>AM.Grappling.GrappleFlyer</thingClass>
+    <pawnFlyer>
+      <flightDurationMin>0.25</flightDurationMin>
+      <flightSpeed>18</flightSpeed>
+    </pawnFlyer>
+  </ThingDef>
+
+  <!-- Knockback -->
+  <ThingDef ParentName="PawnFlyerBase">
+    <defName>AM_KnockbackFlyer</defName>
+    <thingClass>AM.Grappling.KnockbackFlyer</thingClass>
+    <pawnFlyer>
+      <!-- Both these values are overwritten in C#, but they need to be here or will cause errors -->
+      <!-- See KnockbackFlyer.cs -->
+      <flightDurationMin>0.25</flightDurationMin>
+      <flightSpeed>18</flightSpeed>
+    </pawnFlyer>
+  </ThingDef>
+
+</Defs>

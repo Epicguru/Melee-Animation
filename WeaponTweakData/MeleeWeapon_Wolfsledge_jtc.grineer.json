@@ -1,0 +1,14 @@
+{
+  "TextureModID": "jtc.grineer",
+  "ItemDefName": "MeleeWeapon_Wolfsledge",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.426807523,
+  "OffY": -0.00705456734,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.698412657,
+  "BladeEnd": 0.994708955,
+  "MeleeWeaponType": 1
+}
