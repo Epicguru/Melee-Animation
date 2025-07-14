@@ -1,0 +1,14 @@
+{
+  "TextureModID": "jtc.grineer",
+  "ItemDefName": "MeleeWeapon_Knux",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.144620359,
+  "OffY": 0.02821827,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "HandsMode": 2,
+  "BladeStart": 0.204585969,
+  "BladeEnd": 0.6596124,
+  "MeleeWeaponType": 1
+}
