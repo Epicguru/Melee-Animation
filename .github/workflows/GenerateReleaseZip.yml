@@ -13,17 +13,20 @@ env:
     About/
     Animations/
     Bundles/
-    WeaponTweakData/
     Defs/
-    Patches/
     Languages/
     Patch_AlienRaces/
-    Patch_FacialAnimation/
-    Patch_Lightsabers/
     Patch_CAI5000/
     Patch_CombatExtended/
+    Patch_FacialAnimation/
+    Patch_Lightsabers/
+    Patch_PerformanceOptimizer/
+    Patch_Tacticowl/
+    Patch_Vehicles/
+    Patches/
     Sounds/
     Textures/
+    WeaponTweakData/
     loadfolders.xml
 
 on:
