@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3545315057
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f8c50cc6b528d4cc4ba989a7dc4b117b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7859cd501ea75098bcf7e53f1b477c26
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Web/OffsetMode.png
+Dependencies: []

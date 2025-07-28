@@ -45,9 +45,7 @@ public static class BundleExporter
 
             // Build web bundles.
             // These are non-essential bundles used in the settings menu.
-            // Only for windows to save disk space.
-            // Sorry mac and linux users.
-            foreach (var target in new[]{ BuildTarget.StandaloneWindows})
+            foreach (var target in Targets)
             {
                 foreach (var vid in Directory.EnumerateFiles(Path.Combine(Application.dataPath, "Web"), "*", SearchOption.AllDirectories).Where(p => p.EndsWith(".png") || p.EndsWith(".mov")))
                 {
