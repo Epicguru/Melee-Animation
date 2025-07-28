@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3890691016
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f9c38b975719fad289690c900b30eaf6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7859cd501ea75098bcf7e53f1b477c26
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Web/SweepColor.png
+Dependencies: []
