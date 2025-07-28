@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 1571671491
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 93c5682372fa69eb2c4fbd70ca155396
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9533ec91352ac8573a011616e38420f1
+HashAppended: 0
+ClassTypes:
+- Class: 329
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Web/Invisible.mov
+Dependencies: []
