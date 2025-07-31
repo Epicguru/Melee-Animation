@@ -1,0 +1,14 @@
+{
+  "TextureModID": "cat.cryptopack",
+  "ItemDefName": "CAT_CryptoBattleaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.306866944,
+  "OffY": -0.0107296137,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.400557816,
+  "BladeEnd": 0.95843786,
+  "MeleeWeaponType": 2
+}

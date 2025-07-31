@@ -1,0 +1,10 @@
+{
+  "TextureModID": "cat.cryptopack",
+  "ItemDefName": "CAT_CryptoMaceBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.147971362,
+  "OffY": 0.00286413659,
+  "HandsMode": 1,
+  "MeleeWeaponType": 8
+}
