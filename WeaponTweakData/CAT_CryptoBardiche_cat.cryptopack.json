@@ -1,0 +1,13 @@
+{
+  "TextureModID": "cat.cryptopack",
+  "ItemDefName": "CAT_CryptoBardiche",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.345093429,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.3547262,
+  "BladeEnd": 1.10608077,
+  "MeleeWeaponType": 6
+}

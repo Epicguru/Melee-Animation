@@ -1,0 +1,14 @@
+{
+  "TextureModID": "sirmashedpotato.bloodmoon",
+  "ItemDefName": "Mashed_Bloodmoon_MeleeWeapon_HoundslayerLongsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.39736858,
+  "OffY": -0.002631338,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.110526234,
+  "BladeEnd": 1.01052654,
+  "MeleeWeaponType": 6
+}

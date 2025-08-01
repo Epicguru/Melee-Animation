@@ -1,0 +1,11 @@
+{
+  "TextureModID": "cat.cryptopack",
+  "ItemDefName": "CAT_CryptoGreatswordBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.388663977,
+  "Rotation": 45.0,
+  "BladeStart": 0.0971659943,
+  "BladeEnd": 0.986774564,
+  "MeleeWeaponType": 6
+}
