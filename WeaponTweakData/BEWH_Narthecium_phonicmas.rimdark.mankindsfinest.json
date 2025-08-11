@@ -1,0 +1,10 @@
+{
+  "TextureModID": "phonicmas.rimdark.mankindsfinest",
+  "ItemDefName": "BEWH_Narthecium",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.26562503,
+  "BladeStart": 0.184895843,
+  "BladeEnd": 0.6848959,
+  "MeleeWeaponType": 6
+}
