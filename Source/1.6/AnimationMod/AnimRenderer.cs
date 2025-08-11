@@ -11,6 +11,7 @@ using AM.Sweep;
 using AM.Tweaks;
 using AM.UI;
 using JetBrains.Annotations;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -760,7 +761,8 @@ public class AnimRenderer : IExposable
         else
             SeekMS = 0;
 
-        if (Find.CurrentMap != Map || cullDraw)
+        // 1.6 update: do not draw on world map.
+        if (Find.CurrentMap != Map || WorldRendererUtility.WorldRendered || cullDraw)
         {
             DrawMS = 0;
             if (delayedDestroy)

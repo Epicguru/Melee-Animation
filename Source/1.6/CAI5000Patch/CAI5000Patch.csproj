@@ -29,7 +29,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4528" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4543" />
     
     <Publicize Include="CombatAI" />
   </ItemGroup>
