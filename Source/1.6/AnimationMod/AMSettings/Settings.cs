@@ -137,7 +137,7 @@ public class Settings : SimpleSettingsBase
     #region Executions & Duels
     [Header("Executions & Duels", order = 0)]
 
-    [Description("Entirely enables or disables the execution system. Disabling this means that no pawns will every be able to do executions, " +
+    [Description("Entirely enables or disables the execution system. Disabling this means that no pawns will ever be able to do executions, " +
                  "and the option is removed from the UI.")]
     public bool EnableExecutions = true;
 

@@ -1,0 +1,12 @@
+{
+  "TextureModID": "sirmashedpotato.bloodmoon",
+  "ItemDefName": "Mashed_Bloodmoon_MeleeWeapon_HoundslayerShortsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3224211,
+  "OffY": -0.00110047986,
+  "HandsMode": 1,
+  "BladeStart": 0.12434683,
+  "BladeEnd": 0.7801925,
+  "MeleeWeaponType": 48
+}

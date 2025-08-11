@@ -1,0 +1,11 @@
+{
+  "TextureModID": "cat.cryptopack",
+  "ItemDefName": "CAT_CryptoSwordBladelink",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3152498,
+  "HandsMode": 1,
+  "BladeStart": 0.10364379,
+  "BladeEnd": 0.7665317,
+  "MeleeWeaponType": 48
+}

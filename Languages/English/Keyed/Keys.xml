@@ -235,7 +235,7 @@ Affects all pawns.</AM.AMSettings.Settings.GrappleSpeed.Desc>
 Lower values mean that pawns can &lt;b&gt;not&lt;/b&gt; be dragged through/over partial cover such as sand bags or embrasures. A value of 100% means that the lasso can pull pawns though/over anything except completely solid walls and buildings.</AM.AMSettings.Settings.MaxFillPctForLasso.Desc>
   <AM.AMSettings.Settings.Header.Executions___Duels>Executions &amp; Duels</AM.AMSettings.Settings.Header.Executions___Duels>
   <AM.AMSettings.Settings.EnableExecutions>Enable Executions</AM.AMSettings.Settings.EnableExecutions>
-  <AM.AMSettings.Settings.EnableExecutions.Desc>Entirely enables or disables the execution system. Disabling this means that no pawns will every be able to do executions, and the option is removed from the UI.</AM.AMSettings.Settings.EnableExecutions.Desc>
+  <AM.AMSettings.Settings.EnableExecutions.Desc>Entirely enables or disables the execution system. Disabling this means that no pawns will ever be able to do executions, and the option is removed from the UI.</AM.AMSettings.Settings.EnableExecutions.Desc>
   <AM.AMSettings.Settings.AutoExecute>Auto Execute</AM.AMSettings.Settings.AutoExecute>
   <AM.AMSettings.Settings.AutoExecute.Desc>If true, your pawns will automatically execute enemy pawns in combat, without your input.
 This may include opportunistically using their grappling hooks if the Auto Grapple setting is enabled.
