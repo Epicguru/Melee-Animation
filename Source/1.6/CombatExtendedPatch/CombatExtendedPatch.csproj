@@ -30,7 +30,7 @@
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4528" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4543" />
     <Publicize Include="CombatExtended" />
   </ItemGroup>
 
