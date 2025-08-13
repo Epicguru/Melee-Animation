@@ -2,7 +2,7 @@
   "profiles": {
     "CompatibilityReportGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "--directory ../../../../../WeaponTweakData\r\n--output \"../../../../../WeaponTweakData/Compatible Mods.md\""
+      "commandLineArgs": "--directory ../../../../../WeaponTweakData --output \"../../../../../WeaponTweakData/Compatible Mods.md\""
     }
   }
 }

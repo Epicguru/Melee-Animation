@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
 using LudeonTK;
@@ -195,18 +196,26 @@ public static class RetextureUtility
     private static IEnumerable<(ModContentPack mod, Texture2D texture)> ScanAssetBundles(string texPath)
     {
         var mods = LoadedModManager.RunningModsListForReading;
-        string path = Path.Combine("Assets", "Data");
+        string baseBundlePath = Path.Combine("Assets", "Data");
 
         for (int i = mods.Count - 1; i >= 0; i--)
         {
-            string path2 = Path.Combine(path, mods[i].FolderName);
-            foreach (AssetBundle assetBundle in mods[i].assetBundles.loadedAssetBundles)
+            var mod = mods[i];
+            
+            string dirForBundleWithFolderName = Path.Combine(baseBundlePath, mod.FolderName);
+            string dirForBundleWithPackageId  = Path.Combine(baseBundlePath, mod.PackageIdPlayerFacing);
+            string path1 = Path.Combine(Path.Combine(dirForBundleWithFolderName, GenFilePaths.ContentPath<Texture2D>()), texPath).ToLowerInvariant();
+            string path2 = Path.Combine(Path.Combine(dirForBundleWithPackageId,  GenFilePaths.ContentPath<Texture2D>()), texPath).ToLowerInvariant();
+            
+            foreach (AssetBundle bundle in mod.assetBundles.loadedAssetBundles)
             {
-                string str = Path.Combine(Path.Combine(path2, GenFilePaths.ContentPath<Texture2D>()), texPath);
-
                 foreach (string ext in ModAssetBundlesHandler.TextureExtensions)
                 {
-                    var loaded = assetBundle.LoadAsset<Texture2D>(str + ext);
+                    var loaded = bundle.LoadAsset<Texture2D>(path1 + ext);
+                    if (loaded != null)
+                        yield return (mods[i], loaded);
+                    
+                    loaded = bundle.LoadAsset<Texture2D>(path2 + ext);
                     if (loaded != null)
                         yield return (mods[i], loaded);
                 }
@@ -221,19 +230,93 @@ public static class RetextureUtility
         {
             var mod = mods[i];
 
+            // Textures from the textures folder.
             var textures = mod.textures?.contentList;
-            if (textures == null)
-                continue;
-
-            foreach (var pair in textures)
+            if (textures != null)
             {
-                yield return (mod, pair.Value, pair.Key);
+                foreach ((string path, Texture2D texture) in textures)
+                {
+                    yield return (mod, texture, path);
+                }
+            }
+            
+            // Textures from asset bundles.
+            foreach (var tuple in GetTexturesFromBundles(mod))
+            {
+                yield return tuple;
             }
         }
-
     }
 
-    [DebugOutput("Melee Animation")]
+    private static IEnumerable<(ModContentPack mod, Texture2D texture, string path)> GetTexturesFromBundles(ModContentPack mod)
+    {
+        // Ignore core mods, they don't use asset bundles for the main textures and would cause unnecessary performance overhead.
+        if (mod.IsCoreMod || mod.IsOfficialMod)
+            yield break;
+        
+        if (mod.assetBundles == null || mod.assetBundles.loadedAssetBundles.Count == 0)
+            yield break;
+        
+        string[] validExtensions = ModAssetBundlesHandler.TextureExtensions;
+        
+        string modsDir = Path.Combine("Assets", "Data");
+        string dirForBundleWithFolderName = Path.Combine(modsDir, mod.FolderName);
+        string dirForBundleWithPackageId  = Path.Combine(modsDir, mod.PackageIdPlayerFacing);
+        
+        const string FOLDER_PATH = ""; // Want to get all textures in the root Textures/ folder.
+        string pathWithoutExtWithModName = Path.Combine(Path.Combine(dirForBundleWithFolderName, GenFilePaths.ContentPath<Texture2D>()).Replace('\\', '/'), FOLDER_PATH).ToLower();
+        string pathWithoutExtWithPackageId = Path.Combine(Path.Combine(dirForBundleWithPackageId, GenFilePaths.ContentPath<Texture2D>()).Replace('\\', '/'), FOLDER_PATH).ToLower();
+        string text2 = pathWithoutExtWithModName;
+        if (text2[^1] != '/')
+            pathWithoutExtWithModName += '/';
+        
+        string text3 = pathWithoutExtWithPackageId;
+        if (text3[^1] != '/')
+            pathWithoutExtWithPackageId += '/';
+        
+        int bundleCount = mod.assetBundles.loadedAssetBundles.Count;
+        for (int i = 0; i < bundleCount; i++)
+        {
+            var bundle = mod.assetBundles.loadedAssetBundles[i];
+            var namesTrie = mod.AllAssetNamesInBundleTrie(i);
+
+            // Gets names of files inside the Textures/ folder inside the bundle.
+            var paths1 = namesTrie.GetByPrefix(pathWithoutExtWithModName);
+            var paths2 = namesTrie.GetByPrefix(pathWithoutExtWithPackageId);
+            
+            foreach (string texPath in paths1.Concat(paths2))
+            {
+                // Ignore files that are not textures.
+                string ext = Path.GetExtension(texPath);
+                if (!validExtensions.Contains(ext))
+                    continue;
+
+                var loadedTexture = bundle.LoadAsset<Texture2D>(texPath);
+                if (loadedTexture == null)
+                {
+                    Log.Warning($"[MA] Failed to load texture '{texPath}' from asset bundle '{bundle.name}' ({i}) in mod '{mod.Name}' ({mod.PackageId})");
+                    continue;
+                }
+                
+                string relativePath = texPath.Replace(pathWithoutExtWithModName, "").Replace(pathWithoutExtWithPackageId, "");
+                
+                // Remove leading slash.
+                if (relativePath.StartsWith("/"))
+                    relativePath = relativePath[1..];
+                
+                // Remove extension.
+                relativePath = relativePath[..relativePath.LastIndexOf('.')];
+                
+                // Normalize slashes.
+                relativePath = relativePath.Replace('\\', '/');
+                
+                yield return (mod, loadedTexture, relativePath);
+            }
+        }
+        
+    }
+
+    [DebugOutput("Melee Animation"), UsedImplicitly]
     private static void LogAllTextureReports()
     {
         var meleeWeapons = DefDatabase<ThingDef>.AllDefsListForReading.Where(d => IsMeleeWeapon(d));
@@ -292,7 +375,7 @@ public static class RetextureUtility
             if (textures == null)
                 continue;
 
-            string prefix = (xmlPath[xmlPath.Length - 1] == '/') ? xmlPath : xmlPath + "/";
+            string prefix = (xmlPath[^1] == '/') ? xmlPath : xmlPath + "/";
             foreach (string path in textures.GetByPrefix(prefix).OrderBy(s => s))
             {
                 return path;

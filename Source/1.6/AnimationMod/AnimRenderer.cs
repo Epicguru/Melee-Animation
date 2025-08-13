@@ -11,6 +11,7 @@ using AM.Sweep;
 using AM.Tweaks;
 using AM.UI;
 using JetBrains.Annotations;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -759,8 +760,8 @@ public class AnimRenderer : IExposable
             Seek(atTime, dt, e => eventOutput(this, e));
         else
             SeekMS = 0;
-
-        if (Find.CurrentMap != Map || cullDraw)
+        
+        if (Find.CurrentMap != Map || Find.CurrentMap == null || cullDraw)
         {
             DrawMS = 0;
             if (delayedDestroy)
