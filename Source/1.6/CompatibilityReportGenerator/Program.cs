@@ -1,6 +1,6 @@
-﻿using AM.Tweaks;
+﻿using System.CommandLine;
+using System.Text.Json;
 using CompatibilityReportGenerator.Properties;
-using System.CommandLine;
 
 namespace CompatibilityReportGenerator;
 
@@ -34,6 +34,12 @@ public static class Program
         rootCmd.Invoke(args);
     }
 
+    private static TweakDataModel LoadTweakData(string filePath)
+    {
+        string json = File.ReadAllText(filePath);
+        return JsonSerializer.Deserialize<TweakDataModel>(json);
+    }
+
     private static void Run(DirectoryInfo input, FileInfo output)
     {
         if (!input.Exists)
@@ -47,17 +53,17 @@ public static class Program
                         let contents = File.ReadAllText(raw)
                         select (name, contents)).ToDictionary(pair => pair.name, pair => pair.contents);
 
-        var files = Directory.GetFiles(input.FullName, "*.json", SearchOption.AllDirectories);
-        foreach (var file in files)
+        string[] files = Directory.GetFiles(input.FullName, "*.json", SearchOption.AllDirectories);
+        foreach (string jsonFile in files)
         {
-            ItemTweakData tweak;
+            TweakDataModel tweak;
             try
             {
-                tweak = ItemTweakData.LoadFrom(file);
+                tweak = LoadTweakData(jsonFile);
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Exception reading/parsing file '{file}':");
+                Console.WriteLine($"Exception reading/parsing file '{jsonFile}':");
                 Console.WriteLine(e);
                 continue;
             }
@@ -94,7 +100,7 @@ public static class Program
         int modCount = table.Count;
         var lines = from row in table.Values
                     orderby row.ModName
-                    select $"| **{row.ModName}** | {row.ModID} | {row.WeaponCount} | *Epicguru* |";
+                    select $"| **{row.ModName}** | {row.ModID} | {row.WeaponCount}";
 
         string finalTxt = string.Format(template, totalWeaponCount, modCount, string.Join("\n", lines), time);
 

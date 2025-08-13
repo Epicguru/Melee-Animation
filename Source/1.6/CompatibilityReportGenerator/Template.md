@@ -19,7 +19,7 @@ Maybe a weapon that is too large or small?
 Open an issue or leave a comment on the Workshop page - or even better, submit a Pull Request!
 </details>
 
-  | Mod Name | Mod ID | Weapon Count | Patch Author |
+  | Mod Name | Mod ID | Weapon Count |
 | --- | --- | --- | --- |
 {2}
 
