@@ -760,9 +760,8 @@ public class AnimRenderer : IExposable
             Seek(atTime, dt, e => eventOutput(this, e));
         else
             SeekMS = 0;
-
-        // 1.6 update: do not draw on world map.
-        if (Find.CurrentMap != Map || WorldRendererUtility.WorldRendered || cullDraw)
+        
+        if (Find.CurrentMap != Map || Find.CurrentMap == null || cullDraw)
         {
             DrawMS = 0;
             if (delayedDestroy)
