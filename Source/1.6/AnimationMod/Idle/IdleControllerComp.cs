@@ -498,7 +498,7 @@ public class IdleControllerComp : ThingComp
         var anims = GetAttackAnimationsFor(pawn, weapon, out bool allowPauseEver);
         if (anims == null || anims.Count == 0)
         {
-            Core.Warn($"Failed to find any attack animation to play for {weapon}, rot: {rot.AsVector2}!");
+            Core.Warn($"Failed to find any attack animation to play for {weapon?.ToString() ?? "<null>"}, rot: {rot.AsVector2} on pawn {pawn}!");
             return;
         }
 
