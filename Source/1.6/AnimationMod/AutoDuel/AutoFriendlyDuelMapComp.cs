@@ -39,9 +39,9 @@ public class AutoFriendlyDuelMapComp : MapComponent
         }
     }
 
-    public readonly HashSet<Building_DuelSpot> DuelSpots = new HashSet<Building_DuelSpot>();
+    public readonly HashSet<Building_DuelSpot> DuelSpots = [];
 
-    private readonly HashSet<Pawn> pawnsThatCanDuel = new HashSet<Pawn>();
+    private readonly HashSet<Pawn> pawnsThatCanDuel = [];
 
     public AutoFriendlyDuelMapComp(Map map) : base(map) { }
 
@@ -103,21 +103,25 @@ public class AutoFriendlyDuelMapComp : MapComponent
     {
         pawnsThatCanDuel.Clear();
 
-        if (Core.Settings.MaxProcessingThreads != 1)
-        {
-            // Threaded find.
-            Parallel.ForEach(EnumeratePossiblePawns(), p =>
-            {
-                if (!CanPawnDuel(p))
-                    return;
-
-                lock (pawnsThatCanDuel)
-                {
-                    pawnsThatCanDuel.Add(p);
-                }
-            });
-        }
-        else
+        // BUG: as of Rimworld 1.6.4566, attempting to call mapPawns.FreeColonistsSpawned and similar properties from a non-main thread
+        // will throw an exception.
+        // Disable multithreading here for now.
+        
+        // if (Core.Settings.MaxProcessingThreads != 1)
+        // {
+        //     // Threaded find.
+        //     Parallel.ForEach(EnumeratePossiblePawns(), p =>
+        //     {
+        //         if (!CanPawnDuel(p))
+        //             return;
+        //
+        //         lock (pawnsThatCanDuel)
+        //         {
+        //             pawnsThatCanDuel.Add(p);
+        //         }
+        //     });
+        // }
+        // else
         {
             pawnsThatCanDuel.AddRange(EnumeratePossiblePawns().Where(CanPawnDuel));
         }
