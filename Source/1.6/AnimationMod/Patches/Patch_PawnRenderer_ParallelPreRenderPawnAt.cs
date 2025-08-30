@@ -28,10 +28,19 @@ public static class Patch_PawnRenderer_ParallelPreRenderPawnAt
     [HarmonyPriority(Priority.First)]
     private static void Prefix(PawnRenderer __instance, ref Vector3 drawLoc, ref Rot4? rotOverride)
     {
-        if (__instance.pawn.ParentHolder is not Corpse corpse)
-            return;
+        try
+        {
+            if (__instance.pawn.ParentHolder is not Corpse corpse)
+                return;
 
-        DoOffsetLogic(corpse, ref drawLoc, ref rotOverride);
+            DoOffsetLogic(corpse, ref drawLoc, ref rotOverride);
+        }
+        catch (System.Exception)
+        {
+            // Handle the case where corpse has been deleted by another mod
+            // Remove any stale entries from our dictionaries
+            CleanupStaleEntries(__instance.pawn);
+        }
     }
 
     private static void DoOffsetLogic(Corpse corpse, ref Vector3 drawLoc, ref Rot4? rotOverride)
@@ -52,6 +61,31 @@ public static class Patch_PawnRenderer_ParallelPreRenderPawnAt
 
         if (!found.Update(ref drawLoc))
             Interpolators.Remove(corpse);
+    }
+
+    private static void CleanupStaleEntries(Pawn pawn)
+    {
+        // Remove entries associated with this pawn from both dictionaries
+        // This handles the case where a corpse was deleted by another mod
+        if (OverrideRotations.ContainsKey(pawn))
+        {
+            OverrideRotations.Remove(pawn);
+        }
+        
+        // Find and remove any corpse entries associated with this pawn
+        var corpsesToRemove = new List<Corpse>();
+        foreach (var kvp in Interpolators)
+        {
+            if (kvp.Key?.InnerPawn == pawn)
+            {
+                corpsesToRemove.Add(kvp.Key);
+            }
+        }
+        
+        foreach (var corpse in corpsesToRemove)
+        {
+            Interpolators.Remove(corpse);
+        }
     }
 }
 
