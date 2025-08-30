@@ -588,16 +588,7 @@ public class AnimRenderer : IExposable
             foreach (var pawn in Pawns)
             {
                 if (!IsPawnValid(pawn))
-                {
-                    try
-                    {
-                        Core.Error($"Invalid Pawn '{pawn.NameShortColored}': Spawned: {pawn.Spawned}, Dead: {pawn.Dead}, Downed: {pawn.Downed}, HasHolderParent: {pawn.ParentHolder is not Verse.Map} ({pawn.ParentHolder}, {pawn.ParentHolder?.GetType().FullName})");
-                    }
-                    catch (System.Exception e)
-                    {
-                        Core.Error($"Invalid Pawn '{pawn.NameShortColored}': Exception accessing ParentHolder - {e.Message}");
-                    }
-                }
+                    Core.Error($"Invalid Pawn '{pawn.NameShortColored}': Spawned: {pawn.Spawned}, Dead: {pawn.Dead}, Downed: {pawn.Downed}, HasHolderParent: {pawn.ParentHolder is not Verse.Map} ({pawn.ParentHolder}, {pawn.ParentHolder?.GetType().FullName})");
             }
             IsDestroyed = true;
             return false;
@@ -751,15 +742,7 @@ public class AnimRenderer : IExposable
 
         // Spawned (includes things like grappling, flying)
         // Is part of the correct map (checks for drop pods, teleporting across maps)
-        try
-        {
-            return (p.Spawned || ignoreNotSpawned) && ((p.ParentHolder is Map m && m == Map) || (p.ParentHolder == null && ignoreNotSpawned));
-        }
-        catch (System.Exception)
-        {
-            // If accessing ParentHolder throws an exception, consider the pawn invalid
-            return false;
-        }
+        return (p.Spawned || ignoreNotSpawned) && ((p.ParentHolder is Map m && m == Map) || (p.ParentHolder == null && ignoreNotSpawned));
     }
 
     public void Draw(float? atTime, float dt, Action<AnimRenderer, EventBase> eventOutput, bool cullDraw, Action<Pawn, Vector2> labelDraw = null)
