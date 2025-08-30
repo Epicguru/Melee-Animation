@@ -144,7 +144,7 @@ public static class RetextureUtility
 
         // 3. Asset bundles scan.
         // Used by DLC as well as some weird mods.
-        foreach (var pair in ScanAssetBundles(texPath))
+        foreach (var pair in GetTexturesFromBundlesAtPath(texPath))
         {
             if (!hasFirst)
             {
@@ -193,7 +193,7 @@ public static class RetextureUtility
         }
     }
 
-    private static IEnumerable<(ModContentPack mod, Texture2D texture)> ScanAssetBundles(string texPath)
+    private static IEnumerable<(ModContentPack mod, Texture2D texture)> GetTexturesFromBundlesAtPath(string texPath)
     {
         var mods = LoadedModManager.RunningModsListForReading;
         string baseBundlePath = Path.Combine("Assets", "Data");
@@ -222,7 +222,7 @@ public static class RetextureUtility
             }
         }
     }
-
+    
     private static IEnumerable<(ModContentPack mod, Texture2D texture, string path)> GetAllModTextures()
     {
         var mods = LoadedModManager.RunningModsListForReading;
@@ -363,6 +363,8 @@ public static class RetextureUtility
         // Collections load from sub-folders, normal graphic types don't:
         if (!isCollection)
             return xmlPath;
+        
+        string folderPath = xmlPath![^1] == '/' ? xmlPath : xmlPath + '/';
 
         // Other graphic classes will pull images from a sub-folder.
         // Scan mod in reverse load order and attempt to find a subfolder with the correct path.
@@ -375,12 +377,16 @@ public static class RetextureUtility
             if (textures == null)
                 continue;
 
-            string prefix = (xmlPath[^1] == '/') ? xmlPath : xmlPath + "/";
-            foreach (string path in textures.GetByPrefix(prefix).OrderBy(s => s))
+            foreach (string path in textures.GetByPrefix(folderPath).OrderBy(s => s))
             {
                 return path;
             }
         }
+        
+        // Check asset bundles.
+        string fromBundles = GetFirstAssetBundleTexturePathUnder(folderPath);
+        if (fromBundles != null)
+            return fromBundles;
 
         // If no mods have it, check vanilla resources.
         var inFolder = Resources.LoadAll<Texture2D>($"Textures/{xmlPath}");
@@ -392,6 +398,50 @@ public static class RetextureUtility
         }
 
         // Nothing was found.
+        return null;
+    }
+
+    /// <summary>
+    /// Finds the first texture file under the given folder path in any loaded mod's asset bundles.
+    /// Works in reverse load order, so the last mod to load has priority.
+    /// If multiple files exist, the one that is first alphabetically is chosen.
+    /// If no texture is found, returns null.
+    /// </summary>
+    private static string GetFirstAssetBundleTexturePathUnder(string graphicFolder)
+    {
+        // Loop through all loaded mods in reverse load order.
+        var mods = LoadedModManager.RunningModsListForReading;
+        for (int i = mods.Count - 1; i >= 0; i--)
+        {
+            var mod = mods[i];
+            if (mod.assetBundles == null || mod.assetBundles.loadedAssetBundles.Count == 0)
+                continue;
+
+            string baseBundlePath = Path.Combine("Assets", "Data");
+            string dirForBundleWithFolderName = Path.Combine(baseBundlePath, mod.FolderName, GenFilePaths.ContentPath<Texture2D>()).Replace('\\', '/').ToLowerInvariant();
+            string dirForBundleWithPackageId  = Path.Combine(baseBundlePath, mod.PackageIdPlayerFacing, GenFilePaths.ContentPath<Texture2D>()).Replace('\\', '/').ToLowerInvariant();
+            string path1 = Path.Combine(dirForBundleWithFolderName, graphicFolder).ToLowerInvariant();
+            string path2 = Path.Combine(dirForBundleWithPackageId, graphicFolder).ToLowerInvariant();
+
+            for (int j = 0; j < mod.assetBundles.loadedAssetBundles.Count; j++)
+            {
+                var bundleAssetNames = mod.AllAssetNamesInBundleTrie(j);
+                string found = bundleAssetNames.GetByPrefix(path1).FirstOrDefault(path => ModAssetBundlesHandler.TextureExtensions.Contains(Path.GetExtension(path)));
+                found ??= bundleAssetNames.GetByPrefix(path2).FirstOrDefault(path => ModAssetBundlesHandler.TextureExtensions.Contains(Path.GetExtension(path)));
+                
+                if (found == null)
+                    continue;
+                
+                // Remove base path and extension.
+                string relativePath = found.Replace(dirForBundleWithFolderName, "").Replace(dirForBundleWithPackageId, "");
+                if (relativePath.StartsWith("/"))
+                    relativePath = relativePath[1..];
+                relativePath = relativePath[..relativePath.LastIndexOf('.')];
+                
+                return relativePath;
+            }
+        }
+
         return null;
     }
 }
