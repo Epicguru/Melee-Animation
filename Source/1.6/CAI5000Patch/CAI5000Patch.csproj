@@ -22,7 +22,7 @@
       <Private>False</Private>
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
-    <PackageReference Include="Lib.Harmony" Version="2.3.6">
+    <PackageReference Include="Lib.Harmony" Version="2.4.1">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
