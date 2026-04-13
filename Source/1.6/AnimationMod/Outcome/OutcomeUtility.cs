@@ -316,6 +316,15 @@ public static class OutcomeUtility
                    pawn.health.WouldDieAfterAddingHediff(hediff, bp, dmg);
         }
 
+        Thing verbWeaponWanted = args.Weapon;
+        
+        // When doing an execution with fists, the target weapon (equipment) is actually the attacker pawn themselves.
+        // I.e. the equipment used is the fists of the attacker.
+        if (Core.IsFistsOfFuryActive && args.Weapon == null)
+        {
+            verbWeaponWanted = attacker;
+        }
+
         for (int i = 0; i < 50; i++)
         {
             // TODO check does this correctly get the right verbs even if the melee weapon is a sidearm?
@@ -326,19 +335,19 @@ public static class OutcomeUtility
                 verb = attacker.meleeVerbs.TryGetMeleeVerb(pawn);
                 if (limit-- == 0)
                 {
-                    Core.Error($"Failed to find random verb for weapon '{args.Weapon}' on pawn {pawn}. May be a result of an optimization mod or bug.\n" +
-                        $"The possible verbs are {string.Join(", ", attacker.meleeVerbs.GetUpdatedAvailableVerbsList(false).Where(v => v.IsMeleeAttack).Select(v => v.verb))}");
+                    Core.Error($"Failed to find random verb for weapon '{args.Weapon}' on pawn {attacker}. May be a result of an optimization mod or bug.\n" +
+                        $"The possible verbs are {string.Join(",\n", attacker.meleeVerbs.GetUpdatedAvailableVerbsList(false).Where(v => v.IsMeleeAttack).Select(v => $"{v.verb} using {v.verb.EquipmentSource}"))}");
                     return false;
                 }
 
                 // Force verb refresh if required.
-                if (verb.EquipmentSource != args.Weapon)
+                if (verb.EquipmentSource != verbWeaponWanted)
                 {
                     attacker.meleeVerbs.ChooseMeleeVerb(pawn);
                 }
 
-            } while (verb.EquipmentSource != args.Weapon);
-
+            } while (verb.EquipmentSource != verbWeaponWanted);
+            
             float dmg = OutcomeWorker.GetDamage(args.Weapon, verb, attacker);
             if (dmg > dmgToDo)
                 dmg = dmgToDo;
@@ -518,7 +527,11 @@ public static class OutcomeUtility
     private static LogEntry_DamageResult CreateLog(RulePackDef def, Thing weapon, Pawn inst, Pawn vict)
     {
         //var log = new BattleLogEntry_MeleeCombat(rulePackGetter(this.maneuver), alwaysShow, this.CasterPawn, this.currentTarget.Thing, base.ImplementOwnerType, this.tool.labelUsedInLogging ? this.tool.label : "", (base.EquipmentSource == null) ? null : base.EquipmentSource.def, (base.HediffCompSource == null) ? null : base.HediffCompSource.Def, this.maneuver.logEntryDef);
-        var log = new BattleLogEntry_MeleeCombat(def, true, inst, vict, ImplementOwnerTypeDefOf.Weapon, weapon?.Label, def: LogEntryDefOf.MeleeAttack);
+
+        bool isBodyParts = weapon == null;
+        
+        LogEntry_DamageResult log = new BattleLogEntry_MeleeCombat(def, true, inst, vict, isBodyParts ? ImplementOwnerTypeDefOf.Bodypart : ImplementOwnerTypeDefOf.Weapon, weapon?.Label, def: LogEntryDefOf.MeleeAttack);
+
         Find.BattleLog.Add(log);
         return log;
     }
