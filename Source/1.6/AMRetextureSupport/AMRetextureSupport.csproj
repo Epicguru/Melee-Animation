@@ -18,7 +18,7 @@
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4566" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4633" />
   </ItemGroup>
 
 	<ItemGroup>
