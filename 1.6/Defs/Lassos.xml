@@ -130,8 +130,8 @@
 
   <ThingDef ParentName="AM_LassoBaseMakeable">
 		<defName>AM_LassoHyperwave</defName>
-		<label>Hyperwave Lasso</label>
-		<description>A hyperwave lasso that can drag enemies into melee range from a distance, or pull friendlies out of harm's way.\nAllows increased lasso reach compared to a devilstrand lasso.</description>
+		<label>Hyperweave Lasso</label>
+		<description>A hyperweave lasso that can drag enemies into melee range from a distance, or pull friendlies out of harm's way.\nAllows increased lasso reach compared to a devilstrand lasso.</description>
 		<graphicData>
 			<texPath>AM/Rope/Lasso</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
