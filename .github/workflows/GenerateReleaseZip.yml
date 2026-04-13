@@ -50,7 +50,7 @@ jobs:
         rimworld-version: [1.4, 1.5, 1.6] # Add Rimworld version here!
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v6.0.1
+      uses: actions/checkout@v6.0.2
       
     - name: Setup Dotnet
       uses: actions/setup-dotnet@v5.0.1
@@ -126,7 +126,7 @@ jobs:
 
     # The repository needs to be checked out for the next changelog step.
     - name: Checkout Repository
-      uses: actions/checkout@v6.0.1
+      uses: actions/checkout@v6.0.2
 
     # Download the build artifact from the package job.
     - name: Download Mod Artifacts from Build Step
