@@ -22,7 +22,11 @@ savedSearchesSortOrder = 0
 showSavedSearchPanel = false
 hideTabs = false
 indexOnEditorStartup = true
+<<<<<<< Updated upstream
 logIndexingPerformanceReport = true
+=======
+logIndexingPerformanceReport = false
+>>>>>>> Stashed changes
 expandedQueries = [
 ]
 queryBuilder = true

@@ -1,6 +1,10 @@
 {
     "name": "Assets",
+<<<<<<< Updated upstream
     "roots": ["Assets", "Packages"],
+=======
+    "roots": ["Assets"],
+>>>>>>> Stashed changes
     "includes": [],
     "excludes": ["Assets/Temp/", "Assets/External/"],
     "options": {

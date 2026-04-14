@@ -26,7 +26,7 @@ public static class Patch_PawnRenderer_RenderPawnAt
     [HarmonyPriority(Priority.First)]
     public static bool Prefix(Pawn ___pawn, PawnRenderTree ___renderTree, ref PawnRenderer.PreRenderResults ___results, ref PawnRenderer.PreRenderResults? __state)
     {
-        __state = null; // Harmony requires this to be initialized.
+        __state = null; // Harmony requires this to be initialized. Do not remove.
 
         // Fists of fury component needs it's PreDraw called here, because normally it is only called when equipment is aiming.
         if (Core.IsFistsOfFuryActive)
