@@ -15,6 +15,7 @@ namespace AM.Controller;
 
 public class ActionController
 {
+    public static readonly List<Predicate<Pawn>> CanExecutePredicates = [];
     public static readonly List<Predicate<Pawn>> CanBeExecutedPredicates = [];
 
     public static Func<IntVec3, Map, bool> LOSValidator => CheckCell;
@@ -211,6 +212,15 @@ public class ActionController
         if (req.Target == null && (req.Targets == null || !req.Targets.Any()))
             yield break;
 
+        foreach (var predicate in CanExecutePredicates)
+        {
+            if (!predicate(req.Executioner))
+            {
+                yield return new ExecutionAttemptReport(req, "BadRace");
+                yield break;
+            }
+        }
+
         // Missing weapon, unless Fists of Fury is active.
         var weapon = req.Executioner.GetFirstMeleeWeapon();
         if (weapon == null)
@@ -328,7 +338,7 @@ public class ActionController
         // Invalid target pawn or pawn race (currently used for Vehicles).
         foreach (var predicate in CanBeExecutedPredicates)
         {
-            if (!predicate(req.Target))
+            if (!predicate(target))
             {
                 return new ExecutionAttemptReport(req, "BadRace");
             }
