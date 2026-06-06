@@ -17,6 +17,7 @@ public class ActionController
 {
     public static readonly List<Predicate<Pawn>> CanExecutePredicates = [];
     public static readonly List<Predicate<Pawn>> CanBeExecutedPredicates = [];
+    public static readonly List<Predicate<Pawn>> CanBeGrappledPredicates = [];
 
     public static Func<IntVec3, Map, bool> LOSValidator => CheckCell;
 
@@ -124,6 +125,12 @@ public class ActionController
                 UpdateClosestCells(req, map) :
                 UpdateClosestCells(req, req.OccupiedMask.Value);
             return sc == 0 ? new GrappleAttemptReport(req, "NoDest") : GrappleAttemptReport.Success(default);
+        }
+
+        foreach (var predicate in CanBeGrappledPredicates)
+        {
+            if (!predicate(req.Target))
+                return new GrappleAttemptReport(req, "BadRace");
         }
 
         // Grappler is not target.

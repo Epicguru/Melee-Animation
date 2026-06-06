@@ -20,6 +20,8 @@ public class PatchCore : Mod
         // If the pawn is a vehicle, don't allow execution.
         ActionController.CanExecutePredicates.Add(NotVehiclePawn);
         ActionController.CanBeExecutedPredicates.Add(NotVehiclePawn);
+        // Grappling is also not allowed on vehicles.
+        ActionController.CanBeGrappledPredicates.Add(NotVehiclePawn);
     }
 
     public static bool NotVehiclePawn(Pawn pawn)
