@@ -2236,6 +2236,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2257,6 +2259,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -5674,7 +5677,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 0
+  FlipX: 1
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}
@@ -8760,7 +8763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: cf3bf372d54ae204b887c43d0652a3e0, type: 2}
+  Clip: {fileID: 7400000, guid: f12eec176f65a0844a696471bd54ec9d, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -9289,6 +9292,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9310,6 +9315,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -11318,7 +11324,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 11
+  serializedVersion: 12
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -11476,6 +11482,19 @@ Mesh:
     offset: 0
     size: 0
     path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1 &1806637756
 GameObject:
   m_ObjectHideFlags: 0
@@ -11962,7 +11981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035ec63e739b8e43b63587ca5c339e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 7400000, guid: f218eae606a8dc54d9071bb894e18021, type: 2}
+  Clip: {fileID: 7400000, guid: cc70a6df34cedaf48903bdb106d51962, type: 2}
   SweepParams: {fileID: 11400000, guid: 8b5f4250e25ad0743a6923a3d261879b, type: 2}
   AllowLoadingFromJson: 0
   SweepDisplayMode: 3
@@ -12978,7 +12997,7 @@ MonoBehaviour:
   DataA: 0
   DataB: 0
   DataC: 0
-  FlipX: 0
+  FlipX: 1
   FlipY: 0
   FrameIndex: 0
   SplitDrawPivot: {fileID: 0}

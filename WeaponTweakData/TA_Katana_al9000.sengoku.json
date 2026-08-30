@@ -1,0 +1,14 @@
+{
+  "TextureModID": "al9000.sengoku",
+  "ItemDefName": "TA_Katana",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2957431,
+  "OffY": 0.00739361346,
+  "Rotation": 45.0,
+  "ScaleX": 0.75,
+  "ScaleY": 0.75,
+  "BladeStart": 0.09457629,
+  "BladeEnd": 0.7821793,
+  "MeleeWeaponType": 6
+}

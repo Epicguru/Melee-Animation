@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v5.0.0
+    - uses: actions/checkout@v7.0.1
 
     - name: Setup Dotnet
-      uses: actions/setup-dotnet@v4.3.1
+      uses: actions/setup-dotnet@v6.0.0
       with:
         dotnet-version: 8.0.x # Does not seem to work with anything newer than this.
 
@@ -39,7 +39,7 @@ jobs:
         git commit -m "[AUTO CI] Update compatible mod list." -m "[skip ci]"
     
     - name: Push to ${{ github.ref }}.
-      uses: ad-m/github-push-action@v0.8.0
+      uses: ad-m/github-push-action@v1.3.0
       with:
         github_token: ${{ secrets.CI_TOKEN }}
         branch: ${{ github.ref }}

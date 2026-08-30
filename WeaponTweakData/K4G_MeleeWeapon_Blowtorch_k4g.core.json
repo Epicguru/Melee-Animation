@@ -1,0 +1,9 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_Blowtorch",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.216878057,
+  "OffY": -0.02711001,
+  "MeleeWeaponType": 8
+}

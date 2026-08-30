@@ -1,0 +1,14 @@
+{
+  "TextureModID": "trickity.samurai.faction",
+  "ItemDefName": "TSF_OmiYari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.0887228847,
+  "OffY": -0.0443614535,
+  "Rotation": 43.42207,
+  "ScaleX": 2.2,
+  "ScaleY": 2.2,
+  "BladeStart": 0.0576084629,
+  "BladeEnd": 1.59300864,
+  "MeleeWeaponType": 5
+}

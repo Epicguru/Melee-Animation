@@ -97,6 +97,9 @@
   <AM.Error.Grapple.InAnimation>{Target} cannot be lassoed right now</AM.Error.Grapple.InAnimation>
   <AM.Error.Grapple.SelfInAnimation>{Grappler} cannot lasso right now</AM.Error.Grapple.SelfInAnimation>
 
+  <AM.Error.Grapple.BadRace>{Target} is not a valid lasso target.</AM.Error.Grapple.BadRace>
+  <AM.Error.Grapple.BadRace.Short>{Target} is not a valid lasso target</AM.Error.Grapple.BadRace.Short>
+
   <AM.Error.Grapple.Mass>{Target} is too heavy for {Grappler} to lasso</AM.Error.Grapple.Mass>
   <AM.Error.Grapple.Mass.Short>{Target} is too heavy</AM.Error.Grapple.Mass.Short>
 

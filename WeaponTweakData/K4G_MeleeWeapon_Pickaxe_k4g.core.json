@@ -1,0 +1,11 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_Pickaxe",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.135549039,
+  "OffY": -0.00246445835,
+  "BladeStart": 0.09827323,
+  "BladeEnd": 0.46548757,
+  "MeleeWeaponType": 3
+}

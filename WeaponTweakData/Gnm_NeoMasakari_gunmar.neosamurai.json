@@ -1,0 +1,19 @@
+{
+  "TextureModID": "gunmar.neosamurai",
+  "ItemDefName": "Gnm_NeoMasakari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5052278,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.7304243,
+  "BladeEnd": 1.16664529,
+  "MeleeWeaponType": 3,
+  "TrailTint": {
+    "r": 0.4,
+    "g": 0.878,
+    "b": 0.894,
+    "a": 1.0
+  }
+}

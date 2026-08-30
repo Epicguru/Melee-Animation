@@ -17,12 +17,15 @@ public class PatchCore : Mod
     public PatchCore(ModContentPack content) : base(content)
     {
         Log("Loaded vehicle framework patch!");
-        ActionController.CanBeExecutedPredicates.Add(IsValidExecuteTarget);
+        // If the pawn is a vehicle, don't allow execution.
+        ActionController.CanExecutePredicates.Add(NotVehiclePawn);
+        ActionController.CanBeExecutedPredicates.Add(NotVehiclePawn);
+        // Grappling is also not allowed on vehicles.
+        ActionController.CanBeGrappledPredicates.Add(NotVehiclePawn);
     }
 
-    public static bool IsValidExecuteTarget(Pawn pawn)
+    public static bool NotVehiclePawn(Pawn pawn)
     {
-        // If the pawn is a vehicle, don't allow execution.
         return pawn is not VehiclePawn;
     }
 }

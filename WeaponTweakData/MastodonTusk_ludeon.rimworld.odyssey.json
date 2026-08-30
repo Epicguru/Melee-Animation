@@ -1,0 +1,12 @@
+{
+  "TextureModID": "ludeon.rimworld.odyssey",
+  "ItemDefName": "MastodonTusk",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.155265182,
+  "OffY": -0.0492906123,
+  "Rotation": 10.0,
+  "BladeStart": 0.03049897,
+  "BladeEnd": 0.6441658,
+  "MeleeWeaponType": 5
+}
