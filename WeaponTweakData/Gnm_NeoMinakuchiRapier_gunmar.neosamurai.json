@@ -1,0 +1,13 @@
+{
+  "TextureModID": "gunmar.neosamurai",
+  "ItemDefName": "Gnm_NeoMinakuchiRapier",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.411576062,
+  "ScaleX": 1.15,
+  "ScaleY": 1.15,
+  "HandsMode": 1,
+  "BladeStart": 0.2818804,
+  "BladeEnd": 0.952231765,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,14 @@
+{
+  "TextureModID": "kimchibok.kimchianzbeta",
+  "ItemDefName": "KCA_RedHwando",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3573565,
+  "OffY": -0.0246455744,
+  "Rotation": 5.37676573,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.136473536,
+  "BladeEnd": 0.934980035,
+  "MeleeWeaponType": 6
+}

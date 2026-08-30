@@ -1,0 +1,14 @@
+{
+  "TextureModID": "erin.kpdh.weapons",
+  "ItemDefName": "ERN_HonmoonWeapon_EmpoweredSword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.5865574,
+  "OffY": 0.0172516871,
+  "Rotation": 42.82507,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.228893369,
+  "BladeEnd": 1.379827,
+  "MeleeWeaponType": 6
+}

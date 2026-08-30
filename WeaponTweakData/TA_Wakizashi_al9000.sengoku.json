@@ -1,0 +1,13 @@
+{
+  "TextureModID": "al9000.sengoku",
+  "ItemDefName": "TA_Wakizashi",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.256310344,
+  "OffY": -0.009858072,
+  "ScaleX": 0.78,
+  "ScaleY": 0.78,
+  "BladeStart": 0.109363526,
+  "BladeEnd": 0.636772454,
+  "MeleeWeaponType": 6
+}

@@ -1,0 +1,10 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_ShockProd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.207020238,
+  "BladeStart": 0.0884149,
+  "BladeEnd": 0.6478628,
+  "MeleeWeaponType": 1
+}

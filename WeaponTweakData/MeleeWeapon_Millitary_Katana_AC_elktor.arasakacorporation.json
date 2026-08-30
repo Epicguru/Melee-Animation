@@ -1,0 +1,14 @@
+{
+  "TextureModID": "elktor.arasakacorporation",
+  "ItemDefName": "MeleeWeapon_Millitary_Katana_AC",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.44114992,
+  "OffY": -0.04189673,
+  "Rotation": 4.97449064,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.1278477,
+  "BladeEnd": 1.14323282,
+  "MeleeWeaponType": 6
+}

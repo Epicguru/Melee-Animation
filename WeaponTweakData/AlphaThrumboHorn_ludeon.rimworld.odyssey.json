@@ -1,0 +1,11 @@
+{
+  "TextureModID": "ludeon.rimworld.odyssey",
+  "ItemDefName": "AlphaThrumboHorn",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.172516882,
+  "OffY": -0.05421951,
+  "BladeStart": 0.0058534015,
+  "BladeEnd": 0.6466303,
+  "MeleeWeaponType": 7
+}

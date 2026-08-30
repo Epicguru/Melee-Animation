@@ -1,0 +1,11 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_NobleCane",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.182375208,
+  "OffY": -0.007393617,
+  "BladeStart": 0.09827323,
+  "BladeEnd": 0.586249352,
+  "MeleeWeaponType": 1
+}

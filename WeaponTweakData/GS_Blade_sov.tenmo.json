@@ -1,0 +1,13 @@
+{
+  "TextureModID": "sov.tenmo",
+  "ItemDefName": "GS_Blade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.411576033,
+  "OffY": -0.0369678251,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.185764149,
+  "BladeEnd": 1.04095459,
+  "MeleeWeaponType": 6
+}

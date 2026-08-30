@@ -1,0 +1,20 @@
+{
+  "TextureModID": "elktor.arasakacorporation",
+  "ItemDefName": "MeleeWeapon_Thermal_Katana_AC",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.421433866,
+  "OffY": -0.0172516853,
+  "Rotation": 48.0845947,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "BladeStart": 0.153725237,
+  "BladeEnd": 1.10010362,
+  "MeleeWeaponType": 6,
+  "TrailTint": {
+    "r": 0.967,
+    "g": 0.4954619,
+    "b": 0.0449999943,
+    "a": 0.98
+  }
+}

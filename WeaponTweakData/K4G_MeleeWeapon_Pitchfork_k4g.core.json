@@ -1,0 +1,10 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_Pitchfork",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.231665313,
+  "OffY": -0.0123225152,
+  "BladeEnd": 0.71440506,
+  "MeleeWeaponType": 5
+}

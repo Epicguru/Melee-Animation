@@ -1,0 +1,13 @@
+{
+  "TextureModID": "rh2.metal.gear.solid",
+  "ItemDefName": "RHMelee_HF_Blade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.549589,
+  "Rotation": 45.0,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.300364584,
+  "BladeEnd": 1.41679537,
+  "MeleeWeaponType": 6
+}

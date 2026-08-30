@@ -1,0 +1,11 @@
+{
+  "TextureModID": "kimchibok.kimchianzbeta",
+  "ItemDefName": "KCA_DokkaebiClub",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2538464,
+  "OffY": -0.0345033742,
+  "BladeStart": 0.09457629,
+  "BladeEnd": 0.7279598,
+  "MeleeWeaponType": 9
+}

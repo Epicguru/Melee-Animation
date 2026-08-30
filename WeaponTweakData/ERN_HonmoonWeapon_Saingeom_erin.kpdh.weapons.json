@@ -1,0 +1,12 @@
+{
+  "TextureModID": "erin.kpdh.weapons",
+  "ItemDefName": "ERN_HonmoonWeapon_Saingeom",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.384466529,
+  "ScaleX": 1.25,
+  "ScaleY": 1.25,
+  "BladeStart": 0.103202134,
+  "BladeEnd": 0.9756448,
+  "MeleeWeaponType": 6
+}

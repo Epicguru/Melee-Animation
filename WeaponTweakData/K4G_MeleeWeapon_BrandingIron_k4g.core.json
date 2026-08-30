@@ -1,0 +1,17 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_BrandingIron",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2218075,
+  "OffY": -0.0172516853,
+  "BladeStart": 0.09827323,
+  "BladeEnd": 0.6133594,
+  "MeleeWeaponType": 5,
+  "TrailTint": {
+    "r": 0.967,
+    "g": 0.672,
+    "b": 0.045,
+    "a": 0.98
+  }
+}
