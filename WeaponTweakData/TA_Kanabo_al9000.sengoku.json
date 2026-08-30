@@ -1,0 +1,13 @@
+{
+  "TextureModID": "al9000.sengoku",
+  "ItemDefName": "TA_Kanabo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.3080659,
+  "Rotation": 45.0,
+  "ScaleX": 0.9,
+  "ScaleY": 0.9,
+  "BladeStart": 0.109363526,
+  "BladeEnd": 0.8881539,
+  "MeleeWeaponType": 1
+}

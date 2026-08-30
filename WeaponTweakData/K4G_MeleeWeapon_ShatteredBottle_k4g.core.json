@@ -1,0 +1,12 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_ShatteredBottle",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.2045558,
+  "OffY": -0.00246444345,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "HandsMode": 1,
+  "MeleeWeaponType": 24
+}

@@ -1,0 +1,11 @@
+{
+  "TextureModID": "erin.kpdh.weapons",
+  "ItemDefName": "ERN_HonmoonWeapon_SsangGeum",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.280956417,
+  "OffY": 0.0665423,
+  "BladeStart": 0.15495719,
+  "BladeEnd": 0.753837347,
+  "MeleeWeaponType": 6
+}

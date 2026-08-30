@@ -1,0 +1,12 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_Staff",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.25631088,
+  "OffY": -0.012322519,
+  "Rotation": 45.0,
+  "BladeStart": 0.00462143868,
+  "BladeEnd": 0.8203796,
+  "MeleeWeaponType": 1
+}

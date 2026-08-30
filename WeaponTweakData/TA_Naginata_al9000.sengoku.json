@@ -1,0 +1,14 @@
+{
+  "TextureModID": "al9000.sengoku",
+  "ItemDefName": "TA_Naginata",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4805823,
+  "OffY": 0.0640775859,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.07486015,
+  "BladeEnd": 1.37120116,
+  "MeleeWeaponType": 7
+}

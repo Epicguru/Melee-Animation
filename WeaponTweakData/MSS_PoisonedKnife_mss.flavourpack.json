@@ -1,0 +1,18 @@
+{
+  "TextureModID": "mss.flavourpack",
+  "ItemDefName": "MSS_PoisonedKnife",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.142942935,
+  "OffY": -0.0123227835,
+  "HandsMode": 1,
+  "BladeStart": 0.106899075,
+  "BladeEnd": 0.429752231,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.104,
+    "g": 0.922,
+    "b": 0.07,
+    "a": 0.746190369
+  }
+}

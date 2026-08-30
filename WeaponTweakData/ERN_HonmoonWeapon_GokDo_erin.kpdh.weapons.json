@@ -1,0 +1,14 @@
+{
+  "TextureModID": "erin.kpdh.weapons",
+  "ItemDefName": "ERN_HonmoonWeapon_GokDo",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.537266731,
+  "OffY": 0.0123225227,
+  "Rotation": 42.6727448,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.642933846,
+  "BladeEnd": 1.39707863,
+  "MeleeWeaponType": 7
+}

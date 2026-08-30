@@ -1,0 +1,13 @@
+{
+  "TextureModID": "al9000.sengoku",
+  "ItemDefName": "TA_Yari",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4633311,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.08964738,
+  "BladeEnd": 1.351485,
+  "MeleeWeaponType": 5
+}

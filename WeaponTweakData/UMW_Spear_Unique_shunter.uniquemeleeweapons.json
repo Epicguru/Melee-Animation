@@ -1,0 +1,13 @@
+{
+  "TextureModID": "shunter.uniquemeleeweapons",
+  "ItemDefName": "UMW_Spear_Unique",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.384466022,
+  "OffY": -0.00246471539,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "BladeStart": 0.111827977,
+  "BladeEnd": 0.994128466,
+  "MeleeWeaponType": 7
+}

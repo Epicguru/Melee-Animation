@@ -1,0 +1,13 @@
+{
+  "TextureModID": "erin.kpdh.weapons",
+  "ItemDefName": "ERN_HonmoonWeapon_Seokjang",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4608667,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeStart": 0.108131565,
+  "BladeEnd": 1.379827,
+  "MeleeWeaponType": 1
+}

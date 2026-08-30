@@ -1,0 +1,12 @@
+{
+  "TextureModID": "shunter.uniquemeleeweapons",
+  "ItemDefName": "UMW_LongSword_Unique",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.384466529,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.116757408,
+  "BladeEnd": 0.952231765,
+  "MeleeWeaponType": 6
+}

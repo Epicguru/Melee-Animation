@@ -1,0 +1,11 @@
+{
+  "TextureModID": "k4g.core",
+  "ItemDefName": "K4G_MeleeWeapon_Shovel",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.248916969,
+  "OffY": -0.00739361346,
+  "BladeStart": 0.08102154,
+  "BladeEnd": 0.7242629,
+  "MeleeWeaponType": 7
+}

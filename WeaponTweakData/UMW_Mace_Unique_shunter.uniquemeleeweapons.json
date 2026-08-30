@@ -1,0 +1,11 @@
+{
+  "TextureModID": "shunter.uniquemeleeweapons",
+  "ItemDefName": "UMW_Mace_Unique",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.239058644,
+  "OffY": -0.00246471167,
+  "BladeStart": 0.101970166,
+  "BladeEnd": 0.5726946,
+  "MeleeWeaponType": 9
+}

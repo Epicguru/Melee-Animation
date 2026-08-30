@@ -1,0 +1,13 @@
+{
+  "TextureModID": "mlie.cyberneticwarfare",
+  "ItemDefName": "PBF_ThingDef_Weapon_CW_PowerFist",
+  "ItemType": "ThingDef_Weapon",
+  "ItemTypeNamespace": "PersonaBondForge",
+  "OffX": 0.224806666,
+  "OffY": 0.03488372,
+  "ScaleX": 1.1,
+  "ScaleY": 1.1,
+  "HandsMode": 2,
+  "BladeStart": 0.051356826,
+  "MeleeWeaponType": 40
+}

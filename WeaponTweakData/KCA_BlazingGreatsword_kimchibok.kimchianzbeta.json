@@ -1,0 +1,13 @@
+{
+  "TextureModID": "kimchibok.kimchianzbeta",
+  "ItemDefName": "KCA_BlazingGreatsword",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.234130263,
+  "OffY": 0.06407758,
+  "ScaleX": 2.3,
+  "ScaleY": 2.3,
+  "BladeStart": 0.257235348,
+  "BladeEnd": 1.36134338,
+  "MeleeWeaponType": 6
+}
