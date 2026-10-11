@@ -108,9 +108,10 @@ public class Building_DuelSpot : Building
     private void SelectPawn(Pawn except, Action<Pawn> onSelected, Thing firstWeapon)
     {
         // Find all pawns that can duel:
+        // Only humanlikes can duel, this excludes animals, mechanoids, vehicles and modded robots.
         var m = Map;
         var controlledPawns = from pawn in m.mapPawns.AllPawnsSpawned
-                              where !pawn.Dead && !pawn.Downed && !pawn.IsInAnimation() && !pawn.HostileTo(Faction.OfPlayer) && !pawn.IsPrisoner && !pawn.def.race.Animal
+                              where !pawn.Dead && !pawn.Downed && !pawn.IsInAnimation() && !pawn.HostileTo(Faction.OfPlayer) && !pawn.IsPrisoner && pawn.RaceProps.Humanlike
                               select pawn;
 
         var items = new List<FloatMenuOption>();
