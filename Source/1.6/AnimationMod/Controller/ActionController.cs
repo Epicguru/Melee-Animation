@@ -44,6 +44,11 @@ public class ActionController
         var winThought  = isFriendlyDuel ? AM_DefOf.AM_FriendlyDuel_Win  : throw new NotImplementedException();
         var loseThought = isFriendlyDuel ? AM_DefOf.AM_FriendlyDuel_Lose : throw new NotImplementedException();
 
+        // Remove any existing duel thought first, otherwise the old memory is just renewed
+        // and keeps referencing the previous opponent.
+        winner.needs.mood.thoughts.memories.RemoveMemoriesOfDef(winThought);
+        loser.needs.mood.thoughts.memories.RemoveMemoriesOfDef(loseThought);
+
         winner.needs.mood.thoughts.memories.TryGainMemory(winThought, loser);
         loser.needs.mood.thoughts.memories.TryGainMemory(loseThought, winner);
 
