@@ -108,9 +108,10 @@ public class Building_DuelSpot : Building
     private void SelectPawn(Pawn except, Action<Pawn> onSelected, Thing firstWeapon)
     {
         // Find all pawns that can duel:
+        // Only humanlikes can duel, this excludes animals, mechanoids, vehicles and modded robots.
         var m = Map;
         var controlledPawns = from pawn in m.mapPawns.AllPawnsSpawned
-                              where !pawn.Dead && !pawn.Downed && !pawn.IsInAnimation() && !pawn.HostileTo(Faction.OfPlayer) && !pawn.IsPrisoner && !pawn.def.race.Animal
+                              where !pawn.Dead && !pawn.Downed && !pawn.IsInAnimation() && !pawn.HostileTo(Faction.OfPlayer) && !pawn.IsPrisoner && pawn.RaceProps.Humanlike
                               select pawn;
 
         var items = new List<FloatMenuOption>();
@@ -146,7 +147,16 @@ public class Building_DuelSpot : Building
             }
 
             // Make sure than an animation can play out between these weapons:
-            if (firstWeapon != null)
+            if (firstWeapon == null)
+            {
+                // First pawn: weapon must be usable in at least one duel animation.
+                if (!ActionController.CanWeaponDuel(weapon))
+                {
+                    MakeDisabled(p, "AM.Gizmos.DuelSpot.StartDuel.MissingWeapon");
+                    continue;
+                }
+            }
+            else
             {
                 var anim = ActionController.TryGetDuelAnimationFor(weapon, firstWeapon, out _);
                 if (anim == null)

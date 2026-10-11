@@ -44,6 +44,11 @@ public class ActionController
         var winThought  = isFriendlyDuel ? AM_DefOf.AM_FriendlyDuel_Win  : throw new NotImplementedException();
         var loseThought = isFriendlyDuel ? AM_DefOf.AM_FriendlyDuel_Lose : throw new NotImplementedException();
 
+        // Remove any existing duel thought first, otherwise the old memory is just renewed
+        // and keeps referencing the previous opponent.
+        winner.needs.mood.thoughts.memories.RemoveMemoriesOfDef(winThought);
+        loser.needs.mood.thoughts.memories.RemoveMemoriesOfDef(loseThought);
+
         winner.needs.mood.thoughts.memories.TryGainMemory(winThought, loser);
         loser.needs.mood.thoughts.memories.TryGainMemory(loseThought, winner);
 
@@ -728,6 +733,29 @@ public class ActionController
     {
         // TODO make much faster version.
         return cell.Standable(map);
+    }
+
+    /// <summary>
+    /// Returns true if the weapon can be used in at least one duel animation,
+    /// assuming that the opponent has a compatible weapon.
+    /// </summary>
+    public static bool CanWeaponDuel(Thing weapon)
+    {
+        var input = new ReqInput(weapon.def);
+
+        foreach (var anim in AnimDef.GetDefsOfType(AnimType.Duel))
+        {
+            if (anim.weaponFilter == null)
+                continue;
+
+            if (anim.weaponFilter.Evaluate(input))
+                return true;
+
+            if (anim.weaponFilterSecond != null && anim.weaponFilterSecond.Evaluate(input))
+                return true;
+        }
+
+        return false;
     }
 
     public static AnimDef TryGetDuelAnimationFor(Thing a, Thing b, out bool? focusOnA)
