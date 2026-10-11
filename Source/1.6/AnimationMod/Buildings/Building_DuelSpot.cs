@@ -147,7 +147,16 @@ public class Building_DuelSpot : Building
             }
 
             // Make sure than an animation can play out between these weapons:
-            if (firstWeapon != null)
+            if (firstWeapon == null)
+            {
+                // First pawn: weapon must be usable in at least one duel animation.
+                if (!ActionController.CanWeaponDuel(weapon))
+                {
+                    MakeDisabled(p, "AM.Gizmos.DuelSpot.StartDuel.MissingWeapon");
+                    continue;
+                }
+            }
+            else
             {
                 var anim = ActionController.TryGetDuelAnimationFor(weapon, firstWeapon, out _);
                 if (anim == null)
