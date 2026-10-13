@@ -26,7 +26,7 @@
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" />
-    <PackageReference Include="Krafs.Publicizer" Version="2.3.1">
+    <PackageReference Include="Krafs.Publicizer" Version="2.3.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
