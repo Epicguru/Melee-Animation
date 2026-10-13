@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configuration>
   <Excluded>
+    <exclude>.claude</exclude>
     <exclude>.git</exclude>
     <exclude>Source</exclude>
   </Excluded>
