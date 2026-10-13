@@ -1,0 +1,28 @@
+<Defs>
+
+<!-- Def is only active if Melee Animation is loaded, this prevents errors -->
+<AM.MeleeAnimationAdjustmentDef MayRequire="co.uk.epicguru.meleeanimation">
+  <defName>DebugAdjustment</defName>
+
+  <considerMeleeWeapons>
+
+    <!-- Make the assault rifle be considered a melee weapon. -->
+    <li>Gun_AssaultRifle</li>
+
+  </considerMeleeWeapons>
+
+  <weaponAdjustments>
+
+    <!-- Make the knife be treated like a colossal weapon and use those animations. -->
+    <li>
+      <key>MeleeWeapon_Knife</key>
+      <value>
+        <overrideSize>Colossal</overrideSize>
+      </value>
+    </li>
+
+  </weaponAdjustments>
+
+</AM.MeleeAnimationAdjustmentDef>
+
+</Defs>

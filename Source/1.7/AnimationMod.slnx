@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/Patches/">
+    <Project Path="AlienRacesPatch/AlienRacesPatch.csproj" />
+    <Project Path="CAI5000Patch/CAI5000Patch.csproj" />
+    <Project Path="CombatExtendedPatch/CombatExtendedPatch.csproj" />
+    <Project Path="FacialAnimationPatch/FacialAnimationPatch.csproj" />
+    <Project Path="LightsaberPatch/LightsaberPatch.csproj" />
+    <Project Path="PerformanceOptimizerPatch/PerformanceOptimizerPatch.csproj" />
+    <Project Path="TacticowlPatch/TacticowlPatch.csproj" />
+    <Project Path="VehiclesPatch/VehiclesPatch.csproj" />
+  </Folder>
+  <Folder Name="/Reporting/">
+    <Project Path="ModRequestAPI.Backend/src/ModRequestAPI.Backend/ModRequestAPI.Backend.csproj" />
+    <Project Path="ModRequestAPI.Models/ModRequestAPI.Models.csproj" />
+    <Project Path="ModRequestAPI/ModRequestAPI.csproj" />
+  </Folder>
+  <Project Path="AMRetextureSupport/AMRetextureSupport.csproj" />
+  <Project Path="AnimationMod/AnimationMod.csproj" />
+  <Project Path="CompatibilityReportGenerator/CompatibilityReportGenerator.csproj" />
+</Solution>

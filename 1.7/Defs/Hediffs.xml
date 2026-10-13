@@ -1,0 +1,50 @@
+<Defs>
+
+  <HediffDef>
+    <defName>AM_KnockedOut</defName>
+    <label>knocked out</label>
+    <labelNoun>being knocked out</labelNoun>
+    <description>The result of being knocked out during melee combat.
+Recovery will happen automatically over time, or it can be cured by another pawn, even without medicine.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <makesSickThought>false</makesSickThought>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>3600~5400</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+      <li Class="HediffCompProperties_TendDuration">
+        <showTendQuality>false</showTendQuality>
+        <tendAllAtOnce>true</tendAllAtOnce>
+      </li>
+      <li Class="AM.Health.HediffCompProperties_SingleTendRemove"/>
+    </comps>
+    <stages>
+      <li>
+        <vomitMtbDays>0</vomitMtbDays>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <setMax>0.1</setMax>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <setMax>0</setMax>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <setMax>0</setMax>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+
+    <cureAllAtOnceIfCuredByItem>true</cureAllAtOnceIfCuredByItem>
+    <blocksSocialInteraction>true</blocksSocialInteraction>
+    <defaultLabelColor>(255, 97, 179, 255)</defaultLabelColor>
+    <tendable>true</tendable>
+    <initialSeverity>1.1</initialSeverity> <!-- Makes it be tended with higher priority than most other hediffs. -->
+
+  </HediffDef>
+
+</Defs>

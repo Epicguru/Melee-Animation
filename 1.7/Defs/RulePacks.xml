@@ -1,0 +1,145 @@
+<Defs>
+
+  <RulePackDef>
+    <defName>AM_Execution_Includes</defName>
+    <rulePack>
+      <rulesStrings>
+        <li>exec_desc->skillful</li>
+        <li>exec_desc->swift</li>
+        <li>exec_desc->merciful</li>
+        <li>exec_desc->brutal</li>
+        <li>exec_desc->vengeful</li>
+        <li>exec_desc->crude</li>
+        <li>exec_desc->efficient</li>
+        <li>exec_desc->clean</li>
+        <li>exec_desc->shocking</li>
+        <li>exec_desc->spectacular</li>
+
+        <li>impaled->impaled</li>
+        <li>impaled->skewered</li>
+
+        <li>stabbed->stabbed</li>
+        <li>stabbed->skewered</li>
+
+        <li>slashed->slashed</li>
+        <li>slashed->lacerated</li>
+        <li>slashed->cut into</li>
+        <li>slashed->split open</li>
+
+        <li>beat->beat</li>
+        <li>beat->battered</li>
+        <li>beat->bludgeoned</li>
+
+        <li>skillfully->skillfully</li>
+        <li>skillfully->masterfully</li>
+        <li>skillfully->nimbly</li>
+
+        <li>weeb_legend->the Demonic Spirit</li>
+        <li>weeb_legend(p=6)->[INITIATOR_definite], Slayer of [RECIPIENT_labelPlural]</li>
+        <li>weeb_legend->[INITIATOR_definite] the Undying</li>
+        <li>weeb_legend->[INITIATOR_definite], Conqueror of the Stars</li>
+        <li>weeb_legend->[INITIATOR_definite] the Undead</li>
+        <li>weeb_legend->[INITIATOR_definite] the Edgy</li>
+        <li>weeb_legend->[INITIATOR_definite], Edgelord Supreme</li>
+        <li>weeb_legend->[INITIATOR_definite], Collector of Feetpics</li>
+        <li>weeb_legend->[INITIATOR_definite] the Penetrator</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+  <!-- Generic fallback execution. -->
+  <RulePackDef>
+    <defName>AM_Execution_Generic</defName>
+    <include>
+      <li>AM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was killed by [INITIATOR_definite] in a [exec_desc] execution.</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+  <!-- Stabbing and piercing executions -->
+  <RulePackDef>
+    <defName>AM_Execution_Stab</defName>
+    <include>
+      <li>AM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [stabbed] [RECIPIENT_definite] in the [recipient_part0_label].</li>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [impaled] [RECIPIENT_definite] with [INITIATOR_possessive] [TOOL_label].</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+  <!-- Slashing executions -->
+  <RulePackDef>
+    <defName>AM_Execution_Slashed</defName>
+    <include>
+      <li>AM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [slashed] [RECIPIENT_definite] in the [recipient_part0_label].</li>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [slashed] [RECIPIENT_definite] with [INITIATOR_possessive] [TOOL_label].</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+  <!-- Bludgeoning executions -->
+  <RulePackDef>
+    <defName>AM_Execution_Blunt</defName>
+    <include>
+      <li>AM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [beat] [RECIPIENT_definite] to death!</li>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [beat] [RECIPIENT_definite] using [INITIATOR_possessive] [TOOL_label].</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+  <!-- Execution: passover -->
+  <RulePackDef>
+    <defName>AM_Execution_Passover</defName>
+    <include>
+      <li>AM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->Performing a [exec_desc] execution, [INITIATOR_definite] [impaled] [RECIPIENT_definite] on [INITIATOR_possessive] [TOOL_label], then tossed [RECIPIENT_definite] over [INITIATOR_possessive] back! Brutal!</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+  <!-- Execution: Weebstick -->
+  <RulePackDef>
+    <defName>AM_Execution_Weebstick</defName>
+    <include>
+      <li>AM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->Wielding [INITIATOR_possessive] [TOOL_label], a weapon said to have killed God, [INITIATOR_definite] confronted [RECIPIENT_definite]. Too fast for the eye to follow, [INITIATOR_pronoun] [slashed] [RECIPIENT_definite].\nEverybody clapped.</li>
+        <li>r_logentry(p=5)->Wielding [INITIATOR_possessive] [TOOL_label], a weapon said to have killed God, [INITIATOR_definite] confronted [RECIPIENT_definite]. Too fast for the eye to follow, [INITIATOR_pronoun] [slashed] [RECIPIENT_definite].\nThus the legend of [weeb_legend] was born.</li>
+        <li>r_logentry->Wielding [INITIATOR_possessive] [TOOL_label], a weapon said to have killed God, [INITIATOR_definite] confronted [RECIPIENT_definite]. Too fast for the eye to follow, [INITIATOR_pronoun] [slashed] [RECIPIENT_definite].\nNobody can be sure if the blade dealt the killing blow, or whether [INITIATOR_definite] is simply so edgy that [INITIATOR_possessive] powerful aura completely sapped [RECIPIENT_definite] of the will to live.</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+  <!-- Execution: Gilgamesh -->
+  <RulePackDef>
+    <defName>AM_Execution_Gilgamesh</defName>
+    <include>
+      <li>AM_Execution_Includes</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <li>r_logentry->In an impressive feat of psycast mastery [INITIATOR_definite] summoned dozens of weapons to impale [RECIPIENT_definite].</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+</Defs>

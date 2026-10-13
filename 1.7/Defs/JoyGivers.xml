@@ -1,0 +1,30 @@
+<Defs>
+
+  <JoyGiverDef>
+    <defName>AM_DoFriendlyDuelJoyGiver</defName>
+    <giverClass>AM.AutoDuel.JoyGiver_FriendlyDuel</giverClass>
+    <baseChance>2.5</baseChance>
+    <joyKind>AM_FriendlyDuelJoyKind</joyKind>
+    <requiredCapacities>
+      <li>Manipulation</li>
+      <li>Moving</li>
+    </requiredCapacities>
+  </JoyGiverDef>
+
+  <JoyGiverDef>
+    <defName>AM_SpectateFriendlyDuelJoyGiver</defName>
+    <giverClass>AM.AutoDuel.JoyGiver_SpectateFriendlyDuel</giverClass>
+    <baseChance>5</baseChance>
+    <joyKind>AM_FriendlyDuelJoyKind</joyKind>
+    <requiredCapacities>
+      <li>Moving</li>
+    </requiredCapacities>
+  </JoyGiverDef>
+
+  <JoyKindDef>
+    <defName>AM_FriendlyDuelJoyKind</defName>
+    <label>duel training</label>
+    <needsThing>false</needsThing>
+  </JoyKindDef>
+
+</Defs>

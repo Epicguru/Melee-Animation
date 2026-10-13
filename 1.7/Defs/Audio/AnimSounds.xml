@@ -1,0 +1,187 @@
+<Defs>
+
+  <SoundDef Name="AM_AnimSoundBase" Abstract="True">
+    <sustain>false</sustain>
+    <context>MapOnly</context>
+    <maxSimultaneous>8</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+  </SoundDef>
+
+  <!-- Weebstick animations -->
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_AnimeUnsheath</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/AnimeUnsheath</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_Sheath</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/Sheath</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_Dash</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/Dash</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_TrippleSwingSlow</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/TrippleSwingSlow</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_Clap</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/Clap</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_MetalSwordClash</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/MetalSwordClash</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_StoneSwordClash</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/StoneSwordClash</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_WoodSwordClash</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/WoodSwordClash</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_SummonWhoosh</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>false</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/SummonWhoosh</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_SummonWow</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>false</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/SummonWow</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="AM_AnimSoundBase">
+    <defName>AM_FleshHit</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>AM/FleshHit</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

@@ -1,0 +1,17 @@
+<Defs>
+
+  <PawnColumnDef>
+    <defName>AM_ExecutionModePawnColumn</defName>
+    <headerTip>Auto-Execution mode</headerTip>
+    <workerClass>AM.ColumnWorkers.PawnColumnWorker_Execute</workerClass>
+    <sortable>true</sortable>
+  </PawnColumnDef>
+
+  <PawnColumnDef>
+    <defName>AM_LassoModePawnColumn</defName>
+    <headerTip>Auto-Lasso mode</headerTip>
+    <workerClass>AM.ColumnWorkers.PawnColumnWorker_Lasso</workerClass>
+    <sortable>true</sortable>
+  </PawnColumnDef>
+
+</Defs>

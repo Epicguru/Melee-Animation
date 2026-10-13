@@ -1,0 +1,27 @@
+<Defs>
+
+  <ThoughtDef>
+    <defName>AM_FriendlyDuel_Win</defName>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>won friendly duel</label>
+        <description>I won a friendly duel against {OTHERPAWN}!\nIt was a relaxed bout but it still feels good to be victorious.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>AM_FriendlyDuel_Lose</defName>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>lost friendly duel</label>
+        <description>I lost in a friendly duel against {OTHERPAWN}.\nLosing is disappointing but it was still good practice. I'll get em' next time!</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

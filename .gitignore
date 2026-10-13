@@ -399,3 +399,5 @@ Source/UnityProject/UserSettings/
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+
+Source/1.7/.idea/.idea.AnimationMod/.idea/
