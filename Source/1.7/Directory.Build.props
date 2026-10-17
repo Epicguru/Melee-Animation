@@ -10,6 +10,10 @@
       <!-- Other common properties -->
       <TargetFramework>net10.0</TargetFramework>
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+      <!-- Rimworld doesn't use .deps.json files, so don't put them in the mod's Assemblies folders.
+           Executable projects need them and opt back in. -->
+      <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
 </Project>

@@ -7,6 +7,8 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>12</LangVersion>
     <TargetFramework>net8.0</TargetFramework>
+    <!-- Disabled in Directory.Build.props, but needed to run an executable. -->
+    <GenerateDependencyFile>true</GenerateDependencyFile>
   </PropertyGroup>
 
   <ItemGroup>
