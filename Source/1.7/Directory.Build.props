@@ -4,8 +4,11 @@
       <!-- The Rimworld major version, such as 1.5.  -->
       <RimworldVersion>1.7</RimworldVersion>
 
+      <!-- The version of the Krafs.Rimworld.Ref package to reference. -->
+      <RimworldRefVersion>1.7.4979-alpha</RimworldRefVersion>
+
       <!-- Other common properties -->
-      <TargetFramework>net48</TargetFramework>
+      <TargetFramework>net10.0</TargetFramework>
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 

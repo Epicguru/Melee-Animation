@@ -14,13 +14,15 @@
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	  <DebugType>none</DebugType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- .NET (Core) class libraries don't copy NuGet dependencies to the output by default, but the mod needs to ship them. -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
 	  <AssemblyAttribute Include="AM.BuildDateAttribute">
 	    <_Parameter1>$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</_Parameter1>
 	  </AssemblyAttribute>
-	  <PackageReference Include="BetterFloatMenu" Version="16.0.0" />
+	  <PackageReference Include="BetterFloatMenu" Version="17.0.0" />
 	  <PackageReference Include="Krafs.Publicizer" Version="2.3.2">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -32,8 +34,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" />
-    <PackageReference Include="Portable.Meta.Numerics" Version="3.1.0.73149" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="$(RimworldRefVersion)" />
+    <PackageReference Include="Meta.Numerics" Version="4.2.0" />
 	  <ProjectReference Include="..\AMRetextureSupport\AMRetextureSupport.csproj" />
 	  <ProjectReference Include="..\ModRequestAPI\ModRequestAPI.csproj" />
 	  
