@@ -1529,7 +1529,7 @@ public class AnimRenderer : IExposable
 
         // Apply alt hand.
         var altHandPart = GetPart(altHandName);
-        if (mainHandPart != null)
+        if (altHandPart != null)
         {
             var ov = GetOverride(altHandPart);
             ov.PreventDraw = !showAlt;
