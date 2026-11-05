@@ -55,7 +55,7 @@ namespace AM.Tweaks
         [JsonIgnore]
         public float BladeLength => Mathf.Abs(BladeStart - BladeEnd);
         [JsonIgnore]
-        public float MaxDistanceFromHand => Mathf.Max(Mathf.Abs(BladeEnd), Mathf.Abs(BladeEnd));
+        public float MaxDistanceFromHand => Mathf.Max(Mathf.Abs(BladeStart), Mathf.Abs(BladeEnd));
 
         public string TextureModID;
         public string ItemDefName;
