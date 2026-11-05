@@ -131,7 +131,7 @@ namespace AM
         public void ExposeData()
         {
             Scribe_References.Look(ref MainPawn, "mainPawn");
-            Scribe_References.Look(ref MainPawn, "secondPawn");
+            Scribe_References.Look(ref SecondPawn, "secondPawn");
             Scribe_Collections.Look(ref ExtraPawns, "pawns", LookMode.Reference);
             Scribe_Defs.Look(ref Animation, "animation");
             Scribe_Values.Look(ref FlipX, "flipX");
